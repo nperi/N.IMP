@@ -6,15 +6,19 @@
 #include "ofxGui.h"
 #include "ofxSyphon.h"
 
+#include "VisualLayer.h"
+#include "InputSource.h"
+#include "MixTable.h"
+
 class ofApp : public ofBaseApp {
 public:
 	void setup();
 	void update();
 	void draw();
 	
-	ofVideoGrabber cam;
-	ofImage thresh;
-    
+	//ofVideoGrabber cam;
+	//ofImage thresh;
+    /*
     ofxPanel gui;
     ofParameterGroup parameters;
     
@@ -24,7 +28,12 @@ public:
     ofxIntSlider                pVideoNColumns;
     ofxFloatSlider                pCannyX;
     ofxFloatSlider                pCannyY;
+    */
     
+    vector<InputSource> inputs;
+    
+    
+    //syphon
     ofxSyphonClient mClient;
     vector<ofxSyphonServer> syphonServer;
     ofxSyphonServer syphonExport;

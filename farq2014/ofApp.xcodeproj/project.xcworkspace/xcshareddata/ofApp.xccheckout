@@ -6,35 +6,39 @@
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
 	<string>5F275B92-0A50-4DB8-B00A-5A2C442FE54D</string>
+	<key>IDESourceControlProjectName</key>
+	<string>ofApp</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>37526DA425E5430474A14FBFA1BC4525160B5FC1</key>
-		<string>https://github.com/kylemcdonald/ofxCv.git</string>
+		<key>252C87C319FBC1068CD046C09D8C5E406AB96AF3</key>
+		<string>https://github.com/tenderbolton/farq2014.git</string>
 		<key>F4CCB893AFADB97238A965FD2F28717F1CAAE613</key>
 		<string>https://github.com/astellato/ofxSyphon.git</string>
 	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>farq2014/ofApp.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>37526DA425E5430474A14FBFA1BC4525160B5FC1</key>
-		<string>ofxCv</string>
+		<key>252C87C319FBC1068CD046C09D8C5E406AB96AF3</key>
+		<string>../../..</string>
 		<key>F4CCB893AFADB97238A965FD2F28717F1CAAE613</key>
-		<string>ofxSyphon/</string>
+		<string>../../../../../addons/ofxSyphon</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>https://github.com/kylemcdonald/ofxCv.git</string>
+	<string>https://github.com/tenderbolton/farq2014.git</string>
 	<key>IDESourceControlProjectVersion</key>
 	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>37526DA425E5430474A14FBFA1BC4525160B5FC1</string>
+	<string>252C87C319FBC1068CD046C09D8C5E406AB96AF3</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>37526DA425E5430474A14FBFA1BC4525160B5FC1</string>
+			<string>252C87C319FBC1068CD046C09D8C5E406AB96AF3</string>
 			<key>IDESourceControlWCCName</key>
-			<string>ofxCv</string>
+			<string>apps</string>
 		</dict>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
