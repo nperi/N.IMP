@@ -2,6 +2,7 @@
 
 #include "ofMain.h"
 #include "ofxCv.h"
+#include "ofEvents.h"
 
 #include "ofxGui.h"
 #include "ofxSyphon.h"
@@ -11,33 +12,26 @@
 #include "MixTable.h"
 
 #include "InputCamera.h"
+#include "IkedaLayer.h"
+#include "MixSimpleBlend.h"
 
 class ofApp : public ofBaseApp {
 public:
 	void setup();
 	void update();
 	void draw();
+    
+    
 	
-	//ofVideoGrabber cam;
-	//ofImage thresh;
-    /*
-    ofxPanel gui;
-    ofParameterGroup parameters;
-    
-    ofxIntSlider 				pThreshold;
-    ofxToggle                   pInvert;
-    ofxToggle                   pGrayScale;
-    ofxIntSlider                pVideoNColumns;
-    ofxFloatSlider                pCannyX;
-    ofxFloatSlider                pCannyY;
-    */
-    
+    //save
     vector<InputSource*> inputs;
+    vector<VisualLayer*> visualLayers;
+    vector<MixTable*> mixtables;
     
     
     //syphon
-    ofxSyphonClient mClient;
-    vector<ofxSyphonServer> syphonServer;
-    ofxSyphonServer syphonExport;
+    void updateSyphon(ofTexture & img);
     
+    ofxSyphonClient mClient;
+    ofxSyphonServer syphonExport;
 };

@@ -11,25 +11,22 @@
 #define _InputSource
 
 #include "ofMain.h"
+#include "ofEvents.h"
+#include "ImageOutput.h"
 
 
 //abstract class that defines input sources
-class InputSource {
+class InputSource : public ImageOutput{
 	
   public:
 	
-    InputSource(string name_){name = name_;};
+    InputSource(string name_):ImageOutput(name_){};
 	
 	virtual void setup() = 0;
 	virtual void update() = 0;
 	virtual void draw() = 0;
     
-    //returns the input
-    virtual unsigned char* getPixels() = 0;
     
-    protected:
-        string name;
-	
 };
 
 #endif

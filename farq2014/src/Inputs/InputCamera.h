@@ -13,7 +13,7 @@
 #include "ofMain.h"
 #include "InputSource.h"
 
-
+// a standard camera input
 class InputCamera : public InputSource{
 	
   public:
@@ -24,12 +24,13 @@ class InputCamera : public InputSource{
 	void update();
 	void draw();
     
-    unsigned char* getPixels();
     
 
 private:
     ofVideoGrabber cam;
     ofImage img;
+    
+    
 	
 };
 

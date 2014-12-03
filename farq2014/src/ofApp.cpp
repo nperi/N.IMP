@@ -6,94 +6,54 @@ using namespace ofxCv;
 void ofApp::setup() {
     ofSetWindowTitle("projeccion architectura");
     ofSetFrameRate(60);
-    /*
-    //init cam capture
-	cam.initGrabber(640, 480);
-	thresh.allocate(640, 480, OF_IMAGE_GRAYSCALE);
-    thresh.setUseTexture(true);
     
-    //create gui
-    gui.setup();
-    gui.add(pInvert.setup("invert input", true));
-    gui.add(pThreshold.setup("threshold", 12,0,255));
-    //gui.add(pVideoNColumns.setup("nColumns", 4,1,7));
-    pVideoNColumns = 8;
-    gui.add(pCannyX.setup("CannyX", 12,0,255));
-    gui.add(pCannyY.setup("CannyY", 12,0,255));
-    */
     
     //TODO: import settings from xml
+    
+    //creating a test setup
     inputs.push_back(new InputCamera());
+    inputs[0]->setup();
     
     
-    //create Syphon Server for each screen
+    IkedaLayer* ik = new IkedaLayer();
+    ik->setup();
+    ik->setInputSource(inputs[0]);
+    visualLayers.push_back(ik);
+    
+    mixtables.push_back(new MixSimpleBlend());
+    mixtables[0]->addInputLayer(visualLayers[0]);
+    
+    ofAddListener(mixtables[0]->textureEvent, this, &ofApp::updateSyphon);
+    
+    
+    //create Syphon Server
     mClient.setup();
     mClient.setApplicationName("projeccionOF");
     mClient.setServerName("");
     syphonExport.setName("ofProjeccion");
-    
-}
+  }
+
+
 
 void ofApp::update() {
+    //updating inputs
     for (int i=0; i<inputs.size(); ++i) {
         inputs[i]->update();
     }
-    
-    
-    
-	/*cam.update();
-	if(cam.isFrameNew()) {
-        //to gray image
-		convertColor(cam, thresh, CV_RGB2GRAY);
-		
-        // canny edge detection
-        Canny(thresh, thresh, pCannyX, pCannyY, 3);
-        
-        //reduce columns
-        int n = thresh.getWidth() / (pVideoNColumns);
-        int totalPixels = thresh.getWidth()*thresh.getHeight();
-        unsigned char* pixels = thresh.getPixels();
-        
-        for (int i = 0; i < totalPixels; i+=n){
-            int val = 0;
-            for (int j=0; j<n; j++) {
-                val += pixels[j+i];
-            }
-            val /= n;
-            for (int j=0; j<n; j++) {
-                pixels[j+i] = val;
-            }
-        }
-        
-        //threshold
-        threshold(thresh, pThreshold);
-        
-        //invert
-        if (pInvert) {
-            invert(thresh);
-        }
-        
-		thresh.update();
-	}*/
-    
-    //publish screens
-   /* for (int i=0; i<pVideoNColumns; ++i) {
-        syphonServer[i].publishTexture(thresh.getTextureReference().)
-    }*/
-    
 }
 
 void ofApp::draw() {
-    /*
-    for (int i=0; i<inputs.size(); ++i) {
-        inputs[i]->draw();
-    }*/
-    
-	//cam.draw(0, 0);
-	//thresh.draw(640, 0);
-    
-    //gui.draw();
-    
-    //do export to syphon
-    //syphonExport.publishTexture(&thresh.getTextureReference());
+    //draw test screens
+    ofPushMatrix();
+    inputs[0]->draw();
+    ofTranslate(640, 0);
+    visualLayers[0]->draw();
+    ofTranslate(640, 0);
+    mixtables[0]->draw();
+
+}
+
+//texture export does not work yet, maybe you find out why ;)
+void ofApp::updateSyphon(ofTexture & img){
+    syphonExport.publishTexture(&img);
 }

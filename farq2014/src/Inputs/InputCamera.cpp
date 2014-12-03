@@ -25,7 +25,8 @@ void InputCamera::setup() {
 void InputCamera::update() {
     cam.update();
     if(cam.isFrameNew()) {
-        //notify
+        img.setFromPixels(cam.getPixels(), 640, 480, OF_IMAGE_COLOR);
+        ofNotifyEvent(imageEvent, img, this);
     }
 }
 
@@ -33,8 +34,6 @@ void InputCamera::update() {
 //------------------------------------------------------------------
 void InputCamera::draw() {
     cam.draw(0, 0);
+    ofSetColor(255, 255, 255);
+    ofDrawBitmapString(name, 10, 30);
 }
-unsigned char* InputCamera::getPixels(){
-    return cam.getPixels();
-}
-

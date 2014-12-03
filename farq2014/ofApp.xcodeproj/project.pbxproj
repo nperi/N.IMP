@@ -37,6 +37,8 @@
 		D309EB871A2E99D1008B3D94 /* VisualLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D309EB7F1A2E94AD008B3D94 /* VisualLayer.cpp */; };
 		D309EB881A2E99E5008B3D94 /* MixTable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D309EB821A2E94AD008B3D94 /* MixTable.cpp */; };
 		D309EB8C1A2E9B27008B3D94 /* InputCamera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D309EB8A1A2E9B27008B3D94 /* InputCamera.cpp */; };
+		D309EB941A2F2FDF008B3D94 /* IkedaLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D309EB921A2F2FDF008B3D94 /* IkedaLayer.cpp */; };
+		D309EB9A1A2F37A6008B3D94 /* MixSimpleBlend.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D309EB981A2F37A6008B3D94 /* MixSimpleBlend.cpp */; };
 		DBCB84A37F9AECC254870D79 /* Wrappers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D347FB65D19015303863922A /* Wrappers.cpp */; };
 		E4328149138ABC9F0047C5CB /* openFrameworksDebug.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E4328148138ABC890047C5CB /* openFrameworksDebug.a */; };
 		E45BE97B0E8CC7DD009D7055 /* AGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E45BE9710E8CC7DD009D7055 /* AGL.framework */; };
@@ -157,6 +159,11 @@
 		D309EB831A2E94AD008B3D94 /* MixTable.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MixTable.h; sourceTree = "<group>"; };
 		D309EB8A1A2E9B27008B3D94 /* InputCamera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = InputCamera.cpp; sourceTree = "<group>"; };
 		D309EB8B1A2E9B27008B3D94 /* InputCamera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InputCamera.h; sourceTree = "<group>"; };
+		D309EB921A2F2FDF008B3D94 /* IkedaLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = IkedaLayer.cpp; sourceTree = "<group>"; };
+		D309EB931A2F2FDF008B3D94 /* IkedaLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IkedaLayer.h; sourceTree = "<group>"; };
+		D309EB961A2F3073008B3D94 /* ImageOutput.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageOutput.h; sourceTree = "<group>"; };
+		D309EB981A2F37A6008B3D94 /* MixSimpleBlend.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MixSimpleBlend.cpp; sourceTree = "<group>"; };
+		D309EB991A2F37A6008B3D94 /* MixSimpleBlend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MixSimpleBlend.h; sourceTree = "<group>"; };
 		D347FB65D19015303863922A /* Wrappers.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = Wrappers.cpp; path = ../../../addons/ofxCv/libs/ofxCv/src/Wrappers.cpp; sourceTree = SOURCE_ROOT; };
 		D58DCB2C0AEFDE6171E29540 /* Syphon.framework */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = wrapper.framework; name = Syphon.framework; path = ../../../addons/ofxSyphon/libs/Syphon/lib/osx/Syphon.framework; sourceTree = "<group>"; };
 		DB0CD4C938C079DCD67222FE /* imatrix.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = imatrix.h; path = ../../../addons/ofxCv/libs/CLD/include/CLD/imatrix.h; sourceTree = SOURCE_ROOT; };
@@ -478,6 +485,8 @@
 			children = (
 				D309EB7F1A2E94AD008B3D94 /* VisualLayer.cpp */,
 				D309EB801A2E94AD008B3D94 /* VisualLayer.h */,
+				D309EB921A2F2FDF008B3D94 /* IkedaLayer.cpp */,
+				D309EB931A2F2FDF008B3D94 /* IkedaLayer.h */,
 			);
 			path = Layer;
 			sourceTree = "<group>";
@@ -487,6 +496,8 @@
 			children = (
 				D309EB821A2E94AD008B3D94 /* MixTable.cpp */,
 				D309EB831A2E94AD008B3D94 /* MixTable.h */,
+				D309EB981A2F37A6008B3D94 /* MixSimpleBlend.cpp */,
+				D309EB991A2F37A6008B3D94 /* MixSimpleBlend.h */,
 			);
 			path = Mixer;
 			sourceTree = "<group>";
@@ -533,6 +544,7 @@
 				E4B69E1F0A3A1BDC003C02F2 /* ofApp.h */,
 				D309EB741A2E6E04008B3D94 /* Param.cpp */,
 				D309EB751A2E6E04008B3D94 /* Param.h */,
+				D309EB961A2F3073008B3D94 /* ImageOutput.h */,
 			);
 			path = src;
 			sourceTree = SOURCE_ROOT;
@@ -648,8 +660,10 @@
 				E4B69E210A3A1BDC003C02F2 /* ofApp.cpp in Sources */,
 				856AA354D08AB4B323081444 /* ofxBaseGui.cpp in Sources */,
 				5CBB2AB3A60F65431D7B555D /* ofxButton.cpp in Sources */,
+				D309EB941A2F2FDF008B3D94 /* IkedaLayer.cpp in Sources */,
 				B266578FC55D23BFEBC042E7 /* ofxGuiGroup.cpp in Sources */,
 				D309EB871A2E99D1008B3D94 /* VisualLayer.cpp in Sources */,
+				D309EB9A1A2F37A6008B3D94 /* MixSimpleBlend.cpp in Sources */,
 				483908258D00B98B4BE69F07 /* ofxLabel.cpp in Sources */,
 				F285EB3169F1566CA3D93C20 /* ofxPanel.cpp in Sources */,
 				837220E80EB56CD44AD27F2A /* ofxSlider.cpp in Sources */,

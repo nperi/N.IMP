@@ -12,28 +12,40 @@
 
 #include "ofMain.h"
 
+#include "ImageOutput.h"
 #include "InputSource.h"
 #include "Param.h"
 #include <map>
 
-class VisualLayer {
+#include "ofxGui.h"
+
+//basic class for layers
+//gui does not yet work
+class VisualLayer : public ImageOutput{
 	
   public:
 	
-    VisualLayer(){};
+    VisualLayer(string name_);
 	
 	void setup();
-	void update();
-	void draw();
+	virtual void update() = 0;
+	virtual void draw() = 0;
     
-    void setInputSource(InputSource* input_);
-    ofImage* getImage();
+    void setInputSource(ImageOutput* input_);
     void setEnable(bool isEnabled_);
-    
-    bool isEnabled;
-    InputSource* input;
-	
     void inputEvent(map<string, Param*>* params);
+    
+    virtual void inputUpdated(ofImage & img_) = 0;
+    
+    ofxPanel gui;
+    ofxLabel layerName;
+    
+protected:
+    bool isEnabled;
+    bool firstInit;
+    ImageOutput* input;
+    
+    
     
     //route mouse events
 };
