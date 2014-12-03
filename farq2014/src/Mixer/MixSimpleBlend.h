@@ -22,7 +22,7 @@ class MixSimpleBlend : public MixTable{
 	
 	void setup();
 	void update();
-	void draw();
+	void draw(int x,int y, float scale);
     
     void inputUpdated(ofImage & img);
 private:

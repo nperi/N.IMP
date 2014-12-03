@@ -13,7 +13,7 @@
 VisualLayer::VisualLayer(string name_) : ImageOutput(name_){
     isEnabled = true;
     firstInit = true;
-    gui.add(layerName.setup("layerName", name));
+    
 }
 
 

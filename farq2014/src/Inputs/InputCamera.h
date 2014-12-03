@@ -12,6 +12,7 @@
 
 #include "ofMain.h"
 #include "InputSource.h"
+#include "ofxGui.h"
 
 // a standard camera input
 class InputCamera : public InputSource{
@@ -22,14 +23,13 @@ class InputCamera : public InputSource{
 	
 	void setup();
 	void update();
-	void draw();
+	void draw(int x,int y, float scale);
     
     
 
 private:
     ofVideoGrabber cam;
     ofImage img;
-    
     
 	
 };

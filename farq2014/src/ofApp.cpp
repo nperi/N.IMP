@@ -31,6 +31,10 @@ void ofApp::setup() {
     mClient.setApplicationName("projeccionOF");
     mClient.setServerName("");
     syphonExport.setName("ofProjeccion");
+    
+    
+    gui.setup(); // most of the time you don't need a name
+    gui.add(twoCircles.setup("two circles"));
   }
 
 
@@ -44,13 +48,12 @@ void ofApp::update() {
 
 void ofApp::draw() {
     //draw test screens
-    ofPushMatrix();
-    inputs[0]->draw();
-    ofTranslate(640, 0);
-    visualLayers[0]->draw();
-    ofTranslate(640, 0);
-    mixtables[0]->draw();
-
+    
+    inputs[0]->draw(0,0);
+    visualLayers[0]->draw(640,0);
+    mixtables[0]->draw(640*2,0);
+    ofPopMatrix();
+    //gui.draw();
 }
 
 //texture export does not work yet, maybe you find out why ;)

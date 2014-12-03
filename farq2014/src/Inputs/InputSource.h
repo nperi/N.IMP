@@ -13,6 +13,7 @@
 #include "ofMain.h"
 #include "ofEvents.h"
 #include "ImageOutput.h"
+#include "ofxGui.h"
 
 
 //abstract class that defines input sources
@@ -24,9 +25,9 @@ class InputSource : public ImageOutput{
 	
 	virtual void setup() = 0;
 	virtual void update() = 0;
-	virtual void draw() = 0;
+	virtual void draw(int x,int y, float scale = 1.0) = 0;
     
-    
+    ofxPanel gui;
 };
 
 #endif

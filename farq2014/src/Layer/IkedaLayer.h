@@ -23,10 +23,12 @@ class IkedaLayer : public VisualLayer{
 	
 	void setup(bool isCanny_ = true ,bool isThreshold_ = true, bool isColumns_ = true, bool isInvert_ = true);
 	void update();
-	void draw();
+	void draw(int x,int y, float scale);
     
     void inputUpdated(ofImage & img_);
     
+    ofxPanel gui;
+    ofxLabel layerName;
     ofxToggle isCanny;
     ofxToggle isThreshold;
     ofxToggle isColumns;
@@ -36,6 +38,10 @@ class IkedaLayer : public VisualLayer{
     ofxFloatSlider                pCannyX;
     ofxFloatSlider                pCannyY;
     ofxIntSlider                  pThreshold;
+    
+    
+    ofxPanel gui2;
+    ofxFloatSlider                test;
 	
 };
 

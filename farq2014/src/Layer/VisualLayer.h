@@ -29,7 +29,7 @@ class VisualLayer : public ImageOutput{
 	
 	void setup();
 	virtual void update() = 0;
-	virtual void draw() = 0;
+	virtual void draw(int x,int y, float scale = 1.0) = 0;
     
     void setInputSource(ImageOutput* input_);
     void setEnable(bool isEnabled_);
@@ -37,8 +37,7 @@ class VisualLayer : public ImageOutput{
     
     virtual void inputUpdated(ofImage & img_) = 0;
     
-    ofxPanel gui;
-    ofxLabel layerName;
+    
     
 protected:
     bool isEnabled;

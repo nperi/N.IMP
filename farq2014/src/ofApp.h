@@ -34,4 +34,8 @@ public:
     
     ofxSyphonClient mClient;
     ofxSyphonServer syphonExport;
+    
+    //gui
+    ofxPanel gui;
+    ofxButton twoCircles;
 };

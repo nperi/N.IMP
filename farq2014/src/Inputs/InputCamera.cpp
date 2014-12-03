@@ -17,7 +17,7 @@ InputCamera::InputCamera(string name) : InputSource(name){
 
 //------------------------------------------------------------------
 void InputCamera::setup() {
-	
+    
 }
 
 
@@ -28,12 +28,13 @@ void InputCamera::update() {
         img.setFromPixels(cam.getPixels(), 640, 480, OF_IMAGE_COLOR);
         ofNotifyEvent(imageEvent, img, this);
     }
+    
 }
 
 
 //------------------------------------------------------------------
-void InputCamera::draw() {
-    cam.draw(0, 0);
+void InputCamera::draw(int x,int y, float scale) {
+    cam.draw(x, y,cam.getWidth()*scale,cam.getHeight()*scale);
     ofSetColor(255, 255, 255);
-    ofDrawBitmapString(name, 10, 30);
+    ofDrawBitmapString(name, x + 10, y + 30);
 }

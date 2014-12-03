@@ -24,7 +24,7 @@ class MixTable : public ImageOutput{
 	
 	void setup();
 	virtual void update() = 0;
-	virtual void draw() = 0;
+	virtual void draw(int x,int y, float scale = 1.0) = 0;
     
     void addInputLayer(ImageOutput* layer_);
     void removeInputLayer(string name_);

@@ -24,10 +24,10 @@ void MixSimpleBlend::update() {
 
 
 //------------------------------------------------------------------
-void MixSimpleBlend::draw() {
+void MixSimpleBlend::draw(int x,int y, float scale) {
     ofSetColor(255, 255, 255);
-    fbo.draw(0, 0);
-	ofDrawBitmapString(name, 10, 30);
+    fbo.draw(x, y,fbo.getWidth()*scale, fbo.getHeight()*scale);
+	ofDrawBitmapString(name, x + 10, y + 30);
 }
 
 void MixSimpleBlend::inputUpdated(ofImage & img){
