@@ -13,13 +13,14 @@
 #include "ofMain.h"
 
 #include "InputSource.h"
+#include "Param.h"
 #include <map>
 
 class VisualLayer {
 	
   public:
 	
-	VisualLayer();
+    VisualLayer(){};
 	
 	void setup();
 	void update();

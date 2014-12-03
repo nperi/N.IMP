@@ -7,7 +7,7 @@
 #include "ofxSyphon.h"
 
 #include "VisualLayer.h"
-#include "InputSource.h"
+#include "Inputs/InputSource.h"
 #include "MixTable.h"
 
 class ofApp : public ofBaseApp {

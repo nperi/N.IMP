@@ -23,6 +23,7 @@ void ofApp::setup() {
     */
     
     //TODO: import settings from xml
+    inputs.push_back(InputSource());
     
     
     //create Syphon Server for each screen

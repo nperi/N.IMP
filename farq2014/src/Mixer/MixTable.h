@@ -18,7 +18,7 @@ class MixTable {
 	
   public:
 	
-	MixTable();
+    MixTable(){};
 	
 	void setup();
 	void update();

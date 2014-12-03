@@ -17,7 +17,7 @@ class InputSource {
 	
   public:
 	
-	InputSource();
+    InputSource(){};
 	
 	void setup();
 	void update();
