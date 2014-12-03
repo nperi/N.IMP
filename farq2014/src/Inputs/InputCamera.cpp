@@ -34,7 +34,7 @@ void InputCamera::update() {
 
 //------------------------------------------------------------------
 void InputCamera::draw(int x,int y, float scale) {
-    cam.draw(x, y,cam.getWidth()*scale,cam.getHeight()*scale);
+    cam.draw(x, y,640*scale,480*scale);
     ofSetColor(255, 255, 255);
     ofDrawBitmapString(name, x + 10, y + 30);
 }

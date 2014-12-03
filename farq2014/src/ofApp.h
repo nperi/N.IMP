@@ -12,6 +12,7 @@
 #include "MixTable.h"
 
 #include "InputCamera.h"
+#include "VideoPlayerMac.h"
 #include "IkedaLayer.h"
 #include "MixSimpleBlend.h"
 

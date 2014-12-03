@@ -33,11 +33,13 @@ void MixSimpleBlend::draw(int x,int y, float scale) {
 void MixSimpleBlend::inputUpdated(ofImage & img){
     fbo.begin();
     ofClear(255,255,255, 0);
+    ofEnableAlphaBlending();
     //ofEnableBlendMode(OF_BLENDMODE_MULTIPLY);
     for (int i=0; i<input.size(); ++i) {
+        ofSetColor(255, 255, 255,128);
         input[i]->getImage()->draw(0, 0);
     }
-    //ofDisableBlendMode();
+    ofDisableBlendMode();
     fbo.end();
     ofNotifyEvent(fboEvent, fbo, this);
 }
