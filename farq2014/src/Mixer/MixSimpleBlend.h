@@ -12,6 +12,7 @@
 
 #include "ofMain.h"
 #include "MixTable.h"
+#include "ofxSyphon.h"
 
 //simple sample mixtable
 class MixSimpleBlend : public MixTable{

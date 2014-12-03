@@ -23,7 +23,7 @@ void ofApp::setup() {
     mixtables.push_back(new MixSimpleBlend());
     mixtables[0]->addInputLayer(visualLayers[0]);
     
-    ofAddListener(mixtables[0]->textureEvent, this, &ofApp::updateSyphon);
+    ofAddListener(mixtables[0]->fboEvent, this, &ofApp::updateSyphon);
     
     
     //create Syphon Server
@@ -35,6 +35,8 @@ void ofApp::setup() {
     
     gui.setup(); // most of the time you don't need a name
     gui.add(twoCircles.setup("two circles"));
+    
+    texScreen.allocate(640,480,GL_RGB);
   }
 
 
@@ -54,9 +56,11 @@ void ofApp::draw() {
     mixtables[0]->draw(640*2,0);
     ofPopMatrix();
     //gui.draw();
+    
+    
+    
 }
 
-//texture export does not work yet, maybe you find out why ;)
-void ofApp::updateSyphon(ofTexture & img){
-    syphonExport.publishTexture(&img);
+void ofApp::updateSyphon(ofFbo & img){
+    syphonExport.publishTexture(&img.getTextureReference());
 }

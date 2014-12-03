@@ -30,7 +30,7 @@ public:
     
     
     //syphon
-    void updateSyphon(ofTexture & img);
+    void updateSyphon(ofFbo & img);
     
     ofxSyphonClient mClient;
     ofxSyphonServer syphonExport;
@@ -38,4 +38,6 @@ public:
     //gui
     ofxPanel gui;
     ofxButton twoCircles;
+    
+    ofTexture texScreen;
 };

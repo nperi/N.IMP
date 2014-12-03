@@ -32,7 +32,7 @@ class ImageOutput {
     ofImage* getImage(){return &img;}
     
     ofEvent<ofImage> imageEvent;
-    ofEvent<ofTexture> textureEvent;
+    ofEvent<ofFbo> fboEvent;
     
     
 protected:
