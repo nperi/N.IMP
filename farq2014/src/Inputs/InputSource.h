@@ -13,15 +13,22 @@
 #include "ofMain.h"
 
 
+//abstract class that defines input sources
 class InputSource {
 	
   public:
 	
-    InputSource(){};
+    InputSource(string name_){name = name_;};
 	
-	void setup();
-	void update();
-	void draw();
+	virtual void setup() = 0;
+	virtual void update() = 0;
+	virtual void draw() = 0;
+    
+    //returns the input
+    virtual unsigned char* getPixels() = 0;
+    
+    protected:
+        string name;
 	
 };
 

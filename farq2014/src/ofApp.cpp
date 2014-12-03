@@ -23,7 +23,7 @@ void ofApp::setup() {
     */
     
     //TODO: import settings from xml
-    inputs.push_back(InputSource());
+    inputs.push_back(new InputCamera());
     
     
     //create Syphon Server for each screen
@@ -36,7 +36,7 @@ void ofApp::setup() {
 
 void ofApp::update() {
     for (int i=0; i<inputs.size(); ++i) {
-        inputs[i].update();
+        inputs[i]->update();
     }
     
     
@@ -84,6 +84,11 @@ void ofApp::update() {
 }
 
 void ofApp::draw() {
+    /*
+    for (int i=0; i<inputs.size(); ++i) {
+        inputs[i]->draw();
+    }*/
+    
 	//cam.draw(0, 0);
 	//thresh.draw(640, 0);
     

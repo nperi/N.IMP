@@ -22,7 +22,7 @@
 		<key>252C87C319FBC1068CD046C09D8C5E406AB96AF3</key>
 		<string>../../..</string>
 		<key>F4CCB893AFADB97238A965FD2F28717F1CAAE613</key>
-		<string>../../../../../addons/ofxSyphon</string>
+		<string>../../../../addons/ofxSyphon</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
 	<string>https://github.com/tenderbolton/farq2014.git</string>

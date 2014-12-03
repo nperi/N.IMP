@@ -7,8 +7,10 @@
 #include "ofxSyphon.h"
 
 #include "VisualLayer.h"
-#include "Inputs/InputSource.h"
+#include "InputSource.h"
 #include "MixTable.h"
+
+#include "InputCamera.h"
 
 class ofApp : public ofBaseApp {
 public:
@@ -30,7 +32,7 @@ public:
     ofxFloatSlider                pCannyY;
     */
     
-    vector<InputSource> inputs;
+    vector<InputSource*> inputs;
     
     
     //syphon
