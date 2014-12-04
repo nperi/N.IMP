@@ -16,6 +16,8 @@
 		5CBB2AB3A60F65431D7B555D /* ofxButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C88333E71C9457E441C33474 /* ofxButton.cpp */; };
 		5CC34D433F5806179935B89D /* Flow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03A75A648BC4CF1D9DEDD0CE /* Flow.cpp */; };
 		6AABAB39E82AF5CFEA23A205 /* ContourFinder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5FBB4A8427353AED09174BE5 /* ContourFinder.cpp */; };
+		6B0E60EB1A2FCA84006AE261 /* GlitchLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6B0E60E91A2FCA84006AE261 /* GlitchLayer.cpp */; };
+		6B0E614A1A2FDE57006AE261 /* GlitchLayerAlt.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6B0E61481A2FDE57006AE261 /* GlitchLayerAlt.cpp */; };
 		6B9E008B1A2E56EA00813D7C /* Syphon.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = D58DCB2C0AEFDE6171E29540 /* Syphon.framework */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		6B9E01311A2E5B3100813D7C /* Syphon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B9E011F1A2E5B3100813D7C /* Syphon.framework */; };
 		6B9E01321A2E5B3100813D7C /* SyphonNameboundClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B9E01221A2E5B3100813D7C /* SyphonNameboundClient.m */; };
@@ -110,6 +112,15 @@
 		58140E0F92D37844E9C8883D /* Calibration.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = Calibration.h; path = ../../../addons/ofxCv/libs/ofxCv/include/ofxCv/Calibration.h; sourceTree = SOURCE_ROOT; };
 		5CBF6AED6A17AC0C17F63CC4 /* RunningBackground.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = RunningBackground.cpp; path = ../../../addons/ofxCv/libs/ofxCv/src/RunningBackground.cpp; sourceTree = SOURCE_ROOT; };
 		5FBB4A8427353AED09174BE5 /* ContourFinder.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = ContourFinder.cpp; path = ../../../addons/ofxCv/libs/ofxCv/src/ContourFinder.cpp; sourceTree = SOURCE_ROOT; };
+		6B0E60E91A2FCA84006AE261 /* GlitchLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GlitchLayer.cpp; sourceTree = "<group>"; };
+		6B0E60EA1A2FCA84006AE261 /* GlitchLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GlitchLayer.h; sourceTree = "<group>"; };
+		6B0E61461A2FD939006AE261 /* ofxPostGlitch.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ofxPostGlitch.cpp; sourceTree = "<group>"; };
+		6B0E61471A2FD939006AE261 /* ofxPostGlitch.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxPostGlitch.h; sourceTree = "<group>"; };
+		6B0E61481A2FDE57006AE261 /* GlitchLayerAlt.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GlitchLayerAlt.cpp; sourceTree = "<group>"; };
+		6B0E61491A2FDE57006AE261 /* GlitchLayerAlt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GlitchLayerAlt.h; sourceTree = "<group>"; };
+		6B0E615F1A2FDEBD006AE261 /* JpegConstant.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JpegConstant.h; sourceTree = "<group>"; };
+		6B0E61601A2FDEBD006AE261 /* ofxJpegGlitch.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ofxJpegGlitch.cpp; sourceTree = "<group>"; };
+		6B0E61611A2FDEBD006AE261 /* ofxJpegGlitch.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxJpegGlitch.h; sourceTree = "<group>"; };
 		6B3CDFD1A15E92F074E7D5AE /* RunningBackground.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = RunningBackground.h; path = ../../../addons/ofxCv/libs/ofxCv/include/ofxCv/RunningBackground.h; sourceTree = SOURCE_ROOT; };
 		6B9E01031A2E5B3100813D7C /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		6B9E011F1A2E5B3100813D7C /* Syphon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Syphon.framework; sourceTree = "<group>"; };
@@ -286,6 +297,43 @@
 			name = ofxCv;
 			sourceTree = "<group>";
 		};
+		6B0E60EF1A2FD939006AE261 /* ofxPostGlitch */ = {
+			isa = PBXGroup;
+			children = (
+				6B0E61451A2FD939006AE261 /* src */,
+			);
+			name = ofxPostGlitch;
+			path = ../../../addons/ofxPostGlitch;
+			sourceTree = "<group>";
+		};
+		6B0E61451A2FD939006AE261 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				6B0E61461A2FD939006AE261 /* ofxPostGlitch.cpp */,
+				6B0E61471A2FD939006AE261 /* ofxPostGlitch.h */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
+		6B0E614B1A2FDEBD006AE261 /* ofxJpegGlitch */ = {
+			isa = PBXGroup;
+			children = (
+				6B0E615E1A2FDEBD006AE261 /* src */,
+			);
+			name = ofxJpegGlitch;
+			path = ../../../addons/ofxJpegGlitch;
+			sourceTree = "<group>";
+		};
+		6B0E615E1A2FDEBD006AE261 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				6B0E615F1A2FDEBD006AE261 /* JpegConstant.h */,
+				6B0E61601A2FDEBD006AE261 /* ofxJpegGlitch.cpp */,
+				6B0E61611A2FDEBD006AE261 /* ofxJpegGlitch.h */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
 		6B9E01021A2E5B3100813D7C /* ofxSyphon */ = {
 			isa = PBXGroup;
 			children = (
@@ -417,6 +465,8 @@
 		BB4B014C10F69532006C3DED /* addons */ = {
 			isa = PBXGroup;
 			children = (
+				6B0E614B1A2FDEBD006AE261 /* ofxJpegGlitch */,
+				6B0E60EF1A2FD939006AE261 /* ofxPostGlitch */,
 				6B9E01021A2E5B3100813D7C /* ofxSyphon */,
 				480A780D8D0308AE4A368801 /* ofxGui */,
 				6025FAF6414C2CA589764D26 /* ofxCv */,
@@ -492,6 +542,10 @@
 				D309EB801A2E94AD008B3D94 /* VisualLayer.h */,
 				D309EB921A2F2FDF008B3D94 /* IkedaLayer.cpp */,
 				D309EB931A2F2FDF008B3D94 /* IkedaLayer.h */,
+				6B0E60E91A2FCA84006AE261 /* GlitchLayer.cpp */,
+				6B0E60EA1A2FCA84006AE261 /* GlitchLayer.h */,
+				6B0E61481A2FDE57006AE261 /* GlitchLayerAlt.cpp */,
+				6B0E61491A2FDE57006AE261 /* GlitchLayerAlt.h */,
 			);
 			path = Layer;
 			sourceTree = "<group>";
@@ -674,6 +728,7 @@
 				837220E80EB56CD44AD27F2A /* ofxSlider.cpp in Sources */,
 				B56FE57CC35806596D38118C /* ofxSliderGroup.cpp in Sources */,
 				D309EB8C1A2E9B27008B3D94 /* InputCamera.cpp in Sources */,
+				6B0E60EB1A2FCA84006AE261 /* GlitchLayer.cpp in Sources */,
 				1CD33E884D9E3358252E82A1 /* ofxToggle.cpp in Sources */,
 				6B9E01321A2E5B3100813D7C /* SyphonNameboundClient.m in Sources */,
 				D309EB761A2E6E04008B3D94 /* Param.cpp in Sources */,
@@ -694,6 +749,7 @@
 				10B69DE456AED1288FC9316B /* Tracker.cpp in Sources */,
 				A6668C5B1272D7FCD5B5A16F /* Utilities.cpp in Sources */,
 				6B9E01361A2E5B3100813D7C /* ofxSyphonServerDirectory.mm in Sources */,
+				6B0E614A1A2FDE57006AE261 /* GlitchLayerAlt.cpp in Sources */,
 				D309EB861A2E99A3008B3D94 /* InputSource.cpp in Sources */,
 				DBCB84A37F9AECC254870D79 /* Wrappers.cpp in Sources */,
 				6B9E01341A2E5B3100813D7C /* ofxSyphonClient.mm in Sources */,
