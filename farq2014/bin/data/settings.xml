@@ -1,0 +1,43 @@
+<SETTINGS>
+	
+	<INPUTS>
+		<INPUT name="Video1" type="VIDEO">
+			<VIDEO path="videos/fingers.mov" />
+			<VIDEO path="videos/fingers2.mov" />
+		</INPUT>
+		<INPUT name="Camera1" type="CAM" id=""/>
+		<INPUT name="Pic" type="IMAGE"/>
+	</INPUTS>
+	
+	<VISUAL_LAYERS>
+		<VISUAL_LAYER name="V1" type="IKEDA" inputSource="Video1" 
+				isCanny="true" 
+				isThreshold="true" 
+				isColumns="true" 
+				isInvert="true"
+				pNColumns="4"
+				pCannyX="12"
+				pCannyY="12"
+				pThreshold="12"
+				/>
+		<VISUAL_LAYER name="V2" type="GLITCH_1" inputSource="Video1"
+				dataQuantity="20"
+				qn="40"
+				dht="80"/>
+		<VISUAL_LAYER name="V3" type="GLITCH_2" inputSource="Camera1"
+				type="20"/>
+				
+	</VISUAL_LAYERS>
+	
+	<MIXERS>
+		<MIXER name="mainMix" type="SIMPLE_BLEND">
+			<INPUT_SOURCE name="V1"/>
+			<INPUT_SOURCE name="V2"/>
+		</MIXER>
+		<MIXER name="altMix" type="SIMPLE_BLEND">
+			<INPUT_SOURCE name="V2"/>
+			<INPUT_SOURCE name="V3"/>
+		</MIXER>		
+	</MIXERS>
+	
+</SETTINGS>
