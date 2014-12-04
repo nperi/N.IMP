@@ -1,4 +1,4 @@
 #our custom git ignore!
 
-farq2014/bin/*
-!farq2014/bin/data/*
+farq2014/bin/ofAppDebug.app
+farq2014/bin/ofApp.app
