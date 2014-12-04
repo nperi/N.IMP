@@ -12,14 +12,14 @@
 
 #include "ofMain.h"
 #include "MixTable.h"
-#include "ofxSyphon.h"
+#include "ofxGui.h"
 
 //simple sample mixtable
 class MixSimpleBlend : public MixTable{
 	
   public:
 	
-    MixSimpleBlend(string name_ = "Simple Blend"):MixTable(name_){fbo.allocate(640, 480);};
+    MixSimpleBlend(string name_ = "Simple Blend");
 	
 	void setup();
 	void update();
@@ -28,6 +28,10 @@ class MixSimpleBlend : public MixTable{
     void inputUpdated(ofImage & img);
 private:
     ofFbo fbo;
+    
+    ofxPanel gui;
+    vector<ofxIntSlider> alphaSlider;
+    
 	
 };
 

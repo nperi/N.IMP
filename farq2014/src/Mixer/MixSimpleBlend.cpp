@@ -9,6 +9,12 @@
 
 #include "MixSimpleBlend.h"
 
+MixSimpleBlend::MixSimpleBlend(string name_):MixTable(name_){
+    fbo.allocate(640, 480);
+    gui.setup();
+}
+
+
 
 //------------------------------------------------------------------
 void MixSimpleBlend::setup() {
@@ -31,6 +37,13 @@ void MixSimpleBlend::draw(int x,int y, float scale) {
 }
 
 void MixSimpleBlend::inputUpdated(ofImage & img){
+    //check if sliders are all updated
+    /*for (int i=alphaSlider.size(); i < input.size(); ++i) {
+        ofxIntSlider s;
+        gui.add(s.setup("alpha " + ofToString(i), 128, 0, 255));
+        alphaSlider.push_back(s);
+    }*/
+    
     fbo.begin();
     ofClear(255,255,255, 0);
     ofEnableAlphaBlending();
