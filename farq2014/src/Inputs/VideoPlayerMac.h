@@ -23,6 +23,8 @@ class VideoPlayerMac : public InputSource{
 	void update();
 	void draw(int x,int y, float scale);
     void loadVideo(string path);
+    void inputUpdated(ofImage & img){};
+    void drawGui(int x,int y, int width = 240){};
     
 private:
     ofQTKitPlayer player;

@@ -27,11 +27,9 @@ class VisualLayer : public ImageOutput{
 	
     VisualLayer(string name_);
 	
-	void setup();
 	virtual void update() = 0;
-	virtual void draw(int x,int y, float scale = 1.0) = 0;
+	
     
-    void setInputSource(ImageOutput* input_);
     void setEnable(bool isEnabled_);
     void inputEvent(map<string, Param*>* params);
     
@@ -42,7 +40,6 @@ class VisualLayer : public ImageOutput{
 protected:
     bool isEnabled;
     bool firstInit;
-    ImageOutput* input;
     
     
     

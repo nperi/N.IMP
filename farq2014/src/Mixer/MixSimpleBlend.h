@@ -13,6 +13,7 @@
 #include "ofMain.h"
 #include "MixTable.h"
 #include "ofxGui.h"
+#include "ofxPSBlend.h"
 
 //simple sample mixtable
 class MixSimpleBlend : public MixTable{
@@ -24,13 +25,16 @@ class MixSimpleBlend : public MixTable{
 	void setup();
 	void update();
 	void draw(int x,int y, float scale);
+    void drawGui(int x,int y, int width = 240);
+    
     
     void inputUpdated(ofImage & img);
+    
 private:
     ofFbo fbo;
-    
-    ofxPanel gui;
+    ofxIntSlider blendMode;
     vector<ofxIntSlider> alphaSlider;
+    ofxPSBlend psBlend;
     
 	
 };

@@ -16,20 +16,6 @@ VisualLayer::VisualLayer(string name_) : ImageOutput(name_){
     
 }
 
-//------------------------------------------------------------------
-void VisualLayer::setup() {
-    
-}
-
-void VisualLayer::setInputSource(ImageOutput* input_){
-    if (!firstInit) {
-        ofRemoveListener(input->imageEvent, this, &VisualLayer::inputUpdated);
-    }
-    else firstInit = false;
-    
-    input = input_;
-    ofAddListener(input_->imageEvent, this, &VisualLayer::inputUpdated);
-}
 
 void VisualLayer::setEnable(bool isEnabled_){
     isEnabled = isEnabled_;

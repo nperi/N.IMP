@@ -16,6 +16,9 @@
 #include "IkedaLayer.h"
 #include "MixSimpleBlend.h"
 
+#include "NodeViewer.h"
+#include "NodeElement.h"
+
 class ofApp : public ofBaseApp {
 public:
 	void setup();
@@ -37,8 +40,6 @@ public:
     ofxSyphonServer syphonExport;
     
     //gui
-    ofxPanel gui;
-    ofxButton twoCircles;
-    
-    ofTexture texScreen;
+    vector<NodeViewer*> nodeViewers;
+    int currentViewer;
 };

@@ -23,9 +23,7 @@ class InputSource : public ImageOutput{
 	
     InputSource(string name_):ImageOutput(name_){};
 	
-	virtual void setup() = 0;
 	virtual void update() = 0;
-	virtual void draw(int x,int y, float scale = 1.0) = 0;
     
     ofxPanel gui;
 };

@@ -19,16 +19,14 @@ class IkedaLayer : public VisualLayer{
 	
   public:
 	
-    IkedaLayer(string name_ = "visualLayer"):VisualLayer(name_){};
+    IkedaLayer(string name_ = "visualLayer",bool isCanny_ = true ,bool isThreshold_ = true, bool isColumns_ = true, bool isInvert_ = true);
 	
-	void setup(bool isCanny_ = true ,bool isThreshold_ = true, bool isColumns_ = true, bool isInvert_ = true);
 	void update();
 	void draw(int x,int y, float scale);
+    void drawGui(int x,int y, int width = 240);
     
     void inputUpdated(ofImage & img_);
     
-    ofxPanel gui;
-    ofxLabel layerName;
     ofxToggle isCanny;
     ofxToggle isThreshold;
     ofxToggle isColumns;
@@ -38,10 +36,6 @@ class IkedaLayer : public VisualLayer{
     ofxFloatSlider                pCannyX;
     ofxFloatSlider                pCannyY;
     ofxIntSlider                  pThreshold;
-    
-    
-    ofxPanel gui2;
-    ofxFloatSlider                test;
 	
 };
 

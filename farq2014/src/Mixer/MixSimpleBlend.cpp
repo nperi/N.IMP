@@ -11,7 +11,17 @@
 
 MixSimpleBlend::MixSimpleBlend(string name_):MixTable(name_){
     fbo.allocate(640, 480);
+    psBlend.setup(640, 480);
+    
+    maxInputs = 2;
     gui.setup();
+    gui.add(name.setup("", name_));
+    gui.add(blendMode.setup("Blendmode", 10, 0, 24));
+    for (int i=0; i<4; ++i) {
+        ofxIntSlider s;
+        alphaSlider.push_back(s);
+       // gui.add(alphaSlider[i].setup("alpha " + ofToString(i), 128, 0, 255));
+    }
 }
 
 
@@ -36,23 +46,24 @@ void MixSimpleBlend::draw(int x,int y, float scale) {
 	ofDrawBitmapString(name, x + 10, y + 30);
 }
 
+void MixSimpleBlend::drawGui(int x,int y, int width){
+    gui.draw();
+}
+
 void MixSimpleBlend::inputUpdated(ofImage & img){
-    //check if sliders are all updated
-    /*for (int i=alphaSlider.size(); i < input.size(); ++i) {
-        ofxIntSlider s;
-        gui.add(s.setup("alpha " + ofToString(i), 128, 0, 255));
-        alphaSlider.push_back(s);
-    }*/
     
     fbo.begin();
     ofClear(255,255,255, 0);
-    ofEnableAlphaBlending();
-    //ofEnableBlendMode(OF_BLENDMODE_MULTIPLY);
-    for (int i=0; i<input.size(); ++i) {
+    psBlend.begin();
+    input[0]->getImage()->draw(0, 0);
+    psBlend.end();
+    for (int i=1; i<input.size(); ++i) {
         ofSetColor(255, 255, 255,128);
-        input[i]->getImage()->draw(0, 0);
+        psBlend.draw(input[i]->getImage()->getTextureReference(), blendMode);
     }
     ofDisableBlendMode();
     fbo.end();
     ofNotifyEvent(fboEvent, fbo, this);
+    
+    
 }

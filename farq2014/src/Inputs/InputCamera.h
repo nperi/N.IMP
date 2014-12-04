@@ -24,8 +24,9 @@ class InputCamera : public InputSource{
 	void setup();
 	void update();
 	void draw(int x,int y, float scale);
+    void drawGui(int x,int y, int width = 240){};
     
-    
+    void inputUpdated(ofImage & img){};
 
 private:
     ofVideoGrabber cam;

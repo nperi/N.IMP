@@ -14,9 +14,9 @@ using namespace ofxCv;
 
 
 //------------------------------------------------------------------
-void IkedaLayer::setup(bool isCanny_,bool isThreshold_, bool isColumns_, bool isInvert_) {
+IkedaLayer::IkedaLayer(string name_, bool isCanny_,bool isThreshold_, bool isColumns_, bool isInvert_):VisualLayer(name_) {
     gui.setup();
-    gui.add(layerName.setup("layer", name));
+    gui.add(name.setup("", name));
     gui.add(isCanny.setup("Canny", isCanny_));
     gui.add(pCannyX.setup("CannyX", 12,0,255));
     gui.add(pCannyY.setup("CannyY", 12,0,255));
@@ -39,7 +39,11 @@ void IkedaLayer::update() {
 void IkedaLayer::draw(int x,int y, float scale) {
     ofSetColor(255, 255, 255);
     img.draw(x, y,img.getWidth()*scale,img.getHeight()*scale);
+    
+}
+void IkedaLayer::drawGui(int x,int y, int width){
     gui.setPosition(x,y);
+    gui.setWidthElements(width);
     gui.draw();
 }
 

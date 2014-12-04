@@ -22,19 +22,14 @@ class MixTable : public ImageOutput{
 	
     MixTable(string name_ = "mixtable"):ImageOutput(name_){};
 	
-	void setup();
 	virtual void update() = 0;
-	virtual void draw(int x,int y, float scale = 1.0) = 0;
     
-    void addInputLayer(ImageOutput* layer_);
-    void removeInputLayer(string name_);
-    void removeLastLayer();
     
-    virtual void inputUpdated(ofImage & img) = 0;
+    
+    
     
 protected:
     
-    vector<ImageOutput*> input;
 };
 
 #endif
