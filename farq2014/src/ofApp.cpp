@@ -6,10 +6,8 @@ using namespace ofxCv;
 void ofApp::setup() {
     ofSetWindowTitle("projeccion architectura");
     ofSetFrameRate(60);
-    
-    
-    //TODO: import settings from xml
-    
+    loadingOK = false;
+    /*
     //creating a test setup
     inputs.push_back(new InputCamera());
     
@@ -29,43 +27,57 @@ void ofApp::setup() {
     mixtables.push_back(new MixSimpleBlend());
     mixtables[0]->addInput(visualLayers[0]);
     mixtables[0]->addInput(visualLayers[1]);
+    */
     
-    ofAddListener(mixtables[0]->fboEvent, this, &ofApp::updateSyphon);
-    
-    
-    //create Syphon Server
-    mClient.setup();
-    mClient.setApplicationName("projeccionOF");
-    mClient.setServerName("");
-    syphonExport.setName("ofProjeccion");
-    
-    //populating string dictionaries for simple comparison
+    //populating string dictionaries for simple comparison used in LoadFromXML
     inputTypes.insert(std::pair<string,InputType>("VIDEO",VIDEO));
     inputTypes.insert(std::pair<string,InputType>("CAM",CAM));
+    inputTypes.insert(std::pair<string,InputType>("IMAGE",IMAGE));
     visualLayerTypes.insert(std::pair<string,VisualLayerType>("IKEDA", IKEDA));
     visualLayerTypes.insert(std::pair<string,VisualLayerType>("GLITCH_1", GLITCH_1));
     visualLayerTypes.insert(std::pair<string,VisualLayerType>("GLITCH_2", GLITCH_2));
     mixerTypes.insert(std::pair<string,MixerType>("SIMPLE_BLEND", SIMPLE_BLEND));
 
-    currentViewer = 0;
+    loadingOK = loadFromXML();
+    
+    if(loadingOK){
+        //TODO: change mixtable assignment.
+        ofAddListener(mixtables[0]->fboEvent, this, &ofApp::updateSyphon);
+        
+        //create Syphon Server
+        mClient.setup();
+        mClient.setApplicationName("projeccionOF");
+        mClient.setServerName("");
+        syphonExport.setName("ofProjeccion");
+        
+        currentViewer = 0;
+    }
   }
 
 
 
 void ofApp::update() {
-    //updating inputs
-    for (int i=0; i<inputs.size(); ++i) {
-        inputs[i]->update();
+    if(loadingOK){
+        //updating inputs
+        for (int i=0; i<inputs.size(); ++i) {
+            inputs[i]->update();
+        }
     }
 }
 
 void ofApp::draw() {
-    nodeViewers[currentViewer]->draw();
-    
+    if(loadingOK){
+        nodeViewers[currentViewer]->draw();
+    }
+    else{
+        ofDrawBitmapString("ERROR LOADING XML", 50, 50);
+    }
 }
 
 void ofApp::updateSyphon(ofFbo & img){
-    syphonExport.publishTexture(&img.getTextureReference());
+    if(loadingOK){
+        syphonExport.publishTexture(&img.getTextureReference());
+    }
 }
 
 bool ofApp::loadFromXML(){
@@ -73,7 +85,7 @@ bool ofApp::loadFromXML(){
     bool result = true;
     string message = "";
     
-    if( XML.loadFile("settings.xml") ){
+    if( XML.loadFile("appSettings.xml") ){
         
         int numMainSettingsTag = XML.getNumTags("MAIN_SETTINGS");
         
@@ -99,7 +111,7 @@ bool ofApp::loadFromXML(){
                         switch(inputTypes[inputType]){
                             case VIDEO:
                             {
-                                VideoPlayerMac* vP = new VideoPlayerMac();
+                                VideoPlayerMac* vP = new VideoPlayerMac(inputName);
                                 
                                 XML.pushTag("INPUT",i);
                                 
@@ -124,13 +136,26 @@ bool ofApp::loadFromXML(){
                             };
                             case CAM:
                             {
-                                InputCamera* iC = new InputCamera();
+                                InputCamera* iC = new InputCamera(inputName);
                                 
                                 //not used yet
                                 string cameraId = XML.getAttribute("INPUT", "id","default", i);
                                 
                                 inputs.push_back(iC);
                                 nodes.insert(std::pair<string,ImageOutput*>(inputName,iC));
+                                
+                                break;
+                            };
+                            case IMAGE:
+                            {
+                                ImageInput* iI = new ImageInput(inputName);
+
+                                string  path = XML.getAttribute("INPUT", "path","default", i);
+                                
+                                iI->loadImage(path);
+                                
+                                inputs.push_back(iI);
+                                nodes.insert(std::pair<string,ImageOutput*>(inputName,iI));
                                 
                                 break;
                             };
@@ -147,8 +172,6 @@ bool ofApp::loadFromXML(){
                             //exit the loop
                             break;
                         }
-                        
-                       
                         
                     }
                     XML.popTag();
@@ -182,6 +205,10 @@ bool ofApp::loadFromXML(){
                             if(it!=nodes.end()){
                                 iO = it->second;
                             }
+                            else{
+                                result = false;
+                                message = "node not foud!";
+                            }
                             
                             
                             switch(visualLayerTypes[layerType]){
@@ -196,7 +223,7 @@ bool ofApp::loadFromXML(){
                                     int pCannyY = ofToInt(XML.getAttribute("VISUAL_LAYER","pCannyY","12",i));
                                     int pThreshold = ofToInt(XML.getAttribute("VISUAL_LAYER","pThreshold","12",i));
                                     
-                                    IkedaLayer* iL = new IkedaLayer();
+                                    IkedaLayer* iL = new IkedaLayer(layerName);
                                     
                                     iL->isCanny = isCanny;
                                     iL->isThreshold = isThreshold;
@@ -237,7 +264,7 @@ bool ofApp::loadFromXML(){
                                     bool do_CR_REDINVERT = ofToBool(XML.getAttribute("VISUAL_LAYER","do_CR_REDINVERT","false",i));
                                     bool do_CR_GREENINVERT = ofToBool(XML.getAttribute("VISUAL_LAYER","do_CR_GREENINVERT","false",i));
                                     
-                                    GlitchLayer* gL = new GlitchLayer();
+                                    GlitchLayer* gL = new GlitchLayer(layerName);
                                     
                                     gL->do_CONVERGENCE = do_CONVERGENCE;
                                     gL->do_GLOW = do_GLOW;
@@ -273,7 +300,7 @@ bool ofApp::loadFromXML(){
                                     int qn = ofToInt(XML.getAttribute("VISUAL_LAYER","qn","40",i));
                                     int dht = ofToInt(XML.getAttribute("VISUAL_LAYER","dht","80",i));
                                     
-                                    GlitchLayerAlt* gLA = new GlitchLayerAlt();
+                                    GlitchLayerAlt* gLA = new GlitchLayerAlt(layerName);
                                     
                                     if(iO!=NULL){
                                         gLA->addInput(iO);
@@ -291,7 +318,12 @@ bool ofApp::loadFromXML(){
                                     break;
                                 };
                             }
-
+                            
+                            if(!result){
+                                //there has been an error
+                                //exit the loop
+                                break;
+                            }
 
                         }
                         
@@ -321,11 +353,11 @@ bool ofApp::loadFromXML(){
                                     MixSimpleBlend* mSB = new MixSimpleBlend(name);
                                     XML.pushTag("MIXER",i);
                                     
-                                    int numINPUTTag = XML.getNumTags("INPUT");
+                                    int numINPUTTag = XML.getNumTags("INPUT_SOURCE");
                                     std::map<string,ImageOutput*>::iterator it;
                                     
                                     for(int j=0; j<numINPUTTag; j++){
-                                        string inputName = XML.getAttribute("INPUT","name","default",j);
+                                        string inputName = XML.getAttribute("INPUT_SOURCE","name","default",j);
                                         
                                         it = nodes.find(inputName);
                                         
@@ -334,6 +366,10 @@ bool ofApp::loadFromXML(){
                                             
                                             mSB->addInput(iO);
                                         }
+                                        else{
+                                            result = false;
+                                            message = "node not foud!";
+                                        }
                                         
                                     }
                                     
@@ -341,6 +377,8 @@ bool ofApp::loadFromXML(){
                                     nodes.insert(std::pair<string, ImageOutput*>(name, mSB));
                                     //MIXER POP
                                     XML.popTag();
+                                    
+                                    break;
                                 };
                                 default:
                                 {
@@ -348,8 +386,13 @@ bool ofApp::loadFromXML(){
                                     message = "unknown mixer type!";
                                     break;
                                 };
-
                                     
+                            }
+                            
+                            if(!result){
+                                //there has been an error
+                                //exit the loop
+                                break;
                             }
                             
                         }
@@ -409,6 +452,10 @@ bool ofApp::loadFromXML(){
                                 NodeElement* nE = new NodeElement(iO, x, y, guiX, guiY, guiWidth, imageScale);
                                 
                                 nV->addElement(nE);
+                            }
+                            else{
+                                result = false;
+                                message = "node not foud!";
                             }
                             
                         }

@@ -32,7 +32,11 @@ void GlitchLayerAlt::update() {
 void GlitchLayerAlt::draw(int x,int y, float scale) {
     ofSetColor(255, 255, 255);
     img.draw(x, y,img.getWidth()*scale,img.getHeight()*scale);
+}
+
+void GlitchLayerAlt::drawGui(int x,int y, int width){
     gui.setPosition(x,y);
+    gui.setWidthElements(width);
     gui.draw();
 }
 

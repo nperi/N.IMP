@@ -14,6 +14,7 @@
 
 #include "InputCamera.h"
 #include "VideoPlayerMac.h"
+#include "ImageInput.h"
 #include "IkedaLayer.h"
 #include "GlitchLayer.h"
 #include "GlitchLayerAlt.h"
@@ -22,7 +23,7 @@
 #include "NodeViewer.h"
 #include "NodeElement.h"
 
-enum InputType {VIDEO, CAM};
+enum InputType {VIDEO, CAM, IMAGE};
 enum VisualLayerType {IKEDA, GLITCH_1, GLITCH_2};
 enum MixerType {SIMPLE_BLEND};
 
@@ -58,4 +59,6 @@ public:
     map<string, InputType> inputTypes;
     map<string, VisualLayerType> visualLayerTypes;
     map<string, MixerType> mixerTypes;
+    
+    bool loadingOK;
 };

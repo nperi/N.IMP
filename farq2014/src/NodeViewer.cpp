@@ -27,3 +27,7 @@ void NodeViewer::draw() {
     }
 	
 }
+
+void NodeViewer::addElement(NodeElement* elem_){
+    elements.push_back(elem_);
+}
