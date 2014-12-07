@@ -18,6 +18,8 @@
 		<string>https://github.com/kylemcdonald/ofxCv.git</string>
 		<key>AD4BEB8D191D3A37A0E32AAC674B3540263DA07F</key>
 		<string>https://github.com/2bbb/ofxJpegGlitch.git</string>
+		<key>DF8CF2077679A8E9DC1BA352D6E976FCED7DE749</key>
+		<string>https://github.com/Akira-Hayasaka/ofxPSBlend.git</string>
 		<key>F4CCB893AFADB97238A965FD2F28717F1CAAE613</key>
 		<string>https://github.com/astellato/ofxSyphon.git</string>
 	</dict>
@@ -33,6 +35,8 @@
 		<string>../../../../addons/ofxCv</string>
 		<key>AD4BEB8D191D3A37A0E32AAC674B3540263DA07F</key>
 		<string>../../../../addons/ofxJpegGlitch</string>
+		<key>DF8CF2077679A8E9DC1BA352D6E976FCED7DE749</key>
+		<string>../../../../addons/ofxPSBlend</string>
 		<key>F4CCB893AFADB97238A965FD2F28717F1CAAE613</key>
 		<string>../../../../addons/ofxSyphon</string>
 	</dict>
@@ -75,6 +79,14 @@
 			<string>210A84CB64DBE001319448A793DFC671846EB46E</string>
 			<key>IDESourceControlWCCName</key>
 			<string>ofxPostGlitch</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>DF8CF2077679A8E9DC1BA352D6E976FCED7DE749</string>
+			<key>IDESourceControlWCCName</key>
+			<string>ofxPSBlend</string>
 		</dict>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
