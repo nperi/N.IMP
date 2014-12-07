@@ -9,10 +9,12 @@
 
 #include "NodeViewer.h"
 
+NodeViewer::NodeViewer(string name_){
+    name = name_;
+}
 
 //------------------------------------------------------------------
 void NodeViewer::setup() {
-	
 	
 }
 

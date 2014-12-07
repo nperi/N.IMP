@@ -17,23 +17,22 @@ class GlitchLayerAlt : public VisualLayer{
     
 public:
     
-    GlitchLayerAlt(string name_ = "glitchLayerAlt"):VisualLayer(name_){};
+    GlitchLayerAlt(string name_ = "glitchLayerAlt");
     
-    void setup();
     void update();
     void draw(int x,int y, float scale);
+    void drawGui(int x,int y, int width = 240);
     
     void inputUpdated(ofImage & img_);
     
-    ofxPanel gui;
-    ofxLabel layerName;
+    //glitch parameters
+    ofxIntSlider dq;
+    ofxIntSlider qn;
+    ofxIntSlider dht;
     
     ofxJpegGlitch glitcher;
     
-    //glitch parameters
-    int dataBlock;
-    int qnBlock;
-    int dhtBlock;
+    
 
     
 };

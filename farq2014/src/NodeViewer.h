@@ -18,7 +18,7 @@ class NodeViewer {
 	
   public:
 	
-	NodeViewer();
+	NodeViewer(string name_="default");
 	
 	void setup();
     void addElement(NodeElement* elem_);
@@ -26,6 +26,8 @@ class NodeViewer {
 	
     
     vector<NodeElement*> elements;
+    
+    string name;
 };
 
 #endif

@@ -10,16 +10,15 @@
 
 
 //------------------------------------------------------------------
-void GlitchLayerAlt::setup() {
+GlitchLayerAlt::GlitchLayerAlt(string name_):VisualLayer(name_){;
     gui.setup();
-    gui.add(layerName.setup("layer", name));
+    gui.add(name.setup("layer", name));
 
-    //default glitch values
-    dataBlock = 20;
-    qnBlock = 40;
-    dhtBlock = 80;
-    
-    glitcher.setup(dataBlock, qnBlock, dhtBlock);
+    gui.add(dq.setup("DQ", 20,0,255));
+    gui.add(qn.setup("QN", 40,0,255));
+    gui.add(dht.setup("DHT", 80,0,255));
+
+    glitcher.setup(dq, qn, dht);
 }
 
 

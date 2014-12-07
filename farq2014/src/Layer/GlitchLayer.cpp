@@ -10,9 +10,29 @@
 
 
 //------------------------------------------------------------------
-void GlitchLayer::setup() {
+GlitchLayer::GlitchLayer(string name_):VisualLayer(name_){;
     gui.setup();
-    gui.add(layerName.setup("layer", name));
+    gui.add(name.setup("", name));
+    
+    gui.add(do_CONVERGENCE.setup("CONVERGENCE"));
+    gui.add(do_GLOW.setup("GLOW"));
+    gui.add(do_SHAKER.setup("SHAKER"));
+    gui.add(do_CUTSLIDER.setup("CUTSLIDER"));
+    gui.add(do_TWIST.setup("TWIST"));
+    gui.add(do_OUTLINE.setup("OUTLINE"));
+    gui.add(do_NOISE.setup("NOISE"));
+    gui.add(do_SLITSCAN.setup("SLITSCAN"));
+    gui.add(do_SWELL.setup("SWELL"));
+    gui.add(do_INVERT.setup("INVERT"));
+    
+    gui.add(do_CR_HIGHCONTRAST.setup("HIGHCONTRAST"));
+    gui.add(do_CR_BLUERAISE.setup("BLUERAISE"));
+    gui.add(do_CR_REDRAISE.setup("REDRAISE"));
+    gui.add(do_CR_GREENRAISE.setup("GREENRAISE"));
+    gui.add(do_CR_BLUEINVERT.setup("BLUEINVERT"));
+    gui.add(do_CR_REDINVERT.setup("REDINVERT"));
+    gui.add(do_CR_GREENINVERT.setup("GREENINVERT"));
+    
     myFbo.allocate(640, 480);
     myGlitch.setup(&myFbo);
 }
