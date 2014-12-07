@@ -3,11 +3,11 @@
 
         <INPUTS>
             <INPUT name="Video1" type="VIDEO">
-                <VIDEO path="videos/fingers.mov" />
-                <VIDEO path="videos/fingers2.mov" />
+                <VIDEO path="movies/fingers.mov" />
+                <VIDEO path="movies/fingers2.mov" />
             </INPUT>
             <INPUT name="Camera1" type="CAM" id=""/>
-            <INPUT name="Pic" type="IMAGE"/>
+            <INPUT name="Pic" type="IMAGE" path="images/doguie.jpg"/>
         </INPUTS>
 
         <VISUAL_LAYERS>
@@ -48,12 +48,12 @@
 
         <MIXERS>
             <MIXER name="mainMix" type="SIMPLE_BLEND">
-                <INPUT_SOURCE name="V1"/>
-                <INPUT_SOURCE name="V2"/>
+                <INPUT_SOURCE name="V_IKEDA"/>
+                <INPUT_SOURCE name="V_GLITCH1"/>
             </MIXER>
             <MIXER name="altMix" type="SIMPLE_BLEND">
-                <INPUT_SOURCE name="V2"/>
-                <INPUT_SOURCE name="V3"/>
+                <INPUT_SOURCE name="V_GLITCH1"/>
+                <INPUT_SOURCE name="V_GLITCH2"/>
             </MIXER>		
         </MIXERS>
 
