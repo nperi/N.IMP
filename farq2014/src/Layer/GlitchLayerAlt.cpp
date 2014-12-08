@@ -42,13 +42,21 @@ void GlitchLayerAlt::drawGui(int x,int y, int width){
 
 void GlitchLayerAlt::inputUpdated(ofImage & img_){
     //process pipeline
-    
     img.setFromPixels(img_.getPixels(), 640, 480, OF_IMAGE_COLOR);
     
-    glitcher.setPixels(img.getPixelsRef());
-    glitcher.glitch();
+    if(isEnabled){
+       
+        //setting glitcher values according to GUI
+        glitcher.setDataGlitchness(dq);
+        glitcher.setQNGlitchness(qn);
+        glitcher.setDHTGlitchness(dht);
+        
+        glitcher.setPixels(img.getPixelsRef());
+        glitcher.glitch();
+        
+    }
     
     img.update();
-    
     ofNotifyEvent(imageEvent, img, this);
+    
 }

@@ -50,6 +50,8 @@ public:
     ofxToggle do_CR_REDINVERT;
     ofxToggle do_CR_GREENINVERT;
 
+private:
+    void setGlitchParameters();
     
 };
 

@@ -61,19 +61,48 @@ void GlitchLayer::inputUpdated(ofImage & img_){
     
     img.setFromPixels(img_.getPixels(), 640, 480, OF_IMAGE_COLOR);
     
-    myFbo.begin();
-    
-    ofClear(0, 0, 0,255);
-    ofSetColor(255);
-    img.draw(0, 0);
-    
-    myFbo.end();
-    
-    ofPixels buff;
-    myFbo.readToPixels(buff);
-    img.setFromPixels(buff);
+    if(isEnabled){
+        
+        setGlitchParameters();
+        
+        myFbo.begin();
+        
+        ofClear(0, 0, 0,255);
+        ofSetColor(255);
+        img.draw(0, 0);
+        
+        myFbo.end();
+        
+        /* Apply effects */
+        myGlitch.generateFx();
+
+        ofPixels buff;
+        myFbo.readToPixels(buff);
+        img.setFromPixels(buff);
+    }
     
     img.update();
-    
     ofNotifyEvent(imageEvent, img, this);
+}
+
+void GlitchLayer::setGlitchParameters(){
+    myGlitch.setFx(OFXPOSTGLITCH_CONVERGENCE	, do_CONVERGENCE);
+    myGlitch.setFx(OFXPOSTGLITCH_GLOW			, do_GLOW);
+    myGlitch.setFx(OFXPOSTGLITCH_SHAKER			, do_SHAKER);
+    myGlitch.setFx(OFXPOSTGLITCH_CUTSLIDER		, do_CUTSLIDER);
+    myGlitch.setFx(OFXPOSTGLITCH_TWIST			, do_TWIST);
+    myGlitch.setFx(OFXPOSTGLITCH_OUTLINE		, do_OUTLINE);
+    myGlitch.setFx(OFXPOSTGLITCH_NOISE			, do_NOISE);
+    myGlitch.setFx(OFXPOSTGLITCH_SLITSCAN		, do_SLITSCAN);
+    myGlitch.setFx(OFXPOSTGLITCH_SWELL			, do_SWELL);
+    myGlitch.setFx(OFXPOSTGLITCH_INVERT			, do_INVERT);
+    
+    myGlitch.setFx(OFXPOSTGLITCH_CR_HIGHCONTRAST, do_CR_HIGHCONTRAST);
+    myGlitch.setFx(OFXPOSTGLITCH_CR_BLUERAISE	, do_CR_BLUERAISE);
+    myGlitch.setFx(OFXPOSTGLITCH_CR_REDRAISE	, do_CR_REDRAISE);
+    myGlitch.setFx(OFXPOSTGLITCH_CR_GREENRAISE	, do_CR_GREENRAISE);
+    myGlitch.setFx(OFXPOSTGLITCH_CR_BLUEINVERT	, do_CR_BLUEINVERT);
+    myGlitch.setFx(OFXPOSTGLITCH_CR_REDINVERT	, do_CR_REDINVERT);
+    myGlitch.setFx(OFXPOSTGLITCH_CR_GREENINVERT	, do_CR_GREENINVERT);
+
 }

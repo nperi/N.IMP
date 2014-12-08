@@ -32,9 +32,6 @@ public:
     
     ofxJpegGlitch glitcher;
     
-    
-
-    
 };
 
 
