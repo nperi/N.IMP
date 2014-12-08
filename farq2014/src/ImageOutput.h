@@ -43,13 +43,27 @@ class ImageOutput {
             ofAddListener(layer_->imageEvent, this, &ImageOutput::inputUpdated);
         }
     }
+    vector<ImageOutput*> getInputs(){
+        return input;
+    }
+    vector<string> getInputNames(){
+        vector<string> vout;
+        for (int i=0; i<input.size(); ++i) {
+            vout.push_back(input[i]->getName());
+        }
+        return vout;
+    }
     virtual void inputUpdated(ofImage & img) = 0;
     
     ofEvent<ofImage> imageEvent;
     ofEvent<ofFbo> fboEvent;
     
     virtual void draw(int x,int y, float scale = 1.0) = 0;
-    virtual void drawGui(int x,int y, int width = 240) = 0;
+    virtual void drawGui(){gui.draw();}
+    void setGui(int x,int y, int width = 240){
+            gui.setPosition(x,y);
+            gui.setWidthElements(width);
+    };
     
     
 protected:

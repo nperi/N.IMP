@@ -46,9 +46,6 @@ void MixSimpleBlend::draw(int x,int y, float scale) {
 	ofDrawBitmapString(name, x + 10, y + 30);
 }
 
-void MixSimpleBlend::drawGui(int x,int y, int width){
-    gui.draw();
-}
 
 void MixSimpleBlend::inputUpdated(ofImage & img){
     

@@ -34,11 +34,6 @@ void GlitchLayerAlt::draw(int x,int y, float scale) {
     img.draw(x, y,img.getWidth()*scale,img.getHeight()*scale);
 }
 
-void GlitchLayerAlt::drawGui(int x,int y, int width){
-    gui.setPosition(x,y);
-    gui.setWidthElements(width);
-    gui.draw();
-}
 
 void GlitchLayerAlt::inputUpdated(ofImage & img_){
     //process pipeline

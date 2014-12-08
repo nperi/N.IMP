@@ -23,7 +23,6 @@ public:
     void draw(int x,int y, float scale);
     void loadImage(string path_);
     void inputUpdated(ofImage & img){};
-    void drawGui(int x,int y, int width = 240){};
     
 private:
     

@@ -32,7 +32,7 @@ void ImageInput::draw(int x,int y, float scale){
 }
 
 void ImageInput::loadImage(string path_){
-    img.loadImage(path);
+    img.loadImage(path_);
     isLoaded=true;
 }
 

@@ -50,7 +50,7 @@ void ofApp::setup() {
         mClient.setServerName("");
         syphonExport.setName("ofProjeccion");
         
-        currentViewer = 0;
+        setCurrentViewer(0);
     }
   }
 
@@ -66,8 +66,23 @@ void ofApp::update() {
 }
 
 void ofApp::draw() {
+    
+    //create bg
+    ofClear(35);
+    
+    // draw nodes
     if(loadingOK){
         nodeViewers[currentViewer]->draw();
+        
+        string info = nodeViewers[currentViewer]->getName();
+        info += "  (";
+        info += ofToString(currentViewer+1);
+        info += "/";
+        info += ofToString(nodeViewers.size());
+        info += ")";
+        info += "    switch layers <- ->";
+        
+        ofDrawBitmapString(info, 20, ofGetHeight()-20);
     }
     else{
         ofDrawBitmapString("ERROR LOADING XML", 50, 50);
@@ -492,4 +507,70 @@ bool ofApp::loadFromXML(){
     
     return result;
 
+}
+
+void ofApp::keyPressed  (int key){
+    bool notAvailable = false;
+            switch(key){
+                //switch Node Views
+                case OF_KEY_LEFT:
+                    previousViewer();
+                    break;
+                case OF_KEY_RIGHT:
+                    nextViewer();
+                    break;
+                case '1':
+                    setCurrentViewer(0);
+                    break;
+                case '2':
+                    setCurrentViewer(1);
+                    break;
+                case '3':
+                    setCurrentViewer(2);
+                    break;
+                case '4':
+                    setCurrentViewer(3);
+                    break;
+                case '5':
+                    setCurrentViewer(4);
+                    break;
+                case '6':
+                    setCurrentViewer(5);
+                    break;
+                case '7':
+                    setCurrentViewer(6);
+                    break;
+                case '8':
+                    setCurrentViewer(7);
+                    break;
+                case '9':
+                    setCurrentViewer(8);
+                    break;
+                case '0':
+                    setCurrentViewer(9);
+                    break;
+            }
+    if (notAvailable) ofLogNotice() << "key function not available";
+}
+
+void ofApp::nextViewer(){
+    int tViewer = currentViewer;
+    ++tViewer;
+    tViewer %= nodeViewers.size();
+    setCurrentViewer(tViewer);
+}
+void ofApp::previousViewer(){
+    int tViewer = currentViewer;
+    tViewer = (tViewer == 0) ? nodeViewers.size()-1 : --tViewer;
+    setCurrentViewer(tViewer);
+}
+
+void ofApp::setCurrentViewer(int currentViewer_){
+    if (currentViewer_ >= 0 && currentViewer_ < nodeViewers.size()) {
+        currentViewer = currentViewer_;
+        //reset the gui positions
+        nodeViewers[currentViewer]->setupGuiPositions();
+    }else{
+        ofLogNotice() << "choosen viewer not available";
+    }
 }

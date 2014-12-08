@@ -32,7 +32,13 @@ public:
 	void setup();
 	void update();
 	void draw();
+    void keyPressed (int key);
     bool loadFromXML();
+    
+    //change current viewer
+    void nextViewer();
+    void previousViewer();
+    void setCurrentViewer(int currentViewer_);
     
     //xmlfile
     ofxXmlSettings XML;

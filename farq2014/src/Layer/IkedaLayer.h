@@ -23,7 +23,6 @@ class IkedaLayer : public VisualLayer{
 	
 	void update();
 	void draw(int x,int y, float scale);
-    void drawGui(int x,int y, int width = 240);
     
     void inputUpdated(ofImage & img_);
     

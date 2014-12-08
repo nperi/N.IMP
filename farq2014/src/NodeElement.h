@@ -21,6 +21,13 @@ class NodeElement {
 	NodeElement(ImageOutput* imo_, int x_, int y_, int guiX_,int guiY_,int guiWidth_, float scale_);
 	
 	void draw();
+    void drawGui();
+    void setupGuiPositions();
+    ImageOutput* getImageOutput();
+    
+    //return connection points
+    ofVec2f getPosIn();
+    ofVec2f getPosOut();
     
     
 private:

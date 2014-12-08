@@ -24,7 +24,6 @@ class VideoPlayerMac : public InputSource{
 	void draw(int x,int y, float scale);
     void loadVideo(string path);
     void inputUpdated(ofImage & img){};
-    void drawGui(int x,int y, int width = 240){};
     void nextVideo();
     void prevVideo();
     void playVideo();

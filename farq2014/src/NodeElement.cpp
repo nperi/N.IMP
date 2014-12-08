@@ -21,8 +21,26 @@ NodeElement::NodeElement(ImageOutput* imo_, int x_, int y_, int guiX_,int guiY_,
 
 //------------------------------------------------------------------
 void NodeElement::draw() {
-    //draw connections
     imageOutput->draw(x, y,scale);
-    imageOutput->drawGui(guiX,guiY,guiWidth);
 	
+}
+void NodeElement::drawGui() {
+    imageOutput->drawGui();
+    
+}
+
+void NodeElement::setupGuiPositions(){
+    imageOutput->setGui(guiX, guiY, guiWidth);
+}
+
+ImageOutput* NodeElement::getImageOutput(){
+    return imageOutput;
+}
+
+ofVec2f NodeElement::getPosIn(){
+    return ofVec2f(x,y +(scale*240));
+}
+
+ofVec2f NodeElement::getPosOut(){
+    return ofVec2f(x+ (scale*640),y + (scale*240));
 }

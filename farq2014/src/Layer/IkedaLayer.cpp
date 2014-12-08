@@ -41,11 +41,6 @@ void IkedaLayer::draw(int x,int y, float scale) {
     img.draw(x, y,img.getWidth()*scale,img.getHeight()*scale);
     
 }
-void IkedaLayer::drawGui(int x,int y, int width){
-    gui.setPosition(x,y);
-    gui.setWidthElements(width);
-    gui.draw();
-}
 
 void IkedaLayer::inputUpdated(ofImage & img_){
     //process pipeline

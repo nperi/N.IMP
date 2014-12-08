@@ -23,10 +23,14 @@ class NodeViewer {
 	void setup();
     void addElement(NodeElement* elem_);
 	void draw();
+    void setupGuiPositions();
+    
+    string getName();
 	
     
+private:
     vector<NodeElement*> elements;
-    
+    vector<std::pair<ofVec2f,ofVec2f> > connections;
     string name;
 };
 
