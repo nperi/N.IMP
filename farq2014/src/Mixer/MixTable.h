@@ -20,16 +20,16 @@ class MixTable : public ImageOutput{
 	
   public:
 	
-    MixTable(string name_ = "mixtable"):ImageOutput(name_){};
+    MixTable(string name_ = "mixtable"):ImageOutput(name_){fbo.allocate(640, 480);};
 	
 	virtual void update() = 0;
-    
+    virtual void inputUpdated(ofImage & img_) = 0;
     
     
     
     
 protected:
-    
+    ofFbo fbo;
 };
 
 #endif

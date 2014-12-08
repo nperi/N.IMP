@@ -30,7 +30,6 @@ class MixSimpleBlend : public MixTable{
     void inputUpdated(ofImage & img);
     
 private:
-    ofFbo fbo;
     ofxIntSlider blendMode;
     vector<ofxIntSlider> alphaSlider;
     ofxPSBlend psBlend;

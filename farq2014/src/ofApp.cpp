@@ -36,6 +36,8 @@ void ofApp::setup() {
     visualLayerTypes.insert(std::pair<string,VisualLayerType>("IKEDA", IKEDA));
     visualLayerTypes.insert(std::pair<string,VisualLayerType>("GLITCH_1", GLITCH_1));
     visualLayerTypes.insert(std::pair<string,VisualLayerType>("GLITCH_2", GLITCH_2));
+    visualLayerTypes.insert(std::pair<string,VisualLayerType>("IMAGE_PROCESSOR", IMAGE_PROCESSOR));
+    mixerTypes.insert(std::pair<string,MixerType>("MASK", MASK));
     mixerTypes.insert(std::pair<string,MixerType>("SIMPLE_BLEND", SIMPLE_BLEND));
 
     loadingOK = loadFromXML();
@@ -326,6 +328,20 @@ bool ofApp::loadFromXML(){
                                     
                                     break;
                                 };
+                                case IMAGE_PROCESSOR:
+                                {
+                                    
+                                    ImageProcessor* gLA = new ImageProcessor(layerName);
+                                    
+                                    if(iO!=NULL){
+                                        gLA->addInput(iO);
+                                    }
+                                    
+                                    visualLayers.push_back(gLA);
+                                    nodes.insert(std::pair<string,ImageOutput*>(layerName,gLA));
+                                    
+                                    break;
+                                };
                                 default:
                                 {
                                     result = false;
@@ -390,6 +406,38 @@ bool ofApp::loadFromXML(){
                                     
                                     mixtables.push_back(mSB);
                                     nodes.insert(std::pair<string, ImageOutput*>(name, mSB));
+                                    //MIXER POP
+                                    XML.popTag();
+                                    
+                                    break;
+                                };
+                                case MASK:
+                                {
+                                    MixMask* mMM = new MixMask(name);
+                                    XML.pushTag("MIXER",i);
+                                    
+                                    int numINPUTTag = XML.getNumTags("INPUT_SOURCE");
+                                    std::map<string,ImageOutput*>::iterator it;
+                                    
+                                    for(int j=0; j<numINPUTTag; j++){
+                                        string inputName = XML.getAttribute("INPUT_SOURCE","name","default",j);
+                                        
+                                        it = nodes.find(inputName);
+                                        
+                                        if(it!=nodes.end()){
+                                            ImageOutput * iO = it->second;
+                                            
+                                            mMM->addInput(iO);
+                                        }
+                                        else{
+                                            result = false;
+                                            message = "node not foud!";
+                                        }
+                                        
+                                    }
+                                    
+                                    mixtables.push_back(mMM);
+                                    nodes.insert(std::pair<string, ImageOutput*>(name, mMM));
                                     //MIXER POP
                                     XML.popTag();
                                     

@@ -33,6 +33,7 @@ void ImageInput::draw(int x,int y, float scale){
 
 void ImageInput::loadImage(string path_){
     img.loadImage(path_);
+    img.resize(640, 480);
     isLoaded=true;
 }
 

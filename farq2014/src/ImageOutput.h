@@ -18,7 +18,7 @@
 /*            
                 imageOutput
                     |
-        -------------------------
+&        -----------&--------------
         |           |           |
    InputSource  VisualLayer MixTable
  
@@ -32,6 +32,8 @@ class ImageOutput {
         img.allocate(640, 480, OF_IMAGE_COLOR);
         img.setUseTexture(true);
         maxInputs = maxInputs_;
+        panel.setup();
+        panel.add(gui.setup(name));
     };
     
     string getName(){return name;};
@@ -59,16 +61,17 @@ class ImageOutput {
     ofEvent<ofFbo> fboEvent;
     
     virtual void draw(int x,int y, float scale = 1.0) = 0;
-    virtual void drawGui(){gui.draw();}
+    void drawGui(){panel.draw();}
     void setGui(int x,int y, int width = 240){
-            gui.setPosition(x,y);
-            gui.setWidthElements(width);
+            panel.setPosition(x,y);
+            panel.setWidthElements(width);
     };
     
     
 protected:
-    ofxPanel gui;
-    ofxLabel name;
+    ofxPanel panel;
+    ofxGuiGroup gui;
+    string name;
     ofImage img;
     
     vector<ImageOutput*> input;

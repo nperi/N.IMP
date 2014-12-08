@@ -10,9 +10,8 @@
 
 
 //------------------------------------------------------------------
-GlitchLayer::GlitchLayer(string name_):VisualLayer(name_){;
-    gui.setup();
-    gui.add(name.setup("", name));
+GlitchLayer::GlitchLayer(string name_):VisualLayer(name_){
+    //gui.setup();
     
     gui.add(do_CONVERGENCE.setup("CONVERGENCE"));
     gui.add(do_GLOW.setup("GLOW"));

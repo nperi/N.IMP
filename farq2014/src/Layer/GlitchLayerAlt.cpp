@@ -11,8 +11,8 @@
 
 //------------------------------------------------------------------
 GlitchLayerAlt::GlitchLayerAlt(string name_):VisualLayer(name_){;
-    gui.setup();
-    gui.add(name.setup("layer", name));
+    
+    //gui.add(name.setup("layer", name));
 
     gui.add(dq.setup("DQ", 20,0,255));
     gui.add(qn.setup("QN", 40,0,255));

@@ -10,12 +10,11 @@
 #include "MixSimpleBlend.h"
 
 MixSimpleBlend::MixSimpleBlend(string name_):MixTable(name_){
-    fbo.allocate(640, 480);
     psBlend.setup(640, 480);
     
     maxInputs = 2;
-    gui.setup();
-    gui.add(name.setup("", name_));
+    //gui.setup();
+    //gui.add(name.setup("", name_));
     gui.add(blendMode.setup("Blendmode", 10, 0, 24));
     for (int i=0; i<4; ++i) {
         ofxIntSlider s;

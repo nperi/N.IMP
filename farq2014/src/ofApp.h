@@ -18,14 +18,16 @@
 #include "IkedaLayer.h"
 #include "GlitchLayer.h"
 #include "GlitchLayerAlt.h"
+#include "ImageProcessor.h"
 #include "MixSimpleBlend.h"
+#include "MixMask.h"
 
 #include "NodeViewer.h"
 #include "NodeElement.h"
 
 enum InputType {VIDEO, CAM, IMAGE};
-enum VisualLayerType {IKEDA, GLITCH_1, GLITCH_2};
-enum MixerType {SIMPLE_BLEND};
+enum VisualLayerType {IKEDA, GLITCH_1, GLITCH_2,IMAGE_PROCESSOR};
+enum MixerType {SIMPLE_BLEND, MASK};
 
 class ofApp : public ofBaseApp {
 public:
