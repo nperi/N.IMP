@@ -544,6 +544,10 @@ bool ofApp::loadFromXML(){
         
     }
     
+    if(!result){
+        ofLogNotice() << message;
+    }
+    
     return result;
 
 }
@@ -587,6 +591,9 @@ void ofApp::keyPressed  (int key){
                     break;
                 case '0':
                     setCurrentViewer(9);
+                    break;
+                default:
+                    notAvailable = true;
                     break;
             }
     if (notAvailable) ofLogNotice() << "key function not available";
