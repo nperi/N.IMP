@@ -20,10 +20,9 @@ class VideoPlayerMac : public InputSource{
 	VideoPlayerMac(string name = "video player");
 	
 	void setup();
-	void update();
+
 	void draw(int x,int y, float scale);
     void loadVideo(string path);
-    void inputUpdated(ofImage & img){};
     void nextVideo();
     void prevVideo();
     void playVideo();
@@ -32,6 +31,8 @@ class VideoPlayerMac : public InputSource{
     float getSpeed();
     
 private:
+    void update();
+    
     vector<ofQTKitPlayer*> players;
     int currentPlayer;
     

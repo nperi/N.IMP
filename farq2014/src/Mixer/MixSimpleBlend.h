@@ -23,13 +23,13 @@ class MixSimpleBlend : public MixTable{
     MixSimpleBlend(string name_ = "Simple Blend");
 	
 	void setup();
-	void update();
+	
 	void draw(int x,int y, float scale);
-    
-    
-    void textureUpdated(ofTexture & img);
+
     
 private:
+    void update();
+    
     ofxIntSlider blendMode;
     vector<ofxIntSlider> alphaSlider;
     ofxPSBlend psBlend;

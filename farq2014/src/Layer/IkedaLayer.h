@@ -21,10 +21,7 @@ class IkedaLayer : public VisualLayer{
 	
     IkedaLayer(string name_ = "visualLayer",bool isCanny_ = true ,bool isThreshold_ = true, bool isColumns_ = true, bool isInvert_ = true);
 	
-	void update();
 	void draw(int x,int y, float scale);
-    
-    void inputUpdated(ofImage & img_);
     
     ofxToggle isCanny;
     ofxToggle isThreshold;
@@ -35,6 +32,9 @@ class IkedaLayer : public VisualLayer{
     ofxFloatSlider                pCannyX;
     ofxFloatSlider                pCannyY;
     ofxIntSlider                  pThreshold;
+    
+private:
+    void update();
 	
 };
 

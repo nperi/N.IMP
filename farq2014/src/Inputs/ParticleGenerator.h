@@ -25,11 +25,12 @@ class ParticleGenerator : public InputSource{
 	ParticleGenerator(string name = "image input");
 	
 	void setup();
-	void update();
 	void draw(int x,int y, float scale);
-    void inputUpdated(ofImage & img){};
     
 private:
+    
+    void update();
+    
     ofxParticleSystem* particle;
     int nForces = 3;
     vector<ParticleForce> force;

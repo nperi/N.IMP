@@ -23,18 +23,10 @@ ImageOutput::ImageOutput(string name_,int maxInputs_, int width_, int height_){
 string ImageOutput::getName(){
     return name;
 }
-ofImage* ImageOutput::getImage(){
-    return &img;
-}
-ofTexture* ImageOutput::getTexture(){
-    return &tex;
-}
 
 void ImageOutput::addInput(ImageOutput* layer_){
     if (input.size()<maxInputs) {
         input.push_back(layer_);
-        ofAddListener(layer_->imageEvent, this, &ImageOutput::inputUpdated);
-        addTextureInput(layer_);
     }
 }
 vector<ImageOutput*> ImageOutput::getInputs(){
@@ -55,3 +47,23 @@ void ImageOutput::setGui(int x,int y, int width){
     panel.setPosition(x,y);
     panel.setWidthElements(width);
 };
+
+void ImageOutput::resetProcessedFlag(){
+    isProcessed = false;
+}
+
+ofImage* ImageOutput::getImage(){
+    if(!isProcessed){
+        update();
+        isProcessed = true;
+    }
+    return &img;
+}
+
+ofTexture* ImageOutput::getTexture(){
+    if(!isProcessed){
+        update();
+        isProcessed = true;
+    }
+    return &tex;
+}

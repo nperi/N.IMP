@@ -38,8 +38,6 @@ void VideoPlayerMac::update() {
             img.setFromPixels(players[currentPlayer]->getPixels(), players[currentPlayer]->getWidth(), players[currentPlayer]->getHeight(), OF_IMAGE_COLOR_ALPHA);
             img.resize(width, heigth);
             tex = img.getTextureReference();
-            ofNotifyEvent(imageEvent, img, this);
-            ofNotifyEvent(textureEvent, tex, this);
         }
     }
 }

@@ -23,21 +23,15 @@ GlitchLayerAlt::GlitchLayerAlt(string name_):VisualLayer(name_){;
 
 
 //------------------------------------------------------------------
-void GlitchLayerAlt::update() {
-    
-}
-
-
-//------------------------------------------------------------------
 void GlitchLayerAlt::draw(int x,int y, float scale) {
     ofSetColor(255, 255, 255);
     img.draw(x, y,640*scale,480*scale);
 }
 
 
-void GlitchLayerAlt::inputUpdated(ofImage & img_){
+void GlitchLayerAlt::update(){
     //process pipeline
-    img.setFromPixels(img_.getPixels(), width, heigth, OF_IMAGE_COLOR);
+    img.setFromPixels(input[0]->getImage()->getPixels(), width, heigth, OF_IMAGE_COLOR);
     
     if(isEnabled){
        
@@ -53,7 +47,5 @@ void GlitchLayerAlt::inputUpdated(ofImage & img_){
     }
     
     img.update();
-    ofNotifyEvent(imageEvent, img, this);
-    ofNotifyEvent(textureEvent, img.getTextureReference(), this);
     
 }

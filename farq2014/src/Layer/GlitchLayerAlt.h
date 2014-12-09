@@ -19,10 +19,7 @@ public:
     
     GlitchLayerAlt(string name_ = "glitchLayerAlt");
     
-    void update();
     void draw(int x,int y, float scale);
-    
-    void inputUpdated(ofImage & img_);
     
     //glitch parameters
     ofxIntSlider dq;
@@ -30,6 +27,10 @@ public:
     ofxIntSlider dht;
     
     ofxJpegGlitch glitcher;
+    
+private:
+    
+    void update();
     
 };
 

@@ -12,6 +12,8 @@
 ImageInput::ImageInput(string name) : InputSource(name){
     img.allocate(width, heigth, OF_IMAGE_COLOR_ALPHA);
     isLoaded = false;
+    fps = 12;
+    lastFrameSent = ofGetElapsedTimeMillis();
 }
 
 void ImageInput::setup(){
@@ -19,10 +21,7 @@ void ImageInput::setup(){
 }
 
 void ImageInput::update(){
-    if(isLoaded){
-        ofNotifyEvent(imageEvent, img, this);
-        ofNotifyEvent(textureEvent, tex, this);
-    }
+    //we do nothin
 }
 
 void ImageInput::draw(int x,int y, float scale){

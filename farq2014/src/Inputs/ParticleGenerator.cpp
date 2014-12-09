@@ -54,7 +54,7 @@ void ParticleGenerator::update() {
     ofDisableAlphaBlending();
     fbo.end();
     tex = fbo.getTextureReference();
-    ofNotifyEvent(textureEvent, tex, this);
+
 }
 
 

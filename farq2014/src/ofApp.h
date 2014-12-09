@@ -53,6 +53,7 @@ public:
     
     //all objects are stored in this collection
     map<string, ImageOutput*> nodes;
+    vector<ImageOutput*> nodesVector;
     
     //syphon
     void updateSyphon(ofFbo & img);

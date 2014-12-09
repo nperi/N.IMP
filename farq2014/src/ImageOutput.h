@@ -37,19 +37,17 @@ class ImageOutput {
     vector<ImageOutput*> getInputs();
     vector<string> getInputNames();
     
-    virtual void inputUpdated(ofImage & img) = 0;
-    virtual void addTextureInput(ImageOutput* im){}; //for mixers
-    
-    ofEvent<ofImage> imageEvent;
-    ofEvent<ofTexture> textureEvent;
-    ofEvent<ImageOutput*> inputAddedEvent;
-    
     virtual void draw(int x,int y, float scale = 1.0) = 0;
     void drawGui();
     void setGui(int x,int y, int width = 240);
     
+    void resetProcessedFlag();
+    
     
 protected:
+    
+    virtual void update() = 0;
+    
     ofxPanel panel;
     ofxGuiGroup gui;
     string name;
@@ -61,6 +59,7 @@ protected:
     
     //resolution
     int width, heigth;
+    bool isProcessed;
 	
 };
 

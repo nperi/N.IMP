@@ -28,13 +28,6 @@ class MixTable : public ImageOutput{
         s.useDepth			= true;
         fbo.allocate(s);
     }
-	
-	virtual void update() = 0;
-    virtual void textureUpdated(ofTexture & img) = 0;
-    void inputUpdated(ofImage & img){};
-    void addTextureInput(ImageOutput* im){
-        ofAddListener(im->textureEvent, this, &MixTable::textureUpdated);};
-    
     
     
 protected:

@@ -22,14 +22,14 @@ class InputCamera : public InputSource{
 	InputCamera(string name = "camera");
 	
 	void setup();
-	void update();
+	
 	void draw(int x,int y, float scale);
-    
-    void inputUpdated(ofImage & img){};
 
 private:
-    ofVideoGrabber cam;
     
+    void update();
+    
+    ofVideoGrabber cam;
 	
 };
 

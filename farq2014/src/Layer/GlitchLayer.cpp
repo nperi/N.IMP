@@ -39,21 +39,15 @@ GlitchLayer::GlitchLayer(string name_):VisualLayer(name_){
 
 
 //------------------------------------------------------------------
-void GlitchLayer::update() {
-    
-}
-
-
-//------------------------------------------------------------------
 void GlitchLayer::draw(int x,int y, float scale) {
     ofSetColor(255, 255, 255);
     img.draw(x, y,640*scale,480*scale);
 }
 
-void GlitchLayer::inputUpdated(ofImage & img_){
+void GlitchLayer::update(){
     //process pipeline
     
-    img.setFromPixels(img_.getPixels(), width, heigth, OF_IMAGE_COLOR);
+    img.setFromPixels(input[0]->getImage()->getPixels(), width, heigth, OF_IMAGE_COLOR);
     
     if(isEnabled){
         
@@ -76,8 +70,7 @@ void GlitchLayer::inputUpdated(ofImage & img_){
     }
     
     img.update();
-    ofNotifyEvent(imageEvent, img, this);
-    ofNotifyEvent(textureEvent, img.getTextureReference(), this);
+
 }
 
 void GlitchLayer::setGlitchParameters(){
