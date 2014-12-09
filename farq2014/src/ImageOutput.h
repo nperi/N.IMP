@@ -27,7 +27,7 @@ class ImageOutput {
 	
   public:
 	
-    ImageOutput(string name_,int maxInputs_ = 1, int width_ = 640, int height_ = 480);
+    ImageOutput(string name_,int maxInputs_ = 1, int width_ = 1024, int height_ = 768);
     
     string getName();
     ofImage* getImage();

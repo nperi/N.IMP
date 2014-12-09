@@ -15,7 +15,7 @@
         </INPUTS>
 
         <VISUAL_LAYERS>
-            <VISUAL_LAYER name="V_IKEDA" type="IKEDA" inputSource="Camera1"
+            <VISUAL_LAYER name="V_IKEDA" type="IKEDA" inputSource="Video1"
                     isCanny="true" 
                     isThreshold="true" 
                     isColumns="true" 
@@ -52,7 +52,7 @@
 
         <MIXERS>
             <MIXER name="mainMix" type="SIMPLE_BLEND">
-                <INPUT_SOURCE name="Video2"/>
+                <INPUT_SOURCE name="V_IKEDA"/>
                 <INPUT_SOURCE name="Video1"/>
             </MIXER>
             <MIXER name="altMix" type="SIMPLE_BLEND">

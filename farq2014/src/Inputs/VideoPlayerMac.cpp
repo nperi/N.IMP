@@ -36,7 +36,7 @@ void VideoPlayerMac::update() {
         players[currentPlayer]->update();
         if (players[currentPlayer]->isFrameNew()){
             img.setFromPixels(players[currentPlayer]->getPixels(), players[currentPlayer]->getWidth(), players[currentPlayer]->getHeight(), OF_IMAGE_COLOR_ALPHA);
-            img.resize(width, heigth);
+            //img.resize(width, heigth);
             tex = img.getTextureReference();
         }
     }
@@ -57,6 +57,8 @@ void VideoPlayerMac::loadVideo(string path) {
     ofQTKitPlayer* vP = new ofQTKitPlayer();
     vP->setPixelFormat(OF_PIXELS_RGBA);
     vP->loadMovie(path, decodeMode);
+    //ofVideoPlayer* vP = new ofVideoPlayer();
+    //vP->loadMovie(path);
     players.push_back(vP);
 }
 
