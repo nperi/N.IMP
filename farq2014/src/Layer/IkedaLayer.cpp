@@ -17,6 +17,7 @@ using namespace ofxCv;
 IkedaLayer::IkedaLayer(string name_, bool isCanny_,bool isThreshold_, bool isColumns_, bool isInvert_):VisualLayer(name_) {
    // gui.setup();
     
+    gui.add(isEnabled.setup("Enabled",isEnabled, 100,20));
     gui.add(isCanny.setup("Canny", isCanny_));
     gui.add(pCannyX.setup("CannyX", 12,0,255));
     gui.add(pCannyY.setup("CannyY", 12,0,255));

@@ -34,6 +34,11 @@ class VideoPlayerMac : public InputSource{
 private:
     vector<ofQTKitPlayer*> players;
     int currentPlayer;
+    
+    ofxButton play;
+    ofxButton stop;
+    ofxFloatSlider speed;
+    
     //ofImage img;
 };
 

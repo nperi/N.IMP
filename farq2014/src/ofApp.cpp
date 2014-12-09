@@ -5,7 +5,7 @@ using namespace ofxCv;
 
 void ofApp::setup() {
     ofSetWindowTitle("projeccion architectura");
-    ofSetFrameRate(60);
+    ofSetFrameRate(30);
     loadingOK = false;
     
     //populating string dictionaries for simple comparison used in LoadFromXML

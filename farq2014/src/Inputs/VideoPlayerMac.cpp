@@ -13,6 +13,14 @@ VideoPlayerMac::VideoPlayerMac(string name) : InputSource(name){
     //there always has to exist at least one player.
     currentPlayer=0;
     img.allocate(width, heigth, OF_IMAGE_COLOR_ALPHA);
+    
+    play.addListener(this, &VideoPlayerMac::playVideo);
+    stop.addListener(this, &VideoPlayerMac::stopVideo);
+    
+    gui.add(play.setup("Play"));
+    gui.add(stop.setup("Stop"));
+
+    
 }
 
 //------------------------------------------------------------------
@@ -26,11 +34,13 @@ void VideoPlayerMac::setup() {
 void VideoPlayerMac::update() {
     if (players[currentPlayer]->isLoaded()) {
         players[currentPlayer]->update();
-        img.setFromPixels(players[currentPlayer]->getPixels(), players[currentPlayer]->getWidth(), players[currentPlayer]->getHeight(), OF_IMAGE_COLOR_ALPHA);
-        img.resize(width, heigth);
-        tex = img.getTextureReference();
-        ofNotifyEvent(imageEvent, img, this);
-        ofNotifyEvent(textureEvent, tex, this);
+        if (players[currentPlayer]->isFrameNew()){
+            img.setFromPixels(players[currentPlayer]->getPixels(), players[currentPlayer]->getWidth(), players[currentPlayer]->getHeight(), OF_IMAGE_COLOR_ALPHA);
+            img.resize(width, heigth);
+            tex = img.getTextureReference();
+            ofNotifyEvent(imageEvent, img, this);
+            ofNotifyEvent(textureEvent, tex, this);
+        }
     }
 }
 

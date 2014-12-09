@@ -38,7 +38,7 @@ class VisualLayer : public ImageOutput{
     
     
 protected:
-    bool isEnabled;
+    ofxToggle isEnabled;
     bool firstInit;
     
     

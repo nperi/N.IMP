@@ -13,7 +13,7 @@
 GlitchLayerAlt::GlitchLayerAlt(string name_):VisualLayer(name_){;
     
     //gui.add(name.setup("layer", name));
-
+    gui.add(isEnabled.setup("Enabled",isEnabled, 100,20));
     gui.add(dq.setup("DQ", 20,0,255));
     gui.add(qn.setup("QN", 40,0,255));
     gui.add(dht.setup("DHT", 80,0,255));
