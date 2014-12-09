@@ -48,6 +48,7 @@ void GlitchLayerAlt::inputUpdated(ofImage & img_){
         
         glitcher.setPixels(img.getPixelsRef());
         glitcher.glitch();
+        img.setFromPixels(glitcher.getImage().getPixelsRef());
         
     }
     
