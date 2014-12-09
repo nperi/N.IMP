@@ -22,7 +22,7 @@
                     pCannyY="12"
                     pThreshold="12"
                     />
-            <VISUAL_LAYER name="V_GLITCH1" type="GLITCH_1" inputSource="Video1"
+            <VISUAL_LAYER name="V_GLITCH1" type="GLITCH_1" inputSource="Camera1"
                 do_CONVERGENCE="false"
                 do_GLOW="false"
                 do_SHAKER="false"
@@ -101,6 +101,11 @@
             <NODE name="V_GLITCH1" x="200" y="80" guiX="200" guiY="20" imageScale="1" guiWidth="80" />
             <NODE name="V_GLITCH2" x="400" y="80" guiX="200" guiY="20" imageScale="1" guiWidth="80" />
             <NODE name="mainMix" x="600" y="80" guiX="200" guiY="20" imageScale="1" guiWidth="80" />
+        </NODE_VIEW>
+        <NODE_VIEW name="GL2View">
+            <NODE name="Camera1" x="20" y="80" guiX="20" guiY="20" imageScale="1" guiWidth="80" />
+            <NODE name="V_GLITCH2" x="600" y="80" guiX="200" guiY="20" imageScale="1" guiWidth="80" />
+           
         </NODE_VIEW>
     </NODE_VIEWS>
 </MAIN_SETTINGS>
