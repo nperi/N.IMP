@@ -34,7 +34,7 @@ class VideoPlayerMac : public InputSource{
 private:
     vector<ofQTKitPlayer*> players;
     int currentPlayer;
-    ofImage img;
+    //ofImage img;
 };
 
 #endif

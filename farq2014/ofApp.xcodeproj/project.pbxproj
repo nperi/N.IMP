@@ -53,6 +53,11 @@
 		D3A226B81A311C3E005DD5AF /* NodeViewer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D3A226B61A311C3E005DD5AF /* NodeViewer.cpp */; };
 		D3A226C91A36340E005DD5AF /* MixMask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D3A226C71A36340E005DD5AF /* MixMask.cpp */; };
 		D3A226D61A36452E005DD5AF /* ImageProcessor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D3A226D41A36452E005DD5AF /* ImageProcessor.cpp */; };
+		D3A2270D1A37243F005DD5AF /* ParticleGenerator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D3A2270B1A37243F005DD5AF /* ParticleGenerator.cpp */; };
+		D3A227131A372AA3005DD5AF /* ParticleForce.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D3A227111A372AA3005DD5AF /* ParticleForce.cpp */; };
+		D3A227151A373372005DD5AF /* ofxParticle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D3A227071A37241C005DD5AF /* ofxParticle.cpp */; };
+		D3A227161A373375005DD5AF /* ofxParticleSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D3A227091A37241C005DD5AF /* ofxParticleSystem.cpp */; };
+		D3A2271E1A3756B1005DD5AF /* ImageOutput.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D3A2271D1A3756B1005DD5AF /* ImageOutput.cpp */; };
 		DBCB84A37F9AECC254870D79 /* Wrappers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D347FB65D19015303863922A /* Wrappers.cpp */; };
 		E4328149138ABC9F0047C5CB /* openFrameworksDebug.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E4328148138ABC890047C5CB /* openFrameworksDebug.a */; };
 		E45BE97B0E8CC7DD009D7055 /* AGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E45BE9710E8CC7DD009D7055 /* AGL.framework */; };
@@ -211,6 +216,15 @@
 		D3A226C81A36340E005DD5AF /* MixMask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MixMask.h; sourceTree = "<group>"; };
 		D3A226D41A36452E005DD5AF /* ImageProcessor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ImageProcessor.cpp; sourceTree = "<group>"; };
 		D3A226D51A36452E005DD5AF /* ImageProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageProcessor.h; sourceTree = "<group>"; };
+		D3A227071A37241C005DD5AF /* ofxParticle.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ofxParticle.cpp; sourceTree = "<group>"; };
+		D3A227081A37241C005DD5AF /* ofxParticle.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxParticle.h; sourceTree = "<group>"; };
+		D3A227091A37241C005DD5AF /* ofxParticleSystem.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ofxParticleSystem.cpp; sourceTree = "<group>"; };
+		D3A2270A1A37241C005DD5AF /* ofxParticleSystem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxParticleSystem.h; sourceTree = "<group>"; };
+		D3A2270B1A37243F005DD5AF /* ParticleGenerator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ParticleGenerator.cpp; sourceTree = "<group>"; };
+		D3A2270C1A37243F005DD5AF /* ParticleGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParticleGenerator.h; sourceTree = "<group>"; };
+		D3A227111A372AA3005DD5AF /* ParticleForce.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ParticleForce.cpp; sourceTree = "<group>"; };
+		D3A227121A372AA3005DD5AF /* ParticleForce.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParticleForce.h; sourceTree = "<group>"; };
+		D3A2271D1A3756B1005DD5AF /* ImageOutput.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ImageOutput.cpp; sourceTree = "<group>"; };
 		D58DCB2C0AEFDE6171E29540 /* Syphon.framework */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = wrapper.framework; name = Syphon.framework; path = ../../../addons/ofxSyphon/libs/Syphon/lib/osx/Syphon.framework; sourceTree = "<group>"; };
 		DB0CD4C938C079DCD67222FE /* imatrix.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = imatrix.h; path = ../../../addons/ofxCv/libs/CLD/include/CLD/imatrix.h; sourceTree = SOURCE_ROOT; };
 		E112B3AEBEA2C091BF2B40AE /* ofxPanel.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = ofxPanel.cpp; path = ../../../addons/ofxGui/src/ofxPanel.cpp; sourceTree = SOURCE_ROOT; };
@@ -597,6 +611,8 @@
 				D318E84A1A2F8C46000A2046 /* VideoPlayerMac.h */,
 				6B36ECAF1A34F19C0019915B /* ImageInput.cpp */,
 				6B36ECB01A34F19C0019915B /* ImageInput.h */,
+				D3A2270B1A37243F005DD5AF /* ParticleGenerator.cpp */,
+				D3A2270C1A37243F005DD5AF /* ParticleGenerator.h */,
 			);
 			path = Inputs;
 			sourceTree = "<group>";
@@ -660,6 +676,19 @@
 			path = src;
 			sourceTree = "<group>";
 		};
+		D3A227061A37241C005DD5AF /* etc */ = {
+			isa = PBXGroup;
+			children = (
+				D3A227071A37241C005DD5AF /* ofxParticle.cpp */,
+				D3A227081A37241C005DD5AF /* ofxParticle.h */,
+				D3A227091A37241C005DD5AF /* ofxParticleSystem.cpp */,
+				D3A2270A1A37241C005DD5AF /* ofxParticleSystem.h */,
+				D3A227111A372AA3005DD5AF /* ParticleForce.cpp */,
+				D3A227121A372AA3005DD5AF /* ParticleForce.h */,
+			);
+			path = etc;
+			sourceTree = "<group>";
+		};
 		E4328144138ABC890047C5CB /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -703,10 +732,12 @@
 				D309EB741A2E6E04008B3D94 /* Param.cpp */,
 				D309EB751A2E6E04008B3D94 /* Param.h */,
 				D309EB961A2F3073008B3D94 /* ImageOutput.h */,
+				D3A2271D1A3756B1005DD5AF /* ImageOutput.cpp */,
 				D3A226B31A311C29005DD5AF /* NodeElement.cpp */,
 				D3A226B41A311C29005DD5AF /* NodeElement.h */,
 				D3A226B61A311C3E005DD5AF /* NodeViewer.cpp */,
 				D3A226B71A311C3E005DD5AF /* NodeViewer.h */,
+				D3A227061A37241C005DD5AF /* etc */,
 			);
 			path = src;
 			sourceTree = SOURCE_ROOT;
@@ -824,6 +855,7 @@
 				6B36ECAC1A34EA0B0019915B /* ofxJpegGlitch.cpp in Sources */,
 				6B36ECA91A3219280019915B /* ofxXmlSettings.cpp in Sources */,
 				6B36ECA71A3219280019915B /* tinyxmlerror.cpp in Sources */,
+				D3A227131A372AA3005DD5AF /* ParticleForce.cpp in Sources */,
 				D3A226C91A36340E005DD5AF /* MixMask.cpp in Sources */,
 				6B36ECA61A3219280019915B /* tinyxml.cpp in Sources */,
 				6B36ECA81A3219280019915B /* tinyxmlparser.cpp in Sources */,
@@ -839,6 +871,7 @@
 				6B36ECB11A34F19C0019915B /* ImageInput.cpp in Sources */,
 				B56FE57CC35806596D38118C /* ofxSliderGroup.cpp in Sources */,
 				D309EB8C1A2E9B27008B3D94 /* InputCamera.cpp in Sources */,
+				D3A2270D1A37243F005DD5AF /* ParticleGenerator.cpp in Sources */,
 				6B0E60EB1A2FCA84006AE261 /* GlitchLayer.cpp in Sources */,
 				D3A226B81A311C3E005DD5AF /* NodeViewer.cpp in Sources */,
 				D3A226D61A36452E005DD5AF /* ImageProcessor.cpp in Sources */,
@@ -846,6 +879,7 @@
 				D3A226B51A311C29005DD5AF /* NodeElement.cpp in Sources */,
 				6B9E01321A2E5B3100813D7C /* SyphonNameboundClient.m in Sources */,
 				D309EB761A2E6E04008B3D94 /* Param.cpp in Sources */,
+				D3A227161A373375005DD5AF /* ofxParticleSystem.cpp in Sources */,
 				D318E84B1A2F8C46000A2046 /* VideoPlayerMac.cpp in Sources */,
 				B6840996567E78436F7ECFAB /* ETF.cpp in Sources */,
 				6B9E01331A2E5B3100813D7C /* README.md in Sources */,
@@ -857,6 +891,7 @@
 				5CC34D433F5806179935B89D /* Flow.cpp in Sources */,
 				2023EF517ED2D8B397511D4B /* Helpers.cpp in Sources */,
 				311DF864378748129984EA1D /* Kalman.cpp in Sources */,
+				D3A2271E1A3756B1005DD5AF /* ImageOutput.cpp in Sources */,
 				C602002DE761F9B52DB4400A /* ObjectFinder.cpp in Sources */,
 				7CDAD32BE4FA46701E3552C7 /* RunningBackground.cpp in Sources */,
 				6B9E01351A2E5B3100813D7C /* ofxSyphonServer.mm in Sources */,
@@ -865,6 +900,7 @@
 				6B9E01361A2E5B3100813D7C /* ofxSyphonServerDirectory.mm in Sources */,
 				6B0E614A1A2FDE57006AE261 /* GlitchLayerAlt.cpp in Sources */,
 				D309EB861A2E99A3008B3D94 /* InputSource.cpp in Sources */,
+				D3A227151A373372005DD5AF /* ofxParticle.cpp in Sources */,
 				DBCB84A37F9AECC254870D79 /* Wrappers.cpp in Sources */,
 				6B9E01341A2E5B3100813D7C /* ofxSyphonClient.mm in Sources */,
 			);

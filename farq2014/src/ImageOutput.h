@@ -27,45 +27,26 @@ class ImageOutput {
 	
   public:
 	
-    ImageOutput(string name_,int maxInputs_ = 1){
-        name = name_;
-        img.allocate(640, 480, OF_IMAGE_COLOR);
-        img.setUseTexture(true);
-        maxInputs = maxInputs_;
-        panel.setup();
-        panel.add(gui.setup(name));
-    };
+    ImageOutput(string name_,int maxInputs_ = 1, int width_ = 640, int height_ = 480);
     
-    string getName(){return name;};
-    ofImage* getImage(){return &img;};
+    string getName();
+    ofImage* getImage();
+    ofTexture* getTexture();
     
-    void addInput(ImageOutput* layer_){
-        if (input.size()<maxInputs) {
-            input.push_back(layer_);
-            ofAddListener(layer_->imageEvent, this, &ImageOutput::inputUpdated);
-        }
-    }
-    vector<ImageOutput*> getInputs(){
-        return input;
-    }
-    vector<string> getInputNames(){
-        vector<string> vout;
-        for (int i=0; i<input.size(); ++i) {
-            vout.push_back(input[i]->getName());
-        }
-        return vout;
-    }
+    void addInput(ImageOutput* layer_);
+    vector<ImageOutput*> getInputs();
+    vector<string> getInputNames();
+    
     virtual void inputUpdated(ofImage & img) = 0;
+    virtual void addTextureInput(ImageOutput* im){}; //for mixers
     
     ofEvent<ofImage> imageEvent;
-    ofEvent<ofFbo> fboEvent;
+    ofEvent<ofTexture> textureEvent;
+    ofEvent<ImageOutput*> inputAddedEvent;
     
     virtual void draw(int x,int y, float scale = 1.0) = 0;
-    void drawGui(){panel.draw();}
-    void setGui(int x,int y, int width = 240){
-            panel.setPosition(x,y);
-            panel.setWidthElements(width);
-    };
+    void drawGui();
+    void setGui(int x,int y, int width = 240);
     
     
 protected:
@@ -73,9 +54,13 @@ protected:
     ofxGuiGroup gui;
     string name;
     ofImage img;
+    ofTexture tex;
     
     vector<ImageOutput*> input;
     int maxInputs;
+    
+    //resolution
+    int width, heigth;
 	
 };
 

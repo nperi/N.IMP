@@ -10,7 +10,7 @@
 #include "MixSimpleBlend.h"
 
 MixSimpleBlend::MixSimpleBlend(string name_):MixTable(name_){
-    psBlend.setup(640, 480);
+    psBlend.setup(width, heigth);
     
     maxInputs = 2;
     //gui.setup();
@@ -41,25 +41,21 @@ void MixSimpleBlend::update() {
 //------------------------------------------------------------------
 void MixSimpleBlend::draw(int x,int y, float scale) {
     ofSetColor(255, 255, 255);
-    fbo.draw(x, y,fbo.getWidth()*scale, fbo.getHeight()*scale);
+    fbo.draw(x, y,640*scale, 480*scale);
 	ofDrawBitmapString(name, x + 10, y + 30);
 }
 
-
-void MixSimpleBlend::inputUpdated(ofImage & img){
-    
+void MixSimpleBlend::textureUpdated(ofTexture & img){
     fbo.begin();
     ofClear(255,255,255, 0);
     psBlend.begin();
-    input[0]->getImage()->draw(0, 0);
+    input[0]->getTexture()->draw(0, 0);
     psBlend.end();
     for (int i=1; i<input.size(); ++i) {
         ofSetColor(255, 255, 255,128);
-        psBlend.draw(input[i]->getImage()->getTextureReference(), blendMode);
+        psBlend.draw(*(input[i]->getTexture()), blendMode);
     }
     ofDisableBlendMode();
     fbo.end();
-    ofNotifyEvent(fboEvent, fbo, this);
-    
-    
+    ofNotifyEvent(textureEvent, fbo.getTextureReference(), this);
 }

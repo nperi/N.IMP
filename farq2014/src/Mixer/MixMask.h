@@ -24,7 +24,7 @@ class MixMask : public MixTable{
 	void update();
 	void draw(int x,int y, float scale);
     
-    void inputUpdated(ofImage & img);
+    void textureUpdated(ofTexture & img);
     
     
 private:

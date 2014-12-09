@@ -10,7 +10,7 @@
 
 
 ImageInput::ImageInput(string name) : InputSource(name){
-    img.allocate(640, 480, OF_IMAGE_COLOR_ALPHA);
+    img.allocate(width, heigth, OF_IMAGE_COLOR_ALPHA);
     isLoaded = false;
 }
 
@@ -21,6 +21,7 @@ void ImageInput::setup(){
 void ImageInput::update(){
     if(isLoaded){
         ofNotifyEvent(imageEvent, img, this);
+        ofNotifyEvent(textureEvent, tex, this);
     }
 }
 
@@ -33,7 +34,9 @@ void ImageInput::draw(int x,int y, float scale){
 
 void ImageInput::loadImage(string path_){
     img.loadImage(path_);
-    img.resize(640, 480);
+    img.resize(width, heigth);
+    unsigned char* p = img.getPixels();
+    tex.loadData(p, width, heigth, GL_RGB);
     isLoaded=true;
 }
 

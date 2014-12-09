@@ -27,7 +27,7 @@ class MixSimpleBlend : public MixTable{
 	void draw(int x,int y, float scale);
     
     
-    void inputUpdated(ofImage & img);
+    void textureUpdated(ofTexture & img);
     
 private:
     ofxIntSlider blendMode;

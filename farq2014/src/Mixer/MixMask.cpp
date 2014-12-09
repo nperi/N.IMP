@@ -16,6 +16,7 @@ MixMask::MixMask(string name_):MixTable(name_){
     maskShader.load("Shaders/composite");
     maskShader.begin();
        maskShader.end();
+    //fbo.setDefaultTextureIndex(1);
 }
 //------------------------------------------------------------------
 void MixMask::setup() {
@@ -34,50 +35,46 @@ void MixMask::update() {
 //------------------------------------------------------------------
 void MixMask::draw(int x,int y, float scale) {
     ofSetColor(255, 255, 255);
-    fbo.draw(x, y,fbo.getWidth()*scale, fbo.getHeight()*scale);
+    fbo.draw(x, y,640*scale, 480*scale);
     ofDrawBitmapString(name, x + 10, y + 30);
 	
 }
 
-void MixMask::inputUpdated(ofImage & img){
+void MixMask::textureUpdated(ofTexture & img){
     
     fbo.begin();
     ofClear(255,255,255, 0);
-    
-
-    input[0]->getImage()->draw(0, 0);
+    input[0]->getTexture()->draw(0, 0);
     ofEnableAlphaBlending();
     ofPushMatrix();
-    ofTranslate(320, 240);
+    ofTranslate(width/2, heigth/2);
     ofPushMatrix();
     ofRotate(spin);
     ofPushMatrix();
-    ofTranslate(-320, -240);
+    ofTranslate(-width/2, -heigth/2);
     drawShader();
     ofPopMatrix();
     ofPopMatrix();
     ofPopMatrix();
-
-
     ofDisableBlendMode();
     fbo.end();
-    ofNotifyEvent(fboEvent, fbo, this);
+    ofNotifyEvent(textureEvent, fbo.getTextureReference(), this);
     
     
 }
 
 void MixMask::drawShader(){
     maskShader.begin();
-    maskShader.setUniformTexture("Tex0", input[0]->getImage()->getTextureReference(), 0);
-    maskShader.setUniformTexture("Tex1", input[1]->getImage()->getTextureReference(), 1);
+    maskShader.setUniformTexture("Tex0", *input[0]->getTexture(), 0);
+    maskShader.setUniformTexture("Tex1", *input[1]->getTexture(), 1);
 
     //our shader uses two textures, the top layer and the alpha
     //we can load two textures into a shader using the multi texture coordinate extensions
     glActiveTexture(GL_TEXTURE0_ARB);
-    input[0]->getImage()->getTextureReference().bind();
+    input[0]->getTexture()->bind();
     
     glActiveTexture(GL_TEXTURE1_ARB);
-    input[1]->getImage()->getTextureReference().bind();
+    input[1]->getTexture()->bind();
     
     //draw a quad the size of the frame
     glBegin(GL_QUADS);
@@ -104,10 +101,10 @@ void MixMask::drawShader(){
     
     //deactive and clean up
     glActiveTexture(GL_TEXTURE1_ARB);
-    input[0]->getImage()->getTextureReference().unbind();
+    input[0]->getTexture()->unbind();
     
     glActiveTexture(GL_TEXTURE0_ARB);
-    input[1]->getImage()->getTextureReference().unbind();
+    input[1]->getTexture()->unbind();
     
     maskShader.end();
 }

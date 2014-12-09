@@ -1,6 +1,5 @@
 <MAIN_SETTINGS>
     <SETTINGS>
-
         <INPUTS>
             <INPUT name="Video1" type="VIDEO">
                 <VIDEO path="movies/fingers.mov" />
@@ -9,6 +8,7 @@
             <INPUT name="Camera1" type="CAM" id=""/>
             <INPUT name="Pic" type="IMAGE" path="images/doguie.jpg"/>
             <INPUT name="Mask" type="IMAGE" path="images/mask.png"/>
+            <INPUT name="Particle" type="PARTICLE"/>
         </INPUTS>
 
         <VISUAL_LAYERS>
@@ -45,8 +45,6 @@
                 dq="20"
                 qn="40"
                 dht="80"/>
-            <VISUAL_LAYER name="IMG_PRO" type="IMAGE_PROCESSOR" inputSource="Pic"/>
-            <VISUAL_LAYER name="IMG_PRO2" type="IMAGE_PROCESSOR" inputSource="Mask"/>
         </VISUAL_LAYERS>
 
         <MIXERS>
@@ -59,8 +57,8 @@
                 <INPUT_SOURCE name="V_GLITCH2"/>
             </MIXER>	
             <MIXER name="spinMask" type="MASK">
-                <INPUT_SOURCE name="IMG_PRO"/>
-                <INPUT_SOURCE name="IMG_PRO2"/>
+                <INPUT_SOURCE name="Pic"/>
+                <INPUT_SOURCE name="Mask"/>
             </MIXER>    	
         </MIXERS>
 

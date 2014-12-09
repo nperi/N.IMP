@@ -7,32 +7,12 @@ void ofApp::setup() {
     ofSetWindowTitle("projeccion architectura");
     ofSetFrameRate(60);
     loadingOK = false;
-    /*
-    //creating a test setup
-    inputs.push_back(new InputCamera());
-    
-    VideoPlayerMac* player = new VideoPlayerMac();
-    player->loadVideo("fingers.mov");
-    inputs.push_back(player);
-    
-    
-    IkedaLayer* ik = new IkedaLayer();
-    ik->addInput(inputs[0]);
-    visualLayers.push_back(ik);
-    
-    IkedaLayer* ik2 = new IkedaLayer("layer");
-    ik2->addInput(inputs[1]);
-    visualLayers.push_back(ik2);
-    
-    mixtables.push_back(new MixSimpleBlend());
-    mixtables[0]->addInput(visualLayers[0]);
-    mixtables[0]->addInput(visualLayers[1]);
-    */
     
     //populating string dictionaries for simple comparison used in LoadFromXML
     inputTypes.insert(std::pair<string,InputType>("VIDEO",VIDEO));
     inputTypes.insert(std::pair<string,InputType>("CAM",CAM));
     inputTypes.insert(std::pair<string,InputType>("IMAGE",IMAGE));
+    inputTypes.insert(std::pair<string,InputType>("PARTICLE",PARTICLE));
     visualLayerTypes.insert(std::pair<string,VisualLayerType>("IKEDA", IKEDA));
     visualLayerTypes.insert(std::pair<string,VisualLayerType>("GLITCH_1", GLITCH_1));
     visualLayerTypes.insert(std::pair<string,VisualLayerType>("GLITCH_2", GLITCH_2));
@@ -44,7 +24,7 @@ void ofApp::setup() {
     
     if(loadingOK){
         //TODO: change mixtable assignment.
-        ofAddListener(mixtables[0]->fboEvent, this, &ofApp::updateSyphon);
+      //  ofAddListener(mixtables[0]->textureEvent, this, &ofApp::updateSyphon);
         
         //create Syphon Server
         mClient.setup();
@@ -85,6 +65,8 @@ void ofApp::draw() {
         info += "    switch layers <- ->";
         
         ofDrawBitmapString(info, 20, ofGetHeight()-20);
+        
+        ofDrawBitmapString(ofToString(ofGetFrameRate(),0), ofGetWidth() - 50, ofGetHeight()-20);
     }
     else{
         ofDrawBitmapString("ERROR LOADING XML", 50, 50);
@@ -170,6 +152,15 @@ bool ofApp::loadFromXML(){
                                 string  path = XML.getAttribute("INPUT", "path","default", i);
                                 
                                 iI->loadImage(path);
+                                
+                                inputs.push_back(iI);
+                                nodes.insert(std::pair<string,ImageOutput*>(inputName,iI));
+                                
+                                break;
+                            };
+                            case PARTICLE:
+                            {
+                                ParticleGenerator* iI = new ParticleGenerator(inputName);
                                 
                                 inputs.push_back(iI);
                                 nodes.insert(std::pair<string,ImageOutput*>(inputName,iI));

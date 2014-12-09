@@ -38,8 +38,8 @@ void IkedaLayer::update() {
 //------------------------------------------------------------------
 void IkedaLayer::draw(int x,int y, float scale) {
     ofSetColor(255, 255, 255);
-    img.draw(x, y,img.getWidth()*scale,img.getHeight()*scale);
-    
+    //img.draw(x, y,img.getWidth()*scale,img.getHeight()*scale);
+    tex.draw(x, y,img.getWidth()*scale,img.getHeight()*scale);
 }
 
 void IkedaLayer::inputUpdated(ofImage & img_){
@@ -82,6 +82,8 @@ void IkedaLayer::inputUpdated(ofImage & img_){
         invert(img);
     }
     img.update();
-
+    tex = img.getTextureReference();// .loadData(img.getPixels(), img.getWidth(), img.getHeight(), GL_RGB);
+    
     ofNotifyEvent(imageEvent, img, this);
+    ofNotifyEvent(textureEvent, tex, this);
 }

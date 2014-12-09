@@ -29,7 +29,6 @@ class InputCamera : public InputSource{
 
 private:
     ofVideoGrabber cam;
-    ofImage img;
     
 	
 };

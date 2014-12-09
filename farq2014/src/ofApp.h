@@ -15,6 +15,7 @@
 #include "InputCamera.h"
 #include "VideoPlayerMac.h"
 #include "ImageInput.h"
+#include "ParticleGenerator.h"
 #include "IkedaLayer.h"
 #include "GlitchLayer.h"
 #include "GlitchLayerAlt.h"
@@ -25,7 +26,7 @@
 #include "NodeViewer.h"
 #include "NodeElement.h"
 
-enum InputType {VIDEO, CAM, IMAGE};
+enum InputType {VIDEO, CAM, IMAGE, PARTICLE};
 enum VisualLayerType {IKEDA, GLITCH_1, GLITCH_2,IMAGE_PROCESSOR};
 enum MixerType {SIMPLE_BLEND, MASK};
 

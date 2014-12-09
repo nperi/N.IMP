@@ -11,8 +11,8 @@
 
 
 InputCamera::InputCamera(string name) : InputSource(name){
-    cam.initGrabber(640, 480);
-    img.allocate(640, 480, OF_IMAGE_COLOR);
+    cam.initGrabber(width, heigth);
+    //img.allocate(640, 480, OF_IMAGE_COLOR);
 }
 
 //------------------------------------------------------------------
@@ -25,8 +25,10 @@ void InputCamera::setup() {
 void InputCamera::update() {
     cam.update();
     if(cam.isFrameNew()) {
-        img.setFromPixels(cam.getPixels(), 640, 480, OF_IMAGE_COLOR);
+        img.setFromPixels(cam.getPixels(), width, heigth, OF_IMAGE_COLOR);
+        tex = img.getTextureReference();
         ofNotifyEvent(imageEvent, img, this);
+        ofNotifyEvent(textureEvent, tex, this);
     }
     
 }
