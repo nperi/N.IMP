@@ -75,8 +75,9 @@ void GlitchLayer::inputUpdated(ofImage & img_){
     }
     
     img.update();
+    tex = img.getTextureReference();
     ofNotifyEvent(imageEvent, img, this);
-    ofNotifyEvent(textureEvent, img.getTextureReference(), this);
+    ofNotifyEvent(textureEvent, tex, this);
 }
 
 void GlitchLayer::setGlitchParameters(){
