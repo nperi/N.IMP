@@ -21,7 +21,7 @@ void MultiChannelMixer::inputAdded(ImageOutput* in_){
     renderLayers[renderLayers.size()-1]->end();
     
     opacity.push_back(12);
-    gui.add(opacity[opacity.size()-1].set("channel " + ofToString(opacity.size()+1), 0, 0, 255));
+    gui.add(opacity[opacity.size()-1].set("channel " + ofToString(opacity.size()), 0, 0, 255));
 }
 
 
