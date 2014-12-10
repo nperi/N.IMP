@@ -13,18 +13,12 @@
 GlitchLayerAlt::GlitchLayerAlt(string name_):VisualLayer(name_){;
     
     //gui.add(name.setup("layer", name));
-
+    gui.add(isEnabled.setup("Enabled",isEnabled, 100,20));
     gui.add(dq.setup("DQ", 20,0,255));
     gui.add(qn.setup("QN", 40,0,255));
     gui.add(dht.setup("DHT", 80,0,255));
 
     glitcher.setup(dq, qn, dht);
-}
-
-
-//------------------------------------------------------------------
-void GlitchLayerAlt::update() {
-    
 }
 
 
@@ -35,9 +29,9 @@ void GlitchLayerAlt::draw(int x,int y, float scale) {
 }
 
 
-void GlitchLayerAlt::inputUpdated(ofImage & img_){
+void GlitchLayerAlt::update(){
     //process pipeline
-    img.setFromPixels(img_.getPixels(), width, heigth, OF_IMAGE_COLOR);
+    img.setFromPixels(input[0]->getImage()->getPixels(), width, heigth, OF_IMAGE_COLOR);
     
     if(isEnabled){
        
@@ -48,11 +42,10 @@ void GlitchLayerAlt::inputUpdated(ofImage & img_){
         
         glitcher.setPixels(img.getPixelsRef());
         glitcher.glitch();
+        img.setFromPixels(glitcher.getImage().getPixelsRef());
         
     }
     
     img.update();
-    ofNotifyEvent(imageEvent, img, this);
-    ofNotifyEvent(textureEvent, img.getTextureReference(), this);
     
 }

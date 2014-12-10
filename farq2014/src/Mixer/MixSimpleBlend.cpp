@@ -23,20 +23,10 @@ MixSimpleBlend::MixSimpleBlend(string name_):MixTable(name_){
     }
 }
 
-
-
 //------------------------------------------------------------------
 void MixSimpleBlend::setup() {
     
 }
-
-
-//------------------------------------------------------------------
-void MixSimpleBlend::update() {
-	
-	
-}
-
 
 //------------------------------------------------------------------
 void MixSimpleBlend::draw(int x,int y, float scale) {
@@ -45,7 +35,7 @@ void MixSimpleBlend::draw(int x,int y, float scale) {
 	ofDrawBitmapString(name, x + 10, y + 30);
 }
 
-void MixSimpleBlend::textureUpdated(ofTexture & img){
+void MixSimpleBlend::update(){
     fbo.begin();
     ofClear(255,255,255, 0);
     psBlend.begin();
@@ -57,5 +47,4 @@ void MixSimpleBlend::textureUpdated(ofTexture & img){
     }
     ofDisableBlendMode();
     fbo.end();
-    ofNotifyEvent(textureEvent, fbo.getTextureReference(), this);
 }

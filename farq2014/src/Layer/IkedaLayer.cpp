@@ -17,6 +17,7 @@ using namespace ofxCv;
 IkedaLayer::IkedaLayer(string name_, bool isCanny_,bool isThreshold_, bool isColumns_, bool isInvert_):VisualLayer(name_) {
    // gui.setup();
     
+    gui.add(isEnabled.setup("Enabled",isEnabled, 100,20));
     gui.add(isCanny.setup("Canny", isCanny_));
     gui.add(pCannyX.setup("CannyX", 12,0,255));
     gui.add(pCannyY.setup("CannyY", 12,0,255));
@@ -29,31 +30,25 @@ IkedaLayer::IkedaLayer(string name_, bool isCanny_,bool isThreshold_, bool isCol
 
 
 //------------------------------------------------------------------
-void IkedaLayer::update() {
-	
-	
-}
-
-
-//------------------------------------------------------------------
 void IkedaLayer::draw(int x,int y, float scale) {
     ofSetColor(255, 255, 255);
     //img.draw(x, y,img.getWidth()*scale,img.getHeight()*scale);
     tex.draw(x, y,img.getWidth()*scale,img.getHeight()*scale);
 }
 
-void IkedaLayer::inputUpdated(ofImage & img_){
+void IkedaLayer::update(){
     //process pipeline
     //img.setFromPixels(img_.getPixels(), 640, 480, OF_IMAGE_COLOR);
     //canny edge detection
+    img.setImageType(OF_IMAGE_GRAYSCALE);
+    //to gray image
+    convertColor(*(input[0]->getImage()), img, CV_RGB2GRAY);
+    
     if (isCanny) {
-        img.setImageType(OF_IMAGE_GRAYSCALE);
-        //to gray image
-        convertColor(img_, img, CV_RGB2GRAY);
         // canny edge detection
         Canny(img, img, pCannyX, pCannyY, 3);
     }
-    
+
     //reduce columns
     if (isColumns) {
         int n = img.getWidth() / (pNColumns);
@@ -84,6 +79,4 @@ void IkedaLayer::inputUpdated(ofImage & img_){
     img.update();
     tex = img.getTextureReference();// .loadData(img.getPixels(), img.getWidth(), img.getHeight(), GL_RGB);
     
-    ofNotifyEvent(imageEvent, img, this);
-    ofNotifyEvent(textureEvent, tex, this);
 }

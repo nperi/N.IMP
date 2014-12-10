@@ -19,10 +19,7 @@ public:
     
     GlitchLayer(string name_ = "glitchLayer");
     
-    void update();
     void draw(int x,int y, float scale);
-    
-    void inputUpdated(ofImage & img_);
     
     ofFbo			myFbo;
     ofTexture		texture;
@@ -50,6 +47,9 @@ public:
     ofxToggle do_CR_GREENINVERT;
 
 private:
+    
+    void update();
+    
     void setGlitchParameters();
     
 };

@@ -19,10 +19,11 @@ class ImageProcessor : public VisualLayer{
 	
 	ImageProcessor(string name_ = "visualLayer");
 	
-    void update();
     void draw(int x,int y, float scale);
+private:
+    void update();
+
 	
-    void inputUpdated(ofImage & img_);
 };
 
 #endif

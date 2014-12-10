@@ -27,12 +27,9 @@ void InputCamera::update() {
     if(cam.isFrameNew()) {
         img.setFromPixels(cam.getPixels(), width, heigth, OF_IMAGE_COLOR);
         tex = img.getTextureReference();
-        ofNotifyEvent(imageEvent, img, this);
-        ofNotifyEvent(textureEvent, tex, this);
     }
     
 }
-
 
 //------------------------------------------------------------------
 void InputCamera::draw(int x,int y, float scale) {

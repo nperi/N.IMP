@@ -13,33 +13,28 @@
 GlitchLayer::GlitchLayer(string name_):VisualLayer(name_){
     //gui.setup();
     
-    gui.add(do_CONVERGENCE.setup("CONVERGENCE"));
-    gui.add(do_GLOW.setup("GLOW"));
-    gui.add(do_SHAKER.setup("SHAKER"));
-    gui.add(do_CUTSLIDER.setup("CUTSLIDER"));
-    gui.add(do_TWIST.setup("TWIST"));
-    gui.add(do_OUTLINE.setup("OUTLINE"));
-    gui.add(do_NOISE.setup("NOISE"));
-    gui.add(do_SLITSCAN.setup("SLITSCAN"));
-    gui.add(do_SWELL.setup("SWELL"));
-    gui.add(do_INVERT.setup("INVERT"));
+    gui.add(isEnabled.setup("Enabled",isEnabled, 100,20));
+    gui.add(do_CONVERGENCE.setup("CONVERGENCE", do_CONVERGENCE, 100,20));
+    gui.add(do_GLOW.setup("GLOW", do_GLOW, 100,20));
+    gui.add(do_SHAKER.setup("SHAKER", do_SHAKER, 100,20));
+    gui.add(do_CUTSLIDER.setup("CUTSLIDER", do_CUTSLIDER, 100,20));
+    gui.add(do_TWIST.setup("TWIST", do_TWIST, 100,20));
+    gui.add(do_OUTLINE.setup("OUTLINE", do_OUTLINE, 100,20));
+    gui.add(do_NOISE.setup("NOISE", do_NOISE, 100,20));
+    gui.add(do_SLITSCAN.setup("SLITSCAN", do_SLITSCAN, 100,20));
+    gui.add(do_SWELL.setup("SWELL", do_SWELL, 100,20));
+    gui.add(do_INVERT.setup("INVERT", do_INVERT, 100,20));
     
-    gui.add(do_CR_HIGHCONTRAST.setup("HIGHCONTRAST"));
-    gui.add(do_CR_BLUERAISE.setup("BLUERAISE"));
-    gui.add(do_CR_REDRAISE.setup("REDRAISE"));
-    gui.add(do_CR_GREENRAISE.setup("GREENRAISE"));
-    gui.add(do_CR_BLUEINVERT.setup("BLUEINVERT"));
-    gui.add(do_CR_REDINVERT.setup("REDINVERT"));
-    gui.add(do_CR_GREENINVERT.setup("GREENINVERT"));
+    gui.add(do_CR_HIGHCONTRAST.setup("HIGHCONTRAST", do_CR_HIGHCONTRAST, 100,20));
+    gui.add(do_CR_BLUERAISE.setup("BLUERAISE", do_CR_BLUERAISE, 100,20));
+    gui.add(do_CR_REDRAISE.setup("REDRAISE", do_CR_REDRAISE, 100,20));
+    gui.add(do_CR_GREENRAISE.setup("GREENRAISE", do_CR_GREENRAISE, 100,20));
+    gui.add(do_CR_BLUEINVERT.setup("BLUEINVERT", do_CR_BLUEINVERT, 100,20));
+    gui.add(do_CR_REDINVERT.setup("REDINVERT", do_CR_REDINVERT, 100,20));
+    gui.add(do_CR_GREENINVERT.setup("GREENINVERT", do_CR_GREENINVERT, 100,20));
     
     myFbo.allocate(width, heigth);
     myGlitch.setup(&myFbo);
-}
-
-
-//------------------------------------------------------------------
-void GlitchLayer::update() {
-    
 }
 
 
@@ -49,10 +44,10 @@ void GlitchLayer::draw(int x,int y, float scale) {
     img.draw(x, y,640*scale,480*scale);
 }
 
-void GlitchLayer::inputUpdated(ofImage & img_){
+void GlitchLayer::update(){
     //process pipeline
     
-    img.setFromPixels(img_.getPixels(), width, heigth, OF_IMAGE_COLOR);
+    img.setFromPixels(input[0]->getImage()->getPixels(), width, heigth, OF_IMAGE_COLOR);
     
     if(isEnabled){
         
@@ -75,9 +70,6 @@ void GlitchLayer::inputUpdated(ofImage & img_){
     }
     
     img.update();
-    tex = img.getTextureReference();
-    ofNotifyEvent(imageEvent, img, this);
-    ofNotifyEvent(textureEvent, tex, this);
 }
 
 void GlitchLayer::setGlitchParameters(){

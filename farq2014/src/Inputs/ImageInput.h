@@ -19,16 +19,20 @@ public:
     ImageInput(string name = "image input");
     
     void setup();
-    void update();
     void draw(int x,int y, float scale);
     void loadImage(string path_);
-    void inputUpdated(ofImage & img){};
     
 private:
+    
+    void update();
     
     //ofImage img;
     string path;
     bool isLoaded;
+    
+    float fps;
+    unsigned long long lastFrameSent;
+    
 };
 
 

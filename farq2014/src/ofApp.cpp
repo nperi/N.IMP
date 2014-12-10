@@ -5,7 +5,7 @@ using namespace ofxCv;
 
 void ofApp::setup() {
     ofSetWindowTitle("projeccion architectura");
-    ofSetFrameRate(60);
+    ofSetFrameRate(30);
     loadingOK = false;
     
     //populating string dictionaries for simple comparison used in LoadFromXML
@@ -40,10 +40,12 @@ void ofApp::setup() {
 
 void ofApp::update() {
     if(loadingOK){
-        //updating inputs
-        for (int i=0; i<inputs.size(); ++i) {
-            inputs[i]->update();
+        //resetting processed flags
+        for (int i=0; i<nodesVector.size(); ++i) {
+            nodesVector[i]->resetProcessedFlag();
         }
+
+        syphonExport.publishTexture(mixtables[0]->getTexture());
     }
 }
 
@@ -75,7 +77,7 @@ void ofApp::draw() {
 
 void ofApp::updateSyphon(ofFbo & img){
     if(loadingOK){
-        syphonExport.publishTexture(&img.getTextureReference());
+        
     }
 }
 
@@ -544,6 +546,22 @@ bool ofApp::loadFromXML(){
         
     }
     
+    if(!result){
+        ofLogNotice() << message;
+    }
+    else{
+        //populating the nodes vector for fast iteration in the main loop.
+        for(int i=0; i<inputs.size();i++){
+            nodesVector.push_back(inputs[i]);
+        }
+        for(int i=0; i<visualLayers.size();i++){
+            nodesVector.push_back(visualLayers[i]);
+        }
+        for(int i=0; i<mixtables.size();i++){
+            nodesVector.push_back(mixtables[i]);
+        }
+    }
+    
     return result;
 
 }
@@ -587,6 +605,9 @@ void ofApp::keyPressed  (int key){
                     break;
                 case '0':
                     setCurrentViewer(9);
+                    break;
+                default:
+                    notAvailable = true;
                     break;
             }
     if (notAvailable) ofLogNotice() << "key function not available";

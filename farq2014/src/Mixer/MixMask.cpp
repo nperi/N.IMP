@@ -26,13 +26,6 @@ void MixMask::setup() {
 
 
 //------------------------------------------------------------------
-void MixMask::update() {
-	
-	
-}
-
-
-//------------------------------------------------------------------
 void MixMask::draw(int x,int y, float scale) {
     ofSetColor(255, 255, 255);
     fbo.draw(x, y,640*scale, 480*scale);
@@ -40,7 +33,7 @@ void MixMask::draw(int x,int y, float scale) {
 	
 }
 
-void MixMask::textureUpdated(ofTexture & img){
+void MixMask::update(){
     
     fbo.begin();
     ofClear(255,255,255, 0);
@@ -58,8 +51,6 @@ void MixMask::textureUpdated(ofTexture & img){
     ofPopMatrix();
     ofDisableBlendMode();
     fbo.end();
-    ofNotifyEvent(textureEvent, fbo.getTextureReference(), this);
-    
     
 }
 

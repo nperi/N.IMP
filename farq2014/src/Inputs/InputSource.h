@@ -23,7 +23,6 @@ class InputSource : public ImageOutput{
 	
     InputSource(string name_):ImageOutput(name_){};
 	
-	virtual void update() = 0;
 };
 
 #endif

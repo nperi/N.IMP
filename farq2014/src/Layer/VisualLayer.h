@@ -26,21 +26,14 @@ class VisualLayer : public ImageOutput{
   public:
 	
     VisualLayer(string name_);
-	
-	virtual void update() = 0;
-	
     
     void setEnable(bool isEnabled_);
     void inputEvent(map<string, Param*>* params);
     
-    virtual void inputUpdated(ofImage & img_) = 0;
-    
-    
-    
 protected:
-    bool isEnabled;
-    bool firstInit;
     
+    ofxToggle isEnabled;
+    bool firstInit;
     
     
     //route mouse events

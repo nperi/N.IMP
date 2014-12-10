@@ -16,8 +16,7 @@ ImageProcessor::ImageProcessor(string name_):VisualLayer(name_){
 
 //------------------------------------------------------------------
 void ImageProcessor::update() {
-	
-	
+   
 }
 
 
@@ -25,13 +24,4 @@ void ImageProcessor::update() {
 void ImageProcessor::draw(int x,int y, float scale) {
 	
 	
-}
-void ImageProcessor::inputUpdated(ofImage & img_){
-    
-    img.setFromPixels(img_.getPixels(), width, heigth, OF_IMAGE_COLOR);
-    
-    
-    img.update();
-    ofNotifyEvent(imageEvent, img, this);
-    ofNotifyEvent(textureEvent, img.getTextureReference(), this);
 }
