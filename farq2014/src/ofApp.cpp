@@ -19,6 +19,7 @@ void ofApp::setup() {
     visualLayerTypes.insert(std::pair<string,VisualLayerType>("IMAGE_PROCESSOR", IMAGE_PROCESSOR));
     mixerTypes.insert(std::pair<string,MixerType>("MASK", MASK));
     mixerTypes.insert(std::pair<string,MixerType>("SIMPLE_BLEND", SIMPLE_BLEND));
+    mixerTypes.insert(std::pair<string,MixerType>("MULTI_CHANNEL", MULTI_CHANNEL));
 
     loadingOK = loadFromXML();
     
@@ -407,6 +408,38 @@ bool ofApp::loadFromXML(){
                                 case MASK:
                                 {
                                     MixMask* mMM = new MixMask(name);
+                                    XML.pushTag("MIXER",i);
+                                    
+                                    int numINPUTTag = XML.getNumTags("INPUT_SOURCE");
+                                    std::map<string,ImageOutput*>::iterator it;
+                                    
+                                    for(int j=0; j<numINPUTTag; j++){
+                                        string inputName = XML.getAttribute("INPUT_SOURCE","name","default",j);
+                                        
+                                        it = nodes.find(inputName);
+                                        
+                                        if(it!=nodes.end()){
+                                            ImageOutput * iO = it->second;
+                                            
+                                            mMM->addInput(iO);
+                                        }
+                                        else{
+                                            result = false;
+                                            message = "node not foud!";
+                                        }
+                                        
+                                    }
+                                    
+                                    mixtables.push_back(mMM);
+                                    nodes.insert(std::pair<string, ImageOutput*>(name, mMM));
+                                    //MIXER POP
+                                    XML.popTag();
+                                    
+                                    break;
+                                };
+                                case MULTI_CHANNEL:
+                                {
+                                    MultiChannelMixer* mMM = new MultiChannelMixer(name);
                                     XML.pushTag("MIXER",i);
                                     
                                     int numINPUTTag = XML.getNumTags("INPUT_SOURCE");

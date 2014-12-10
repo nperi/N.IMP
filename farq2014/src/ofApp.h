@@ -22,13 +22,14 @@
 #include "ImageProcessor.h"
 #include "MixSimpleBlend.h"
 #include "MixMask.h"
+#include "MultiChannelMixer.h"
 
 #include "NodeViewer.h"
 #include "NodeElement.h"
 
 enum InputType {VIDEO, CAM, IMAGE, PARTICLE};
 enum VisualLayerType {IKEDA, GLITCH_1, GLITCH_2,IMAGE_PROCESSOR};
-enum MixerType {SIMPLE_BLEND, MASK};
+enum MixerType {SIMPLE_BLEND, MASK, MULTI_CHANNEL};
 
 class ofApp : public ofBaseApp {
 public:

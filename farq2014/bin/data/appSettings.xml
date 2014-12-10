@@ -51,6 +51,16 @@
         </VISUAL_LAYERS>
 
         <MIXERS>
+            <MIXER name="multiChannel" type="MULTI_CHANNEL">
+                <INPUT_SOURCE name="Camera1"/>
+                <INPUT_SOURCE name="Mask"/>
+                <INPUT_SOURCE name="Video1"/>
+                <INPUT_SOURCE name="V_IKEDA"/>
+                <INPUT_SOURCE name="Camera1"/>
+                <INPUT_SOURCE name="Mask"/>
+                <INPUT_SOURCE name="Video1"/>
+                <INPUT_SOURCE name="V_IKEDA"/>
+            </MIXER>
             <MIXER name="mainMix" type="SIMPLE_BLEND">
                 <INPUT_SOURCE name="V_IKEDA"/>
                 <INPUT_SOURCE name="Video1"/>
@@ -59,17 +69,13 @@
                 <INPUT_SOURCE name="V_IKEDA"/>
                 <INPUT_SOURCE name="V_GLITCH1"/>
             </MIXER>	
-            <MIXER name="spinMask" type="MASK">
-                <INPUT_SOURCE name="Camera1"/>
-                <INPUT_SOURCE name="Mask"/>
-            </MIXER>
         </MIXERS>
 
     </SETTINGS>
 
     <NODE_VIEWS>
         <NODE_VIEW name="OUTPUT">
-            <NODE name="mainMix" x="20" y="20" guiX="730" guiY="20" imageScale="1" guiWidth="250" />
+            <NODE name="multiChannel" x="20" y="20" guiX="1370" guiY="20" imageScale="1.35" guiWidth="200" />
         </NODE_VIEW>
         <NODE_VIEW name="IKEDA-INPUT">
             <!--NODE name="Camera1" x="20" y="20" guiX="0" guiY="20" imageScale="0.3" guiWidth="200" /-->
@@ -89,11 +95,6 @@
             <NODE name="V_IKEDA" x="340" y="20" guiX="400" guiY="560" imageScale="0.5" guiWidth="200" />
             <NODE name="V_GLITCH2" x="340" y="300" guiX="750" guiY="380" imageScale="0.5" guiWidth="200" />
             <NODE name="mainMix" x="680" y="20" guiX="750" guiY="300" imageScale="0.5" guiWidth="200" />
-        </NODE_VIEW>
-        <NODE_VIEW name="MASK">
-            <NODE name="spinMask" x="20" y="20" guiX="730" guiY="20" imageScale="1" guiWidth="250" />
-            <NODE name="Pic" x="20" y="520" guiX="730" guiY="20" imageScale="0.3" guiWidth="250" />
-            <NODE name="Mask" x="300" y="520" guiX="730" guiY="20" imageScale="0.3" guiWidth="250" />
         </NODE_VIEW>
         <NODE_VIEW name="view1">
             
