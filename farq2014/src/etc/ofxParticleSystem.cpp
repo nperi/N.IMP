@@ -9,21 +9,14 @@
 
 #include "ofxParticleSystem.h"
 
-ofxParticleSystem::ofxParticleSystem() {
-}
-
-ofxParticleSystem::ofxParticleSystem(int initialAmount) {
-	//addParticles(initialAmount);
-    for (int i = 0; i <initialAmount; i++){		
-		
-		ofxParticle myParticle;
-		myParticle.setInitialCondition(ofRandom(0,ofGetWidth()),ofRandom(0,ofGetHeight()),0,0);
-		particles.push_back(myParticle);
-		
-        bRepel		= true;
-        radius		= 100;
-        strength	= 0.5f;
-	}
+ofxParticleSystem::ofxParticleSystem(int initialAmount, int width_, int heigth_) {
+    width = width_;
+    height = heigth_;
+    bRepel		= true;
+    radius		= 100;
+    strength	= 0.5f;
+    
+    addParticles(initialAmount);
 }
 
 void ofxParticleSystem::update() {
@@ -104,17 +97,19 @@ void ofxParticleSystem::draw() {
 }
 
 void ofxParticleSystem::addParticles( int amount ) {
-	/*for (int i = 0; i < amount; i++) {
-		particles.push_back( ofxParticle() );
-	}*/
+	for (int i = 0; i < amount; i++) {
+        ofxParticle myParticle(width,height);
+        myParticle.setInitialCondition(ofRandom(0,width),ofRandom(0,height),0,0);
+        particles.push_back( myParticle );
+	}
 }
 
 void ofxParticleSystem::removeParticles( int amount ) {
-	/*for (int i = 0; i < amount; i++) {
+	for (int i = 0; i < amount; i++) {
 		if (!particles.empty()) {
 			particles.pop_back();
 		}
-	}*/
+	}
 }
 
 int ofxParticleSystem::numParticles() {

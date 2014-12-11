@@ -21,7 +21,7 @@ class ofxParticle{
         ofVec2f vel;
         ofVec2f frc;   // frc is also know as acceleration (newton says "f=ma")
 			
-        ofxParticle();
+        ofxParticle(int width_ = 1024,int heigth = 768);
 		virtual ~ofxParticle(){};
 
         void resetForce();
@@ -58,6 +58,7 @@ class ofxParticle{
 
     protected:
     private:
+    int width,height;
 };
 
 #endif // PARTICLE_H

@@ -2,8 +2,12 @@
 #include "ofMain.h"
 
 //------------------------------------------------------------
-ofxParticle::ofxParticle(){
+ofxParticle::ofxParticle(int width_,int heigth_){
 	setInitialCondition(0,0,0,0);
+    
+    width = width_;
+    height = heigth_;
+    
 	damping	= 0.03f;
 	
 	seperation.distance		= 35;
@@ -317,7 +321,7 @@ void ofxParticle::setInitialCondition(float px, float py, float vx, float vy){
     pos.set(px,py);
 	vel.set(vx,vy);
 	
-	trail.clear();
+	//trail.clear();
 }
 
 //------------------------------------------------------------
@@ -386,8 +390,8 @@ void ofxParticle::bounceOffWalls(){
 	// what are the walls
 	float minx = 0;
 	float miny = 0;
-	float maxx = 640;
-	float maxy = 480;
+	float maxx = width;
+	float maxy = height;
 	
 	if (pos.x > maxx){
 		pos.x = maxx; // move to the edge, (important!)

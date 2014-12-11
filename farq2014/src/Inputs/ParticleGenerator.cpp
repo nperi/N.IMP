@@ -18,6 +18,10 @@ ParticleGenerator::ParticleGenerator(string name) : InputSource(name){
     fbo.allocate(s);
     
     particle = new ofxParticleSystem(100);
+    
+    gui.add(bAddParticles.setup("add Particles"));
+    gui.add(bRemoveParticles.setup("remove Particles"));
+    
     for(int i=0; i<nForces; ++i){
         force.push_back(ParticleForce());
         if (i%2) force[i].isAttracting = true;
@@ -35,6 +39,13 @@ void ParticleGenerator::setup() {
 
 //------------------------------------------------------------------
 void ParticleGenerator::update() {
+    if (bAddParticles) {
+        particle->addParticles(10);
+    }
+    if (bRemoveParticles) {
+        particle->removeParticles(10);
+    }
+    
     for(int i=0; i<force.size();++i){
         if (force[i].isAttracting) {
             particle->addAttractionForce(force[i].pos->x, force[i].pos->y, force[i].radius, force[i].scale);

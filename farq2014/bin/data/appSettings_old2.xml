@@ -1,0 +1,30 @@
+<MAIN_SETTINGS>
+    <SETTINGS>
+        <INPUTS>
+            <INPUT name="vStars" type="VIDEO">
+                <VIDEO path="movies/stars.mov" />
+            </INPUT>
+            <INPUT name="Particle" type="PARTICLE"/>
+        </INPUTS>
+
+        <VISUAL_LAYERS>
+        </VISUAL_LAYERS>
+
+        <MIXERS>
+            <MIXER name="ParticleBlend" type="SIMPLE_BLEND">
+                <INPUT_SOURCE name="vStars"/>
+                <INPUT_SOURCE name="Particle"/>
+            </MIXER>	
+        </MIXERS>
+
+    </SETTINGS>
+
+    <NODE_VIEWS>
+        <NODE_VIEW name="ParticleBlend">
+            <NODE name="ParticleBlend" x="20" y="20" guiX="680" guiY="20" imageScale="1" guiWidth="200" />
+            <NODE name="Particle" x="700" y="20" guiX="700" guiY="540" imageScale="1" guiWidth="200" />
+            <NODE name="vStars" x="20" y="540" guiX="400" guiY="540" imageScale=".3" guiWidth="200" />
+        </NODE_VIEW>
+        
+    </NODE_VIEWS>
+</MAIN_SETTINGS>

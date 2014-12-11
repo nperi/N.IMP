@@ -59,6 +59,8 @@
 		D3A227161A373375005DD5AF /* ofxParticleSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D3A227091A37241C005DD5AF /* ofxParticleSystem.cpp */; };
 		D3A2271E1A3756B1005DD5AF /* ImageOutput.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D3A2271D1A3756B1005DD5AF /* ImageOutput.cpp */; };
 		D3A227281A38711E005DD5AF /* MultiChannelMixer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D3A227261A38711E005DD5AF /* MultiChannelMixer.cpp */; };
+		D3A227461A39C10E005DD5AF /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = D3A227421A39C10E005DD5AF /* README.md */; };
+		D3A227471A39C10E005DD5AF /* ofxImageSequencePlayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D3A227441A39C10E005DD5AF /* ofxImageSequencePlayer.cpp */; };
 		DBCB84A37F9AECC254870D79 /* Wrappers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D347FB65D19015303863922A /* Wrappers.cpp */; };
 		E4328149138ABC9F0047C5CB /* openFrameworksDebug.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E4328148138ABC890047C5CB /* openFrameworksDebug.a */; };
 		E45BE97B0E8CC7DD009D7055 /* AGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E45BE9710E8CC7DD009D7055 /* AGL.framework */; };
@@ -228,6 +230,10 @@
 		D3A2271D1A3756B1005DD5AF /* ImageOutput.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ImageOutput.cpp; sourceTree = "<group>"; };
 		D3A227261A38711E005DD5AF /* MultiChannelMixer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MultiChannelMixer.cpp; sourceTree = "<group>"; };
 		D3A227271A38711E005DD5AF /* MultiChannelMixer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MultiChannelMixer.h; sourceTree = "<group>"; };
+		D3A227411A39C10E005DD5AF /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		D3A227421A39C10E005DD5AF /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		D3A227441A39C10E005DD5AF /* ofxImageSequencePlayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxImageSequencePlayer.cpp; sourceTree = "<group>"; };
+		D3A227451A39C10E005DD5AF /* ofxImageSequencePlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxImageSequencePlayer.h; sourceTree = "<group>"; };
 		D58DCB2C0AEFDE6171E29540 /* Syphon.framework */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = wrapper.framework; name = Syphon.framework; path = ../../../addons/ofxSyphon/libs/Syphon/lib/osx/Syphon.framework; sourceTree = "<group>"; };
 		DB0CD4C938C079DCD67222FE /* imatrix.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = imatrix.h; path = ../../../addons/ofxCv/libs/CLD/include/CLD/imatrix.h; sourceTree = SOURCE_ROOT; };
 		E112B3AEBEA2C091BF2B40AE /* ofxPanel.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = ofxPanel.cpp; path = ../../../addons/ofxGui/src/ofxPanel.cpp; sourceTree = SOURCE_ROOT; };
@@ -684,6 +690,7 @@
 		D3A227061A37241C005DD5AF /* etc */ = {
 			isa = PBXGroup;
 			children = (
+				D3A227401A39C10E005DD5AF /* ofxImageSequencePlayer */,
 				D3A227071A37241C005DD5AF /* ofxParticle.cpp */,
 				D3A227081A37241C005DD5AF /* ofxParticle.h */,
 				D3A227091A37241C005DD5AF /* ofxParticleSystem.cpp */,
@@ -692,6 +699,25 @@
 				D3A227121A372AA3005DD5AF /* ParticleForce.h */,
 			);
 			path = etc;
+			sourceTree = "<group>";
+		};
+		D3A227401A39C10E005DD5AF /* ofxImageSequencePlayer */ = {
+			isa = PBXGroup;
+			children = (
+				D3A227411A39C10E005DD5AF /* .gitignore */,
+				D3A227421A39C10E005DD5AF /* README.md */,
+				D3A227431A39C10E005DD5AF /* src */,
+			);
+			path = ofxImageSequencePlayer;
+			sourceTree = "<group>";
+		};
+		D3A227431A39C10E005DD5AF /* src */ = {
+			isa = PBXGroup;
+			children = (
+				D3A227441A39C10E005DD5AF /* ofxImageSequencePlayer.cpp */,
+				D3A227451A39C10E005DD5AF /* ofxImageSequencePlayer.h */,
+			);
+			path = src;
 			sourceTree = "<group>";
 		};
 		E4328144138ABC890047C5CB /* Products */ = {
@@ -892,11 +918,13 @@
 				EBCDE831EFAE08274E799C97 /* Calibration.cpp in Sources */,
 				6AABAB39E82AF5CFEA23A205 /* ContourFinder.cpp in Sources */,
 				45CC483A999BF1065A6B926C /* Distance.cpp in Sources */,
+				D3A227461A39C10E005DD5AF /* README.md in Sources */,
 				D309EB881A2E99E5008B3D94 /* MixTable.cpp in Sources */,
 				5CC34D433F5806179935B89D /* Flow.cpp in Sources */,
 				2023EF517ED2D8B397511D4B /* Helpers.cpp in Sources */,
 				311DF864378748129984EA1D /* Kalman.cpp in Sources */,
 				D3A2271E1A3756B1005DD5AF /* ImageOutput.cpp in Sources */,
+				D3A227471A39C10E005DD5AF /* ofxImageSequencePlayer.cpp in Sources */,
 				D3A227281A38711E005DD5AF /* MultiChannelMixer.cpp in Sources */,
 				C602002DE761F9B52DB4400A /* ObjectFinder.cpp in Sources */,
 				7CDAD32BE4FA46701E3552C7 /* RunningBackground.cpp in Sources */,

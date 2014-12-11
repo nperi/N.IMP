@@ -13,7 +13,11 @@
 #include "ofMain.h"
 #include "MixTable.h"
 #include "ofxGui.h"
-#include "ofxPSBlend.h"
+
+/*  Mixes up to 8 channels with alpha blend
+    
+    includes channelpreview
+ */
 
 class MultiChannelMixer : public MixTable{
 	
@@ -29,7 +33,6 @@ private:
     void inputAdded(ImageOutput* in_);
     void update();
     
-    ofxPSBlend psBlend;
     vector<ofFbo*> renderLayers;
     vector<ofParameter<float> > opacity;
     

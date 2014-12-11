@@ -10,7 +10,6 @@
 #include "MultiChannelMixer.h"
 
 MultiChannelMixer::MultiChannelMixer(string name_):MixTable(name_){
-    psBlend.setup(width, heigth);
     maxInputs = 8;
 }
 void MultiChannelMixer::inputAdded(ImageOutput* in_){
@@ -63,16 +62,10 @@ void MultiChannelMixer::update() {
 void MultiChannelMixer::draw(int x,int y, float scale) {
     ofSetColor(255, 255, 255);
     fbo.draw(x, y,640*scale, 480*scale);
-    /*ofDrawBitmapString(name, x + 10, y + 30);
-    ofDrawBitmapString("Channel       Blendmode          Opacity", x + 10, y + 480*scale + 20);
-    ofDrawBitmapString("---------     ---------          -------", x + 10, y + 480*scale + 30);
-    for (int i=0; i<controls.size(); ++i) {
-        ofDrawBitmapString("channel " + ofToString(i+1), x + 10, y + 480*scale + 45 + (i*15));
-        ofDrawBitmapString(psBlend.getBlendMode(controls[i].blendMode), x + 123, y + 480*scale + 45 + (i*15));
-        ofDrawBitmapString(ofToString((int)ofMap(controls[i].opacity,0,255,0,100)), x + 280, y + 480*scale + 45 + (i*15));
-    }*/
-    int h = (480*scale)/input.size()*2;
-    int w = (640*scale)/input.size()*2;
+    
+    int is = (input.size() < 2) ? 2 : input.size();
+    int h = (480*scale)/(is%4);
+    int w = (640*scale)/(is%4);
     
     for (int i=0; i<renderLayers.size(); ++i) {
         ofPushMatrix();
