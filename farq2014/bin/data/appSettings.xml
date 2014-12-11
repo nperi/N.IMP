@@ -5,9 +5,7 @@
             <INPUT name="vStars" type="VIDEO">
                 <VIDEO path="movies/stars.mov" />
             </INPUT>
-            <INPUT name="vFlicker" type="VIDEO">
-                <VIDEO path="movies/flicker.mov" />
-            </INPUT>
+            <INPUT name="vFlicker" type="IMAGE" path="movies/flicker.mov" />
             <INPUT name="Pic" type="IMAGE" path="test"
                    palindrom="true"
             />

@@ -13,6 +13,7 @@ ImageInput::ImageInput(string name) : InputSource(name){
     lastFrameSent = ofGetElapsedTimeMillis();
     
     isImageSequence = false;
+    isVideo = false;
     img.allocate(width, heigth, OF_IMAGE_COLOR_ALPHA);
 }
 
@@ -23,13 +24,16 @@ void ImageInput::setup(){
 void ImageInput::update(){
     if (isImageSequence && isPlaying) {
         player.update();
-        //player.nextFrame();
         if (player.isFrameNew()) {
             tex = *player.getTexture();
         }
+    }else if (isVideo && isPlaying){
+        videoPlayer.update();
+        if (videoPlayer.isFrameNew()){
+            img.setFromPixels(videoPlayer.getPixels(), videoPlayer.getWidth(), videoPlayer.getHeight(), OF_IMAGE_COLOR_ALPHA);
+            tex = img.getTextureReference();
+        }
     }
-    
-    
 }
 
 void ImageInput::draw(int x,int y, float scale){
@@ -43,7 +47,25 @@ void ImageInput::draw(int x,int y, float scale){
 
 void ImageInput::loadImage(string path_){
     //load image sequence
-    if (!ofIsStringInString(path_, ".")) {
+    if (ofIsStringInString(path_, ".mov")) {
+        ofQTKitDecodeMode decodeMode = OF_QTKIT_DECODE_PIXELS_AND_TEXTURE;
+        videoPlayer.setPixelFormat(OF_PIXELS_RGBA);
+        videoPlayer.loadMovie(path_, decodeMode);
+        isVideo = true;
+        
+        gui.add(isPlaying.set("Play",true));
+        //gui.add(isPalindromLoop.set("LoopPalindrom",false));
+        //gui.add(isMatchBpmToSequenceLength.set("match BPM to Sequence Length",false));
+        //gui.add(bpm.set("bpm", 100, 10, 200));
+        //gui.add(bpmMultiplier.set("bpmMultiplier", 4, 1, 40));
+        //player.setFrameRate(bpm*((float)bpmMultiplier)/60.0);
+        //gui.add(nextFrame.setup("nextFrame"));
+        //gui.add(previousFrame.setup("previousFrame"));
+        
+        videoPlayer.play();
+        //add controls for video player
+    }
+    else if (!ofIsStringInString(path_, ".")) {
         ofDirectory dir;
         dir.listDir(path_);
         player.loadMovie(path_);
@@ -72,10 +94,6 @@ void ImageInput::loadImage(string path_){
         player.setFrameRate(bpm*((float)bpmMultiplier)/60.0);
         gui.add(nextFrame.setup("nextFrame"));
         gui.add(previousFrame.setup("previousFrame"));
-        
-        
-        
-        
         player.play();
     }
     //load single image
@@ -133,5 +151,7 @@ void ImageInput::nextFrameChanged(){
     player.nextFrame();
     tex = *player.getTexture();
 }
+
+
 
 

@@ -36,7 +36,7 @@
 		<key>37526DA425E5430474A14FBFA1BC4525160B5FC1</key>
 		<string>../../../../addons/ofxCv</string>
 		<key>948EE651663C32063606289EDDFF747A436F0AF9</key>
-		<string>../../../../../addons/ofxImageSequencePlayer</string>
+		<string>../../../../addons/ofxImageSequencePlayer</string>
 		<key>AD4BEB8D191D3A37A0E32AAC674B3540263DA07F</key>
 		<string>../../../../addons/ofxJpegGlitch</string>
 		<key>DF8CF2077679A8E9DC1BA352D6E976FCED7DE749</key>

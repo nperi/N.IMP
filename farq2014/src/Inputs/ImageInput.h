@@ -43,7 +43,9 @@ private:
     unsigned long long lastFrameSent;
     
     ofxImageSequencePlayer player;
+    ofQTKitPlayer videoPlayer;
     bool isImageSequence;
+    bool isVideo;
     
     void loopTypeChanged(bool &b);
     void bpmChanged(float &b);
