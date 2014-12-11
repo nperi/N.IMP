@@ -46,7 +46,7 @@ void ofApp::update() {
             nodesVector[i]->resetProcessedFlag();
         }
 
-        syphonExport.publishTexture(mixtables[0]->getTexture());
+        syphonExport.publishTexture(mixtables[mixtables.size()-1]->getTexture());
     }
 }
 
@@ -386,6 +386,12 @@ bool ofApp::loadFromXML(){
                             switch(mixerTypes[type]){
                                 case SIMPLE_BLEND:
                                 {
+                                    int selectorL = ofToInt(XML.getAttribute("MIXER","selectorLeft","0", i));
+                                    int selectorR = ofToInt(XML.getAttribute("MIXER","selectorRight","0", i));
+                                    int blendmode = ofToInt(XML.getAttribute("MIXER","blendmode","0", i));
+                                    float opacity = ofToFloat(XML.getAttribute("MIXER","opacity","0", i));
+                                    
+
                                     MixSimpleBlend* mSB = new MixSimpleBlend(name);
                                     XML.pushTag("MIXER",i);
                                     
@@ -408,6 +414,10 @@ bool ofApp::loadFromXML(){
                                         }
                                         
                                     }
+                                    mSB->selector1 = selectorL;
+                                    mSB->selector2 = selectorR;
+                                    mSB->opacity = opacity;
+                                    mSB->blendMode = blendmode;
                                     
                                     mixtables.push_back(mSB);
                                     nodes.insert(std::pair<string, ImageOutput*>(name, mSB));
@@ -455,10 +465,10 @@ bool ofApp::loadFromXML(){
                                     
                                     int numINPUTTag = XML.getNumTags("INPUT_SOURCE");
                                     std::map<string,ImageOutput*>::iterator it;
-                                    
+                                    int interfaceOption =  ofToInt(XML.getAttribute("INPUT_SOURCE","interfaceOption","1",i));
                                     for(int j=0; j<numINPUTTag; j++){
                                         string inputName = XML.getAttribute("INPUT_SOURCE","name","default",j);
-                                        
+                            
                                         it = nodes.find(inputName);
                                         
                                         if(it!=nodes.end()){
@@ -472,7 +482,7 @@ bool ofApp::loadFromXML(){
                                         }
                                         
                                     }
-                                    
+                                    mMM->interfaceOption = interfaceOption;
                                     mixtables.push_back(mMM);
                                     nodes.insert(std::pair<string, ImageOutput*>(name, mMM));
                                     //MIXER POP

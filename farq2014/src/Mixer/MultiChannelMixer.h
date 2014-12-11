@@ -27,7 +27,7 @@ class MultiChannelMixer : public MixTable{
 	
 	void setup();
 	void draw(int x,int y, float scale);
-    
+    ofParameter<int> interfaceOption; //0 - 8 windows | 1 - 2 windows
     
 private:
     void inputAdded(ImageOutput* in_);
@@ -35,6 +35,8 @@ private:
     
     vector<ofFbo*> renderLayers;
     vector<ofParameter<float> > opacity;
+    
+    void drawBigInterface(int x,int y, float scale);
     
 };
 

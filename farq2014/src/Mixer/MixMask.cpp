@@ -51,7 +51,7 @@ void MixMask::update(){
     ofPopMatrix();
     ofDisableBlendMode();
     fbo.end();
-    
+    tex = fbo.getTextureReference();
 }
 
 void MixMask::drawShader(){

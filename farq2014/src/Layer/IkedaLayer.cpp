@@ -33,7 +33,7 @@ IkedaLayer::IkedaLayer(string name_, bool isCanny_,bool isThreshold_, bool isCol
 void IkedaLayer::draw(int x,int y, float scale) {
     ofSetColor(255, 255, 255);
     //img.draw(x, y,img.getWidth()*scale,img.getHeight()*scale);
-    tex.draw(x, y,img.getWidth()*scale,img.getHeight()*scale);
+    tex.draw(x, y,640*scale,480*scale);
 }
 
 void IkedaLayer::update(){

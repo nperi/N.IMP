@@ -12,15 +12,20 @@
 MixSimpleBlend::MixSimpleBlend(string name_):MixTable(name_){
     psBlend.setup(width, heigth);
     
-    maxInputs = 2;
-    //gui.setup();
-    //gui.add(name.setup("", name_));
-    gui.add(blendMode.setup("Blendmode", 10, 0, 24));
-    for (int i=0; i<4; ++i) {
-        ofxIntSlider s;
-        alphaSlider.push_back(s);
-       // gui.add(alphaSlider[i].setup("alpha " + ofToString(i), 128, 0, 255));
-    }
+    maxInputs = 16;
+
+    gui.add(blendMode.set("normal", 0, 0, 24));
+    gui.add(opacity.set("opacity", 0, 0, 255));
+    gui.add(selector1.set("Left Source", 0, 0, 0));
+    gui.add(selector2.set("Right Source", 0, 0, 0));
+    
+
+    
+    blendMode.addListener(this, &MixSimpleBlend::blendModeChanged);
+
+
+    
+
 }
 
 //------------------------------------------------------------------
@@ -31,20 +36,54 @@ void MixSimpleBlend::setup() {
 //------------------------------------------------------------------
 void MixSimpleBlend::draw(int x,int y, float scale) {
     ofSetColor(255, 255, 255);
-    fbo.draw(x, y,640*scale, 480*scale);
-	ofDrawBitmapString(name, x + 10, y + 30);
+    int w = 640*scale;
+    int h = 480*scale;
+    ofPushMatrix();
+    ofTranslate(x, y);
+    
+    fbo.draw(0, 0, w, h);
+    ofDrawBitmapString(name + "\n"+
+                        input[selector1]->getName()+ " / " + input[selector2]->getName()+"\n"+
+                        psBlend.getBlendMode(blendMode) + " " + ofToString(ofMap(opacity,0,255,0,100)), 10, 30);
+
+    ofPopMatrix();
 }
 
 void MixSimpleBlend::update(){
     fbo.begin();
     ofClear(255,255,255, 0);
-    psBlend.begin();
-    input[0]->getTexture()->draw(0, 0);
-    psBlend.end();
-    for (int i=1; i<input.size(); ++i) {
-        ofSetColor(255, 255, 255,128);
-        psBlend.draw(*(input[i]->getTexture()), blendMode);
+    if (blendMode == 0) {
+        glPushAttrib(GL_ALL_ATTRIB_BITS);
+        glEnable(GL_BLEND);
+        glBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA,GL_ONE,GL_ONE_MINUS_SRC_ALPHA);
+        ofSetColor(255, 255, 255);
+        input[selector1]->getTexture()->draw(0, 0);
+        ofSetColor(255, 255, 255,opacity);
+        input[selector2]->getTexture()->draw(0, 0);
+        glDisable(GL_BLEND);
+        glPopAttrib();
+        
     }
-    ofDisableBlendMode();
+    else{
+        psBlend.begin();
+        ofSetColor(255, 255, 255,opacity);
+        input[selector2]->getTexture()->draw(0, 0);
+        psBlend.end();
+        psBlend.draw(*(input[selector1]->getTexture()), blendMode);
+    }
+    
     fbo.end();
+    
+    
+    tex = fbo.getTextureReference();
+}
+
+void MixSimpleBlend::blendModeChanged(int& i){
+    blendMode.setName(psBlend.getBlendMode(i));
+}
+
+void MixSimpleBlend::inputAdded(ImageOutput* in_){
+
+    selector1.setMax(input.size()-1);
+    selector2.setMax(input.size()-1);
 }

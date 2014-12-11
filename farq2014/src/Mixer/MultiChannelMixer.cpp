@@ -21,6 +21,7 @@ void MultiChannelMixer::inputAdded(ImageOutput* in_){
     
     opacity.push_back(12);
     gui.add(opacity[opacity.size()-1].set("channel " + ofToString(opacity.size()), 0, 0, 255));
+    interfaceOption = 0;
 }
 
 
@@ -55,14 +56,23 @@ void MultiChannelMixer::update() {
         }
     }
     fbo.end();
+    tex = fbo.getTextureReference();
 }
 
 
 //------------------------------------------------------------------
 void MultiChannelMixer::draw(int x,int y, float scale) {
     ofSetColor(255, 255, 255);
-    fbo.draw(x, y,640*scale, 480*scale);
     
+    if (interfaceOption == 0) {
+        drawBigInterface(x,y,scale);
+    }else{
+        fbo.draw(x, y,640*scale, 480*scale);
+    }
+    
+}
+
+void MultiChannelMixer::drawBigInterface(int x,int y, float scale) {
     int is = (input.size() < 2) ? 2 : input.size();
     int h = (480*scale)/(is%4);
     int w = (640*scale)/(is%4);
@@ -76,4 +86,7 @@ void MultiChannelMixer::draw(int x,int y, float scale) {
         ofDrawBitmapString("opacity " + ofToString((int)ofMap(opacity[i],0,255,0,100)), 5,30);
         ofPopMatrix();
     }
+    fbo.draw(x, y,640*scale, 480*scale);
+    renderLayers[0]->draw(x, y+10, 320*scale*0.9, 240*scale*0.9);
+    renderLayers[1]->draw(x+320*scale, y+10, 320*scale*0.9, 240*scale*0.9);
 }
