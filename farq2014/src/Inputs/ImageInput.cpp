@@ -62,14 +62,19 @@ void ImageInput::loadImage(string path_){
         bpmMultiplier.addListener(this, &ImageInput::bpmMultiplierChanged);
         nextFrame.addListener(this, &ImageInput::nextFrameChanged);
         previousFrame.addListener(this, &ImageInput::previousFrameChanged);
+        isMatchBpmToSequenceLength.addListener(this, &ImageInput::isMatchBpmToSequenceLengthChanged);
         
         gui.add(isPlaying.set("Play",true));
         gui.add(isPalindromLoop.set("LoopPalindrom",false));
+        gui.add(isMatchBpmToSequenceLength.set("match BPM to Sequence Length",false));
         gui.add(bpm.set("bpm", 100, 10, 200));
         gui.add(bpmMultiplier.set("bpmMultiplier", 4, 1, 40));
         player.setFrameRate(bpm*((float)bpmMultiplier)/60.0);
         gui.add(nextFrame.setup("nextFrame"));
         gui.add(previousFrame.setup("previousFrame"));
+        
+        
+        
         
         player.play();
     }
@@ -92,22 +97,39 @@ void ImageInput::loopTypeChanged(bool &b){
 }
 
 void ImageInput::bpmChanged(float &b){
-    //bpm to fps
-    float fps = b*((float)bpmMultiplier)/60.0;
-    player.setFrameRate(fps);
+    calculateFPS();
 }
 void ImageInput::bpmMultiplierChanged(int &b){//bpm to fps
-    float fps = bpm*((float)b)/60.0;
-    player.setFrameRate(fps);
+    calculateFPS();
+}
+void ImageInput::isMatchBpmToSequenceLengthChanged(bool &b){
+    if (b) {
+        bpmMultiplier.set("loop length in beats", 1, 1, 16 );
+    }
+    else{
+        bpmMultiplier.set("bpmMultiplier", 4, 1, 40);
+    }
+    calculateFPS();
 }
 
-void ImageInput::nextFrameChanged(){
-    player.nextFrame();
-    tex = *player.getTexture();
+
+void ImageInput::calculateFPS(){
+    float fps;
+    if (!isMatchBpmToSequenceLength) {
+        fps = bpm*((float)bpmMultiplier)/60.0;
+    }else{
+        ((float)player.getTotalNumFrames())* bpm/60.0 / ((float)bpmMultiplier);
+    }
+    player.setFrameRate(fps);
 }
 
 void ImageInput::previousFrameChanged(){
     player.previousFrame();
+    tex = *player.getTexture();
+}
+
+void ImageInput::nextFrameChanged(){
+    player.nextFrame();
     tex = *player.getTexture();
 }
 

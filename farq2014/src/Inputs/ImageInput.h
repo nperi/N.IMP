@@ -29,6 +29,7 @@ public:
     ofParameter<int> bpmMultiplier;
     ofParameter<bool> isPlaying;
     ofParameter<bool> isPalindromLoop;
+    ofParameter<bool> isMatchBpmToSequenceLength;
     ofxButton nextFrame;
     ofxButton previousFrame;
     
@@ -49,8 +50,11 @@ private:
     void loopTypeChanged(bool &b);
     void bpmChanged(float &b);
     void bpmMultiplierChanged(int &b);
+    void isMatchBpmToSequenceLengthChanged(bool &b);
     void nextFrameChanged();
     void previousFrameChanged();
+    
+    void calculateFPS();
     
 };
 
