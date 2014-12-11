@@ -1,8 +1,18 @@
 <MAIN_SETTINGS>
     <SETTINGS>
         <INPUTS>
-            <INPUT name="Pic" type="IMAGE" path="test"/>
-            <INPUT name="Mask" type="IMAGE" path="images/mask.png"/>
+            <!-- load a Single Image  -->
+            <INPUT name="Mask" type="IMAGE" path="images/mask.png"
+                   />
+            <!-- load a Image Sequence -->
+            <INPUT name="Pic" type="IMAGE" path="test"
+                isPlaying="false" 
+                   bpm="120" 
+                   matchBPMtoSequence="false" 
+                   multiplier_divider="2"
+                   palindrom="true"
+            />
+            
         </INPUTS>
 
         <VISUAL_LAYERS>
