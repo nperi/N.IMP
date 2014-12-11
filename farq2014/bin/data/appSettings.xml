@@ -2,8 +2,6 @@
     <SETTINGS>
         <INPUTS>
             <INPUT name="Cam" type="CAM"/>
-            <INPUT name="Mask" type="IMAGE" path="images/mask.png"
-                   />
             <INPUT name="vStars" type="VIDEO">
                 <VIDEO path="movies/stars.mov" />
             </INPUT>
@@ -13,6 +11,7 @@
             <INPUT name="Pic" type="IMAGE" path="test"
                    palindrom="true"
             />
+            <INPUT name="Mask" type="IMAGE" path="images/mask_building.png"/>
             
         </INPUTS>
 
@@ -37,6 +36,10 @@
                 <INPUT_SOURCE name="channel1"/>
                 <INPUT_SOURCE name="channel2"/>
             </MIXER>
+            <MIXER name="maskMix" type="SIMPLE_BLEND" selectorRight="1">
+                <INPUT_SOURCE name="mainMix"/>
+                <INPUT_SOURCE name="Mask"/>
+            </MIXER>
         </MIXERS>
 
     </SETTINGS>
@@ -46,6 +49,7 @@
             <NODE name="mainMix" x="675" y="20" guiX="675" guiY="240" imageScale="0.4" guiWidth="200" />
             <NODE name="channel1" x="20" y="20" guiX="20" guiY="520" imageScale="1.0" guiWidth="200" />
             <NODE name="channel2" x="940" y="20" guiX="940" guiY="520" imageScale="1.0" guiWidth="200" />
+            <NODE name="maskMix" x="675" y="500" guiX="675" guiY="760" imageScale="0.4" guiWidth="200" />
         </NODE_VIEW>
         
         <NODE_VIEW name="INPUT">
@@ -53,9 +57,6 @@
             <NODE name="V_IKEDA" x="580" y="20" guiX="900" guiY="20" imageScale="0.5" guiWidth="200" />
             <NODE name="vFlicker" x="20" y="400" guiX="350" guiY="400" imageScale="0.5" guiWidth="200" />
             <NODE name="vStars" x="580" y="400" guiX="900" guiY="400" imageScale="0.5" guiWidth="200" />
-        </NODE_VIEW>
-        <NODE_VIEW name="OUTPUT">
-            <NODE name="channel1" x="50" y="20" guiX="1370" guiY="20" imageScale="1.35" guiWidth="200" />
         </NODE_VIEW>
         
     </NODE_VIEWS>
