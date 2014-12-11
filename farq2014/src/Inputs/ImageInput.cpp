@@ -118,7 +118,8 @@ void ImageInput::calculateFPS(){
     if (!isMatchBpmToSequenceLength) {
         fps = bpm*((float)bpmMultiplier)/60.0;
     }else{
-        ((float)player.getTotalNumFrames())* bpm/60.0 / ((float)bpmMultiplier);
+        float ds = bpm/60.0;
+        fps = player.getTotalNumFrames() * ds / ((float)bpmMultiplier);
     }
     player.setFrameRate(fps);
 }
