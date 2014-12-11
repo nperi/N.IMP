@@ -25,6 +25,7 @@ public:
     void loadImage(string path_);
     
     
+    
     ofParameter<float> bpm;
     ofParameter<int> bpmMultiplier;
     ofParameter<bool> isPlaying;
@@ -37,9 +38,6 @@ public:
 private:
     
     void update();
-    
-    //ofImage img;
-    //string path;
     
 
     unsigned long long lastFrameSent;

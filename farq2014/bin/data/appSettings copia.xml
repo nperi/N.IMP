@@ -1,0 +1,70 @@
+<MAIN_SETTINGS>
+    <SETTINGS>
+        <INPUTS>
+            <INPUT name="vStars" type="VIDEO">
+                <VIDEO path="movies/stars.mov" />
+            </INPUT>
+            <INPUT name="Video2" type="VIDEO">
+                <VIDEO path="movies/fingers.mov" />
+            </INPUT>
+            <INPUT name="Camera1" type="CAM" id=""/>
+            <INPUT name="Pic" type="IMAGE" path="test"/>
+            <INPUT name="Mask" type="IMAGE" path="images/mask.png"/>
+            <INPUT name="Particle" type="PARTICLE"/>
+        </INPUTS>
+
+        <VISUAL_LAYERS>
+            <VISUAL_LAYER name="V_IKEDA" type="IKEDA" inputSource="Video2"
+                    isCanny="true" 
+                    isThreshold="true" 
+                    isColumns="true" 
+                    isInvert="true"
+                    pNColumns="4"
+                    pCannyX="12"
+                    pCannyY="12"
+                    pThreshold="12"
+                    />
+            <VISUAL_LAYER name="V_GLITCH1" type="GLITCH_1" inputSource="Video2"
+                do_CONVERGENCE="false"
+                do_GLOW="false"
+                do_SHAKER="false"
+                de_CUTSLIDER="false"
+                do_TWIST="false"
+                do_OUTLINE="false"
+                do_NOISE="false"
+                do_SLITSCAN="false"
+                do_SWELL="false"
+                do_INVERT="false"
+                
+                do_CR_HIGHCONTRAST="false"
+                do_CR_BLUERAISE="false"
+                do_CR_REDRAISE="false"
+                do_CR_GREENRAISE="false"
+                do_CR_BLUEINVERT="false"
+                do_CR_REDINVERT="false"
+                do_CR_GREENINVERT="false"/>
+            <VISUAL_LAYER name="V_GLITCH2" type="GLITCH_2" inputSource="Camera1"
+                dq="20"
+                qn="40"
+                dht="80"/>
+        </VISUAL_LAYERS>
+
+        <MIXERS>
+            <MIXER name="mainMix" type="MULTI_CHANNEL">
+                <INPUT_SOURCE name="Pic"/>
+            </MIXER>
+            
+            	
+        </MIXERS>
+
+    </SETTINGS>
+
+    <NODE_VIEWS>
+
+        <NODE_VIEW name="OUTPUT">
+            <NODE name="mainMix" x="20" y="20" guiX="1370" guiY="20" imageScale="1.35" guiWidth="200" />
+            <NODE name="Pic" x="800" y="400" guiX="680" guiY="400" imageScale="0.5" guiWidth="200" />
+        </NODE_VIEW>
+        
+    </NODE_VIEWS>
+</MAIN_SETTINGS>

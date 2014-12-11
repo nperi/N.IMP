@@ -154,7 +154,18 @@ bool ofApp::loadFromXML(){
 
                                 string  path = XML.getAttribute("INPUT", "path","default", i);
                                 
+                                float bpm         = ofToFloat(XML.getAttribute("INPUT", "bpm","100", i));
+                                int bpmMultiplier = ofToInt(XML.getAttribute("INPUT", "multiplier_divider","1", i));
+                                bool isPlaying    = ofToBool(XML.getAttribute("INPUT", "isPlaying","true", i));
+                                bool isPalindromLoop    = ofToBool(XML.getAttribute("INPUT", "palindrom","false", i));
+                                bool isMatchBpmToSequenceLength    = ofToBool(XML.getAttribute("INPUT", "matchBPMtoSequence","true", i));
+                                
                                 iI->loadImage(path);
+                                iI->bpm = bpm;
+                                iI->bpmMultiplier = bpmMultiplier;
+                                iI->isPlaying = isPlaying;
+                                iI->isPalindromLoop = isPalindromLoop;
+                                iI->isMatchBpmToSequenceLength = isMatchBpmToSequenceLength;
                                 
                                 inputs.push_back(iI);
                                 nodes.insert(std::pair<string,ImageOutput*>(inputName,iI));
