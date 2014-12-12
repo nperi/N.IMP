@@ -1,66 +1,41 @@
 <MAIN_SETTINGS>
     <SETTINGS>
         <INPUTS>
-            <INPUT name="Video1" type="VIDEO">
-                <VIDEO path="movies/fingers.mov" />
-                <VIDEO path="movies/fingers2.mov" />
+            <INPUT name="Cam" type="CAM"/>
+            <INPUT name="vStars" type="VIDEO">
+                <VIDEO path="movies/stars.mov" />
             </INPUT>
-            <INPUT name="Video2" type="VIDEO">
-                <VIDEO path="movies/fingers.mov" />
-            </INPUT>
-            <INPUT name="Camera1" type="CAM" id=""/>
-            <INPUT name="Pic" type="IMAGE" path="images/doguie.jpg"/>
-            <INPUT name="Mask" type="IMAGE" path="images/mask.png"/>
-            <INPUT name="Particle" type="PARTICLE"/>
+            <INPUT name="vFlicker" type="IMAGE" path="movies/flicker.mov" />
+            <INPUT name="Pic" type="IMAGE" path="test"
+                   palindrom="true"
+            />
+            <INPUT name="Mask" type="IMAGE" path="images/mask_building.png"/>
+            
         </INPUTS>
 
         <VISUAL_LAYERS>
-            <VISUAL_LAYER name="V_IKEDA" type="IKEDA" inputSource="Video1"
-                    isCanny="true" 
-                    isThreshold="true" 
-                    isColumns="true" 
-                    isInvert="true"
-                    pNColumns="4"
-                    pCannyX="12"
-                    pCannyY="12"
-                    pThreshold="12"
-                    />
-            <VISUAL_LAYER name="V_GLITCH1" type="GLITCH_1" inputSource="Video1"
-                do_CONVERGENCE="false"
-                do_GLOW="false"
-                do_SHAKER="false"
-                de_CUTSLIDER="false"
-                do_TWIST="false"
-                do_OUTLINE="false"
-                do_NOISE="false"
-                do_SLITSCAN="false"
-                do_SWELL="false"
-                do_INVERT="false"
-                
-                do_CR_HIGHCONTRAST="false"
-                do_CR_BLUERAISE="false"
-                do_CR_REDRAISE="false"
-                do_CR_GREENRAISE="false"
-                do_CR_BLUEINVERT="false"
-                do_CR_REDINVERT="false"
-                do_CR_GREENINVERT="false"/>
-            <VISUAL_LAYER name="V_GLITCH2" type="GLITCH_2" inputSource="Camera1"
-                dq="20"
-                qn="40"
-                dht="80"/>
+            <VISUAL_LAYER name="V_IKEDA" type="IKEDA" inputSource="Cam"/>
         </VISUAL_LAYERS>
 
         <MIXERS>
-            <MIXER name="mainMix" type="SIMPLE_BLEND">
+            <MIXER name="channel1" type="SIMPLE_BLEND">
+                <INPUT_SOURCE name="Pic"/>
                 <INPUT_SOURCE name="V_IKEDA"/>
-                <INPUT_SOURCE name="Video1"/>
+                <INPUT_SOURCE name="vFlicker"/>
+                <INPUT_SOURCE name="vStars"/>
             </MIXER>
-            <MIXER name="altMix" type="SIMPLE_BLEND">
+            <MIXER name="channel2" type="SIMPLE_BLEND">
+                <INPUT_SOURCE name="Pic"/>
                 <INPUT_SOURCE name="V_IKEDA"/>
-                <INPUT_SOURCE name="V_GLITCH1"/>
-            </MIXER>	
-            <MIXER name="spinMask" type="MASK">
-                <INPUT_SOURCE name="Camera1"/>
+                <INPUT_SOURCE name="vFlicker"/>
+                <INPUT_SOURCE name="vStars"/>
+            </MIXER>
+            <MIXER name="mainMix" type="SIMPLE_BLEND" selectorRight="1">
+                <INPUT_SOURCE name="channel1"/>
+                <INPUT_SOURCE name="channel2"/>
+            </MIXER>
+            <MIXER name="maskMix" type="SIMPLE_BLEND" selectorRight="1">
+                <INPUT_SOURCE name="mainMix"/>
                 <INPUT_SOURCE name="Mask"/>
             </MIXER>
         </MIXERS>
@@ -68,49 +43,19 @@
     </SETTINGS>
 
     <NODE_VIEWS>
-        <NODE_VIEW name="OUTPUT">
-            <NODE name="mainMix" x="20" y="20" guiX="730" guiY="20" imageScale="1" guiWidth="250" />
+        <NODE_VIEW name="FinalMix">
+            <NODE name="mainMix" x="675" y="20" guiX="675" guiY="240" imageScale="0.4" guiWidth="200" />
+            <NODE name="channel1" x="20" y="20" guiX="20" guiY="520" imageScale="1.0" guiWidth="200" />
+            <NODE name="channel2" x="940" y="20" guiX="940" guiY="520" imageScale="1.0" guiWidth="200" />
+            <NODE name="maskMix" x="675" y="500" guiX="675" guiY="760" imageScale="0.4" guiWidth="200" />
         </NODE_VIEW>
-        <NODE_VIEW name="IKEDA-INPUT">
-            <!--NODE name="Camera1" x="20" y="20" guiX="0" guiY="20" imageScale="0.3" guiWidth="200" /-->
-            <NODE name="Video1" x="240" y="20" guiX="20" guiY="200" imageScale="1.0" guiWidth="200" />
-            <NODE name="Video2" x="240" y="20" guiX="20" guiY="300" imageScale="1.0" guiWidth="200" />
-            <NODE name="mainMix" x="800" y="550" guiX="2000" guiY="20" imageScale="0.3" guiWidth="200" />
+        
+        <NODE_VIEW name="INPUT">
+            <NODE name="Pic" x="20" y="20" guiX="350" guiY="20" imageScale="0.5" guiWidth="200" />
+            <NODE name="V_IKEDA" x="580" y="20" guiX="900" guiY="20" imageScale="0.5" guiWidth="200" />
+            <NODE name="vFlicker" x="20" y="400" guiX="350" guiY="400" imageScale="0.5" guiWidth="200" />
+            <NODE name="vStars" x="580" y="400" guiX="900" guiY="400" imageScale="0.5" guiWidth="200" />
         </NODE_VIEW>
-        <NODE_VIEW name="GLITCH-INPUT">
-            <NODE name="Video1" x="20" y="20" guiX="0" guiY="20" imageScale="0.3" guiWidth="200" />
-            <NODE name="Video2" x="20" y="20" guiX="0" guiY="50" imageScale="0.3" guiWidth="200" />
-            <NODE name="V_GLITCH1" x="240" y="20" guiX="20" guiY="200" imageScale="1" guiWidth="200" />
-            <NODE name="mainMix" x="800" y="550" guiX="2000" guiY="20" imageScale="0.3" guiWidth="200" />
-        </NODE_VIEW>
-        <NODE_VIEW name="TOTAL-INPUT">
-            <NODE name="Camera1" x="0" y="20" guiX="0" guiY="20" imageScale="0.5" guiWidth="200" />
-            
-            <NODE name="V_IKEDA" x="340" y="20" guiX="400" guiY="560" imageScale="0.5" guiWidth="200" />
-            <NODE name="V_GLITCH2" x="340" y="300" guiX="750" guiY="380" imageScale="0.5" guiWidth="200" />
-            <NODE name="mainMix" x="680" y="20" guiX="750" guiY="300" imageScale="0.5" guiWidth="200" />
-        </NODE_VIEW>
-        <NODE_VIEW name="MASK">
-            <NODE name="spinMask" x="20" y="20" guiX="730" guiY="20" imageScale="1" guiWidth="250" />
-            <NODE name="Pic" x="20" y="520" guiX="730" guiY="20" imageScale="0.3" guiWidth="250" />
-            <NODE name="Mask" x="300" y="520" guiX="730" guiY="20" imageScale="0.3" guiWidth="250" />
-        </NODE_VIEW>
-        <NODE_VIEW name="view1">
-            
-            <NODE name="V_GLITCH1" x="400" y="20" guiX="400" guiY="20" imageScale="0.3" guiWidth="80" />
-            <NODE name="V_GLITCH2" x="400" y="20" guiX="400" guiY="20" imageScale="0.3" guiWidth="80" />
-            <NODE name="mainMix" x="600" y="20" guiX="200" guiY="20" imageScale="0.5" guiWidth="80" />
-        </NODE_VIEW>
-        <NODE_VIEW name="view2">
-            
-            <NODE name="V_GLITCH1" x="200" y="80" guiX="200" guiY="20" imageScale="1" guiWidth="80" />
-            <NODE name="V_GLITCH2" x="400" y="80" guiX="200" guiY="20" imageScale="1" guiWidth="80" />
-            <NODE name="mainMix" x="600" y="80" guiX="200" guiY="20" imageScale="1" guiWidth="80" />
-        </NODE_VIEW>
-        <NODE_VIEW name="GL2View">
-            <NODE name="Camera1" x="20" y="80" guiX="20" guiY="20" imageScale="1" guiWidth="80" />
-            <NODE name="V_GLITCH1" x="600" y="80" guiX="200" guiY="20" imageScale="1" guiWidth="80" />
-           
-        </NODE_VIEW>
+        
     </NODE_VIEWS>
 </MAIN_SETTINGS>

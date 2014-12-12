@@ -27,6 +27,7 @@ string ImageOutput::getName(){
 void ImageOutput::addInput(ImageOutput* layer_){
     if (input.size()<maxInputs) {
         input.push_back(layer_);
+        inputAdded(layer_);
     }
 }
 

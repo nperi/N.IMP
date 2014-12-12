@@ -70,7 +70,6 @@ void GlitchLayer::update(){
     }
     
     img.update();
-
 }
 
 void GlitchLayer::setGlitchParameters(){

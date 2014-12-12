@@ -35,6 +35,8 @@ private:
     int nForces = 3;
     vector<ParticleForce> force;
     ofFbo fbo;
+    
+    ofxButton bAddParticles,bRemoveParticles;
 };
 
 

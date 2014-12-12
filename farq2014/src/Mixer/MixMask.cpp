@@ -51,7 +51,7 @@ void MixMask::update(){
     ofPopMatrix();
     ofDisableBlendMode();
     fbo.end();
-    
+    tex = fbo.getTextureReference();
 }
 
 void MixMask::drawShader(){
@@ -76,17 +76,17 @@ void MixMask::drawShader(){
     glMultiTexCoord2d(GL_TEXTURE1_ARB, 0, maskOffset);
     glVertex2f( 0, 0);
     
-    glMultiTexCoord2d(GL_TEXTURE0_ARB, 640, 0);
-    glMultiTexCoord2d(GL_TEXTURE1_ARB, 640, maskOffset);
-    glVertex2f( 640, 0);
+    glMultiTexCoord2d(GL_TEXTURE0_ARB, width, 0);
+    glMultiTexCoord2d(GL_TEXTURE1_ARB, width, maskOffset);
+    glVertex2f( width, 0);
     
-    glMultiTexCoord2d(GL_TEXTURE0_ARB, 640, 480);
-    glMultiTexCoord2d(GL_TEXTURE1_ARB, 640, 480 + maskOffset);
-    glVertex2f( 640,480);
+    glMultiTexCoord2d(GL_TEXTURE0_ARB, width, heigth);
+    glMultiTexCoord2d(GL_TEXTURE1_ARB, width, heigth + maskOffset);
+    glVertex2f( width,heigth);
     
-    glMultiTexCoord2d(GL_TEXTURE0_ARB, 0, 480);
-    glMultiTexCoord2d(GL_TEXTURE1_ARB, 0, 480 + maskOffset);
-    glVertex2f( 0, 480 );
+    glMultiTexCoord2d(GL_TEXTURE0_ARB, 0, heigth);
+    glMultiTexCoord2d(GL_TEXTURE1_ARB, 0, heigth + maskOffset);
+    glVertex2f( 0, heigth );
     
     glEnd();
     

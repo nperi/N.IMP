@@ -20,6 +20,7 @@ void ofApp::setup() {
     visualLayerTypes.insert(std::pair<string,VisualLayerType>("IMAGE_PROCESSOR", IMAGE_PROCESSOR));
     mixerTypes.insert(std::pair<string,MixerType>("MASK", MASK));
     mixerTypes.insert(std::pair<string,MixerType>("SIMPLE_BLEND", SIMPLE_BLEND));
+    mixerTypes.insert(std::pair<string,MixerType>("MULTI_CHANNEL", MULTI_CHANNEL));
 
     loadingOK = loadFromXML();
     
@@ -47,7 +48,7 @@ void ofApp::update() {
             nodesVector[i]->resetProcessedFlag();
         }
 
-        syphonExport.publishTexture(mixtables[0]->getTexture());
+        syphonExport.publishTexture(mixtables[mixtables.size()-1]->getTexture());
     }
 }
 
@@ -155,7 +156,18 @@ bool ofApp::loadFromXML(){
 
                                 string  path = XML.getAttribute("INPUT", "path","default", i);
                                 
+                                float bpm         = ofToFloat(XML.getAttribute("INPUT", "bpm","100", i));
+                                int bpmMultiplier = ofToInt(XML.getAttribute("INPUT", "multiplier_divider","1", i));
+                                bool isPlaying    = ofToBool(XML.getAttribute("INPUT", "isPlaying","true", i));
+                                bool isPalindromLoop    = ofToBool(XML.getAttribute("INPUT", "palindrom","false", i));
+                                bool isMatchBpmToSequenceLength    = ofToBool(XML.getAttribute("INPUT", "matchBPMtoSequence","true", i));
+                                
                                 iI->loadImage(path);
+                                iI->bpm = bpm;
+                                iI->bpmMultiplier = bpmMultiplier;
+                                iI->isPlaying = isPlaying;
+                                iI->isPalindromLoop = isPalindromLoop;
+                                iI->isMatchBpmToSequenceLength = isMatchBpmToSequenceLength;
                                 
                                 inputs.push_back(iI);
                                 nodes.insert(std::pair<string,ImageOutput*>(inputName,iI));
@@ -359,6 +371,12 @@ bool ofApp::loadFromXML(){
                             switch(mixerTypes[type]){
                                 case SIMPLE_BLEND:
                                 {
+                                    int selectorL = ofToInt(XML.getAttribute("MIXER","selectorLeft","0", i));
+                                    int selectorR = ofToInt(XML.getAttribute("MIXER","selectorRight","0", i));
+                                    int blendmode = ofToInt(XML.getAttribute("MIXER","blendmode","0", i));
+                                    float opacity = ofToFloat(XML.getAttribute("MIXER","opacity","0", i));
+                                    
+
                                     MixSimpleBlend* mSB = new MixSimpleBlend(name);
                                     XML.pushTag("MIXER",i);
                                     
@@ -371,6 +389,10 @@ bool ofApp::loadFromXML(){
                                         mSB->addInputIdentifier(inputName);
                                         
                                     }
+                                    mSB->selector1 = selectorL;
+                                    mSB->selector2 = selectorR;
+                                    mSB->opacity = opacity;
+                                    mSB->blendMode = blendmode;
                                     
                                     mixtables.push_back(mSB);
                                     nodes.insert(std::pair<string, ImageOutput*>(name, mSB));
@@ -394,6 +416,38 @@ bool ofApp::loadFromXML(){
                                         
                                     }
                                     
+                                    mixtables.push_back(mMM);
+                                    nodes.insert(std::pair<string, ImageOutput*>(name, mMM));
+                                    //MIXER POP
+                                    XML.popTag();
+                                    
+                                    break;
+                                };
+                                case MULTI_CHANNEL:
+                                {
+                                    MultiChannelMixer* mMM = new MultiChannelMixer(name);
+                                    XML.pushTag("MIXER",i);
+                                    
+                                    int numINPUTTag = XML.getNumTags("INPUT_SOURCE");
+                                    std::map<string,ImageOutput*>::iterator it;
+                                    int interfaceOption =  ofToInt(XML.getAttribute("INPUT_SOURCE","interfaceOption","1",i));
+                                    for(int j=0; j<numINPUTTag; j++){
+                                        string inputName = XML.getAttribute("INPUT_SOURCE","name","default",j);
+                            
+                                        it = nodes.find(inputName);
+                                        
+                                        if(it!=nodes.end()){
+                                            ImageOutput * iO = it->second;
+                                            
+                                            mMM->addInput(iO);
+                                        }
+                                        else{
+                                            result = false;
+                                            message = "node not foud!";
+                                        }
+                                        
+                                    }
+                                    mMM->interfaceOption = interfaceOption;
                                     mixtables.push_back(mMM);
                                     nodes.insert(std::pair<string, ImageOutput*>(name, mMM));
                                     //MIXER POP

@@ -13,8 +13,7 @@
 class ofxParticleSystem {
 public:
 	// constructors
-	ofxParticleSystem();
-	ofxParticleSystem(int initialAmount);
+	ofxParticleSystem(int initialAmount,int width_ = 1024, int heigth_ = 768);
 	
 	// methods
 	void update();
@@ -38,4 +37,6 @@ private:
 	float	radius;
 	float	strength;
     ofFbo   fbo;
+    
+    int width,height;
 };

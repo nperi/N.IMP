@@ -49,6 +49,7 @@ class ImageOutput {
 protected:
     
     virtual void update() = 0;
+    virtual void inputAdded(ImageOutput* in_){}; //called when input is added
     
     ofxPanel panel;
     ofxGuiGroup gui;
