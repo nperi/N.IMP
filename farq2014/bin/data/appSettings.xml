@@ -5,7 +5,11 @@
             <INPUT name="vStars" type="VIDEO">
                 <VIDEO path="movies/stars.mov" />
             </INPUT>
-            <INPUT name="vFlicker" type="IMAGE" path="movies/flicker.mov" />
+            <INPUT name="vFlicker" type="IMAGE">
+                <ASSET name="stars" path="movies/stars.mov" />
+                <ASSET name="mask" path="images/mask_building.png" />
+                <ASSET name="beach" path="test" />
+            </INPUT>
             <INPUT name="Pic" type="IMAGE" path="test"
                    palindrom="true"
             />
@@ -14,7 +18,7 @@
         </INPUTS>
 
         <VISUAL_LAYERS>
-            <VISUAL_LAYER name="V_IKEDA" type="IKEDA" inputSource="Cam"/>
+            <VISUAL_LAYER name="V_IKEDA" type="GLITCH1" inputSource="Cam"/>
         </VISUAL_LAYERS>
 
         <MIXERS>
@@ -55,6 +59,7 @@
             <NODE name="V_IKEDA" x="580" y="20" guiX="900" guiY="20" imageScale="0.5" guiWidth="200" />
             <NODE name="vFlicker" x="20" y="400" guiX="350" guiY="400" imageScale="0.5" guiWidth="200" />
             <NODE name="vStars" x="580" y="400" guiX="900" guiY="400" imageScale="0.5" guiWidth="200" />
+            <NODE name="Mask" x="1200" y="400" guiX="1500" guiY="400" imageScale="0.5" guiWidth="200" />
         </NODE_VIEW>
         
     </NODE_VIEWS>

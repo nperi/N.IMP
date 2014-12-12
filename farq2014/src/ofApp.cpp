@@ -150,9 +150,10 @@ bool ofApp::loadFromXML(){
                             };
                             case IMAGE:
                             {
-                                ImageInput* iI = new ImageInput(inputName);
-
-                                string  path = XML.getAttribute("INPUT", "path","default", i);
+                                //ImageInput* iI = new ImageInput(inputName);
+                                
+                                ImageInputList* iI = new ImageInputList(inputName);
+                                string  path = XML.getAttribute("INPUT", "path","none", i);
                                 
                                 float bpm         = ofToFloat(XML.getAttribute("INPUT", "bpm","100", i));
                                 int bpmMultiplier = ofToInt(XML.getAttribute("INPUT", "multiplier_divider","1", i));
@@ -160,7 +161,27 @@ bool ofApp::loadFromXML(){
                                 bool isPalindromLoop    = ofToBool(XML.getAttribute("INPUT", "palindrom","false", i));
                                 bool isMatchBpmToSequenceLength    = ofToBool(XML.getAttribute("INPUT", "matchBPMtoSequence","true", i));
                                 
-                                iI->loadImage(path);
+                                if (path == "none") {
+                                    XML.pushTag("INPUT",i);
+                                    int numVideoTag = XML.getNumTags("ASSET");
+                                    if(numVideoTag>0){
+                                        for (int v=0; v<numVideoTag; v++){
+                                            string name = XML.getAttribute("ASSET","name","default",v);
+                                            string path_ = XML.getAttribute("ASSET","path","default",v);
+                                            iI->loadImage(name,path_);
+                                        }
+                                        
+                                    }
+                                    else{
+                                        result = false;
+                                        message = "no videos to be loaded!";
+                                    }
+                                    XML.popTag();
+                                }
+                                else{
+                                    iI->loadImage(inputName, path);
+                                }
+                                
                                 iI->bpm = bpm;
                                 iI->bpmMultiplier = bpmMultiplier;
                                 iI->isPlaying = isPlaying;

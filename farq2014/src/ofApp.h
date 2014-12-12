@@ -15,6 +15,7 @@
 #include "InputCamera.h"
 #include "VideoPlayerMac.h"
 #include "ImageInput.h"
+#include "ImageInputList.h"
 #include "ParticleGenerator.h"
 #include "IkedaLayer.h"
 #include "GlitchLayer.h"

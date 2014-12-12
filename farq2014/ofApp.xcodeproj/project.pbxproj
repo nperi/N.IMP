@@ -61,6 +61,10 @@
 		D3A227281A38711E005DD5AF /* MultiChannelMixer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D3A227261A38711E005DD5AF /* MultiChannelMixer.cpp */; };
 		D3A2274E1A39DD42005DD5AF /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = D3A2274A1A39DD42005DD5AF /* README.md */; };
 		D3A2274F1A39DD42005DD5AF /* ofxImageSequencePlayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D3A2274C1A39DD42005DD5AF /* ofxImageSequencePlayer.cpp */; };
+		D3A227541A3B57A9005DD5AF /* ImageInputList.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D3A227521A3B57A9005DD5AF /* ImageInputList.cpp */; };
+		D3A227571A3B58FE005DD5AF /* ImageTypePicture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D3A227551A3B58FE005DD5AF /* ImageTypePicture.cpp */; };
+		D3A2275A1A3B590C005DD5AF /* ImageTypePictureSequence.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D3A227581A3B590C005DD5AF /* ImageTypePictureSequence.cpp */; };
+		D3A2275D1A3B5921005DD5AF /* ImageTypeMovie.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D3A2275B1A3B5921005DD5AF /* ImageTypeMovie.cpp */; };
 		DBCB84A37F9AECC254870D79 /* Wrappers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D347FB65D19015303863922A /* Wrappers.cpp */; };
 		E4328149138ABC9F0047C5CB /* openFrameworksDebug.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E4328148138ABC890047C5CB /* openFrameworksDebug.a */; };
 		E45BE97B0E8CC7DD009D7055 /* AGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E45BE9710E8CC7DD009D7055 /* AGL.framework */; };
@@ -234,6 +238,15 @@
 		D3A2274A1A39DD42005DD5AF /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		D3A2274C1A39DD42005DD5AF /* ofxImageSequencePlayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxImageSequencePlayer.cpp; sourceTree = "<group>"; };
 		D3A2274D1A39DD42005DD5AF /* ofxImageSequencePlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxImageSequencePlayer.h; sourceTree = "<group>"; };
+		D3A227511A3B51DE005DD5AF /* ImageType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ImageType.h; sourceTree = "<group>"; };
+		D3A227521A3B57A9005DD5AF /* ImageInputList.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ImageInputList.cpp; sourceTree = "<group>"; };
+		D3A227531A3B57A9005DD5AF /* ImageInputList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageInputList.h; sourceTree = "<group>"; };
+		D3A227551A3B58FE005DD5AF /* ImageTypePicture.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ImageTypePicture.cpp; sourceTree = "<group>"; };
+		D3A227561A3B58FE005DD5AF /* ImageTypePicture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageTypePicture.h; sourceTree = "<group>"; };
+		D3A227581A3B590C005DD5AF /* ImageTypePictureSequence.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ImageTypePictureSequence.cpp; sourceTree = "<group>"; };
+		D3A227591A3B590C005DD5AF /* ImageTypePictureSequence.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageTypePictureSequence.h; sourceTree = "<group>"; };
+		D3A2275B1A3B5921005DD5AF /* ImageTypeMovie.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ImageTypeMovie.cpp; sourceTree = "<group>"; };
+		D3A2275C1A3B5921005DD5AF /* ImageTypeMovie.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageTypeMovie.h; sourceTree = "<group>"; };
 		D58DCB2C0AEFDE6171E29540 /* Syphon.framework */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = wrapper.framework; name = Syphon.framework; path = ../../../addons/ofxSyphon/libs/Syphon/lib/osx/Syphon.framework; sourceTree = "<group>"; };
 		DB0CD4C938C079DCD67222FE /* imatrix.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = imatrix.h; path = ../../../addons/ofxCv/libs/CLD/include/CLD/imatrix.h; sourceTree = SOURCE_ROOT; };
 		E112B3AEBEA2C091BF2B40AE /* ofxPanel.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = ofxPanel.cpp; path = ../../../addons/ofxGui/src/ofxPanel.cpp; sourceTree = SOURCE_ROOT; };
@@ -623,6 +636,15 @@
 				6B36ECB01A34F19C0019915B /* ImageInput.h */,
 				D3A2270B1A37243F005DD5AF /* ParticleGenerator.cpp */,
 				D3A2270C1A37243F005DD5AF /* ParticleGenerator.h */,
+				D3A227511A3B51DE005DD5AF /* ImageType.h */,
+				D3A227521A3B57A9005DD5AF /* ImageInputList.cpp */,
+				D3A227531A3B57A9005DD5AF /* ImageInputList.h */,
+				D3A227551A3B58FE005DD5AF /* ImageTypePicture.cpp */,
+				D3A227561A3B58FE005DD5AF /* ImageTypePicture.h */,
+				D3A227581A3B590C005DD5AF /* ImageTypePictureSequence.cpp */,
+				D3A227591A3B590C005DD5AF /* ImageTypePictureSequence.h */,
+				D3A2275B1A3B5921005DD5AF /* ImageTypeMovie.cpp */,
+				D3A2275C1A3B5921005DD5AF /* ImageTypeMovie.h */,
 			);
 			path = Inputs;
 			sourceTree = "<group>";
@@ -884,6 +906,7 @@
 				E4B69E200A3A1BDC003C02F2 /* main.cpp in Sources */,
 				E4B69E210A3A1BDC003C02F2 /* ofApp.cpp in Sources */,
 				6B36ECAE1A34EA990019915B /* ofxPostGlitch.cpp in Sources */,
+				D3A227571A3B58FE005DD5AF /* ImageTypePicture.cpp in Sources */,
 				6B36ECAC1A34EA0B0019915B /* ofxJpegGlitch.cpp in Sources */,
 				6B36ECA91A3219280019915B /* ofxXmlSettings.cpp in Sources */,
 				6B36ECA71A3219280019915B /* tinyxmlerror.cpp in Sources */,
@@ -897,6 +920,7 @@
 				B266578FC55D23BFEBC042E7 /* ofxGuiGroup.cpp in Sources */,
 				D309EB871A2E99D1008B3D94 /* VisualLayer.cpp in Sources */,
 				D309EB9A1A2F37A6008B3D94 /* MixSimpleBlend.cpp in Sources */,
+				D3A227541A3B57A9005DD5AF /* ImageInputList.cpp in Sources */,
 				483908258D00B98B4BE69F07 /* ofxLabel.cpp in Sources */,
 				F285EB3169F1566CA3D93C20 /* ofxPanel.cpp in Sources */,
 				837220E80EB56CD44AD27F2A /* ofxSlider.cpp in Sources */,
@@ -905,6 +929,7 @@
 				D309EB8C1A2E9B27008B3D94 /* InputCamera.cpp in Sources */,
 				D3A2270D1A37243F005DD5AF /* ParticleGenerator.cpp in Sources */,
 				6B0E60EB1A2FCA84006AE261 /* GlitchLayer.cpp in Sources */,
+				D3A2275D1A3B5921005DD5AF /* ImageTypeMovie.cpp in Sources */,
 				D3A226B81A311C3E005DD5AF /* NodeViewer.cpp in Sources */,
 				D3A226D61A36452E005DD5AF /* ImageProcessor.cpp in Sources */,
 				1CD33E884D9E3358252E82A1 /* ofxToggle.cpp in Sources */,
@@ -926,6 +951,7 @@
 				311DF864378748129984EA1D /* Kalman.cpp in Sources */,
 				D3A2271E1A3756B1005DD5AF /* ImageOutput.cpp in Sources */,
 				D3A2274F1A39DD42005DD5AF /* ofxImageSequencePlayer.cpp in Sources */,
+				D3A2275A1A3B590C005DD5AF /* ImageTypePictureSequence.cpp in Sources */,
 				D3A227281A38711E005DD5AF /* MultiChannelMixer.cpp in Sources */,
 				C602002DE761F9B52DB4400A /* ObjectFinder.cpp in Sources */,
 				7CDAD32BE4FA46701E3552C7 /* RunningBackground.cpp in Sources */,
