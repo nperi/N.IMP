@@ -7,6 +7,7 @@ void ofApp::setup() {
     ofSetWindowTitle("projeccion architectura");
     ofSetFrameRate(30);
     loadingOK = false;
+    isFullScreen = false;
     
     //populating string dictionaries for simple comparison used in LoadFromXML
     inputTypes.insert(std::pair<string,InputType>("VIDEO",VIDEO));
@@ -34,6 +35,7 @@ void ofApp::setup() {
         
         setCurrentViewer(0);
     }
+    
   }
 
 
@@ -207,20 +209,6 @@ bool ofApp::loadFromXML(){
                             string layerType = XML.getAttribute("VISUAL_LAYER","type","IKEDA",i);
                             string inputSourceName = XML.getAttribute("VISUAL_LAYER","inputSource","default",i);
                             
-                            ImageOutput* iO=NULL;
-                            std::map<string,ImageOutput*>::iterator it;
-                            
-                            it = nodes.find(inputSourceName);
-                            
-                            if(it!=nodes.end()){
-                                iO = it->second;
-                            }
-                            else{
-                                result = false;
-                                message = "node not foud!";
-                            }
-                            
-                            
                             switch(visualLayerTypes[layerType]){
                                 case IKEDA:
                                 {
@@ -244,9 +232,9 @@ bool ofApp::loadFromXML(){
                                     iL->pCannyY = pCannyY;
                                     iL->pThreshold = pThreshold;
                                     
-                                    if(iO!=NULL){
-                                        iL->addInput(iO);
-                                    }
+                                    
+                                    iL->addInputIdentifier(inputSourceName);
+                                    
                                     
                                     visualLayers.push_back(iL);
                                     nodes.insert(std::pair<string,ImageOutput*>(layerName,iL));
@@ -295,9 +283,7 @@ bool ofApp::loadFromXML(){
                                     gL->do_CR_REDINVERT = do_CR_REDINVERT;
                                     gL->do_CR_GREENINVERT = do_CR_GREENINVERT;
                                     
-                                    if(iO!=NULL){
-                                        gL->addInput(iO);
-                                    }
+                                    gL->addInputIdentifier(inputSourceName);
 
                                     visualLayers.push_back(gL);
                                     nodes.insert(std::pair<string,ImageOutput*>(layerName,gL));
@@ -312,9 +298,8 @@ bool ofApp::loadFromXML(){
                                     
                                     GlitchLayerAlt* gLA = new GlitchLayerAlt(layerName);
                                     
-                                    if(iO!=NULL){
-                                        gLA->addInput(iO);
-                                    }
+                                    
+                                    gLA->addInputIdentifier(inputSourceName);
                                     
                                     visualLayers.push_back(gLA);
                                     nodes.insert(std::pair<string,ImageOutput*>(layerName,gLA));
@@ -326,9 +311,9 @@ bool ofApp::loadFromXML(){
                                     
                                     ImageProcessor* gLA = new ImageProcessor(layerName);
                                     
-                                    if(iO!=NULL){
-                                        gLA->addInput(iO);
-                                    }
+                                    
+                                    gLA->addInputIdentifier(inputSourceName);
+
                                     
                                     visualLayers.push_back(gLA);
                                     nodes.insert(std::pair<string,ImageOutput*>(layerName,gLA));
@@ -378,22 +363,12 @@ bool ofApp::loadFromXML(){
                                     XML.pushTag("MIXER",i);
                                     
                                     int numINPUTTag = XML.getNumTags("INPUT_SOURCE");
-                                    std::map<string,ImageOutput*>::iterator it;
                                     
                                     for(int j=0; j<numINPUTTag; j++){
+                                        
                                         string inputName = XML.getAttribute("INPUT_SOURCE","name","default",j);
                                         
-                                        it = nodes.find(inputName);
-                                        
-                                        if(it!=nodes.end()){
-                                            ImageOutput * iO = it->second;
-                                            
-                                            mSB->addInput(iO);
-                                        }
-                                        else{
-                                            result = false;
-                                            message = "node not foud!";
-                                        }
+                                        mSB->addInputIdentifier(inputName);
                                         
                                     }
                                     
@@ -415,17 +390,7 @@ bool ofApp::loadFromXML(){
                                     for(int j=0; j<numINPUTTag; j++){
                                         string inputName = XML.getAttribute("INPUT_SOURCE","name","default",j);
                                         
-                                        it = nodes.find(inputName);
-                                        
-                                        if(it!=nodes.end()){
-                                            ImageOutput * iO = it->second;
-                                            
-                                            mMM->addInput(iO);
-                                        }
-                                        else{
-                                            result = false;
-                                            message = "node not foud!";
-                                        }
+                                        mMM->addInputIdentifier(inputName);
                                         
                                     }
                                     
@@ -560,6 +525,18 @@ bool ofApp::loadFromXML(){
         for(int i=0; i<mixtables.size();i++){
             nodesVector.push_back(mixtables[i]);
         }
+        
+        //setting inputs to every node
+        bool error = false;
+        for(int i=0; i<nodesVector.size(); i++){
+            error = nodesVector[i]->findAndAssignInputs(nodes);
+            if(error){
+                message = "node not found";
+                result = false;
+                break;
+            }
+        }
+        
     }
     
     return result;
@@ -605,6 +582,10 @@ void ofApp::keyPressed  (int key){
                     break;
                 case '0':
                     setCurrentViewer(9);
+                    break;
+                case 'f':
+                    isFullScreen = !isFullScreen;
+                    ofSetFullscreen(isFullScreen);
                     break;
                 default:
                     notAvailable = true;

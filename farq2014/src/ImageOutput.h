@@ -34,6 +34,8 @@ class ImageOutput {
     ofTexture* getTexture();
     
     void addInput(ImageOutput* layer_);
+    void addInputIdentifier(string inputId_);
+    bool findAndAssignInputs(map<string,ImageOutput*> &nodeCollection);
     vector<ImageOutput*> getInputs();
     vector<string> getInputNames();
     
@@ -55,6 +57,7 @@ protected:
     ofTexture tex;
     
     vector<ImageOutput*> input;
+    vector<string> inputIdentifiers;
     int maxInputs;
     
     //resolution

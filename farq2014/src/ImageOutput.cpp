@@ -29,6 +29,36 @@ void ImageOutput::addInput(ImageOutput* layer_){
         input.push_back(layer_);
     }
 }
+
+void ImageOutput::addInputIdentifier(string inputId_){
+    if (inputIdentifiers.size()<maxInputs) {
+        inputIdentifiers.push_back(inputId_);
+    }
+}
+
+bool ImageOutput::findAndAssignInputs(map<string,ImageOutput*> &nodeCollection){
+    std::map<string,ImageOutput*>::iterator it;
+    
+    ImageOutput* iO = NULL;
+    
+    bool error = false;
+
+    for(int i = 0 ;i < inputIdentifiers.size(); i++){
+        it = nodeCollection.find(inputIdentifiers[i]);
+        
+        if(it!=nodeCollection.end()){
+            iO = it->second;
+            addInput(iO);
+        }
+        else{
+            error = true;
+            break;
+        }
+    }
+    return error;
+
+}
+
 vector<ImageOutput*> ImageOutput::getInputs(){
     return input;
 }
