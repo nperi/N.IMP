@@ -1,33 +1,40 @@
-//
-//  ImageInput.h
-//  ofApp
-//
-//  Created by Christian Clark on 12/7/14.
-//
-//
+/*
+ *  ImageInputList.h
+ *  ofApp
+ *
+ *  Created by Brian Eschrich on 12/12/14
+ *  Copyright 2014 __MyCompanyName__. All rights reserved.
+ *
+ */
 
-//not longer used
-
-#ifndef _ImageInput
-#define _ImageInput
+#ifndef _ImageInputList
+#define _ImageInputList
 
 #include "ofMain.h"
 #include "InputSource.h"
-#include "ofxImageSequencePlayer.h"
 #include "ofEvents.h"
+#include "ofxGui.h"
+#include "ImageType.h"
+#include "ImageTypeMovie.h"
+#include "ImageTypePicture.h"
+#include "ImageTypePictureSequence.h"
 
-class ImageInput : public InputSource{
-    
-public:
-    
-    ImageInput(string name = "image input");
+
+class ImageInputList : public InputSource{
+	
+  public:
+	
+    ImageInputList(string name = "image input");
     
     void setup();
     void draw(int x,int y, float scale);
-    void loadImage(string path_);
+    void loadImage(string name_,string path_);
     
+    ofxButton nextSequence;
+    ofxButton prevSequence;
+    ofParameter<int> currentSequence;
     
-    
+    ofParameterGroup seqSettings;
     ofParameter<float> bpm;
     ofParameter<int> bpmMultiplier;
     ofParameter<bool> isPlaying;
@@ -38,22 +45,17 @@ public:
     ofxButton nextFrame;
     ofxButton previousFrame;
     ofxButton setOriginalPlaySpeed;
-    
-    
+	
 private:
+    vector<ImageType*> inputs;
     
     void update();
     
-
-    unsigned long long lastFrameSent;
-    
-    ofxImageSequencePlayer player;
-    ofQTKitPlayer videoPlayer;
-    bool isImageSequence;
-    bool isVideo;
+    void prevSequenceChanged();
+    void nextSequenceChanged();
+    void sequenceChanged(int &s);
     
     void setOriginalPlaySpeedChanged();
-    
     void loopTypeChanged(bool &b);
     void isPlayingBackwardsChanged(bool &b);
     void bpmChanged(float &b);
@@ -63,18 +65,7 @@ private:
     void previousFrameChanged();
     void playPositionChanged(float &pos);
     void calculateFPS();
-    
-    
-    void videoLoopTypeChanged(bool &b);
-    void videoBpmChanged(float &b);
-    void videoBpmMultiplierChanged(int &b);
-    void videoIsMatchBpmToSequenceLengthChanged(bool &b);
-    void videoNextFrameChanged();
-    void videoPreviousFrameChanged();
-    void videoPlayPositionChanged(float &pos);
-    void videoCalculateFPS();
-    
+    void isPlayingChanged(bool &b);
 };
 
-
-#endif /* defined(_ImageInput) */
+#endif
