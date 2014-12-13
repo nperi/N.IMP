@@ -18,7 +18,7 @@
         </INPUTS>
 
         <VISUAL_LAYERS>
-            <VISUAL_LAYER name="V_IKEDA" type="GLITCH1" inputSource="Cam"/>
+            <VISUAL_LAYER name="GLITCH" type="GLITCH_1" inputSource="Cam"/>
             <VISUAL_LAYER name="Post" type="IMAGE_PROCESSOR" inputSource="Cam"/>
             
         </VISUAL_LAYERS>
@@ -32,7 +32,7 @@
             </MIXER>
             <MIXER name="channel2" type="SIMPLE_BLEND">
                 <INPUT_SOURCE name="Pic"/>
-                <INPUT_SOURCE name="V_IKEDA"/>
+                <INPUT_SOURCE name="GLITCH"/>
                 <INPUT_SOURCE name="vFlicker"/>
                 <INPUT_SOURCE name="vStars"/>
             </MIXER>
