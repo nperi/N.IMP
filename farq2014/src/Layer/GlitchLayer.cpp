@@ -70,6 +70,7 @@ void GlitchLayer::update(){
     }
     
     img.update();
+    tex = img.getTextureReference();
 }
 
 void GlitchLayer::setGlitchParameters(){
