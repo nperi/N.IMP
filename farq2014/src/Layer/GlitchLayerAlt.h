@@ -13,6 +13,8 @@
 #include "VisualLayer.h"
 #include "ofxJpegGlitch.h"
 
+// DEPRECATED - Processing is too slow.
+
 class GlitchLayerAlt : public VisualLayer{
     
 public:
