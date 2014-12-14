@@ -73,4 +73,5 @@ public:
     map<string, MixerType> mixerTypes;
     
     bool loadingOK;
+    bool isFullScreen;
 };

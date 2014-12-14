@@ -8,6 +8,7 @@
 
 #include "GlitchLayerAlt.h"
 
+// DEPRECATED - Processing is too slow.
 
 //------------------------------------------------------------------
 GlitchLayerAlt::GlitchLayerAlt(string name_):VisualLayer(name_){;
