@@ -73,7 +73,10 @@ void ParticleGenerator::update() {
 void ParticleGenerator::draw(int x,int y, float scale) {
     ofSetColor(255, 255, 255);
     ofEnableAlphaBlending();
-    fbo.draw(x, y,640*scale, 480*scale);
+    float ratio = (float)heigth/(float)width;
+    int w = 640*scale;
+    int h = w*ratio;
+    fbo.draw(x, y,w,h);
     for(int i=0; i<force.size();++i){
         int mult = (force[i].isAttracting) ? 255 : 0;
         ofSetColor(255-mult, mult, 0,force[i].scale*50);

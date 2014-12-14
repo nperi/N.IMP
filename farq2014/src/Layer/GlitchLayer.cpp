@@ -41,7 +41,10 @@ GlitchLayer::GlitchLayer(string name_):VisualLayer(name_){
 //------------------------------------------------------------------
 void GlitchLayer::draw(int x,int y, float scale) {
     ofSetColor(255, 255, 255);
-    img.draw(x, y,640*scale,480*scale);
+    float ratio = (float)heigth/(float)width;
+    int w = 640*scale;
+    int h = w*ratio;
+    img.draw(x, y,w,h);
 }
 
 void GlitchLayer::update(){

@@ -150,7 +150,10 @@ void ImageProcessor::update() {
 
 //------------------------------------------------------------------
 void ImageProcessor::draw(int x,int y, float scale) {
-    fbo.draw(x,y,640*scale,480*scale);
+    float ratio = (float)heigth/(float)width;
+    int w = 640*scale;
+    int h = w*ratio;
+    fbo.draw(x,y,w,h);
     ofSetColor(255, 255, 255);
     ofDrawBitmapString(name, x + 10, y + 30);
 }

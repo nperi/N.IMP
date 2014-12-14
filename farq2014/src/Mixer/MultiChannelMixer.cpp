@@ -67,7 +67,10 @@ void MultiChannelMixer::draw(int x,int y, float scale) {
     if (interfaceOption == 0) {
         drawBigInterface(x,y,scale);
     }else{
-        fbo.draw(x, y,640*scale, 480*scale);
+        float ratio = (float)heigth/(float)width;
+        int w = 640*scale;
+        int h = w*ratio;
+        fbo.draw(x, y,w, h);
     }
     
 }
