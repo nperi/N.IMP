@@ -152,6 +152,7 @@ void ImageProcessor::update() {
     ofSetColor(255);
     ofClear(255,255,255,0);
     post.begin();
+    ofClear(255,255,255,0);
     ofPushMatrix();
     ofScale(1, -1);
     ofPushMatrix();

@@ -61,7 +61,7 @@ public:
     void updateSyphon(ofFbo & img);
     
     ofxSyphonClient mClient;
-    ofxSyphonServer syphonExport;
+    ofxSyphonServer syphonExport,syphonExport2;
     
     //gui
     vector<NodeViewer*> nodeViewers;

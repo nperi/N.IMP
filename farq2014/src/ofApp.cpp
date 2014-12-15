@@ -32,7 +32,8 @@ void ofApp::setup() {
         mClient.setup();
         mClient.setApplicationName("projeccionOF");
         mClient.setServerName("");
-        syphonExport.setName("ofProjeccion");
+        syphonExport.setName("bg");
+        syphonExport2.setName("Columns");
         
         setCurrentViewer(0);
     }
@@ -49,6 +50,7 @@ void ofApp::update() {
         }
 
         syphonExport.publishTexture(mixtables[mixtables.size()-1]->getTexture());
+        syphonExport2.publishTexture(mixtables[mixtables.size()-2]->getTexture());
     }
 }
 
