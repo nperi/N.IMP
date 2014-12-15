@@ -88,3 +88,7 @@ void IkedaLayer::update(){
     tex = img.getTextureReference();// .loadData(img.getPixels(), img.getWidth(), img.getHeight(), GL_RGB);
     
 }
+
+void IkedaLayer::updateParameter(Param* inputParam){
+    
+}

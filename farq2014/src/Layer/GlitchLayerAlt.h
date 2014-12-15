@@ -22,6 +22,7 @@ public:
     GlitchLayerAlt(string name_ = "glitchLayerAlt");
     
     void draw(int x,int y, float scale);
+    void updateParameter(Param* inputParam);
     
     //glitch parameters
     ofxIntSlider dq;

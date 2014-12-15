@@ -58,3 +58,4 @@ void ImageTypePictureSequence::activate(ofImage& _img, ofTexture& _tex){
     _tex = *player.getTexture();
     _img = img;
 }
+

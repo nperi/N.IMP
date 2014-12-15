@@ -40,3 +40,7 @@ void InputCamera::draw(int x,int y, float scale) {
     ofSetColor(255, 255, 255);
     ofDrawBitmapString(name, x + 10, y + 30);
 }
+
+void InputCamera::updateParameter(Param* inputParam){
+
+}

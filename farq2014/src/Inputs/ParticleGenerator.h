@@ -26,6 +26,7 @@ class ParticleGenerator : public InputSource{
 	
 	void setup();
 	void draw(int x,int y, float scale);
+    void updateParameter(Param* inputParam);
     
     void addForce(ParticleForce f);
     

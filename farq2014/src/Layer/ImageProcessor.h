@@ -21,6 +21,7 @@ class ImageProcessor : public VisualLayer{
 	ImageProcessor(string name_ = "visualLayer");
 	
     void draw(int x,int y, float scale);
+    void updateParameter(Param* inputParam);
     
     ofParameter<bool> isBloom;
     ofParameter<bool> isContrast;

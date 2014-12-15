@@ -27,6 +27,7 @@ class MultiChannelMixer : public MixTable{
 	
 	void setup();
 	void draw(int x,int y, float scale);
+    void updateParameter(Param* inputParam);
     ofParameter<int> interfaceOption; //0 - 8 windows | 1 - 2 windows
     
 private:

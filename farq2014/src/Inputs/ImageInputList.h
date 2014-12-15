@@ -29,6 +29,7 @@ class ImageInputList : public InputSource{
     void setup();
     void draw(int x,int y, float scale);
     void loadImage(string name_,string path_);
+    void updateParameter(Param* inputParam);
     
     ofxButton nextSequence;
     ofxButton prevSequence;

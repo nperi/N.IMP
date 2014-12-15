@@ -97,3 +97,7 @@ void GlitchLayer::setGlitchParameters(){
     myGlitch.setFx(OFXPOSTGLITCH_CR_GREENINVERT	, do_CR_GREENINVERT);
 
 }
+
+void GlitchLayer::updateParameter(Param* inputParam){
+    
+}

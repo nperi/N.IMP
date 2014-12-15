@@ -17,6 +17,7 @@ class Param {
   public:
 	
 	Param();
+    string imageInputName;
     string name;
     int intVal;
     string stringVal;

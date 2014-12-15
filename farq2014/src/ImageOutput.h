@@ -12,6 +12,7 @@
 
 #include "ofMain.h"
 #include "ofxGui.h"
+#include "Param.h"
 
 // abstract class that covers all image output classes
 // includes an image and some events
@@ -45,6 +46,7 @@ class ImageOutput {
     
     void resetProcessedFlag();
     
+    virtual void updateParameter(Param* inputParam)=0;
     
 protected:
     

@@ -8,12 +8,15 @@
             <INPUT name="vFlicker" type="IMAGE">
                 <ASSET name="stars" path="movies/stars.mov" />
                 <ASSET name="mask" path="images/mask_building.png" />
-                <ASSET name="beach" path="test" />
             </INPUT>
-            <INPUT name="Pic" type="IMAGE" path="test"
+            
+            <INPUT name="vParticle" type="PARTICLE"/>
+            
+            <!--INPUT name="Pic" type="IMAGE" path="test"
                    palindrom="true"
             />
             <INPUT name="Particle" type="PARTICLE"/>
+            /-->
             <INPUT name="Mask" type="IMAGE" path="images/mask_building.png"/>
             
         </INPUTS>
@@ -27,15 +30,17 @@
         <MIXERS>
             <MIXER name="channel1" type="SIMPLE_BLEND">
                 <INPUT_SOURCE name="Post"/>
-                <INPUT_SOURCE name="Pic"/>
+                <!--INPUT_SOURCE name="Pic"/-->
                 <INPUT_SOURCE name="vFlicker"/>
                 <INPUT_SOURCE name="vStars"/>
             </MIXER>
             <MIXER name="channel2" type="SIMPLE_BLEND">
                 <INPUT_SOURCE name="Particle"/>
+                <!--INPUT_SOURCE name="Pic"/-->
                 <INPUT_SOURCE name="GLITCH"/>
                 <INPUT_SOURCE name="vFlicker"/>
                 <INPUT_SOURCE name="vStars"/>
+                <INPUT_SOURCE name="vParticle" />
             </MIXER>
             <MIXER name="mainMix" type="SIMPLE_BLEND" selectorRight="1">
                 <INPUT_SOURCE name="channel1"/>
@@ -58,12 +63,21 @@
         </NODE_VIEW>
         
         <NODE_VIEW name="INPUT">
+<<<<<<< HEAD
             <NODE name="Particle" x="20" y="20" guiX="350" guiY="20" imageScale="0.5" guiWidth="200" />
+=======
+            <!--NODE name="Pic" x="20" y="20" guiX="350" guiY="20" imageScale="0.5" guiWidth="200" /-->
+>>>>>>> c1deb0518f99cb0372ffc37f42bccca864e35b2d
             <NODE name="Post" x="580" y="20" guiX="900" guiY="20" imageScale="0.5" guiWidth="200" />
             <NODE name="vFlicker" x="20" y="400" guiX="350" guiY="400" imageScale="0.5" guiWidth="200" />
-            <NODE name="vStars" x="580" y="400" guiX="900" guiY="400" imageScale="0.5" guiWidth="200" />
+            <NODE name="vParticle" x="580" y="400" guiX="900" guiY="400" imageScale="0.5" guiWidth="200" />
             <NODE name="Mask" x="1200" y="400" guiX="1500" guiY="400" imageScale="0.5" guiWidth="200" />
         </NODE_VIEW>
         
     </NODE_VIEWS>
+    
+    <PARAM_INPUT_GENERATORS>
+        <INPUT_GEN name="MIDI1" type="MIDI" midiDeviceName="Oxygen 25"/>
+    </PARAM_INPUT_GENERATORS>
+        
 </MAIN_SETTINGS>

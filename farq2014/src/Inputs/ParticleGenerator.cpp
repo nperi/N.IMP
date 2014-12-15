@@ -114,6 +114,11 @@ void ParticleGenerator::draw(int x,int y, float scale) {
     ofDrawBitmapString(name, x + 10, y + 30);
 }
 
+
 void ParticleGenerator::addForce(ParticleForce f){
     force.push_back(f);
+}
+
+void ParticleGenerator::updateParameter(Param* inputParam){
+    
 }
