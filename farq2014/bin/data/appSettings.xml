@@ -63,11 +63,8 @@
         </NODE_VIEW>
         
         <NODE_VIEW name="INPUT">
-<<<<<<< HEAD
             <NODE name="Particle" x="20" y="20" guiX="350" guiY="20" imageScale="0.5" guiWidth="200" />
-=======
             <!--NODE name="Pic" x="20" y="20" guiX="350" guiY="20" imageScale="0.5" guiWidth="200" /-->
->>>>>>> c1deb0518f99cb0372ffc37f42bccca864e35b2d
             <NODE name="Post" x="580" y="20" guiX="900" guiY="20" imageScale="0.5" guiWidth="200" />
             <NODE name="vFlicker" x="20" y="400" guiX="350" guiY="400" imageScale="0.5" guiWidth="200" />
             <NODE name="vParticle" x="580" y="400" guiX="900" guiY="400" imageScale="0.5" guiWidth="200" />
@@ -79,5 +76,10 @@
     <PARAM_INPUT_GENERATORS>
         <INPUT_GEN name="MIDI1" type="MIDI" midiDeviceName="Oxygen 25"/>
     </PARAM_INPUT_GENERATORS>
+    
+    <SYPHON_SERVERS>
+        <SERVER inputName="mainMix" exportName="bg"/>
+        <SERVER inputName="maskMix" exportName="Columns"/>
+    </SYPHON_SERVERS>
         
 </MAIN_SETTINGS>

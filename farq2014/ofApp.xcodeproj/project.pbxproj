@@ -18,6 +18,7 @@
 		6AABAB39E82AF5CFEA23A205 /* ContourFinder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5FBB4A8427353AED09174BE5 /* ContourFinder.cpp */; };
 		6B0E60EB1A2FCA84006AE261 /* GlitchLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6B0E60E91A2FCA84006AE261 /* GlitchLayer.cpp */; };
 		6B0E614A1A2FDE57006AE261 /* GlitchLayerAlt.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6B0E61481A2FDE57006AE261 /* GlitchLayerAlt.cpp */; };
+		6B1CBBF51A3F92760084F9EE /* CustomSyphonServer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6B1CBBF31A3F92760084F9EE /* CustomSyphonServer.cpp */; };
 		6B36ECA61A3219280019915B /* tinyxml.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6B36EC9A1A31DBEA0019915B /* tinyxml.cpp */; };
 		6B36ECA71A3219280019915B /* tinyxmlerror.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6B36EC9C1A31DBEA0019915B /* tinyxmlerror.cpp */; };
 		6B36ECA81A3219280019915B /* tinyxmlparser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6B36EC9D1A31DBEA0019915B /* tinyxmlparser.cpp */; };
@@ -180,6 +181,8 @@
 		6B0E615F1A2FDEBD006AE261 /* JpegConstant.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JpegConstant.h; sourceTree = "<group>"; };
 		6B0E61601A2FDEBD006AE261 /* ofxJpegGlitch.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ofxJpegGlitch.cpp; sourceTree = "<group>"; };
 		6B0E61611A2FDEBD006AE261 /* ofxJpegGlitch.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxJpegGlitch.h; sourceTree = "<group>"; };
+		6B1CBBF31A3F92760084F9EE /* CustomSyphonServer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CustomSyphonServer.cpp; path = CustomSyphonServer/CustomSyphonServer.cpp; sourceTree = "<group>"; };
+		6B1CBBF41A3F92760084F9EE /* CustomSyphonServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CustomSyphonServer.h; path = CustomSyphonServer/CustomSyphonServer.h; sourceTree = "<group>"; };
 		6B36EC9A1A31DBEA0019915B /* tinyxml.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = tinyxml.cpp; sourceTree = "<group>"; };
 		6B36EC9B1A31DBEA0019915B /* tinyxml.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = tinyxml.h; sourceTree = "<group>"; };
 		6B36EC9C1A31DBEA0019915B /* tinyxmlerror.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = tinyxmlerror.cpp; sourceTree = "<group>"; };
@@ -519,6 +522,15 @@
 				6B0E61611A2FDEBD006AE261 /* ofxJpegGlitch.h */,
 			);
 			path = src;
+			sourceTree = "<group>";
+		};
+		6B1CBBEC1A3F8AF20084F9EE /* CustomSyphonServer */ = {
+			isa = PBXGroup;
+			children = (
+				6B1CBBF31A3F92760084F9EE /* CustomSyphonServer.cpp */,
+				6B1CBBF41A3F92760084F9EE /* CustomSyphonServer.h */,
+			);
+			name = CustomSyphonServer;
 			sourceTree = "<group>";
 		};
 		6B36EC981A31DBEA0019915B /* ofxXmlSettings */ = {
@@ -1043,6 +1055,7 @@
 		E4B69E1C0A3A1BDC003C02F2 /* src */ = {
 			isa = PBXGroup;
 			children = (
+				6B1CBBEC1A3F8AF20084F9EE /* CustomSyphonServer */,
 				6BFCC2F71A3DCE0E009D68F0 /* ParamInputGen */,
 				D309EB7B1A2E94AD008B3D94 /* Inputs */,
 				D309EB7E1A2E94AD008B3D94 /* Layer */,
@@ -1175,6 +1188,7 @@
 				D3A227AD1A3B91E0005DD5AF /* RGBShiftPass.cpp in Sources */,
 				E4B69E210A3A1BDC003C02F2 /* ofApp.cpp in Sources */,
 				D3A227AC1A3B91E0005DD5AF /* RenderPass.cpp in Sources */,
+				6B1CBBF51A3F92760084F9EE /* CustomSyphonServer.cpp in Sources */,
 				6B36ECAE1A34EA990019915B /* ofxPostGlitch.cpp in Sources */,
 				D3A227571A3B58FE005DD5AF /* ImageTypePicture.cpp in Sources */,
 				6B36ECAC1A34EA0B0019915B /* ofxJpegGlitch.cpp in Sources */,

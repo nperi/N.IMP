@@ -36,11 +36,14 @@ void ofApp::setup() {
         }
         
         //create Syphon Server
-        mClient.setup();
-        mClient.setApplicationName("projeccionOF");
-        mClient.setServerName("");
-        syphonExport.setName("bg");
-        syphonExport2.setName("Columns");
+        //mClient.setup();
+        //mClient.setApplicationName("projeccionOF");
+        //mClient.setServerName("");
+        
+        //for(int i=0; i<syphonServers.size();i++){
+        //    syphonServers[i]->setup();
+        //}
+
         
         setCurrentViewer(0);
     }
@@ -77,9 +80,9 @@ void ofApp::update() {
             }
         }
 
-
-        syphonExport.publishTexture(mixtables[mixtables.size()-1]->getTexture());
-        syphonExport2.publishTexture(mixtables[mixtables.size()-2]->getTexture());
+        //for(int i=0; i<syphonServers.size();i++){
+        //    syphonServers[i]->publishTexture();
+        //}
     }
 }
 
@@ -649,6 +652,53 @@ bool ofApp::loadFromXML(){
                     }
                     
                 }
+                
+                //PROCESSING SYPHON SERVERS
+                if (result){
+                    int numServers = XML.getNumTags("SYPHON_SERVERS");
+                    
+                    
+                    if(numServers==1){
+                        XML.pushTag("SYPHON_SERVERS");
+                        
+                        int numSyphonServer = XML.getNumTags("SERVER");
+                        
+                        for(int j=0; j<numSyphonServer; j++){
+                            string inputName = XML.getAttribute("SERVER","inputName","mainMix",j);
+                            string exportName = XML.getAttribute("SERVER","exportName","syphon1",j);
+                            
+                            std::map<string,ImageOutput*>::iterator it;
+                            
+                            it=nodes.find(inputName);
+                            
+                            if(it!=nodes.end()){
+                                ImageOutput* iO = it->second;
+                                //CustomSyphonServer* cSS = new CustomSyphonServer(exportName,iO);
+                                
+                                //syphonServers.push_back(cSS);
+                                
+                            }
+                            else{
+                                result = false;
+                                message = "node not foud!";
+                                break;
+                            }
+                            
+                        }
+                        
+                        //Popping SYPHON_SERVERS tags
+                        XML.popTag();
+                        
+                    }
+                    else{
+                        result = false;
+                        message = "missing SYPHON_SERVERS tag!";
+                    }
+                    
+                }
+
+                
+                                
             }
         }
         else{
