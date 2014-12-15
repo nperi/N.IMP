@@ -40,10 +40,9 @@ void ofApp::setup() {
         //mClient.setApplicationName("projeccionOF");
         //mClient.setServerName("");
         
-        //for(int i=0; i<syphonServers.size();i++){
-        //    syphonServers[i]->setup();
-        //}
-
+        for(int i=0; i<syphonServers.size();i++){
+            syphonServers[i]->setup();
+        }
         
         setCurrentViewer(0);
     }
@@ -80,9 +79,9 @@ void ofApp::update() {
             }
         }
 
-        //for(int i=0; i<syphonServers.size();i++){
-        //    syphonServers[i]->publishTexture();
-        //}
+        for(int i=0; i<syphonServers.size();i++){
+            syphonServers[i]->publishTexture();
+        }
     }
 }
 
@@ -673,9 +672,9 @@ bool ofApp::loadFromXML(){
                             
                             if(it!=nodes.end()){
                                 ImageOutput* iO = it->second;
-                                //CustomSyphonServer* cSS = new CustomSyphonServer(exportName,iO);
+                                CustomSyphonServer* cSS = new CustomSyphonServer(exportName,iO);
                                 
-                                //syphonServers.push_back(cSS);
+                                syphonServers.push_back(cSS);
                                 
                             }
                             else{

@@ -31,7 +31,7 @@
 #include "NodeViewer.h"
 #include "NodeElement.h"
 
-//#include "CustomSyphonServer.h"
+#include "CustomSyphonServer.h"
 
 enum InputType {VIDEO, CAM, IMAGE, PARTICLE};
 enum VisualLayerType {IKEDA, GLITCH_1, GLITCH_2,IMAGE_PROCESSOR};
@@ -68,7 +68,7 @@ public:
     void updateSyphon(ofFbo & img);
     
     //ofxSyphonClient mClient;
-    //vector<CustomSyphonServer*> syphonServers;
+    vector<CustomSyphonServer*> syphonServers;
     
     //gui
     vector<NodeViewer*> nodeViewers;
