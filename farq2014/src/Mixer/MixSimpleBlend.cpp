@@ -36,8 +36,9 @@ void MixSimpleBlend::setup() {
 //------------------------------------------------------------------
 void MixSimpleBlend::draw(int x,int y, float scale) {
     ofSetColor(255, 255, 255);
+    float ratio = (float)heigth/(float)width;
     int w = 640*scale;
-    int h = 480*scale;
+    int h = w*ratio;
     ofPushMatrix();
     ofTranslate(x, y);
     
@@ -71,10 +72,7 @@ void MixSimpleBlend::update(){
         psBlend.end();
         psBlend.draw(*(input[selector1]->getTexture()), blendMode);
     }
-    
     fbo.end();
-    
-    
     tex = fbo.getTextureReference();
 }
 

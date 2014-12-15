@@ -46,7 +46,10 @@ void VideoPlayerMac::update() {
 //------------------------------------------------------------------
 void VideoPlayerMac::draw(int x,int y, float scale) {
 	if (players[currentPlayer]->isLoaded()) {
-        players[currentPlayer]->draw(x, y, 640*scale, 480*scale);
+        float ratio = (float)heigth/(float)width;
+        int w = 640*scale;
+        int h = w*ratio;
+        players[currentPlayer]->draw(x, y, w,h);
     }
     ofSetColor(255, 255, 255);
     ofDrawBitmapString(name, x + 10, y + 30);

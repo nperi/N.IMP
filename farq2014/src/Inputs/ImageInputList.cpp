@@ -25,7 +25,10 @@ void ImageInputList::update(){
 }
 
 void ImageInputList::draw(int x,int y, float scale){
-    tex.draw(x, y,640*scale,480*scale);
+    float ratio = (float)heigth/(float)width;
+    int w = 640*scale;
+    int h = w*ratio;
+    tex.draw(x, y,w,h);
     ofSetColor(255, 255, 255);
     string desc = name;
     desc += "\n------------------";
