@@ -6,7 +6,7 @@
 #include "ofxXmlSettings.h"
 
 #include "ofxGui.h"
-#include "ofxSyphon.h"
+//#include "ofxSyphon.h"
 
 #include "VisualLayer.h"
 #include "InputSource.h"
@@ -30,6 +30,8 @@
 
 #include "NodeViewer.h"
 #include "NodeElement.h"
+
+#include "CustomSyphonServer.h"
 
 enum InputType {VIDEO, CAM, IMAGE, PARTICLE};
 enum VisualLayerType {IKEDA, GLITCH_1, GLITCH_2,IMAGE_PROCESSOR};
@@ -65,8 +67,8 @@ public:
     //syphon
     void updateSyphon(ofFbo & img);
     
-    ofxSyphonClient mClient;
-    ofxSyphonServer syphonExport,syphonExport2;
+    //ofxSyphonClient mClient;
+    vector<CustomSyphonServer*> syphonServers;
     
     //gui
     vector<NodeViewer*> nodeViewers;
