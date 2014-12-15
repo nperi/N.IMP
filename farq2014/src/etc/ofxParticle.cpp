@@ -2,11 +2,16 @@
 #include "ofMain.h"
 
 //------------------------------------------------------------
-ofxParticle::ofxParticle(int width_,int heigth_){
+ofxParticle::ofxParticle(int width_,int heigth_, int lifeTime_, int radius_, float fadeOut_){
 	setInitialCondition(0,0,0,0);
     
     width = width_;
     height = heigth_;
+    isAlive = true;
+    lifeTime = lifeTime_;
+    radius = radius_;
+    fadeOut = fadeOut_;
+    creationTime = ofGetElapsedTimeMillis();
     
 	damping	= 0.03f;
 	
@@ -328,55 +333,34 @@ void ofxParticle::setInitialCondition(float px, float py, float vx, float vy){
 void ofxParticle::update(){	
 	vel = vel + frc;
 	pos = pos + vel;
-	/*
-	trail.push_back(pos);
-	if(trail.size() > 50){
-		trail.erase(trail.begin());
-	}*/
+    if (lifeTime !=0 && lifeTime < ofGetElapsedTimeMillis()-creationTime) {
+        int t = ofGetElapsedTimeMillis()-lifeTime;
+        isAlive = false;
+    }
+    
 }
 
 //------------------------------------------------------------
 void ofxParticle::draw(){
     
 	ofFill();
-    ofSetColor(255);
-	ofCircle(pos.x, pos.y, 4);
+    
+    if (fadeOut>0) {
+        ofSetColor(255, ofMap(ofGetElapsedTimeMillis(), creationTime + (lifeTime*(1.0-fadeOut)), creationTime+lifeTime, 255, 0));
+    }else{
+        ofSetColor(255);
+    }
+    
+	ofCircle(pos.x, pos.y, radius);
 	
+    /*
 	ofVec2f velNormal = vel;
 	velNormal.normalize();
 	
 	ofVec2f velPerp;
 	velPerp.x = -velNormal.y;
-	velPerp.y = velNormal.x;
-	
-	//ofLine(pos.x, pos.y, pos.x + velNormal.x*10, pos.y + velNormal.y*10);
+	velPerp.y = velNormal.x;*/
 	  
-	ofEnableAlphaBlending();
-	//ofNoFill();
-	ofFill();
-    //ofSetColor(255, 210, 0);
-    //ofCircle(trail[0].x, trail[0].y, 2);
-    /*
-    for(int i = 0; i < trail.size()-1; i+=6){
-		float pct = i / (float)(trail.size());
-		ofSetColor(255, 255, 255, 255*pct);
-        ofSetLineWidth(1);
-		ofCircle(trail[i].x, trail[i].y, 3);
-    }*/
-   /* for(int i = 0; i < trail.size()-1; i++){
-		float pct = i / (float)(trail.size());
-		ofSetColor(255, 210, 0, 30);
-        ofSetLineWidth(5);
-		ofLine(trail[i].x, trail[i].y, trail[i+1].x, trail[i+1].y);
-    }*/
-    
-    //ofBeginShape();
-	/*for (int i = 0; i < trail.size()-1; i++){
-		float pct = i / (float)(trail.size());
-		ofSetColor(255, 255, 255, 255*pct);
-		ofLine(trail[i].x, trail[i].y, trail[i+1].x, trail[i+1].y);
-	}*/
-	//ofEndShape();
 }
 
 
@@ -417,4 +401,8 @@ void ofxParticle::bounceOffWalls(){
 		vel *= 0.3;
 	}
 	
+}
+
+bool ofxParticle::getAlive(){
+    return isAlive;
 }

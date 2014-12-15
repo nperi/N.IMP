@@ -21,7 +21,7 @@ class ofxParticle{
         ofVec2f vel;
         ofVec2f frc;   // frc is also know as acceleration (newton says "f=ma")
 			
-        ofxParticle(int width_ = 1024,int heigth = 768);
+        ofxParticle(int width_ = 1024,int heigth = 768, int lifeTime_ = 20000, int radius_ = 10,float fadeOut_= 0);
 		virtual ~ofxParticle(){};
 
         void resetForce();
@@ -50,15 +50,17 @@ class ofxParticle{
         void draw();
 	
 		void bounceOffWalls();
-		
-		vector < ofPoint > trail;
 	
-	
+    bool getAlive();
 		float damping;
 
     protected:
     private:
+    bool isAlive;
     int width,height;
+    int lifeTime,radius;
+    long int creationTime;
+    float fadeOut;
 };
 
 #endif // PARTICLE_H

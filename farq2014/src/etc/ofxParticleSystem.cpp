@@ -9,17 +9,29 @@
 
 #include "ofxParticleSystem.h"
 
-ofxParticleSystem::ofxParticleSystem(int initialAmount, int width_, int heigth_) {
+ofxParticleSystem::ofxParticleSystem(int initialAmount, int width_, int heigth_,int minSize, int maxSize, int minLifetime, int maxLifetime, float fadeOut) {
     width = width_;
     height = heigth_;
     bRepel		= true;
     radius		= 100;
     strength	= 0.5f;
     
-    addParticles(initialAmount);
+    addParticles(initialAmount, minSize,maxSize,minLifetime,maxLifetime,fadeOut);
 }
 
 void ofxParticleSystem::update() {
+    vector<int> toDel;
+    for (int i = 0; i < particles.size(); i++){
+        if (!particles[i].getAlive()) {
+            toDel.push_back(i);
+        }
+    }
+
+    for (int i=0; i<toDel.size(); ++i) {
+        swap(particles[toDel[i]], particles.back());
+        particles.pop_back();
+    }
+    
     for (int i = 0; i < particles.size(); i++){
 		particles[i].resetForce();
 	}
@@ -27,11 +39,9 @@ void ofxParticleSystem::update() {
 	for (int i = 0; i < particles.size(); i++){
 		for (int j = 0; j < particles.size(); j++){
 			if (i != j){
-				particles[i].addForFlocking(particles[j]);	
+				particles[i].addForFlocking(particles[j]);
 			}
 		}
-		
-		//particles[i].addRepulsionForce(mouseX, mouseY, 150, 0.4);
 	}
 	
 	for (int i = 0; i < particles.size(); i++){
@@ -86,19 +96,19 @@ void ofxParticleSystem::draw() {
 	/*for ( list<ofxParticle>::iterator p = particles.begin(); p != particles.end(); ++p) {
 		p->draw();
 	}*/
-    //ofEnableAlphaBlending();
-	ofSetColor(0,130,130, 200);
-	ofSetColor(0x000000);	
+    ofEnableAlphaBlending();
+	//ofSetColor(0,130,130, 200);
+	//ofSetColor(0x000000);
 	
 	for (int i = 0; i < particles.size(); i++){
 		particles[i].draw();
 	}
-    //ofDisableAlphaBlending();
+    ofDisableAlphaBlending();
 }
 
-void ofxParticleSystem::addParticles( int amount ) {
+void ofxParticleSystem::addParticles( int amount, int minSize, int maxSize, int minLifetime, int maxLifetime, float fadeOut ) {
 	for (int i = 0; i < amount; i++) {
-        ofxParticle myParticle(width,height);
+        ofxParticle myParticle(width,height,ofRandom(minLifetime, maxLifetime),ofRandom(minSize,maxSize),fadeOut);
         myParticle.setInitialCondition(ofRandom(0,width),ofRandom(0,height),0,0);
         particles.push_back( myParticle );
 	}

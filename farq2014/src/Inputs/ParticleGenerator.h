@@ -27,6 +27,24 @@ class ParticleGenerator : public InputSource{
 	void setup();
 	void draw(int x,int y, float scale);
     
+    void addForce(ParticleForce f);
+    
+    ofParameter<bool>   isClearBg;
+    ofParameter<float>  alphaParticles;
+    
+    ofParameter<bool> autoGenParticle;
+    ofParameter<float> autoGenAmount;
+    
+    ofParameterGroup pScale;
+    ofParameter<bool> unityScale;
+    ofParameter<float> minRadius, maxRadius;
+    
+    ofParameterGroup pLifetime;
+    ofParameter<float> minLifetime,maxLifetime;
+    
+    ofParameter<float> fadeOut;
+    
+    
 private:
     
     void update();
@@ -37,6 +55,8 @@ private:
     ofFbo fbo;
     
     ofxButton bAddParticles,bRemoveParticles;
+    
+    long int lastGen = 0;
 };
 
 

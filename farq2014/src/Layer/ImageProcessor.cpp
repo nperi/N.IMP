@@ -10,6 +10,7 @@
 #include "ImageProcessor.h"
 
 ImageProcessor::ImageProcessor(string name_):VisualLayer(name_){
+    
     fbo.allocate(width, heigth);
     
     bloom.setName("bloom");
@@ -65,7 +66,7 @@ ImageProcessor::ImageProcessor(string name_):VisualLayer(name_){
     
     
     // Setup post-processing chain
-    post.init(ofGetWidth(), ofGetHeight());
+    post.init(width,heigth);
     post.createPass<BloomPass>()->setEnabled(isBloom);
     post.createPass<ContrastPass>()->setEnabled(isContrast);
     post.createPass<KaleidoscopePass>()->setEnabled(isKaleidoscope);
@@ -129,7 +130,9 @@ ImageProcessor::ImageProcessor(string name_):VisualLayer(name_){
 
 //------------------------------------------------------------------
 void ImageProcessor::update() {
-    fbo.begin();
+    /*fbo.begin();
+    ofSetColor(255);
+    ofClear(255,255,255,0);
     post.begin();
     ofPushMatrix();
     ofTranslate(width/2, heigth/2);
@@ -137,12 +140,26 @@ void ImageProcessor::update() {
     ofRotate(180);
     ofPushMatrix();
     ofTranslate(-width/2, -heigth/2);
-    input[0]->getTexture()->draw(0,0);
+    input[0]->getTexture()->draw(0,0,width,heigth);
     ofPopMatrix();
     ofPopMatrix();
     ofPopMatrix();
     post.end();
+    fbo.end();
+    tex = fbo.getTextureReference();*/
+    
+    fbo.begin();
+    ofSetColor(255);
+    ofClear(255,255,255,0);
+    post.begin();
+    ofPushMatrix();
+    ofScale(1, -1);
+    ofPushMatrix();
+    ofTranslate(0, -heigth);
+    input[0]->getTexture()->draw(0,0,width,heigth);
     ofPopMatrix();
+    ofPopMatrix();
+    post.end();
     fbo.end();
     tex = fbo.getTextureReference();
 }
@@ -153,6 +170,7 @@ void ImageProcessor::draw(int x,int y, float scale) {
     float ratio = (float)heigth/(float)width;
     int w = 640*scale;
     int h = w*ratio;
+    ofSetColor(255);
     fbo.draw(x,y,w,h);
     ofSetColor(255, 255, 255);
     ofDrawBitmapString(name, x + 10, y + 30);

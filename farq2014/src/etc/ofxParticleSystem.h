@@ -13,14 +13,14 @@
 class ofxParticleSystem {
 public:
 	// constructors
-	ofxParticleSystem(int initialAmount,int width_ = 1024, int heigth_ = 768);
+	ofxParticleSystem(int initialAmount,int width_ = 1024, int heigth_ = 768,int minSize = 4, int maxSize = 4, int minLifetime = 0, int maxLifetime = 0 , float fadeOut = 0.0);
 	
 	// methods
 	void update();
 	void addForce(ofVec2f force);
 	void draw();
 	
-	void addParticles(int amount);
+	void addParticles(int amount,int minSize = 4, int maxSize = 4, int minLifetime = 0, int maxLifetime = 0 , float fadeOut = 0.0);
 	void removeParticles(int amount);
     
     void resetForce();
