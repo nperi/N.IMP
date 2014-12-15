@@ -87,3 +87,9 @@ void MixSimpleBlend::inputAdded(ImageOutput* in_){
     selector1.setMax(input.size()-1);
     selector2.setMax(input.size()-1);
 }
+
+void MixSimpleBlend::updateParameter(Param* inputParam){
+    if(inputParam->name.compare("opacity")==0){
+        this->opacity = inputParam->intVal;
+    }
+}

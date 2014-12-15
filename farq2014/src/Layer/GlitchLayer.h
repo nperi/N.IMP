@@ -20,6 +20,7 @@ public:
     GlitchLayer(string name_ = "glitchLayer");
     
     void draw(int x,int y, float scale);
+    void updateParameter(Param* inputParam);
     
     ofFbo			myFbo;
     ofTexture		texture;

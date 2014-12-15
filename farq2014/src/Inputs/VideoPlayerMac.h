@@ -30,6 +30,8 @@ class VideoPlayerMac : public InputSource{
     void setSpeed(float speed);
     float getSpeed();
     
+    void updateParameter(Param* inputParam);
+    
 private:
     void update();
     

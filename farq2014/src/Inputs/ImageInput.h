@@ -25,7 +25,7 @@ public:
     void setup();
     void draw(int x,int y, float scale);
     void loadImage(string path_);
-    
+    void updateParameter(Param* inputParam);
     
     
     ofParameter<float> bpm;

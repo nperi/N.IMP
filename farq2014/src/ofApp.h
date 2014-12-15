@@ -11,6 +11,9 @@
 #include "VisualLayer.h"
 #include "InputSource.h"
 #include "MixTable.h"
+#include "ParamInputGenerator.h"
+
+#include "MidiInputGenerator.h"
 
 #include "InputCamera.h"
 #include "VideoPlayerMac.h"
@@ -31,6 +34,7 @@
 enum InputType {VIDEO, CAM, IMAGE, PARTICLE};
 enum VisualLayerType {IKEDA, GLITCH_1, GLITCH_2,IMAGE_PROCESSOR};
 enum MixerType {SIMPLE_BLEND, MASK, MULTI_CHANNEL};
+enum InputGeneratorsType {MIDI};
 
 class ofApp : public ofBaseApp {
 public:
@@ -52,6 +56,7 @@ public:
     vector<InputSource*> inputs;
     vector<VisualLayer*> visualLayers;
     vector<MixTable*> mixtables;
+    vector<ParamInputGenerator*> inputGenerators;
     
     //all objects are stored in this collection
     map<string, ImageOutput*> nodes;
@@ -71,6 +76,7 @@ public:
     map<string, InputType> inputTypes;
     map<string, VisualLayerType> visualLayerTypes;
     map<string, MixerType> mixerTypes;
+    map<string, InputGeneratorsType> inputGenTypes;
     
     bool loadingOK;
     bool isFullScreen;

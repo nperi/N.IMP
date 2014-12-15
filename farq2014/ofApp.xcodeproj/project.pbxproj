@@ -41,6 +41,9 @@
 		6BFCC2E51A3C82D9009D68F0 /* ofxMidiMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6BFCC2C81A3C82D9009D68F0 /* ofxMidiMessage.cpp */; };
 		6BFCC2E61A3C82D9009D68F0 /* ofxMidiOut.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6BFCC2CA1A3C82D9009D68F0 /* ofxMidiOut.cpp */; };
 		6BFCC2F11A3C8384009D68F0 /* CoreMIDI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BFCC2F01A3C8384009D68F0 /* CoreMIDI.framework */; };
+		6BFCC2FA1A3DCED6009D68F0 /* ParamInputGenerator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6BFCC2F81A3DCED6009D68F0 /* ParamInputGenerator.cpp */; };
+		6BFCC2FD1A3E07F8009D68F0 /* MidiInputGenerator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6BFCC2FB1A3E07F8009D68F0 /* MidiInputGenerator.cpp */; };
+		6BFCC3011A3EF263009D68F0 /* DTMidiMap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6BFCC2FF1A3EF263009D68F0 /* DTMidiMap.cpp */; };
 		7CDAD32BE4FA46701E3552C7 /* RunningBackground.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5CBF6AED6A17AC0C17F63CC4 /* RunningBackground.cpp */; };
 		837220E80EB56CD44AD27F2A /* ofxSlider.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15F2C6477A769C03A56D1401 /* ofxSlider.cpp */; };
 		856AA354D08AB4B323081444 /* ofxBaseGui.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9604B925D32EE39065747725 /* ofxBaseGui.cpp */; };
@@ -220,6 +223,12 @@
 		6BFCC2CB1A3C82D9009D68F0 /* ofxMidiOut.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxMidiOut.h; sourceTree = "<group>"; };
 		6BFCC2CC1A3C82D9009D68F0 /* ofxMidiTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxMidiTypes.h; sourceTree = "<group>"; };
 		6BFCC2F01A3C8384009D68F0 /* CoreMIDI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMIDI.framework; path = System/Library/Frameworks/CoreMIDI.framework; sourceTree = SDKROOT; };
+		6BFCC2F81A3DCED6009D68F0 /* ParamInputGenerator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ParamInputGenerator.cpp; path = ParameterInputGen/ParamInputGenerator.cpp; sourceTree = "<group>"; };
+		6BFCC2F91A3DCED6009D68F0 /* ParamInputGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ParamInputGenerator.h; path = ParameterInputGen/ParamInputGenerator.h; sourceTree = "<group>"; };
+		6BFCC2FB1A3E07F8009D68F0 /* MidiInputGenerator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MidiInputGenerator.cpp; path = ParameterInputGen/MidiInputGenerator.cpp; sourceTree = "<group>"; };
+		6BFCC2FC1A3E07F8009D68F0 /* MidiInputGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MidiInputGenerator.h; path = ParameterInputGen/MidiInputGenerator.h; sourceTree = "<group>"; };
+		6BFCC2FF1A3EF263009D68F0 /* DTMidiMap.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DTMidiMap.cpp; path = ParameterInputGen/DTMidiMap.cpp; sourceTree = "<group>"; };
+		6BFCC3001A3EF263009D68F0 /* DTMidiMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DTMidiMap.h; path = ParameterInputGen/DTMidiMap.h; sourceTree = "<group>"; };
 		6CEC50DB3D06414010233963 /* Utilities.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = Utilities.cpp; path = ../../../addons/ofxCv/libs/ofxCv/src/Utilities.cpp; sourceTree = SOURCE_ROOT; };
 		70046E043EDDB466ED625C3B /* Tracker.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = Tracker.h; path = ../../../addons/ofxCv/libs/ofxCv/include/ofxCv/Tracker.h; sourceTree = SOURCE_ROOT; };
 		73157AAE32787C63313C7D8E /* Wrappers.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = Wrappers.h; path = ../../../addons/ofxCv/libs/ofxCv/include/ofxCv/Wrappers.h; sourceTree = SOURCE_ROOT; };
@@ -671,6 +680,19 @@
 			path = desktop;
 			sourceTree = "<group>";
 		};
+		6BFCC2F71A3DCE0E009D68F0 /* ParamInputGen */ = {
+			isa = PBXGroup;
+			children = (
+				6BFCC2F81A3DCED6009D68F0 /* ParamInputGenerator.cpp */,
+				6BFCC2F91A3DCED6009D68F0 /* ParamInputGenerator.h */,
+				6BFCC2FB1A3E07F8009D68F0 /* MidiInputGenerator.cpp */,
+				6BFCC2FC1A3E07F8009D68F0 /* MidiInputGenerator.h */,
+				6BFCC2FF1A3EF263009D68F0 /* DTMidiMap.cpp */,
+				6BFCC3001A3EF263009D68F0 /* DTMidiMap.h */,
+			);
+			name = ParamInputGen;
+			sourceTree = "<group>";
+		};
 		7CC1E591490DB083FB916812 /* CLD */ = {
 			isa = PBXGroup;
 			children = (
@@ -1021,6 +1043,7 @@
 		E4B69E1C0A3A1BDC003C02F2 /* src */ = {
 			isa = PBXGroup;
 			children = (
+				6BFCC2F71A3DCE0E009D68F0 /* ParamInputGen */,
 				D309EB7B1A2E94AD008B3D94 /* Inputs */,
 				D309EB7E1A2E94AD008B3D94 /* Layer */,
 				D309EB811A2E94AD008B3D94 /* Mixer */,
@@ -1147,6 +1170,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6BFCC2FD1A3E07F8009D68F0 /* MidiInputGenerator.cpp in Sources */,
 				E4B69E200A3A1BDC003C02F2 /* main.cpp in Sources */,
 				D3A227AD1A3B91E0005DD5AF /* RGBShiftPass.cpp in Sources */,
 				E4B69E210A3A1BDC003C02F2 /* ofApp.cpp in Sources */,
@@ -1169,6 +1193,7 @@
 				D309EB871A2E99D1008B3D94 /* VisualLayer.cpp in Sources */,
 				6BFCC2DB1A3C82D9009D68F0 /* ofxRtMidiIn.cpp in Sources */,
 				D309EB9A1A2F37A6008B3D94 /* MixSimpleBlend.cpp in Sources */,
+				6BFCC3011A3EF263009D68F0 /* DTMidiMap.cpp in Sources */,
 				6BFCC2E21A3C82D9009D68F0 /* ofxBaseMidi.cpp in Sources */,
 				D3A227A71A3B91E0005DD5AF /* LimbDarkeningPass.cpp in Sources */,
 				D3A227541A3B57A9005DD5AF /* ImageInputList.cpp in Sources */,
@@ -1211,6 +1236,7 @@
 				D3A227A41A3B91E0005DD5AF /* GodRaysPass.cpp in Sources */,
 				6AABAB39E82AF5CFEA23A205 /* ContourFinder.cpp in Sources */,
 				D3A227A01A3B91E0005DD5AF /* DofPass.cpp in Sources */,
+				6BFCC2FA1A3DCED6009D68F0 /* ParamInputGenerator.cpp in Sources */,
 				45CC483A999BF1065A6B926C /* Distance.cpp in Sources */,
 				D3A2274E1A39DD42005DD5AF /* README.md in Sources */,
 				D309EB881A2E99E5008B3D94 /* MixTable.cpp in Sources */,

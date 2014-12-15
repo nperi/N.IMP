@@ -102,3 +102,7 @@ void ImageProcessor::cisEdge(bool &b){
 void ImageProcessor::cisGod(bool &b){
     post[5]->setEnabled(b);
 }
+
+void ImageProcessor::updateParameter(Param* inputParam){
+    
+}

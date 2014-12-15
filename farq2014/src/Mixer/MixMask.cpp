@@ -99,3 +99,7 @@ void MixMask::drawShader(){
     
     maskShader.end();
 }
+
+void MixMask::updateParameter(Param* inputParam){
+    
+}

@@ -24,6 +24,8 @@ class InputCamera : public InputSource{
 	void setup();
 	
 	void draw(int x,int y, float scale);
+    
+    void updateParameter(Param* inputParam);
 
 private:
     

@@ -23,6 +23,7 @@ class MixSimpleBlend : public MixTable{
     MixSimpleBlend(string name_ = "Simple Blend");
 	
 	void setup();
+    void updateParameter(Param* inputParam);
 	
 	void draw(int x,int y, float scale);
     

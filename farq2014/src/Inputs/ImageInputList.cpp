@@ -174,3 +174,7 @@ void ImageInputList::sequenceChanged(int &s){
     
     //change gui appeareance
 }
+
+void ImageInputList::updateParameter(Param* inputParam){
+    
+}

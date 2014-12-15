@@ -101,3 +101,7 @@ void VideoPlayerMac::setSpeed(float speed){
 float VideoPlayerMac::getSpeed(){
     return players[currentPlayer]->getSpeed();
 }
+
+void VideoPlayerMac::updateParameter(Param* inputParam){
+    
+}

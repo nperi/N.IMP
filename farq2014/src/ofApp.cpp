@@ -21,12 +21,19 @@ void ofApp::setup() {
     mixerTypes.insert(std::pair<string,MixerType>("MASK", MASK));
     mixerTypes.insert(std::pair<string,MixerType>("SIMPLE_BLEND", SIMPLE_BLEND));
     mixerTypes.insert(std::pair<string,MixerType>("MULTI_CHANNEL", MULTI_CHANNEL));
+    inputGenTypes.insert(std::pair<string,InputGeneratorsType>("MIDI", MIDI));
 
     loadingOK = loadFromXML();
     
     if(loadingOK){
         //TODO: change mixtable assignment.
       //  ofAddListener(mixtables[0]->textureEvent, this, &ofApp::updateSyphon);
+        
+        //invoking input generators setup functions
+        
+        for(int i=0; i<inputGenerators.size(); i++){
+            inputGenerators[i]->setup();
+        }
         
         //create Syphon Server
         mClient.setup();
@@ -47,6 +54,28 @@ void ofApp::update() {
         for (int i=0; i<nodesVector.size(); ++i) {
             nodesVector[i]->resetProcessedFlag();
         }
+        
+        //getting new paraminputs
+        for (int i=0; i<inputGenerators.size(); ++i) {
+            ParamInputGenerator* p = inputGenerators[i];
+            
+            Param* param = p->getNextInputMessage();
+            
+            //sending param info to the destination node
+            if(param!=NULL){
+                ImageOutput* destinationNode=NULL;
+                std::map<string,ImageOutput*>::iterator it;
+
+                it=nodes.find(param->imageInputName);
+                
+                if(it!=nodes.end()){
+                    it->second->updateParameter(param);
+                    delete param;
+                }
+                
+            }
+        }
+
 
         syphonExport.publishTexture(mixtables[mixtables.size()-1]->getTexture());
     }
@@ -570,6 +599,53 @@ bool ofApp::loadFromXML(){
                 else{
                     result = false;
                     message = "missing NODE_VIEWS tag!";
+                }
+                
+                // PROCESSING PARAM INPUT GENERATORS
+                
+                if (result){
+                    
+                    int numParamInputs = XML.getNumTags("PARAM_INPUT_GENERATORS");
+                    
+                    
+                    if(numParamInputs==1){
+                        
+                        XML.pushTag("PARAM_INPUT_GENERATORS");
+
+                        int numInputGen = XML.getNumTags("INPUT_GEN");
+                        
+                        for(int j=0; j<numInputGen; j++){
+                            string inputName = XML.getAttribute("INPUT_GEN","name","default",j);
+                            string inputType = XML.getAttribute("INPUT_GEN","type","MIDI",j);
+                            string midiDeviceName = XML.getAttribute("INPUT_GEN","midiDeviceName","Oxygen 25",j);
+                            switch(inputGenTypes[inputType]){
+                                case MIDI:
+                                {
+                                    MidiInputGenerator* mI = new MidiInputGenerator(inputName,midiDeviceName);
+                                    inputGenerators.push_back(mI);
+                                    
+                                    break;
+                                }
+                                default:
+                                {
+                                    result = false;
+                                    message = "unknown mixer type!";
+                                    break;
+                                };
+                                    
+                            }
+                            
+                        }
+                        
+                        //Popping PARAM_INPUT_GENERATORS tags
+                        XML.popTag();
+
+                    }
+                    else{
+                        result = false;
+                        message = "missing PARAM_INPUT_GENERATORS tag!";
+                    }
+                    
                 }
             }
         }

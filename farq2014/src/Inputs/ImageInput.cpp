@@ -251,3 +251,7 @@ void ImageInput::videoPlayPositionChanged(float &pos){
 void ImageInput::setOriginalPlaySpeedChanged(){
     videoPlayer.setSpeed(1);
 }
+
+void ImageInput::updateParameter(Param* inputParam){
+    
+}

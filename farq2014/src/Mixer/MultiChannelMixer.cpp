@@ -90,3 +90,7 @@ void MultiChannelMixer::drawBigInterface(int x,int y, float scale) {
     renderLayers[0]->draw(x, y+10, 320*scale*0.9, 240*scale*0.9);
     renderLayers[1]->draw(x+320*scale, y+10, 320*scale*0.9, 240*scale*0.9);
 }
+
+void MultiChannelMixer::updateParameter(Param* inputParam){
+    
+}

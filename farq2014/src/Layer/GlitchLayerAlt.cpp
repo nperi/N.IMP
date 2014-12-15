@@ -50,3 +50,7 @@ void GlitchLayerAlt::update(){
     img.update();
     
 }
+
+void GlitchLayerAlt::updateParameter(Param* inputParam){
+    
+}
