@@ -147,6 +147,9 @@ void ImageProcessor::update() {
     tex = fbo.getTextureReference();
 }
 
+void ImageProcessor::updateParameter(Param* inputParam){
+    
+}
 
 //------------------------------------------------------------------
 void ImageProcessor::draw(int x,int y, float scale) {
