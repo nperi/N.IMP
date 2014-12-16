@@ -27,7 +27,7 @@
 #include "ImageProcessor.h"
 #include "MixSimpleBlend.h"
 #include "MixMask.h"
-#include "MultiChannelMixer.h"
+#include "MultiChannelSwitch.h"
 
 #include "NodeViewer.h"
 #include "NodeElement.h"

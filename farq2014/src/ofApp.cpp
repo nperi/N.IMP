@@ -233,6 +233,27 @@ bool ofApp::loadFromXML(){
                             {
                                 ParticleGenerator* iI = new ParticleGenerator(inputName);
                                 
+                                bool isClearBg          = ofToBool(XML.getAttribute("INPUT", "isClearBg","true", i));
+                                float alphaParticles    = ofToFloat(XML.getAttribute("INPUT", "alphaParticles","0.4", i));
+                                bool autoGenParticle    = ofToBool(XML.getAttribute("INPUT", "autoGenParticle","false", i));
+                                float autoGenAmount     = ofToFloat(XML.getAttribute("INPUT", "autoGenAmount","0.0", i));
+                                bool unityScale         = ofToBool(XML.getAttribute("INPUT", "unityScale","false", i));
+                                float minRadius         = ofToFloat(XML.getAttribute("INPUT", "minRadius","4", i));
+                                float maxRadius         = ofToFloat(XML.getAttribute("INPUT", "maxRadius","10", i));
+                                float minLifetime       = ofToFloat(XML.getAttribute("INPUT", "minLifetime","0", i));
+                                float maxLifetime       = ofToFloat(XML.getAttribute("INPUT", "maxLifetime","0", i));
+                                
+                                iI->isClearBg = isClearBg;
+                                iI->alphaParticles = alphaParticles;
+                                iI->autoGenParticle = autoGenParticle;
+                                iI->autoGenAmount = autoGenAmount;
+                                iI->unityScale = unityScale;
+                                iI->minRadius = minRadius;
+                                iI->maxRadius = maxRadius;
+                                iI->minLifetime = minLifetime;
+                                iI->maxLifetime = maxLifetime;
+                                
+                                
                                 inputs.push_back(iI);
                                 nodes.insert(std::pair<string,ImageOutput*>(inputName,iI));
                                 
@@ -480,21 +501,24 @@ bool ofApp::loadFromXML(){
                                 };
                                 case MULTI_CHANNEL:
                                 {
-                                    MultiChannelMixer* mMM = new MultiChannelMixer(name);
+                                    MultiChannelSwitch* mMM = new MultiChannelSwitch(name);
                                     XML.pushTag("MIXER",i);
                                     
                                     int numINPUTTag = XML.getNumTags("INPUT_SOURCE");
                                     std::map<string,ImageOutput*>::iterator it;
-                                    int interfaceOption =  ofToInt(XML.getAttribute("INPUT_SOURCE","interfaceOption","1",i));
+                                    int selChannel =  ofToInt(XML.getAttribute("INPUT_SOURCE","selChannel","0",i));
                                     for(int j=0; j<numINPUTTag; j++){
                                         string inputName = XML.getAttribute("INPUT_SOURCE","name","default",j);
                             
                                         it = nodes.find(inputName);
                                         
                                         if(it!=nodes.end()){
-                                            ImageOutput * iO = it->second;
+                                            /*ImageOutput * iO = it->second;
                                             
-                                            mMM->addInput(iO);
+                                            mMM->addInput(iO);*/
+                                            string inputName = XML.getAttribute("INPUT_SOURCE","name","default",j);
+                                            
+                                            mMM->addInputIdentifier(inputName);
                                         }
                                         else{
                                             result = false;
@@ -502,7 +526,7 @@ bool ofApp::loadFromXML(){
                                         }
                                         
                                     }
-                                    mMM->interfaceOption = interfaceOption;
+                                    mMM->selChannel = selChannel;
                                     mixtables.push_back(mMM);
                                     nodes.insert(std::pair<string, ImageOutput*>(name, mMM));
                                     //MIXER POP
@@ -745,6 +769,11 @@ bool ofApp::loadFromXML(){
                 result = false;
                 break;
             }
+        }
+        
+        //create connections in nodeView
+        for (int i=0; i<nodeViewers.size(); ++i) {
+            nodeViewers[i]->createConnections();
         }
         
     }

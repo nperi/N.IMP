@@ -28,9 +28,9 @@ ParticleGenerator::ParticleGenerator(string name) : InputSource(name){
     gui.add(fadeOut.set("fade out",0.0,0.0,1.0));
     
     pScale.setName("Size");
-    pScale.add(unityScale.set("Same Size",true));
+    pScale.add(unityScale.set("Same Size",false));
     pScale.add(minRadius.set("min Size", 4, 1, 50));
-    pScale.add(maxRadius.set("max Size", 4, 1, 50));
+    pScale.add(maxRadius.set("max Size", 10, 1, 50));
     gui.add(pScale);
     
     pLifetime.setName("Lifetime");
@@ -38,7 +38,7 @@ ParticleGenerator::ParticleGenerator(string name) : InputSource(name){
     pLifetime.add(maxLifetime.set("min Lifetime", 0, 0, 60000));
     gui.add(pLifetime);
     
-    particle = new ofxParticleSystem(100,width,heigth,minRadius,(unityScale) ? minRadius : maxRadius,minLifetime,maxLifetime,fadeOut);
+    particle = new ofxParticleSystem(200,width,heigth,minRadius,(unityScale) ? minRadius : maxRadius,minLifetime,maxLifetime,fadeOut);
     
    /* for(int i=0; i<nForces; ++i){
         force.push_back(ParticleForce());
@@ -84,7 +84,7 @@ void ParticleGenerator::update() {
     fbo.begin();
     ofEnableAlphaBlending();
     if (isClearBg) {
-        ofClear(0,0,0,0);
+        ofClear(0,0,0,255);
     }
     ofSetColor(255, 255, 255,alphaParticles);
     particle->draw();
@@ -104,6 +104,9 @@ void ParticleGenerator::draw(int x,int y, float scale) {
     int w = 640*scale;
     int h = w*ratio;
     fbo.draw(x, y,w,h);
+    ofNoFill();
+    ofRect(x, y, w, h);
+    ofFill();
     for(int i=0; i<force.size();++i){
         int mult = (force[i].isAttracting) ? 255 : 0;
         ofSetColor(255-mult, mult, 0,force[i].scale*50);

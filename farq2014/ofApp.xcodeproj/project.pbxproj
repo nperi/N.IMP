@@ -87,7 +87,7 @@
 		D3A227151A373372005DD5AF /* ofxParticle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D3A227071A37241C005DD5AF /* ofxParticle.cpp */; };
 		D3A227161A373375005DD5AF /* ofxParticleSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D3A227091A37241C005DD5AF /* ofxParticleSystem.cpp */; };
 		D3A2271E1A3756B1005DD5AF /* ImageOutput.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D3A2271D1A3756B1005DD5AF /* ImageOutput.cpp */; };
-		D3A227281A38711E005DD5AF /* MultiChannelMixer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D3A227261A38711E005DD5AF /* MultiChannelMixer.cpp */; };
+		D3A227281A38711E005DD5AF /* MultiChannelSwitch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D3A227261A38711E005DD5AF /* MultiChannelSwitch.cpp */; };
 		D3A2274E1A39DD42005DD5AF /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = D3A2274A1A39DD42005DD5AF /* README.md */; };
 		D3A2274F1A39DD42005DD5AF /* ofxImageSequencePlayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D3A2274C1A39DD42005DD5AF /* ofxImageSequencePlayer.cpp */; };
 		D3A227541A3B57A9005DD5AF /* ImageInputList.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D3A227521A3B57A9005DD5AF /* ImageInputList.cpp */; };
@@ -352,8 +352,8 @@
 		D3A227111A372AA3005DD5AF /* ParticleForce.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ParticleForce.cpp; sourceTree = "<group>"; };
 		D3A227121A372AA3005DD5AF /* ParticleForce.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParticleForce.h; sourceTree = "<group>"; };
 		D3A2271D1A3756B1005DD5AF /* ImageOutput.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ImageOutput.cpp; sourceTree = "<group>"; };
-		D3A227261A38711E005DD5AF /* MultiChannelMixer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MultiChannelMixer.cpp; sourceTree = "<group>"; };
-		D3A227271A38711E005DD5AF /* MultiChannelMixer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MultiChannelMixer.h; sourceTree = "<group>"; };
+		D3A227261A38711E005DD5AF /* MultiChannelSwitch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MultiChannelSwitch.cpp; sourceTree = "<group>"; };
+		D3A227271A38711E005DD5AF /* MultiChannelSwitch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MultiChannelSwitch.h; sourceTree = "<group>"; };
 		D3A227491A39DD42005DD5AF /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		D3A2274A1A39DD42005DD5AF /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		D3A2274C1A39DD42005DD5AF /* ofxImageSequencePlayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxImageSequencePlayer.cpp; sourceTree = "<group>"; };
@@ -941,8 +941,8 @@
 				D309EB991A2F37A6008B3D94 /* MixSimpleBlend.h */,
 				D3A226C71A36340E005DD5AF /* MixMask.cpp */,
 				D3A226C81A36340E005DD5AF /* MixMask.h */,
-				D3A227261A38711E005DD5AF /* MultiChannelMixer.cpp */,
-				D3A227271A38711E005DD5AF /* MultiChannelMixer.h */,
+				D3A227261A38711E005DD5AF /* MultiChannelSwitch.cpp */,
+				D3A227271A38711E005DD5AF /* MultiChannelSwitch.h */,
 			);
 			path = Mixer;
 			sourceTree = "<group>";
@@ -1440,7 +1440,7 @@
 				D3A2271E1A3756B1005DD5AF /* ImageOutput.cpp in Sources */,
 				D3A2274F1A39DD42005DD5AF /* ofxImageSequencePlayer.cpp in Sources */,
 				D3A2275A1A3B590C005DD5AF /* ImageTypePictureSequence.cpp in Sources */,
-				D3A227281A38711E005DD5AF /* MultiChannelMixer.cpp in Sources */,
+				D3A227281A38711E005DD5AF /* MultiChannelSwitch.cpp in Sources */,
 				6BFCC2DC1A3C82D9009D68F0 /* ofxRtMidiOut.cpp in Sources */,
 				C602002DE761F9B52DB4400A /* ObjectFinder.cpp in Sources */,
 				7CDAD32BE4FA46701E3552C7 /* RunningBackground.cpp in Sources */,

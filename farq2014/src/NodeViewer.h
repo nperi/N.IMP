@@ -25,6 +25,8 @@ class NodeViewer {
 	void draw();
     void setupGuiPositions();
     
+    void createConnections();
+    
     string getName();
 	
     
