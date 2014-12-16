@@ -5,10 +5,13 @@
             
             <INPUT name="Pic" type="IMAGE" palindrom="true">
                 <ASSET name="satellite" path="images/satellite"/>
+                <ASSET name="stars" path="sets/space/Stars1-Visual.mov"/>
             </INPUT>
             <INPUT name="Pic2" type="IMAGE" palindrom="true">
                 <ASSET name="flicker" path="movies/flicker.mov"/>
                 <ASSET name="stars" path="movies/stars.mov"/>
+                <ASSET name="stars" path="sets/space/Stars1-Visual.mov"/>
+                
             </INPUT>
             <INPUT name="Particle" type="PARTICLE"/>
             

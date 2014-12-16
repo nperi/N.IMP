@@ -130,25 +130,10 @@ ImageProcessor::ImageProcessor(string name_):VisualLayer(name_){
 
 //------------------------------------------------------------------
 void ImageProcessor::update() {
-    /*fbo.begin();
-    ofSetColor(255);
-    ofClear(255,255,255,0);
-    post.begin();
-    ofPushMatrix();
-    ofTranslate(width/2, heigth/2);
-    ofPushMatrix();
-    ofRotate(180);
-    ofPushMatrix();
-    ofTranslate(-width/2, -heigth/2);
-    input[0]->getTexture()->draw(0,0,width,heigth);
-    ofPopMatrix();
-    ofPopMatrix();
-    ofPopMatrix();
-    post.end();
-    fbo.end();
-    tex = fbo.getTextureReference();*/
-    
     fbo.begin();
+    glPushAttrib(GL_ALL_ATTRIB_BITS);
+    glEnable(GL_BLEND);
+    glBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA,GL_ONE,GL_ONE_MINUS_SRC_ALPHA);
     ofSetColor(255);
     ofClear(255,255,255,0);
     post.begin();
@@ -161,6 +146,8 @@ void ImageProcessor::update() {
     ofPopMatrix();
     ofPopMatrix();
     post.end();
+    glDisable(GL_BLEND);
+    glPopAttrib();
     fbo.end();
     tex = fbo.getTextureReference();
 }
