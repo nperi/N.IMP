@@ -22,7 +22,8 @@ void ofApp::setup() {
     mixerTypes.insert(std::pair<string,MixerType>("SIMPLE_BLEND", SIMPLE_BLEND));
     mixerTypes.insert(std::pair<string,MixerType>("MULTI_CHANNEL", MULTI_CHANNEL));
     inputGenTypes.insert(std::pair<string,InputGeneratorsType>("MIDI", MIDI));
-
+    inputGenTypes.insert(std::pair<string,InputGeneratorsType>("OSC", OSC));
+    
     loadingOK = loadFromXML();
     
     if(loadingOK){
@@ -627,6 +628,13 @@ bool ofApp::loadFromXML(){
                                 {
                                     MidiInputGenerator* mI = new MidiInputGenerator(inputName,midiDeviceName);
                                     inputGenerators.push_back(mI);
+                                    
+                                    break;
+                                }
+                                case OSC:
+                                {
+                                    OscInputGenerator* oI = new OscInputGenerator(inputName);
+                                    inputGenerators.push_back(oI);
                                     
                                     break;
                                 }

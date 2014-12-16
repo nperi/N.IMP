@@ -14,6 +14,7 @@
 #include "ParamInputGenerator.h"
 
 #include "MidiInputGenerator.h"
+#include "OscInputGenerator.h"
 
 #include "InputCamera.h"
 #include "VideoPlayerMac.h"
@@ -36,7 +37,7 @@
 enum InputType {VIDEO, CAM, IMAGE, PARTICLE};
 enum VisualLayerType {IKEDA, GLITCH_1, GLITCH_2,IMAGE_PROCESSOR};
 enum MixerType {SIMPLE_BLEND, MASK, MULTI_CHANNEL};
-enum InputGeneratorsType {MIDI};
+enum InputGeneratorsType {MIDI, OSC};
 
 class ofApp : public ofBaseApp {
 public:

@@ -74,6 +74,12 @@
     
     <PARAM_INPUT_GENERATORS>
         <INPUT_GEN name="MIDI1" type="MIDI" midiDeviceName="Oxygen 25"/>
+        <INPUT_GEN name="OSC" type="OSC" port="12345"/>
     </PARAM_INPUT_GENERATORS>
-        
+
+    <SYPHON_SERVERS>
+        <SERVER inputName="mainMix" exportName="bg"/>
+        <SERVER inputName="maskMix" exportName="Columns"/>
+    </SYPHON_SERVERS>
+
 </MAIN_SETTINGS>

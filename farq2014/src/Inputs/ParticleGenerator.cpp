@@ -120,5 +120,17 @@ void ParticleGenerator::addForce(ParticleForce f){
 }
 
 void ParticleGenerator::updateParameter(Param* inputParam){
-    
+    if(inputParam->name.compare("forceX")==0){
+        ParticleForce f;
+        f.radius = 50;
+        f.isAttracting = true;
+        f.scale = 2;
+        f.pos.set(ofVec2f(inputParam->floatVal,0));
+        addForce(f);
+    }else if (inputParam->name.compare("forceY")==0){
+        if (force.size()>0) {
+            ofVec2f v = force[force.size()-1].pos;
+            v.y = inputParam->floatVal;
+        }
+    }
 }
