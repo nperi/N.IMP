@@ -57,7 +57,6 @@ bool MidiInputGenerator::setupFromXML(){
         }
         
         XML.popTag();
-        
         midiIn.openPort(midiInputName);
         midiIn.ignoreTypes(false, false, false);
         // add this class as a listener

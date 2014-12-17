@@ -96,5 +96,8 @@ void MixSimpleBlend::inputAdded(ImageOutput* in_){
 void MixSimpleBlend::updateParameter(Param* inputParam){
     if(inputParam->name.compare("opacity")==0){
         this->opacity = inputParam->intVal;
+    }else if(inputParam->name.compare("nextLayer")==0){
+        cout << inputParam->intVal <<endl;
+        //this->opacity = inputParam->intVal;
     }
 }

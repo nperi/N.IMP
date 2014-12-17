@@ -6,11 +6,16 @@
             <INPUT name="Pic" type="IMAGE" palindrom="true">
                 <ASSET name="satellite" path="images/satellite"/>
                 <ASSET name="stars" path="sets/space/Stars1-Visual.mov"/>
+                <ASSET name="stars" path="sets/space/Stars2-Visual.mov"/>
+                <ASSET name="test" path="sets/contorno ciudad.mov"/>
+                <ASSET name="test2" path="sets/frontal edificios.mov"/>
             </INPUT>
             <INPUT name="Pic2" type="IMAGE" palindrom="true">
                 <ASSET name="flicker" path="movies/flicker.mov"/>
                 <ASSET name="stars" path="movies/stars.mov"/>
                 <ASSET name="stars" path="sets/space/Stars1-Visual.mov"/>
+                <ASSET name="stars" path="sets/space/Stars2-Visual.mov"/>
+                
                 
             </INPUT>
             <INPUT name="Particle" type="PARTICLE"/>
@@ -154,7 +159,7 @@
     </NODE_VIEWS>
     
     <PARAM_INPUT_GENERATORS>
-        <INPUT_GEN name="MIDI1" type="MIDI" midiDeviceName="Oxygen 25"/>
+        <INPUT_GEN name="KORG_NANO" type="MIDI" midiDeviceName="nanoKONTROL2 SLIDER/KNOB"/>
         <INPUT_GEN name="OSC" type="OSC" port="12345"/>
     </PARAM_INPUT_GENERATORS>
 
