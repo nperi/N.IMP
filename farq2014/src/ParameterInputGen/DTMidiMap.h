@@ -9,8 +9,6 @@
 #ifndef __ofApp__DTMidiMap__
 #define __ofApp__DTMidiMap__
 
-#include <stdio.h>
-
 #include "ofMain.h"
 
 class DTMidiMap {

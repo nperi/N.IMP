@@ -31,12 +31,12 @@ public:
 protected:
     
     void threadedFunction();
-    std::queue<Param*> inputBuffer;
+    std::queue<Param*> * inputBuffer;
     bool isRunning;
     bool isConfigured;
     bool isThreaded;
     string generatorName;
-    int samplingFps;
+    int samplingMs;
     int bufferSize;
     ofxXmlSettings XML;
 };

@@ -13,6 +13,7 @@ ParamInputGenerator::ParamInputGenerator(string name_, bool isThreaded_){
     generatorName = name_;
     isConfigured = false;
     isThreaded = isThreaded_;
+    inputBuffer = new queue<Param*>();
 }
 
 ParamInputGenerator::~ParamInputGenerator(){
@@ -20,6 +21,7 @@ ParamInputGenerator::~ParamInputGenerator(){
 }
 
 void ParamInputGenerator::setup(){
+    samplingMs = 33; // default sampling is 30 fps -- this only works with threaded generators
     setupFromXML();
     isConfigured = true;
 }
@@ -41,9 +43,9 @@ Param* ParamInputGenerator::getNextInputMessage(){
     
     Param* p = NULL;
     if(lock()){
-        if(inputBuffer.size()>0){
-            p = inputBuffer.front();
-            inputBuffer.pop();
+        if(inputBuffer->size()>0){
+            p = inputBuffer->front();
+            inputBuffer->pop();
         }
         unlock();
     }
@@ -52,14 +54,17 @@ Param* ParamInputGenerator::getNextInputMessage(){
 }
 
 bool ParamInputGenerator::storeMessage(Param* p){
-    bool ableToStore = false;
-    if(lock()){
+    // IMPORTANT: this function has to be called between lock and unlock ALWAYS!
     
-        inputBuffer.push(p);
-        ableToStore = true;
-        
-        unlock();
+    bool ableToStore = false;
+    
+    if(inputBuffer->size()>5){
+        Param* firstP = inputBuffer->front();
+        inputBuffer->pop();
+        delete firstP;
     }
+    inputBuffer->push(p);
+    ableToStore = true;
     
     return ableToStore;
 }
@@ -71,15 +76,16 @@ void ParamInputGenerator::threadedFunction(){
         if(p!=NULL){
             storeMessage(p);
         }
+        sleep(samplingMs); // we limit the sampling to avoid wasting resources.
     }
     
     deleteAllMessages();
 }
 
 void ParamInputGenerator::deleteAllMessages(){
-    while(inputBuffer.size()>0){
-        Param* p = inputBuffer.front();
-        inputBuffer.pop();
+    while(inputBuffer->size()>0){
+        Param* p = inputBuffer->front();
+        inputBuffer->pop();
         delete p;
     }
 }

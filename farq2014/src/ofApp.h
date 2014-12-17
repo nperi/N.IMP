@@ -12,9 +12,10 @@
 #include "InputSource.h"
 #include "MixTable.h"
 #include "ParamInputGenerator.h"
+#include "AudioListenerInput.h"
+#include "AudioInputGenerator.h"
 
 #include "MidiInputGenerator.h"
-#include "OscInputGenerator.h"
 
 #include "InputCamera.h"
 #include "VideoPlayerMac.h"
@@ -27,25 +28,30 @@
 #include "ImageProcessor.h"
 #include "MixSimpleBlend.h"
 #include "MixMask.h"
-#include "MultiChannelSwitch.h"
+#include "MultiChannelMixer.h"
 
 #include "NodeViewer.h"
 #include "NodeElement.h"
 
 #include "CustomSyphonServer.h"
 
+#define BUFFER_SIZE 256
+#define NUM_WINDOWS 80
+
 enum InputType {VIDEO, CAM, IMAGE, PARTICLE};
 enum VisualLayerType {IKEDA, GLITCH_1, GLITCH_2,IMAGE_PROCESSOR};
 enum MixerType {SIMPLE_BLEND, MASK, MULTI_CHANNEL};
-enum InputGeneratorsType {MIDI, OSC};
+enum InputGeneratorsType {MIDI, FFT};
 
 class ofApp : public ofBaseApp {
 public:
 	void setup();
+    void setupAudio();
 	void update();
 	void draw();
     void keyPressed (int key);
     bool loadFromXML();
+    void audioIn(float * input, int bufferSize, int nChannels);
     
     //change current viewer
     void nextViewer();
@@ -60,6 +66,7 @@ public:
     vector<VisualLayer*> visualLayers;
     vector<MixTable*> mixtables;
     vector<ParamInputGenerator*> inputGenerators;
+    vector<AudioListenerInput*> audioListeners;
     
     //all objects are stored in this collection
     map<string, ImageOutput*> nodes;
@@ -83,4 +90,16 @@ public:
     
     bool loadingOK;
     bool isFullScreen;
+    
+    
+    // START AUDIO FUNCTIONS AND PARAMETERS
+    
+    float* left;
+    float* right;
+    int 	bufferCounter;
+    
+    ofSoundStream soundStream;
+    
+    //END AUDIO PARAMETRERS
+    
 };

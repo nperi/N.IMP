@@ -19,6 +19,9 @@
 		6B0E60EB1A2FCA84006AE261 /* GlitchLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6B0E60E91A2FCA84006AE261 /* GlitchLayer.cpp */; };
 		6B0E614A1A2FDE57006AE261 /* GlitchLayerAlt.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6B0E61481A2FDE57006AE261 /* GlitchLayerAlt.cpp */; };
 		6B1CBBF51A3F92760084F9EE /* CustomSyphonServer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6B1CBBF31A3F92760084F9EE /* CustomSyphonServer.cpp */; };
+		6B1CBBFC1A3F9A450084F9EE /* AudioInputGenerator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6B1CBBFA1A3F9A450084F9EE /* AudioInputGenerator.cpp */; };
+		6B1CBBFF1A3F9DC00084F9EE /* DTAudioMap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6B1CBBFD1A3F9DC00084F9EE /* DTAudioMap.cpp */; };
+		6B1CBC071A3FBAEA0084F9EE /* AudioListenerInput.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6B1CBC051A3FBAEA0084F9EE /* AudioListenerInput.cpp */; };
 		6B36ECA61A3219280019915B /* tinyxml.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6B36EC9A1A31DBEA0019915B /* tinyxml.cpp */; };
 		6B36ECA71A3219280019915B /* tinyxmlerror.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6B36EC9C1A31DBEA0019915B /* tinyxmlerror.cpp */; };
 		6B36ECA81A3219280019915B /* tinyxmlparser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6B36EC9D1A31DBEA0019915B /* tinyxmlparser.cpp */; };
@@ -26,6 +29,7 @@
 		6B36ECAC1A34EA0B0019915B /* ofxJpegGlitch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6B0E61601A2FDEBD006AE261 /* ofxJpegGlitch.cpp */; };
 		6B36ECAE1A34EA990019915B /* ofxPostGlitch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6B0E61461A2FD939006AE261 /* ofxPostGlitch.cpp */; };
 		6B36ECB11A34F19C0019915B /* ImageInput.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6B36ECAF1A34F19C0019915B /* ImageInput.cpp */; };
+		6B67DE0B1A40F02300588367 /* fft.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6B67DE091A40F02300588367 /* fft.cpp */; };
 		6B9E008B1A2E56EA00813D7C /* Syphon.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = D58DCB2C0AEFDE6171E29540 /* Syphon.framework */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		6B9E01311A2E5B3100813D7C /* Syphon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B9E011F1A2E5B3100813D7C /* Syphon.framework */; };
 		6B9E01321A2E5B3100813D7C /* SyphonNameboundClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B9E01221A2E5B3100813D7C /* SyphonNameboundClient.m */; };
@@ -199,6 +203,12 @@
 		6B0E61611A2FDEBD006AE261 /* ofxJpegGlitch.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxJpegGlitch.h; sourceTree = "<group>"; };
 		6B1CBBF31A3F92760084F9EE /* CustomSyphonServer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CustomSyphonServer.cpp; path = CustomSyphonServer/CustomSyphonServer.cpp; sourceTree = "<group>"; };
 		6B1CBBF41A3F92760084F9EE /* CustomSyphonServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CustomSyphonServer.h; path = CustomSyphonServer/CustomSyphonServer.h; sourceTree = "<group>"; };
+		6B1CBBFA1A3F9A450084F9EE /* AudioInputGenerator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AudioInputGenerator.cpp; path = ParameterInputGen/AudioInputGenerator.cpp; sourceTree = "<group>"; };
+		6B1CBBFB1A3F9A450084F9EE /* AudioInputGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AudioInputGenerator.h; path = ParameterInputGen/AudioInputGenerator.h; sourceTree = "<group>"; };
+		6B1CBBFD1A3F9DC00084F9EE /* DTAudioMap.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DTAudioMap.cpp; path = ParameterInputGen/DTAudioMap.cpp; sourceTree = "<group>"; };
+		6B1CBBFE1A3F9DC00084F9EE /* DTAudioMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DTAudioMap.h; path = ParameterInputGen/DTAudioMap.h; sourceTree = "<group>"; };
+		6B1CBC051A3FBAEA0084F9EE /* AudioListenerInput.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AudioListenerInput.cpp; path = ParameterInputGen/AudioListenerInput.cpp; sourceTree = "<group>"; };
+		6B1CBC061A3FBAEA0084F9EE /* AudioListenerInput.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AudioListenerInput.h; path = ParameterInputGen/AudioListenerInput.h; sourceTree = "<group>"; };
 		6B36EC9A1A31DBEA0019915B /* tinyxml.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = tinyxml.cpp; sourceTree = "<group>"; };
 		6B36EC9B1A31DBEA0019915B /* tinyxml.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = tinyxml.h; sourceTree = "<group>"; };
 		6B36EC9C1A31DBEA0019915B /* tinyxmlerror.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = tinyxmlerror.cpp; sourceTree = "<group>"; };
@@ -208,6 +218,8 @@
 		6B36ECAF1A34F19C0019915B /* ImageInput.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ImageInput.cpp; sourceTree = "<group>"; };
 		6B36ECB01A34F19C0019915B /* ImageInput.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageInput.h; sourceTree = "<group>"; };
 		6B3CDFD1A15E92F074E7D5AE /* RunningBackground.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = RunningBackground.h; path = ../../../addons/ofxCv/libs/ofxCv/include/ofxCv/RunningBackground.h; sourceTree = SOURCE_ROOT; };
+		6B67DE091A40F02300588367 /* fft.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = fft.cpp; sourceTree = "<group>"; };
+		6B67DE0A1A40F02300588367 /* fft.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fft.h; sourceTree = "<group>"; };
 		6B9E01031A2E5B3100813D7C /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		6B9E011F1A2E5B3100813D7C /* Syphon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Syphon.framework; sourceTree = "<group>"; };
 		6B9E01211A2E5B3100813D7C /* SyphonNameboundClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SyphonNameboundClient.h; sourceTree = "<group>"; };
@@ -749,12 +761,18 @@
 		6BFCC2F71A3DCE0E009D68F0 /* ParamInputGen */ = {
 			isa = PBXGroup;
 			children = (
+				6B1CBC051A3FBAEA0084F9EE /* AudioListenerInput.cpp */,
+				6B1CBC061A3FBAEA0084F9EE /* AudioListenerInput.h */,
 				6BFCC2F81A3DCED6009D68F0 /* ParamInputGenerator.cpp */,
 				6BFCC2F91A3DCED6009D68F0 /* ParamInputGenerator.h */,
 				6BFCC2FB1A3E07F8009D68F0 /* MidiInputGenerator.cpp */,
 				6BFCC2FC1A3E07F8009D68F0 /* MidiInputGenerator.h */,
 				6BFCC2FF1A3EF263009D68F0 /* DTMidiMap.cpp */,
 				6BFCC3001A3EF263009D68F0 /* DTMidiMap.h */,
+				6B1CBBFA1A3F9A450084F9EE /* AudioInputGenerator.cpp */,
+				6B1CBBFB1A3F9A450084F9EE /* AudioInputGenerator.h */,
+				6B1CBBFD1A3F9DC00084F9EE /* DTAudioMap.cpp */,
+				6B1CBBFE1A3F9DC00084F9EE /* DTAudioMap.h */,
 				D34E96191A3FA0770089BFE4 /* OscInputGenerator.cpp */,
 				D34E961A1A3FA0770089BFE4 /* OscInputGenerator.h */,
 				D34E96551A3FB5C50089BFE4 /* DTOscMap.cpp */,
@@ -1085,6 +1103,8 @@
 		D3A227061A37241C005DD5AF /* etc */ = {
 			isa = PBXGroup;
 			children = (
+				6B67DE091A40F02300588367 /* fft.cpp */,
+				6B67DE0A1A40F02300588367 /* fft.h */,
 				D3A227071A37241C005DD5AF /* ofxParticle.cpp */,
 				D3A227081A37241C005DD5AF /* ofxParticle.h */,
 				D3A227091A37241C005DD5AF /* ofxParticleSystem.cpp */,
@@ -1377,6 +1397,7 @@
 				D34E964E1A3FA2850089BFE4 /* OscReceivedElements.cpp in Sources */,
 				6BFCC2DB1A3C82D9009D68F0 /* ofxRtMidiIn.cpp in Sources */,
 				D309EB9A1A2F37A6008B3D94 /* MixSimpleBlend.cpp in Sources */,
+				6B1CBBFF1A3F9DC00084F9EE /* DTAudioMap.cpp in Sources */,
 				6BFCC3011A3EF263009D68F0 /* DTMidiMap.cpp in Sources */,
 				6BFCC2E21A3C82D9009D68F0 /* ofxBaseMidi.cpp in Sources */,
 				D3A227A71A3B91E0005DD5AF /* LimbDarkeningPass.cpp in Sources */,
@@ -1424,8 +1445,10 @@
 				D3A2279D1A3B91E0005DD5AF /* ContrastPass.cpp in Sources */,
 				6B9E01331A2E5B3100813D7C /* README.md in Sources */,
 				F76B4A79BD8DE4854141CB47 /* fdog.cpp in Sources */,
+				6B67DE0B1A40F02300588367 /* fft.cpp in Sources */,
 				EBCDE831EFAE08274E799C97 /* Calibration.cpp in Sources */,
 				D3A227A41A3B91E0005DD5AF /* GodRaysPass.cpp in Sources */,
+				6B1CBBFC1A3F9A450084F9EE /* AudioInputGenerator.cpp in Sources */,
 				6AABAB39E82AF5CFEA23A205 /* ContourFinder.cpp in Sources */,
 				D3A227A01A3B91E0005DD5AF /* DofPass.cpp in Sources */,
 				6BFCC2FA1A3DCED6009D68F0 /* ParamInputGenerator.cpp in Sources */,
@@ -1456,6 +1479,7 @@
 				D3A227A81A3B91E0005DD5AF /* LUTPass.cpp in Sources */,
 				D309EB861A2E99A3008B3D94 /* InputSource.cpp in Sources */,
 				D3A227151A373372005DD5AF /* ofxParticle.cpp in Sources */,
+				6B1CBC071A3FBAEA0084F9EE /* AudioListenerInput.cpp in Sources */,
 				DBCB84A37F9AECC254870D79 /* Wrappers.cpp in Sources */,
 				6BFCC2E41A3C82D9009D68F0 /* ofxMidiIn.cpp in Sources */,
 				D3A2279F1A3B91E0005DD5AF /* DofAltPass.cpp in Sources */,
