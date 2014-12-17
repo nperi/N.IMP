@@ -161,6 +161,7 @@
     <PARAM_INPUT_GENERATORS>
         <INPUT_GEN name="KORG_NANO" type="MIDI" midiDeviceName="nanoKONTROL2 SLIDER/KNOB"/>
         <INPUT_GEN name="OSC" type="OSC" port="12345"/>
+        <INPUT_GEN name="FFT1" type="FFT" />
     </PARAM_INPUT_GENERATORS>
 
     <SYPHON_SERVERS>
