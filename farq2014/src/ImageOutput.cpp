@@ -74,6 +74,12 @@ vector<string> ImageOutput::getInputNames(){
 void ImageOutput::drawGui(){
     panel.draw();
 }
+void ImageOutput::drawGui(int x, int y){
+    ofVec2f p = panel.getPosition();
+    panel.setPosition(x, y);
+    panel.draw();
+    //panel.setPosition(p);
+}
 void ImageOutput::setGui(int x,int y, int width){
     panel.setPosition(x,y);
     panel.setWidthElements(width);

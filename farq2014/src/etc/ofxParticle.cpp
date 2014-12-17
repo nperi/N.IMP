@@ -15,7 +15,8 @@ ofxParticle::ofxParticle(int width_,int heigth_, int lifeTime_, int radius_, flo
     
 	damping	= 0.03f;
 	
-	seperation.distance		= 35;
+    seperation.distance		= ofRandom(5,50);
+	//seperation.distance		= 35;
 	alignment.distance		= 80;
 	cohesion.distance		= 90;
 	

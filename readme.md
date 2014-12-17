@@ -123,5 +123,21 @@ Multi-channel Mixer layer (up to 8 inputs)
                 <INPUT_SOURCE name="source4"/>
                 <INPUT_SOURCE name="source5"/>
             </MIXER>
-```            
+```         
+
+Render Pipeline
+---------------
+
+###General Render Pipeline
+
+```
+ _____  n    ____________   1   ______________
+|INPUT|---->|ChannelMixer|---->|ImageProcessor| --
+ -----       ------------       --------------    \     ___________    n    _______
+                                                    -> |SimpleMixer| ----> |MainMix|
+ _____  n    ____________   1   ______________    /     -----------         -------
+|INPUT|---->|ChannelMixer|---->|ImageProcessor| --
+ -----       ------------       --------------     
+```
+
             

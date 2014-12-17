@@ -42,6 +42,7 @@ class ImageOutput {
     
     virtual void draw(int x,int y, float scale = 1.0) = 0;
     void drawGui();
+    void drawGui(int x, int y);
     void setGui(int x,int y, int width = 240);
     
     void resetProcessedFlag();

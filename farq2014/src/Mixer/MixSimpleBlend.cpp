@@ -53,16 +53,21 @@ void MixSimpleBlend::draw(int x,int y, float scale) {
 void MixSimpleBlend::update(){
     fbo.begin();
     ofClear(255,255,255, 0);
+    glPushAttrib(GL_ALL_ATTRIB_BITS);
+    glEnable(GL_BLEND);
+    glBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA,GL_ONE,GL_ONE_MINUS_SRC_ALPHA);
     if (blendMode == 0) {
-        glPushAttrib(GL_ALL_ATTRIB_BITS);
-        glEnable(GL_BLEND);
-        glBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA,GL_ONE,GL_ONE_MINUS_SRC_ALPHA);
-        ofSetColor(255, 255, 255);
-        input[selector1]->getTexture()->draw(0, 0);
-        ofSetColor(255, 255, 255,opacity);
-        input[selector2]->getTexture()->draw(0, 0);
-        glDisable(GL_BLEND);
-        glPopAttrib();
+        
+        if (opacity < 255) {
+            ofSetColor(255, 255, 255);
+            input[selector1]->getTexture()->draw(0, 0);
+        }
+        if (opacity>0) {
+            ofSetColor(255, 255, 255,opacity);
+            input[selector2]->getTexture()->draw(0, 0);
+        }
+        
+        
         
     }
     else{
@@ -72,6 +77,8 @@ void MixSimpleBlend::update(){
         psBlend.end();
         psBlend.draw(*(input[selector1]->getTexture()), blendMode);
     }
+    glDisable(GL_BLEND);
+    glPopAttrib();
     fbo.end();
     tex = fbo.getTextureReference();
 }

@@ -36,7 +36,9 @@ void NodeViewer::draw() {
 
 void NodeViewer::addElement(NodeElement* elem_){
     elements.push_back(elem_);
-    
+}
+
+void NodeViewer::createConnections(){
     connections.clear();
     vector<string> elemNames;
     for (int i=0; i<elements.size(); ++i) {
@@ -55,11 +57,7 @@ void NodeViewer::addElement(NodeElement* elem_){
                 }
             }
         }
-        
     }
-    
-    
-    
 }
 
 string NodeViewer::getName(){
