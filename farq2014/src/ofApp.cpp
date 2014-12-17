@@ -22,6 +22,8 @@ void ofApp::setup() {
     mixerTypes.insert(std::pair<string,MixerType>("SIMPLE_BLEND", SIMPLE_BLEND));
     mixerTypes.insert(std::pair<string,MixerType>("MULTI_CHANNEL", MULTI_CHANNEL));
     inputGenTypes.insert(std::pair<string,InputGeneratorsType>("MIDI", MIDI));
+    inputGenTypes.insert(std::pair<string,InputGeneratorsType>("FFT", FFT));
+
 
     loadingOK = loadFromXML();
     
@@ -35,6 +37,12 @@ void ofApp::setup() {
             inputGenerators[i]->setup();
         }
         
+        //starting input generators theads (the not threadeds will not start)
+        
+        for(int i=0; i<inputGenerators.size(); i++){
+            inputGenerators[i]->start();
+        }
+        
         //create Syphon Server
         //mClient.setup();
         //mClient.setApplicationName("projeccionOF");
@@ -45,11 +53,54 @@ void ofApp::setup() {
         }
         
         setCurrentViewer(0);
+        
+        setupAudio();
     }
     
   }
 
+void ofApp::setupAudio(){
+    
+    bufferCounter	= 0;
+   
+    // 0 output channels,
+    // 2 input channels
+    // 44100 samples per second
+    // BUFFER_SIZE samples per buffer
+    // 4 num buffers (latency)
+    
+    ofSoundStreamSetup(0,2,this, 44100,BUFFER_SIZE, 4);
+    left = new float[BUFFER_SIZE];
+    right = new float[BUFFER_SIZE];
+    
+    //soundStream.setup(this, 0, 2, 44100, bufferSize, 4);
+}
 
+void ofApp::audioIn(float * input, int bufferSize, int nChannels){
+    // samples are "interleaved"
+    for (int i = 0; i < bufferSize; i++){
+        left[i] = input[i*2];
+        right[i] = input[i*2+1];
+    }
+    
+    for (int i=0; i<audioListeners.size(); i++){
+        // for each audio listener, i copy the audiobuffer and send it to it.
+        
+        float * leftToGo = new float[BUFFER_SIZE];
+        float * rightToGo = new float[BUFFER_SIZE];
+        
+        memcpy ( leftToGo, left, sizeof (float)*BUFFER_SIZE );
+        memcpy ( rightToGo, right, sizeof (float)*BUFFER_SIZE );
+        
+        if(!audioListeners[i]->fillNewData(leftToGo, rightToGo, BUFFER_SIZE)){
+            // if data copy was not successful, then we delete the memory (because the input gen wont delete it)
+            delete[] leftToGo;
+            delete[] rightToGo;
+        }
+    }
+    
+    bufferCounter++;
+}
 
 void ofApp::update() {
     if(loadingOK){
@@ -630,6 +681,15 @@ bool ofApp::loadFromXML(){
                                     
                                     break;
                                 }
+                                case FFT:
+                                {
+                                    AudioInputGenerator* aI = new AudioInputGenerator(inputName);
+                                    inputGenerators.push_back(aI);
+                                    audioListeners.push_back(aI);
+                                    
+                                    break;
+                                }
+
                                 default:
                                 {
                                     result = false;
