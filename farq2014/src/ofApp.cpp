@@ -22,11 +22,8 @@ void ofApp::setup() {
     mixerTypes.insert(std::pair<string,MixerType>("SIMPLE_BLEND", SIMPLE_BLEND));
     mixerTypes.insert(std::pair<string,MixerType>("MULTI_CHANNEL", MULTI_CHANNEL));
     inputGenTypes.insert(std::pair<string,InputGeneratorsType>("MIDI", MIDI));
-
     inputGenTypes.insert(std::pair<string,InputGeneratorsType>("FFT", FFT));
-
-    // commented out by chachi to merge
-    //inputGenTypes.insert(std::pair<string,InputGeneratorsType>("OSC", OSC));
+    inputGenTypes.insert(std::pair<string,InputGeneratorsType>("OSC", OSC));
     
     loadingOK = loadFromXML();
     
