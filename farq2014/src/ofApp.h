@@ -14,6 +14,7 @@
 #include "ParamInputGenerator.h"
 #include "AudioListenerInput.h"
 #include "AudioInputGenerator.h"
+#include "OscInputGenerator.h"
 
 #include "MidiInputGenerator.h"
 
@@ -28,7 +29,7 @@
 #include "ImageProcessor.h"
 #include "MixSimpleBlend.h"
 #include "MixMask.h"
-#include "MultiChannelMixer.h"
+#include "MultiChannelSwitch.h"
 
 #include "NodeViewer.h"
 #include "NodeElement.h"
@@ -41,7 +42,7 @@
 enum InputType {VIDEO, CAM, IMAGE, PARTICLE};
 enum VisualLayerType {IKEDA, GLITCH_1, GLITCH_2,IMAGE_PROCESSOR};
 enum MixerType {SIMPLE_BLEND, MASK, MULTI_CHANNEL};
-enum InputGeneratorsType {MIDI, FFT};
+enum InputGeneratorsType {MIDI, FFT, OSC};
 
 class ofApp : public ofBaseApp {
 public:
