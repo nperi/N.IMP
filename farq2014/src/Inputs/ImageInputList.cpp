@@ -63,6 +63,7 @@ void ImageInputList::loadImage(string name_, string path_){
         //create gui
         isPalindromLoop.addListener(this, &ImageInputList::loopTypeChanged);
         bpm.addListener(this, &ImageInputList::bpmChanged);
+        setOriginalPlaySpeed.addListener(this,&ImageInputList::setOriginalPlaySpeedChanged);
         bpmMultiplier.addListener(this, &ImageInputList::bpmMultiplierChanged);
         nextFrame.addListener(this, &ImageInputList::nextFrameChanged);
         previousFrame.addListener(this, &ImageInputList::previousFrameChanged);
@@ -80,11 +81,12 @@ void ImageInputList::loadImage(string name_, string path_){
         
         
         seqSettings.setName("Sequence Settings");
+       // seqSettings.add(setOriginalPlaySpeed.set("original play speed",true));
         seqSettings.add(isPlaying.set("Play",true));
-        seqSettings.add(isPalindromLoop.set("LoopPalindrom",false));
+        seqSettings.add(isPalindromLoop.set("LoopPalindrom",true));
         seqSettings.add(isMatchBpmToSequenceLength.set("match BPM to Sequence Length",false));
         seqSettings.add(bpm.set("bpm", 100, 10, 200));
-        seqSettings.add(bpmMultiplier.set("bpmMultiplier", 4, 1, 40));
+        seqSettings.add(bpmMultiplier.set("bpmMultiplier", 4, 1, 120));
         seqSettings.add(playPosition.set("playPosition",0.0,0.0,1.0));
         
         gui.add(seqSettings);
@@ -130,10 +132,10 @@ void ImageInputList::bpmMultiplierChanged(int &b){//bpm to fps
 }
 void ImageInputList::isMatchBpmToSequenceLengthChanged(bool &b){
     if (b) {
-        bpmMultiplier.set("loop length in beats", 1, 1, 16 );
+        bpmMultiplier.set("loop length in beats", bpmMultiplier, 1, 16 );
     }
     else{
-        bpmMultiplier.set("bpmMultiplier", 4, 1, 40);
+        bpmMultiplier.set("bpmMultiplier", bpmMultiplier, 1, 120);
     }
     inputs[currentSequence]->isMatchBpmToSequenceLength = b;
     inputs[currentSequence]->calculateFPS();
@@ -181,3 +183,13 @@ void ImageInputList::sequenceChanged(int &s){
 void ImageInputList::updateParameter(Param* inputParam){
     
 }
+
+void ImageInputList::setOriginalPlaySpeedChanged(bool &b){
+    if (b) {
+      
+    }
+}
+/*
+void ImageInputList::setParameters(int bpm_){
+    bpm = bpm_;
+}*/

@@ -46,7 +46,7 @@ float ImageTypeMovie::getPosition(){
 }
 
 void ImageTypeMovie::calculateFPS(){
-    float fps;
+    /*float fps;
     if (!isMatchBpmToSequenceLength) {
         fps = bpm*((float)bpmMultiplier)/60.0;
     }else{
@@ -54,9 +54,13 @@ void ImageTypeMovie::calculateFPS(){
         fps = videoPlayer.getTotalNumFrames() * ds / ((float)bpmMultiplier);
     }
     float speed = fps/(videoPlayer.getTotalNumFrames()/videoPlayer.getDuration());
+    */
+    float speed = ((float)(bpm))/100.0;
+    
     if (isPlayingBackwards) {
         speed *= -1;
     }
+    
     videoPlayer.setSpeed(speed);
 }
 

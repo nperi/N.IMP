@@ -9,6 +9,8 @@ void ofApp::setup() {
     loadingOK = false;
     isFullScreen = false;
     
+    ofSetLogLevel(OF_LOG_ERROR);
+    
     //populating string dictionaries for simple comparison used in LoadFromXML
     inputTypes.insert(std::pair<string,InputType>("VIDEO",VIDEO));
     inputTypes.insert(std::pair<string,InputType>("CAM",CAM));
@@ -145,7 +147,7 @@ void ofApp::draw() {
     if(loadingOK){
         nodeViewers[currentViewer]->draw();
         
-        string info = nodeViewers[currentViewer]->getName();
+        string info = "";
         info += "  (";
         info += ofToString(currentViewer+1);
         info += "/";
@@ -154,8 +156,10 @@ void ofApp::draw() {
         info += "    switch layers <- ->";
         
         ofDrawBitmapString(info, 20, ofGetHeight()-20);
+        string info2 = nodeViewers[currentViewer]->getName();
         
-        ofDrawBitmapString(ofToString(ofGetFrameRate(),0), ofGetWidth() - 50, ofGetHeight()-20);
+        ofDrawBitmapString(ofToString(info2,0), ofGetWidth() - 300, ofGetHeight()-20);
+        ofDrawBitmapString(ofToString(ofGetFrameRate(),0), ofGetWidth() - 50, ofGetHeight()-35);
     }
     else{
         ofDrawBitmapString("ERROR LOADING XML", 50, 50);
@@ -241,11 +245,11 @@ bool ofApp::loadFromXML(){
                                 ImageInputList* iI = new ImageInputList(inputName);
                                 string  path = XML.getAttribute("INPUT", "path","none", i);
                                 
-                                float bpm         = ofToFloat(XML.getAttribute("INPUT", "bpm","100", i));
-                                int bpmMultiplier = ofToInt(XML.getAttribute("INPUT", "multiplier_divider","1", i));
+                                float bpm         = ofToFloat(XML.getAttribute("INPUT", "bpm","120", i));
+                                int bpmMultiplier = ofToInt(XML.getAttribute("INPUT", "multiplier_divider","32", i));
                                 bool isPlaying    = ofToBool(XML.getAttribute("INPUT", "isPlaying","true", i));
-                                bool isPalindromLoop    = ofToBool(XML.getAttribute("INPUT", "palindrom","false", i));
-                                bool isMatchBpmToSequenceLength    = ofToBool(XML.getAttribute("INPUT", "matchBPMtoSequence","true", i));
+                                bool isPalindromLoop    = ofToBool(XML.getAttribute("INPUT", "palindrom","true", i));
+                                bool isMatchBpmToSequenceLength    = ofToBool(XML.getAttribute("INPUT", "matchBPMtoSequence","false", i));
                                 
                                 if (path == "none") {
                                     XML.pushTag("INPUT",i);
@@ -273,6 +277,7 @@ bool ofApp::loadFromXML(){
                                 iI->isPlaying = isPlaying;
                                 iI->isPalindromLoop = isPalindromLoop;
                                 iI->isMatchBpmToSequenceLength = isMatchBpmToSequenceLength;
+                                //iI->setParameters(bpm);
                                 
                                 inputs.push_back(iI);
                                 nodes.insert(std::pair<string,ImageOutput*>(inputName,iI));

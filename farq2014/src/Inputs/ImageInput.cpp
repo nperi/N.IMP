@@ -76,7 +76,7 @@ void ImageInput::loadImage(string path_){
         gui.add(isPlaying.set("Play",true));
         gui.add(isPalindromLoop.set("LoopPalindrom",false));
         gui.add(isPlayingBackwards.set("Backwards", false));
-        gui.add(setOriginalPlaySpeed.setup("reset"));
+        gui.add(setOriginalPlaySpeed.setup("original playspeed"));
         gui.add(isMatchBpmToSequenceLength.set("match BPM to Sequence Length",false));
         gui.add(bpm.set("bpm", 100, 10, 200));
         gui.add(bpmMultiplier.set("bpmMultiplier", 4, 1, 40));
@@ -102,6 +102,7 @@ void ImageInput::loadImage(string path_){
         //create image sequence gui
         isPalindromLoop.addListener(this, &ImageInput::loopTypeChanged);
         bpm.addListener(this, &ImageInput::bpmChanged);
+        setOriginalPlaySpeed.addListener(this, &ImageInput::setOriginalPlaySpeedChanged);
         bpmMultiplier.addListener(this, &ImageInput::bpmMultiplierChanged);
         nextFrame.addListener(this, &ImageInput::nextFrameChanged);
         previousFrame.addListener(this, &ImageInput::previousFrameChanged);
@@ -109,11 +110,13 @@ void ImageInput::loadImage(string path_){
         playPosition.addListener(this, &ImageInput::playPositionChanged);
         
         gui.add(isPlaying.set("Play",true));
+        gui.add(setOriginalPlaySpeed.setup("original playspeed"));
         gui.add(isPalindromLoop.set("LoopPalindrom",false));
         gui.add(isMatchBpmToSequenceLength.set("match BPM to Sequence Length",false));
         gui.add(bpm.set("bpm", 100, 10, 200));
         gui.add(bpmMultiplier.set("bpmMultiplier", 4, 1, 40));
         player.setFrameRate(bpm*((float)bpmMultiplier)/60.0);
+        
         gui.add(nextFrame.setup("nextFrame"));
         gui.add(previousFrame.setup("previousFrame"));
         gui.add(playPosition.set("playPosition",0.0,0.0,1.0));

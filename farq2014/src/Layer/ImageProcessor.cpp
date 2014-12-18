@@ -153,7 +153,57 @@ void ImageProcessor::update() {
 }
 
 void ImageProcessor::updateParameter(Param* inputParam){
-    
+    if(inputParam->name.compare("isBloom")==0){
+        isBloom = inputParam->intVal;
+    }
+    else if(inputParam->name.compare("isEdge")==0){
+        isEdge = inputParam->intVal;
+    }
+    else if(inputParam->name.compare("isContrast")==0){
+        isContrast = inputParam->intVal;
+    }
+    else if(inputParam->name.compare("coBrightness")==0){
+        coBrightness = ofMap(inputParam->intVal,0,255,0,20);
+    }
+    else if(inputParam->name.compare("coMultiple")==0){
+        coMultiple = ofMap(inputParam->intVal,0,255,0,5);
+    }
+    else if(inputParam->name.compare("isZoomBlur")==0){
+        isZoomBlur = inputParam->intVal;
+    }
+    else if(inputParam->name.compare("zbCenterX")==0){
+        zbCenterX = ofMap(inputParam->intVal,0,255,0,1);
+    }
+    else if(inputParam->name.compare("zbExposure")==0){
+        zbExposure = ofMap(inputParam->intVal,0,255,0,5);
+    }
+    else if(inputParam->name.compare("isRGBShift")==0){
+        isRGBShift = inputParam->intVal;
+    }
+    else if(inputParam->name.compare("rgAngle")==0){
+        rgAngle = ofMap(inputParam->intVal,0,255,0,360);
+    }
+    else if(inputParam->name.compare("rgAngle")==0){
+        rgAngle = ofMap(inputParam->intVal,0,255,0,360);
+    }
+    else if(inputParam->name.compare("rgAmount")==0){
+        rgAmount = ofMap(inputParam->intVal,0,255,0,0.1);
+    }
+    else if(inputParam->name.compare("isPixelate")==0){
+        isPixelate = inputParam->intVal;
+    }
+    else if(inputParam->name.compare("piIsUnityScale")==0){
+        piIsUnityScale = inputParam->intVal;
+    }
+    else if(inputParam->name.compare("piRes")==0){
+        int bv = ofMap(inputParam->intVal,0,255,0,100);
+        ofVec2f b = ofVec2f(bv,bv);
+        if (piIsUnityScale) {
+            (static_pointer_cast<PixelatePass>(post[9]))->setResolution(ofVec2f((int)b.x, (int)(b.x*heigth/width)));
+        }else{
+            (static_pointer_cast<PixelatePass>(post[9]))->setResolution(ofVec2f((int)b.x, (int)(b.y*heigth/width)));
+        }
+    }
 }
 
 //------------------------------------------------------------------

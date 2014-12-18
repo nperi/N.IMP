@@ -45,7 +45,9 @@ class ImageInputList : public InputSource{
     ofParameter<float> playPosition;
     ofxButton nextFrame;
     ofxButton previousFrame;
-    ofxButton setOriginalPlaySpeed;
+    ofParameter<bool> setOriginalPlaySpeed;
+    
+//void setParameters(float bpm_,int bpmMultiplier_,bpmMultiplier);
 	
 private:
     vector<ImageType*> inputs;
@@ -56,7 +58,7 @@ private:
     void nextSequenceChanged();
     void sequenceChanged(int &s);
     
-    void setOriginalPlaySpeedChanged();
+    void setOriginalPlaySpeedChanged(bool &b);
     void loopTypeChanged(bool &b);
     void isPlayingBackwardsChanged(bool &b);
     void bpmChanged(float &b);

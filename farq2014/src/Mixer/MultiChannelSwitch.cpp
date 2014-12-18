@@ -64,6 +64,7 @@ void MultiChannelSwitch::update() {
         }
     }
     fbo.end();*/
+    img = *input[selChannel]->getImage();
     tex = *input[selChannel]->getTexture();
 }
 

@@ -1,9 +1,0 @@
-<MIDI_SETTINGS deviceid="nanoKONTROL2 SLIDER/KNOB">
-    
-    <MIDI_MAP midiId="16" nodeName="Columns" param="opacity" inputMinValue='0' inputMaxValue='127' paramMinValue='0' paramMaxValue='255' />
-    <MIDI_MAP midiId="16" nodeName="Background" param="opacity" inputMinValue='0' inputMaxValue='127' paramMinValue='0' paramMaxValue='255' />
-    <MIDI_MAP midiId="59" nodeName="Columns" param="nextLayer" inputMinValue='0' inputMaxValue='127' paramMinValue='0' paramMaxValue='1' />
-    <MIDI_MAP midiId="13" nodeName="V_GLITCH1" param="p3" inputMinValue='0' inputMaxValue='127' paramMinValue='0' paramMaxValue='255' />
-    <MIDI_MAP midiId="76" nodeName="V_GLITCH1" param="p4" inputMinValue='0' inputMaxValue='127' paramMinValue='0' paramMaxValue='255' />
-    
-</MIDI_SETTINGS>

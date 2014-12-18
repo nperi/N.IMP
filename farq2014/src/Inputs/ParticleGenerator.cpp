@@ -25,7 +25,7 @@ ParticleGenerator::ParticleGenerator(string name) : InputSource(name){
     gui.add(alphaParticles.set("Particles Alpha", 255, 0, 255));
     gui.add(autoGenParticle.set("autogen particle",false));
     gui.add(autoGenAmount.set("autogen amount", 0, 0, 5));
-    gui.add(fadeOut.set("fade out",0.0,0.0,1.0));
+    gui.add(fadeOut.set("fade out",0.4,0.0,1.0));
     
     pScale.setName("Size");
     pScale.add(unityScale.set("Same Size",false));
@@ -135,5 +135,7 @@ void ParticleGenerator::updateParameter(Param* inputParam){
             ofVec2f v = force[force.size()-1].pos;
             v.y = inputParam->floatVal;
         }
+    }else if(inputParam->name.compare("clearBg")==0){
+        isClearBg = inputParam->intVal;
     }
 }

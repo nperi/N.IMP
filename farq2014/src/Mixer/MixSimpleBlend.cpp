@@ -99,5 +99,7 @@ void MixSimpleBlend::updateParameter(Param* inputParam){
     }else if(inputParam->name.compare("nextLayer")==0){
         cout << inputParam->intVal <<endl;
         //this->opacity = inputParam->intVal;
+    }else if(inputParam->name.compare("blendmode")==0){
+        this->blendMode = inputParam->intVal;
     }
 }
