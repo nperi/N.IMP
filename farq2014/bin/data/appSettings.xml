@@ -49,6 +49,7 @@
                 <ASSET name="tex hoja cielo verde" path="sets/textures/slow/textura hojas verde y rosado.mov"/>
                 <ASSET name="tex pasto giro" path="sets/textures/slow/textura pasto giro normal 1.mov"/>
                 <ASSET name="vertical" path="sets/textures/slow/vertical_.mov"/>
+                <ASSET name="farc" path="sets/mar.mov"/>
             </INPUT>
             <!--Particle and Cam -->
             <INPUT name="Particle" type="PARTICLE"/>

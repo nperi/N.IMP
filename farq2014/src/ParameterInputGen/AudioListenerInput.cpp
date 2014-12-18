@@ -14,7 +14,7 @@ AudioListenerInput::AudioListenerInput(string name_):ParamInputGenerator(name_,t
     hasNewData = false;
 }
 
-Param* AudioListenerInput::processInput(){
+void AudioListenerInput::processInput(){
     
 }
 

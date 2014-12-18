@@ -23,7 +23,7 @@ class AudioListenerInput: public ParamInputGenerator {
 public:
     
     AudioListenerInput(string name_);
-    Param* processInput();
+    void processInput();
     bool setupFromXML();
     bool fillNewData(float* left_, float* right_, int bufferLen_);
     void disposeData();

@@ -33,9 +33,9 @@ bool OscInputGenerator::setupFromXML() {
             
             string address = XML.getAttribute("ADDRESS","path","/",j);
             XML.pushTag("ADDRESS");
-            int getNumMidiMapTag = XML.getNumTags("OSC_MAP");
+            int getNumOSCMapTag = XML.getNumTags("OSC_MAP");
             
-            for(int i = 0;i<getNumMidiMapTag ; i++){
+            for(int i = 0;i<getNumOSCMapTag ; i++){
                 
                 string nodeId = XML.getAttribute("OSC_MAP","nodeName","",i);
                 string param = XML.getAttribute("OSC_MAP","param","",i);
@@ -67,33 +67,29 @@ bool OscInputGenerator::setupFromXML() {
 	
 }
 
-
-//------------------------------------------------------------------
-void OscInputGenerator::update() {
+void OscInputGenerator::processInput() {
     
-    
-       }
-
-Param* OscInputGenerator::processInput() {
-    cout << "input" <<endl;
-    while(receiver.hasWaitingMessages()){
-    // get the next message
-    ofxOscMessage m;
-    receiver.getNextMessage(&m);
-    
-    std::map<string,DTOscMap* >::iterator it;
-    
-    for (int j=0; j<m.getNumArgs(); ++j) {
-        it = oscMap.find(m.getAddress());
-        if(it!=oscMap.end()){
-            Param* p = new Param();
-            p->imageInputName = it->second->nodeId[j];
-            p->name = it->second->paramId[j];
-            p->intVal = ofMap(m.getArgAsFloat(j), it->second->inputMinValue[j], it->second->inputMaxValue[j], it->second->paramMinValue[j], it->second->paramMaxValue[j]);
-            storeMessage(p);
+    if(lock()){
+        while(receiver.hasWaitingMessages()){
+            // get the next message
+            ofxOscMessage m;
+            receiver.getNextMessage(&m);
+            
+            std::map<string,DTOscMap* >::iterator it;
+            
+            for (int j=0; j<m.getNumArgs(); ++j) {
+                it = oscMap.find(m.getAddress());
+                if(it!=oscMap.end()){
+                    Param* p = new Param();
+                    p->imageInputName = it->second->nodeId[j];
+                    p->name = it->second->paramId[j];
+                    p->intVal = ofMap(m.getArgAsFloat(j), it->second->inputMinValue[j], it->second->inputMaxValue[j], it->second->paramMinValue[j], it->second->paramMaxValue[j]);
+                    storeMessage(p);
+                }
+            
+            }
         }
+        unlock();
     }
 }
-}
-
 

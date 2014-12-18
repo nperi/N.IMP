@@ -16,6 +16,8 @@
 		<string>https://github.com/tenderbolton/farq2014.git</string>
 		<key>37526DA425E5430474A14FBFA1BC4525160B5FC1</key>
 		<string>https://github.com/kylemcdonald/ofxCv.git</string>
+		<key>90E2F969A762FB62C413A0C44D1F334E6EC3F531</key>
+		<string>https://github.com/danomatika/ofxMidi.git</string>
 		<key>948EE651663C32063606289EDDFF747A436F0AF9</key>
 		<string>https://github.com/brinoausrino/ofxImageSequencePlayer.git</string>
 		<key>95F70890EFD46183734FEDFE52CF53391DE6937E</key>
@@ -37,6 +39,8 @@
 		<string>../../..</string>
 		<key>37526DA425E5430474A14FBFA1BC4525160B5FC1</key>
 		<string>../../../../addons/ofxCv</string>
+		<key>90E2F969A762FB62C413A0C44D1F334E6EC3F531</key>
+		<string>../../../../addons/ofxMidi</string>
 		<key>948EE651663C32063606289EDDFF747A436F0AF9</key>
 		<string>../../../../addons/ofxImageSequencePlayer</string>
 		<key>95F70890EFD46183734FEDFE52CF53391DE6937E</key>
@@ -87,6 +91,14 @@
 			<string>AD4BEB8D191D3A37A0E32AAC674B3540263DA07F</string>
 			<key>IDESourceControlWCCName</key>
 			<string>ofxJpegGlitch</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>90E2F969A762FB62C413A0C44D1F334E6EC3F531</string>
+			<key>IDESourceControlWCCName</key>
+			<string>ofxMidi</string>
 		</dict>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>

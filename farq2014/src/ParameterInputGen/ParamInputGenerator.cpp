@@ -53,29 +53,21 @@ Param* ParamInputGenerator::getNextInputMessage(){
     
 }
 
-bool ParamInputGenerator::storeMessage(Param* p){
+void ParamInputGenerator::storeMessage(Param* p){
     // IMPORTANT: this function has to be called between lock and unlock ALWAYS!
     
-    bool ableToStore = false;
-    
-    if(inputBuffer->size()>5){
+    if(inputBuffer->size()>10){
         Param* firstP = inputBuffer->front();
         inputBuffer->pop();
         delete firstP;
     }
     inputBuffer->push(p);
-    ableToStore = true;
-    
-    return ableToStore;
 }
 
 void ParamInputGenerator::threadedFunction(){
     
     while(isThreadRunning()) {
-        Param* p = processInput();
-        if(p!=NULL){
-            storeMessage(p);
-        }
+        processInput();
         sleep(samplingMs); // we limit the sampling to avoid wasting resources.
     }
     
@@ -88,4 +80,8 @@ void ParamInputGenerator::deleteAllMessages(){
         inputBuffer->pop();
         delete p;
     }
+}
+
+void ParamInputGenerator::keyPressed (int key){
+    // this method should be thread safe using lock and unlock
 }
