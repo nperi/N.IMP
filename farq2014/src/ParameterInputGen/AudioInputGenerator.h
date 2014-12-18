@@ -24,7 +24,7 @@ class AudioInputGenerator: public AudioListenerInput {
 public:
     
     AudioInputGenerator(string name_);
-    Param* processInput();
+    void processInput();
     bool setupFromXML();
     //for storing audio feature mapping
     std::vector<DTAudioMap*>* audioMap;

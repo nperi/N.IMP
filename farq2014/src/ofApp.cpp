@@ -785,9 +785,6 @@ bool ofApp::loadFromXML(){
                     }
                     
                 }
-
-                
-                                
             }
         }
         else{
@@ -889,6 +886,12 @@ void ofApp::keyPressed  (int key){
                     break;
             }
     if (notAvailable) ofLogNotice() << "key function not available";
+    
+    // sending keyboard input to all input generators
+    for (int i = 0; i<inputGenerators.size();i++){
+        inputGenerators[i]->keyPressed(key);
+    }
+    
 }
 
 void ofApp::nextViewer(){

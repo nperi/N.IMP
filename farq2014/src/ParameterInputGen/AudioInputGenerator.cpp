@@ -62,8 +62,7 @@ bool AudioInputGenerator::setupFromXML(){
    
 }
 
-Param* AudioInputGenerator::processInput(){
-    Param* p = NULL;
+void AudioInputGenerator::processInput(){
     
     if(lock()){
         if(hasNewData){
@@ -102,10 +101,7 @@ Param* AudioInputGenerator::processInput(){
                     p->name = audioMap->at(i)->paramId;
                     p->intVal = ofMap(magnitude[band], audioMap->at(i)->inputMinValue, audioMap->at(i)->inputMaxValue, audioMap->at(i)->paramMinValue, audioMap->at(i)->paramMaxValue);
                     
-                    if(!storeMessage(p)){
-                        // if we cant store it, we delete it
-                        delete p;
-                    }
+                    storeMessage(p);
                 }
                 
                 
@@ -115,6 +111,4 @@ Param* AudioInputGenerator::processInput(){
         }
         unlock();
     }
-    
-    return p;
 }

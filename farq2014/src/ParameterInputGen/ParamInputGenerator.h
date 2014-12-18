@@ -22,11 +22,12 @@ public:
     void setup();
     void start();
     void stop();
-    virtual Param* processInput()=0;
+    virtual void processInput()=0;
     virtual bool setupFromXML()=0;
     Param* getNextInputMessage();
-    bool storeMessage(Param* p);
+    void storeMessage(Param* p);
     void deleteAllMessages();
+    void keyPressed (int key);
 
 protected:
     

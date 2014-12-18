@@ -92,7 +92,6 @@ public:
     bool loadingOK;
     bool isFullScreen;
     
-    
     // START AUDIO FUNCTIONS AND PARAMETERS
     
     float* left;
@@ -103,4 +102,5 @@ public:
     
     //END AUDIO PARAMETRERS
     
+   
 };

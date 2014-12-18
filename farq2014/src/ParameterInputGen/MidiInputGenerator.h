@@ -19,11 +19,15 @@ class MidiInputGenerator: public ParamInputGenerator, public ofxMidiListener  {
 public:
     
     MidiInputGenerator(string name_, string midiInputName_);
-    Param* processInput();
+    void processInput();
     bool setupFromXML();
     void newMidiMessage(ofxMidiMessage& eventArgs);
+    void keyPressed (int key);
+    void nextMidiMap();
+    void prevMidiMap();
     //for storing midi control ids and map them to Node id and parameter.
-    std::map<int,DTMidiMap* > midiMap;
+    vector<std::map<int,vector<DTMidiMap*>* >*> midiMaps;
+    int activeMidiMap;
     
 private:
     
