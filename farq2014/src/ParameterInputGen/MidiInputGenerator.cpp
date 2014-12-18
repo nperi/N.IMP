@@ -10,6 +10,7 @@
 
 MidiInputGenerator::MidiInputGenerator(string name_, string midiInputName_):ParamInputGenerator(name_,false){
     midiInputName = midiInputName_;
+    midiMaps = new vector<std::map<int,vector<DTMidiMap*>* >*>();
 }
 
 void MidiInputGenerator::processInput(){
@@ -19,7 +20,7 @@ void MidiInputGenerator::processInput(){
 
 void MidiInputGenerator::nextMidiMap(){
     activeMidiMap+=1;
-    if(activeMidiMap>(midiMaps.size() - 1)){
+    if(activeMidiMap>(midiMaps->size() - 1)){
         activeMidiMap = 0;
     }
 }
@@ -27,7 +28,7 @@ void MidiInputGenerator::nextMidiMap(){
 void MidiInputGenerator::prevMidiMap(){
     activeMidiMap-=1;
     if(activeMidiMap<0){
-        activeMidiMap = (midiMaps.size() - 1);
+        activeMidiMap = (midiMaps->size() - 1);
     }
 }
 
@@ -94,7 +95,7 @@ bool MidiInputGenerator::setupFromXML(){
                 
             }
             
-            midiMaps.push_back(mMap);
+            midiMaps->push_back(mMap);
             
             XML.popTag();
         }
@@ -118,9 +119,9 @@ void MidiInputGenerator::newMidiMessage(ofxMidiMessage& msg){
     
     std::map<int,vector<DTMidiMap*>* >::iterator it;
     
-    it = midiMaps[activeMidiMap]->find(msg.control);
+    it = midiMaps->at(activeMidiMap)->find(msg.control);
     
-    if(it!=midiMaps[activeMidiMap]->end()){
+    if(it!=midiMaps->at(activeMidiMap)->end()){
         vector<DTMidiMap*>* vMaps = it->second;
         for(int i = 0; i<vMaps->size(); i++){
             Param* p = new Param();

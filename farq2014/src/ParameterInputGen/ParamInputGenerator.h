@@ -27,7 +27,7 @@ public:
     Param* getNextInputMessage();
     void storeMessage(Param* p);
     void deleteAllMessages();
-    void keyPressed (int key);
+    virtual void keyPressed (int key);
 
 protected:
     

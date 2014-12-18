@@ -106,12 +106,15 @@ void ParticleGenerator::draw(int x,int y, float scale) {
     fbo.draw(x, y,w,h);
     ofNoFill();
     ofRect(x, y, w, h);
+    ofPushMatrix();
+    ofTranslate(x, y);
     ofFill();
     for(int i=0; i<force.size();++i){
         int mult = (force[i].isAttracting) ? 255 : 0;
         ofSetColor(255-mult, mult, 0,force[i].scale*50);
         ofCircle(force[i].pos->x, force[i].pos->y, force[i].radius);
     }
+    ofPopMatrix();
     ofDisableAlphaBlending();
     ofSetColor(255, 255, 255);
     ofDrawBitmapString(name, x + 10, y + 30);
@@ -127,13 +130,16 @@ void ParticleGenerator::updateParameter(Param* inputParam){
         ParticleForce f;
         f.radius = 50;
         f.isAttracting = true;
-        f.scale = 2;
+        f.scale = 1;
         f.pos.set(ofVec2f(inputParam->floatVal,0));
         addForce(f);
+        
+        cout <<"x: " << f.pos->x;
     }else if (inputParam->name.compare("forceY")==0){
         if (force.size()>0) {
             ofVec2f v = force[force.size()-1].pos;
             v.y = inputParam->floatVal;
+            cout <<" y: " << v.y <<endl;
         }
     }else if(inputParam->name.compare("clearBg")==0){
         isClearBg = inputParam->intVal;

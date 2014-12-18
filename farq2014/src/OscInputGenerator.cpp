@@ -11,7 +11,7 @@
 
 
 OscInputGenerator::OscInputGenerator(string name_):ParamInputGenerator(name_,true){
-
+    oscMap = new std::map<string,DTOscMap* >();
 }
 
 //------------------------------------------------------------------
@@ -34,7 +34,7 @@ bool OscInputGenerator::setupFromXML() {
             string address = XML.getAttribute("ADDRESS","path","/",j);
             XML.pushTag("ADDRESS");
             int getNumOSCMapTag = XML.getNumTags("OSC_MAP");
-            
+            DTOscMap* dtM = new DTOscMap();
             for(int i = 0;i<getNumOSCMapTag ; i++){
                 
                 string nodeId = XML.getAttribute("OSC_MAP","nodeName","",i);
@@ -44,9 +44,6 @@ bool OscInputGenerator::setupFromXML() {
                 float paramMinValue = ofToFloat(XML.getAttribute("OSC_MAP","paramMinValue","0",i));
                 float paramMaxValue = ofToFloat(XML.getAttribute("OSC_MAP","paramMaxValue","127",i));
                 
-                DTOscMap* dtM = new DTOscMap();
-                
-                
                 dtM->path = address;
                 dtM->paramId.push_back(param);
                 dtM->nodeId.push_back(nodeId);
@@ -55,7 +52,7 @@ bool OscInputGenerator::setupFromXML() {
                 dtM->paramMinValue.push_back(paramMinValue);
                 dtM->paramMaxValue.push_back(paramMaxValue);
                 
-                oscMap.insert(std::pair<string,DTOscMap* >(address,dtM));
+                oscMap->insert(std::pair<string,DTOscMap* >(address,dtM));
             }
             XML.popTag();
         }
@@ -77,16 +74,18 @@ void OscInputGenerator::processInput() {
             
             std::map<string,DTOscMap* >::iterator it;
             
-            for (int j=0; j<m.getNumArgs(); ++j) {
-                it = oscMap.find(m.getAddress());
-                if(it!=oscMap.end()){
-                    Param* p = new Param();
-                    p->imageInputName = it->second->nodeId[j];
-                    p->name = it->second->paramId[j];
-                    p->intVal = ofMap(m.getArgAsFloat(j), it->second->inputMinValue[j], it->second->inputMaxValue[j], it->second->paramMinValue[j], it->second->paramMaxValue[j]);
-                    storeMessage(p);
-                }
+            it = oscMap->find(m.getAddress());
             
+            if(it!=oscMap->end()){
+                for (int j=0; j<m.getNumArgs(); ++j) {
+                    
+                        Param* p = new Param();
+                        p->imageInputName = it->second->nodeId[j];
+                        p->name = it->second->paramId[j];
+                        p->floatVal = ofMap(m.getArgAsFloat(j), it->second->inputMinValue[j], it->second->inputMaxValue[j], it->second->paramMinValue[j], it->second->paramMaxValue[j]);
+                        storeMessage(p);
+                
+                }
             }
         }
         unlock();

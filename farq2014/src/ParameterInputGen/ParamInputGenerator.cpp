@@ -42,12 +42,20 @@ void ParamInputGenerator::stop(){
 Param* ParamInputGenerator::getNextInputMessage(){
     
     Param* p = NULL;
-    if(lock()){
+    if(isThreaded){
+        if(lock()){
+            if(inputBuffer->size()>0){
+                p = inputBuffer->front();
+                inputBuffer->pop();
+            }
+            unlock();
+        }
+    }
+    else{
         if(inputBuffer->size()>0){
             p = inputBuffer->front();
             inputBuffer->pop();
         }
-        unlock();
     }
     return p;
     
@@ -58,8 +66,11 @@ void ParamInputGenerator::storeMessage(Param* p){
     
     if(inputBuffer->size()>10){
         Param* firstP = inputBuffer->front();
+        cout << inputBuffer->size();
         inputBuffer->pop();
-        delete firstP;
+        cout << " after: " << inputBuffer->size() << endl;
+        //delete firstP;
+        
     }
     inputBuffer->push(p);
 }

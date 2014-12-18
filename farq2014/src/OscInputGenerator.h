@@ -24,7 +24,7 @@ class OscInputGenerator : public ParamInputGenerator{
     void processInput();
     bool setupFromXML();
     
-    std::map<string,DTOscMap* > oscMap;
+    std::map<string,DTOscMap* >* oscMap;
 private:
     int port;
     ofxOscReceiver receiver;

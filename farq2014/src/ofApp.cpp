@@ -115,20 +115,27 @@ void ofApp::update() {
         for (int i=0; i<inputGenerators.size(); ++i) {
             ParamInputGenerator* p = inputGenerators[i];
             
-            Param* param = p->getNextInputMessage();
-            
-            //sending param info to the destination node
-            if(param!=NULL){
-                ImageOutput* destinationNode=NULL;
-                std::map<string,ImageOutput*>::iterator it;
+            int maxParams = 0;
+            bool continueProcessing = true;
+            while(maxParams<=5 && continueProcessing){
+                Param* param = p->getNextInputMessage();
+                
+                //sending param info to the destination node
+                if(param!=NULL){
+                    ImageOutput* destinationNode=NULL;
+                    std::map<string,ImageOutput*>::iterator it;
 
-                it=nodes.find(param->imageInputName);
-                
-                if(it!=nodes.end()){
-                    it->second->updateParameter(param);
-                    delete param;
+                    it=nodes.find(param->imageInputName);
+                    
+                    if(it!=nodes.end()){
+                        it->second->updateParameter(param);
+                        delete param;
+                    }
+                    maxParams += 1;
                 }
-                
+                else{
+                    continueProcessing = false;
+                }
             }
         }
 

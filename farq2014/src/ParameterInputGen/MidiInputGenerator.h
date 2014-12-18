@@ -26,7 +26,7 @@ public:
     void nextMidiMap();
     void prevMidiMap();
     //for storing midi control ids and map them to Node id and parameter.
-    vector<std::map<int,vector<DTMidiMap*>* >*> midiMaps;
+    vector<std::map<int,vector<DTMidiMap*>* >*>* midiMaps;
     int activeMidiMap;
     
 private:

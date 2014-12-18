@@ -270,6 +270,7 @@
     <PARAM_INPUT_GENERATORS>
         <INPUT_GEN name="NANO" type="MIDI" midiDeviceName="nanoKONTROL2 SLIDER/KNOB"/>
         <INPUT_GEN name="FFT1" type="FFT" />
+        <INPUT_GEN name="OSC" type="OSC" />
     </PARAM_INPUT_GENERATORS>
 
     <SYPHON_SERVERS>
