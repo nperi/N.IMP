@@ -14,6 +14,7 @@ ImageTypeMovie::ImageTypeMovie(string name_ ,string path_): ImageType(name_,path
     ofQTKitDecodeMode decodeMode = OF_QTKIT_DECODE_PIXELS_AND_TEXTURE;
     videoPlayer.setPixelFormat(OF_PIXELS_RGBA);
     videoPlayer.loadMovie(path_, decodeMode);
+    isPlaying.addListener(this, &ImageTypeMovie::cIsPlaying);
 }
 
 void ImageTypeMovie::activate(ofImage& _img, ofTexture& _tex){
@@ -71,4 +72,13 @@ void ImageTypeMovie::setPosition(float p, ofImage& _img, ofTexture& _tex){
     videoPlayer.update();
     _img.setFromPixels(videoPlayer.getPixels(),videoPlayer.getWidth(),videoPlayer.getHeight(), OF_IMAGE_COLOR_ALPHA);
     _tex = _img.getTextureReference();
+}
+
+void ImageTypeMovie::cIsPlaying(bool &b){
+    if (b) {
+        videoPlayer.play();
+    }
+    else{
+        videoPlayer.stop();
+    }
 }

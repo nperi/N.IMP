@@ -29,6 +29,7 @@ class ImageTypeMovie : public ImageType{
     
 private:
     ofQTKitPlayer videoPlayer;
+    void cIsPlaying(bool &b);
 	
 };
 

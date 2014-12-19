@@ -14,6 +14,7 @@ ImageInputList::ImageInputList(string name) : InputSource(name){
     
     img.allocate(width, heigth, OF_IMAGE_COLOR_ALPHA);
     currentSequence = 0;
+    lastSequence = currentSequence;
 }
 
 void ImageInputList::setup(){
@@ -22,6 +23,7 @@ void ImageInputList::setup(){
 
 void ImageInputList::update(){
     inputs[currentSequence]->update(img, tex);
+    playPos2 =inputs[currentSequence]->getPosition();
 }
 
 void ImageInputList::draw(int x,int y, float scale){
@@ -88,6 +90,7 @@ void ImageInputList::loadImage(string name_, string path_){
         seqSettings.add(bpm.set("bpm", 100, 10, 200));
         seqSettings.add(bpmMultiplier.set("bpmMultiplier", 4, 1, 120));
         seqSettings.add(playPosition.set("playPosition",0.0,0.0,1.0));
+        seqSettings.add(playPos2.set("pos",0.0,0.0,1.0));
         
         gui.add(seqSettings);
         
@@ -166,6 +169,9 @@ void ImageInputList::nextSequenceChanged(){
     currentSequence = (currentSequence -1 <0) ? currentSequence = inputs.size()-1 : currentSequence-1;
 }
 void ImageInputList::sequenceChanged(int &s){
+    inputs[lastSequence]->isPlaying = false;
+    lastSequence = currentSequence;
+    
     inputs[currentSequence]->activate(img, tex);
     inputs[currentSequence]->isPlaying = isPlaying;
     

@@ -43,6 +43,7 @@ class ImageInputList : public InputSource{
     ofParameter<bool> isPlayingBackwards;
     ofParameter<bool> isMatchBpmToSequenceLength;
     ofParameter<float> playPosition;
+    ofParameter<float> playPos2;
     ofxButton nextFrame;
     ofxButton previousFrame;
     ofParameter<bool> setOriginalPlaySpeed;
@@ -69,6 +70,8 @@ private:
     void playPositionChanged(float &pos);
     void calculateFPS();
     void isPlayingChanged(bool &b);
+    
+    int lastSequence;
 };
 
 #endif
