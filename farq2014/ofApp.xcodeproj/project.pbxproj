@@ -58,6 +58,9 @@
 		B6840996567E78436F7ECFAB /* ETF.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B047FF96258DC01792B272DB /* ETF.cpp */; };
 		BBAB23CB13894F3D00AA2426 /* GLUT.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = BBAB23BE13894E4700AA2426 /* GLUT.framework */; };
 		C602002DE761F9B52DB4400A /* ObjectFinder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AE75A3FBA2C2D87D14F06FE6 /* ObjectFinder.cpp */; };
+		D3008A4D1A44911800DACD2E /* ImageTypeMovie.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D3008A471A44911800DACD2E /* ImageTypeMovie.cpp */; };
+		D3008A4E1A44911800DACD2E /* ImageTypePicture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D3008A491A44911800DACD2E /* ImageTypePicture.cpp */; };
+		D3008A4F1A44911800DACD2E /* ImageTypePictureSequence.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D3008A4B1A44911800DACD2E /* ImageTypePictureSequence.cpp */; };
 		D309EB761A2E6E04008B3D94 /* Param.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D309EB741A2E6E04008B3D94 /* Param.cpp */; };
 		D309EB861A2E99A3008B3D94 /* InputSource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D309EB7C1A2E94AD008B3D94 /* InputSource.cpp */; };
 		D309EB871A2E99D1008B3D94 /* VisualLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D309EB7F1A2E94AD008B3D94 /* VisualLayer.cpp */; };
@@ -95,9 +98,6 @@
 		D3A2274E1A39DD42005DD5AF /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = D3A2274A1A39DD42005DD5AF /* README.md */; };
 		D3A2274F1A39DD42005DD5AF /* ofxImageSequencePlayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D3A2274C1A39DD42005DD5AF /* ofxImageSequencePlayer.cpp */; };
 		D3A227541A3B57A9005DD5AF /* ImageInputList.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D3A227521A3B57A9005DD5AF /* ImageInputList.cpp */; };
-		D3A227571A3B58FE005DD5AF /* ImageTypePicture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D3A227551A3B58FE005DD5AF /* ImageTypePicture.cpp */; };
-		D3A2275A1A3B590C005DD5AF /* ImageTypePictureSequence.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D3A227581A3B590C005DD5AF /* ImageTypePictureSequence.cpp */; };
-		D3A2275D1A3B5921005DD5AF /* ImageTypeMovie.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D3A2275B1A3B5921005DD5AF /* ImageTypeMovie.cpp */; };
 		D3A2279B1A3B91E0005DD5AF /* BleachBypassPass.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D3A2276A1A3B90C1005DD5AF /* BleachBypassPass.cpp */; };
 		D3A2279C1A3B91E0005DD5AF /* BloomPass.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D3A2276C1A3B90C1005DD5AF /* BloomPass.cpp */; };
 		D3A2279D1A3B91E0005DD5AF /* ContrastPass.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D3A2276E1A3B90C1005DD5AF /* ContrastPass.cpp */; };
@@ -286,6 +286,13 @@
 		C88333E71C9457E441C33474 /* ofxButton.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = ofxButton.cpp; path = ../../../addons/ofxGui/src/ofxButton.cpp; sourceTree = SOURCE_ROOT; };
 		CC455256CE0ECFE328853737 /* fdog.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = fdog.h; path = ../../../addons/ofxCv/libs/CLD/include/CLD/fdog.h; sourceTree = SOURCE_ROOT; };
 		D29DD28C195CD81267F3C8A1 /* Distance.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = Distance.h; path = ../../../addons/ofxCv/libs/ofxCv/include/ofxCv/Distance.h; sourceTree = SOURCE_ROOT; };
+		D3008A461A44911800DACD2E /* ImageType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageType.h; sourceTree = "<group>"; };
+		D3008A471A44911800DACD2E /* ImageTypeMovie.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ImageTypeMovie.cpp; sourceTree = "<group>"; };
+		D3008A481A44911800DACD2E /* ImageTypeMovie.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageTypeMovie.h; sourceTree = "<group>"; };
+		D3008A491A44911800DACD2E /* ImageTypePicture.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ImageTypePicture.cpp; sourceTree = "<group>"; };
+		D3008A4A1A44911800DACD2E /* ImageTypePicture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageTypePicture.h; sourceTree = "<group>"; };
+		D3008A4B1A44911800DACD2E /* ImageTypePictureSequence.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ImageTypePictureSequence.cpp; sourceTree = "<group>"; };
+		D3008A4C1A44911800DACD2E /* ImageTypePictureSequence.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageTypePictureSequence.h; sourceTree = "<group>"; };
 		D309EB741A2E6E04008B3D94 /* Param.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Param.cpp; sourceTree = "<group>"; };
 		D309EB751A2E6E04008B3D94 /* Param.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Param.h; sourceTree = "<group>"; };
 		D309EB7C1A2E94AD008B3D94 /* InputSource.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = InputSource.cpp; sourceTree = "<group>"; };
@@ -370,15 +377,8 @@
 		D3A2274A1A39DD42005DD5AF /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		D3A2274C1A39DD42005DD5AF /* ofxImageSequencePlayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxImageSequencePlayer.cpp; sourceTree = "<group>"; };
 		D3A2274D1A39DD42005DD5AF /* ofxImageSequencePlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxImageSequencePlayer.h; sourceTree = "<group>"; };
-		D3A227511A3B51DE005DD5AF /* ImageType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ImageType.h; sourceTree = "<group>"; };
 		D3A227521A3B57A9005DD5AF /* ImageInputList.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ImageInputList.cpp; sourceTree = "<group>"; };
 		D3A227531A3B57A9005DD5AF /* ImageInputList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageInputList.h; sourceTree = "<group>"; };
-		D3A227551A3B58FE005DD5AF /* ImageTypePicture.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ImageTypePicture.cpp; sourceTree = "<group>"; };
-		D3A227561A3B58FE005DD5AF /* ImageTypePicture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageTypePicture.h; sourceTree = "<group>"; };
-		D3A227581A3B590C005DD5AF /* ImageTypePictureSequence.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ImageTypePictureSequence.cpp; sourceTree = "<group>"; };
-		D3A227591A3B590C005DD5AF /* ImageTypePictureSequence.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageTypePictureSequence.h; sourceTree = "<group>"; };
-		D3A2275B1A3B5921005DD5AF /* ImageTypeMovie.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ImageTypeMovie.cpp; sourceTree = "<group>"; };
-		D3A2275C1A3B5921005DD5AF /* ImageTypeMovie.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageTypeMovie.h; sourceTree = "<group>"; };
 		D3A227631A3B90C1005DD5AF /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		D3A227641A3B90C1005DD5AF /* ofxaddons_thumbnail.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ofxaddons_thumbnail.png; sourceTree = "<group>"; };
 		D3A227651A3B90C1005DD5AF /* readme.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = readme.md; sourceTree = "<group>"; };
@@ -907,9 +907,24 @@
 			name = src;
 			sourceTree = "<group>";
 		};
+		D3008A451A44911800DACD2E /* ImageTypes */ = {
+			isa = PBXGroup;
+			children = (
+				D3008A461A44911800DACD2E /* ImageType.h */,
+				D3008A471A44911800DACD2E /* ImageTypeMovie.cpp */,
+				D3008A481A44911800DACD2E /* ImageTypeMovie.h */,
+				D3008A491A44911800DACD2E /* ImageTypePicture.cpp */,
+				D3008A4A1A44911800DACD2E /* ImageTypePicture.h */,
+				D3008A4B1A44911800DACD2E /* ImageTypePictureSequence.cpp */,
+				D3008A4C1A44911800DACD2E /* ImageTypePictureSequence.h */,
+			);
+			path = ImageTypes;
+			sourceTree = "<group>";
+		};
 		D309EB7B1A2E94AD008B3D94 /* Inputs */ = {
 			isa = PBXGroup;
 			children = (
+				D3008A451A44911800DACD2E /* ImageTypes */,
 				D309EB7C1A2E94AD008B3D94 /* InputSource.cpp */,
 				D309EB7D1A2E94AD008B3D94 /* InputSource.h */,
 				D309EB8A1A2E9B27008B3D94 /* InputCamera.cpp */,
@@ -920,15 +935,8 @@
 				6B36ECB01A34F19C0019915B /* ImageInput.h */,
 				D3A2270B1A37243F005DD5AF /* ParticleGenerator.cpp */,
 				D3A2270C1A37243F005DD5AF /* ParticleGenerator.h */,
-				D3A227511A3B51DE005DD5AF /* ImageType.h */,
 				D3A227521A3B57A9005DD5AF /* ImageInputList.cpp */,
 				D3A227531A3B57A9005DD5AF /* ImageInputList.h */,
-				D3A227551A3B58FE005DD5AF /* ImageTypePicture.cpp */,
-				D3A227561A3B58FE005DD5AF /* ImageTypePicture.h */,
-				D3A227581A3B590C005DD5AF /* ImageTypePictureSequence.cpp */,
-				D3A227591A3B590C005DD5AF /* ImageTypePictureSequence.h */,
-				D3A2275B1A3B5921005DD5AF /* ImageTypeMovie.cpp */,
-				D3A2275C1A3B5921005DD5AF /* ImageTypeMovie.h */,
 			);
 			path = Inputs;
 			sourceTree = "<group>";
@@ -1375,17 +1383,18 @@
 				D3A227AC1A3B91E0005DD5AF /* RenderPass.cpp in Sources */,
 				6B1CBBF51A3F92760084F9EE /* CustomSyphonServer.cpp in Sources */,
 				6B36ECAE1A34EA990019915B /* ofxPostGlitch.cpp in Sources */,
-				D3A227571A3B58FE005DD5AF /* ImageTypePicture.cpp in Sources */,
 				6B36ECAC1A34EA0B0019915B /* ofxJpegGlitch.cpp in Sources */,
 				D34E96501A3FA2850089BFE4 /* ofxOscBundle.cpp in Sources */,
 				6B36ECA91A3219280019915B /* ofxXmlSettings.cpp in Sources */,
 				D3A2279C1A3B91E0005DD5AF /* BloomPass.cpp in Sources */,
+				D3008A4D1A44911800DACD2E /* ImageTypeMovie.cpp in Sources */,
 				6B36ECA71A3219280019915B /* tinyxmlerror.cpp in Sources */,
 				D3A227131A372AA3005DD5AF /* ParticleForce.cpp in Sources */,
 				D3A226C91A36340E005DD5AF /* MixMask.cpp in Sources */,
 				6BFCC2E51A3C82D9009D68F0 /* ofxMidiMessage.cpp in Sources */,
 				6B36ECA61A3219280019915B /* tinyxml.cpp in Sources */,
 				6B36ECA81A3219280019915B /* tinyxmlparser.cpp in Sources */,
+				D3008A4E1A44911800DACD2E /* ImageTypePicture.cpp in Sources */,
 				856AA354D08AB4B323081444 /* ofxBaseGui.cpp in Sources */,
 				D34E96531A3FA2850089BFE4 /* ofxOscReceiver.cpp in Sources */,
 				D34E964B1A3FA2850089BFE4 /* UdpSocketWin.cpp in Sources */,
@@ -1418,7 +1427,6 @@
 				D3A227A51A3B91E0005DD5AF /* HorizontalTiltShifPass.cpp in Sources */,
 				6B0E60EB1A2FCA84006AE261 /* GlitchLayer.cpp in Sources */,
 				D34E96521A3FA2850089BFE4 /* ofxOscParameterSync.cpp in Sources */,
-				D3A2275D1A3B5921005DD5AF /* ImageTypeMovie.cpp in Sources */,
 				D3A226B81A311C3E005DD5AF /* NodeViewer.cpp in Sources */,
 				6BFCC2E31A3C82D9009D68F0 /* ofxMidi.cpp in Sources */,
 				D3A227A61A3B91E0005DD5AF /* KaleidoscopePass.cpp in Sources */,
@@ -1442,6 +1450,7 @@
 				D3A227AF1A3B91E0005DD5AF /* SSAOPass.cpp in Sources */,
 				B6840996567E78436F7ECFAB /* ETF.cpp in Sources */,
 				D34E96481A3FA2850089BFE4 /* NetworkingUtils.cpp in Sources */,
+				D3008A4F1A44911800DACD2E /* ImageTypePictureSequence.cpp in Sources */,
 				D3A2279D1A3B91E0005DD5AF /* ContrastPass.cpp in Sources */,
 				6B9E01331A2E5B3100813D7C /* README.md in Sources */,
 				F76B4A79BD8DE4854141CB47 /* fdog.cpp in Sources */,
@@ -1462,7 +1471,6 @@
 				311DF864378748129984EA1D /* Kalman.cpp in Sources */,
 				D3A2271E1A3756B1005DD5AF /* ImageOutput.cpp in Sources */,
 				D3A2274F1A39DD42005DD5AF /* ofxImageSequencePlayer.cpp in Sources */,
-				D3A2275A1A3B590C005DD5AF /* ImageTypePictureSequence.cpp in Sources */,
 				D3A227281A38711E005DD5AF /* MultiChannelSwitch.cpp in Sources */,
 				6BFCC2DC1A3C82D9009D68F0 /* ofxRtMidiOut.cpp in Sources */,
 				C602002DE761F9B52DB4400A /* ObjectFinder.cpp in Sources */,

@@ -45,11 +45,6 @@ void ofApp::setup() {
             inputGenerators[i]->start();
         }
         
-        //create Syphon Server
-        //mClient.setup();
-        //mClient.setApplicationName("projeccionOF");
-        //mClient.setServerName("");
-        
         for(int i=0; i<syphonServers.size();i++){
             syphonServers[i]->setup();
         }

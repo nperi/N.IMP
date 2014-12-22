@@ -17,7 +17,7 @@ class ImageTypeMovie : public ImageType{
 	
   public:
 	
-	ImageTypeMovie(string name_ ,string path_);
+	ImageTypeMovie(string name_ ,string path_,ofQTKitPlayer* player);
 	
     void activate(ofImage& _img, ofTexture& _tex);
     void update(ofImage& _img, ofTexture& _tex);
@@ -28,7 +28,11 @@ class ImageTypeMovie : public ImageType{
     void setLoopState(ofLoopType l);
     
 private:
-    ofQTKitPlayer videoPlayer;
+    //ofVideoPlayer videoPlayer;
+    //ofQTKitPlayer videoPlayer;
+    ofQTKitPlayer* videoPlayer;
+    string path;
+    
     void cIsPlaying(bool &b);
 	
 };

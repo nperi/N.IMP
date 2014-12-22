@@ -14,16 +14,16 @@
 #include "ofxGui.h"
 #include "Param.h"
 
-// abstract class that covers all image output classes
-// includes an image and some events
-/*            
-                imageOutput
-                    |
-&        -----------&--------------
-        |           |           |
-   InputSource  VisualLayer MixTable
- 
-*/
+/* abstract class that covers all image output classes
+ * includes an image and some events
+ *
+ *               imageOutput
+ *                   |
+ *        -----------&--------------
+ *       |           |              |
+ *  InputSource  VisualLayer     MixTable
+ *
+ */
 class ImageOutput {
 	
   public:
@@ -33,20 +33,25 @@ class ImageOutput {
     string getName();
     ofImage* getImage();
     ofTexture* getTexture();
-    
-    void addInput(ImageOutput* layer_);
-    void addInputIdentifier(string inputId_);
-    bool findAndAssignInputs(map<string,ImageOutput*> &nodeCollection);
     vector<ImageOutput*> getInputs();
     vector<string> getInputNames();
     
+    //draws the node (whatever there is defined), in general the Output-picture
     virtual void draw(int x,int y, float scale = 1.0) = 0;
+    
+    //gui methods
     void drawGui();
     void drawGui(int x, int y);
     void setGui(int x,int y, int width = 240);
     
+    //methods for adding input//
+    void addInput(ImageOutput* layer_);
+    void addInputIdentifier(string inputId_);
+    bool findAndAssignInputs(map<string,ImageOutput*> &nodeCollection);
+    
     void resetProcessedFlag();
     
+    //external input
     virtual void updateParameter(Param* inputParam)=0;
     
 protected:

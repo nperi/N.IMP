@@ -72,6 +72,8 @@ private:
     void isPlayingChanged(bool &b);
     
     int lastSequence;
+    bool isMovie;
+    ofQTKitPlayer* videoPlayer;
 };
 
 #endif

@@ -66,9 +66,9 @@ void ParamInputGenerator::storeMessage(Param* p){
     
     if(inputBuffer->size()>10){
         Param* firstP = inputBuffer->front();
-        cout << inputBuffer->size();
+        //cout << inputBuffer->size();
         inputBuffer->pop();
-        cout << " after: " << inputBuffer->size() << endl;
+        //cout << " after: " << inputBuffer->size() << endl;
         //delete firstP;
         
     }

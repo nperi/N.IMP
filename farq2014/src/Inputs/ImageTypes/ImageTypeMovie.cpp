@@ -9,41 +9,47 @@
 
 #include "ImageTypeMovie.h"
 
-ImageTypeMovie::ImageTypeMovie(string name_ ,string path_): ImageType(name_,path_){
+ImageTypeMovie::ImageTypeMovie(string name_ ,string path_, ofQTKitPlayer* player): ImageType(name_,path_){
     mediaType = T_MOVIE;
-    ofQTKitDecodeMode decodeMode = OF_QTKIT_DECODE_PIXELS_AND_TEXTURE;
-    videoPlayer.setPixelFormat(OF_PIXELS_RGBA);
-    videoPlayer.loadMovie(path_, decodeMode);
+    //ofQTKitDecodeMode decodeMode = OF_QTKIT_DECODE_PIXELS_AND_TEXTURE;
+    //videoPlayer.setPixelFormat(OF_PIXELS_RGBA);
+    //videoPlayer.loadMovie(path_, decodeMode);
+    //videoPlayer.loadMovie(path_);
+    path = path_;
+    videoPlayer = player;
+    
     isPlaying.addListener(this, &ImageTypeMovie::cIsPlaying);
 }
 
 void ImageTypeMovie::activate(ofImage& _img, ofTexture& _tex){
-    videoPlayer.play();
+    videoPlayer->loadMovie(path);
+    videoPlayer->play();
+    //videoPlayer.play();
 
     //videoPlayer.update();
-    _img.setFromPixels(videoPlayer.getPixels(), videoPlayer.getWidth(), videoPlayer.getHeight(), OF_IMAGE_COLOR_ALPHA);
+    _img.setFromPixels(videoPlayer->getPixels(), videoPlayer->getWidth(), videoPlayer->getHeight(), OF_IMAGE_COLOR_ALPHA);
     _tex = _img.getTextureReference();
 }
 
 void ImageTypeMovie::update(ofImage& _img, ofTexture& _tex){
     if (isPlaying) {
-        videoPlayer.update();
-        if (videoPlayer.isFrameNew()){
-            _img.setFromPixels(videoPlayer.getPixels(), videoPlayer.getWidth(), videoPlayer.getHeight(), OF_IMAGE_COLOR_ALPHA);
+        videoPlayer->update();
+        if (videoPlayer->isFrameNew()){
+            _img.setFromPixels(videoPlayer->getPixels(), videoPlayer->getWidth(), videoPlayer->getHeight(), OF_IMAGE_COLOR_ALPHA);
             _tex = _img.getTextureReference();
         }
     }
 }
 
 int ImageTypeMovie::getFrameRate(){
-    return videoPlayer.getTotalNumFrames()/videoPlayer.getDuration()*videoPlayer.getSpeed();
+    return videoPlayer->getTotalNumFrames()/videoPlayer->getDuration()*videoPlayer->getSpeed();
 }
 void ImageTypeMovie::setLoopState(ofLoopType l){
-    videoPlayer.setLoopState(l);
+    videoPlayer->setLoopState(l);
 }
 
 float ImageTypeMovie::getPosition(){
-    return videoPlayer.getPosition();
+    return videoPlayer->getPosition();
 }
 
 void ImageTypeMovie::calculateFPS(){
@@ -61,24 +67,23 @@ void ImageTypeMovie::calculateFPS(){
     if (isPlayingBackwards) {
         speed *= -1;
     }
-    
-    videoPlayer.setSpeed(speed);
+    videoPlayer->setSpeed(speed);
 }
 
 void ImageTypeMovie::setPosition(float p, ofImage& _img, ofTexture& _tex){
     isPlaying = false;
     
-    videoPlayer.setPosition(p);
-    videoPlayer.update();
-    _img.setFromPixels(videoPlayer.getPixels(),videoPlayer.getWidth(),videoPlayer.getHeight(), OF_IMAGE_COLOR_ALPHA);
+    videoPlayer->setPosition(p);
+    videoPlayer->update();
+    _img.setFromPixels(videoPlayer->getPixels(),videoPlayer->getWidth(),videoPlayer->getHeight(), OF_IMAGE_COLOR_ALPHA);
     _tex = _img.getTextureReference();
 }
 
 void ImageTypeMovie::cIsPlaying(bool &b){
     if (b) {
-        videoPlayer.play();
+        videoPlayer->play();
     }
     else{
-        videoPlayer.stop();
+        videoPlayer->stop();
     }
 }

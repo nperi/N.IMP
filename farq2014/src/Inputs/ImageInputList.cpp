@@ -15,6 +15,7 @@ ImageInputList::ImageInputList(string name) : InputSource(name){
     img.allocate(width, heigth, OF_IMAGE_COLOR_ALPHA);
     currentSequence = 0;
     lastSequence = currentSequence;
+    isMovie = false;
 }
 
 void ImageInputList::setup(){
@@ -49,7 +50,12 @@ void ImageInputList::draw(int x,int y, float scale){
 void ImageInputList::loadImage(string name_, string path_){
     
     if (ofIsStringInString(path_, ".mov")) {
-        inputs.push_back(new ImageTypeMovie(name_,path_));
+        if (!isMovie) {
+            videoPlayer = new ofQTKitPlayer();
+            ofQTKitDecodeMode decodeMode = OF_QTKIT_DECODE_PIXELS_AND_TEXTURE;
+            videoPlayer->setPixelFormat(OF_PIXELS_RGBA);
+        }
+        inputs.push_back(new ImageTypeMovie(name_,path_,videoPlayer));
     }
     //load image sequence
     else if (!ofIsStringInString(path_, ".")) {
