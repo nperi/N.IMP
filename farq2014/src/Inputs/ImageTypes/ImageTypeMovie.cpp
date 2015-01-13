@@ -22,17 +22,19 @@ ImageTypeMovie::ImageTypeMovie(string name_ ,string path_, ofQTKitPlayer* player
 }
 
 void ImageTypeMovie::activate(ofImage& _img, ofTexture& _tex){
-    videoPlayer->loadMovie(path);
-    videoPlayer->play();
-    //videoPlayer.play();
+    if (videoPlayer!=NULL) {
+        videoPlayer->loadMovie(path);
+        videoPlayer->play();
+        //videoPlayer.play();
 
-    //videoPlayer.update();
-    _img.setFromPixels(videoPlayer->getPixels(), videoPlayer->getWidth(), videoPlayer->getHeight(), OF_IMAGE_COLOR_ALPHA);
-    _tex = _img.getTextureReference();
+        //videoPlayer.update();
+        _img.setFromPixels(videoPlayer->getPixels(), videoPlayer->getWidth(), videoPlayer->getHeight(), OF_IMAGE_COLOR_ALPHA);
+        _tex = _img.getTextureReference();
+    }
 }
 
 void ImageTypeMovie::update(ofImage& _img, ofTexture& _tex){
-    if (isPlaying) {
+    if (isPlaying && videoPlayer!=NULL) {
         videoPlayer->update();
         if (videoPlayer->isFrameNew()){
             _img.setFromPixels(videoPlayer->getPixels(), videoPlayer->getWidth(), videoPlayer->getHeight(), OF_IMAGE_COLOR_ALPHA);
@@ -42,48 +44,58 @@ void ImageTypeMovie::update(ofImage& _img, ofTexture& _tex){
 }
 
 int ImageTypeMovie::getFrameRate(){
-    return videoPlayer->getTotalNumFrames()/videoPlayer->getDuration()*videoPlayer->getSpeed();
+    if (videoPlayer!=NULL) {
+        return videoPlayer->getTotalNumFrames()/videoPlayer->getDuration()*videoPlayer->getSpeed();
+    }
+    return 0;
 }
 void ImageTypeMovie::setLoopState(ofLoopType l){
-    videoPlayer->setLoopState(l);
+    if (videoPlayer!=NULL) {
+        videoPlayer->setLoopState(l);
+    }
 }
 
 float ImageTypeMovie::getPosition(){
-    return videoPlayer->getPosition();
+    if (videoPlayer!=NULL) {
+        return videoPlayer->getPosition();
+    }
+    return 0;
 }
 
 void ImageTypeMovie::calculateFPS(){
-    /*float fps;
-    if (!isMatchBpmToSequenceLength) {
-        fps = bpm*((float)bpmMultiplier)/60.0;
-    }else{
-        float ds = bpm/60.0;
-        fps = videoPlayer.getTotalNumFrames() * ds / ((float)bpmMultiplier);
+    if (videoPlayer!=NULL) {
+        float speed = ((float)(bpm))/100.0;
+        
+        if (isPlayingBackwards) {
+            speed *= -1;
+        }
+        videoPlayer->setSpeed(speed);
     }
-    float speed = fps/(videoPlayer.getTotalNumFrames()/videoPlayer.getDuration());
-    */
-    float speed = ((float)(bpm))/100.0;
-    
-    if (isPlayingBackwards) {
-        speed *= -1;
-    }
-    videoPlayer->setSpeed(speed);
 }
 
 void ImageTypeMovie::setPosition(float p, ofImage& _img, ofTexture& _tex){
-    isPlaying = false;
-    
-    videoPlayer->setPosition(p);
-    videoPlayer->update();
-    _img.setFromPixels(videoPlayer->getPixels(),videoPlayer->getWidth(),videoPlayer->getHeight(), OF_IMAGE_COLOR_ALPHA);
-    _tex = _img.getTextureReference();
+    if (videoPlayer!=NULL) {
+        isPlaying = false;
+
+        videoPlayer->setPosition(p);
+        videoPlayer->update();
+        _img.setFromPixels(videoPlayer->getPixels(),videoPlayer->getWidth(),videoPlayer->getHeight(), OF_IMAGE_COLOR_ALPHA);
+        _tex = _img.getTextureReference();
+        }
 }
 
 void ImageTypeMovie::cIsPlaying(bool &b){
-    if (b) {
-        videoPlayer->play();
+    if (videoPlayer!=NULL) {
+        if (b) {
+            videoPlayer->play();
+        }
+        else{
+            videoPlayer->stop();
+        }
     }
-    else{
-        videoPlayer->stop();
-    }
+    
+}
+
+void ImageTypeMovie::setPlayer(ofQTKitPlayer *player){
+    videoPlayer = player;
 }

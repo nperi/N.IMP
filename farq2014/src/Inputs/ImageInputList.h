@@ -18,6 +18,8 @@
 #include "ImageTypeMovie.h"
 #include "ImageTypePicture.h"
 #include "ImageTypePictureSequence.h"
+#include "VideoPool.h"
+
 
 
 class ImageInputList : public InputSource{
@@ -30,6 +32,8 @@ class ImageInputList : public InputSource{
     void draw(int x,int y, float scale);
     void loadImage(string name_,string path_);
     void updateParameter(Param* inputParam);
+    void setEnable(bool isEnabled_);
+    
     
     ofxButton nextSequence;
     ofxButton prevSequence;

@@ -19,7 +19,7 @@ MixSimpleBlend::MixSimpleBlend(string name_):MixTable(name_){
     gui.add(selector1.set("Left Source", 0, 0, 0));
     gui.add(selector2.set("Right Source", 0, 0, 0));
     
-
+    isEnabled = false;
     
     blendMode.addListener(this, &MixSimpleBlend::blendModeChanged);
 
@@ -103,4 +103,10 @@ void MixSimpleBlend::updateParameter(Param* inputParam){
     }else if(inputParam->name.compare("blendmode")==0){
         this->blendMode = inputParam->intVal;
     }
+}
+
+void MixSimpleBlend::setEnable(bool isEnabled_){
+    isEnabled = isEnabled_;
+    input[0]->setEnable(isEnabled);
+    input[1]->setEnable(isEnabled);
 }

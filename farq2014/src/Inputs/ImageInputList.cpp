@@ -15,7 +15,8 @@ ImageInputList::ImageInputList(string name) : InputSource(name){
     img.allocate(width, heigth, OF_IMAGE_COLOR_ALPHA);
     currentSequence = 0;
     lastSequence = currentSequence;
-    isMovie = false;
+    isEnabled = false;
+    videoPlayer = NULL;
 }
 
 void ImageInputList::setup(){
@@ -50,11 +51,6 @@ void ImageInputList::draw(int x,int y, float scale){
 void ImageInputList::loadImage(string name_, string path_){
     
     if (ofIsStringInString(path_, ".mov")) {
-        if (!isMovie) {
-            videoPlayer = new ofQTKitPlayer();
-            ofQTKitDecodeMode decodeMode = OF_QTKIT_DECODE_PIXELS_AND_TEXTURE;
-            videoPlayer->setPixelFormat(OF_PIXELS_RGBA);
-        }
         inputs.push_back(new ImageTypeMovie(name_,path_,videoPlayer));
     }
     //load image sequence
@@ -175,19 +171,22 @@ void ImageInputList::nextSequenceChanged(){
     currentSequence = (currentSequence -1 <0) ? currentSequence = inputs.size()-1 : currentSequence-1;
 }
 void ImageInputList::sequenceChanged(int &s){
-    inputs[lastSequence]->isPlaying = false;
-    lastSequence = currentSequence;
+    if (isEnabled) {
+        inputs[lastSequence]->isPlaying = false;
+        lastSequence = currentSequence;
+        
+        inputs[currentSequence]->activate(img, tex);
+        inputs[currentSequence]->isPlaying = isPlaying;
+        
+        inputs[0]->bpm = bpm;
+        inputs[0]->bpmMultiplier = bpmMultiplier;
+        inputs[0]->isMatchBpmToSequenceLength = isMatchBpmToSequenceLength;
+        inputs[0]->isPlayingBackwards = isPlayingBackwards;
+        ofLoopType l = (isPalindromLoop) ? OF_LOOP_PALINDROME : OF_LOOP_NORMAL;
+        inputs[0]->setLoopState(l);
+        inputs[0]->calculateFPS();
+    }
     
-    inputs[currentSequence]->activate(img, tex);
-    inputs[currentSequence]->isPlaying = isPlaying;
-    
-    inputs[0]->bpm = bpm;
-    inputs[0]->bpmMultiplier = bpmMultiplier;
-    inputs[0]->isMatchBpmToSequenceLength = isMatchBpmToSequenceLength;
-    inputs[0]->isPlayingBackwards = isPlayingBackwards;
-    ofLoopType l = (isPalindromLoop) ? OF_LOOP_PALINDROME : OF_LOOP_NORMAL;
-    inputs[0]->setLoopState(l);
-    inputs[0]->calculateFPS();
     
     //change gui appeareance
 }
@@ -201,6 +200,32 @@ void ImageInputList::setOriginalPlaySpeedChanged(bool &b){
       
     }
 }
+
+void ImageInputList::setEnable(bool isEnabled_){
+    isEnabled = isEnabled_;
+    if (isEnabled_) {
+        
+        
+        
+        videoPlayer = VideoPool::getInstance()->getPlayer();
+        
+        for (int i=0; i<inputs.size(); ++i) {
+            if (inputs[i]->getType() == T_MOVIE) {
+                ImageTypeMovie* t = (ImageTypeMovie*)inputs[i];
+                t->setPlayer(videoPlayer);
+            }
+        }
+        
+        inputs[currentSequence]->activate(img, tex);
+        inputs[currentSequence]->isPlaying = isPlaying;
+    }
+    else{
+        VideoPool::getInstance()->releasePlayer(videoPlayer);
+    }
+    
+}
+
+
 /*
 void ImageInputList::setParameters(int bpm_){
     bpm = bpm_;

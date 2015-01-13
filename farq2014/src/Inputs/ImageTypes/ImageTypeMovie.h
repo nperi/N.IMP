@@ -27,6 +27,8 @@ class ImageTypeMovie : public ImageType{
     void setPosition(float p, ofImage& _img, ofTexture& _tex);
     void setLoopState(ofLoopType l);
     
+    void setPlayer(ofQTKitPlayer* player);
+    
 private:
     //ofVideoPlayer videoPlayer;
     //ofQTKitPlayer videoPlayer;

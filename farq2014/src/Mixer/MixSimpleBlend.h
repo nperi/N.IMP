@@ -24,6 +24,7 @@ class MixSimpleBlend : public MixTable{
 	
 	void setup();
     void updateParameter(Param* inputParam);
+    void setEnable(bool isEnabled_);
 	
 	void draw(int x,int y, float scale);
     

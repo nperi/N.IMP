@@ -27,12 +27,12 @@ class VisualLayer : public ImageOutput{
 	
     VisualLayer(string name_);
     
-    void setEnable(bool isEnabled_);
     void inputEvent(map<string, Param*>* params);
+    void setEnable(bool isEnabled_);
     
 protected:
     
-    ofxToggle isEnabled;
+    
     bool firstInit;
     
     

@@ -17,10 +17,13 @@ VisualLayer::VisualLayer(string name_) : ImageOutput(name_){
 }
 
 
-void VisualLayer::setEnable(bool isEnabled_){
-    isEnabled = isEnabled_;
-}
+
 
 void VisualLayer::inputEvent(map<string, Param*>* params){
     //some mapping
+}
+
+void VisualLayer::setEnable(bool isEnabled_){
+    isEnabled = isEnabled_;
+    input[0]->setEnable(isEnabled);
 }

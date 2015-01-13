@@ -112,7 +112,14 @@ void MultiChannelSwitch::cLabel(bool& b){
         }
         for (int i=0; i<labels.size(); ++i) {
             if (labels[i] == true) {
+                input[selChannel]->setEnable(false);
                 selChannel = ofToInt(labels[i].getName().substr(0,1));
+                input[selChannel]->setEnable(true);
             }
         }
+}
+
+void MultiChannelSwitch::setEnable(bool isEnabled_){
+    isEnabled = isEnabled_;
+    input[selChannel]->setEnable(isEnabled);
 }

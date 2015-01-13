@@ -53,6 +53,7 @@ class ImageOutput {
     
     //external input
     virtual void updateParameter(Param* inputParam)=0;
+    virtual void setEnable(bool isEnabled_);
     
 protected:
     
@@ -72,6 +73,8 @@ protected:
     //resolution
     int width, heigth;
     bool isProcessed;
+    
+    ofxToggle isEnabled;
 	
 };
 

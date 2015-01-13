@@ -104,3 +104,7 @@ ofTexture* ImageOutput::getTexture(){
     }
     return &tex;
 }
+
+void ImageOutput::setEnable(bool isEnabled_){
+    isEnabled = isEnabled_;
+}
