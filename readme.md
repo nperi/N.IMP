@@ -1,7 +1,7 @@
-Architecture proyection software
-================================
+n.imp
+=====
 
-Video mapping software.
+node-based image processor
 
 
 Overview appSettings.xml
