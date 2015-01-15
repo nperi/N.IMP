@@ -17,6 +17,7 @@ ImageInputList::ImageInputList(string name) : InputSource(name){
     lastSequence = currentSequence;
     isEnabled = false;
     videoPlayer = NULL;
+    hasMovie = false;
 }
 
 void ImageInputList::setup(){
@@ -52,6 +53,7 @@ void ImageInputList::loadImage(string name_, string path_){
     
     if (ofIsStringInString(path_, ".mov")) {
         inputs.push_back(new ImageTypeMovie(name_,path_,videoPlayer));
+        hasMovie = true;
     }
     //load image sequence
     else if (!ofIsStringInString(path_, ".")) {
@@ -202,27 +204,35 @@ void ImageInputList::setOriginalPlaySpeedChanged(bool &b){
 }
 
 void ImageInputList::setEnable(bool isEnabled_){
-    isEnabled = isEnabled_;
-    if (isEnabled_) {
-        
-        
-        
-        videoPlayer = VideoPool::getInstance()->getPlayer();
-        
-        for (int i=0; i<inputs.size(); ++i) {
-            if (inputs[i]->getType() == T_MOVIE) {
-                ImageTypeMovie* t = (ImageTypeMovie*)inputs[i];
-                t->setPlayer(videoPlayer);
-            }
-        }
-        
-        inputs[currentSequence]->activate(img, tex);
-        inputs[currentSequence]->isPlaying = isPlaying;
-    }
-    else{
-        VideoPool::getInstance()->releasePlayer(videoPlayer);
-    }
+    //all to manage videoplayer
     
+    //does it need player
+    if (hasMovie) {
+        if (isEnabled_ && nEnabled > 0) {
+            //nothing
+        }
+        else if (isEnabled_ && nEnabled == 0)
+        {
+            videoPlayer = VideoPool::getInstance()->getPlayer();
+            
+            for (int i=0; i<inputs.size(); ++i) {
+                if (inputs[i]->getType() == T_MOVIE) {
+                    ImageTypeMovie* t = (ImageTypeMovie*)inputs[i];
+                    t->setPlayer(videoPlayer);
+                }
+            }
+            
+            inputs[currentSequence]->activate(img, tex);
+            inputs[currentSequence]->isPlaying = isPlaying;
+        }
+        else if (!isEnabled_ && nEnabled>1){
+            //nothing
+        }
+        else{
+            VideoPool::getInstance()->releasePlayer(videoPlayer);
+        }
+    }
+    InputSource::setEnable(isEnabled_);
 }
 
 

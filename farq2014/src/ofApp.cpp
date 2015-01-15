@@ -4,7 +4,7 @@ using namespace cv;
 using namespace ofxCv;
 
 void ofApp::setup() {
-    ofSetWindowTitle("projeccion architectura");
+    ofSetWindowTitle("n.imp");
     ofSetFrameRate(30);
     loadingOK = false;
     isFullScreen = false;
@@ -27,6 +27,8 @@ void ofApp::setup() {
     inputGenTypes.insert(std::pair<string,InputGeneratorsType>("FFT", FFT));
     inputGenTypes.insert(std::pair<string,InputGeneratorsType>("OSC", OSC));
     
+
+    ofDrawBitmapString("LOADING XML ...", 50, 50);
     loadingOK = loadFromXML();
     
     if(loadingOK){

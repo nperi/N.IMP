@@ -30,6 +30,8 @@ void MultiChannelSwitch::inputAdded(ImageOutput* in_){
     }
     labels[labels.size()-1].addListener(this, &MultiChannelSwitch::cLabel);
 
+    //hack
+    lastClicked = ofGetElapsedTimeMillis();
 }
 
 
@@ -103,7 +105,9 @@ void MultiChannelSwitch::cselChannel(int& s){
 }
 
 void MultiChannelSwitch::cLabel(bool& b){
-    //hacked radio button
+    if (ofGetElapsedTimeMillis()-lastClicked > 200) {
+        //hacked radio button
+        lastClicked = ofGetElapsedTimeMillis();
         if (b) {
             for (int i=0; i<labels.size(); ++i) {
                 labels[i] = false;
@@ -117,6 +121,9 @@ void MultiChannelSwitch::cLabel(bool& b){
                 input[selChannel]->setEnable(true);
             }
         }
+        
+    }
+    
 }
 
 void MultiChannelSwitch::setEnable(bool isEnabled_){

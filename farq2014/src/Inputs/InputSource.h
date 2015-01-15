@@ -21,8 +21,17 @@ class InputSource : public ImageOutput{
 	
   public:
 	
-    InputSource(string name_):ImageOutput(name_){};
+    InputSource(string name_):ImageOutput(name_){nEnabled = 0;};
+    virtual void setEnable(bool isEnabled_){
+        if (isEnabled_){
+            ++nEnabled;
+        }else if (nEnabled >0){
+            --nEnabled;
+        }
+            };
 	
+protected:
+    int nEnabled; //0- not enabled , >0 enabled by n nodes
 };
 
 #endif

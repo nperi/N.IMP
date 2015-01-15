@@ -41,6 +41,9 @@ private:
     vector<ofParameter<bool> > labels;
     bool notificationSendedSlider,notificationSendedRadio;
     
+    
+    //hack to kill double callback
+    long lastClicked;
 };
 
 #endif
