@@ -26,11 +26,11 @@
 		<key>252C87C319FBC1068CD046C09D8C5E406AB96AF3</key>
 		<string>../../..</string>
 		<key>948EE651663C32063606289EDDFF747A436F0AF9</key>
-		<string>../../../../../addons/ofxImageSequencePlayer</string>
+		<string>../../../../addons/ofxImageSequencePlayer</string>
 		<key>95F70890EFD46183734FEDFE52CF53391DE6937E</key>
-		<string>../../../../../addons/ofxPostProcessing</string>
+		<string>../../../../addons/ofxPostProcessing</string>
 		<key>F4CCB893AFADB97238A965FD2F28717F1CAAE613</key>
-		<string>../../../../../addons/ofxSyphon</string>
+		<string>../../../../addons/ofxSyphon</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
 	<string>https://github.com/tenderbolton/farq2014.git</string>
