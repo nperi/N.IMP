@@ -76,11 +76,15 @@ void ImageInputList::loadImage(string name_, string path_){
         isMatchBpmToSequenceLength.addListener(this, &ImageInputList::isMatchBpmToSequenceLengthChanged);
         playPosition.addListener(this, &ImageInputList::playPositionChanged);
         isPlaying.addListener(this, &ImageInputList::isPlayingChanged);
+        isEnabledOn.addListener(this, &ImageInputList::setEnableChanged);
+        
         
         nextSequence.addListener(this, &ImageInputList::nextSequenceChanged);
         prevSequence.addListener(this, &ImageInputList::prevSequenceChanged);
         currentSequence.addListener(this, &ImageInputList::sequenceChanged);
         
+        gui.add(isEnabledOn.set("Enabled",false));
+
         gui.add(nextSequence.setup(">> next"));
         gui.add(prevSequence.setup("<< prev"));
         gui.add(currentSequence.set("current", 0, 0, 0));
@@ -159,6 +163,10 @@ void ImageInputList::nextFrameChanged(){
 }
 void ImageInputList::isPlayingChanged(bool &b){
     inputs[currentSequence]->isPlaying = b;
+}
+
+void ImageInputList::setEnableChanged(bool &b){
+    this->setEnable(b);
 }
 
 void ImageInputList::playPositionChanged(float &pos){

@@ -8,7 +8,7 @@
 
 #include "ImageOutput.h"
 
-ImageOutput::ImageOutput(string name_,int maxInputs_, int width_, int height_){
+ImageOutput::ImageOutput(string name_,int maxInputs_, int width_, int height_) : ofxPatch(){
     name = name_;
     width = width_;
     heigth = height_;

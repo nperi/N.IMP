@@ -13,6 +13,7 @@
 #include "ofMain.h"
 #include "ofxGui.h"
 #include "Param.h"
+#include "patch.h"
 
 /* abstract class that covers all image output classes
  * includes an image and some events
@@ -24,7 +25,7 @@
  *  InputSource  VisualLayer     MixTable
  *
  */
-class ImageOutput {
+class ImageOutput : public ofxPatch {
 	
   public:
 	

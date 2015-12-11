@@ -36,8 +36,14 @@
 
 #include "CustomSyphonServer.h"
 
-#define BUFFER_SIZE 256
-#define NUM_WINDOWS 80
+#include "ofxMultiTouchPad.h"
+#include "ofxComposer.h"
+#include "menuItem.h"
+#include "scrollBar.h"
+#include "textInputEvent.h"
+#include "ofxUIWidget.h"
+#include "textInput.h"
+#include "enumerations.h"
 
 enum InputType {VIDEO, CAM, IMAGE, PARTICLE};
 enum VisualLayerType {IKEDA, GLITCH_1, GLITCH_2,IMAGE_PROCESSOR};
@@ -48,9 +54,23 @@ class ofApp : public ofBaseApp {
 public:
 	void setup();
     void setupAudio();
+    
+    //loops
 	void update();
 	void draw();
+    
+    //events
     void keyPressed (int key);
+    void keyReleased(int key);
+    void mouseDragged(int x, int y, int button);
+    void mousePressed(int x, int y, int button);
+    void mouseReleased(int x, int y, int button);
+    void dragEvent(ofDragInfo dragInfo);
+    void menuEvent(ofxUIEventArgs &e);
+    
+    //other functions
+    void createNodeInput(float _x = ofGetMouseX(), float _y = ofGetMouseY());
+    void createNode(textInputEvent &args);
     bool loadFromXML();
     void audioIn(float * input, int bufferSize, int nChannels);
     
@@ -102,5 +122,29 @@ public:
     
     //END AUDIO PARAMETRERS
     
+    //gui
+    ofxUISuperCanvas* gui;
+    ofxUISuperCanvas* menu;
+    ofxUISuperCanvas* right_menu;
+    
+    //touchpad
+    ofxMultiTouchPad pad;
+    
+    //composer
+    ofxComposer* composer;
+    
+    //camera
+    ofEasyCam cam;
+    float scale;
+    
+    //scrollbar
+    scrollBar* scrollBars;
+    
+    //zoom
+    bool zoom_in, zoom_out, do_zoom;
+    
+    //create new node
+    vector<ofxUIWidget*> widgetsToDelete;
+    textInput* newNodeInput;
    
 };

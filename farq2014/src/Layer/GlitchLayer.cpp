@@ -44,7 +44,7 @@ void GlitchLayer::draw(int x,int y, float scale) {
     float ratio = (float)heigth/(float)width;
     int w = 640*scale;
     int h = w*ratio;
-    img.draw(x, y,w,h);
+    img.draw(x,y,w,h);
 }
 
 void GlitchLayer::update(){

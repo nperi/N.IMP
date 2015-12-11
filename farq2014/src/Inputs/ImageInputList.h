@@ -34,15 +34,16 @@ class ImageInputList : public InputSource{
     void updateParameter(Param* inputParam);
     void setEnable(bool isEnabled_);
     
-    
     ofxButton nextSequence;
     ofxButton prevSequence;
+    
     ofParameter<int> currentSequence;
     
     ofParameterGroup seqSettings;
     ofParameter<float> bpm;
     ofParameter<int> bpmMultiplier;
     ofParameter<bool> isPlaying;
+    ofParameter<bool> isEnabledOn;
     ofParameter<bool> isPalindromLoop;
     ofParameter<bool> isPlayingBackwards;
     ofParameter<bool> isMatchBpmToSequenceLength;
@@ -74,6 +75,7 @@ private:
     void playPositionChanged(float &pos);
     void calculateFPS();
     void isPlayingChanged(bool &b);
+    void setEnableChanged(bool &b);
     
     int lastSequence;
     bool hasMovie;
