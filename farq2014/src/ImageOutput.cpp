@@ -20,10 +20,12 @@ ImageOutput::ImageOutput(string name_,int maxInputs_, int width_, int height_) :
     panel.add(gui.setup(name));
 };
 
+//------------------------------------------------------------------
 string ImageOutput::getName(){
     return name;
 }
 
+//------------------------------------------------------------------
 void ImageOutput::addInput(ImageOutput* layer_){
     if (input.size()<maxInputs) {
         input.push_back(layer_);
@@ -31,12 +33,14 @@ void ImageOutput::addInput(ImageOutput* layer_){
     }
 }
 
+//------------------------------------------------------------------
 void ImageOutput::addInputIdentifier(string inputId_){
     if (inputIdentifiers.size()<maxInputs) {
         inputIdentifiers.push_back(inputId_);
     }
 }
 
+//------------------------------------------------------------------
 bool ImageOutput::findAndAssignInputs(map<string,ImageOutput*> &nodeCollection){
     std::map<string,ImageOutput*>::iterator it;
     
@@ -60,9 +64,12 @@ bool ImageOutput::findAndAssignInputs(map<string,ImageOutput*> &nodeCollection){
 
 }
 
+//------------------------------------------------------------------
 vector<ImageOutput*> ImageOutput::getInputs(){
     return input;
 }
+
+//------------------------------------------------------------------
 vector<string> ImageOutput::getInputNames(){
     vector<string> vout;
     for (int i=0; i<input.size(); ++i) {
@@ -71,24 +78,31 @@ vector<string> ImageOutput::getInputNames(){
     return vout;
 }
 
+//------------------------------------------------------------------
 void ImageOutput::drawGui(){
     panel.draw();
 }
+
+//------------------------------------------------------------------
 void ImageOutput::drawGui(int x, int y){
     ofVec2f p = panel.getPosition();
     panel.setPosition(x, y);
     panel.draw();
     //panel.setPosition(p);
 }
+
+//------------------------------------------------------------------
 void ImageOutput::setGui(int x,int y, int width){
     panel.setPosition(x,y);
     panel.setWidthElements(width);
 };
 
+//------------------------------------------------------------------
 void ImageOutput::resetProcessedFlag(){
     isProcessed = false;
 }
 
+//------------------------------------------------------------------
 ofImage* ImageOutput::getImage(){
     if(!isProcessed){
         update();
@@ -97,6 +111,7 @@ ofImage* ImageOutput::getImage(){
     return &img;
 }
 
+//------------------------------------------------------------------
 ofTexture* ImageOutput::getTexture(){
     if(!isProcessed){
         update();
@@ -105,10 +120,12 @@ ofTexture* ImageOutput::getTexture(){
     return &tex;
 }
 
+//------------------------------------------------------------------
 void ImageOutput::setEnable(bool isEnabled_){
     isEnabled = isEnabled_;
 }
 
+//------------------------------------------------------------------
 bool ImageOutput::loadSettings(ofxXmlSettings &XML, int nTag_) {
     
     // Load the texture coorners

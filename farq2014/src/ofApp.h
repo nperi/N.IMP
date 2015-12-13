@@ -130,9 +130,6 @@ public:
     //touchpad
     ofxMultiTouchPad pad;
     
-    //composer
-    ofxComposer* composer;
-    
     //camera
     ofEasyCam cam;
     float scale;

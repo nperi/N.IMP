@@ -99,21 +99,6 @@ void ofApp::setup() {
     gui->setColorBack(ofxUIColor(255,255,255,0));
     gui->setDraggable(false);
     gui->setOtherSelected(false);
-    
-    
-    //*** COMPOSER AND PATCHES SETUP ***//
-    //
-    composer = new ofxComposer();
-    composer->setParent(cam);
-    composer->setMainCanvas(gui);
-    composer->setLinkType(PATH_LINKS);
-    
-    
-    //*** SCROLL BAR SETUP ***//
-    //
-    this->scrollBars = new scrollBar(this->composer, &this->pad, SCROLL_BAR_EVENT_PRIORITY);
-    scrollBars->setup();
-    
 
     //*** LOADING NODES FROM XML ***//
     //
@@ -126,12 +111,13 @@ void ofApp::setup() {
         //  ofAddListener(mixtables[0]->textureEvent, this, &ofApp::updateSyphon);
         
         //invoking input generators setup functions
-        
+        //
 //        for(int i=0; i<inputGenerators.size(); i++){
 //            inputGenerators[i]->setup();
 //        }
         
         //invoking nodes setup functions and setting main canvas and camera
+        //
         for (int i=0; i<nodesVector.size(); ++i) {
             nodesVector[i]->setParent(cam);
             nodesVector[i]->setMainCanvas(gui);
@@ -139,7 +125,7 @@ void ofApp::setup() {
         }
         
         //starting input generators theads (the not threadeds will not start)
-        
+        //
         for(int i=0; i<inputGenerators.size(); i++){
             inputGenerators[i]->start();
         }
@@ -148,9 +134,21 @@ void ofApp::setup() {
             syphonServers[i]->setup();
         }
         
+        //*** NODE VIEWR SETUP (COMPOSER) ***//
+        //
         setCurrentViewer(0);
+        nodeViewers[currentViewer]->setParent(cam);
+        nodeViewers[currentViewer]->setMainCanvas(gui);
+        nodeViewers[currentViewer]->setLinkType(PATH_LINKS);
         
+        //*** AUDIO SETUP ***//
+        //
         setupAudio();
+        
+        //*** SCROLL BAR SETUP ***//
+        //
+        this->scrollBars = new scrollBar(nodeViewers[currentViewer], &this->pad, SCROLL_BAR_EVENT_PRIORITY);
+        scrollBars->setup();
     }
     
   }
@@ -251,7 +249,7 @@ void ofApp::update() {
         right_menu->getWidget("Zoom Out")->getRect()->setY(right_menu->getRect()->getHeight()-60);
         
         scrollBars->update();
-        composer->update();
+        nodeViewers[currentViewer]->update();
     }
 }
 
@@ -265,7 +263,6 @@ void ofApp::draw() {
     if(loadingOK){
         
         cam.begin();
-        composer->customDraw();
         nodeViewers[currentViewer]->draw();
         cam.end();
         
@@ -453,7 +450,7 @@ void ofApp::dragEvent(ofDragInfo dragInfo){
     
     if( dragInfo.files.size() > 0 ){
         for(int i = 0; i < dragInfo.files.size(); i++){
-            composer->addPatchFromFile( dragInfo.files[i], dragInfo.position );
+            nodeViewers[currentViewer]->addPatchFromFile( dragInfo.files[i], dragInfo.position );
         }
     }
 }
@@ -469,19 +466,19 @@ void ofApp::menuEvent(ofxUIEventArgs &e)
         ((ofxUIImageToggle*)menu->getWidget("Straight Links"))->setValue(true);
         ((ofxUIImageToggle*)menu->getWidget("Segmented Links"))->setValue(false);
         ((ofxUIImageToggle*)menu->getWidget("Curved Links"))->setValue(false);
-        composer->setLinkType(STRAIGHT_LINKS);
+        nodeViewers[currentViewer]->setLinkType(STRAIGHT_LINKS);
     }
     else if (name == "Curved Links") {
         ((ofxUIImageToggle*)menu->getWidget("Curved Links"))->setValue(true);
         ((ofxUIImageToggle*)menu->getWidget("Segmented Links"))->setValue(false);
         ((ofxUIImageToggle*)menu->getWidget("Straight Links"))->setValue(false);
-        composer->setLinkType(CURVE_LINKS);
+        nodeViewers[currentViewer]->setLinkType(CURVE_LINKS);
     }
     else if (name == "Segmented Links") {
         ((ofxUIImageToggle*)menu->getWidget("Segmented Links"))->setValue(true);
         ((ofxUIImageToggle*)menu->getWidget("Curved Links"))->setValue(false);
         ((ofxUIImageToggle*)menu->getWidget("Straight Links"))->setValue(false);
-        composer->setLinkType(PATH_LINKS);
+        nodeViewers[currentViewer]->setLinkType(PATH_LINKS);
     }
     else if (name == "Create Node") {
         
@@ -499,9 +496,9 @@ void ofApp::menuEvent(ofxUIEventArgs &e)
     }
     else if (name == "Edit Mode on/off") {
         
-        if (composer->getEdit())
-            composer->setEdit(false);
-        else composer->setEdit(true);
+        if (nodeViewers[currentViewer]->getEdit())
+            nodeViewers[currentViewer]->setEdit(false);
+        else nodeViewers[currentViewer]->setEdit(true);
     }
     /*else if (name == "Inspect"){
      if (open_flyout) open_flyout = false;
@@ -525,12 +522,12 @@ void ofApp::menuEvent(ofxUIEventArgs &e)
     }
     else if (name == "Save Snippet"){
         if(((ofxUIMultiImageButton*)e.widget)->getValue() == 1){
-            composer->saveSnippet();
+            nodeViewers[currentViewer]->saveSnippet();
         }
     }
     else if (name == "Open Snippet"){
         if(((ofxUIMultiImageButton*)e.widget)->getValue() == 1){
-            composer->loadSnippet();
+            nodeViewers[currentViewer]->loadSnippet();
         }
     }
 }
@@ -590,10 +587,10 @@ void ofApp::createNodeInput(float _x, float _y){
 void ofApp::createNode(textInputEvent &args){
     
     if (args.type == "ofImage" || args.type == "ofVideoPlayer" || args.type == "ofShader" || args.type == "ofTexture") {
-        composer->addPatchFromFile(args.path, args.point);
+        nodeViewers[currentViewer]->addPatchFromFile(args.path, args.point);
     }
     else {
-        composer->addPatchWithOutFile(args.type, args.point);
+        nodeViewers[currentViewer]->addPatchWithOutFile(args.type, args.point);
     }
     
     ofRemoveListener(((textInput*)args.widget)->createNode , this, &ofApp::createNode);
@@ -664,7 +661,6 @@ bool ofApp::loadFromXML(){
                                 
                                 inputs.push_back(iC);
                                 nodes.insert(std::pair<string,ImageOutput*>(inputName,iC));
-                                composer->addPatch(iC);
                                 
                                 break;
                             };
@@ -677,8 +673,7 @@ bool ofApp::loadFromXML(){
                                 
                                 inputs.push_back(iI);
                                 nodes.insert(std::pair<string,ImageOutput*>(inputName,iI));
-                                composer->addPatch(iI);
-                                
+
                                 break;
                             };
                             case PARTICLE:
@@ -856,7 +851,6 @@ bool ofApp::loadFromXML(){
                                     
                                     visualLayers.push_back(gLA);
                                     nodes.insert(std::pair<string,ImageOutput*>(layerName,gLA));
-                                    composer->addPatch(gLA);
                                     
                                     break;
                                 };
@@ -974,7 +968,7 @@ bool ofApp::loadFromXML(){
                                         }
                                         else{
                                             result = false;
-                                            message = "node not foud!";
+                                            message = "node not found!";
                                         }
                                         
                                     }
@@ -1061,7 +1055,7 @@ bool ofApp::loadFromXML(){
                             }
                             else{
                                 result = false;
-                                message = "node not foud!";
+                                message = "node not found!";
                             }
                             
                         }

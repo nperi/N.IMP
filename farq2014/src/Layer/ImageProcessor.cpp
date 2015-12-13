@@ -407,6 +407,8 @@ bool ImageProcessor::loadSettings(ofxXmlSettings &XML, int nTag_) {
     
     ImageOutput::loadSettings(XML, nTag_);
     
+    addInputDot();
+    
     XML.popTag(); // Pop VISUAL_LAYER
     
     return true;

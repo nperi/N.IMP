@@ -12,6 +12,9 @@
 #define BUFFER_SIZE 256
 #define NUM_WINDOWS 80
 
+#define NODE_WIDTH 640  //1024
+#define NODE_HEIGHT 480 //576
+
 #define MENU_ITEM_SIZE 20
 #define MENU_ITEM_PADDING 7
 #define MENU_HEIGHT 42

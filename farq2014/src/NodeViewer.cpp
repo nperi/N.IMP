@@ -9,7 +9,7 @@
 
 #include "NodeViewer.h"
 
-NodeViewer::NodeViewer(string name_){
+NodeViewer::NodeViewer(string name_) : ofxComposer() {
     name = name_;
 }
 
@@ -18,44 +18,42 @@ void NodeViewer::setup() {
 	
 }
 
+//------------------------------------------------------------------
+void NodeViewer::update() {
+    
+    ofxComposer::update();
+}
 
 //------------------------------------------------------------------
 void NodeViewer::draw() {
     
-    for (int i=0; i<connections.size(); ++i) {
-        ofLine(connections[i].first.x, connections[i].first.y, connections[i].second.x, connections[i].second.y);
-    }
     for (int i=0; i<elements.size(); ++i) {
         elements[i]->draw();
     }
     for (int i=0; i<elements.size(); ++i) {
         elements[i]->drawGui();
     }
-	
+
+    ofxComposer::customDraw();
 }
 
 void NodeViewer::addElement(NodeElement* elem_){
     elements.push_back(elem_);
+    addPatch(elem_->getImageOutput());
 }
 
 void NodeViewer::createConnections(){
+    
     connections.clear();
     vector<string> elemNames;
+    
+    vector<ImageOutput*> inputs;
+    
     for (int i=0; i<elements.size(); ++i) {
-        elemNames.push_back(elements[i]->getImageOutput()->getName());
-    }
-    //add connection for each element
-    for (int i=0; i<elements.size(); ++i) {
-        vector<string> inNames = elements[i]->getImageOutput()->getInputNames();
-        for (int e =0; e<inNames.size(); ++e) {
-            for (int es=0; es<elemNames.size(); ++es) {
-                if (inNames[e] == elemNames[es]) {
-                    std::pair<ofVec2f, ofVec2f> p;
-                    p.first = elements[i]->getPosIn();
-                    p.second = elements[es]->getPosOut();
-                    connections.push_back(p);
-                }
-            }
+        inputs = elements[i]->getImageOutput()->getInputs();
+        
+        for (int j = 0; j < inputs.size(); j++) {
+            connect(inputs[j]->getId(), elements[i]->getImageOutput()->getId(), 0);
         }
     }
 }

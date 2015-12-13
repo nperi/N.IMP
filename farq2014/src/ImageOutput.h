@@ -13,7 +13,8 @@
 #include "ofMain.h"
 #include "ofxGui.h"
 #include "Param.h"
-#include "patch.h"
+#include "ofxPatch.h"
+#include "enumerations.h"
 
 /* abstract class that covers all image output classes
  * includes an image and some events
@@ -29,7 +30,7 @@ class ImageOutput : public ofxPatch {
 	
   public:
 	
-    ImageOutput(string name_,int maxInputs_ = 1, int width_ = 1024, int height_ = 576);
+    ImageOutput(string name_,int maxInputs_ = 1, int width_ = NODE_WIDTH, int height_ = NODE_HEIGHT);
     
     string getName();
     ofImage* getImage();

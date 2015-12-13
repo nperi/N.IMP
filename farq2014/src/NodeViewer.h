@@ -12,15 +12,17 @@
 
 #include "ofMain.h"
 #include "NodeElement.h"
+#include "ofxComposer.h"
 
 
-class NodeViewer {
+class NodeViewer : public ofxComposer {
 	
   public:
 	
 	NodeViewer(string name_="default");
 	
 	void setup();
+    void update();
     void addElement(NodeElement* elem_);
 	void draw();
     void setupGuiPositions();
