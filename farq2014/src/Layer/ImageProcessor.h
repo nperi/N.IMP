@@ -20,6 +20,7 @@ class ImageProcessor : public VisualLayer{
 	
 	ImageProcessor(string name_ = "visualLayer");
 	
+    void setup();
     void draw(int x,int y, float scale);
     void updateParameter(Param* inputParam);
     
@@ -63,20 +64,16 @@ class ImageProcessor : public VisualLayer{
     ofParameter<bool> isBleach;
     ofParameter<float> blOpacity;
     
-    
-    
-    
-    
-    
     ofParameterGroup bloom,contrast,kaleidoscope,noise,pixelate,edge,
                      god,bleach,rgbshift,zoomBlur;
+    
+    bool loadSettings(ofxXmlSettings &XML, int nTag_);
+    void updateFromInputCoorners(ofPoint pos_);
     
 private:
     void update();
     ofxPostProcessing post;
     ofFbo fbo;
-    
-    
     
     void cIsBloom(bool &b);
     void cIsContrast(bool &b);

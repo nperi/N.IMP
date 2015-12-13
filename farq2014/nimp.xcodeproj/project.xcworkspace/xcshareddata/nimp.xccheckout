@@ -7,13 +7,13 @@
 	<key>IDESourceControlProjectIdentifier</key>
 	<string>AD29777C-A75C-48E9-821F-C5295F5C172B</string>
 	<key>IDESourceControlProjectName</key>
-	<string>project</string>
+	<string>nimp</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>210A84CB64DBE001319448A793DFC671846EB46E</key>
 		<string>https://github.com/maxillacult/ofxPostGlitch.git</string>
 		<key>252C87C319FBC1068CD046C09D8C5E406AB96AF3</key>
-		<string>https://github.com/LaboratorioDeMedios/N.IMP.git</string>
+		<string>https://github.com/nperi/N.IMP.git</string>
 		<key>37526DA425E5430474A14FBFA1BC4525160B5FC1</key>
 		<string>https://github.com/kylemcdonald/ofxCv.git</string>
 		<key>8F000071CE7F4AC671BD6E9084D7C2A0B99F7D99</key>
@@ -26,6 +26,8 @@
 		<string>https://github.com/neilmendoza/ofxPostProcessing.git</string>
 		<key>AD4BEB8D191D3A37A0E32AAC674B3540263DA07F</key>
 		<string>https://github.com/2bbb/ofxJpegGlitch.git</string>
+		<key>D513395B3B2672F06879738DB1BEEA65E2B146B1</key>
+		<string>https://github.com/MiliGaricoits/ofxComposer_nimp.git</string>
 		<key>DA298CE2AB975BA2CF43E11863DF98F71A466522</key>
 		<string>https://github.com/Akira-Hayasaka/ofxGLEditor</string>
 		<key>DF8CF2077679A8E9DC1BA352D6E976FCED7DE749</key>
@@ -36,15 +38,13 @@
 		<string>https://github.com/MiliGaricoits/ofxUI_nimp</string>
 		<key>EBC5E2A29F125165AEBCAA19E4D8FC06D99494BA</key>
 		<string>https://github.com/kronick/ofxAVFVideoPlayer.git</string>
-		<key>F1CA11219AA67E3A00E54BB628B5BA140CA6CA85</key>
-		<string>https://github.com/MiliGaricoits/ofxComposer_nimp</string>
 		<key>F4CCB893AFADB97238A965FD2F28717F1CAAE613</key>
 		<string>https://github.com/astellato/ofxSyphon.git</string>
 		<key>F7E083AAB3EC4A58EF654FC28444C64C193E627F</key>
 		<string>https://github.com/MiliGaricoits/ofxMSAInteractiveObject_nimp</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>farq2014/nimp.xcodeproj/project.xcworkspace</string>
+	<string>farq2014/nimp.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>210A84CB64DBE001319448A793DFC671846EB46E</key>
@@ -63,6 +63,8 @@
 		<string>../../../../../addons/ofxPostProcessing</string>
 		<key>AD4BEB8D191D3A37A0E32AAC674B3540263DA07F</key>
 		<string>../../../../../addons/ofxJpegGlitch</string>
+		<key>D513395B3B2672F06879738DB1BEEA65E2B146B1</key>
+		<string>../../../../../addons/ofxComposer_nimp</string>
 		<key>DA298CE2AB975BA2CF43E11863DF98F71A466522</key>
 		<string>../../../../../addons/ofxGLEditor</string>
 		<key>DF8CF2077679A8E9DC1BA352D6E976FCED7DE749</key>
@@ -73,15 +75,13 @@
 		<string>../../../../../addons/ofxUI_nimp</string>
 		<key>EBC5E2A29F125165AEBCAA19E4D8FC06D99494BA</key>
 		<string>../../../../../addons/ofxAVFVideoPlayer</string>
-		<key>F1CA11219AA67E3A00E54BB628B5BA140CA6CA85</key>
-		<string>../../../../../addons/ofxComposer_nimp</string>
 		<key>F4CCB893AFADB97238A965FD2F28717F1CAAE613</key>
 		<string>../../../../../addons/ofxSyphon</string>
 		<key>F7E083AAB3EC4A58EF654FC28444C64C193E627F</key>
 		<string>../../../../../addons/ofxMSAInteractiveObject_nimp</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>https://github.com/LaboratorioDeMedios/N.IMP.git</string>
+	<string>https://github.com/nperi/N.IMP.git</string>
 	<key>IDESourceControlProjectVersion</key>
 	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
@@ -94,7 +94,7 @@
 			<key>IDESourceControlWCCIdentifierKey</key>
 			<string>252C87C319FBC1068CD046C09D8C5E406AB96AF3</string>
 			<key>IDESourceControlWCCName</key>
-			<string>N.IMP</string>
+			<string>N.IMP%20fork</string>
 		</dict>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
@@ -108,7 +108,7 @@
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>F1CA11219AA67E3A00E54BB628B5BA140CA6CA85</string>
+			<string>D513395B3B2672F06879738DB1BEEA65E2B146B1</string>
 			<key>IDESourceControlWCCName</key>
 			<string>ofxComposer_nimp</string>
 		</dict>

@@ -29,8 +29,6 @@ class InputSource : public ImageOutput{
             --nEnabled;
         }
     };
-	
-    bool loadSettings(ofxXmlSettings &XML, int nTag_);
     
 protected:
     int nEnabled; //0- not enabled , >0 enabled by n nodes

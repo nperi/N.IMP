@@ -41,6 +41,9 @@ class ImageType {
     
     string getName(){return name;};
     
+    virtual float getHeight() = 0;
+    virtual float getWidth() = 0;
+    
     protected:
     imgType mediaType;
     string name;

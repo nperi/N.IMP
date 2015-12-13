@@ -9,9 +9,9 @@
 
 #include "ofxParticleSystem.h"
 
-ofxParticleSystem::ofxParticleSystem(int initialAmount, int width_, int heigth_,int minSize, int maxSize, int minLifetime, int maxLifetime, float fadeOut) {
+ofxParticleSystem::ofxParticleSystem(int initialAmount, int width_, int height_,int minSize, int maxSize, int minLifetime, int maxLifetime, float fadeOut) {
     width = width_;
-    height = heigth_;
+    height = height_;
     bRepel		= true;
     radius		= 100;
     strength	= 0.5f;

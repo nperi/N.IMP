@@ -14,7 +14,7 @@ ImageInput::ImageInput(string name) : InputSource(name){
     
     isImageSequence = false;
     isVideo = false;
-    img.allocate(width, heigth, OF_IMAGE_COLOR_ALPHA);
+    img.allocate(width, height, OF_IMAGE_COLOR_ALPHA);
 }
 
 void ImageInput::setup(){
@@ -95,7 +95,7 @@ void ImageInput::loadImage(string path_){
         
         img.loadImage(dir.getPath(0));
         unsigned char* p = img.getPixels();
-        tex.loadData(p, width, heigth, GL_RGB);
+        tex.loadData(p, width, height, GL_RGB);
         
         isImageSequence = true;
         
@@ -125,9 +125,9 @@ void ImageInput::loadImage(string path_){
     //load single image
     else{
         img.loadImage(path_);
-        img.resize(width, heigth);
+        img.resize(width, height);
         unsigned char* p = img.getPixels();
-        tex.loadData(p, width, heigth, GL_RGB);
+        tex.loadData(p, width, height, GL_RGB);
         isImageSequence = false;
     }
 }

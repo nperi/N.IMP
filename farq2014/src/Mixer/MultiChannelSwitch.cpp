@@ -74,7 +74,7 @@ void MultiChannelSwitch::update() {
 //------------------------------------------------------------------
 void MultiChannelSwitch::draw(int x,int y, float scale) {
     ofSetColor(255, 255, 255);
-        float ratio = (float)heigth/(float)width;
+        float ratio = (float)height/(float)width;
         int w = 640*scale;
         int h = w*ratio;
         tex.draw(x, y,w, h);

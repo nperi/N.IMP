@@ -28,11 +28,13 @@ IkedaLayer::IkedaLayer(string name_, bool isCanny_,bool isThreshold_, bool isCol
     gui.add(isInvert.setup("Invert", isInvert_));
 }
 
+//------------------------------------------------------------------
+void IkedaLayer::setup() {}
 
 //------------------------------------------------------------------
 void IkedaLayer::draw(int x,int y, float scale) {
     ofSetColor(255, 255, 255);
-    float ratio = (float)heigth/(float)width;
+    float ratio = (float)height/(float)width;
     int w = 640*scale;
     int h = w*ratio;
     tex.draw(x, y,w,h);
@@ -82,7 +84,7 @@ void IkedaLayer::update(){
     }
     else{
         //we bypass the image
-        img.setFromPixels(input[0]->getImage()->getPixels(), width, heigth, OF_IMAGE_COLOR);
+        img.setFromPixels(input[0]->getImage()->getPixels(), width, height, OF_IMAGE_COLOR);
     }
     img.update();
     tex = img.getTextureReference();// .loadData(img.getPixels(), img.getWidth(), img.getHeight(), GL_RGB);

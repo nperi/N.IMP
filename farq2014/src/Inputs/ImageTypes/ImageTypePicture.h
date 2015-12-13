@@ -18,7 +18,7 @@ class ImageTypePicture : public ImageType{
 	
   public:
 	
-	ImageTypePicture(string name_ ,string path_, bool isResize = false, int width = 1024, int heigth = 768);
+	ImageTypePicture(string name_ ,string path_, bool isResize = false, int width = 1024, int height = 768);
 	
     void update(ofImage& _img, ofTexture& _tex);
     
@@ -28,6 +28,9 @@ class ImageTypePicture : public ImageType{
     void setPosition(float p, ofImage& _img, ofTexture& _tex);
     void activate(ofImage& _img, ofTexture& _tex);
     void setLoopState(ofLoopType l){};
+    
+    float getHeight();
+    float getWidth();
     
 private:
     ofImage img;

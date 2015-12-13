@@ -99,3 +99,12 @@ void ImageTypeMovie::cIsPlaying(bool &b){
 void ImageTypeMovie::setPlayer(ofQTKitPlayer *player){
     videoPlayer = player;
 }
+
+
+float ImageTypeMovie::getHeight() {
+    return videoPlayer->getHeight();
+}
+
+float ImageTypeMovie::getWidth() {
+    return videoPlayer->getWidth();
+}

@@ -34,6 +34,8 @@ class ImageInputList : public InputSource{
     void updateParameter(Param* inputParam);
     void setEnable(bool isEnabled_);
     
+    bool loadSettings(ofxXmlSettings &XML, int nTag_);
+    
     ofxButton nextSequence;
     ofxButton prevSequence;
     

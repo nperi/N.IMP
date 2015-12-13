@@ -12,7 +12,7 @@
 
 ImageInputList::ImageInputList(string name) : InputSource(name){
     
-    img.allocate(width, heigth, OF_IMAGE_COLOR_ALPHA);
+    img.allocate(width, height, OF_IMAGE_COLOR_ALPHA);
     currentSequence = 0;
     lastSequence = currentSequence;
     isEnabled = false;
@@ -25,15 +25,23 @@ void ImageInputList::setup(){
 }
 
 void ImageInputList::update(){
+    
     inputs[currentSequence]->update(img, tex);
-    playPos2 =inputs[currentSequence]->getPosition();
+    playPos2 = inputs[currentSequence]->getPosition();
+    
+    //setting texture to draw to patch
+    texture = &tex;
 }
 
 void ImageInputList::draw(int x,int y, float scale){
-    float ratio = (float)heigth/(float)width;
-    int w = 640*scale;
-    int h = w*ratio;
-    tex.draw(x, y,w,h);
+    
+//    float ratio = (float)height/(float)width;
+//    int w = 640*scale;
+//    int h = w*ratio;
+    
+    ofPushMatrix();
+    glMultMatrixf(glMatrix);
+    tex.draw(0,0);
     ofSetColor(255, 255, 255);
     string desc = name;
     desc += "\n------------------";
@@ -42,10 +50,11 @@ void ImageInputList::draw(int x,int y, float scale){
     desc += "\nposition: " + ofToString(inputs[currentSequence]->getPosition());
     
     ofSetColor(0, 0, 0);
-    ofRect(x + 5, y + 5, 180, 73);
+    ofRect(5, 5, 180, 73);
     
     ofSetColor(255, 255, 255);
-    ofDrawBitmapString(desc, x + 10, y + 18);
+    ofDrawBitmapString(desc, 10, 18);
+    ofPopMatrix();
     
 }
 
@@ -66,6 +75,10 @@ void ImageInputList::loadImage(string name_, string path_){
     currentSequence.setMax(inputs.size()-1);
     
     if (inputs.size() == 1) {
+        
+        width = inputs[0]->getWidth();
+        height = inputs[0]->getHeight();
+        
         //create gui
         isPalindromLoop.addListener(this, &ImageInputList::loopTypeChanged);
         bpm.addListener(this, &ImageInputList::bpmChanged);
@@ -115,10 +128,8 @@ void ImageInputList::loadImage(string name_, string path_){
         inputs[0]->setLoopState(l);
         inputs[0]->calculateFPS();
         inputs[0]->activate(img, tex);
-        
-        
     }
-   }
+}
 
 void ImageInputList::loopTypeChanged(bool &b){
     if (b) {
@@ -241,6 +252,70 @@ void ImageInputList::setEnable(bool isEnabled_){
         }
     }
     InputSource::setEnable(isEnabled_);
+}
+
+
+bool ImageInputList::loadSettings(ofxXmlSettings &XML, int nTag_) {
+    
+    bool loaded = true;
+    
+    string  path = XML.getAttribute("INPUT", "path","none", nTag_);
+    
+    bpm             = ofToFloat(XML.getAttribute("INPUT", "bpm","120", nTag_));
+    bpmMultiplier   = ofToInt(XML.getAttribute("INPUT", "multiplier_divider","32", nTag_));
+    isPlaying       = ofToBool(XML.getAttribute("INPUT", "isPlaying","true", nTag_));
+    isPalindromLoop = ofToBool(XML.getAttribute("INPUT", "palindrom","true", nTag_));
+    isMatchBpmToSequenceLength = ofToBool(XML.getAttribute("INPUT", "matchBPMtoSequence","false", nTag_));
+    
+    if (path == "none") {
+        XML.pushTag("INPUT",nTag_);
+        int numVideoTag = XML.getNumTags("ASSET");
+        if(numVideoTag>0){
+            for (int v=0; v<numVideoTag; v++){
+                string name = XML.getAttribute("ASSET","name","default",v);
+                string path_ = XML.getAttribute("ASSET","path","default",v);
+                loadImage(name, path_);
+            }
+        }
+        else{
+            loaded = false;
+        }
+        XML.popTag();
+    }
+    else{
+        loadImage(name, path);
+    }
+
+    XML.pushTag("INPUT", nTag_);
+    
+    nId = XML.getValue("id", 0);
+    type = XML.getValue("type","none");
+    bVisible = XML.getValue("visible", true);
+    //filePath = XML.getValue("path", "none" );
+    
+    title->setTitle(name + ":" + type );
+        
+    InputSource::loadSettings(XML, nTag_);
+    
+    XML.popTag(); // Pop INPUT
+    
+    
+    // Setting Inspector
+    //
+    imageSrc = path;
+    inspector = new ofxUICanvas();
+    inspector->addLabel("INSPECTOR");
+    inspector->addSpacer();
+    inspector->addLabel("Image src:");
+    ofxUITextInput* ti = inspector->addTextInput("Image src", imageSrc);
+    ti->setDraggable(false);
+    inspector->setWidgetPosition(OFX_UI_WIDGET_POSITION_RIGHT);
+    inspector->addImageButton("Image src btn", "assets/edit.png", false);
+    inspector->autoSizeToFitWidgets();
+    //ofAddListener(inspector->newGUIEvent,this,&ofxPatch::guiEvent);
+    inspector->setVisible(false);
+    
+    return loaded;
 }
 
 

@@ -21,6 +21,7 @@ public:
     
     GlitchLayerAlt(string name_ = "glitchLayerAlt");
     
+    void setup();
     void draw(int x,int y, float scale);
     void updateParameter(Param* inputParam);
     

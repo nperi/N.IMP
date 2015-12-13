@@ -28,6 +28,9 @@ class ImageTypePictureSequence : public ImageType{
     void setPosition(float p, ofImage& _img, ofTexture& _tex);
     void setLoopState(ofLoopType l);
     
+    float getHeight();
+    float getWidth();
+    
 private:
     ofxImageSequencePlayer player;
     ofImage img;

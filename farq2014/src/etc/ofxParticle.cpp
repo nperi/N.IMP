@@ -2,11 +2,11 @@
 #include "ofMain.h"
 
 //------------------------------------------------------------
-ofxParticle::ofxParticle(int width_,int heigth_, int lifeTime_, int radius_, float fadeOut_){
+ofxParticle::ofxParticle(int width_,int height_, int lifeTime_, int radius_, float fadeOut_){
 	setInitialCondition(0,0,0,0);
     
     width = width_;
-    height = heigth_;
+    height = height_;
     isAlive = true;
     lifeTime = lifeTime_;
     radius = radius_;

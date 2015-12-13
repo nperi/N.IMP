@@ -22,11 +22,14 @@ GlitchLayerAlt::GlitchLayerAlt(string name_):VisualLayer(name_){;
     glitcher.setup(dq, qn, dht);
 }
 
+//------------------------------------------------------------------
+void GlitchLayerAlt::setup() {}
+
 
 //------------------------------------------------------------------
 void GlitchLayerAlt::draw(int x,int y, float scale) {
     ofSetColor(255, 255, 255);
-    float ratio = (float)heigth/(float)width;
+    float ratio = (float)height/(float)width;
     int w = 640*scale;
     int h = w*ratio;
     img.draw(x, y,w,h);
@@ -35,7 +38,7 @@ void GlitchLayerAlt::draw(int x,int y, float scale) {
 
 void GlitchLayerAlt::update(){
     //process pipeline
-    img.setFromPixels(input[0]->getImage()->getPixels(), width, heigth, OF_IMAGE_COLOR);
+    img.setFromPixels(input[0]->getImage()->getPixels(), width, height, OF_IMAGE_COLOR);
     
     if(isEnabled){
        

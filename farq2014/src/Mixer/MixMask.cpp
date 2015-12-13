@@ -28,7 +28,7 @@ void MixMask::setup() {
 //------------------------------------------------------------------
 void MixMask::draw(int x,int y, float scale) {
     ofSetColor(255, 255, 255);
-    float ratio = (float)heigth/(float)width;
+    float ratio = (float)height/(float)width;
     int w = 640*scale;
     int h = w*ratio;
     fbo.draw(x, y,w,h);
@@ -43,11 +43,11 @@ void MixMask::update(){
     input[0]->getTexture()->draw(0, 0);
     ofEnableAlphaBlending();
     ofPushMatrix();
-    ofTranslate(width/2, heigth/2);
+    ofTranslate(width/2, height/2);
     ofPushMatrix();
     ofRotate(spin);
     ofPushMatrix();
-    ofTranslate(-width/2, -heigth/2);
+    ofTranslate(-width/2, -height/2);
     drawShader();
     ofPopMatrix();
     ofPopMatrix();
@@ -83,13 +83,13 @@ void MixMask::drawShader(){
     glMultiTexCoord2d(GL_TEXTURE1_ARB, width, maskOffset);
     glVertex2f( width, 0);
     
-    glMultiTexCoord2d(GL_TEXTURE0_ARB, width, heigth);
-    glMultiTexCoord2d(GL_TEXTURE1_ARB, width, heigth + maskOffset);
-    glVertex2f( width,heigth);
+    glMultiTexCoord2d(GL_TEXTURE0_ARB, width, height);
+    glMultiTexCoord2d(GL_TEXTURE1_ARB, width, height + maskOffset);
+    glVertex2f( width,height);
     
-    glMultiTexCoord2d(GL_TEXTURE0_ARB, 0, heigth);
-    glMultiTexCoord2d(GL_TEXTURE1_ARB, 0, heigth + maskOffset);
-    glVertex2f( 0, heigth );
+    glMultiTexCoord2d(GL_TEXTURE0_ARB, 0, height);
+    glMultiTexCoord2d(GL_TEXTURE1_ARB, 0, height + maskOffset);
+    glVertex2f( 0, height );
     
     glEnd();
     

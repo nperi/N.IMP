@@ -9,11 +9,11 @@
 
 #include "ImageTypePicture.h"
 
-ImageTypePicture::ImageTypePicture(string name_ ,string path_, bool isResize, int width, int heigth): ImageType(name_,path_){
+ImageTypePicture::ImageTypePicture(string name_ ,string path_, bool isResize, int width, int height): ImageType(name_,path_){
     mediaType = T_IMAGE;
     img.loadImage(path_);
     if (isResize) {
-        img.resize(width, heigth);
+        img.resize(width, height);
     }
     unsigned char* p = img.getPixels();
     tex.loadData(p, img.getWidth(), img.getHeight(), GL_RGB);
@@ -42,3 +42,12 @@ void ImageTypePicture::calculateFPS(){
 void ImageTypePicture::setPosition(float p, ofImage& _img, ofTexture& _tex){
     
 }
+
+float ImageTypePicture::getHeight() {
+    return img.getHeight();
+}
+
+float ImageTypePicture::getWidth() {
+    return img.getWidth();
+}
+

@@ -12,7 +12,7 @@
 VideoPlayerMac::VideoPlayerMac(string name) : InputSource(name){
     //there always has to exist at least one player.
     currentPlayer=0;
-    img.allocate(width, heigth, OF_IMAGE_COLOR_ALPHA);
+    img.allocate(width, height, OF_IMAGE_COLOR_ALPHA);
     
     play.addListener(this, &VideoPlayerMac::playVideo);
     stop.addListener(this, &VideoPlayerMac::stopVideo);
@@ -36,7 +36,7 @@ void VideoPlayerMac::update() {
         players[currentPlayer]->update();
         if (players[currentPlayer]->isFrameNew()){
             img.setFromPixels(players[currentPlayer]->getPixels(), players[currentPlayer]->getWidth(), players[currentPlayer]->getHeight(), OF_IMAGE_COLOR_ALPHA);
-            //img.resize(width, heigth);
+            //img.resize(width, height);
             tex = img.getTextureReference();
         }
     }
@@ -46,7 +46,7 @@ void VideoPlayerMac::update() {
 //------------------------------------------------------------------
 void VideoPlayerMac::draw(int x,int y, float scale) {
 	if (players[currentPlayer]->isLoaded()) {
-        float ratio = (float)heigth/(float)width;
+        float ratio = (float)height/(float)width;
         int w = 640*scale;
         int h = w*ratio;
         players[currentPlayer]->draw(x, y, w,h);

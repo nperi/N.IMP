@@ -37,6 +37,8 @@ class ImageOutput : public ofxPatch {
     vector<ImageOutput*> getInputs();
     vector<string> getInputNames();
     
+    virtual void setup() = 0;
+    
     //draws the node (whatever there is defined), in general the Output-picture
     virtual void draw(int x,int y, float scale = 1.0) = 0;
     
@@ -56,6 +58,9 @@ class ImageOutput : public ofxPatch {
     virtual void updateParameter(Param* inputParam)=0;
     virtual void setEnable(bool isEnabled_);
     
+    //load patch settings
+    bool loadSettings(ofxXmlSettings &XML, int nTag_);
+    
 protected:
     
     virtual void update() = 0;
@@ -72,7 +77,7 @@ protected:
     int maxInputs;
     
     //resolution
-    int width, heigth;
+    //int width, height;
     bool isProcessed;
     
     ofxToggle isEnabled;

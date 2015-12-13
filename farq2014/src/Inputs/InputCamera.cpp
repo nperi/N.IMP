@@ -11,7 +11,7 @@
 
 
 InputCamera::InputCamera(string name) : InputSource(name){
-    //cam.initGrabber(width, heigth);
+    //cam.initGrabber(width, height);
     //img.allocate(640, 480, OF_IMAGE_COLOR);
 }
 
@@ -24,11 +24,9 @@ void InputCamera::setup() {
 //------------------------------------------------------------------
 void InputCamera::update() {
     
-    ofxPatch::update();
-    
-    //videoGrabber->update();
+    videoGrabber->update();
     if(videoGrabber->isFrameNew()) {
-        img.setFromPixels(videoGrabber->getPixels(), width, heigth, OF_IMAGE_COLOR);
+        img.setFromPixels(videoGrabber->getPixels(), width, height, OF_IMAGE_COLOR);
         tex = img.getTextureReference();
     }
     
@@ -36,14 +34,17 @@ void InputCamera::update() {
 
 //------------------------------------------------------------------
 void InputCamera::draw(int x,int y, float scale) {
-    /*float ratio = (float)heigth/(float)width;
-    int w = 640*scale;
-    int h = w*ratio;
-    videoGrabber->draw(x,y,w,h);
-    ofSetColor(255, 255, 255);
-    ofDrawBitmapString(name, x + 10, y + 30);*/
     
-    //patch::customDraw();
+//    float ratio = (float)height/(float)width;
+//    int w = 640*scale;
+//    int h = w*ratio;
+    
+    ofPushMatrix();
+    glMultMatrixf(glMatrix);
+    videoGrabber->draw(0,0);
+    ofSetColor(255, 255, 255);
+    ofDrawBitmapString(name, 10, 30);
+    ofPopMatrix();
 }
 
 void InputCamera::updateParameter(Param* inputParam){

@@ -33,15 +33,17 @@ GlitchLayer::GlitchLayer(string name_):VisualLayer(name_){
     gui.add(do_CR_REDINVERT.setup("REDINVERT", do_CR_REDINVERT, 100,20));
     gui.add(do_CR_GREENINVERT.setup("GREENINVERT", do_CR_GREENINVERT, 100,20));
     
-    myFbo.allocate(width, heigth);
+    myFbo.allocate(width, height);
     myGlitch.setup(&myFbo);
 }
 
+//------------------------------------------------------------------
+void GlitchLayer::setup() {}
 
 //------------------------------------------------------------------
 void GlitchLayer::draw(int x,int y, float scale) {
     ofSetColor(255, 255, 255);
-    float ratio = (float)heigth/(float)width;
+    float ratio = (float)height/(float)width;
     int w = 640*scale;
     int h = w*ratio;
     img.draw(x,y,w,h);
@@ -50,7 +52,7 @@ void GlitchLayer::draw(int x,int y, float scale) {
 void GlitchLayer::update(){
     //process pipeline
     
-    img.setFromPixels(input[0]->getImage()->getPixels(), width, heigth, OF_IMAGE_COLOR);
+    img.setFromPixels(input[0]->getImage()->getPixels(), width, height, OF_IMAGE_COLOR);
     
     if(isEnabled){
         

@@ -12,7 +12,7 @@
 ParticleGenerator::ParticleGenerator(string name) : InputSource(name){
     ofFbo::Settings s;
     s.width			= width;
-    s.height			= heigth;
+    s.height			= height;
     s.internalformat   = GL_RGBA;
     s.useDepth			= false;
     fbo.allocate(s);
@@ -38,7 +38,7 @@ ParticleGenerator::ParticleGenerator(string name) : InputSource(name){
     pLifetime.add(maxLifetime.set("min Lifetime", 0, 0, 60000));
     gui.add(pLifetime);
     
-    particle = new ofxParticleSystem(200,width,heigth,minRadius,(unityScale) ? minRadius : maxRadius,minLifetime,maxLifetime,fadeOut);
+    particle = new ofxParticleSystem(200,width,height,minRadius,(unityScale) ? minRadius : maxRadius,minLifetime,maxLifetime,fadeOut);
     
    /* for(int i=0; i<nForces; ++i){
         force.push_back(ParticleForce());
@@ -100,7 +100,7 @@ void ParticleGenerator::update() {
 void ParticleGenerator::draw(int x,int y, float scale) {
     ofSetColor(255, 255, 255);
     ofEnableAlphaBlending();
-    float ratio = (float)heigth/(float)width;
+    float ratio = (float)height/(float)width;
     int w = 640*scale;
     int h = w*ratio;
     fbo.draw(x, y,w,h);

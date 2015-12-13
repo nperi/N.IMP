@@ -122,18 +122,20 @@ void ofApp::setup() {
     
     if(loadingOK){
         
-        for (int i=0; i<nodesVector.size(); ++i) {
-            nodesVector[i]->setParent(cam);
-            nodesVector[i]->setMainCanvas(gui);
-        }
-        
         //TODO: change mixtable assignment.
         //  ofAddListener(mixtables[0]->textureEvent, this, &ofApp::updateSyphon);
         
         //invoking input generators setup functions
         
-        for(int i=0; i<inputGenerators.size(); i++){
-            inputGenerators[i]->setup();
+//        for(int i=0; i<inputGenerators.size(); i++){
+//            inputGenerators[i]->setup();
+//        }
+        
+        //invoking nodes setup functions and setting main canvas and camera
+        for (int i=0; i<nodesVector.size(); ++i) {
+            nodesVector[i]->setParent(cam);
+            nodesVector[i]->setMainCanvas(gui);
+            nodesVector[i]->setup();
         }
         
         //starting input generators theads (the not threadeds will not start)
@@ -261,7 +263,11 @@ void ofApp::draw() {
     
     // draw nodes
     if(loadingOK){
+        
+        cam.begin();
+        composer->customDraw();
         nodeViewers[currentViewer]->draw();
+        cam.end();
         
         string info = "";
         info += "  (";
@@ -282,10 +288,7 @@ void ofApp::draw() {
         menu->setWidth(ofGetWidth());
         right_menu->setHeight(ofGetHeight() - (MENU_HEIGHT + MENU_TOP_PADDING));
         
-        cam.begin();
-        composer->customDraw();
-        cam.end();
-        
+        //draw scrollbars
         scrollBars->draw();
     }
     else{
@@ -670,44 +673,11 @@ bool ofApp::loadFromXML(){
                                 //ImageInput* iI = new ImageInput(inputName);
                                 
                                 ImageInputList* iI = new ImageInputList(inputName);
-                                string  path = XML.getAttribute("INPUT", "path","none", i);
-                                
-                                float bpm         = ofToFloat(XML.getAttribute("INPUT", "bpm","120", i));
-                                int bpmMultiplier = ofToInt(XML.getAttribute("INPUT", "multiplier_divider","32", i));
-                                bool isPlaying    = ofToBool(XML.getAttribute("INPUT", "isPlaying","true", i));
-                                bool isPalindromLoop    = ofToBool(XML.getAttribute("INPUT", "palindrom","true", i));
-                                bool isMatchBpmToSequenceLength    = ofToBool(XML.getAttribute("INPUT", "matchBPMtoSequence","false", i));
-                                
-                                if (path == "none") {
-                                    XML.pushTag("INPUT",i);
-                                    int numVideoTag = XML.getNumTags("ASSET");
-                                    if(numVideoTag>0){
-                                        for (int v=0; v<numVideoTag; v++){
-                                            string name = XML.getAttribute("ASSET","name","default",v);
-                                            string path_ = XML.getAttribute("ASSET","path","default",v);
-                                            iI->loadImage(name,path_);
-                                        }
-                                        
-                                    }
-                                    else{
-                                        result = false;
-                                        message = "no videos to be loaded!";
-                                    }
-                                    XML.popTag();
-                                }
-                                else{
-                                    iI->loadImage(inputName, path);
-                                }
-                                
-                                iI->bpm = bpm;
-                                iI->bpmMultiplier = bpmMultiplier;
-                                iI->isPlaying = isPlaying;
-                                iI->isPalindromLoop = isPalindromLoop;
-                                iI->isMatchBpmToSequenceLength = isMatchBpmToSequenceLength;
-                                //iI->setParameters(bpm);
+                                iI->loadSettings(XML, i);
                                 
                                 inputs.push_back(iI);
                                 nodes.insert(std::pair<string,ImageOutput*>(inputName,iI));
+                                composer->addPatch(iI);
                                 
                                 break;
                             };
@@ -880,13 +850,13 @@ bool ofApp::loadFromXML(){
                                 {
                                     
                                     ImageProcessor* gLA = new ImageProcessor(layerName);
-                                    
-                                    
                                     gLA->addInputIdentifier(inputSourceName);
+                                    gLA->loadSettings(XML, i);
 
                                     
                                     visualLayers.push_back(gLA);
                                     nodes.insert(std::pair<string,ImageOutput*>(layerName,gLA));
+                                    composer->addPatch(gLA);
                                     
                                     break;
                                 };

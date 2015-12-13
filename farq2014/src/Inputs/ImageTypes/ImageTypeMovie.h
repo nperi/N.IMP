@@ -29,6 +29,9 @@ class ImageTypeMovie : public ImageType{
     
     void setPlayer(ofQTKitPlayer* player);
     
+    float getHeight();
+    float getWidth();
+    
 private:
     //ofVideoPlayer videoPlayer;
     //ofQTKitPlayer videoPlayer;

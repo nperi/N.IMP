@@ -21,6 +21,7 @@ class IkedaLayer : public VisualLayer{
 	
     IkedaLayer(string name_ = "visualLayer",bool isCanny_ = true ,bool isThreshold_ = true, bool isColumns_ = true, bool isInvert_ = true);
 	
+    void setup();
 	void draw(int x,int y, float scale);
     void updateParameter(Param* inputParam);
     

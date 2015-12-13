@@ -19,6 +19,7 @@ public:
     
     GlitchLayer(string name_ = "glitchLayer");
     
+    void setup();
     void draw(int x,int y, float scale);
     void updateParameter(Param* inputParam);
     

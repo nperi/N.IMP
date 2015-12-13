@@ -59,3 +59,11 @@ void ImageTypePictureSequence::activate(ofImage& _img, ofTexture& _tex){
     _img = img;
 }
 
+float ImageTypePictureSequence::getHeight() {
+    return img.getHeight();
+}
+
+float ImageTypePictureSequence::getWidth() {
+    return img.getWidth();
+}
+
