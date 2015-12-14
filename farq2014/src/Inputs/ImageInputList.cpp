@@ -12,7 +12,6 @@
 
 ImageInputList::ImageInputList(string name) : InputSource(name){
     
-    img.allocate(width, height, OF_IMAGE_COLOR_ALPHA);
     currentSequence = 0;
     lastSequence = currentSequence;
     isEnabled = false;
@@ -22,38 +21,38 @@ ImageInputList::ImageInputList(string name) : InputSource(name){
 
 void ImageInputList::setup(){
     
+    width  = inputs[currentSequence]->getWidth();
+    height = inputs[currentSequence]->getHeight();
+    
+    img.allocate(width, height, OF_IMAGE_COLOR_ALPHA);
+    
+    //setting texture to draw to patch
+    setTexture(tex);
 }
 
 void ImageInputList::update(){
     
     inputs[currentSequence]->update(img, tex);
     playPos2 = inputs[currentSequence]->getPosition();
-    
-    //setting texture to draw to patch
-    texture = &tex;
 }
 
 void ImageInputList::draw(int x,int y, float scale){
     
-//    float ratio = (float)height/(float)width;
-//    int w = 640*scale;
-//    int h = w*ratio;
-    
     ofPushMatrix();
     glMultMatrixf(glMatrix);
     tex.draw(0,0);
-    ofSetColor(255, 255, 255);
-    string desc = name;
-    desc += "\n------------------";
-    desc += "\n" + ofToString(inputs[currentSequence]->getName());
-    desc += "\nfps: " + ofToString(inputs[currentSequence]->getFrameRate());
-    desc += "\nposition: " + ofToString(inputs[currentSequence]->getPosition());
-    
-    ofSetColor(0, 0, 0);
-    ofRect(5, 5, 180, 73);
-    
-    ofSetColor(255, 255, 255);
-    ofDrawBitmapString(desc, 10, 18);
+//    ofSetColor(255, 255, 255);
+//    string desc = name;
+//    desc += "\n------------------";
+//    desc += "\n" + ofToString(inputs[currentSequence]->getName());
+//    desc += "\nfps: " + ofToString(inputs[currentSequence]->getFrameRate());
+//    desc += "\nposition: " + ofToString(inputs[currentSequence]->getPosition());
+//    
+//    ofSetColor(0, 0, 0);
+//    ofRect(5, 5, 180, 73);
+//    
+//    ofSetColor(255, 255, 255);
+//    ofDrawBitmapString(desc, 10, 18);
     ofPopMatrix();
     
 }
@@ -293,27 +292,11 @@ bool ImageInputList::loadSettings(ofxXmlSettings &XML, int nTag_) {
     bVisible = XML.getValue("visible", true);
     //filePath = XML.getValue("path", "none" );
     
-    title->setTitle(name + ":" + type );
+    //title->setTitle(name + ":" + type );
         
     InputSource::loadSettings(XML, nTag_);
     
-    XML.popTag(); // Pop INPUT
-    
-    
-    // Setting Inspector
-    //
-    imageSrc = path;
-    inspector = new ofxUICanvas();
-    inspector->addLabel("INSPECTOR");
-    inspector->addSpacer();
-    inspector->addLabel("Image src:");
-    ofxUITextInput* ti = inspector->addTextInput("Image src", imageSrc);
-    ti->setDraggable(false);
-    inspector->setWidgetPosition(OFX_UI_WIDGET_POSITION_RIGHT);
-    inspector->addImageButton("Image src btn", "assets/edit.png", false);
-    inspector->autoSizeToFitWidgets();
-    //ofAddListener(inspector->newGUIEvent,this,&ofxPatch::guiEvent);
-    inspector->setVisible(false);
+    XML.popTag();
     
     return loaded;
 }

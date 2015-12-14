@@ -227,8 +227,8 @@ void ImageProcessor::draw(int x,int y, float scale) {
     glMultMatrixf(glMatrix);
     ofSetColor(255);
     fbo.draw(0,0);
-    ofSetColor(255, 255, 255);
-    ofDrawBitmapString(name, 10, 30);
+//    ofSetColor(255, 255, 255);
+//    ofDrawBitmapString(name, 10, 30);
     ofPopMatrix();
 }
 
@@ -399,7 +399,7 @@ bool ImageProcessor::loadSettings(ofxXmlSettings &XML, int nTag_) {
     type = XML.getValue("type","none");
     bVisible = XML.getValue("visible", true);
     
-    title->setTitle(name + ":" + type );
+    //title->setTitle(name + ":" + type );
     
     ImageOutput::loadSettings(XML, nTag_);
     

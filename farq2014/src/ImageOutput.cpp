@@ -18,6 +18,7 @@ ImageOutput::ImageOutput(string name_,int maxInputs_, int width_, int height_) :
     maxInputs = maxInputs_;
     panel.setup();
     panel.add(gui.setup(name));
+    panel.setDraggable(false);
 };
 
 //------------------------------------------------------------------
@@ -85,10 +86,8 @@ void ImageOutput::drawGui(){
 
 //------------------------------------------------------------------
 void ImageOutput::drawGui(int x, int y){
-    ofVec2f p = panel.getPosition();
     panel.setPosition(x, y);
     panel.draw();
-    //panel.setPosition(p);
 }
 
 //------------------------------------------------------------------

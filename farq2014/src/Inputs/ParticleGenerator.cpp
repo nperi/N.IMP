@@ -99,6 +99,7 @@ void ParticleGenerator::draw(int x,int y, float scale) {
     glMultMatrixf(glMatrix);
     fbo.draw(0,0);
     ofNoFill();
+    ofSetColor(0, 0, 0);
     ofRect(0, 0, width, height);
     ofFill();
     for(int i=0; i<force.size();++i){
@@ -107,8 +108,8 @@ void ParticleGenerator::draw(int x,int y, float scale) {
         ofCircle(force[i].pos->x, force[i].pos->y, force[i].radius);
     }
     ofDisableAlphaBlending();
-    ofSetColor(255, 255, 255);
-    ofDrawBitmapString(name, 10, 30);
+//    ofSetColor(255, 255, 255);
+//    ofDrawBitmapString(name, 10, 30);
     ofPopMatrix();
     ofPopStyle();
 }
@@ -159,7 +160,7 @@ bool ParticleGenerator::loadSettings(ofxXmlSettings &XML, int nTag_) {
     type = XML.getValue("type","none");
     bVisible = XML.getValue("visible", true);
     
-    title->setTitle(name + ":" + type );
+    //title->setTitle(name + ":" + type );
     
     ImageOutput::loadSettings(XML, nTag_);
     

@@ -38,8 +38,8 @@ void InputCamera::draw(int x,int y, float scale) {
     ofPushMatrix();
     glMultMatrixf(glMatrix);
     videoGrabber->draw(0,0);
-    ofSetColor(255, 255, 255);
-    ofDrawBitmapString(name, 10, 30);
+//    ofSetColor(255, 255, 255);
+//    ofDrawBitmapString(name, 10, 30);
     ofPopMatrix();
 }
 
@@ -61,7 +61,7 @@ bool InputCamera::loadSettings(ofxXmlSettings &XML, int nTag_) {
     bVisible = XML.getValue("visible", true);
     filePath = XML.getValue("path", "none" );
     
-    title->setTitle(name + ":" + type );
+    //title->setTitle(name + ":" + type );
     
     videoGrabber = new ofVideoGrabber();
     videoGrabber->setDeviceID( XML.getValue("path", 0 ) );
