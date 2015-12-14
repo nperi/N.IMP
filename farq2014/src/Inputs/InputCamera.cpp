@@ -35,10 +35,6 @@ void InputCamera::update() {
 //------------------------------------------------------------------
 void InputCamera::draw(int x,int y, float scale) {
     
-//    float ratio = (float)height/(float)width;
-//    int w = 640*scale;
-//    int h = w*ratio;
-    
     ofPushMatrix();
     glMultMatrixf(glMatrix);
     videoGrabber->draw(0,0);
@@ -78,7 +74,7 @@ bool InputCamera::loadSettings(ofxXmlSettings &XML, int nTag_) {
         InputSource::loadSettings(XML, nTag_);
     }
     
-    XML.popTag(); // Pop INPUT
+    XML.popTag();
     
     return loaded;
 }

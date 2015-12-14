@@ -199,7 +199,8 @@ void ofApp::update() {
         
         //resetting processed flags
         for (int i=0; i<nodesVector.size(); ++i) {
-            nodesVector[i]->resetProcessedFlag();
+            //nodesVector[i]->resetProcessedFlag();
+            nodesVector[i]->update();
         }
         
         //getting new paraminputs
@@ -679,27 +680,7 @@ bool ofApp::loadFromXML(){
                             case PARTICLE:
                             {
                                 ParticleGenerator* iI = new ParticleGenerator(inputName);
-                                
-                                bool isClearBg          = ofToBool(XML.getAttribute("INPUT", "isClearBg","true", i));
-                                float alphaParticles    = ofToFloat(XML.getAttribute("INPUT", "alphaParticles","0.4", i));
-                                bool autoGenParticle    = ofToBool(XML.getAttribute("INPUT", "autoGenParticle","false", i));
-                                float autoGenAmount     = ofToFloat(XML.getAttribute("INPUT", "autoGenAmount","0.0", i));
-                                bool unityScale         = ofToBool(XML.getAttribute("INPUT", "unityScale","false", i));
-                                float minRadius         = ofToFloat(XML.getAttribute("INPUT", "minRadius","4", i));
-                                float maxRadius         = ofToFloat(XML.getAttribute("INPUT", "maxRadius","10", i));
-                                float minLifetime       = ofToFloat(XML.getAttribute("INPUT", "minLifetime","0", i));
-                                float maxLifetime       = ofToFloat(XML.getAttribute("INPUT", "maxLifetime","0", i));
-                                
-                                iI->isClearBg = isClearBg;
-                                iI->alphaParticles = alphaParticles;
-                                iI->autoGenParticle = autoGenParticle;
-                                iI->autoGenAmount = autoGenAmount;
-                                iI->unityScale = unityScale;
-                                iI->minRadius = minRadius;
-                                iI->maxRadius = maxRadius;
-                                iI->minLifetime = minLifetime;
-                                iI->maxLifetime = maxLifetime;
-                                
+                                iI->loadSettings(XML, i);
                                 
                                 inputs.push_back(iI);
                                 nodes.insert(std::pair<string,ImageOutput*>(inputName,iI));

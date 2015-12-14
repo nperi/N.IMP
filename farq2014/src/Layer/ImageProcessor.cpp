@@ -222,10 +222,6 @@ void ImageProcessor::updateParameter(Param* inputParam){
 
 //------------------------------------------------------------------
 void ImageProcessor::draw(int x,int y, float scale) {
-
-//    float ratio = (float)height/(float)width;
-//    int w = 640*scale;
-//    int h = w*ratio;
     
     ofPushMatrix();
     glMultMatrixf(glMatrix);
@@ -409,7 +405,7 @@ bool ImageProcessor::loadSettings(ofxXmlSettings &XML, int nTag_) {
     
     addInputDot();
     
-    XML.popTag(); // Pop VISUAL_LAYER
+    XML.popTag();
     
     return true;
 }

@@ -45,6 +45,8 @@ class ParticleGenerator : public InputSource{
     
     ofParameter<float> fadeOut;
     
+    bool loadSettings(ofxXmlSettings &XML, int nTag_);
+    
     
 private:
     

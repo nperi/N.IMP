@@ -40,6 +40,7 @@ class ImageOutput : public ofxPatch {
     
     virtual void setup() = 0;
     
+    virtual void update() = 0;
     //draws the node (whatever there is defined), in general the Output-picture
     virtual void draw(int x,int y, float scale = 1.0) = 0;
     
@@ -63,8 +64,7 @@ class ImageOutput : public ofxPatch {
     bool loadSettings(ofxXmlSettings &XML, int nTag_);
     
 protected:
-    
-    virtual void update() = 0;
+
     virtual void inputAdded(ImageOutput* in_){}; //called when input is added
     
     ofxPanel panel;

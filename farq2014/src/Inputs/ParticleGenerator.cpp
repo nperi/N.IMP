@@ -11,12 +11,11 @@
 
 ParticleGenerator::ParticleGenerator(string name) : InputSource(name){
     ofFbo::Settings s;
-    s.width			= width;
-    s.height			= height;
-    s.internalformat   = GL_RGBA;
+    s.width             = width;
+    s.height            = height;
+    s.internalformat    = GL_RGBA;
     s.useDepth			= false;
     fbo.allocate(s);
-    
     
     
     gui.add(bAddParticles.setup("add Particles"));
@@ -49,11 +48,7 @@ ParticleGenerator::ParticleGenerator(string name) : InputSource(name){
 }
 
 //------------------------------------------------------------------
-void ParticleGenerator::setup() {
-	
-	
-}
-
+void ParticleGenerator::setup() {}
 
 //------------------------------------------------------------------
 void ParticleGenerator::update() {
@@ -78,7 +73,6 @@ void ParticleGenerator::update() {
         }
     }
     
-    
     particle->update();
     
     fbo.begin();
@@ -95,36 +89,36 @@ void ParticleGenerator::update() {
     force.clear();
 }
 
-
 //------------------------------------------------------------------
 void ParticleGenerator::draw(int x,int y, float scale) {
+
+    ofPushStyle();
     ofSetColor(255, 255, 255);
     ofEnableAlphaBlending();
-    float ratio = (float)height/(float)width;
-    int w = 640*scale;
-    int h = w*ratio;
-    fbo.draw(x, y,w,h);
-    ofNoFill();
-    ofRect(x, y, w, h);
     ofPushMatrix();
-    ofTranslate(x, y);
+    glMultMatrixf(glMatrix);
+    fbo.draw(0,0);
+    ofNoFill();
+    ofRect(0, 0, width, height);
     ofFill();
     for(int i=0; i<force.size();++i){
         int mult = (force[i].isAttracting) ? 255 : 0;
         ofSetColor(255-mult, mult, 0,force[i].scale*50);
         ofCircle(force[i].pos->x, force[i].pos->y, force[i].radius);
     }
-    ofPopMatrix();
     ofDisableAlphaBlending();
     ofSetColor(255, 255, 255);
-    ofDrawBitmapString(name, x + 10, y + 30);
+    ofDrawBitmapString(name, 10, 30);
+    ofPopMatrix();
+    ofPopStyle();
 }
 
-
+//------------------------------------------------------------------
 void ParticleGenerator::addForce(ParticleForce f){
     force.push_back(f);
 }
 
+//------------------------------------------------------------------
 void ParticleGenerator::updateParameter(Param* inputParam){
     if(inputParam->name.compare("forceX")==0){
         ParticleForce f;
@@ -144,4 +138,32 @@ void ParticleGenerator::updateParameter(Param* inputParam){
     }else if(inputParam->name.compare("clearBg")==0){
         isClearBg = inputParam->intVal;
     }
+}
+
+//------------------------------------------------------------------
+bool ParticleGenerator::loadSettings(ofxXmlSettings &XML, int nTag_) {
+    
+    isClearBg       = ofToBool(XML.getAttribute("INPUT", "isClearBg","true", nTag_));
+    alphaParticles  = ofToFloat(XML.getAttribute("INPUT", "alphaParticles","0.4", nTag_));
+    autoGenParticle = ofToBool(XML.getAttribute("INPUT", "autoGenParticle","false", nTag_));
+    autoGenAmount   = ofToFloat(XML.getAttribute("INPUT", "autoGenAmount","0.0", nTag_));
+    unityScale      = ofToBool(XML.getAttribute("INPUT", "unityScale","false", nTag_));
+    minRadius       = ofToFloat(XML.getAttribute("INPUT", "minRadius","4", nTag_));
+    maxRadius       = ofToFloat(XML.getAttribute("INPUT", "maxRadius","10", nTag_));
+    minLifetime     = ofToFloat(XML.getAttribute("INPUT", "minLifetime","0", nTag_));
+    maxLifetime     = ofToFloat(XML.getAttribute("INPUT", "maxLifetime","0", nTag_));
+    
+    XML.pushTag("INPUT", nTag_);
+    
+    nId = XML.getValue("id", 0);
+    type = XML.getValue("type","none");
+    bVisible = XML.getValue("visible", true);
+    
+    title->setTitle(name + ":" + type );
+    
+    ImageOutput::loadSettings(XML, nTag_);
+    
+    XML.popTag();
+    
+    return true;
 }
