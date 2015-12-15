@@ -150,19 +150,19 @@
                 <visible>1</visible>
                 <texture>
                     <point>
-                        <x>459.580688477</x>
+                        <x>359.580688477</x>
                         <y>64.936889648</y>
                     </point>
                     <point>
-                        <x>707.635253906</x>
+                        <x>607.635253906</x>
                         <y>64.935852051</y>
                     </point>
                     <point>
-                        <x>707.635314941</x>
+                        <x>607.635314941</x>
                         <y>250.976806641</y>
                     </point>
                     <point>
-                        <x>459.581115723</x>
+                        <x>359.581115723</x>
                         <y>250.976684570</y>
                     </point>
                 </texture>
@@ -264,19 +264,19 @@
                 <visible>1</visible>
                 <texture>
                     <point>
-                        <x>759.580688477</x>
+                        <x>659.580688477</x>
                         <y>464.936889648</y>
                     </point>
                     <point>
-                        <x>1007.635253906</x>
+                        <x>907.635253906</x>
                         <y>464.935852051</y>
                     </point>
                     <point>
-                        <x>1007.635314941</x>
+                        <x>907.635314941</x>
                         <y>650.976806641</y>
                     </point>
                     <point>
-                        <x>759.581115723</x>
+                        <x>659.581115723</x>
                         <y>650.976684570</y>
                     </point>
                 </texture>
@@ -312,6 +312,50 @@
             <MIXER name="Particle Mix" type="SIMPLE_BLEND"   selectorRight="1" blendmode="13" opacity="255">
                 <INPUT_SOURCE name="Particle Visual"/>
                 <INPUT_SOURCE name="Glitch Mix"/>
+                
+                <id>6</id>
+                <type>none</type>
+                <path>none</path>
+                <visible>1</visible>
+                <texture>
+                    <point>
+                        <x>959.580688477</x>
+                        <y>464.936889648</y>
+                    </point>
+                    <point>
+                        <x>1207.635253906</x>
+                        <y>464.935852051</y>
+                    </point>
+                    <point>
+                        <x>1207.635314941</x>
+                        <y>650.976806641</y>
+                    </point>
+                    <point>
+                        <x>959.581115723</x>
+                        <y>650.976684570</y>
+                    </point>
+                </texture>
+                <mask>
+                    <point>
+                        <x>0.000000000</x>
+                        <y>0.000000000</y>
+                    </point>
+                    <point>
+                        <x>1.000000000</x>
+                        <y>0.000000000</y>
+                    </point>
+                    <point>
+                        <x>1.000000000</x>
+                        <y>1.000000000</y>
+                    </point>
+                    <point>
+                        <x>0.000000000</x>
+                        <y>1.000000000</y>
+                    </point>
+                </mask>
+                <out>
+                    <active>1</active>
+                </out>
             </MIXER>
            
         </MIXERS>

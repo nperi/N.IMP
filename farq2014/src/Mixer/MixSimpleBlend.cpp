@@ -23,9 +23,6 @@ MixSimpleBlend::MixSimpleBlend(string name_):MixTable(name_){
     
     blendMode.addListener(this, &MixSimpleBlend::blendModeChanged);
 
-
-    
-
 }
 
 //------------------------------------------------------------------
@@ -36,20 +33,17 @@ void MixSimpleBlend::setup() {
 //------------------------------------------------------------------
 void MixSimpleBlend::draw(int x,int y, float scale) {
     ofSetColor(255, 255, 255);
-    float ratio = (float)height/(float)width;
-    int w = 640*scale;
-    int h = w*ratio;
-    ofPushMatrix();
-    ofTranslate(x, y);
     
-    fbo.draw(0, 0, w, h);
-    ofDrawBitmapString(name + "\n"+
-                        input[selector1]->getName()+ " / " + input[selector2]->getName()+"\n"+
-                        psBlend.getBlendMode(blendMode) + " " + ofToString(ofMap(opacity,0,255,0,100)), 10, 30);
-
+    ofPushMatrix();
+    glMultMatrixf(glMatrix);
+    fbo.draw(0, 0);
+//    ofDrawBitmapString(name + "\n"+
+//                        input[selector1]->getName()+ " / " + input[selector2]->getName()+"\n"+
+//                        psBlend.getBlendMode(blendMode) + " " + ofToString(ofMap(opacity,0,255,0,100)), 10, 30);
     ofPopMatrix();
 }
 
+//------------------------------------------------------------------
 void MixSimpleBlend::update(){
     fbo.begin();
     ofClear(255,255,255, 0);
@@ -66,9 +60,6 @@ void MixSimpleBlend::update(){
             ofSetColor(255, 255, 255,opacity);
             input[selector2]->getTexture()->draw(0, 0);
         }
-        
-        
-        
     }
     else{
         psBlend.begin();
@@ -83,16 +74,19 @@ void MixSimpleBlend::update(){
     tex = fbo.getTextureReference();
 }
 
+//------------------------------------------------------------------
 void MixSimpleBlend::blendModeChanged(int& i){
     blendMode.setName(psBlend.getBlendMode(i));
 }
 
+//------------------------------------------------------------------
 void MixSimpleBlend::inputAdded(ImageOutput* in_){
 
     selector1.setMax(input.size()-1);
     selector2.setMax(input.size()-1);
 }
 
+//------------------------------------------------------------------
 void MixSimpleBlend::updateParameter(Param* inputParam){
     if(inputParam->name.compare("opacity")==0){
         //this->opacity = inputParam->intVal;
@@ -105,8 +99,44 @@ void MixSimpleBlend::updateParameter(Param* inputParam){
     }
 }
 
+//------------------------------------------------------------------
 void MixSimpleBlend::setEnable(bool isEnabled_){
     isEnabled = isEnabled_;
     input[0]->setEnable(isEnabled);
     input[1]->setEnable(isEnabled);
+}
+
+//------------------------------------------------------------------
+bool MixSimpleBlend::loadSettings(ofxXmlSettings &XML, int nTag_) {
+    
+    
+    selector1 = ofToInt(XML.getAttribute("MIXER","selectorLeft","0", nTag_));
+    selector2 = ofToInt(XML.getAttribute("MIXER","selectorRight","0", nTag_));
+    blendMode = ofToInt(XML.getAttribute("MIXER","blendmode","0", nTag_));
+    opacity = ofToFloat(XML.getAttribute("MIXER","opacity","0", nTag_));
+    
+    XML.pushTag("MIXER", nTag_);
+    
+    int numINPUTTag = XML.getNumTags("INPUT_SOURCE");
+    
+    for(int j=0; j<numINPUTTag; j++){
+        
+        string inputName = XML.getAttribute("INPUT_SOURCE","name","default",j);
+        
+        addInputIdentifier(inputName);
+    }
+    
+    nId = XML.getValue("id", 0);
+    type = XML.getValue("type","none");
+    bVisible = XML.getValue("visible", true);
+    
+    //title->setTitle(name + ":" + type );
+    
+    ImageOutput::loadSettings(XML, nTag_);
+    
+    addInputDot();
+    
+    XML.popTag();
+    
+    return true;
 }

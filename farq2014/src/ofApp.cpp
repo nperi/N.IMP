@@ -837,33 +837,11 @@ bool ofApp::loadFromXML(){
                             switch(mixerTypes[type]){
                                 case SIMPLE_BLEND:
                                 {
-                                    int selectorL = ofToInt(XML.getAttribute("MIXER","selectorLeft","0", i));
-                                    int selectorR = ofToInt(XML.getAttribute("MIXER","selectorRight","0", i));
-                                    int blendmode = ofToInt(XML.getAttribute("MIXER","blendmode","0", i));
-                                    float opacity = ofToFloat(XML.getAttribute("MIXER","opacity","0", i));
-                                    
-
                                     MixSimpleBlend* mSB = new MixSimpleBlend(name);
-                                    XML.pushTag("MIXER",i);
-                                    
-                                    int numINPUTTag = XML.getNumTags("INPUT_SOURCE");
-                                    
-                                    for(int j=0; j<numINPUTTag; j++){
-                                        
-                                        string inputName = XML.getAttribute("INPUT_SOURCE","name","default",j);
-                                        
-                                        mSB->addInputIdentifier(inputName);
-                                        
-                                    }
-                                    mSB->selector1 = selectorL;
-                                    mSB->selector2 = selectorR;
-                                    mSB->opacity = opacity;
-                                    mSB->blendMode = blendmode;
+                                    mSB->loadSettings(XML, i);
                                     
                                     mixtables.push_back(mSB);
                                     nodes.insert(std::pair<string, ImageOutput*>(name, mSB));
-                                    //MIXER POP
-                                    XML.popTag();
                                     
                                     break;
                                 };

@@ -56,6 +56,7 @@ void GlitchLayer::draw(int x,int y, float scale) {
     ofPopMatrix();
 }
 
+//------------------------------------------------------------------
 void GlitchLayer::update(){
     //process pipeline
     
@@ -85,6 +86,7 @@ void GlitchLayer::update(){
     tex = img.getTextureReference();
 }
 
+//------------------------------------------------------------------
 void GlitchLayer::setGlitchParameters(){
     myGlitch.setFx(OFXPOSTGLITCH_CONVERGENCE	, do_CONVERGENCE);
     myGlitch.setFx(OFXPOSTGLITCH_GLOW			, do_GLOW);
@@ -107,6 +109,7 @@ void GlitchLayer::setGlitchParameters(){
 
 }
 
+//------------------------------------------------------------------
 void GlitchLayer::updateParameter(Param* inputParam){
     
 }
