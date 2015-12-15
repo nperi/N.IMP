@@ -759,45 +759,8 @@ bool ofApp::loadFromXML(){
                                 };
                                 case GLITCH_1:
                                 {
-                                    bool do_CONVERGENCE = ofToBool(XML.getAttribute("VISUAL_LAYER","do_CONVERGENCE","false",i));
-                                    bool do_GLOW = ofToBool(XML.getAttribute("VISUAL_LAYER","do_GLOW","false",i));
-                                    bool do_SHAKER = ofToBool(XML.getAttribute("VISUAL_LAYER","do_SHAKER","false",i));
-                                    bool do_CUTSLIDER = ofToBool(XML.getAttribute("VISUAL_LAYER","do_CUTSLIDER","false",i));
-                                    bool do_TWIST = ofToBool(XML.getAttribute("VISUAL_LAYER","do_TWIST","false",i));
-                                    bool do_OUTLINE = ofToBool(XML.getAttribute("VISUAL_LAYER","do_OUTLINE","false",i));
-                                    bool do_NOISE = ofToBool(XML.getAttribute("VISUAL_LAYER","do_NOISE","false",i));
-                                    bool do_SLITSCAN = ofToBool(XML.getAttribute("VISUAL_LAYER","do_SLITSCAN","false",i));
-                                    bool do_SWELL = ofToBool(XML.getAttribute("VISUAL_LAYER","do_SWELL","false",i));
-                                    bool do_INVERT = ofToBool(XML.getAttribute("VISUAL_LAYER","do_INVERT","false",i));
-                                    
-                                    bool do_CR_HIGHCONTRAST = ofToBool(XML.getAttribute("VISUAL_LAYER","do_CR_HIGHCONTRAST","false",i));
-                                    bool do_CR_BLUERAISE = ofToBool(XML.getAttribute("VISUAL_LAYER","do_CR_BLUERAISE","false",i));
-                                    bool do_CR_REDRAISE = ofToBool(XML.getAttribute("VISUAL_LAYER","do_CR_REDRAISE","false",i));
-                                    bool do_CR_GREENRAISE = ofToBool(XML.getAttribute("VISUAL_LAYER","do_CR_GREENRAISE","false",i));
-                                    bool do_CR_BLUEINVERT = ofToBool(XML.getAttribute("VISUAL_LAYER","do_CR_BLUEINVERT","false",i));
-                                    bool do_CR_REDINVERT = ofToBool(XML.getAttribute("VISUAL_LAYER","do_CR_REDINVERT","false",i));
-                                    bool do_CR_GREENINVERT = ofToBool(XML.getAttribute("VISUAL_LAYER","do_CR_GREENINVERT","false",i));
-                                    
                                     GlitchLayer* gL = new GlitchLayer(layerName);
-                                    
-                                    gL->do_CONVERGENCE = do_CONVERGENCE;
-                                    gL->do_GLOW = do_GLOW;
-                                    gL->do_SHAKER = do_SHAKER;
-                                    gL->do_CUTSLIDER = do_CUTSLIDER;
-                                    gL->do_TWIST = do_TWIST;
-                                    gL->do_OUTLINE = do_OUTLINE;
-                                    gL->do_NOISE = do_NOISE;
-                                    gL->do_SLITSCAN = do_SLITSCAN;
-                                    gL->do_SWELL = do_SWELL;
-                                    gL->do_INVERT = do_INVERT;
-                                    
-                                    gL->do_CR_HIGHCONTRAST = do_CR_HIGHCONTRAST;
-                                    gL->do_CR_BLUERAISE = do_CR_BLUERAISE;
-                                    gL->do_CR_REDRAISE = do_CR_REDRAISE;
-                                    gL->do_CR_GREENRAISE = do_CR_GREENRAISE;
-                                    gL->do_CR_BLUEINVERT = do_CR_BLUEINVERT;
-                                    gL->do_CR_REDINVERT = do_CR_REDINVERT;
-                                    gL->do_CR_GREENINVERT = do_CR_GREENINVERT;
+                                    gL->loadSettings(XML, i);
                                     
                                     gL->addInputIdentifier(inputSourceName);
 

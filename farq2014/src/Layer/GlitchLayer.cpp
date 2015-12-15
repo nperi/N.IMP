@@ -32,21 +32,28 @@ GlitchLayer::GlitchLayer(string name_):VisualLayer(name_){
     gui.add(do_CR_BLUEINVERT.setup("BLUEINVERT", do_CR_BLUEINVERT, 100,20));
     gui.add(do_CR_REDINVERT.setup("REDINVERT", do_CR_REDINVERT, 100,20));
     gui.add(do_CR_GREENINVERT.setup("GREENINVERT", do_CR_GREENINVERT, 100,20));
+
+}
+
+//------------------------------------------------------------------
+void GlitchLayer::setup() {
+
+    height = input[0]->getHeight();
+    width  = input[0]->getWidth();
+    
+    setTexture(*input[0]->getTexture());
     
     myFbo.allocate(width, height);
     myGlitch.setup(&myFbo);
 }
 
 //------------------------------------------------------------------
-void GlitchLayer::setup() {}
-
-//------------------------------------------------------------------
 void GlitchLayer::draw(int x,int y, float scale) {
     ofSetColor(255, 255, 255);
-    float ratio = (float)height/(float)width;
-    int w = 640*scale;
-    int h = w*ratio;
-    img.draw(x,y,w,h);
+    ofPushMatrix();
+    glMultMatrixf(glMatrix);
+    img.draw(0, 0);
+    ofPopMatrix();
 }
 
 void GlitchLayer::update(){
@@ -102,4 +109,44 @@ void GlitchLayer::setGlitchParameters(){
 
 void GlitchLayer::updateParameter(Param* inputParam){
     
+}
+
+//------------------------------------------------------------------
+bool GlitchLayer::loadSettings(ofxXmlSettings &XML, int nTag_) {
+    
+    
+    do_CONVERGENCE = ofToBool(XML.getAttribute("VISUAL_LAYER","do_CONVERGENCE","false",nTag_));
+    do_GLOW = ofToBool(XML.getAttribute("VISUAL_LAYER","do_GLOW","false",nTag_));
+    do_SHAKER = ofToBool(XML.getAttribute("VISUAL_LAYER","do_SHAKER","false",nTag_));
+    do_CUTSLIDER = ofToBool(XML.getAttribute("VISUAL_LAYER","do_CUTSLIDER","false",nTag_));
+    do_TWIST = ofToBool(XML.getAttribute("VISUAL_LAYER","do_TWIST","false",nTag_));
+    do_OUTLINE = ofToBool(XML.getAttribute("VISUAL_LAYER","do_OUTLINE","false",nTag_));
+    do_NOISE = ofToBool(XML.getAttribute("VISUAL_LAYER","do_NOISE","false",nTag_));
+    do_SLITSCAN = ofToBool(XML.getAttribute("VISUAL_LAYER","do_SLITSCAN","false",nTag_));
+    do_SWELL = ofToBool(XML.getAttribute("VISUAL_LAYER","do_SWELL","false",nTag_));
+    do_INVERT = ofToBool(XML.getAttribute("VISUAL_LAYER","do_INVERT","false",nTag_));
+    
+    do_CR_HIGHCONTRAST = ofToBool(XML.getAttribute("VISUAL_LAYER","do_CR_HIGHCONTRAST","false",nTag_));
+    do_CR_BLUERAISE = ofToBool(XML.getAttribute("VISUAL_LAYER","do_CR_BLUERAISE","false",nTag_));
+    do_CR_REDRAISE = ofToBool(XML.getAttribute("VISUAL_LAYER","do_CR_REDRAISE","false",nTag_));
+    do_CR_GREENRAISE = ofToBool(XML.getAttribute("VISUAL_LAYER","do_CR_GREENRAISE","false",nTag_));
+    do_CR_BLUEINVERT = ofToBool(XML.getAttribute("VISUAL_LAYER","do_CR_BLUEINVERT","false",nTag_));
+    do_CR_REDINVERT = ofToBool(XML.getAttribute("VISUAL_LAYER","do_CR_REDINVERT","false",nTag_));
+    do_CR_GREENINVERT = ofToBool(XML.getAttribute("VISUAL_LAYER","do_CR_GREENINVERT","false",nTag_));
+    
+    XML.pushTag("VISUAL_LAYER", nTag_);
+    
+    nId = XML.getValue("id", 0);
+    type = XML.getValue("type","none");
+    bVisible = XML.getValue("visible", true);
+    
+    //title->setTitle(name + ":" + type );
+    
+    ImageOutput::loadSettings(XML, nTag_);
+    
+    addInputDot();
+    
+    XML.popTag();
+    
+    return true;
 }

@@ -22,6 +22,7 @@ public:
     void setup();
     void draw(int x,int y, float scale);
     void updateParameter(Param* inputParam);
+    bool loadSettings(ofxXmlSettings &XML, int nTag_);
     
     ofFbo			myFbo;
     ofTexture		texture;
