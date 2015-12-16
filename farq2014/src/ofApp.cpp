@@ -558,8 +558,10 @@ void ofApp::previousViewer(){
 void ofApp::setCurrentViewer(int currentViewer_){
     if (currentViewer_ >= 0 && currentViewer_ < nodeViewers.size()) {
         currentViewer = currentViewer_;
+        
         //reset the gui positions
-        nodeViewers[currentViewer]->setupGuiPositions();
+        //
+        //nodeViewers[currentViewer]->setupGuiPositions();
     }else{
         ofLogNotice() << "choosen viewer not available";
     }

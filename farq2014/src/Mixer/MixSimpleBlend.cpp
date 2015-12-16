@@ -18,6 +18,7 @@ MixSimpleBlend::MixSimpleBlend(string name_):MixTable(name_){
     gui.add(opacity.set("opacity", 0, 0, 255));
     gui.add(selector1.set("Left Source", 0, 0, 0));
     gui.add(selector2.set("Right Source", 0, 0, 0));
+    gui.setWidthElements(INSPECTOR_WIDTH);
     
     isEnabled = false;
     
@@ -37,9 +38,6 @@ void MixSimpleBlend::draw(int x,int y, float scale) {
     ofPushMatrix();
     glMultMatrixf(glMatrix);
     fbo.draw(0, 0);
-//    ofDrawBitmapString(name + "\n"+
-//                        input[selector1]->getName()+ " / " + input[selector2]->getName()+"\n"+
-//                        psBlend.getBlendMode(blendMode) + " " + ofToString(ofMap(opacity,0,255,0,100)), 10, 30);
     ofPopMatrix();
 }
 

@@ -38,8 +38,6 @@ void InputCamera::draw(int x,int y, float scale) {
     ofPushMatrix();
     glMultMatrixf(glMatrix);
     videoGrabber->draw(0,0);
-//    ofSetColor(255, 255, 255);
-//    ofDrawBitmapString(name, 10, 30);
     ofPopMatrix();
 }
 

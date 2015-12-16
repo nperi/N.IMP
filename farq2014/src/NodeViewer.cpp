@@ -34,11 +34,13 @@ void NodeViewer::draw() {
     ofxComposer::customDraw();
 }
 
+//------------------------------------------------------------------
 void NodeViewer::addElement(NodeElement* elem_){
     elements.push_back(elem_);
     addPatch(elem_->getImageOutput());
 }
 
+//------------------------------------------------------------------
 void NodeViewer::createConnections(){
     
     connections.clear();
@@ -55,10 +57,12 @@ void NodeViewer::createConnections(){
     }
 }
 
+//------------------------------------------------------------------
 string NodeViewer::getName(){
     return name;
 }
 
+//------------------------------------------------------------------
 void NodeViewer::setupGuiPositions(){
     for (int i=0; i<elements.size(); ++i) {
         elements[i]->setupGuiPositions();

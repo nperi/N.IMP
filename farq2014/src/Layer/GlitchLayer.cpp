@@ -11,7 +11,6 @@
 
 //------------------------------------------------------------------
 GlitchLayer::GlitchLayer(string name_):VisualLayer(name_){
-    //gui.setup();
     
     gui.add(isEnabled.setup("Enabled",isEnabled, 100,20));
     gui.add(do_CONVERGENCE.setup("CONVERGENCE", do_CONVERGENCE, 100,20));
@@ -32,6 +31,7 @@ GlitchLayer::GlitchLayer(string name_):VisualLayer(name_){
     gui.add(do_CR_BLUEINVERT.setup("BLUEINVERT", do_CR_BLUEINVERT, 100,20));
     gui.add(do_CR_REDINVERT.setup("REDINVERT", do_CR_REDINVERT, 100,20));
     gui.add(do_CR_GREENINVERT.setup("GREENINVERT", do_CR_GREENINVERT, 100,20));
+    gui.setWidthElements(INSPECTOR_WIDTH);
 
 }
 
@@ -40,8 +40,6 @@ void GlitchLayer::setup() {
 
     height = input[0]->getHeight();
     width  = input[0]->getWidth();
-    
-    setTexture(*input[0]->getTexture());
     
     myFbo.allocate(width, height);
     myGlitch.setup(&myFbo);

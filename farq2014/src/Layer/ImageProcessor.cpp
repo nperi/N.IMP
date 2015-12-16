@@ -110,8 +110,7 @@ ImageProcessor::ImageProcessor(string name_):VisualLayer(name_) {
    // gui.add(god);
     gui.add(zoomBlur);
     gui.add(pixelate);
-    
-    
+    gui.setWidthElements(INSPECTOR_WIDTH);
 }
 
 //------------------------------------------------------------------
@@ -120,7 +119,6 @@ void ImageProcessor::setup() {
     height = input[0]->getHeight();
     width  = input[0]->getWidth();
     
-    setTexture(*input[0]->getTexture());
     updateFromInputCoorners(getTextureCoorners().getVertices()[0]);
     
     fbo.allocate(width, height);
@@ -227,8 +225,6 @@ void ImageProcessor::draw(int x,int y, float scale) {
     glMultMatrixf(glMatrix);
     ofSetColor(255);
     fbo.draw(0,0);
-//    ofSetColor(255, 255, 255);
-//    ofDrawBitmapString(name, 10, 30);
     ofPopMatrix();
 }
 

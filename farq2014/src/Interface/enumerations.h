@@ -36,6 +36,8 @@
 #define GRIP_TOLERANCE .002f
 #define SCROLL_BAR_WIDTH 13.f
 
+#define INSPECTOR_WIDTH 200
+
 
 enum nodeLinkType
 {

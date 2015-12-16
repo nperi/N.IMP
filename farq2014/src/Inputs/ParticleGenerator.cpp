@@ -17,7 +17,6 @@ ParticleGenerator::ParticleGenerator(string name) : InputSource(name){
     s.useDepth			= false;
     fbo.allocate(s);
     
-    
     gui.add(bAddParticles.setup("add Particles"));
     gui.add(bRemoveParticles.setup("remove Particles"));
     gui.add(isClearBg.set("Clear BG",true));
@@ -36,6 +35,8 @@ ParticleGenerator::ParticleGenerator(string name) : InputSource(name){
     pLifetime.add(minLifetime.set("min Lifetime", 0, 0, 60000));
     pLifetime.add(maxLifetime.set("min Lifetime", 0, 0, 60000));
     gui.add(pLifetime);
+    
+    gui.setWidthElements(INSPECTOR_WIDTH);
     
     particle = new ofxParticleSystem(200,width,height,minRadius,(unityScale) ? minRadius : maxRadius,minLifetime,maxLifetime,fadeOut);
     
@@ -108,8 +109,6 @@ void ParticleGenerator::draw(int x,int y, float scale) {
         ofCircle(force[i].pos->x, force[i].pos->y, force[i].radius);
     }
     ofDisableAlphaBlending();
-//    ofSetColor(255, 255, 255);
-//    ofDrawBitmapString(name, 10, 30);
     ofPopMatrix();
     ofPopStyle();
 }

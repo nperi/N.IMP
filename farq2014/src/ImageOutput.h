@@ -69,7 +69,6 @@ protected:
     
     string name;
     ofImage img;
-    ofTexture tex;
     
     vector<ImageOutput*> input;
     vector<string> inputIdentifiers;

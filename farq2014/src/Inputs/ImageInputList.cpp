@@ -25,9 +25,6 @@ void ImageInputList::setup(){
     height = inputs[currentSequence]->getHeight();
     
     img.allocate(width, height, OF_IMAGE_COLOR_ALPHA);
-    
-    //setting texture to draw to patch
-    setTexture(tex);
 }
 
 void ImageInputList::update(){
@@ -41,18 +38,6 @@ void ImageInputList::draw(int x,int y, float scale){
     ofPushMatrix();
     glMultMatrixf(glMatrix);
     tex.draw(0,0);
-//    ofSetColor(255, 255, 255);
-//    string desc = name;
-//    desc += "\n------------------";
-//    desc += "\n" + ofToString(inputs[currentSequence]->getName());
-//    desc += "\nfps: " + ofToString(inputs[currentSequence]->getFrameRate());
-//    desc += "\nposition: " + ofToString(inputs[currentSequence]->getPosition());
-//    
-//    ofSetColor(0, 0, 0);
-//    ofRect(5, 5, 180, 73);
-//    
-//    ofSetColor(255, 255, 255);
-//    ofDrawBitmapString(desc, 10, 18);
     ofPopMatrix();
     
 }
@@ -96,11 +81,9 @@ void ImageInputList::loadImage(string name_, string path_){
         currentSequence.addListener(this, &ImageInputList::sequenceChanged);
         
         gui.add(isEnabledOn.set("Enabled",false));
-
         gui.add(nextSequence.setup(">> next"));
         gui.add(prevSequence.setup("<< prev"));
         gui.add(currentSequence.set("current", 0, 0, 0));
-        
         
         seqSettings.setName("Sequence Settings");
        // seqSettings.add(setOriginalPlaySpeed.set("original play speed",true));
@@ -111,8 +94,9 @@ void ImageInputList::loadImage(string name_, string path_){
         seqSettings.add(bpmMultiplier.set("bpmMultiplier", 4, 1, 120));
         seqSettings.add(playPosition.set("playPosition",0.0,0.0,1.0));
         seqSettings.add(playPos2.set("pos",0.0,0.0,1.0));
-        
         gui.add(seqSettings);
+        
+        gui.setWidthElements(INSPECTOR_WIDTH);
         
         //gui.add(nextFrame.setup("nextFrame"));
         //gui.add(previousFrame.setup("previousFrame"));
