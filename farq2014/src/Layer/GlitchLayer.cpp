@@ -119,26 +119,26 @@ void GlitchLayer::updateParameter(Param* inputParam){
 //------------------------------------------------------------------
 bool GlitchLayer::loadSettings(ofxXmlSettings &XML, int nTag_) {
     
-    do_CONVERGENCE = ofToBool(XML.getAttribute("VISUAL_LAYER","do_CONVERGENCE","false",nTag_));
-    do_GLOW = ofToBool(XML.getAttribute("VISUAL_LAYER","do_GLOW","false",nTag_));
-    do_SHAKER = ofToBool(XML.getAttribute("VISUAL_LAYER","do_SHAKER","false",nTag_));
-    do_CUTSLIDER = ofToBool(XML.getAttribute("VISUAL_LAYER","do_CUTSLIDER","false",nTag_));
-    do_TWIST = ofToBool(XML.getAttribute("VISUAL_LAYER","do_TWIST","false",nTag_));
-    do_OUTLINE = ofToBool(XML.getAttribute("VISUAL_LAYER","do_OUTLINE","false",nTag_));
-    do_NOISE = ofToBool(XML.getAttribute("VISUAL_LAYER","do_NOISE","false",nTag_));
-    do_SLITSCAN = ofToBool(XML.getAttribute("VISUAL_LAYER","do_SLITSCAN","false",nTag_));
-    do_SWELL = ofToBool(XML.getAttribute("VISUAL_LAYER","do_SWELL","false",nTag_));
-    do_INVERT = ofToBool(XML.getAttribute("VISUAL_LAYER","do_INVERT","false",nTag_));
+    do_CONVERGENCE = ofToBool(XML.getAttribute("NODE","do_CONVERGENCE","false",nTag_));
+    do_GLOW = ofToBool(XML.getAttribute("NODE","do_GLOW","false",nTag_));
+    do_SHAKER = ofToBool(XML.getAttribute("NODE","do_SHAKER","false",nTag_));
+    do_CUTSLIDER = ofToBool(XML.getAttribute("NODE","do_CUTSLIDER","false",nTag_));
+    do_TWIST = ofToBool(XML.getAttribute("NODE","do_TWIST","false",nTag_));
+    do_OUTLINE = ofToBool(XML.getAttribute("NODE","do_OUTLINE","false",nTag_));
+    do_NOISE = ofToBool(XML.getAttribute("NODE","do_NOISE","false",nTag_));
+    do_SLITSCAN = ofToBool(XML.getAttribute("NODE","do_SLITSCAN","false",nTag_));
+    do_SWELL = ofToBool(XML.getAttribute("NODE","do_SWELL","false",nTag_));
+    do_INVERT = ofToBool(XML.getAttribute("NODE","do_INVERT","false",nTag_));
     
-    do_CR_HIGHCONTRAST = ofToBool(XML.getAttribute("VISUAL_LAYER","do_CR_HIGHCONTRAST","false",nTag_));
-    do_CR_BLUERAISE = ofToBool(XML.getAttribute("VISUAL_LAYER","do_CR_BLUERAISE","false",nTag_));
-    do_CR_REDRAISE = ofToBool(XML.getAttribute("VISUAL_LAYER","do_CR_REDRAISE","false",nTag_));
-    do_CR_GREENRAISE = ofToBool(XML.getAttribute("VISUAL_LAYER","do_CR_GREENRAISE","false",nTag_));
-    do_CR_BLUEINVERT = ofToBool(XML.getAttribute("VISUAL_LAYER","do_CR_BLUEINVERT","false",nTag_));
-    do_CR_REDINVERT = ofToBool(XML.getAttribute("VISUAL_LAYER","do_CR_REDINVERT","false",nTag_));
-    do_CR_GREENINVERT = ofToBool(XML.getAttribute("VISUAL_LAYER","do_CR_GREENINVERT","false",nTag_));
+    do_CR_HIGHCONTRAST = ofToBool(XML.getAttribute("NODE","do_CR_HIGHCONTRAST","false",nTag_));
+    do_CR_BLUERAISE = ofToBool(XML.getAttribute("NODE","do_CR_BLUERAISE","false",nTag_));
+    do_CR_REDRAISE = ofToBool(XML.getAttribute("NODE","do_CR_REDRAISE","false",nTag_));
+    do_CR_GREENRAISE = ofToBool(XML.getAttribute("NODE","do_CR_GREENRAISE","false",nTag_));
+    do_CR_BLUEINVERT = ofToBool(XML.getAttribute("NODE","do_CR_BLUEINVERT","false",nTag_));
+    do_CR_REDINVERT = ofToBool(XML.getAttribute("NODE","do_CR_REDINVERT","false",nTag_));
+    do_CR_GREENINVERT = ofToBool(XML.getAttribute("NODE","do_CR_GREENINVERT","false",nTag_));
     
-    XML.pushTag("VISUAL_LAYER", nTag_);
+    XML.pushTag("NODE", nTag_);
     
     nId = XML.getValue("id", 0);
     type = XML.getValue("type","none");
@@ -152,3 +152,51 @@ bool GlitchLayer::loadSettings(ofxXmlSettings &XML, int nTag_) {
     
     return true;
 }
+
+//------------------------------------------------------------------
+bool GlitchLayer::saveSettings(ofxXmlSettings &XML) {
+    
+    bool saved = false;
+    
+    // Search for the patch ID to update information
+    // If the patch ID doesn't exists.. then I need to add it to the .xml
+    //
+    
+    // Get the total number of nodes of the same type ...
+    //
+    int totalNodes = XML.getNumTags("NODE");
+    
+    // ... and search for the right id for loading
+    //
+    for (int i = 0; i < totalNodes; i++){
+        
+        if (XML.pushTag("NODE", i)){
+            
+            // Once it found the right surface that match the id ...
+            //
+            if ( XML.getValue("id", -1) == nId){
+                
+                ofxPatch::saveSettings(XML, false, i);
+            }
+        }
+        // If it was the last node in the XML and it wasn't me..
+        // I need to add myself in the .xml file
+        //
+        else if (i == totalNodes-1) {
+            
+            // Insert a new NODE tag at the end
+            // and fill it with the proper structure
+            //
+            int lastPlace = XML.addTag("NODE");
+            if (XML.pushTag("NODE", lastPlace)){
+                
+                ofxPatch::saveSettings(XML, true, i);
+            }
+        }
+        XML.popTag();
+    }
+    
+    return saved;
+    
+}
+

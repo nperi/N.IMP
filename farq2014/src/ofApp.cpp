@@ -72,7 +72,7 @@ void ofApp::setup() {
     spacer->setColorFill(ofxUIColor(120, 120, 120, 200));
     new menuItem(menu, "MultiImageToggle", "Straight Links", "assets/line.png", false, RIGHT_MENU_WIDTH + MENU_ITEM_SIZE*6 + MENU_ITEM_PADDING*9, 20);
     new menuItem(menu, "MultiImageToggle", "Curved Links", "assets/curve_line.png", false, RIGHT_MENU_WIDTH + MENU_ITEM_SIZE*7 + MENU_ITEM_PADDING*10, 20);
-    new menuItem(menu, "MultiImageToggle", "Segmented Links", "assets/path_line.png", true, RIGHT_MENU_WIDTH + MENU_ITEM_SIZE*8 + MENU_ITEM_PADDING*11, 20);
+    new menuItem(menu, "MultiImageToggle", "Segmented Links", "assets/path_line.png", false, RIGHT_MENU_WIDTH + MENU_ITEM_SIZE*8 + MENU_ITEM_PADDING*11, 20);
     spacer = new ofxUISpacer(RIGHT_MENU_WIDTH + MENU_ITEM_SIZE*9 + MENU_ITEM_PADDING*12, 20, 1,MENU_ITEM_SIZE);
     menu->addWidget(spacer);
     spacer->setColorFill(ofxUIColor(120, 120, 120, 200));
@@ -139,7 +139,6 @@ void ofApp::setup() {
         setCurrentViewer(0);
         nodeViewers[currentViewer]->setParent(cam);
         nodeViewers[currentViewer]->setMainCanvas(gui);
-        nodeViewers[currentViewer]->setLinkType(PATH_LINKS);
         
         //*** AUDIO SETUP ***//
         //
@@ -531,6 +530,11 @@ void ofApp::menuEvent(ofxUIEventArgs &e)
             nodeViewers[currentViewer]->loadSnippet();
         }
     }
+    else if (name == "Save Patcher"){
+        if(((ofxUIMultiImageButton*)e.widget)->getValue() == 1){
+            saveToXML();
+        }
+    }
 }
 /* ================================================ */
 /* ================================================ */
@@ -606,6 +610,7 @@ bool ofApp::loadFromXML(){
     
     bool result = true;
     string message = "";
+    nodeLinkType nodeLinkType;
     
     if( XML.loadFile("appSettings.xml") ){
         
@@ -613,6 +618,29 @@ bool ofApp::loadFromXML(){
         
         if(numMainSettingsTag==1){
             XML.pushTag("MAIN_SETTINGS");
+            
+            int linkType = XML.getValue("link_type", 0);
+            switch (linkType) {
+                case 0:
+                    nodeLinkType = STRAIGHT_LINKS;
+                    ((ofxUIImageToggle*)menu->getWidget("Segmented Links"))->setValue(false);
+                    ((ofxUIImageToggle*)menu->getWidget("Curved Links"))->setValue(false);
+                    ((ofxUIImageToggle*)menu->getWidget("Straight Links"))->setValue(true);
+                    break;
+                case 1:
+                    nodeLinkType = CURVE_LINKS;
+                    ((ofxUIImageToggle*)menu->getWidget("Segmented Links"))->setValue(false);
+                    ((ofxUIImageToggle*)menu->getWidget("Curved Links"))->setValue(true);
+                    ((ofxUIImageToggle*)menu->getWidget("Straight Links"))->setValue(false);
+                    break;
+                case 2:
+                    nodeLinkType = PATH_LINKS;
+                    ((ofxUIImageToggle*)menu->getWidget("Segmented Links"))->setValue(true);
+                    ((ofxUIImageToggle*)menu->getWidget("Curved Links"))->setValue(false);
+                    ((ofxUIImageToggle*)menu->getWidget("Straight Links"))->setValue(false);
+                    break;
+            }
+            
             int numSettingsTag = XML.getNumTags("SETTINGS");
             
             if(numSettingsTag==1){
@@ -626,10 +654,10 @@ bool ofApp::loadFromXML(){
                 if(numInputTag==1){
                     XML.pushTag("INPUTS");
                     
-                    int numInputTag = XML.getNumTags("INPUT");
+                    int numInputTag = XML.getNumTags("NODE");
                     for(int i=0; i < numInputTag; i++){
-                        string inputName = XML.getAttribute("INPUT","name","default",i);
-                        string inputType = XML.getAttribute("INPUT","type","CAM",i);
+                        string inputName = XML.getAttribute("NODE","name","default",i);
+                        string inputType = XML.getAttribute("NODE","type","CAM",i);
                         
                         switch(inputTypes[inputType]){
                             case VIDEO:
@@ -713,12 +741,12 @@ bool ofApp::loadFromXML(){
                         
                         XML.pushTag("VISUAL_LAYERS");
                         
-                        int numVLTag = XML.getNumTags("VISUAL_LAYER");
+                        int numVLTag = XML.getNumTags("NODE");
                         
                         for(int i=0; i < numVLTag; i++){
-                            string layerName = XML.getAttribute("VISUAL_LAYER","name","default",i);
-                            string layerType = XML.getAttribute("VISUAL_LAYER","type","IKEDA",i);
-                            string inputSourceName = XML.getAttribute("VISUAL_LAYER","inputSource","default",i);
+                            string layerName = XML.getAttribute("NODE","name","default",i);
+                            string layerType = XML.getAttribute("NODE","type","IKEDA",i);
+                            string inputSourceName = XML.getAttribute("NODE","inputSource","default",i);
                             
                             switch(visualLayerTypes[layerType]){
                                 case IKEDA:
@@ -798,11 +826,11 @@ bool ofApp::loadFromXML(){
                     if(numMXsTag==1){
                         XML.pushTag("MIXERS");
                         
-                        int numMXTag = XML.getNumTags("MIXER");
+                        int numMXTag = XML.getNumTags("NODE");
                         
                         for(int i = 0; i < numMXTag; i++){
-                            string name = XML.getAttribute("MIXER","name","default",i);
-                            string type = XML.getAttribute("MIXER","type","SIMPLE_BLEND", i);
+                            string name = XML.getAttribute("NODE","name","default",i);
+                            string type = XML.getAttribute("NODE","type","SIMPLE_BLEND", i);
                             
                             switch(mixerTypes[type]){
                                 case SIMPLE_BLEND:
@@ -1080,12 +1108,91 @@ bool ofApp::loadFromXML(){
         //create connections in nodeView
         for (int i=0; i<nodeViewers.size(); ++i) {
             nodeViewers[i]->createConnections();
+            nodeViewers[i]->setLinkType(nodeLinkType);
         }
         
     }
     
     return result;
     
+}
+
+
+//------------------------------------------------------------------
+bool ofApp::saveToXML() {
+    
+    ofxXmlSettings XML;
+    
+    // Open the settings file
+    //
+    if (XML.loadFile("appSettings.xml")){
+        
+        XML.pushTag("MAIN_SETTINGS");
+        
+        XML.setValue("link_type", nodeViewers[currentViewer]->getLinkType() );
+        
+            XML.pushTag("SETTINGS");
+            
+            
+                // Save Inputs
+                //
+                XML.pushTag("INPUTS");
+                for (int i = 0; i < inputs.size(); i++) {
+                    inputs[i]->saveSettings(XML);
+                }
+                XML.popTag();
+                
+                
+                // Save Visual Layers
+                //
+                XML.pushTag("VISUAL_LAYERS");
+                for (int vl = 0; vl < visualLayers.size(); vl++) {
+                    visualLayers[vl]->saveSettings(XML);
+                }
+                XML.popTag();
+                
+                
+                // Save Mixers
+                //
+                XML.pushTag("MIXERS");
+                for (int m = 0; m < mixtables.size(); m++) {
+                    mixtables[m]->saveSettings(XML);
+                }
+                XML.popTag();
+            
+            XML.popTag(); // tag SETTINGS
+            
+            
+            // Save Node Views
+            //
+            XML.pushTag("NODE_VIEWS");
+            for (int nv = 0; nv < nodeViewers.size(); nv++) {
+                //nodeViewers[nv]->saveSettings(XML);
+            }
+            XML.popTag(); // tag NODE_VIEWS
+            
+            
+            // Save Param Input Generators
+            //
+            XML.pushTag("PARAM_INPUT_GENERATORS");
+            
+            XML.popTag(); // tag PARAM_INPUT_GENERATORS
+            
+            
+            // Save Syphon Servers
+            //
+            XML.pushTag("SYPHON_SERVERS");
+            
+            XML.popTag(); // tag SYPHON_SERVERS
+        
+        XML.popTag(); // tag MAIN_SETTINGS
+        
+        if (XML.saveFile()) {
+            ofLog(OF_LOG_NOTICE, "Settings saved succesfully");
+        }
+        else ofLog(OF_LOG_ERROR, "Couldn't save settings. An error occurred");
+    }
+    else ofLog(OF_LOG_ERROR, "Couldn't load the .xml file. The file appSettings.xml was not found");
 }
 /* ================================================ */
 /* ================================================ */

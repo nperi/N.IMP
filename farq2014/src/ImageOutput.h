@@ -62,6 +62,7 @@ class ImageOutput : public ofxPatch {
     
     //load patch settings
     bool loadSettings(ofxXmlSettings &XML, int nTag_);
+    virtual bool saveSettings(ofxXmlSettings &XML)=0;
     
 protected:
 

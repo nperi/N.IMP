@@ -244,16 +244,16 @@ bool ImageInputList::loadSettings(ofxXmlSettings &XML, int nTag_) {
     
     bool loaded = true;
     
-    string  path = XML.getAttribute("INPUT", "path","none", nTag_);
+    string  path = XML.getAttribute("NODE", "path","none", nTag_);
     
-    bpm             = ofToFloat(XML.getAttribute("INPUT", "bpm","120", nTag_));
-    bpmMultiplier   = ofToInt(XML.getAttribute("INPUT", "multiplier_divider","32", nTag_));
-    isPlaying       = ofToBool(XML.getAttribute("INPUT", "isPlaying","true", nTag_));
-    isPalindromLoop = ofToBool(XML.getAttribute("INPUT", "palindrom","true", nTag_));
-    isMatchBpmToSequenceLength = ofToBool(XML.getAttribute("INPUT", "matchBPMtoSequence","false", nTag_));
+    bpm             = ofToFloat(XML.getAttribute("NODE", "bpm","120", nTag_));
+    bpmMultiplier   = ofToInt(XML.getAttribute("NODE", "multiplier_divider","32", nTag_));
+    isPlaying       = ofToBool(XML.getAttribute("NODE", "isPlaying","true", nTag_));
+    isPalindromLoop = ofToBool(XML.getAttribute("NODE", "palindrom","true", nTag_));
+    isMatchBpmToSequenceLength = ofToBool(XML.getAttribute("NODE", "matchBPMtoSequence","false", nTag_));
     
     if (path == "none") {
-        XML.pushTag("INPUT",nTag_);
+        XML.pushTag("NODE",nTag_);
         int numVideoTag = XML.getNumTags("ASSET");
         if(numVideoTag>0){
             for (int v=0; v<numVideoTag; v++){
@@ -271,7 +271,7 @@ bool ImageInputList::loadSettings(ofxXmlSettings &XML, int nTag_) {
         loadImage(name, path);
     }
 
-    XML.pushTag("INPUT", nTag_);
+    XML.pushTag("NODE", nTag_);
     
     nId = XML.getValue("id", 0);
     type = XML.getValue("type","none");
@@ -283,6 +283,54 @@ bool ImageInputList::loadSettings(ofxXmlSettings &XML, int nTag_) {
     
     return loaded;
 }
+
+//------------------------------------------------------------------
+bool ImageInputList::saveSettings(ofxXmlSettings &XML) {
+    
+    bool saved = false;
+    
+    // Search for the patch ID to update information
+    // If the patch ID doesn't exists.. then I need to add it to the .xml
+    //
+    
+    // Get the total number of nodes of the same type ...
+    //
+    int totalNodes = XML.getNumTags("NODE");
+    
+    // ... and search for the right id for loading
+    //
+    for (int i = 0; i < totalNodes; i++){
+        
+        if (XML.pushTag("NODE", i)){
+            
+            // Once it found the right surface that match the id ...
+            //
+            if ( XML.getValue("id", -1) == nId){
+                
+                ofxPatch::saveSettings(XML, false, i);
+            }
+        }
+        // If it was the last node in the XML and it wasn't me..
+        // I need to add myself in the .xml file
+        //
+        else if (i == totalNodes-1) {
+            
+            // Insert a new NODE tag at the end
+            // and fill it with the proper structure
+            //
+            int lastPlace = XML.addTag("NODE");
+            if (XML.pushTag("NODE", lastPlace)){
+                
+                ofxPatch::saveSettings(XML, true, i);
+            }
+        }
+        XML.popTag();
+    }
+    
+    return saved;
+    
+}
+
 
 
 /*

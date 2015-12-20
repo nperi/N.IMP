@@ -34,6 +34,7 @@ class MixSimpleBlend : public MixTable{
     ofParameter<float> opacity;
     
     bool loadSettings(ofxXmlSettings &XML, int nTag_);
+    bool saveSettings(ofxXmlSettings &XML);
     
 private:
     void update();

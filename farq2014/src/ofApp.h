@@ -72,6 +72,7 @@ public:
     void createNodeInput(float _x = ofGetMouseX(), float _y = ofGetMouseY());
     void createNode(textInputEvent &args);
     bool loadFromXML();
+    bool saveToXML();
     void audioIn(float * input, int bufferSize, int nChannels);
     
     //change current viewer
@@ -114,9 +115,9 @@ public:
     
     // START AUDIO FUNCTIONS AND PARAMETERS
     
-    float* left;
-    float* right;
-    int 	bufferCounter;
+    float*  left;
+    float*  right;
+    int     bufferCounter;
     
     ofSoundStream soundStream;
     

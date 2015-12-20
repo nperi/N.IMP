@@ -46,4 +46,11 @@ enum nodeLinkType
     PATH_LINKS = 2
 };
 
+enum nodeType
+{
+    INPUT = 0,
+    VISUAL_LAYER = 1,
+    MIXER = 2
+};
+
 #endif

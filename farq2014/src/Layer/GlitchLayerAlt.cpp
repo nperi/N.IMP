@@ -65,11 +65,11 @@ void GlitchLayerAlt::updateParameter(Param* inputParam){
 //------------------------------------------------------------------
 bool GlitchLayerAlt::loadSettings(ofxXmlSettings &XML, int nTag_) {
     
-    dq = ofToInt(XML.getAttribute("VISUAL_LAYER","dq","20",nTag_));
-    qn = ofToInt(XML.getAttribute("VISUAL_LAYER","qn","40",nTag_));
-    dht = ofToInt(XML.getAttribute("VISUAL_LAYER","dht","80",nTag_));
+    dq = ofToInt(XML.getAttribute("NODE","dq","20",nTag_));
+    qn = ofToInt(XML.getAttribute("NODE","qn","40",nTag_));
+    dht = ofToInt(XML.getAttribute("NODE","dht","80",nTag_));
     
-    XML.pushTag("VISUAL_LAYER", nTag_);
+    XML.pushTag("NODE", nTag_);
     
     nId = XML.getValue("id", 0);
     type = XML.getValue("type","none");
@@ -83,3 +83,51 @@ bool GlitchLayerAlt::loadSettings(ofxXmlSettings &XML, int nTag_) {
     
     return true;
 }
+
+//------------------------------------------------------------------
+bool GlitchLayerAlt::saveSettings(ofxXmlSettings &XML) {
+    
+    bool saved = false;
+    
+    // Search for the patch ID to update information
+    // If the patch ID doesn't exists.. then I need to add it to the .xml
+    //
+    
+    // Get the total number of nodes of the same type ...
+    //
+    int totalNodes = XML.getNumTags("NODE");
+    
+    // ... and search for the right id for loading
+    //
+    for (int i = 0; i < totalNodes; i++){
+        
+        if (XML.pushTag("NODE", i)){
+            
+            // Once it found the right surface that match the id ...
+            //
+            if ( XML.getValue("id", -1) == nId){
+                
+                ofxPatch::saveSettings(XML, false, i);
+            }
+        }
+        // If it was the last node in the XML and it wasn't me..
+        // I need to add myself in the .xml file
+        //
+        else if (i == totalNodes-1) {
+            
+            // Insert a new NODE tag at the end
+            // and fill it with the proper structure
+            //
+            int lastPlace = XML.addTag("NODE");
+            if (XML.pushTag("NODE", lastPlace)){
+                
+                ofxPatch::saveSettings(XML, true, i);
+            }
+        }
+        XML.popTag();
+    }
+    
+    return saved;
+    
+}
+

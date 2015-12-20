@@ -12,7 +12,6 @@
 
 #include "ofMain.h"
 #include "VisualLayer.h"
-
 #include "ImageOutput.h"
 
 // Basic class for mixtables
@@ -22,11 +21,13 @@ class MixTable : public ImageOutput{
 	
     MixTable(string name_ = "mixtable"):ImageOutput(name_){
         ofFbo::Settings s;
-        s.width			= width;
-        s.height			= height;
-        s.internalformat   = GL_RGBA;
-        s.useDepth			= true;
+        s.width			 = width;
+        s.height		 = height;
+        s.internalformat = GL_RGBA;
+        s.useDepth		 = true;
         fbo.allocate(s);
+        
+        nodeType = MIXER;
     }
     
     

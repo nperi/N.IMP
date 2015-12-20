@@ -33,6 +33,7 @@ class VideoPlayerMac : public InputSource{
     void updateParameter(Param* inputParam);
     
     bool loadSettings(ofxXmlSettings &XML, int nTag_);
+    bool saveSettings(ofxXmlSettings &XML);
     
 private:
     void update();

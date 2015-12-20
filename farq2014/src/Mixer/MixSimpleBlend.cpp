@@ -54,17 +54,17 @@ void MixSimpleBlend::update(){
         
         if (opacity < 255) {
             ofSetColor(255, 255, 255);
-            input[selector1]->getTextureReference().draw(0, 0);
+            input[selector1]->getTextureReference().draw(0, 0, width, height);
         }
         if (opacity>0) {
             ofSetColor(255, 255, 255,opacity);
-            input[selector2]->getTextureReference().draw(0, 0);
+            input[selector2]->getTextureReference().draw(0, 0, width, height);
         }
     }
     else{
         psBlend.begin();
         ofSetColor(255, 255, 255,opacity);
-        input[selector2]->getTexture()->draw(0, 0);
+        input[selector2]->getTextureReference().draw(0, 0);
         psBlend.end();
         psBlend.draw(input[selector1]->getTextureReference(), blendMode);
     }
@@ -110,12 +110,12 @@ void MixSimpleBlend::setEnable(bool isEnabled_){
 bool MixSimpleBlend::loadSettings(ofxXmlSettings &XML, int nTag_) {
     
     
-    selector1 = ofToInt(XML.getAttribute("MIXER","selectorLeft","0", nTag_));
-    selector2 = ofToInt(XML.getAttribute("MIXER","selectorRight","0", nTag_));
-    blendMode = ofToInt(XML.getAttribute("MIXER","blendmode","0", nTag_));
-    opacity = ofToFloat(XML.getAttribute("MIXER","opacity","0", nTag_));
+    selector1 = ofToInt(XML.getAttribute("NODE","selectorLeft","0", nTag_));
+    selector2 = ofToInt(XML.getAttribute("NODE","selectorRight","0", nTag_));
+    blendMode = ofToInt(XML.getAttribute("NODE","blendmode","0", nTag_));
+    opacity = ofToFloat(XML.getAttribute("NODE","opacity","0", nTag_));
     
-    XML.pushTag("MIXER", nTag_);
+    XML.pushTag("NODE", nTag_);
     
     int numINPUTTag = XML.getNumTags("INPUT_SOURCE");
     
@@ -138,3 +138,50 @@ bool MixSimpleBlend::loadSettings(ofxXmlSettings &XML, int nTag_) {
     
     return true;
 }
+
+//------------------------------------------------------------------
+bool MixSimpleBlend::saveSettings(ofxXmlSettings &XML) {
+    
+    bool saved = false;
+    
+    // Search for the patch ID to update information
+    // If the patch ID doesn't exists.. then I need to add it to the .xml
+    //
+    
+    // Get the total number of nodes of the same type ...
+    //
+    int totalNodes = XML.getNumTags("NODE");
+    
+    // ... and search for the right id for loading
+    //
+    for (int i = 0; i < totalNodes; i++){
+        
+        if (XML.pushTag("NODE", i)){
+            
+            // Once it found the right surface that match the id ...
+            //
+            if ( XML.getValue("id", -1) == nId){
+                
+                ofxPatch::saveSettings(XML, false, i);
+            }
+        }
+        // If it was the last node in the XML and it wasn't me..
+        // I need to add myself in the .xml file
+        //
+        else if (i == totalNodes-1) {
+            
+            // Insert a new NODE tag at the end
+            // and fill it with the proper structure
+            //
+            int lastPlace = XML.addTag("NODE");
+            if (XML.pushTag("NODE", lastPlace)){
+                
+                ofxPatch::saveSettings(XML, true, i);
+            }
+        }
+        XML.popTag();
+    }
+    
+    return saved;
+}
+

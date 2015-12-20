@@ -26,6 +26,7 @@ class IkedaLayer : public VisualLayer{
     void updateParameter(Param* inputParam);
     
     bool loadSettings(ofxXmlSettings &XML, int nTag_);
+    bool saveSettings(ofxXmlSettings &XML);
     
     ofxToggle isCanny;
     ofxToggle isThreshold;
