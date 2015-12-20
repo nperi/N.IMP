@@ -20,7 +20,10 @@ class ImageType {
 	
   public:
 	
-    ImageType(string name_ , string path_){name = name_;};
+    ImageType(string name_ , string path_){
+        name = name_;
+        path = path_;
+    };
 	
     imgType getType(){return mediaType;};
     virtual void update(ofImage& _img, ofTexture& _tex) = 0;
@@ -40,6 +43,7 @@ class ImageType {
     ofParameter<bool> isPlaying;
     
     string getName(){return name;};
+    string getPath(){return path;};
     
     virtual float getHeight() = 0;
     virtual float getWidth() = 0;
@@ -47,6 +51,7 @@ class ImageType {
     protected:
     imgType mediaType;
     string name;
+    string path;
 };
 
 #endif

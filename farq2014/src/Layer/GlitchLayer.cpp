@@ -119,30 +119,31 @@ void GlitchLayer::updateParameter(Param* inputParam){
 //------------------------------------------------------------------
 bool GlitchLayer::loadSettings(ofxXmlSettings &XML, int nTag_) {
     
-    do_CONVERGENCE = ofToBool(XML.getAttribute("NODE","do_CONVERGENCE","false",nTag_));
-    do_GLOW = ofToBool(XML.getAttribute("NODE","do_GLOW","false",nTag_));
-    do_SHAKER = ofToBool(XML.getAttribute("NODE","do_SHAKER","false",nTag_));
-    do_CUTSLIDER = ofToBool(XML.getAttribute("NODE","do_CUTSLIDER","false",nTag_));
-    do_TWIST = ofToBool(XML.getAttribute("NODE","do_TWIST","false",nTag_));
-    do_OUTLINE = ofToBool(XML.getAttribute("NODE","do_OUTLINE","false",nTag_));
-    do_NOISE = ofToBool(XML.getAttribute("NODE","do_NOISE","false",nTag_));
-    do_SLITSCAN = ofToBool(XML.getAttribute("NODE","do_SLITSCAN","false",nTag_));
-    do_SWELL = ofToBool(XML.getAttribute("NODE","do_SWELL","false",nTag_));
-    do_INVERT = ofToBool(XML.getAttribute("NODE","do_INVERT","false",nTag_));
+    do_CONVERGENCE      = ofToBool(XML.getAttribute("NODE","do_CONVERGENCE","false",nTag_));
+    do_GLOW             = ofToBool(XML.getAttribute("NODE","do_GLOW","false",nTag_));
+    do_SHAKER           = ofToBool(XML.getAttribute("NODE","do_SHAKER","false",nTag_));
+    do_CUTSLIDER        = ofToBool(XML.getAttribute("NODE","do_CUTSLIDER","false",nTag_));
+    do_TWIST            = ofToBool(XML.getAttribute("NODE","do_TWIST","false",nTag_));
+    do_OUTLINE          = ofToBool(XML.getAttribute("NODE","do_OUTLINE","false",nTag_));
+    do_NOISE            = ofToBool(XML.getAttribute("NODE","do_NOISE","false",nTag_));
+    do_SLITSCAN         = ofToBool(XML.getAttribute("NODE","do_SLITSCAN","false",nTag_));
+    do_SWELL            = ofToBool(XML.getAttribute("NODE","do_SWELL","false",nTag_));
+    do_INVERT           = ofToBool(XML.getAttribute("NODE","do_INVERT","false",nTag_));
     
-    do_CR_HIGHCONTRAST = ofToBool(XML.getAttribute("NODE","do_CR_HIGHCONTRAST","false",nTag_));
-    do_CR_BLUERAISE = ofToBool(XML.getAttribute("NODE","do_CR_BLUERAISE","false",nTag_));
-    do_CR_REDRAISE = ofToBool(XML.getAttribute("NODE","do_CR_REDRAISE","false",nTag_));
-    do_CR_GREENRAISE = ofToBool(XML.getAttribute("NODE","do_CR_GREENRAISE","false",nTag_));
-    do_CR_BLUEINVERT = ofToBool(XML.getAttribute("NODE","do_CR_BLUEINVERT","false",nTag_));
-    do_CR_REDINVERT = ofToBool(XML.getAttribute("NODE","do_CR_REDINVERT","false",nTag_));
-    do_CR_GREENINVERT = ofToBool(XML.getAttribute("NODE","do_CR_GREENINVERT","false",nTag_));
+    do_CR_HIGHCONTRAST  = ofToBool(XML.getAttribute("NODE","do_CR_HIGHCONTRAST","false",nTag_));
+    do_CR_BLUERAISE     = ofToBool(XML.getAttribute("NODE","do_CR_BLUERAISE","false",nTag_));
+    do_CR_REDRAISE      = ofToBool(XML.getAttribute("NODE","do_CR_REDRAISE","false",nTag_));
+    do_CR_GREENRAISE    = ofToBool(XML.getAttribute("NODE","do_CR_GREENRAISE","false",nTag_));
+    do_CR_BLUEINVERT    = ofToBool(XML.getAttribute("NODE","do_CR_BLUEINVERT","false",nTag_));
+    do_CR_REDINVERT     = ofToBool(XML.getAttribute("NODE","do_CR_REDINVERT","false",nTag_));
+    do_CR_GREENINVERT   = ofToBool(XML.getAttribute("NODE","do_CR_GREENINVERT","false",nTag_));
+    
+    nId                 = XML.getAttribute("NODE", "id", -1, nTag_);
     
     XML.pushTag("NODE", nTag_);
     
-    nId = XML.getValue("id", 0);
-    type = XML.getValue("type","none");
-    bVisible = XML.getValue("visible", true);
+    type                = XML.getValue("type","none");
+    bVisible            = XML.getValue("visible", true);
     
     ImageOutput::loadSettings(XML, nTag_);
     
@@ -168,32 +169,82 @@ bool GlitchLayer::saveSettings(ofxXmlSettings &XML) {
     
     // ... and search for the right id for loading
     //
-    for (int i = 0; i < totalNodes; i++){
+    for (int i = 0; i <= totalNodes; i++){
         
-        if (XML.pushTag("NODE", i)){
+        // Once it found the right surface that match the id ...
+        //
+        if ( XML.getAttribute("NODE", "id", -1, i) == nId){
             
-            // Once it found the right surface that match the id ...
-            //
-            if ( XML.getValue("id", -1) == nId){
-                
-                ofxPatch::saveSettings(XML, false, i);
-            }
+            XML.setAttribute("NODE", "name", name, i);
+            XML.setAttribute("NODE", "inputSource", input[0]->getName(), i);
+            
+            XML.setAttribute("NODE","do_CONVERGENCE", do_CONVERGENCE, i);
+            XML.setAttribute("NODE","do_GLOW", do_GLOW, i);
+            XML.setAttribute("NODE","do_SHAKER", do_SHAKER, i);
+            XML.setAttribute("NODE","do_CUTSLIDER", do_CUTSLIDER, i);
+            XML.setAttribute("NODE","do_TWIST", do_TWIST, i);
+            XML.setAttribute("NODE","do_OUTLINE", do_OUTLINE, i);
+            XML.setAttribute("NODE","do_NOISE", do_NOISE, i);
+            XML.setAttribute("NODE","do_SLITSCAN", do_SLITSCAN, i);
+            XML.setAttribute("NODE","do_SWELL", do_SWELL, i);
+            XML.setAttribute("NODE","do_INVERT", do_INVERT, i);
+            
+            XML.setAttribute("NODE","do_CR_HIGHCONTRAST", do_CR_HIGHCONTRAST, i);
+            XML.setAttribute("NODE","do_CR_BLUERAISE", do_CR_BLUERAISE, i);
+            XML.setAttribute("NODE","do_CR_REDRAISE", do_CR_REDRAISE, i);
+            XML.setAttribute("NODE","do_CR_GREENRAISE", do_CR_GREENRAISE, i);
+            XML.setAttribute("NODE","do_CR_BLUEINVERT", do_CR_BLUEINVERT, i);
+            XML.setAttribute("NODE","do_CR_REDINVERT", do_CR_REDINVERT, i);
+            XML.setAttribute("NODE","do_CR_GREENINVERT", do_CR_GREENINVERT, i);
+            
+            XML.pushTag("NODE", i);
+            
+            ofxPatch::saveSettings(XML, false, i);
+            
+            XML.popTag();
+            break;
         }
+        
         // If it was the last node in the XML and it wasn't me..
         // I need to add myself in the .xml file
         //
-        else if (i == totalNodes-1) {
+        else if (i >= totalNodes-1) {
             
             // Insert a new NODE tag at the end
             // and fill it with the proper structure
             //
             int lastPlace = XML.addTag("NODE");
+            
+            XML.addAttribute("NODE", "id", nId, lastPlace);
+            XML.addAttribute("NODE", "name", name, lastPlace);
+            XML.addAttribute("NODE", "type", "GLITCH_1", lastPlace);
+            XML.setAttribute("NODE", "inputSource", input[0]->getName(), lastPlace);
+            
+            XML.addAttribute("NODE","do_CONVERGENCE", do_CONVERGENCE, lastPlace);
+            XML.addAttribute("NODE","do_GLOW", do_GLOW, lastPlace);
+            XML.addAttribute("NODE","do_SHAKER", do_SHAKER, lastPlace);
+            XML.addAttribute("NODE","do_CUTSLIDER", do_CUTSLIDER, lastPlace);
+            XML.addAttribute("NODE","do_TWIST", do_TWIST, lastPlace);
+            XML.addAttribute("NODE","do_OUTLINE", do_OUTLINE, lastPlace);
+            XML.addAttribute("NODE","do_NOISE", do_NOISE, lastPlace);
+            XML.addAttribute("NODE","do_SLITSCAN", do_SLITSCAN, lastPlace);
+            XML.addAttribute("NODE","do_SWELL", do_SWELL, lastPlace);
+            XML.addAttribute("NODE","do_INVERT", do_INVERT, lastPlace);
+            
+            XML.addAttribute("NODE","do_CR_HIGHCONTRAST", do_CR_HIGHCONTRAST, lastPlace);
+            XML.addAttribute("NODE","do_CR_BLUERAISE", do_CR_BLUERAISE, lastPlace);
+            XML.addAttribute("NODE","do_CR_REDRAISE", do_CR_REDRAISE, lastPlace);
+            XML.addAttribute("NODE","do_CR_GREENRAISE", do_CR_GREENRAISE, lastPlace);
+            XML.addAttribute("NODE","do_CR_BLUEINVERT", do_CR_BLUEINVERT, lastPlace);
+            XML.addAttribute("NODE","do_CR_REDINVERT", do_CR_REDINVERT, lastPlace);
+            XML.addAttribute("NODE","do_CR_GREENINVERT", do_CR_GREENINVERT, lastPlace);
+            
             if (XML.pushTag("NODE", lastPlace)){
                 
-                ofxPatch::saveSettings(XML, true, i);
+                ofxPatch::saveSettings(XML, true, lastPlace);
+                XML.popTag();
             }
         }
-        XML.popTag();
     }
     
     return saved;

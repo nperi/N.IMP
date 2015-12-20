@@ -3,12 +3,7 @@
    version = "1.0">
    <ContextStates>
       <ContextState
-         contextName = "ofApp::saveToXML():ofApp.cpp">
-         <PersistentStrings>
-            <PersistentString
-               value = "nodeViewers[currentViewer]-&gt;getLinkType()">
-            </PersistentString>
-         </PersistentStrings>
+         contextName = "ofFbo::updateTexture(int):ofFbo.cpp">
       </ContextState>
       <ContextState
          contextName = "ofxPatch::_mousePressed(ofMouseEventArgs&amp;):ofxPatch.cpp">
@@ -19,18 +14,15 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "ofxPatch::update():ofxPatch.cpp">
+         contextName = "ImageInputList::saveSettings(ofxXmlSettings&amp;):ImageInputList.cpp">
          <PersistentStrings>
             <PersistentString
-               value = "getSrcTexture()">
+               value = "XML.getAttribute(&quot;NODE&quot;, &quot;id&quot;, -1)">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
       <ContextState
          contextName = "ofApp::update():ofApp.cpp">
-      </ContextState>
-      <ContextState
-         contextName = "ofxSyphonServer::publishTexture(ofTexture*):ofxSyphonServer.mm">
       </ContextState>
       <ContextState
          contextName = "ofxUISuperCanvas::getOtherSelected():ofxUISuperCanvas.cpp">

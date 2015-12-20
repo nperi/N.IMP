@@ -24,6 +24,8 @@
 		<string>https://github.com/julapy/ofxImageSequencePlayer.git</string>
 		<key>95F70890EFD46183734FEDFE52CF53391DE6937E</key>
 		<string>https://github.com/neilmendoza/ofxPostProcessing.git</string>
+		<key>9F24B140E362DCBFDD8B74297D6CA071351FB1FC</key>
+		<string>https://github.com/charlesveasey/ofxMultiGLFWWindow.git</string>
 		<key>AD4BEB8D191D3A37A0E32AAC674B3540263DA07F</key>
 		<string>https://github.com/2bbb/ofxJpegGlitch.git</string>
 		<key>D513395B3B2672F06879738DB1BEEA65E2B146B1</key>
@@ -61,6 +63,8 @@
 		<string>../../../../../addons/ofxImageSequencePlayer</string>
 		<key>95F70890EFD46183734FEDFE52CF53391DE6937E</key>
 		<string>../../../../../addons/ofxPostProcessing</string>
+		<key>9F24B140E362DCBFDD8B74297D6CA071351FB1FC</key>
+		<string>../../../../../addons/ofxMultiGLFWWindow</string>
 		<key>AD4BEB8D191D3A37A0E32AAC674B3540263DA07F</key>
 		<string>../../../../../addons/ofxJpegGlitch</string>
 		<key>D513395B3B2672F06879738DB1BEEA65E2B146B1</key>
@@ -159,6 +163,14 @@
 			<string>F7E083AAB3EC4A58EF654FC28444C64C193E627F</string>
 			<key>IDESourceControlWCCName</key>
 			<string>ofxMSAInteractiveObject_nimp</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>9F24B140E362DCBFDD8B74297D6CA071351FB1FC</string>
+			<key>IDESourceControlWCCName</key>
+			<string>ofxMultiGLFWWindow</string>
 		</dict>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>

@@ -65,15 +65,16 @@ void GlitchLayerAlt::updateParameter(Param* inputParam){
 //------------------------------------------------------------------
 bool GlitchLayerAlt::loadSettings(ofxXmlSettings &XML, int nTag_) {
     
-    dq = ofToInt(XML.getAttribute("NODE","dq","20",nTag_));
-    qn = ofToInt(XML.getAttribute("NODE","qn","40",nTag_));
+    dq  = ofToInt(XML.getAttribute("NODE","dq","20",nTag_));
+    qn  = ofToInt(XML.getAttribute("NODE","qn","40",nTag_));
     dht = ofToInt(XML.getAttribute("NODE","dht","80",nTag_));
+    
+    nId = XML.getAttribute("NODE", "id", -1, nTag_);
     
     XML.pushTag("NODE", nTag_);
     
-    nId = XML.getValue("id", 0);
-    type = XML.getValue("type","none");
-    bVisible = XML.getValue("visible", true);
+    type        = XML.getValue("type","none");
+    bVisible    = XML.getValue("visible", true);
     
     ImageOutput::loadSettings(XML, nTag_);
     
@@ -99,32 +100,52 @@ bool GlitchLayerAlt::saveSettings(ofxXmlSettings &XML) {
     
     // ... and search for the right id for loading
     //
-    for (int i = 0; i < totalNodes; i++){
+    for (int i = 0; i <= totalNodes; i++){
         
-        if (XML.pushTag("NODE", i)){
+        // Once it found the right surface that match the id ...
+        //
+        if ( XML.getAttribute("NODE", "id", -1, i) == nId){
             
-            // Once it found the right surface that match the id ...
-            //
-            if ( XML.getValue("id", -1) == nId){
-                
-                ofxPatch::saveSettings(XML, false, i);
-            }
+            XML.setAttribute("NODE", "name", name, i);
+            XML.setAttribute("NODE", "inputSource", input[0]->getName(), i);
+
+            XML.setAttribute("NODE","dq", dq, i);
+            XML.setAttribute("NODE","qn", qn, i);
+            XML.setAttribute("NODE","dht", dht, i);
+            
+            XML.pushTag("NODE", i);
+            
+            ofxPatch::saveSettings(XML, false, i);
+            
+            XML.popTag();
+            break;
         }
+        
         // If it was the last node in the XML and it wasn't me..
         // I need to add myself in the .xml file
         //
-        else if (i == totalNodes-1) {
+        else if (i >= totalNodes-1) {
             
             // Insert a new NODE tag at the end
             // and fill it with the proper structure
             //
             int lastPlace = XML.addTag("NODE");
+            
+            XML.addAttribute("NODE", "id", nId, lastPlace);
+            XML.addAttribute("NODE", "name", name, lastPlace);
+            XML.addAttribute("NODE", "type", "GLITCH_2", lastPlace);
+            XML.addAttribute("NODE", "inputSource", input[0]->getName(), lastPlace);
+            
+            XML.addAttribute("NODE","dq", dq, lastPlace);
+            XML.addAttribute("NODE","qn", qn, lastPlace);
+            XML.addAttribute("NODE","dht", dht, lastPlace);
+            
             if (XML.pushTag("NODE", lastPlace)){
                 
-                ofxPatch::saveSettings(XML, true, i);
+                ofxPatch::saveSettings(XML, true, lastPlace);
+                XML.popTag();
             }
         }
-        XML.popTag();
     }
     
     return saved;

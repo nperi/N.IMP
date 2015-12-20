@@ -100,22 +100,21 @@ void IkedaLayer::updateParameter(Param* inputParam){
 //------------------------------------------------------------------
 bool IkedaLayer::loadSettings(ofxXmlSettings &XML, int nTag_) {
     
-    isCanny = ofToBool(XML.getAttribute("NODE","isCanny","true",nTag_));
+    isCanny     = ofToBool(XML.getAttribute("NODE","isCanny","true",nTag_));
     isThreshold = ofToBool(XML.getAttribute("NODE","isThreshold","true",nTag_));
-    isColumns = ofToBool(XML.getAttribute("NODE","isColumns","true",nTag_));
-    isInvert = ofToBool(XML.getAttribute("NODE","isInvert","true",nTag_));
-    pNColumns = ofToInt(XML.getAttribute("NODE","pNColumns","4",nTag_));
-    pCannyX = ofToInt(XML.getAttribute("NODE","pCannyX","12",nTag_));
-    pCannyY = ofToInt(XML.getAttribute("NODE","pCannyY","12",nTag_));
-    pThreshold = ofToInt(XML.getAttribute("NODE","pThreshold","12",nTag_));
+    isColumns   = ofToBool(XML.getAttribute("NODE","isColumns","true",nTag_));
+    isInvert    = ofToBool(XML.getAttribute("NODE","isInvert","true",nTag_));
+    pNColumns   = ofToInt(XML.getAttribute("NODE","pNColumns","4",nTag_));
+    pCannyX     = ofToInt(XML.getAttribute("NODE","pCannyX","12",nTag_));
+    pCannyY     = ofToInt(XML.getAttribute("NODE","pCannyY","12",nTag_));
+    pThreshold  = ofToInt(XML.getAttribute("NODE","pThreshold","12",nTag_));
+    
+    nId         = XML.getAttribute("NODE", "id", -1, nTag_);
     
     XML.pushTag("NODE", nTag_);
     
-    nId = XML.getValue("id", 0);
-    type = XML.getValue("type","none");
-    bVisible = XML.getValue("visible", true);
-    
-    //title->setTitle(name + ":" + type );
+    type        = XML.getValue("type","none");
+    bVisible    = XML.getValue("visible", true);
     
     ImageOutput::loadSettings(XML, nTag_);
     
@@ -141,32 +140,62 @@ bool IkedaLayer::saveSettings(ofxXmlSettings &XML) {
     
     // ... and search for the right id for loading
     //
-    for (int i = 0; i < totalNodes; i++){
+    for (int i = 0; i <= totalNodes; i++){
         
-        if (XML.pushTag("NODE", i)){
+        // Once it found the right surface that match the id ...
+        //
+        if ( XML.getAttribute("NODE", "id", -1, i) == nId){
             
-            // Once it found the right surface that match the id ...
-            //
-            if ( XML.getValue("id", -1) == nId){
-                
-                ofxPatch::saveSettings(XML, false, i);
-            }
+            XML.setAttribute("NODE", "name", name, i);
+            XML.setAttribute("NODE", "inputSource", input[0]->getName(), i);
+            
+            XML.setAttribute("NODE", "isCanny", isCanny, i);
+            XML.setAttribute("NODE", "isThreshold", isThreshold, i);
+            XML.setAttribute("NODE", "isColumns", isColumns, i);
+            XML.setAttribute("NODE", "isInvert", isInvert, i);
+            XML.setAttribute("NODE", "pNColumns", pNColumns, i);
+            XML.setAttribute("NODE", "pCannyX", pCannyX, i);
+            XML.setAttribute("NODE", "pCannyY", pCannyY, i);
+            XML.setAttribute("NODE", "pThreshold", pThreshold, i);
+            
+            XML.pushTag("NODE", i);
+            
+            ofxPatch::saveSettings(XML, false, i);
+            
+            XML.popTag();
+            break;
         }
+        
         // If it was the last node in the XML and it wasn't me..
         // I need to add myself in the .xml file
         //
-        else if (i == totalNodes-1) {
+        else if (i >= totalNodes-1) {
             
             // Insert a new NODE tag at the end
             // and fill it with the proper structure
             //
             int lastPlace = XML.addTag("NODE");
+            
+            XML.addAttribute("NODE", "id", nId, lastPlace);
+            XML.addAttribute("NODE", "name", name, lastPlace);
+            XML.addAttribute("NODE", "type", "IKEDA", lastPlace);
+            XML.addAttribute("NODE", "inputSource", input[0]->getName(), lastPlace);
+            
+            XML.addAttribute("NODE", "isCanny", isCanny, lastPlace);
+            XML.addAttribute("NODE", "isThreshold", isThreshold, lastPlace);
+            XML.addAttribute("NODE", "isColumns", isColumns, lastPlace);
+            XML.addAttribute("NODE", "isInvert", isInvert, lastPlace);
+            XML.addAttribute("NODE", "pNColumns", pNColumns, lastPlace);
+            XML.addAttribute("NODE", "pCannyX", pCannyX, lastPlace);
+            XML.addAttribute("NODE", "pCannyY", pCannyY, lastPlace);
+            XML.addAttribute("NODE", "pThreshold", pThreshold, lastPlace);
+            
             if (XML.pushTag("NODE", lastPlace)){
                 
-                ofxPatch::saveSettings(XML, true, i);
+                ofxPatch::saveSettings(XML, true, lastPlace);
+                XML.popTag();
             }
         }
-        XML.popTag();
     }
     
     return saved;

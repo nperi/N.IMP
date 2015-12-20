@@ -61,6 +61,7 @@ void VideoPlayerMac::loadVideo(string path) {
     //ofVideoPlayer* vP = new ofVideoPlayer();
     //vP->loadMovie(path);
     players.push_back(vP);
+    playerPaths.push_back(path);
 }
 
 //------------------------------------------------------------------
@@ -119,7 +120,8 @@ bool VideoPlayerMac::loadSettings(ofxXmlSettings &XML, int nTag_) {
     
     bool loaded = true;
     
-    string  path = XML.getAttribute("NODE", "path","none", nTag_);
+    path    = XML.getAttribute("NODE", "path","none", nTag_);
+    nId     = XML.getAttribute("NODE", "id", -1, nTag_);
     
     XML.pushTag("NODE",nTag_);
     
@@ -137,9 +139,8 @@ bool VideoPlayerMac::loadSettings(ofxXmlSettings &XML, int nTag_) {
     
     XML.popTag();
     
-    nId = XML.getValue("id", 0);
-    type = XML.getValue("type","none");
-    bVisible = XML.getValue("visible", true);
+    type        = XML.getValue("type","none");
+    bVisible    = XML.getValue("visible", true);
     
     InputSource::loadSettings(XML, nTag_);
     
@@ -163,32 +164,53 @@ bool VideoPlayerMac::saveSettings(ofxXmlSettings &XML) {
     
     // ... and search for the right id for loading
     //
-    for (int i = 0; i < totalNodes; i++){
+    for (int i = 0; i <= totalNodes; i++){
         
-        if (XML.pushTag("NODE", i)){
+        // Once it found the right surface that match the id ...
+        //
+        if ( XML.getAttribute("NODE", "id", -1, i) == nId){
             
-            // Once it found the right surface that match the id ...
-            //
-            if ( XML.getValue("id", -1) == nId){
-                
-                ofxPatch::saveSettings(XML, false, i);
+            XML.setAttribute("NODE", "name", name, i);
+            XML.setAttribute("NODE", "path", path, i);
+            
+            XML.pushTag("NODE", i);
+            
+            for (int v = 0; v < playerPaths.size(); v++){
+                XML.setAttribute("VIDEO", "path", playerPaths[v], v);
             }
+            
+            ofxPatch::saveSettings(XML, false, i);
+            
+            XML.popTag();
+            break;
         }
+        
         // If it was the last node in the XML and it wasn't me..
         // I need to add myself in the .xml file
         //
-        else if (i == totalNodes-1) {
+        else if (i >= totalNodes-1) {
             
             // Insert a new NODE tag at the end
             // and fill it with the proper structure
             //
             int lastPlace = XML.addTag("NODE");
+            
+            XML.addAttribute("NODE", "id", nId, lastPlace);
+            XML.addAttribute("NODE", "name", name, lastPlace);
+            XML.addAttribute("NODE", "type", "VIDEO", lastPlace);
+            XML.addAttribute("NODE", "path", path, lastPlace);
+            
             if (XML.pushTag("NODE", lastPlace)){
                 
-                ofxPatch::saveSettings(XML, true, i);
+                for (int v = 0; v < playerPaths.size(); v++){
+                    XML.addTag("VIDEO");
+                    XML.addAttribute("VIDEO", "path", playerPaths[v], v);
+                }
+                
+                ofxPatch::saveSettings(XML, true, lastPlace);
+                XML.popTag();
             }
         }
-        XML.popTag();
     }
     
     return saved;

@@ -112,6 +112,8 @@ void MixMask::updateParameter(Param* inputParam){
 //------------------------------------------------------------------
 bool MixMask::loadSettings(ofxXmlSettings &XML, int nTag_) {
     
+    nId = XML.getAttribute("NODE", "id", -1, nTag_);
+    
     XML.pushTag("NODE", nTag_);
     
     int numINPUTTag = XML.getNumTags("INPUT_SOURCE");
@@ -119,13 +121,10 @@ bool MixMask::loadSettings(ofxXmlSettings &XML, int nTag_) {
     
     for(int j=0; j<numINPUTTag; j++){
         string inputName = XML.getAttribute("INPUT_SOURCE","name","default",j);
-        
         addInputIdentifier(inputName);
-        
     }
     
-    nId = XML.getValue("id", 0);
-    type = XML.getValue("type","none");
+    type     = XML.getValue("type","none");
     bVisible = XML.getValue("visible", true);
     
     ImageOutput::loadSettings(XML, nTag_);
@@ -152,21 +151,22 @@ bool MixMask::saveSettings(ofxXmlSettings &XML) {
     
     // ... and search for the right id for loading
     //
-    for (int i = 0; i < totalNodes; i++){
+    for (int i = 0; i <= totalNodes; i++){
         
-        if (XML.pushTag("NODE", i)){
+        // Once it found the right surface that match the id ...
+        //
+        if ( XML.getAttribute("NODE", "id", -1, i) == nId){
             
-            // Once it found the right surface that match the id ...
-            //
-            if ( XML.getValue("id", -1) == nId){
-                
-                ofxPatch::saveSettings(XML, false, i);
-            }
+            XML.pushTag("NODE", i);
+            ofxPatch::saveSettings(XML, false, i);
+            XML.popTag();
+            break;
         }
+        
         // If it was the last node in the XML and it wasn't me..
         // I need to add myself in the .xml file
         //
-        else if (i == totalNodes-1) {
+        else if (i >= totalNodes-1) {
             
             // Insert a new NODE tag at the end
             // and fill it with the proper structure
@@ -174,10 +174,10 @@ bool MixMask::saveSettings(ofxXmlSettings &XML) {
             int lastPlace = XML.addTag("NODE");
             if (XML.pushTag("NODE", lastPlace)){
                 
-                ofxPatch::saveSettings(XML, true, i);
+                ofxPatch::saveSettings(XML, true, lastPlace);
+                XML.popTag();
             }
         }
-        XML.popTag();
     }
     
     return saved;

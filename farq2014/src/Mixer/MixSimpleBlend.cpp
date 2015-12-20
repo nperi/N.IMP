@@ -110,25 +110,24 @@ void MixSimpleBlend::setEnable(bool isEnabled_){
 bool MixSimpleBlend::loadSettings(ofxXmlSettings &XML, int nTag_) {
     
     
-    selector1 = ofToInt(XML.getAttribute("NODE","selectorLeft","0", nTag_));
-    selector2 = ofToInt(XML.getAttribute("NODE","selectorRight","0", nTag_));
-    blendMode = ofToInt(XML.getAttribute("NODE","blendmode","0", nTag_));
-    opacity = ofToFloat(XML.getAttribute("NODE","opacity","0", nTag_));
+    selector1   = ofToInt(XML.getAttribute("NODE","selectorLeft","0", nTag_));
+    selector2   = ofToInt(XML.getAttribute("NODE","selectorRight","0", nTag_));
+    blendMode   = ofToInt(XML.getAttribute("NODE","blendmode","0", nTag_));
+    opacity     = ofToFloat(XML.getAttribute("NODE","opacity","0", nTag_));
+    
+    nId         = XML.getAttribute("NODE", "id", -1, nTag_);
     
     XML.pushTag("NODE", nTag_);
     
     int numINPUTTag = XML.getNumTags("INPUT_SOURCE");
     
     for(int j=0; j<numINPUTTag; j++){
-        
         string inputName = XML.getAttribute("INPUT_SOURCE","name","default",j);
-        
         addInputIdentifier(inputName);
     }
     
-    nId = XML.getValue("id", 0);
-    type = XML.getValue("type","none");
-    bVisible = XML.getValue("visible", true);
+    type        = XML.getValue("type","none");
+    bVisible    = XML.getValue("visible", true);
     
     ImageOutput::loadSettings(XML, nTag_);
     
@@ -154,32 +153,68 @@ bool MixSimpleBlend::saveSettings(ofxXmlSettings &XML) {
     
     // ... and search for the right id for loading
     //
-    for (int i = 0; i < totalNodes; i++){
+    for (int i = 0; i <= totalNodes; i++){
         
-        if (XML.pushTag("NODE", i)){
+        // Once it found the right surface that match the id ...
+        //
+        if ( XML.getAttribute("NODE", "id", -1, i) == nId){
             
-            // Once it found the right surface that match the id ...
-            //
-            if ( XML.getValue("id", -1) == nId){
+            XML.setAttribute("NODE", "name", name, i);
+            XML.setAttribute("NODE","selectorLeft", selector1, i);
+            XML.setAttribute("NODE","selectorRight", selector2, i);
+            XML.setAttribute("NODE","blendmode", blendMode, i);
+            XML.setAttribute("NODE","opacity", opacity, i);
+            
+            XML.pushTag("NODE", i);
+            
+            int numInputSource = XML.getNumTags("INPUT_SOURCE");
+            
+            for (int iS = 0; iS < input.size(); iS++){
                 
-                ofxPatch::saveSettings(XML, false, i);
+                if (iS >= numInputSource) {
+                    XML.addTag("INPUT_SOURCE");
+                }
+                XML.setAttribute("INPUT_SOURCE", "name", input[iS]->getName(), iS);
             }
+            
+            ofxPatch::saveSettings(XML, false, i);
+            
+            XML.popTag();
+            break;
         }
+        
         // If it was the last node in the XML and it wasn't me..
         // I need to add myself in the .xml file
         //
-        else if (i == totalNodes-1) {
+        else if (i >= totalNodes-1) {
             
             // Insert a new NODE tag at the end
             // and fill it with the proper structure
             //
             int lastPlace = XML.addTag("NODE");
+            
+            XML.addAttribute("NODE", "id", nId, lastPlace);
+            XML.addAttribute("NODE", "name", name, lastPlace);
+            XML.addAttribute("NODE", "type", "SIMPLE_BLEND", lastPlace);
+            
+            XML.addAttribute("NODE", "name", name, lastPlace);
+            XML.addAttribute("NODE", "selectorLeft", selector1, lastPlace);
+            XML.addAttribute("NODE", "selectorRight", selector2, lastPlace);
+            XML.addAttribute("NODE", "blendmode", blendMode, lastPlace);
+            XML.addAttribute("NODE", "opacity", opacity, lastPlace);
+            
             if (XML.pushTag("NODE", lastPlace)){
                 
-                ofxPatch::saveSettings(XML, true, i);
+                for (int iS = 0; iS < input.size(); iS++){
+                    
+                    XML.addTag("INPUT_SOURCE");
+                    XML.addAttribute("INPUT_SOURCE", "name", input[iS]->getName(), iS);
+                }
+                
+                ofxPatch::saveSettings(XML, true, lastPlace);
+                XML.popTag();
             }
         }
-        XML.popTag();
     }
     
     return saved;

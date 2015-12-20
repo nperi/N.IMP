@@ -45,6 +45,9 @@ private:
     ofxButton stop;
     ofxFloatSlider speed;
     
+    string path;
+    vector<string> playerPaths;
+    
     //ofImage img;
 };
 

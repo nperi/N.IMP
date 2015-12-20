@@ -155,13 +155,12 @@ bool ParticleGenerator::loadSettings(ofxXmlSettings &XML, int nTag_) {
     minLifetime     = ofToFloat(XML.getAttribute("NODE", "minLifetime","0", nTag_));
     maxLifetime     = ofToFloat(XML.getAttribute("NODE", "maxLifetime","0", nTag_));
     
+    nId             = XML.getAttribute("NODE", "id", -1, nTag_);
+    
     XML.pushTag("NODE", nTag_);
     
-    nId = XML.getValue("id", 0);
-    type = XML.getValue("type","none");
-    bVisible = XML.getValue("visible", true);
-    
-    //title->setTitle(name + ":" + type );
+    type            = XML.getValue("type","none");
+    bVisible        = XML.getValue("visible", true);
     
     ImageOutput::loadSettings(XML, nTag_);
     
@@ -185,32 +184,43 @@ bool ParticleGenerator::saveSettings(ofxXmlSettings &XML) {
     
     // ... and search for the right id for loading
     //
-    for (int i = 0; i < totalNodes; i++){
+    for (int i = 0; i <= totalNodes; i++){
         
-        if (XML.pushTag("NODE", i)){
+        // Once it found the right surface that match the id ...
+        //
+        if ( XML.getAttribute("NODE", "id", -1, i) == nId){
             
-            // Once it found the right surface that match the id ...
-            //
-            if ( XML.getValue("id", -1) == nId){
-                
-                ofxPatch::saveSettings(XML, false, i);
-            }
+            XML.setAttribute("NODE", "name", name, i);
+            XML.pushTag("NODE", i);
+            
+            ofxPatch::saveSettings(XML, false, i);
+            
+            XML.popTag();
+            
+            break;
         }
+        
         // If it was the last node in the XML and it wasn't me..
         // I need to add myself in the .xml file
         //
-        else if (i == totalNodes-1) {
+        else if (i >= totalNodes-1) {
             
             // Insert a new NODE tag at the end
             // and fill it with the proper structure
             //
             int lastPlace = XML.addTag("NODE");
+            
+            XML.addAttribute("NODE", "id", nId, lastPlace);
+            XML.addAttribute("NODE", "name", name, lastPlace);
+            XML.addAttribute("NODE", "type", "PARTICLE", lastPlace);
+            
             if (XML.pushTag("NODE", lastPlace)){
                 
-                ofxPatch::saveSettings(XML, true, i);
+                ofxPatch::saveSettings(XML, true, lastPlace);
+                
+                XML.popTag();
             }
         }
-        XML.popTag();
     }
     
     return saved;

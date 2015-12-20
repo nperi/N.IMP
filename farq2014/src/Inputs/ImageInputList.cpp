@@ -244,7 +244,8 @@ bool ImageInputList::loadSettings(ofxXmlSettings &XML, int nTag_) {
     
     bool loaded = true;
     
-    string  path = XML.getAttribute("NODE", "path","none", nTag_);
+    nId     = XML.getAttribute("NODE", "id", -1, nTag_);
+    path    = XML.getAttribute("NODE", "path","none", nTag_);
     
     bpm             = ofToFloat(XML.getAttribute("NODE", "bpm","120", nTag_));
     bpmMultiplier   = ofToInt(XML.getAttribute("NODE", "multiplier_divider","32", nTag_));
@@ -273,9 +274,8 @@ bool ImageInputList::loadSettings(ofxXmlSettings &XML, int nTag_) {
 
     XML.pushTag("NODE", nTag_);
     
-    nId = XML.getValue("id", 0);
-    type = XML.getValue("type","none");
-    bVisible = XML.getValue("visible", true);
+    type        = XML.getValue("type","none");
+    bVisible    = XML.getValue("visible", true);
         
     InputSource::loadSettings(XML, nTag_);
     
@@ -299,32 +299,82 @@ bool ImageInputList::saveSettings(ofxXmlSettings &XML) {
     
     // ... and search for the right id for loading
     //
-    for (int i = 0; i < totalNodes; i++){
+    for (int i = 0; i <= totalNodes; i++){
         
-        if (XML.pushTag("NODE", i)){
+        // Once it found the right surface that match the id ...
+        //
+        if ( XML.getAttribute("NODE", "id", -1, i) == nId){
             
-            // Once it found the right surface that match the id ...
-            //
-            if ( XML.getValue("id", -1) == nId){
+            XML.setAttribute("NODE", "name", name, i);
+            XML.setAttribute("NODE", "path", path, i);
+            
+            XML.setAttribute("NODE", "bpm", bpm, i);
+            XML.setAttribute("NODE", "multiplier_divider", bpmMultiplier, i);
+            XML.setAttribute("NODE", "isPlaying", isPlaying, i);
+            XML.setAttribute("NODE", "palindrom", isPalindromLoop, i);
+            XML.setAttribute("NODE", "matchBPMtoSequence", isMatchBpmToSequenceLength, i);
+            
+            XML.pushTag("NODE", i);
+            
+            if (path == "none") {
+
+                int numVideoTag = XML.getNumTags("ASSET");
                 
-                ofxPatch::saveSettings(XML, false, i);
+                for (int v = 0; v < inputs.size(); v++){
+                    
+                    if (v >= numVideoTag) {
+                        XML.addTag("ASSET");
+                    }
+                    XML.setAttribute("ASSET", "name", inputs[v]->getName(), v);
+                    XML.setAttribute("ASSET", "path", inputs[v]->getPath(), v);
+                }
             }
+            
+            ofxPatch::saveSettings(XML, false, i);
+            
+            XML.popTag();
+            
+            break;
         }
+        
         // If it was the last node in the XML and it wasn't me..
         // I need to add myself in the .xml file
         //
-        else if (i == totalNodes-1) {
+        else if (i >= totalNodes-1) {
             
             // Insert a new NODE tag at the end
             // and fill it with the proper structure
             //
             int lastPlace = XML.addTag("NODE");
+            
+            XML.addAttribute("NODE", "id", nId, lastPlace);
+            XML.addAttribute("NODE", "name", name, lastPlace);
+            XML.addAttribute("NODE", "type", "IMAGE", lastPlace);
+            XML.addAttribute("NODE", "path", path, lastPlace);
+            
+            XML.addAttribute("NODE", "bpm", bpm, lastPlace);
+            XML.addAttribute("NODE", "multiplier_divider", bpmMultiplier, lastPlace);
+            XML.addAttribute("NODE", "isPlaying", isPlaying, lastPlace);
+            XML.addAttribute("NODE", "palindrom", isPalindromLoop, lastPlace);
+            XML.addAttribute("NODE", "matchBPMtoSequence", isMatchBpmToSequenceLength, lastPlace);
+            
             if (XML.pushTag("NODE", lastPlace)){
                 
-                ofxPatch::saveSettings(XML, true, i);
+                if (path == "none") {
+                    
+                    for (int v = 0; v < inputs.size(); v++){
+                        
+                        XML.addTag("ASSET");
+                        XML.addAttribute("ASSET", "name", inputs[v]->getName(), v);
+                        XML.addAttribute("ASSET", "path", inputs[v]->getPath(), v);
+                    }
+                }
+                
+                ofxPatch::saveSettings(XML, true, lastPlace);
+                
+                XML.popTag();
             }
         }
-        XML.popTag();
     }
     
     return saved;
