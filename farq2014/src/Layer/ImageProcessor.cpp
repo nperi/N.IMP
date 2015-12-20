@@ -123,6 +123,8 @@ void ImageProcessor::setup() {
     
     fbo.allocate(width, height);
     
+    drawFbo = true;
+    
     // Setup post-processing chain
     post.init(width,height);
     post.createPass<BloomPass>()->setEnabled(isBloom);
@@ -153,7 +155,8 @@ void ImageProcessor::update() {
     ofScale(1, -1);
     ofPushMatrix();
     ofTranslate(0, -height);
-    input[0]->getTexture()->draw(0,0,width,height);
+    //input[0]->getTexture()->draw(0,0,width,height);
+    input[0]->getTextureReference().draw(0,0,width,height);
     ofPopMatrix();
     ofPopMatrix();
     post.end();
@@ -221,11 +224,11 @@ void ImageProcessor::updateParameter(Param* inputParam){
 //------------------------------------------------------------------
 void ImageProcessor::draw(int x,int y, float scale) {
     
-    ofPushMatrix();
-    glMultMatrixf(glMatrix);
-    ofSetColor(255);
-    fbo.draw(0,0);
-    ofPopMatrix();
+//    ofPushMatrix();
+//    glMultMatrixf(glMatrix);
+//    ofSetColor(255);
+//    fbo.draw(0,0);
+//    ofPopMatrix();
 }
 
 //------------------------------------------------------------------
@@ -394,8 +397,6 @@ bool ImageProcessor::loadSettings(ofxXmlSettings &XML, int nTag_) {
     nId = XML.getValue("id", 0);
     type = XML.getValue("type","none");
     bVisible = XML.getValue("visible", true);
-    
-    //title->setTitle(name + ":" + type );
     
     ImageOutput::loadSettings(XML, nTag_);
     

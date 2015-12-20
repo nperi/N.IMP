@@ -73,7 +73,7 @@ class ImageProcessor : public VisualLayer{
 private:
     void update();
     ofxPostProcessing post;
-    ofFbo fbo;
+    //ofFbo fbo;
     
     void cIsBloom(bool &b);
     void cIsContrast(bool &b);

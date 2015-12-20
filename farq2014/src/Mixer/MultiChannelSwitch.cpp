@@ -18,6 +18,8 @@ MultiChannelSwitch::MultiChannelSwitch(string name_):MixTable(name_){
     labelGroup.setName("channels");
     
 }
+
+//------------------------------------------------------------------
 void MultiChannelSwitch::inputAdded(ImageOutput* in_){
     if (input.size()>1) {
         selChannel.setMax(selChannel.getMax()+1);
@@ -34,13 +36,10 @@ void MultiChannelSwitch::inputAdded(ImageOutput* in_){
     lastClicked = ofGetElapsedTimeMillis();
 }
 
-
 //------------------------------------------------------------------
 void MultiChannelSwitch::setup() {
 	
-	
 }
-
 
 //------------------------------------------------------------------
 void MultiChannelSwitch::update() {
@@ -70,7 +69,6 @@ void MultiChannelSwitch::update() {
     tex = *input[selChannel]->getTexture();
 }
 
-
 //------------------------------------------------------------------
 void MultiChannelSwitch::draw(int x,int y, float scale) {
     ofSetColor(255, 255, 255);
@@ -89,10 +87,12 @@ void MultiChannelSwitch::draw(int x,int y, float scale) {
     }
 }
 
+//------------------------------------------------------------------
 void MultiChannelSwitch::updateParameter(Param* inputParam){
     
 }
 
+//------------------------------------------------------------------
 void MultiChannelSwitch::cselChannel(int& s){
     /*
         notificationSendedSlider = true;
@@ -104,6 +104,7 @@ void MultiChannelSwitch::cselChannel(int& s){
      */
 }
 
+//------------------------------------------------------------------
 void MultiChannelSwitch::cLabel(bool& b){
     if (ofGetElapsedTimeMillis()-lastClicked > 200) {
         //hacked radio button
@@ -126,7 +127,37 @@ void MultiChannelSwitch::cLabel(bool& b){
     
 }
 
+//------------------------------------------------------------------
 void MultiChannelSwitch::setEnable(bool isEnabled_){
     isEnabled = isEnabled_;
     input[selChannel]->setEnable(isEnabled);
+}
+
+//------------------------------------------------------------------
+bool MultiChannelSwitch::loadSettings(ofxXmlSettings &XML, int nTag_) {
+    
+    XML.pushTag("MIXER", nTag_);
+    
+    int numINPUTTag = XML.getNumTags("INPUT_SOURCE");
+    
+    selChannel =  ofToInt(XML.getAttribute("INPUT_SOURCE","selChannel","0",nTag_));
+    
+    std::map<string,ImageOutput*>::iterator it;
+
+    for(int j=0; j < numINPUTTag; j++){
+        string inputName = XML.getAttribute("INPUT_SOURCE","name","default",j);
+        addInputIdentifier(inputName);
+    }
+    
+    nId = XML.getValue("id", 0);
+    type = XML.getValue("type","none");
+    bVisible = XML.getValue("visible", true);
+    
+    ImageOutput::loadSettings(XML, nTag_);
+    
+    addInputDot();
+    
+    XML.popTag();
+    
+    return true;
 }

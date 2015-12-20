@@ -25,6 +25,8 @@ class IkedaLayer : public VisualLayer{
 	void draw(int x,int y, float scale);
     void updateParameter(Param* inputParam);
     
+    bool loadSettings(ofxXmlSettings &XML, int nTag_);
+    
     ofxToggle isCanny;
     ofxToggle isThreshold;
     ofxToggle isColumns;

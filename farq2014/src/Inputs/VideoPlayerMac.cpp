@@ -20,15 +20,13 @@ VideoPlayerMac::VideoPlayerMac(string name) : InputSource(name){
     gui.add(play.setup("Play"));
     gui.add(stop.setup("Stop"));
 
-    
+    drawVideo = true;
 }
 
 //------------------------------------------------------------------
 void VideoPlayerMac::setup() {
 	
-	
 }
-
 
 //------------------------------------------------------------------
 void VideoPlayerMac::update() {
@@ -42,7 +40,6 @@ void VideoPlayerMac::update() {
     }
 }
 
-
 //------------------------------------------------------------------
 void VideoPlayerMac::draw(int x,int y, float scale) {
 	if (players[currentPlayer]->isLoaded()) {
@@ -55,6 +52,7 @@ void VideoPlayerMac::draw(int x,int y, float scale) {
     ofDrawBitmapString(name, x + 10, y + 30);
 }
 
+//------------------------------------------------------------------
 void VideoPlayerMac::loadVideo(string path) {
     ofQTKitDecodeMode decodeMode = OF_QTKIT_DECODE_PIXELS_AND_TEXTURE;
     ofQTKitPlayer* vP = new ofQTKitPlayer();
@@ -65,6 +63,7 @@ void VideoPlayerMac::loadVideo(string path) {
     players.push_back(vP);
 }
 
+//------------------------------------------------------------------
 void VideoPlayerMac::nextVideo(){
     //stopping current video
     players[currentPlayer]->stop();
@@ -77,6 +76,7 @@ void VideoPlayerMac::nextVideo(){
     players[currentPlayer]->play();
 }
 
+//------------------------------------------------------------------
 void VideoPlayerMac::prevVideo(){
     //stopping current video
     players[currentPlayer]->stop();
@@ -89,22 +89,61 @@ void VideoPlayerMac::prevVideo(){
     players[currentPlayer]->play();
 }
 
+//------------------------------------------------------------------
 void VideoPlayerMac::playVideo(){
     players[currentPlayer]->play();
 }
 
+//------------------------------------------------------------------
 void VideoPlayerMac::stopVideo(){
     players[currentPlayer]->stop();
 }
 
+//------------------------------------------------------------------
 void VideoPlayerMac::setSpeed(float speed){
     players[currentPlayer]->setSpeed(speed);
 }
 
+//------------------------------------------------------------------
 float VideoPlayerMac::getSpeed(){
     return players[currentPlayer]->getSpeed();
 }
 
+//------------------------------------------------------------------
 void VideoPlayerMac::updateParameter(Param* inputParam){
     
+}
+
+//------------------------------------------------------------------
+bool VideoPlayerMac::loadSettings(ofxXmlSettings &XML, int nTag_) {
+    
+    bool loaded = true;
+    
+    string  path = XML.getAttribute("INPUT", "path","none", nTag_);
+    
+    XML.pushTag("INPUT",nTag_);
+    
+    int numVideoTag = XML.getNumTags("VIDEO");
+    
+    if(numVideoTag>0){
+        for (int v=0; v<numVideoTag; v++){
+            string path = XML.getAttribute("VIDEO","path","default",v);
+            loadVideo(path);
+        }
+    }
+    else{
+        loaded = false;
+    }
+    
+    XML.popTag();
+    
+    nId = XML.getValue("id", 0);
+    type = XML.getValue("type","none");
+    bVisible = XML.getValue("visible", true);
+    
+    InputSource::loadSettings(XML, nTag_);
+    
+    XML.popTag();
+    
+    return loaded;
 }

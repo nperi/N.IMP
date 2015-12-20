@@ -35,7 +35,7 @@ void GlitchLayerAlt::draw(int x,int y, float scale) {
     img.draw(x, y,w,h);
 }
 
-
+//------------------------------------------------------------------
 void GlitchLayerAlt::update(){
     //process pipeline
     img.setFromPixels(input[0]->getImage()->getPixels(), width, height, OF_IMAGE_COLOR);
@@ -57,6 +57,29 @@ void GlitchLayerAlt::update(){
     
 }
 
+//------------------------------------------------------------------
 void GlitchLayerAlt::updateParameter(Param* inputParam){
     
+}
+
+//------------------------------------------------------------------
+bool GlitchLayerAlt::loadSettings(ofxXmlSettings &XML, int nTag_) {
+    
+    dq = ofToInt(XML.getAttribute("VISUAL_LAYER","dq","20",nTag_));
+    qn = ofToInt(XML.getAttribute("VISUAL_LAYER","qn","40",nTag_));
+    dht = ofToInt(XML.getAttribute("VISUAL_LAYER","dht","80",nTag_));
+    
+    XML.pushTag("VISUAL_LAYER", nTag_);
+    
+    nId = XML.getValue("id", 0);
+    type = XML.getValue("type","none");
+    bVisible = XML.getValue("visible", true);
+    
+    ImageOutput::loadSettings(XML, nTag_);
+    
+    addInputDot();
+    
+    XML.popTag();
+    
+    return true;
 }

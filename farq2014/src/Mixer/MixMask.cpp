@@ -18,12 +18,11 @@ MixMask::MixMask(string name_):MixTable(name_){
        maskShader.end();
     //fbo.setDefaultTextureIndex(1);
 }
+
 //------------------------------------------------------------------
 void MixMask::setup() {
-	
-	
+    
 }
-
 
 //------------------------------------------------------------------
 void MixMask::draw(int x,int y, float scale) {
@@ -36,6 +35,7 @@ void MixMask::draw(int x,int y, float scale) {
 	
 }
 
+//------------------------------------------------------------------
 void MixMask::update(){
     
     fbo.begin();
@@ -57,6 +57,7 @@ void MixMask::update(){
     tex = fbo.getTextureReference();
 }
 
+//------------------------------------------------------------------
 void MixMask::drawShader(){
     maskShader.begin();
     maskShader.setUniformTexture("Tex0", *input[0]->getTexture(), 0);
@@ -103,6 +104,35 @@ void MixMask::drawShader(){
     maskShader.end();
 }
 
+//------------------------------------------------------------------
 void MixMask::updateParameter(Param* inputParam){
     
+}
+
+//------------------------------------------------------------------
+bool MixMask::loadSettings(ofxXmlSettings &XML, int nTag_) {
+    
+    XML.pushTag("MIXER", nTag_);
+    
+    int numINPUTTag = XML.getNumTags("INPUT_SOURCE");
+    std::map<string,ImageOutput*>::iterator it;
+    
+    for(int j=0; j<numINPUTTag; j++){
+        string inputName = XML.getAttribute("INPUT_SOURCE","name","default",j);
+        
+        addInputIdentifier(inputName);
+        
+    }
+    
+    nId = XML.getValue("id", 0);
+    type = XML.getValue("type","none");
+    bVisible = XML.getValue("visible", true);
+    
+    ImageOutput::loadSettings(XML, nTag_);
+    
+    addInputDot();
+    
+    XML.popTag();
+    
+    return true;
 }

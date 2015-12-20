@@ -30,6 +30,8 @@ class MultiChannelSwitch : public MixTable{
     ofParameter<bool> drawInputGui;
     void setEnable(bool isEnabled_);
     
+    bool loadSettings(ofxXmlSettings &XML, int nTag_);
+    
 private:
     void inputAdded(ImageOutput* in_);
     void update();

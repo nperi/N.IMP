@@ -40,6 +40,7 @@ void IkedaLayer::draw(int x,int y, float scale) {
     tex.draw(x, y,w,h);
 }
 
+//------------------------------------------------------------------
 void IkedaLayer::update(){
     //process pipeline
     //img.setFromPixels(img_.getPixels(), 640, 480, OF_IMAGE_COLOR);
@@ -91,6 +92,36 @@ void IkedaLayer::update(){
     
 }
 
+//------------------------------------------------------------------
 void IkedaLayer::updateParameter(Param* inputParam){
     
+}
+
+//------------------------------------------------------------------
+bool IkedaLayer::loadSettings(ofxXmlSettings &XML, int nTag_) {
+    
+    isCanny = ofToBool(XML.getAttribute("VISUAL_LAYER","isCanny","true",nTag_));
+    isThreshold = ofToBool(XML.getAttribute("VISUAL_LAYER","isThreshold","true",nTag_));
+    isColumns = ofToBool(XML.getAttribute("VISUAL_LAYER","isColumns","true",nTag_));
+    isInvert = ofToBool(XML.getAttribute("VISUAL_LAYER","isInvert","true",nTag_));
+    pNColumns = ofToInt(XML.getAttribute("VISUAL_LAYER","pNColumns","4",nTag_));
+    pCannyX = ofToInt(XML.getAttribute("VISUAL_LAYER","pCannyX","12",nTag_));
+    pCannyY = ofToInt(XML.getAttribute("VISUAL_LAYER","pCannyY","12",nTag_));
+    pThreshold = ofToInt(XML.getAttribute("VISUAL_LAYER","pThreshold","12",nTag_));
+    
+    XML.pushTag("VISUAL_LAYER", nTag_);
+    
+    nId = XML.getValue("id", 0);
+    type = XML.getValue("type","none");
+    bVisible = XML.getValue("visible", true);
+    
+    //title->setTitle(name + ":" + type );
+    
+    ImageOutput::loadSettings(XML, nTag_);
+    
+    addInputDot();
+    
+    XML.popTag();
+    
+    return true;
 }

@@ -13,6 +13,8 @@
 InputCamera::InputCamera(string name) : InputSource(name){
     //cam.initGrabber(width, height);
     //img.allocate(640, 480, OF_IMAGE_COLOR);
+    
+    drawCamera = true;
 }
 
 //------------------------------------------------------------------
@@ -35,10 +37,10 @@ void InputCamera::update() {
 //------------------------------------------------------------------
 void InputCamera::draw(int x,int y, float scale) {
     
-    ofPushMatrix();
-    glMultMatrixf(glMatrix);
-    videoGrabber->draw(0,0);
-    ofPopMatrix();
+//    ofPushMatrix();
+//    glMultMatrixf(glMatrix);
+//    videoGrabber->draw(0,0);
+//    ofPopMatrix();
 }
 
 void InputCamera::updateParameter(Param* inputParam){

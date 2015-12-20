@@ -31,7 +31,7 @@ class MixTable : public ImageOutput{
     
     
 protected:
-    ofFbo fbo;
+    //ofFbo fbo;
 };
 
 #endif

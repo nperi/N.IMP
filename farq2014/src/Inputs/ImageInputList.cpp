@@ -25,6 +25,8 @@ void ImageInputList::setup(){
     height = inputs[currentSequence]->getHeight();
     
     img.allocate(width, height, OF_IMAGE_COLOR_ALPHA);
+    
+    drawTexture = true;
 }
 
 void ImageInputList::update(){
@@ -35,10 +37,10 @@ void ImageInputList::update(){
 
 void ImageInputList::draw(int x,int y, float scale){
     
-    ofPushMatrix();
-    glMultMatrixf(glMatrix);
-    tex.draw(0,0);
-    ofPopMatrix();
+//    ofPushMatrix();
+//    glMultMatrixf(glMatrix);
+//    tex.draw(0,0);
+//    ofPopMatrix();
     
 }
 
@@ -274,9 +276,6 @@ bool ImageInputList::loadSettings(ofxXmlSettings &XML, int nTag_) {
     nId = XML.getValue("id", 0);
     type = XML.getValue("type","none");
     bVisible = XML.getValue("visible", true);
-    //filePath = XML.getValue("path", "none" );
-    
-    //title->setTitle(name + ":" + type );
         
     InputSource::loadSettings(XML, nTag_);
     

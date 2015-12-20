@@ -23,6 +23,8 @@ MixSimpleBlend::MixSimpleBlend(string name_):MixTable(name_){
     isEnabled = false;
     
     blendMode.addListener(this, &MixSimpleBlend::blendModeChanged);
+    
+    drawFbo = true;
 
 }
 
@@ -33,12 +35,12 @@ void MixSimpleBlend::setup() {
 
 //------------------------------------------------------------------
 void MixSimpleBlend::draw(int x,int y, float scale) {
-    ofSetColor(255, 255, 255);
     
-    ofPushMatrix();
-    glMultMatrixf(glMatrix);
-    fbo.draw(0, 0);
-    ofPopMatrix();
+//    ofSetColor(255, 255, 255);
+//    ofPushMatrix();
+//    glMultMatrixf(glMatrix);
+//    fbo.draw(0, 0);
+//    ofPopMatrix();
 }
 
 //------------------------------------------------------------------
@@ -52,11 +54,11 @@ void MixSimpleBlend::update(){
         
         if (opacity < 255) {
             ofSetColor(255, 255, 255);
-            input[selector1]->getTexture()->draw(0, 0);
+            input[selector1]->getTextureReference().draw(0, 0);
         }
         if (opacity>0) {
             ofSetColor(255, 255, 255,opacity);
-            input[selector2]->getTexture()->draw(0, 0);
+            input[selector2]->getTextureReference().draw(0, 0);
         }
     }
     else{
@@ -64,7 +66,7 @@ void MixSimpleBlend::update(){
         ofSetColor(255, 255, 255,opacity);
         input[selector2]->getTexture()->draw(0, 0);
         psBlend.end();
-        psBlend.draw(*(input[selector1]->getTexture()), blendMode);
+        psBlend.draw(input[selector1]->getTextureReference(), blendMode);
     }
     glDisable(GL_BLEND);
     glPopAttrib();
@@ -127,8 +129,6 @@ bool MixSimpleBlend::loadSettings(ofxXmlSettings &XML, int nTag_) {
     nId = XML.getValue("id", 0);
     type = XML.getValue("type","none");
     bVisible = XML.getValue("visible", true);
-    
-    //title->setTitle(name + ":" + type );
     
     ImageOutput::loadSettings(XML, nTag_);
     

@@ -25,6 +25,8 @@ class MixMask : public MixTable{
 	
 	void draw(int x,int y, float scale);
     
+    bool loadSettings(ofxXmlSettings &XML, int nTag_);
+    
 private:
     
     void update();

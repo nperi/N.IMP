@@ -55,7 +55,7 @@ private:
     ofxParticleSystem* particle;
     int nForces = 3;
     vector<ParticleForce> force;
-    ofFbo fbo;
+    //ofFbo fbo;
     
     ofxButton bAddParticles,bRemoveParticles;
     

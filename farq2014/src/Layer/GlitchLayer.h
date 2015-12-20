@@ -24,7 +24,7 @@ public:
     void updateParameter(Param* inputParam);
     bool loadSettings(ofxXmlSettings &XML, int nTag_);
     
-    ofFbo			myFbo;
+    //ofFbo			myFbo;
     ofTexture		texture;
     ofxPostGlitch	myGlitch;
     

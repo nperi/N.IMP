@@ -41,17 +41,20 @@ void GlitchLayer::setup() {
     height = input[0]->getHeight();
     width  = input[0]->getWidth();
     
-    myFbo.allocate(width, height);
-    myGlitch.setup(&myFbo);
+    fbo.allocate(width, height);
+    myGlitch.setup(&fbo);
+    
+    drawFbo = true;
 }
 
 //------------------------------------------------------------------
 void GlitchLayer::draw(int x,int y, float scale) {
-    ofSetColor(255, 255, 255);
-    ofPushMatrix();
-    glMultMatrixf(glMatrix);
-    img.draw(0, 0);
-    ofPopMatrix();
+    
+//    ofSetColor(255, 255, 255);
+//    ofPushMatrix();
+//    glMultMatrixf(glMatrix);
+//    img.draw(0, 0);
+//    ofPopMatrix();
 }
 
 //------------------------------------------------------------------
@@ -64,19 +67,20 @@ void GlitchLayer::update(){
         
         setGlitchParameters();
         
-        myFbo.begin();
+        fbo.begin();
         
         ofClear(0, 0, 0,255);
         ofSetColor(255);
-        img.draw(0, 0);
+        //img.draw(0, 0);
+        input[0]->getTextureReference().draw(0,0,width,height);
         
-        myFbo.end();
+        fbo.end();
         
         /* Apply effects */
         myGlitch.generateFx();
 
         ofPixels buff;
-        myFbo.readToPixels(buff);
+        fbo.readToPixels(buff);
         img.setFromPixels(buff);
     }
     
@@ -115,7 +119,6 @@ void GlitchLayer::updateParameter(Param* inputParam){
 //------------------------------------------------------------------
 bool GlitchLayer::loadSettings(ofxXmlSettings &XML, int nTag_) {
     
-    
     do_CONVERGENCE = ofToBool(XML.getAttribute("VISUAL_LAYER","do_CONVERGENCE","false",nTag_));
     do_GLOW = ofToBool(XML.getAttribute("VISUAL_LAYER","do_GLOW","false",nTag_));
     do_SHAKER = ofToBool(XML.getAttribute("VISUAL_LAYER","do_SHAKER","false",nTag_));
@@ -140,8 +143,6 @@ bool GlitchLayer::loadSettings(ofxXmlSettings &XML, int nTag_) {
     nId = XML.getValue("id", 0);
     type = XML.getValue("type","none");
     bVisible = XML.getValue("visible", true);
-    
-    //title->setTitle(name + ":" + type );
     
     ImageOutput::loadSettings(XML, nTag_);
     

@@ -17,6 +17,8 @@ ParticleGenerator::ParticleGenerator(string name) : InputSource(name){
     s.useDepth			= false;
     fbo.allocate(s);
     
+    drawFbo = true;
+    
     gui.add(bAddParticles.setup("add Particles"));
     gui.add(bRemoveParticles.setup("remove Particles"));
     gui.add(isClearBg.set("Clear BG",true));

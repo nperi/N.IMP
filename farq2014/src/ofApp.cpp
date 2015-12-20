@@ -636,24 +636,14 @@ bool ofApp::loadFromXML(){
                             {
                                 VideoPlayerMac* vP = new VideoPlayerMac(inputName);
                                 
-                                XML.pushTag("INPUT",i);
-                                
-                                int numVideoTag = XML.getNumTags("VIDEO");
-                                
-                                if(numVideoTag>0){
-                                    for (int v=0; v<numVideoTag; v++){
-                                        string path = XML.getAttribute("VIDEO","path","default",v);
-                                        vP->loadVideo(path);
-                                    }
+                                if (vP->loadSettings(XML, i)) {
                                     inputs.push_back(vP);
                                     nodes.insert(std::pair<string,ImageOutput*>(inputName,vP));
                                 }
-                                else{
+                                else {
                                     result = false;
                                     message = "no videos to be loaded!";
                                 }
-                                
-                                XML.popTag();
                                 
                                 break;
                             };
@@ -669,14 +659,17 @@ bool ofApp::loadFromXML(){
                             };
                             case IMAGE:
                             {
-                                //ImageInput* iI = new ImageInput(inputName);
-                                
                                 ImageInputList* iI = new ImageInputList(inputName);
-                                iI->loadSettings(XML, i);
                                 
-                                inputs.push_back(iI);
-                                nodes.insert(std::pair<string,ImageOutput*>(inputName,iI));
-
+                                if (iI->loadSettings(XML, i)) {
+                                    inputs.push_back(iI);
+                                    nodes.insert(std::pair<string,ImageOutput*>(inputName,iI));
+                                }
+                                else {
+                                    result = false;
+                                    message = "no images to be loaded!";
+                                }
+                                
                                 break;
                             };
                             case PARTICLE:
@@ -730,29 +723,10 @@ bool ofApp::loadFromXML(){
                             switch(visualLayerTypes[layerType]){
                                 case IKEDA:
                                 {
-                                    bool isCanny = ofToBool(XML.getAttribute("VISUAL_LAYER","isCanny","true",i));
-                                    bool isThreshold = ofToBool(XML.getAttribute("VISUAL_LAYER","isThreshold","true",i));
-                                    bool isColumns = ofToBool(XML.getAttribute("VISUAL_LAYER","isColumns","true",i));
-                                    bool isInvert = ofToBool(XML.getAttribute("VISUAL_LAYER","isInvert","true",i));
-                                    int pNColumns = ofToInt(XML.getAttribute("VISUAL_LAYER","pNColumns","4",i));
-                                    int pCannyX = ofToInt(XML.getAttribute("VISUAL_LAYER","pCannyX","12",i));
-                                    int pCannyY = ofToInt(XML.getAttribute("VISUAL_LAYER","pCannyY","12",i));
-                                    int pThreshold = ofToInt(XML.getAttribute("VISUAL_LAYER","pThreshold","12",i));
-                                    
                                     IkedaLayer* iL = new IkedaLayer(layerName);
-                                    
-                                    iL->isCanny = isCanny;
-                                    iL->isThreshold = isThreshold;
-                                    iL->isColumns = isColumns;
-                                    iL->isInvert = isInvert;
-                                    iL->pNColumns = pNColumns;
-                                    iL->pCannyX = pCannyX;
-                                    iL->pCannyY = pCannyY;
-                                    iL->pThreshold = pThreshold;
-                                    
+                                    iL->loadSettings(XML, i);
                                     
                                     iL->addInputIdentifier(inputSourceName);
-                                    
                                     
                                     visualLayers.push_back(iL);
                                     nodes.insert(std::pair<string,ImageOutput*>(layerName,iL));
@@ -762,9 +736,8 @@ bool ofApp::loadFromXML(){
                                 case GLITCH_1:
                                 {
                                     GlitchLayer* gL = new GlitchLayer(layerName);
-                                    gL->loadSettings(XML, i);
-                                    
                                     gL->addInputIdentifier(inputSourceName);
+                                    gL->loadSettings(XML, i);
 
                                     visualLayers.push_back(gL);
                                     nodes.insert(std::pair<string,ImageOutput*>(layerName,gL));
@@ -773,14 +746,9 @@ bool ofApp::loadFromXML(){
                                 };
                                 case GLITCH_2:
                                 {
-                                    int dq = ofToInt(XML.getAttribute("VISUAL_LAYER","dq","20",i));
-                                    int qn = ofToInt(XML.getAttribute("VISUAL_LAYER","qn","40",i));
-                                    int dht = ofToInt(XML.getAttribute("VISUAL_LAYER","dht","80",i));
-                                    
                                     GlitchLayerAlt* gLA = new GlitchLayerAlt(layerName);
-                                    
-                                    
                                     gLA->addInputIdentifier(inputSourceName);
+                                    gLA->loadSettings(XML, i);
                                     
                                     visualLayers.push_back(gLA);
                                     nodes.insert(std::pair<string,ImageOutput*>(layerName,gLA));
@@ -850,57 +818,20 @@ bool ofApp::loadFromXML(){
                                 case MASK:
                                 {
                                     MixMask* mMM = new MixMask(name);
-                                    XML.pushTag("MIXER",i);
-                                    
-                                    int numINPUTTag = XML.getNumTags("INPUT_SOURCE");
-                                    std::map<string,ImageOutput*>::iterator it;
-                                    
-                                    for(int j=0; j<numINPUTTag; j++){
-                                        string inputName = XML.getAttribute("INPUT_SOURCE","name","default",j);
-                                        
-                                        mMM->addInputIdentifier(inputName);
-                                        
-                                    }
+                                    mMM->loadSettings(XML, i);
                                     
                                     mixtables.push_back(mMM);
                                     nodes.insert(std::pair<string, ImageOutput*>(name, mMM));
-                                    //MIXER POP
-                                    XML.popTag();
                                     
                                     break;
                                 };
                                 case MULTI_CHANNEL:
                                 {
                                     MultiChannelSwitch* mMM = new MultiChannelSwitch(name);
-                                    XML.pushTag("MIXER",i);
+                                    mMM->loadSettings(XML, i);
                                     
-                                    int numINPUTTag = XML.getNumTags("INPUT_SOURCE");
-                                    std::map<string,ImageOutput*>::iterator it;
-                                    int selChannel =  ofToInt(XML.getAttribute("INPUT_SOURCE","selChannel","0",i));
-                                    for(int j=0; j<numINPUTTag; j++){
-                                        string inputName = XML.getAttribute("INPUT_SOURCE","name","default",j);
-                            
-                                        it = nodes.find(inputName);
-                                        
-                                        if(it!=nodes.end()){
-                                            /*ImageOutput * iO = it->second;
-                                            
-                                            mMM->addInput(iO);*/
-                                            string inputName = XML.getAttribute("INPUT_SOURCE","name","default",j);
-                                            
-                                            mMM->addInputIdentifier(inputName);
-                                        }
-                                        else{
-                                            result = false;
-                                            message = "node not found!";
-                                        }
-                                        
-                                    }
-                                    mMM->selChannel = selChannel;
                                     mixtables.push_back(mMM);
                                     nodes.insert(std::pair<string, ImageOutput*>(name, mMM));
-                                    //MIXER POP
-                                    XML.popTag();
                                     
                                     break;
                                 };
