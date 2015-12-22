@@ -15,8 +15,10 @@ NodeElement::NodeElement(ImageOutput* imo_, int x_, int y_, int guiX_,int guiY_,
     guiX = guiX_;
     guiY = guiY_;
     guiWidth = guiWidth_;
-    scale = scale_;
     imageOutput = imo_;
+    
+//    scale = scale_;
+    
 }
 
 //------------------------------------------------------------------
@@ -37,10 +39,10 @@ ImageOutput* NodeElement::getImageOutput(){
     return imageOutput;
 }
 
-ofVec2f NodeElement::getPosIn(){
-    return ofVec2f(x,y +(scale*240));
-}
-
-ofVec2f NodeElement::getPosOut(){
-    return ofVec2f(x+ (scale*640),y + (scale*240));
-}
+//ofVec2f NodeElement::getPosIn(){
+//    return ofVec2f(x,y +(scale*240));
+//}
+//
+//ofVec2f NodeElement::getPosOut(){
+//    return ofVec2f(x+ (scale*640),y + (scale*240));
+//}

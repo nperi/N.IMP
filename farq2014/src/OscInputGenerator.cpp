@@ -64,6 +64,7 @@ bool OscInputGenerator::setupFromXML() {
 	
 }
 
+//------------------------------------------------------------------
 void OscInputGenerator::processInput() {
     
     if(lock()){
@@ -90,5 +91,49 @@ void OscInputGenerator::processInput() {
         }
         unlock();
     }
+}
+
+//------------------------------------------------------------------
+bool OscInputGenerator::saveSettings(ofxXmlSettings &XML) {
+    
+    bool saved = false;
+    
+    // Search for the input generator name to update information
+    // If it doesn't exists.. then I need to add it to the .xml
+    //
+    
+    // Get the total number of input generators ...
+    //
+    int totalInputGen = XML.getNumTags("INPUT_GEN");
+    
+    // ... and search for the right name for loading
+    //
+    for (int i = 0; i <= totalInputGen; i++){
+        
+        // Once it found the right one ...
+        //
+        if ( XML.getAttribute("INPUT_GEN", "name", "", i) == generatorName){
+            
+            XML.setAttribute("INPUT_GEN", "name", generatorName, i);
+            break;
+        }
+        
+        // If it was the last input generator in the XML and it wasn't me..
+        // I need to add myself in the .xml file
+        //
+        else if (i >= totalInputGen-1) {
+            
+            // Insert a new INPUT_GEN tag at the end
+            // and fill it with the proper structure
+            //
+            int lastPlace = XML.addTag("INPUT_GEN");
+            
+            XML.addAttribute("INPUT_GEN", "name", generatorName, lastPlace);
+            XML.addAttribute("INPUT_GEN", "type", "MIDI", lastPlace);
+        }
+    }
+    
+    return saved;
+    
 }
 

@@ -1175,7 +1175,9 @@ bool ofApp::saveToXML() {
             // Save Param Input Generators
             //
             XML.pushTag("PARAM_INPUT_GENERATORS");
-            
+            for (int ig = 0; ig < inputGenerators.size(); ig++) {
+                inputGenerators[ig]->saveSettings(XML);
+            }
             XML.popTag(); // tag PARAM_INPUT_GENERATORS
             
             

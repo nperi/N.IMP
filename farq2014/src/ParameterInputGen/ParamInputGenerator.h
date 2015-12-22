@@ -28,6 +28,8 @@ public:
     void storeMessage(Param* p);
     void deleteAllMessages();
     virtual void keyPressed (int key);
+    
+    virtual bool saveSettings(ofxXmlSettings &XML)=0;
 
 protected:
     

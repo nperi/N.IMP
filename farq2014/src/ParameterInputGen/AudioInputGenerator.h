@@ -29,6 +29,8 @@ public:
     //for storing audio feature mapping
     std::vector<DTAudioMap*>* audioMap;
     
+    bool saveSettings(ofxXmlSettings &XML);
+    
 private:
 
     int 	bufferCounter;

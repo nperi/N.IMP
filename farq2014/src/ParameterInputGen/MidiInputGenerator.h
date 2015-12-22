@@ -29,6 +29,8 @@ public:
     vector<std::map<int,vector<DTMidiMap*>* >*>* midiMaps;
     int activeMidiMap;
     
+    bool saveSettings(ofxXmlSettings &XML);
+    
 private:
     
     string midiInputName;
