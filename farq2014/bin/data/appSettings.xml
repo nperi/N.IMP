@@ -353,9 +353,9 @@
         </NODE_VIEW>
     </NODE_VIEWS>
     <PARAM_INPUT_GENERATORS>
-        <INPUT_GEN name="FFT1" type="FFT"></INPUT_GEN>
+        <INPUT_GEN name="FFT1" type="FFT" />
     </PARAM_INPUT_GENERATORS>
     <SYPHON_SERVERS>
-        <SERVER inputName="Particle Mix" exportName="mainOut" />
+        <SERVER exportName="mainOut" inputName="Particle Mix"></SERVER>
     </SYPHON_SERVERS>
 </MAIN_SETTINGS>

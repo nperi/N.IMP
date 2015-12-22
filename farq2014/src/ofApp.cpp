@@ -1184,7 +1184,9 @@ bool ofApp::saveToXML() {
             // Save Syphon Servers
             //
             XML.pushTag("SYPHON_SERVERS");
-            
+            for (int ss = 0; ss < syphonServers.size(); ss++) {
+                syphonServers[ss]->saveSettings(XML);
+            }
             XML.popTag(); // tag SYPHON_SERVERS
         
         XML.popTag(); // tag MAIN_SETTINGS

@@ -22,6 +22,8 @@ public:
     void setup();
     void publishTexture();
     
+    bool saveSettings(ofxXmlSettings &XML);
+    
     string exportName;
     ImageOutput* feeder;
     ofxSyphonServer server;

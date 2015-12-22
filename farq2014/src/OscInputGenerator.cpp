@@ -129,7 +129,7 @@ bool OscInputGenerator::saveSettings(ofxXmlSettings &XML) {
             int lastPlace = XML.addTag("INPUT_GEN");
             
             XML.addAttribute("INPUT_GEN", "name", generatorName, lastPlace);
-            XML.addAttribute("INPUT_GEN", "type", "MIDI", lastPlace);
+            XML.addAttribute("INPUT_GEN", "type", "OSC", lastPlace);
         }
     }
     
