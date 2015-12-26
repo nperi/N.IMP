@@ -112,9 +112,9 @@ void ofApp::setup() {
         
         //invoking input generators setup functions
         //
-//        for(int i=0; i<inputGenerators.size(); i++){
-//            inputGenerators[i]->setup();
-//        }
+        for(int i=0; i<inputGenerators.size(); i++){
+            inputGenerators[i]->setup();
+        }
         
         //invoking nodes setup functions and setting main canvas and camera
         //
@@ -976,10 +976,13 @@ bool ofApp::loadFromXML(){
                             string inputName = XML.getAttribute("INPUT_GEN","name","default",j);
                             string inputType = XML.getAttribute("INPUT_GEN","type","MIDI",j);
                             string midiDeviceName = XML.getAttribute("INPUT_GEN","midiDeviceName","Oxygen 25",j);
+                            XML.pushTag("INPUT_GEN",j);
                             switch(inputGenTypes[inputType]){
                                 case MIDI:
                                 {
                                     MidiInputGenerator* mI = new MidiInputGenerator(inputName,midiDeviceName);
+                                    mI->loadSettings(XML);
+                                    
                                     inputGenerators.push_back(mI);
                                     
                                     break;
@@ -987,6 +990,8 @@ bool ofApp::loadFromXML(){
                                 case FFT:
                                 {
                                     AudioInputGenerator* aI = new AudioInputGenerator(inputName);
+                                    aI->loadSettings(XML);
+                                    
                                     inputGenerators.push_back(aI);
                                     audioListeners.push_back(aI);
                                     
@@ -995,6 +1000,8 @@ bool ofApp::loadFromXML(){
                                 case OSC:
                                 {
                                     OscInputGenerator* oI = new OscInputGenerator(inputName);
+                                    oI->loadSettings(XML);
+                                    
                                     inputGenerators.push_back(oI);
                                     
                                     break;
@@ -1007,6 +1014,7 @@ bool ofApp::loadFromXML(){
                                 };
                                     
                             }
+                            XML.popTag();
                             
                         }
                         

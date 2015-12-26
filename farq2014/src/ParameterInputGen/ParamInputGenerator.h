@@ -23,7 +23,7 @@ public:
     void start();
     void stop();
     virtual void processInput()=0;
-    virtual bool setupFromXML()=0;
+    //virtual bool setupFromXML()=0;
     Param* getNextInputMessage();
     void storeMessage(Param* p);
     void deleteAllMessages();

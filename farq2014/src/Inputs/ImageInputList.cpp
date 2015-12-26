@@ -318,11 +318,11 @@ bool ImageInputList::saveSettings(ofxXmlSettings &XML) {
             
             if (path == "none") {
 
-                int numVideoTag = XML.getNumTags("ASSET");
+                int numAssetTag = XML.getNumTags("ASSET");
                 
                 for (int v = 0; v < inputs.size(); v++){
                     
-                    if (v >= numVideoTag) {
+                    if (v >= numAssetTag) {
                         XML.addTag("ASSET");
                     }
                     XML.setAttribute("ASSET", "name", inputs[v]->getName(), v);

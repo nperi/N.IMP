@@ -18,9 +18,9 @@ void AudioListenerInput::processInput(){
     
 }
 
-bool AudioListenerInput::setupFromXML(){
-    
-}
+//bool AudioListenerInput::setupFromXML(){
+//    
+//}
 
 bool AudioListenerInput::fillNewData(float* left_, float* right_, int bufferLen_){
     

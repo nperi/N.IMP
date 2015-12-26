@@ -22,10 +22,11 @@ class OscInputGenerator : public ParamInputGenerator{
 	OscInputGenerator(string name_);
 	
     void processInput();
-    bool setupFromXML();
+    //bool setupFromXML();
     
     std::map<string,DTOscMap* >* oscMap;
     
+    bool loadSettings(ofxXmlSettings &XML);
     bool saveSettings(ofxXmlSettings &XML);
     
 private:

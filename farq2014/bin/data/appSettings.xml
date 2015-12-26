@@ -353,9 +353,29 @@
         </NODE_VIEW>
     </NODE_VIEWS>
     <PARAM_INPUT_GENERATORS>
-        <INPUT_GEN name="FFT1" type="FFT" />
+        <INPUT_GEN name="FFT1" type="FFT">
+            <FFT_SETTINGS>
+                <AUDIO_MAP band="1" nodeName="Particle Visual" param="coBrightness" inputMinValue="0.000000" inputMaxValue="50.000000" paramMinValue="0" paramMaxValue="255" />
+            </FFT_SETTINGS>
+        </INPUT_GEN>
+        <INPUT_GEN name="MIDI1" type="MIDI" midiDeviceName="Oxygen 25">
+            <MIDI_SETTINGS>
+                <MAIN_MIDI_MAP>
+                    <MIDI_MAP midiId="27" nodeName="mainMix" param="opacity" inputMinValue="0" inputMaxValue="127" paramMinValue="0" paramMaxValue="255" />
+                    <MIDI_MAP midiId="29" nodeName="V_GLITCH1" param="p2" inputMinValue="0" inputMaxValue="127" paramMinValue="0" paramMaxValue="255" />
+                    <MIDI_MAP midiId="13" nodeName="V_GLITCH1" param="p3" inputMinValue="0" inputMaxValue="127" paramMinValue="0" paramMaxValue="255" />
+                    <MIDI_MAP midiId="76" nodeName="V_GLITCH1" param="p4" inputMinValue="0" inputMaxValue="127" paramMinValue="0" paramMaxValue="255" />
+                </MAIN_MIDI_MAP>
+                <MAIN_MIDI_MAP>
+                    <MIDI_MAP midiId="27" nodeName="mainMix" param="opacity" inputMinValue="0" inputMaxValue="127" paramMinValue="0" paramMaxValue="255" />
+                    <MIDI_MAP midiId="29" nodeName="V_GLITCH1" param="p2" inputMinValue="0" inputMaxValue="127" paramMinValue="0" paramMaxValue="255" />
+                    <MIDI_MAP midiId="13" nodeName="V_GLITCH1" param="p3" inputMinValue="0" inputMaxValue="127" paramMinValue="0" paramMaxValue="255" />
+                    <MIDI_MAP midiId="76" nodeName="V_GLITCH1" param="p4" inputMinValue="0" inputMaxValue="127" paramMinValue="0" paramMaxValue="255" />
+                </MAIN_MIDI_MAP>
+            </MIDI_SETTINGS>
+        </INPUT_GEN>
     </PARAM_INPUT_GENERATORS>
     <SYPHON_SERVERS>
-        <SERVER exportName="mainOut" inputName="Particle Mix"></SERVER>
+        <SERVER exportName="mainOut" inputName="Particle Mix" />
     </SYPHON_SERVERS>
 </MAIN_SETTINGS>

@@ -24,7 +24,7 @@ public:
     
     AudioListenerInput(string name_);
     void processInput();
-    bool setupFromXML();
+    //bool setupFromXML();
     bool fillNewData(float* left_, float* right_, int bufferLen_);
     void disposeData();
 

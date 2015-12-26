@@ -20,7 +20,7 @@ public:
     
     MidiInputGenerator(string name_, string midiInputName_);
     void processInput();
-    bool setupFromXML();
+    //bool setupFromXML();
     void newMidiMessage(ofxMidiMessage& eventArgs);
     void keyPressed (int key);
     void nextMidiMap();
@@ -29,6 +29,7 @@ public:
     vector<std::map<int,vector<DTMidiMap*>* >*>* midiMaps;
     int activeMidiMap;
     
+    bool loadSettings(ofxXmlSettings &XML);
     bool saveSettings(ofxXmlSettings &XML);
     
 private:

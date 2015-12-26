@@ -175,7 +175,14 @@ bool VideoPlayerMac::saveSettings(ofxXmlSettings &XML) {
             
             XML.pushTag("NODE", i);
             
+            int numVideoTag = XML.getNumTags("VIDEO");
+            
             for (int v = 0; v < playerPaths.size(); v++){
+                
+                if (v >= numVideoTag) {
+                    XML.addTag("VIDEO");
+                }
+                
                 XML.setAttribute("VIDEO", "path", playerPaths[v], v);
             }
             

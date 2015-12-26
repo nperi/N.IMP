@@ -36,7 +36,7 @@ void MidiInputGenerator::prevMidiMap(){
 }
 
 //------------------------------------------------------------------
-bool MidiInputGenerator::setupFromXML(){
+/*bool MidiInputGenerator::setupFromXML(){
     
     bool result = true;
     
@@ -115,7 +115,7 @@ bool MidiInputGenerator::setupFromXML(){
     }
     
     return result;
-}
+}*/
 
 //------------------------------------------------------------------
 void MidiInputGenerator::newMidiMessage(ofxMidiMessage& msg){
@@ -169,6 +169,70 @@ void MidiInputGenerator::keyPressed (int key){
 }
 
 //------------------------------------------------------------------
+bool MidiInputGenerator::loadSettings(ofxXmlSettings &XML) {
+    
+    bool result = true;
+    XML.pushTag("MIDI_SETTINGS");
+    
+    int getNumMainMidiMapTag = XML.getNumTags("MAIN_MIDI_MAP");
+    
+    for (int j = 0; j < getNumMainMidiMapTag; j++){
+        
+        XML.pushTag("MAIN_MIDI_MAP",j);
+        
+        std::map<int,vector<DTMidiMap*>* >* mMap = new std::map<int,vector<DTMidiMap*>* >();
+        
+        int getNumMidiMapTag = XML.getNumTags("MIDI_MAP");
+        
+        for(int i = 0; i < getNumMidiMapTag; i++){
+            
+            DTMidiMap* dtM = new DTMidiMap();
+            
+            dtM->control = ofToInt(XML.getAttribute("MIDI_MAP","midiId","0",i));
+            dtM->nodeId = XML.getAttribute("MIDI_MAP","nodeName","",i);
+            dtM->paramId = XML.getAttribute("MIDI_MAP","param","",i);
+            dtM->inputMinValue = ofToInt(XML.getAttribute("MIDI_MAP","inputMinValue","0",i));
+            dtM->inputMaxValue = ofToInt(XML.getAttribute("MIDI_MAP","inputMaxValue","127",i));
+            dtM->paramMinValue = ofToInt(XML.getAttribute("MIDI_MAP","paramMinValue","0",i));
+            dtM->paramMaxValue = ofToInt(XML.getAttribute("MIDI_MAP","paramMaxValue","127",i));
+            
+            std::map<int,vector<DTMidiMap*>*>::iterator it;
+            
+            it = mMap->find(dtM->control);
+            
+            vector<DTMidiMap*>* vMap = NULL;
+            
+            if(it==mMap->end()){
+                //we create the vector and insert it to the map
+                vMap = new vector<DTMidiMap*>();
+                mMap->insert(std::pair<int,vector<DTMidiMap*>* >(dtM->control,vMap));
+            }
+            else{
+                vMap = it->second;
+            }
+            
+            vMap->push_back(dtM);
+            
+        }
+        
+        midiMaps->push_back(mMap);
+        
+        XML.popTag();
+    }
+    
+    XML.popTag();
+    midiIn.openPort(midiInputName);
+    midiIn.ignoreTypes(false, false, false);
+    // add this class as a listener
+    midiIn.addListener(this);
+    
+    // we start at the first midiMap.
+    activeMidiMap = 0;
+    
+    return result;
+}
+
+//------------------------------------------------------------------
 bool MidiInputGenerator::saveSettings(ofxXmlSettings &XML) {
     
     bool saved = false;
@@ -207,6 +271,23 @@ bool MidiInputGenerator::saveSettings(ofxXmlSettings &XML) {
             XML.addAttribute("INPUT_GEN", "name", generatorName, lastPlace);
             XML.addAttribute("INPUT_GEN", "type", "MIDI", lastPlace);
             XML.addAttribute("INPUT_GEN", "midiDeviceName", midiInputName, lastPlace);
+            
+            XML.pushTag("INPUT_GEN");
+            XML.addTag("MIDI_SETTINGS");
+            XML.pushTag("MIDI_SETTINGS");
+            
+//            for(int i = 0; i < midiMaps->size(); i++){
+//                
+//                XML.addTag("MIDI_MAP");
+//                
+//                for(map<int,vector<DTMidiMap*>* >::iterator it = midiMaps->at(i)->begin(); it != midiMaps->at(i)->end(); it++ ){
+//
+//                }
+//                
+//            }
+            
+            XML.popTag(); // FFT_SETTINGS
+            XML.popTag(); // INPUT_GEN
         }
     }
     

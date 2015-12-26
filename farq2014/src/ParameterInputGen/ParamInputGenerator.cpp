@@ -22,7 +22,7 @@ ParamInputGenerator::~ParamInputGenerator(){
 
 void ParamInputGenerator::setup(){
     samplingMs = 33; // default sampling is 30 fps -- this only works with threaded generators
-    setupFromXML();
+    //setupFromXML();
     isConfigured = true;
 }
 

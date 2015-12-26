@@ -25,10 +25,11 @@ public:
     
     AudioInputGenerator(string name_);
     void processInput();
-    bool setupFromXML();
+    //bool setupFromXML();
     //for storing audio feature mapping
     std::vector<DTAudioMap*>* audioMap;
     
+    bool loadSettings(ofxXmlSettings &XML);
     bool saveSettings(ofxXmlSettings &XML);
     
 private:
