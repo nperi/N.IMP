@@ -61,30 +61,33 @@ void GlitchLayer::draw(int x,int y, float scale) {
 void GlitchLayer::update(){
     //process pipeline
     
-    img.setFromPixels(input[0]->getImage()->getPixels(), width, height, OF_IMAGE_COLOR);
-    
-    if(isEnabled){
+    if(input.size()) {
         
-        setGlitchParameters();
-        
-        fbo.begin();
-        
-        ofClear(0, 0, 0,255);
-        ofSetColor(255);
-        //img.draw(0, 0);
-        input[0]->getTextureReference().draw(0,0,width,height);
-        
-        fbo.end();
-        
-        /* Apply effects */
-        myGlitch.generateFx();
+        img.setFromPixels(input[0]->getImage()->getPixels(), width, height, OF_IMAGE_COLOR);
 
-        ofPixels buff;
-        fbo.readToPixels(buff);
-        img.setFromPixels(buff);
+        if(isEnabled){
+            
+            setGlitchParameters();
+            
+            fbo.begin();
+            
+            ofClear(0, 0, 0,255);
+            ofSetColor(255);
+            //img.draw(0, 0);
+            input[0]->getTextureReference().draw(0,0,width,height);
+            
+            fbo.end();
+            
+            /* Apply effects */
+            myGlitch.generateFx();
+
+            ofPixels buff;
+            fbo.readToPixels(buff);
+            img.setFromPixels(buff);
+        }
+
+        img.update();
     }
-    
-    img.update();
     tex = img.getTextureReference();
 }
 

@@ -149,22 +149,26 @@ void ImageProcessor::update() {
     glBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA,GL_ONE,GL_ONE_MINUS_SRC_ALPHA);
     ofSetColor(255);
     ofClear(255,255,255,0);
-    post.begin();
-    ofClear(255,255,255,0);
-    ofPushMatrix();
-    ofScale(1, -1);
-    ofPushMatrix();
-    ofTranslate(0, -height);
-    //input[0]->getTexture()->draw(0,0,width,height);
-    input[0]->getTextureReference().draw(0,0);
-    ofPopMatrix();
-    ofPopMatrix();
-    post.end();
+
+    if(input.size()) {
+
+        post.begin();
+        ofClear(255,255,255,0);
+        ofPushMatrix();
+        ofScale(1, -1);
+        ofPushMatrix();
+        ofTranslate(0, -height);
+        //input[0]->getTexture()->draw(0,0,width,height);
+        input[0]->getTextureReference().draw(0,0);
+        ofPopMatrix();
+        ofPopMatrix();
+        post.end();
+    }
+
     glDisable(GL_BLEND);
     glPopAttrib();
     fbo.end();
     tex = fbo.getTextureReference();
-    
 }
 
 void ImageProcessor::updateParameter(Param* inputParam){

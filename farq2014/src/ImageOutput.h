@@ -50,9 +50,10 @@ class ImageOutput : public ofxPatch {
     void setGui(int x,int y, int width = 240);
     
     //methods for adding input//
-    void addInput(ImageOutput* layer_);
+    void addInput(ofxPatch* layer_);
     void addInputIdentifier(string inputId_);
     bool findAndAssignInputs(map<string,ImageOutput*> &nodeCollection);
+    void removeInput(string inputId_);
     
     void resetProcessedFlag();
     

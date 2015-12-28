@@ -27,10 +27,10 @@ string ImageOutput::getName(){
 }
 
 //------------------------------------------------------------------
-void ImageOutput::addInput(ImageOutput* layer_){
+void ImageOutput::addInput(ofxPatch* layer_){
     if (input.size()<maxInputs) {
-        input.push_back(layer_);
-        inputAdded(layer_);
+        input.push_back((ImageOutput*)layer_);
+        inputAdded((ImageOutput*)layer_);
     }
 }
 
@@ -63,6 +63,18 @@ bool ImageOutput::findAndAssignInputs(map<string,ImageOutput*> &nodeCollection){
     }
     return error;
 
+}
+
+//------------------------------------------------------------------
+void ImageOutput::removeInput(string inputId_){
+    
+    for(std::vector<ImageOutput*>::iterator it = input.begin(); it != input.end(); it++ ){
+        
+        if((*it)->getName() == inputId_){
+            input.erase(it);
+            break;
+        }
+    }
 }
 
 //------------------------------------------------------------------

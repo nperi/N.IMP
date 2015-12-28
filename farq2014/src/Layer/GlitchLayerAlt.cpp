@@ -38,23 +38,26 @@ void GlitchLayerAlt::draw(int x,int y, float scale) {
 //------------------------------------------------------------------
 void GlitchLayerAlt::update(){
     //process pipeline
-    img.setFromPixels(input[0]->getImage()->getPixels(), width, height, OF_IMAGE_COLOR);
     
-    if(isEnabled){
-       
-        //setting glitcher values according to GUI
-        glitcher.setDataGlitchness(dq);
-        glitcher.setQNGlitchness(qn);
-        glitcher.setDHTGlitchness(dht);
+    if(input.size()) {
         
-        glitcher.setPixels(img.getPixelsRef());
-        glitcher.glitch();
-        img.setFromPixels(glitcher.getImage().getPixelsRef());
+        img.setFromPixels(input[0]->getImage()->getPixels(), width, height, OF_IMAGE_COLOR);
         
+        if(isEnabled){
+           
+            //setting glitcher values according to GUI
+            glitcher.setDataGlitchness(dq);
+            glitcher.setQNGlitchness(qn);
+            glitcher.setDHTGlitchness(dht);
+            
+            glitcher.setPixels(img.getPixelsRef());
+            glitcher.glitch();
+            img.setFromPixels(glitcher.getImage().getPixelsRef());
+            
+        }
+        
+        img.update();
     }
-    
-    img.update();
-    
 }
 
 //------------------------------------------------------------------

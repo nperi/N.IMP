@@ -42,52 +42,57 @@ void IkedaLayer::draw(int x,int y, float scale) {
 
 //------------------------------------------------------------------
 void IkedaLayer::update(){
-    //process pipeline
-    //img.setFromPixels(img_.getPixels(), 640, 480, OF_IMAGE_COLOR);
-    //canny edge detection
-    if(isEnabled){
-        img.setImageType(OF_IMAGE_GRAYSCALE);
-        //to gray image
-        convertColor(*(input[0]->getImage()), img, CV_RGB2GRAY);
+    
+    if(input.size()) {
         
-        if (isCanny) {
-            // canny edge detection
-            Canny(img, img, pCannyX, pCannyY, 3);
-        }
-
-        //reduce columns
-        if (isColumns) {
-            int n = img.getWidth() / (pNColumns);
-            int totalPixels = img.getWidth()*img.getHeight();
-            unsigned char* pixels = img.getPixels();
+        //process pipeline
+        //img.setFromPixels(img_.getPixels(), 640, 480, OF_IMAGE_COLOR);
+        //canny edge detection
+        if(isEnabled){
+            img.setImageType(OF_IMAGE_GRAYSCALE);
+            //to gray image
+            convertColor(*(input[0]->getImage()), img, CV_RGB2GRAY);
             
-            for (int i = 0; i < totalPixels; i+=n){
-                int val = 0;
-                for (int j=0; j<n; j++) {
-                    val += pixels[j+i];
-                }
-                val /= n;
-                for (int j=0; j<n; j++) {
-                    pixels[j+i] = val;
+            if (isCanny) {
+                // canny edge detection
+                Canny(img, img, pCannyX, pCannyY, 3);
+            }
+
+            //reduce columns
+            if (isColumns) {
+                int n = img.getWidth() / (pNColumns);
+                int totalPixels = img.getWidth()*img.getHeight();
+                unsigned char* pixels = img.getPixels();
+                
+                for (int i = 0; i < totalPixels; i+=n){
+                    int val = 0;
+                    for (int j=0; j<n; j++) {
+                        val += pixels[j+i];
+                    }
+                    val /= n;
+                    for (int j=0; j<n; j++) {
+                        pixels[j+i] = val;
+                    }
                 }
             }
+            
+            //threshold
+            if (isThreshold) {
+                threshold(img, pThreshold);
+            }
+            
+            //invert
+            if (isInvert) {
+                invert(img);
+            }
         }
-        
-        //threshold
-        if (isThreshold) {
-            threshold(img, pThreshold);
+        else{
+            //we bypass the image
+            img.setFromPixels(input[0]->getImage()->getPixels(), width, height, OF_IMAGE_COLOR);
         }
-        
-        //invert
-        if (isInvert) {
-            invert(img);
-        }
+        img.update();
     }
-    else{
-        //we bypass the image
-        img.setFromPixels(input[0]->getImage()->getPixels(), width, height, OF_IMAGE_COLOR);
-    }
-    img.update();
+    
     tex = img.getTextureReference();// .loadData(img.getPixels(), img.getWidth(), img.getHeight(), GL_RGB);
     
 }

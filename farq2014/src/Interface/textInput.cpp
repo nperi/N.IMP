@@ -25,15 +25,16 @@ textInput::textInput(string _name, string _textstring, float w, float h, float x
     imSelected = false;
 }
 
+//------------------------------------------------------------------
 textInput::~textInput() {
     
     ofRemoveListener(((ofxUISuperCanvas*) this->getCanvasParent())->newGUIEvent, this, &textInput::guiEvent);
 }
 
+
 /* ================================================ */
 /*                      EVENTS                      */
 /* ================================================ */
-
 
 void textInput::keyPressed(int key) {
     
@@ -53,6 +54,7 @@ void textInput::keyPressed(int key) {
     }
 }
 
+//------------------------------------------------------------------
 void textInput::mouseDragged(int x, int y, int button) {
     
     if ( (this->hit && !((ofxUISuperCanvas*)this->getCanvasParent())->getOtherSelected()) || (this->hit && imSelected) ) {
@@ -68,6 +70,7 @@ void textInput::mouseDragged(int x, int y, int button) {
     }
 }
 
+//------------------------------------------------------------------
 void textInput::mouseReleased(int x, int y, int button) {
     
     if (hit) {
@@ -84,6 +87,7 @@ void textInput::mouseReleased(int x, int y, int button) {
     ofxUITextInput::mouseReleased(x, y, button);
 }
 
+//------------------------------------------------------------------
 void textInput::guiEvent(ofxUIEventArgs &e){
     
     if(e.widget == this->dropdownList && this->dropdownList->getSelected().size()) {
@@ -242,6 +246,7 @@ void textInput::setDropdownList(ofxUIDropDownList* dl) {
     ofAddListener(((ofxUISuperCanvas*) dl->getCanvasParent())->newGUIEvent,this,&textInput::guiEvent);
 }
 
+//------------------------------------------------------------------
 ofxUIDropDownList* textInput::getDropdownList() {
     return this->dropdownList;
 }
