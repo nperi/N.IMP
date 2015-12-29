@@ -287,6 +287,9 @@ void ofApp::draw() {
         
         //draw scrollbars
         scrollBars->draw();
+        
+        //draw inspectors
+        nodeViewers[currentViewer]->drawInspectorGUIs();
     }
     else{
         ofDrawBitmapString("ERROR LOADING XML", 50, 50);
