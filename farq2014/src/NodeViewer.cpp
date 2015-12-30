@@ -52,7 +52,7 @@ void NodeViewer::createConnections(){
         inputs = elements[i]->getImageOutput()->getInputs();
         
         for (int j = 0; j < inputs.size(); j++) {
-            connect(inputs[j]->getId(), elements[i]->getImageOutput()->getId(), 0);
+            connect(inputs[j]->getId(), elements[i]->getImageOutput()->getId(), 0, false);
         }
     }
 }

@@ -129,10 +129,10 @@ void MidiInputGenerator::newMidiMessage(ofxMidiMessage& msg){
     if(it!=midiMaps->at(activeMidiMap)->end()){
         vector<DTMidiMap*>* vMaps = it->second;
         for(int i = 0; i<vMaps->size(); i++){
-            Param* p = new Param();
-            p->imageInputName = it->second->at(i)->nodeId;
-            p->name = it->second->at(i)->paramId;
-            p->intVal = ofMap(msg.value, it->second->at(i)->inputMinValue, it->second->at(i)->inputMaxValue, it->second->at(i)->paramMinValue, it->second->at(i)->paramMaxValue);
+            Param* p        = new Param();
+            p->imageInputId = it->second->at(i)->nodeId;
+            p->name         = it->second->at(i)->paramId;
+            p->intVal       = ofMap(msg.value, it->second->at(i)->inputMinValue, it->second->at(i)->inputMaxValue, it->second->at(i)->paramMinValue, it->second->at(i)->paramMaxValue);
             
             // since this is unthreaded, then i dont need to lock and unlock
             storeMessage(p);
@@ -188,13 +188,13 @@ bool MidiInputGenerator::loadSettings(ofxXmlSettings &XML) {
             
             DTMidiMap* dtM = new DTMidiMap();
             
-            dtM->control = ofToInt(XML.getAttribute("MIDI_MAP","midiId","0",i));
-            dtM->nodeId = XML.getAttribute("MIDI_MAP","nodeName","",i);
-            dtM->paramId = XML.getAttribute("MIDI_MAP","param","",i);
-            dtM->inputMinValue = ofToInt(XML.getAttribute("MIDI_MAP","inputMinValue","0",i));
-            dtM->inputMaxValue = ofToInt(XML.getAttribute("MIDI_MAP","inputMaxValue","127",i));
-            dtM->paramMinValue = ofToInt(XML.getAttribute("MIDI_MAP","paramMinValue","0",i));
-            dtM->paramMaxValue = ofToInt(XML.getAttribute("MIDI_MAP","paramMaxValue","127",i));
+            dtM->control        = ofToInt(XML.getAttribute("MIDI_MAP","midiId","0",i));
+            dtM->nodeId         = XML.getAttribute("MIDI_MAP","nodeId",0,i);
+            dtM->paramId        = XML.getAttribute("MIDI_MAP","param","",i);
+            dtM->inputMinValue  = ofToInt(XML.getAttribute("MIDI_MAP","inputMinValue","0",i));
+            dtM->inputMaxValue  = ofToInt(XML.getAttribute("MIDI_MAP","inputMaxValue","127",i));
+            dtM->paramMinValue  = ofToInt(XML.getAttribute("MIDI_MAP","paramMinValue","0",i));
+            dtM->paramMaxValue  = ofToInt(XML.getAttribute("MIDI_MAP","paramMaxValue","127",i));
             
             std::map<int,vector<DTMidiMap*>*>::iterator it;
             
@@ -254,7 +254,7 @@ bool MidiInputGenerator::saveSettings(ofxXmlSettings &XML) {
         if ( XML.getAttribute("INPUT_GEN", "name", "", i) == generatorName){
             
             XML.setAttribute("INPUT_GEN", "name", generatorName, i);
-            XML.setAttribute("INPUT_GEN", "midiDeviceName", generatorName, i);
+            XML.setAttribute("INPUT_GEN", "midiDeviceName", midiInputName, i);
             break;
         }
         

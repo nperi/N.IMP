@@ -19,7 +19,8 @@ class InputCamera : public InputSource{
 	
   public:
 	
-	InputCamera(string name = "camera");
+	InputCamera();
+    InputCamera(string name, int id_ = -1);
 	
 	void setup();
 	

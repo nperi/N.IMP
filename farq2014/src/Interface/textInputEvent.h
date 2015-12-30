@@ -17,6 +17,7 @@ public:
     string type;
     ofPoint point;
     string path;
+    string name;
     ofxUIWidget* widget;
 };
 

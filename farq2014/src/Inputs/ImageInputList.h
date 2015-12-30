@@ -26,7 +26,7 @@ class ImageInputList : public InputSource{
 	
   public:
 	
-    ImageInputList(string name = "image input");
+    ImageInputList(string name = "New Image Input", int id_ = -1);
     
     void setup();
     void draw(int x,int y, float scale);

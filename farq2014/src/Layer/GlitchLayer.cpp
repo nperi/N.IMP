@@ -10,7 +10,7 @@
 
 
 //------------------------------------------------------------------
-GlitchLayer::GlitchLayer(string name_):VisualLayer(name_){
+GlitchLayer::GlitchLayer(string name_, int id_):VisualLayer(name_, id_){
     
     gui.add(isEnabled.setup("Enabled",isEnabled, 100,20));
     gui.add(do_CONVERGENCE.setup("CONVERGENCE", do_CONVERGENCE, 100,20));
@@ -179,7 +179,7 @@ bool GlitchLayer::saveSettings(ofxXmlSettings &XML) {
         if ( XML.getAttribute("NODE", "id", -1, i) == nId){
             
             XML.setAttribute("NODE", "name", name, i);
-            XML.setAttribute("NODE", "inputSource", input[0]->getName(), i);
+            XML.setAttribute("NODE", "inputSource", input[0]->getId(), i);
             
             XML.setAttribute("NODE","do_CONVERGENCE", do_CONVERGENCE, i);
             XML.setAttribute("NODE","do_GLOW", do_GLOW, i);
@@ -221,7 +221,7 @@ bool GlitchLayer::saveSettings(ofxXmlSettings &XML) {
             XML.addAttribute("NODE", "id", nId, lastPlace);
             XML.addAttribute("NODE", "name", name, lastPlace);
             XML.addAttribute("NODE", "type", "GLITCH_1", lastPlace);
-            XML.setAttribute("NODE", "inputSource", input[0]->getName(), lastPlace);
+            XML.setAttribute("NODE", "inputSource", input[0]->getId(), lastPlace);
             
             XML.addAttribute("NODE","do_CONVERGENCE", do_CONVERGENCE, lastPlace);
             XML.addAttribute("NODE","do_GLOW", do_GLOW, lastPlace);

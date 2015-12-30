@@ -20,13 +20,13 @@ class DTOscMap {
     DTOscMap(){};
     
     string path;
-    vector<string> nodeId;
-    vector<string> paramId;
+    vector<int>     nodeId;
+    vector<string>  paramId;
     
-    vector<float> inputMinValue;
-    vector<float> inputMaxValue;
-    vector<float> paramMinValue;
-    vector<float> paramMaxValue;
+    vector<float>   inputMinValue;
+    vector<float>   inputMaxValue;
+    vector<float>   paramMinValue;
+    vector<float>   paramMaxValue;
     
     
 	

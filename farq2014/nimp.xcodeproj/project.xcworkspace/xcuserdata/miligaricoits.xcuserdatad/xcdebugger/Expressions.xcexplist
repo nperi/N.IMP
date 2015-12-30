@@ -3,7 +3,12 @@
    version = "1.0">
    <ContextStates>
       <ContextState
-         contextName = "ofFbo::updateTexture(int):ofFbo.cpp">
+         contextName = "ofxComposer::_mouseReleased(ofMouseEventArgs&amp;):ofxComposer.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "patches[selectedDot]-&gt;outPut">
+            </PersistentString>
+         </PersistentStrings>
       </ContextState>
       <ContextState
          contextName = "ofxPatch::_mousePressed(ofMouseEventArgs&amp;):ofxPatch.cpp">
@@ -14,15 +19,26 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "ImageInputList::saveSettings(ofxXmlSettings&amp;):ImageInputList.cpp">
+         contextName = "ImageOutput::removeInput(std::string):ImageOutput.cpp">
          <PersistentStrings>
             <PersistentString
-               value = "XML.getAttribute(&quot;NODE&quot;, &quot;id&quot;, -1)">
+               value = "(*it)-&gt;getName()">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
       <ContextState
          contextName = "ofApp::update():ofApp.cpp">
+      </ContextState>
+      <ContextState
+         contextName = "ImageProcessor::update():ImageProcessor.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "input">
+            </PersistentString>
+            <PersistentString
+               value = "input[0]">
+            </PersistentString>
+         </PersistentStrings>
       </ContextState>
       <ContextState
          contextName = "ofxUISuperCanvas::getOtherSelected():ofxUISuperCanvas.cpp">

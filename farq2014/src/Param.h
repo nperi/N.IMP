@@ -17,11 +17,12 @@ class Param {
   public:
 	
 	Param();
-    string imageInputName;
-    string name;
-    int intVal;
-    string stringVal;
-    float floatVal;
+    //string imageInputName;
+    string  name;
+    int     imageInputId;
+    int     intVal;
+    string  stringVal;
+    float   floatVal;
 	
 };
 

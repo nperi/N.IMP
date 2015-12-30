@@ -30,7 +30,7 @@ class ImageOutput : public ofxPatch {
 	
   public:
 	
-    ImageOutput(string name_,int maxInputs_ = 1, int width_ = NODE_WIDTH, int height_ = NODE_HEIGHT);
+    ImageOutput(string name_, int id_, int maxInputs_ = 1, int width_ = NODE_WIDTH, int height_ = NODE_HEIGHT);
     
     string getName();
     ofImage* getImage();
@@ -51,9 +51,9 @@ class ImageOutput : public ofxPatch {
     
     //methods for adding input//
     void addInput(ofxPatch* layer_);
-    void addInputIdentifier(string inputId_);
-    bool findAndAssignInputs(map<string,ImageOutput*> &nodeCollection);
-    void removeInput(string inputId_);
+    void addInputIdentifier(int inputId_);
+    bool findAndAssignInputs(map<int,ImageOutput*> &nodeCollection);
+    void removeInput(int inputId_);
     
     void resetProcessedFlag();
     
@@ -73,7 +73,7 @@ protected:
     ofImage img;
     
     vector<ImageOutput*> input;
-    vector<string> inputIdentifiers;
+    vector<int> inputIdentifiers;
     int maxInputs;
     
     //resolution

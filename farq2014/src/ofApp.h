@@ -91,7 +91,7 @@ public:
     vector<AudioListenerInput*> audioListeners;
     
     //all objects are stored in this collection
-    map<string, ImageOutput*> nodes;
+    map<int, ImageOutput*> nodes;
     vector<ImageOutput*> nodesVector;
     
     //syphon
@@ -144,5 +144,5 @@ public:
     //create new node
     vector<ofxUIWidget*> widgetsToDelete;
     textInput* newNodeInput;
-   
+
 };

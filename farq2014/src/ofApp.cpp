@@ -212,11 +212,11 @@ void ofApp::update() {
                 Param* param = p->getNextInputMessage();
                 
                 //sending param info to the destination node
-                if(param!=NULL){
-                    ImageOutput* destinationNode=NULL;
-                    std::map<string,ImageOutput*>::iterator it;
+                if(param != NULL){
+                    ImageOutput* destinationNode = NULL;
+                    std::map<int,ImageOutput*>::iterator it;
 
-                    it=nodes.find(param->imageInputName);
+                    it = nodes.find(param->imageInputId);
                     
                     if(it!=nodes.end()){
                         it->second->updateParameter(param);
@@ -577,14 +577,14 @@ void ofApp::setCurrentViewer(int currentViewer_){
 //------------------------------------------------------------------
 void ofApp::createNodeInput(float _x, float _y){
     
-    textInput *node = new textInput("", "", 150, 20, _x, _y);
+    textInput *node = new textInput("", "", 200, 20, _x, _y);
     vector<string> nodes;
-    ofxUIDropDownList *dlist = new ofxUIDropDownList("", nodes, 150, _x, _y);
+    ofxUIDropDownList *dlist = new ofxUIDropDownList("", nodes, 200, _x, _y);
     
     gui->addWidget(dlist);
     gui->addWidget(node);
     
-    node->setColorBack(ofxUIColor (80,80,80,100));
+    node->setColorBack(ofxUIColor (80,80,80,200));
     node->setColorOutlineHighlight(ofxUIColor(150,150,250));
     node->setDropdownList(dlist);
     
@@ -596,15 +596,63 @@ void ofApp::createNodeInput(float _x, float _y){
 //------------------------------------------------------------------
 void ofApp::createNode(textInputEvent &args){
     
-    if (args.type == "ofImage" || args.type == "ofVideoPlayer" || args.type == "ofShader" || args.type == "ofTexture") {
-        nodeViewers[currentViewer]->addPatchFromFile(args.path, args.point);
+    NodeElement* nE;
+    ImageOutput* newPatch;
+    
+    if (args.type == "camera") {
+        newPatch = new InputCamera();
+        inputs.push_back((InputCamera*)newPatch);
     }
-    else {
-        nodeViewers[currentViewer]->addPatchWithOutFile(args.type, args.point);
+    else if (args.type == "image") {
+        newPatch = new ImageInputList();
+        ((ImageInputList*)newPatch)->loadImage(args.name, args.path);
+        inputs.push_back((ImageInputList*)newPatch);
     }
+    else if (args.type == "video") {
+        newPatch = new VideoPlayerMac();
+        ((VideoPlayerMac*)newPatch)->loadVideo(args.path);
+        inputs.push_back((VideoPlayerMac*)newPatch);
+    }
+    else if (args.type == "particle generator") {
+        newPatch = new ParticleGenerator();
+        inputs.push_back((ParticleGenerator*)newPatch);
+    }
+    else if (args.type == "ikeda") {
+        newPatch = new IkedaLayer();
+        visualLayers.push_back((IkedaLayer*)newPatch);
+    }
+    else if (args.type == "glitch 1") {
+        newPatch = new GlitchLayer();
+        visualLayers.push_back((GlitchLayer*)newPatch);
+    }
+    else if (args.type == "glitch 2") {
+        newPatch = new GlitchLayerAlt();
+        visualLayers.push_back((GlitchLayerAlt*)newPatch);
+    }
+    else if (args.type == "image processor") {
+        newPatch = new ImageProcessor();
+        visualLayers.push_back((ImageProcessor*)newPatch);
+    }
+    else if (args.type == "mix simple blend") {
+        newPatch = new MixSimpleBlend();
+        mixtables.push_back((MultiChannelSwitch*)newPatch);
+    }
+    else if (args.type == "mix mask") {
+        newPatch = new MixMask();
+        mixtables.push_back((MultiChannelSwitch*)newPatch);
+    }
+    else if (args.type == "multi channel switch") {
+        newPatch = new MultiChannelSwitch();
+        mixtables.push_back((MultiChannelSwitch*)newPatch);
+    }
+    
+    nE = new NodeElement(newPatch);
+    nodeViewers[currentViewer]->addElement(nE);
+    nodes.insert(std::pair<int, ImageOutput*>(newPatch->getId(), newPatch));
+    nodesVector.push_back(newPatch);
+    newPatch->setup();
     
     ofRemoveListener(((textInput*)args.widget)->createNode , this, &ofApp::createNode);
-    
     widgetsToDelete.push_back(args.widget); // delete input from canvas
 }
 
@@ -614,6 +662,7 @@ bool ofApp::loadFromXML(){
     bool result = true;
     string message = "";
     nodeLinkType nodeLinkType;
+    int nodesCount;
     
     if( XML.loadFile("appSettings.xml") ){
         
@@ -644,6 +693,8 @@ bool ofApp::loadFromXML(){
                     break;
             }
             
+            nodesCount = XML.getValue("total_nodes", -1);
+            
             int numSettingsTag = XML.getNumTags("SETTINGS");
             
             if(numSettingsTag==1){
@@ -659,17 +710,18 @@ bool ofApp::loadFromXML(){
                     
                     int numInputTag = XML.getNumTags("NODE");
                     for(int i=0; i < numInputTag; i++){
+                        int    inputId   = XML.getAttribute("NODE","id",-1,i);
                         string inputName = XML.getAttribute("NODE","name","default",i);
                         string inputType = XML.getAttribute("NODE","type","CAM",i);
                         
                         switch(inputTypes[inputType]){
                             case VIDEO:
                             {
-                                VideoPlayerMac* vP = new VideoPlayerMac(inputName);
+                                VideoPlayerMac* vP = new VideoPlayerMac(inputName, inputId);
                                 
                                 if (vP->loadSettings(XML, i)) {
                                     inputs.push_back(vP);
-                                    nodes.insert(std::pair<string,ImageOutput*>(inputName,vP));
+                                    nodes.insert(std::pair<int,ImageOutput*>(inputId,vP));
                                 }
                                 else {
                                     result = false;
@@ -680,21 +732,21 @@ bool ofApp::loadFromXML(){
                             };
                             case CAM:
                             {
-                                InputCamera* iC = new InputCamera(inputName);
+                                InputCamera* iC = new InputCamera(inputName, inputId);
                                 iC->loadSettings(XML, i);
                                 
                                 inputs.push_back(iC);
-                                nodes.insert(std::pair<string,ImageOutput*>(inputName,iC));
+                                nodes.insert(std::pair<int,ImageOutput*>(inputId,iC));
                                 
                                 break;
                             };
                             case IMAGE:
                             {
-                                ImageInputList* iI = new ImageInputList(inputName);
+                                ImageInputList* iI = new ImageInputList(inputName, inputId);
                                 
                                 if (iI->loadSettings(XML, i)) {
                                     inputs.push_back(iI);
-                                    nodes.insert(std::pair<string,ImageOutput*>(inputName,iI));
+                                    nodes.insert(std::pair<int,ImageOutput*>(inputId,iI));
                                 }
                                 else {
                                     result = false;
@@ -705,11 +757,11 @@ bool ofApp::loadFromXML(){
                             };
                             case PARTICLE:
                             {
-                                ParticleGenerator* iI = new ParticleGenerator(inputName);
+                                ParticleGenerator* iI = new ParticleGenerator(inputName, inputId);
                                 iI->loadSettings(XML, i);
                                 
                                 inputs.push_back(iI);
-                                nodes.insert(std::pair<string,ImageOutput*>(inputName,iI));
+                                nodes.insert(std::pair<int,ImageOutput*>(inputId,iI));
                                 
                                 break;
                             };
@@ -747,55 +799,56 @@ bool ofApp::loadFromXML(){
                         int numVLTag = XML.getNumTags("NODE");
                         
                         for(int i=0; i < numVLTag; i++){
-                            string layerName = XML.getAttribute("NODE","name","default",i);
-                            string layerType = XML.getAttribute("NODE","type","IKEDA",i);
-                            string inputSourceName = XML.getAttribute("NODE","inputSource","default",i);
+                            int    layerId    = XML.getAttribute("NODE","id",-1,i);
+                            string layerName  = XML.getAttribute("NODE","name","default",i);
+                            string layerType  = XML.getAttribute("NODE","type","IKEDA",i);
+                            int inputSourceId = XML.getAttribute("NODE","inputSource",0,i);
                             
                             switch(visualLayerTypes[layerType]){
                                 case IKEDA:
                                 {
-                                    IkedaLayer* iL = new IkedaLayer(layerName);
+                                    IkedaLayer* iL = new IkedaLayer(layerName, layerId);
                                     iL->loadSettings(XML, i);
                                     
-                                    iL->addInputIdentifier(inputSourceName);
+                                    iL->addInputIdentifier(inputSourceId);
                                     
                                     visualLayers.push_back(iL);
-                                    nodes.insert(std::pair<string,ImageOutput*>(layerName,iL));
+                                    nodes.insert(std::pair<int,ImageOutput*>(layerId,iL));
                                     
                                     break;
                                 };
                                 case GLITCH_1:
                                 {
-                                    GlitchLayer* gL = new GlitchLayer(layerName);
-                                    gL->addInputIdentifier(inputSourceName);
+                                    GlitchLayer* gL = new GlitchLayer(layerName, layerId);
+                                    gL->addInputIdentifier(inputSourceId);
                                     gL->loadSettings(XML, i);
 
                                     visualLayers.push_back(gL);
-                                    nodes.insert(std::pair<string,ImageOutput*>(layerName,gL));
+                                    nodes.insert(std::pair<int,ImageOutput*>(layerId,gL));
                                     
                                     break;
                                 };
                                 case GLITCH_2:
                                 {
-                                    GlitchLayerAlt* gLA = new GlitchLayerAlt(layerName);
-                                    gLA->addInputIdentifier(inputSourceName);
+                                    GlitchLayerAlt* gLA = new GlitchLayerAlt(layerName, layerId);
+                                    gLA->addInputIdentifier(inputSourceId);
                                     gLA->loadSettings(XML, i);
                                     
                                     visualLayers.push_back(gLA);
-                                    nodes.insert(std::pair<string,ImageOutput*>(layerName,gLA));
+                                    nodes.insert(std::pair<int,ImageOutput*>(layerId,gLA));
                                     
                                     break;
                                 };
                                 case IMAGE_PROCESSOR:
                                 {
                                     
-                                    ImageProcessor* gLA = new ImageProcessor(layerName);
-                                    gLA->addInputIdentifier(inputSourceName);
+                                    ImageProcessor* gLA = new ImageProcessor(layerName, layerId);
+                                    gLA->addInputIdentifier(inputSourceId);
                                     gLA->loadSettings(XML, i);
 
                                     
                                     visualLayers.push_back(gLA);
-                                    nodes.insert(std::pair<string,ImageOutput*>(layerName,gLA));
+                                    nodes.insert(std::pair<int,ImageOutput*>(layerId,gLA));
                                     
                                     break;
                                 };
@@ -832,37 +885,38 @@ bool ofApp::loadFromXML(){
                         int numMXTag = XML.getNumTags("NODE");
                         
                         for(int i = 0; i < numMXTag; i++){
-                            string name = XML.getAttribute("NODE","name","default",i);
-                            string type = XML.getAttribute("NODE","type","SIMPLE_BLEND", i);
+                            int    mixerId   = XML.getAttribute("NODE","id",-1,i);
+                            string mixerName = XML.getAttribute("NODE","name","default",i);
+                            string mixerType = XML.getAttribute("NODE","type","SIMPLE_BLEND", i);
                             
-                            switch(mixerTypes[type]){
+                            switch(mixerTypes[mixerType]){
                                 case SIMPLE_BLEND:
                                 {
-                                    MixSimpleBlend* mSB = new MixSimpleBlend(name);
+                                    MixSimpleBlend* mSB = new MixSimpleBlend(mixerName, mixerId);
                                     mSB->loadSettings(XML, i);
                                     
                                     mixtables.push_back(mSB);
-                                    nodes.insert(std::pair<string, ImageOutput*>(name, mSB));
+                                    nodes.insert(std::pair<int, ImageOutput*>(mixerId, mSB));
                                     
                                     break;
                                 };
                                 case MASK:
                                 {
-                                    MixMask* mMM = new MixMask(name);
+                                    MixMask* mMM = new MixMask(mixerName, mixerId);
                                     mMM->loadSettings(XML, i);
                                     
                                     mixtables.push_back(mMM);
-                                    nodes.insert(std::pair<string, ImageOutput*>(name, mMM));
+                                    nodes.insert(std::pair<int, ImageOutput*>(mixerId, mMM));
                                     
                                     break;
                                 };
                                 case MULTI_CHANNEL:
                                 {
-                                    MultiChannelSwitch* mMM = new MultiChannelSwitch(name);
+                                    MultiChannelSwitch* mMM = new MultiChannelSwitch(mixerName, mixerId);
                                     mMM->loadSettings(XML, i);
                                     
                                     mixtables.push_back(mMM);
-                                    nodes.insert(std::pair<string, ImageOutput*>(name, mMM));
+                                    nodes.insert(std::pair<int, ImageOutput*>(mixerId, mMM));
                                     
                                     break;
                                 };
@@ -915,25 +969,27 @@ bool ofApp::loadFromXML(){
                         string nodeViewName = XML.getAttribute("NODE_VIEW","name","default",i);
                         
                         NodeViewer* nV = new NodeViewer(nodeViewName);
+                        nV->setNodesCount(nodesCount);
                         
                         XML.pushTag("NODE_VIEW",i);
                         int numNODETag = XML.getNumTags("NODE");
                         
-                        for(int j=0; j<numNODETag; j++){
+                        for(int j = 0; j < numNODETag; j++){
+                            int    nodeId   = XML.getAttribute("NODE","id",0,j);
                             string nodeName = XML.getAttribute("NODE","name","default",j);
                             
-                            int x = ofToInt(XML.getAttribute("NODE","x","20",j));
-                            int y = ofToInt(XML.getAttribute("NODE","y","20",j));
-                            int guiX = ofToInt(XML.getAttribute("NODE","guiX","20",j));
-                            int guiY = ofToInt(XML.getAttribute("NODE","guiY","20",j));
-                            int guiWidth = ofToInt(XML.getAttribute("NODE","guiWidth","120",j));
+                            int x            = ofToInt(XML.getAttribute("NODE","x","20",j));
+                            int y            = ofToInt(XML.getAttribute("NODE","y","20",j));
+                            int guiX         = ofToInt(XML.getAttribute("NODE","guiX","20",j));
+                            int guiY         = ofToInt(XML.getAttribute("NODE","guiY","20",j));
+                            int guiWidth     = ofToInt(XML.getAttribute("NODE","guiWidth","120",j));
                             float imageScale = ofToFloat(XML.getAttribute("NODE","imageScale","1",j));
                             
-                            std::map<string,ImageOutput*>::iterator it;
+                            std::map<int,ImageOutput*>::iterator it;
                             
-                            it=nodes.find(nodeName);
+                            it = nodes.find(nodeId);
                             
-                            if(it!=nodes.end()){
+                            if(it != nodes.end()){
                                 ImageOutput* iO = it->second;
                                 NodeElement* nE = new NodeElement(iO, x, y, guiX, guiY, guiWidth, imageScale);
                                 
@@ -1043,12 +1099,13 @@ bool ofApp::loadFromXML(){
                         int numSyphonServer = XML.getNumTags("SERVER");
                         
                         for(int j=0; j<numSyphonServer; j++){
-                            string inputName = XML.getAttribute("SERVER","inputName","mainMix",j);
-                            string exportName = XML.getAttribute("SERVER","exportName","syphon1",j);
+                            int inputId         = XML.getAttribute("SERVER","inputId",0,j);
+                            string inputName    = XML.getAttribute("SERVER","inputName","mainMix",j);
+                            string exportName   = XML.getAttribute("SERVER","exportName","syphon1",j);
                             
-                            std::map<string,ImageOutput*>::iterator it;
+                            std::map<int,ImageOutput*>::iterator it;
                             
-                            it=nodes.find(inputName);
+                            it=nodes.find(inputId);
                             
                             if(it!=nodes.end()){
                                 ImageOutput* iO = it->second;
@@ -1059,7 +1116,7 @@ bool ofApp::loadFromXML(){
                             }
                             else{
                                 result = false;
-                                message = "node not foud!";
+                                message = "node not found!";
                                 break;
                             }
                             
@@ -1141,64 +1198,65 @@ bool ofApp::saveToXML() {
         XML.pushTag("MAIN_SETTINGS");
         
         XML.setValue("link_type", nodeViewers[currentViewer]->getLinkType() );
+        XML.setValue("total_nodes", nodeViewers[currentViewer]->getNodesCount() );
         
-            XML.pushTag("SETTINGS");
-            
-            
-                // Save Inputs
-                //
-                XML.pushTag("INPUTS");
-                for (int i = 0; i < inputs.size(); i++) {
-                    inputs[i]->saveSettings(XML);
-                }
-                XML.popTag();
-                
-                
-                // Save Visual Layers
-                //
-                XML.pushTag("VISUAL_LAYERS");
-                for (int vl = 0; vl < visualLayers.size(); vl++) {
-                    visualLayers[vl]->saveSettings(XML);
-                }
-                XML.popTag();
-                
-                
-                // Save Mixers
-                //
-                XML.pushTag("MIXERS");
-                for (int m = 0; m < mixtables.size(); m++) {
-                    mixtables[m]->saveSettings(XML);
-                }
-                XML.popTag();
-            
-            XML.popTag(); // tag SETTINGS
-            
-            
-            // Save Node Views
+        XML.pushTag("SETTINGS");
+        
+        
+            // Save Inputs
             //
-            XML.pushTag("NODE_VIEWS");
-            for (int nv = 0; nv < nodeViewers.size(); nv++) {
-                //nodeViewers[nv]->saveSettings(XML);
+            XML.pushTag("INPUTS");
+            for (int i = 0; i < inputs.size(); i++) {
+                inputs[i]->saveSettings(XML);
             }
-            XML.popTag(); // tag NODE_VIEWS
+            XML.popTag();
             
             
-            // Save Param Input Generators
+            // Save Visual Layers
             //
-            XML.pushTag("PARAM_INPUT_GENERATORS");
-            for (int ig = 0; ig < inputGenerators.size(); ig++) {
-                inputGenerators[ig]->saveSettings(XML);
+            XML.pushTag("VISUAL_LAYERS");
+            for (int vl = 0; vl < visualLayers.size(); vl++) {
+                visualLayers[vl]->saveSettings(XML);
             }
-            XML.popTag(); // tag PARAM_INPUT_GENERATORS
+            XML.popTag();
             
             
-            // Save Syphon Servers
+            // Save Mixers
             //
-            XML.pushTag("SYPHON_SERVERS");
-            for (int ss = 0; ss < syphonServers.size(); ss++) {
-                syphonServers[ss]->saveSettings(XML);
+            XML.pushTag("MIXERS");
+            for (int m = 0; m < mixtables.size(); m++) {
+                mixtables[m]->saveSettings(XML);
             }
-            XML.popTag(); // tag SYPHON_SERVERS
+            XML.popTag();
+        
+        XML.popTag(); // tag SETTINGS
+        
+        
+        // Save Node Views
+        //
+        XML.pushTag("NODE_VIEWS");
+        for (int nv = 0; nv < nodeViewers.size(); nv++) {
+            //nodeViewers[nv]->saveSettings(XML);
+        }
+        XML.popTag(); // tag NODE_VIEWS
+        
+        
+        // Save Param Input Generators
+        //
+        XML.pushTag("PARAM_INPUT_GENERATORS");
+        for (int ig = 0; ig < inputGenerators.size(); ig++) {
+            inputGenerators[ig]->saveSettings(XML);
+        }
+        XML.popTag(); // tag PARAM_INPUT_GENERATORS
+        
+        
+        // Save Syphon Servers
+        //
+        XML.pushTag("SYPHON_SERVERS");
+        for (int ss = 0; ss < syphonServers.size(); ss++) {
+            syphonServers[ss]->saveSettings(XML);
+        }
+        XML.popTag(); // tag SYPHON_SERVERS
         
         XML.popTag(); // tag MAIN_SETTINGS
         

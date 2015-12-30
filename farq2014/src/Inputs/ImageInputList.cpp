@@ -10,7 +10,7 @@
 #include "ImageInputList.h"
 
 
-ImageInputList::ImageInputList(string name) : InputSource(name){
+ImageInputList::ImageInputList(string name, int id_) : InputSource(name, id_){
     
     currentSequence = 0;
     lastSequence = currentSequence;
@@ -19,6 +19,7 @@ ImageInputList::ImageInputList(string name) : InputSource(name){
     hasMovie = false;
 }
 
+//------------------------------------------------------------------
 void ImageInputList::setup(){
     
     width  = inputs[currentSequence]->getWidth();
@@ -29,12 +30,14 @@ void ImageInputList::setup(){
     drawTexture = true;
 }
 
+//------------------------------------------------------------------
 void ImageInputList::update(){
     
     inputs[currentSequence]->update(img, tex);
     playPos2 = inputs[currentSequence]->getPosition();
 }
 
+//------------------------------------------------------------------
 void ImageInputList::draw(int x,int y, float scale){
     
 //    ofPushMatrix();
@@ -44,6 +47,7 @@ void ImageInputList::draw(int x,int y, float scale){
     
 }
 
+//------------------------------------------------------------------
 void ImageInputList::loadImage(string name_, string path_){
     
     if (ofIsStringInString(path_, ".mov")) {
@@ -116,6 +120,7 @@ void ImageInputList::loadImage(string name_, string path_){
     }
 }
 
+//------------------------------------------------------------------
 void ImageInputList::loopTypeChanged(bool &b){
     if (b) {
         inputs[currentSequence]->setLoopState(OF_LOOP_PALINDROME);
@@ -124,19 +129,25 @@ void ImageInputList::loopTypeChanged(bool &b){
     }
 }
 
+//------------------------------------------------------------------
 void ImageInputList::isPlayingBackwardsChanged(bool &b){
     inputs[currentSequence]->isPlayingBackwards = b;
     inputs[currentSequence]->calculateFPS();
 }
 
+//------------------------------------------------------------------
 void ImageInputList::bpmChanged(float &b){
     inputs[currentSequence]->bpm = b;
     inputs[currentSequence]->calculateFPS();
 }
+
+//------------------------------------------------------------------
 void ImageInputList::bpmMultiplierChanged(int &b){//bpm to fps
     inputs[currentSequence]->bpmMultiplier = b;
     inputs[currentSequence]->calculateFPS();
 }
+
+//------------------------------------------------------------------
 void ImageInputList::isMatchBpmToSequenceLengthChanged(bool &b){
     if (b) {
         bpmMultiplier.set("loop length in beats", bpmMultiplier, 1, 16 );
@@ -148,34 +159,45 @@ void ImageInputList::isMatchBpmToSequenceLengthChanged(bool &b){
     inputs[currentSequence]->calculateFPS();
 }
 
+//------------------------------------------------------------------
 void ImageInputList::previousFrameChanged(){
     /*player.previousFrame();
     tex = *player.getTexture();*/
 }
 
+//------------------------------------------------------------------
 void ImageInputList::nextFrameChanged(){
     /*player.nextFrame();
     tex = *player.getTexture();*/
 }
+
+//------------------------------------------------------------------
 void ImageInputList::isPlayingChanged(bool &b){
     inputs[currentSequence]->isPlaying = b;
 }
 
+//------------------------------------------------------------------
 void ImageInputList::setEnableChanged(bool &b){
     this->setEnable(b);
 }
 
+//------------------------------------------------------------------
 void ImageInputList::playPositionChanged(float &pos){
     isPlaying = false;
     inputs[currentSequence]->setPosition(pos,img,tex);
 }
 
+//------------------------------------------------------------------
 void ImageInputList::prevSequenceChanged(){
     currentSequence = (currentSequence+1)%inputs.size();
 }
+
+//------------------------------------------------------------------
 void ImageInputList::nextSequenceChanged(){
     currentSequence = (currentSequence -1 <0) ? currentSequence = inputs.size()-1 : currentSequence-1;
 }
+
+//------------------------------------------------------------------
 void ImageInputList::sequenceChanged(int &s){
     if (isEnabled) {
         inputs[lastSequence]->isPlaying = false;
@@ -197,16 +219,19 @@ void ImageInputList::sequenceChanged(int &s){
     //change gui appeareance
 }
 
+//------------------------------------------------------------------
 void ImageInputList::updateParameter(Param* inputParam){
     
 }
 
+//------------------------------------------------------------------
 void ImageInputList::setOriginalPlaySpeedChanged(bool &b){
     if (b) {
       
     }
 }
 
+//------------------------------------------------------------------
 void ImageInputList::setEnable(bool isEnabled_){
     //all to manage videoplayer
     
@@ -239,7 +264,7 @@ void ImageInputList::setEnable(bool isEnabled_){
     InputSource::setEnable(isEnabled_);
 }
 
-
+//------------------------------------------------------------------
 bool ImageInputList::loadSettings(ofxXmlSettings &XML, int nTag_) {
     
     bool loaded = true;

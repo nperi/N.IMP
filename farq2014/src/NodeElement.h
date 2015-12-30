@@ -18,7 +18,7 @@ class NodeElement {
 	
   public:
 	
-	NodeElement(ImageOutput* imo_, int x_, int y_, int guiX_,int guiY_,int guiWidth_, float scale_);
+	NodeElement(ImageOutput* imo_, int x_=50, int y_=50, int guiX_=50, int guiY_=50, int guiWidth_=200, float scale_=0.4);
 	
 	void draw();
     void drawGui();

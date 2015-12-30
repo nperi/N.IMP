@@ -45,7 +45,7 @@ bool CustomSyphonServer::saveSettings(ofxXmlSettings &XML) {
         //
         if ( XML.getAttribute("SERVER", "exportName", "", i) == exportName){
             
-            XML.setAttribute("SERVER", "inputName", feeder->getName(), i);
+            XML.setAttribute("SERVER", "inputId", feeder->getId(), i);
             break;
         }
         
@@ -59,7 +59,7 @@ bool CustomSyphonServer::saveSettings(ofxXmlSettings &XML) {
             //
             int lastPlace = XML.addTag("SERVER");
             
-            XML.addAttribute("SERVER", "inputName", feeder->getName(), lastPlace);
+            XML.addAttribute("SERVER", "inputId", feeder->getId(), lastPlace);
             XML.addAttribute("SERVER", "exportName", exportName, lastPlace);
         }
     }

@@ -25,7 +25,7 @@ class VisualLayer : public ImageOutput{
 	
   public:
 	
-    VisualLayer(string name_);
+    VisualLayer(string name_, int id_ = -1);
     
     void inputEvent(map<string, Param*>* params);
     void setEnable(bool isEnabled_);

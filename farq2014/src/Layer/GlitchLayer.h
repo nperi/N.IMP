@@ -17,7 +17,7 @@ class GlitchLayer : public VisualLayer{
     
 public:
     
-    GlitchLayer(string name_ = "glitchLayer");
+    GlitchLayer(string name_ = "New Glitch Layer", int id_ = -1);
     
     void setup();
     void draw(int x,int y, float scale);

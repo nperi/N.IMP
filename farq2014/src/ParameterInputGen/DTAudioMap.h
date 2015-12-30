@@ -19,13 +19,13 @@ public:
     
     DTAudioMap();
     
-    string nodeId;
-    string paramId;
-    int band;
-    float inputMinValue;
-    float  inputMaxValue;
-    int paramMinValue;
-    int paramMaxValue;
+    int     nodeId;
+    string  paramId;
+    int     band;
+    float   inputMinValue;
+    float   inputMaxValue;
+    int     paramMinValue;
+    int     paramMaxValue;
     
 };
 #endif /* defined(__ofApp__DTAudioMap__) */

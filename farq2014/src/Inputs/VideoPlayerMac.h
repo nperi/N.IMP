@@ -17,7 +17,7 @@ class VideoPlayerMac : public InputSource{
 	
   public:
 	
-	VideoPlayerMac(string name = "video player");
+	VideoPlayerMac(string name = "New Video Player", int id_ = -1);
 	
 	void setup();
 

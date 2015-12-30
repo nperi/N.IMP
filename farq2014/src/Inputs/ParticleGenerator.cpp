@@ -9,7 +9,7 @@
 
 #include "ParticleGenerator.h"
 
-ParticleGenerator::ParticleGenerator(string name) : InputSource(name){
+ParticleGenerator::ParticleGenerator(string name, int id_) : InputSource(name, id_){
     ofFbo::Settings s;
     s.width             = width;
     s.height            = height;

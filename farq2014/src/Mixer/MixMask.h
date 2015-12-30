@@ -18,7 +18,7 @@ class MixMask : public MixTable{
 	
   public:
 	
-	MixMask(string name_ = "Simple Blend");
+	MixMask(string name_ = "New Mix Mask", int id_ = -1);
 	
 	void setup();
     void updateParameter(Param* inputParam);

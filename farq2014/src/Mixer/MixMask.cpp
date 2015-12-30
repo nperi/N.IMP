@@ -9,7 +9,7 @@
 
 #include "MixMask.h"
 
-MixMask::MixMask(string name_):MixTable(name_){
+MixMask::MixMask(string name_, int id_):MixTable(name_, id_){
     gui.add(spin.setup("spin", 90, 0, 360));
     
     maxInputs = 2;
@@ -120,8 +120,8 @@ bool MixMask::loadSettings(ofxXmlSettings &XML, int nTag_) {
     std::map<string,ImageOutput*>::iterator it;
     
     for(int j=0; j<numINPUTTag; j++){
-        string inputName = XML.getAttribute("INPUT_SOURCE","name","default",j);
-        addInputIdentifier(inputName);
+        int inputId = XML.getAttribute("INPUT_SOURCE","nodeId",0,j);
+        addInputIdentifier(inputId);
     }
     
     type     = XML.getValue("type","none");

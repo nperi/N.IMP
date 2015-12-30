@@ -99,9 +99,9 @@ void AudioInputGenerator::processInput(){
                         magnitude[band] = 50.0f;
                     }
                     
-                    p->imageInputName = audioMap->at(i)->nodeId;
-                    p->name = audioMap->at(i)->paramId;
-                    p->intVal = ofMap(magnitude[band], audioMap->at(i)->inputMinValue, audioMap->at(i)->inputMaxValue, audioMap->at(i)->paramMinValue, audioMap->at(i)->paramMaxValue);
+                    p->imageInputId = audioMap->at(i)->nodeId;
+                    p->name         = audioMap->at(i)->paramId;
+                    p->intVal       = ofMap(magnitude[band], audioMap->at(i)->inputMinValue, audioMap->at(i)->inputMaxValue, audioMap->at(i)->paramMinValue, audioMap->at(i)->paramMaxValue);
                     
                     storeMessage(p);
                 }
@@ -132,13 +132,13 @@ bool AudioInputGenerator::loadSettings(ofxXmlSettings &XML) {
         
         DTAudioMap* dtM = new DTAudioMap();
         
-        dtM->band = ofToInt(XML.getAttribute("AUDIO_MAP","band","1",i));
-        dtM->nodeId = XML.getAttribute("AUDIO_MAP","nodeName","",i);
-        dtM->paramId = XML.getAttribute("AUDIO_MAP","param","",i);
-        dtM->inputMinValue = ofToInt(XML.getAttribute("AUDIO_MAP","inputMinValue","0",i));
-        dtM->inputMaxValue = ofToInt(XML.getAttribute("AUDIO_MAP","inputMaxValue","127",i));
-        dtM->paramMinValue = ofToInt(XML.getAttribute("AUDIO_MAP","paramMinValue","0",i));
-        dtM->paramMaxValue = ofToInt(XML.getAttribute("AUDIO_MAP","paramMaxValue","127",i));
+        dtM->band           = ofToInt(XML.getAttribute("AUDIO_MAP","band","1",i));
+        dtM->nodeId         = XML.getAttribute("AUDIO_MAP","nodeId",0,i);
+        dtM->paramId        = XML.getAttribute("AUDIO_MAP","param","",i);
+        dtM->inputMinValue  = ofToInt(XML.getAttribute("AUDIO_MAP","inputMinValue","0",i));
+        dtM->inputMaxValue  = ofToInt(XML.getAttribute("AUDIO_MAP","inputMaxValue","127",i));
+        dtM->paramMinValue  = ofToInt(XML.getAttribute("AUDIO_MAP","paramMinValue","0",i));
+        dtM->paramMaxValue  = ofToInt(XML.getAttribute("AUDIO_MAP","paramMaxValue","127",i));
         
         audioMap->push_back(dtM);
     }
@@ -188,7 +188,7 @@ bool AudioInputGenerator::saveSettings(ofxXmlSettings &XML) {
                 }
                 
                 XML.setAttribute("AUDIO_MAP","band", audioMap->at(i)->band,i);
-                XML.setAttribute("AUDIO_MAP","nodeName", audioMap->at(i)->nodeId,i);
+                XML.setAttribute("AUDIO_MAP","nodeId", audioMap->at(i)->nodeId,i);
                 XML.setAttribute("AUDIO_MAP","param", audioMap->at(i)->paramId,i);
                 XML.setAttribute("AUDIO_MAP","inputMinValue", audioMap->at(i)->inputMinValue,i);
                 XML.setAttribute("AUDIO_MAP","inputMaxValue", audioMap->at(i)->inputMaxValue,i);
@@ -225,7 +225,7 @@ bool AudioInputGenerator::saveSettings(ofxXmlSettings &XML) {
                 XML.addTag("AUDIO_MAP");
                 
                 XML.addAttribute("AUDIO_MAP","band", audioMap->at(i)->band,i);
-                XML.addAttribute("AUDIO_MAP","nodeName", audioMap->at(i)->nodeId,i);
+                XML.addAttribute("AUDIO_MAP","nodeId", audioMap->at(i)->nodeId,i);
                 XML.addAttribute("AUDIO_MAP","param", audioMap->at(i)->paramId,i);
                 XML.addAttribute("AUDIO_MAP","inputMinValue", audioMap->at(i)->inputMinValue,i);
                 XML.addAttribute("AUDIO_MAP","inputMaxValue", audioMap->at(i)->inputMaxValue,i);

@@ -10,7 +10,21 @@
 #include "InputCamera.h"
 
 
-InputCamera::InputCamera(string name) : InputSource(name){
+InputCamera::InputCamera() : InputSource("New Camera"){
+    
+    videoGrabber = new ofVideoGrabber();
+    bool loaded = videoGrabber->initGrabber(width, height);
+    
+    if (loaded){
+        width   = videoGrabber->getWidth();
+        height  = videoGrabber->getHeight();
+    }
+    
+    drawCamera = true;
+}
+
+//------------------------------------------------------------------
+InputCamera::InputCamera(string name, int id_) : InputSource(name, id_){
     //cam.initGrabber(width, height);
     //img.allocate(640, 480, OF_IMAGE_COLOR);
     

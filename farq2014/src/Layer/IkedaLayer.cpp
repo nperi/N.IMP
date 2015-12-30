@@ -14,7 +14,7 @@ using namespace ofxCv;
 
 
 //------------------------------------------------------------------
-IkedaLayer::IkedaLayer(string name_, bool isCanny_,bool isThreshold_, bool isColumns_, bool isInvert_):VisualLayer(name_) {
+IkedaLayer::IkedaLayer(string name_, int id_, bool isCanny_,bool isThreshold_, bool isColumns_, bool isInvert_):VisualLayer(name_, id_) {
    // gui.setup();
     
     gui.add(isEnabled.setup("Enabled",isEnabled, 100,20));
@@ -152,7 +152,7 @@ bool IkedaLayer::saveSettings(ofxXmlSettings &XML) {
         if ( XML.getAttribute("NODE", "id", -1, i) == nId){
             
             XML.setAttribute("NODE", "name", name, i);
-            XML.setAttribute("NODE", "inputSource", input[0]->getName(), i);
+            XML.setAttribute("NODE", "inputSource", input[0]->getId(), i);
             
             XML.setAttribute("NODE", "isCanny", isCanny, i);
             XML.setAttribute("NODE", "isThreshold", isThreshold, i);
@@ -184,7 +184,7 @@ bool IkedaLayer::saveSettings(ofxXmlSettings &XML) {
             XML.addAttribute("NODE", "id", nId, lastPlace);
             XML.addAttribute("NODE", "name", name, lastPlace);
             XML.addAttribute("NODE", "type", "IKEDA", lastPlace);
-            XML.addAttribute("NODE", "inputSource", input[0]->getName(), lastPlace);
+            XML.addAttribute("NODE", "inputSource", input[0]->getId(), lastPlace);
             
             XML.addAttribute("NODE", "isCanny", isCanny, lastPlace);
             XML.addAttribute("NODE", "isThreshold", isThreshold, lastPlace);

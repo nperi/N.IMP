@@ -9,7 +9,7 @@
 
 #include "MixSimpleBlend.h"
 
-MixSimpleBlend::MixSimpleBlend(string name_):MixTable(name_){
+MixSimpleBlend::MixSimpleBlend(string name_, int id_):MixTable(name_, id_){
     psBlend.setup(width, height);
     
     maxInputs = 16;
@@ -122,8 +122,8 @@ bool MixSimpleBlend::loadSettings(ofxXmlSettings &XML, int nTag_) {
     int numINPUTTag = XML.getNumTags("INPUT_SOURCE");
     
     for(int j=0; j<numINPUTTag; j++){
-        string inputName = XML.getAttribute("INPUT_SOURCE","name","default",j);
-        addInputIdentifier(inputName);
+        int inputId = XML.getAttribute("INPUT_SOURCE","nodeId",0,j);
+        addInputIdentifier(inputId);
     }
     
     type        = XML.getValue("type","none");
@@ -160,10 +160,10 @@ bool MixSimpleBlend::saveSettings(ofxXmlSettings &XML) {
         if ( XML.getAttribute("NODE", "id", -1, i) == nId){
             
             XML.setAttribute("NODE", "name", name, i);
-            XML.setAttribute("NODE","selectorLeft", selector1, i);
-            XML.setAttribute("NODE","selectorRight", selector2, i);
-            XML.setAttribute("NODE","blendmode", blendMode, i);
-            XML.setAttribute("NODE","opacity", opacity, i);
+            XML.setAttribute("NODE", "selectorLeft", selector1, i);
+            XML.setAttribute("NODE", "selectorRight", selector2, i);
+            XML.setAttribute("NODE", "blendmode", blendMode, i);
+            XML.setAttribute("NODE", "opacity", opacity, i);
             
             XML.pushTag("NODE", i);
             
@@ -174,7 +174,7 @@ bool MixSimpleBlend::saveSettings(ofxXmlSettings &XML) {
                 if (iS >= numInputSource) {
                     XML.addTag("INPUT_SOURCE");
                 }
-                XML.setAttribute("INPUT_SOURCE", "name", input[iS]->getName(), iS);
+                XML.setAttribute("INPUT_SOURCE", "nodeId", input[iS]->getId(), iS);
             }
             
             ofxPatch::saveSettings(XML, false, i);
@@ -208,7 +208,7 @@ bool MixSimpleBlend::saveSettings(ofxXmlSettings &XML) {
                 for (int iS = 0; iS < input.size(); iS++){
                     
                     XML.addTag("INPUT_SOURCE");
-                    XML.addAttribute("INPUT_SOURCE", "name", input[iS]->getName(), iS);
+                    XML.addAttribute("INPUT_SOURCE", "nodeId", input[iS]->getId(), iS);
                 }
                 
                 ofxPatch::saveSettings(XML, true, lastPlace);

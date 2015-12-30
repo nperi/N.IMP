@@ -19,7 +19,7 @@ class GlitchLayerAlt : public VisualLayer{
     
 public:
     
-    GlitchLayerAlt(string name_ = "glitchLayerAlt");
+    GlitchLayerAlt(string name_ = "New Glitch Layer Alt", int id_ = -1);
     
     void setup();
     void draw(int x,int y, float scale);

@@ -9,7 +9,7 @@
 
 #include "ImageProcessor.h"
 
-ImageProcessor::ImageProcessor(string name_):VisualLayer(name_) {
+ImageProcessor::ImageProcessor(string name_, int id_):VisualLayer(name_, id_) {
     
     bloom.setName("bloom");
     contrast.setName("contrast");
@@ -434,7 +434,7 @@ bool ImageProcessor::saveSettings(ofxXmlSettings &XML) {
         if ( XML.getAttribute("NODE", "id", -1, i) == nId){
             
             XML.setAttribute("NODE", "name", name, i);
-            XML.setAttribute("NODE", "inputSource", input[0]->getName(), i);
+            XML.setAttribute("NODE", "inputSource", input[0]->getId(), i);
             
             XML.pushTag("NODE", i);
             
@@ -457,7 +457,7 @@ bool ImageProcessor::saveSettings(ofxXmlSettings &XML) {
             XML.addAttribute("NODE", "id", nId, lastPlace);
             XML.addAttribute("NODE", "name", name, lastPlace);
             XML.addAttribute("NODE", "type", "IMAGE_PROCESSOR", lastPlace);
-            XML.addAttribute("NODE", "inputSource", input[0]->getName(), lastPlace);
+            XML.addAttribute("NODE", "inputSource", input[0]->getId(), lastPlace);
             
             if (XML.pushTag("NODE", lastPlace)){
                 

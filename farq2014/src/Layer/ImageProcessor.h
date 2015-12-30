@@ -18,7 +18,7 @@ class ImageProcessor : public VisualLayer{
 	
   public:
 	
-	ImageProcessor(string name_ = "visualLayer");
+	ImageProcessor(string name_ = "New Image Processor", int id_ = -1);
 	
     void setup();
     void draw(int x,int y, float scale);

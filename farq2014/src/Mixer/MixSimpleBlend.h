@@ -20,7 +20,7 @@ class MixSimpleBlend : public MixTable{
 	
   public:
 	
-    MixSimpleBlend(string name_ = "Simple Blend");
+    MixSimpleBlend(string name_ = "New Mix Simple Blend", int id_ = -1);
 	
 	void setup();
     void updateParameter(Param* inputParam);

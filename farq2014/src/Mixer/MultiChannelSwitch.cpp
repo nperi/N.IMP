@@ -9,7 +9,7 @@
 
 #include "MultiChannelSwitch.h"
 
-MultiChannelSwitch::MultiChannelSwitch(string name_):MixTable(name_){
+MultiChannelSwitch::MultiChannelSwitch(string name_, int id_):MixTable(name_, id_){
     maxInputs = 16;
     //gui.add(selChannel.set("channel", 0, 0, 0));
     gui.add(drawInputGui.set("show input Gui", true));
@@ -147,8 +147,8 @@ bool MultiChannelSwitch::loadSettings(ofxXmlSettings &XML, int nTag_) {
     std::map<string,ImageOutput*>::iterator it;
 
     for(int j=0; j < numINPUTTag; j++){
-        string inputName = XML.getAttribute("INPUT_SOURCE","name","default",j);
-        addInputIdentifier(inputName);
+        int inputId = XML.getAttribute("INPUT_SOURCE","nodeId",0,j);
+        addInputIdentifier(inputId);
     }
     
     type     = XML.getValue("type","none");

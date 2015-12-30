@@ -8,7 +8,8 @@
 
 #include "ImageOutput.h"
 
-ImageOutput::ImageOutput(string name_,int maxInputs_, int width_, int height_) : ofxPatch(){
+ImageOutput::ImageOutput(string name_, int id_, int maxInputs_, int width_, int height_) : ofxPatch(){
+    nId = id_;
     name = name_;
     width = width_;
     height = height_;
@@ -35,15 +36,15 @@ void ImageOutput::addInput(ofxPatch* layer_){
 }
 
 //------------------------------------------------------------------
-void ImageOutput::addInputIdentifier(string inputId_){
-    if (inputIdentifiers.size()<maxInputs) {
+void ImageOutput::addInputIdentifier(int inputId_){
+    if (inputIdentifiers.size() < maxInputs) {
         inputIdentifiers.push_back(inputId_);
     }
 }
 
 //------------------------------------------------------------------
-bool ImageOutput::findAndAssignInputs(map<string,ImageOutput*> &nodeCollection){
-    std::map<string,ImageOutput*>::iterator it;
+bool ImageOutput::findAndAssignInputs(map<int,ImageOutput*> &nodeCollection){
+    std::map<int,ImageOutput*>::iterator it;
     
     ImageOutput* iO = NULL;
     
@@ -66,11 +67,11 @@ bool ImageOutput::findAndAssignInputs(map<string,ImageOutput*> &nodeCollection){
 }
 
 //------------------------------------------------------------------
-void ImageOutput::removeInput(string inputId_){
+void ImageOutput::removeInput(int inputId_){
     
     for(std::vector<ImageOutput*>::iterator it = input.begin(); it != input.end(); it++ ){
         
-        if((*it)->getName() == inputId_){
+        if((*it)->getId() == inputId_){
             input.erase(it);
             break;
         }

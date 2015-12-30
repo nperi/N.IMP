@@ -22,7 +22,7 @@ class ParticleGenerator : public InputSource{
 	
   public:
 	
-	ParticleGenerator(string name = "image input");
+	ParticleGenerator(string name = "New Particle Generator", int id_ = -1);
 	
 	void setup();
 	void draw(int x,int y, float scale);

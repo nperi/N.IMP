@@ -80,10 +80,10 @@ void OscInputGenerator::processInput() {
             if(it!=oscMap->end()){
                 for (int j=0; j<m.getNumArgs(); ++j) {
                     
-                        Param* p = new Param();
-                        p->imageInputName = it->second->nodeId[j];
-                        p->name = it->second->paramId[j];
-                        p->floatVal = ofMap(m.getArgAsFloat(j), it->second->inputMinValue[j], it->second->inputMaxValue[j], it->second->paramMinValue[j], it->second->paramMaxValue[j]);
+                        Param* p        = new Param();
+                        p->imageInputId = it->second->nodeId[j];
+                        p->name         = it->second->paramId[j];
+                        p->floatVal     = ofMap(m.getArgAsFloat(j), it->second->inputMinValue[j], it->second->inputMaxValue[j], it->second->paramMinValue[j], it->second->paramMaxValue[j]);
                         storeMessage(p);
                 
                 }
@@ -115,12 +115,12 @@ bool OscInputGenerator::loadSettings(ofxXmlSettings &XML) {
         DTOscMap* dtM = new DTOscMap();
         for(int i = 0;i<getNumOSCMapTag ; i++){
             
-            string nodeId = XML.getAttribute("OSC_MAP","nodeName","",i);
-            string param = XML.getAttribute("OSC_MAP","param","",i);
-            float inputMinValue = ofToFloat(XML.getAttribute("OSC_MAP","inputMinValue","0",i));
-            float inputMaxValue = ofToFloat(XML.getAttribute("OSC_MAP","inputMaxValue","127",i));
-            float paramMinValue = ofToFloat(XML.getAttribute("OSC_MAP","paramMinValue","0",i));
-            float paramMaxValue = ofToFloat(XML.getAttribute("OSC_MAP","paramMaxValue","127",i));
+            int     nodeId = XML.getAttribute("OSC_MAP","nodeId",0,i);
+            string  param = XML.getAttribute("OSC_MAP","param","",i);
+            float   inputMinValue = ofToFloat(XML.getAttribute("OSC_MAP","inputMinValue","0",i));
+            float   inputMaxValue = ofToFloat(XML.getAttribute("OSC_MAP","inputMaxValue","127",i));
+            float   paramMinValue = ofToFloat(XML.getAttribute("OSC_MAP","paramMinValue","0",i));
+            float   paramMaxValue = ofToFloat(XML.getAttribute("OSC_MAP","paramMaxValue","127",i));
             
             dtM->path = address;
             dtM->paramId.push_back(param);

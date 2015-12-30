@@ -21,7 +21,7 @@ class InputSource : public ImageOutput{
 	
   public:
 	
-    InputSource(string name_):ImageOutput(name_){
+    InputSource(string name_, int id_ = -1):ImageOutput(name_, id_){
         nEnabled = 0;
         nodeType = INPUT;
     };

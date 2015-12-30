@@ -16,13 +16,13 @@ class DTMidiMap {
 public:
     DTMidiMap();
     
-    int control;
-    string nodeId;
-    string paramId;
-    int inputMinValue;
-    int inputMaxValue;
-    int paramMinValue;
-    int paramMaxValue;
+    int     control;
+    int     nodeId;
+    string  paramId;
+    int     inputMinValue;
+    int     inputMaxValue;
+    int     paramMinValue;
+    int     paramMaxValue;
 };
 
 

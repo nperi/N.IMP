@@ -9,7 +9,7 @@
 
 #include "VideoPlayerMac.h"
 
-VideoPlayerMac::VideoPlayerMac(string name) : InputSource(name){
+VideoPlayerMac::VideoPlayerMac(string name, int id_) : InputSource(name, id_){
     //there always has to exist at least one player.
     currentPlayer=0;
     img.allocate(width, height, OF_IMAGE_COLOR_ALPHA);

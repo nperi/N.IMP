@@ -1,5 +1,6 @@
 <MAIN_SETTINGS>
     <link_type>1</link_type>
+    <total_nodes>6</total_nodes>
     <SETTINGS>
         <INPUTS>
             <NODE id="0" name="Black" type="IMAGE" path="sets/all_black.png" bpm="100.000000" multiplier_divider="4" isPlaying="0" palindrom="1" matchBPMtoSequence="0">
@@ -189,7 +190,7 @@
             </NODE>
         </INPUTS>
         <VISUAL_LAYERS>
-            <NODE id="4" name="Particle Visual" type="IMAGE_PROCESSOR" inputSource="V1">
+            <NODE id="4" name="Particle Visual" type="IMAGE_PROCESSOR" inputSource="1">
                 <type>ofTexture</type>
                 <path>none</path>
                 <visible>1</visible>
@@ -238,7 +239,7 @@
                 </out>
             </NODE>
             <!-- GLITCH -->
-            <NODE id="5" name="Glitch Mix" type="GLITCH_1" inputSource="Cam" do_CONVERGENCE="0" do_GLOW="0" do_SHAKER="0" de_CUTSLIDER="false" do_TWIST="0" do_OUTLINE="0" do_NOISE="0" do_SLITSCAN="0" do_SWELL="0" do_INVERT="0" do_CR_HIGHCONTRAST="0" do_CR_BLUERAISE="0" do_CR_REDRAISE="0" do_CR_GREENRAISE="0" do_CR_BLUEINVERT="0" do_CR_REDINVERT="0" do_CR_GREENINVERT="0" do_CUTSLIDER="0">
+            <NODE id="5" name="Glitch Mix" type="GLITCH_1" inputSource="3" do_CONVERGENCE="0" do_GLOW="0" do_SHAKER="0" de_CUTSLIDER="false" do_TWIST="0" do_OUTLINE="0" do_NOISE="0" do_SLITSCAN="0" do_SWELL="0" do_INVERT="0" do_CR_HIGHCONTRAST="0" do_CR_BLUERAISE="0" do_CR_REDRAISE="0" do_CR_GREENRAISE="0" do_CR_BLUEINVERT="0" do_CR_REDINVERT="0" do_CR_GREENINVERT="0" do_CUTSLIDER="0">
                 <type>none</type>
                 <path>none</path>
                 <visible>1</visible>
@@ -290,8 +291,8 @@
         </VISUAL_LAYERS>
         <MIXERS>
             <NODE id="6" name="Particle Mix" type="SIMPLE_BLEND" selectorLeft="0" selectorRight="1" blendmode="13" opacity="255.000000">
-                <INPUT_SOURCE name="Particle Visual" />
-                <INPUT_SOURCE name="Glitch Mix" />
+                <INPUT_SOURCE nodeId="4" />
+                <INPUT_SOURCE nodeId="5" />
                 <type>none</type>
                 <path>none</path>
                 <visible>1</visible>
@@ -341,21 +342,21 @@
         <!-- Final Mix Node View -->
         <NODE_VIEW name="FinalMix">
             <!--inputs-->
-            <NODE name="Black" x="20" y="20" guiX="675" guiY="240" imageScale="0.4" guiWidth="200" />
-            <NODE name="V1" x="20" y="200" guiX="675" guiY="240" imageScale="0.4" guiWidth="200" />
-            <NODE name="Particle" x="20" y="400" guiX="675" guiY="240" imageScale="0.4" guiWidth="200" />
-            <NODE name="Cam" x="700" y="0" guiX="675" guiY="690" imageScale="0.4" guiWidth="200" />
+            <NODE id="0" name="Black" x="20" y="20" guiX="675" guiY="240" imageScale="0.4" guiWidth="200" />
+            <NODE id="1" name="V1" x="20" y="200" guiX="675" guiY="240" imageScale="0.4" guiWidth="200" />
+            <NODE id="2" name="Particle" x="20" y="400" guiX="675" guiY="240" imageScale="0.4" guiWidth="200" />
+            <NODE id="3" name="Cam" x="700" y="0" guiX="675" guiY="690" imageScale="0.4" guiWidth="200" />
             <!-- process nodes -->
-            <NODE name="Particle Visual" x="5&#x09;00" y="100" guiX="675" guiY="240" imageScale="0.4" guiWidth="200" />
-            <NODE name="Glitch Mix" x="700" y="500" guiX="675" guiY="600" imageScale="0.4" guiWidth="200" />
+            <NODE id="4" name="Particle Visual" x="5&#x09;00" y="100" guiX="675" guiY="240" imageScale="0.4" guiWidth="200" />
+            <NODE id="5" name="Glitch Mix" x="700" y="500" guiX="675" guiY="600" imageScale="0.4" guiWidth="200" />
             <!-- main mix -->
-            <NODE name="Particle Mix" x="1000" y="500" guiX="675" guiY="600" imageScale="0.4" guiWidth="200" />
+            <NODE id="6" name="Particle Mix" x="1000" y="500" guiX="675" guiY="600" imageScale="0.4" guiWidth="200" />
         </NODE_VIEW>
     </NODE_VIEWS>
     <PARAM_INPUT_GENERATORS>
         <INPUT_GEN name="FFT1" type="FFT">
             <FFT_SETTINGS>
-                <AUDIO_MAP band="1" nodeName="Particle Visual" param="coBrightness" inputMinValue="0.000000" inputMaxValue="50.000000" paramMinValue="0" paramMaxValue="255" />
+                <AUDIO_MAP band="1" nodeId="4" param="coBrightness" inputMinValue="0.000000" inputMaxValue="50.000000" paramMinValue="0" paramMaxValue="255" />
             </FFT_SETTINGS>
         </INPUT_GEN>
         <INPUT_GEN name="MIDI1" type="MIDI" midiDeviceName="Oxygen 25">
@@ -376,6 +377,6 @@
         </INPUT_GEN>
     </PARAM_INPUT_GENERATORS>
     <SYPHON_SERVERS>
-        <SERVER exportName="mainOut" inputName="Particle Mix" />
+        <SERVER exportName="mainOut" inputId="6" />
     </SYPHON_SERVERS>
 </MAIN_SETTINGS>

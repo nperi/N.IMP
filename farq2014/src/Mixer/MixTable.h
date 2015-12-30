@@ -19,7 +19,7 @@ class MixTable : public ImageOutput{
 	
   public:
 	
-    MixTable(string name_ = "mixtable"):ImageOutput(name_){
+    MixTable(string name_ = "mixtable", int id_ = -1):ImageOutput(name_, id_){
         ofFbo::Settings s;
         s.width			 = width;
         s.height		 = height;
