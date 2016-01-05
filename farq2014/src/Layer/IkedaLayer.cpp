@@ -26,18 +26,25 @@ IkedaLayer::IkedaLayer(string name_, int id_, bool isCanny_,bool isThreshold_, b
     gui.add(isThreshold.setup("Threshold", isThreshold_));
     gui.add(pThreshold.setup("amount", 12,0,255));
     gui.add(isInvert.setup("Invert", isInvert_));
+    
+    gui.setWidthElements(INSPECTOR_WIDTH);
 }
 
 //------------------------------------------------------------------
-void IkedaLayer::setup() {}
+void IkedaLayer::setup() {
+
+    if(input.size()) {
+        drawTexture = true;
+    }
+}
 
 //------------------------------------------------------------------
 void IkedaLayer::draw(int x,int y, float scale) {
-    ofSetColor(255, 255, 255);
-    float ratio = (float)height/(float)width;
-    int w = 640*scale;
-    int h = w*ratio;
-    tex.draw(x, y,w,h);
+//    ofSetColor(255, 255, 255);
+//    float ratio = (float)height/(float)width;
+//    int w = 640*scale;
+//    int h = w*ratio;
+//    tex.draw(x, y,w,h);
 }
 
 //------------------------------------------------------------------
