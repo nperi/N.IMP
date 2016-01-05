@@ -14,6 +14,8 @@ VisualLayer::VisualLayer(string name_, int id_) : ImageOutput(name_, id_){
     isEnabled = true;
     firstInit = true;
     nodeType = VISUAL_LAYER;
+    
+    addInputDot();
 }
 
 

@@ -24,6 +24,7 @@ class NodeViewer : public ofxComposer {
 	void setup();
     void update();
     void addElement(NodeElement* elem_);
+    void addElement(NodeElement* elem_, ofPoint position_);
 	void draw();
     void setupGuiPositions();
     

@@ -15,7 +15,7 @@ MixMask::MixMask(string name_, int id_):MixTable(name_, id_){
     maxInputs = 2;
     maskShader.load("Shaders/composite");
     maskShader.begin();
-       maskShader.end();
+    maskShader.end();
     //fbo.setDefaultTextureIndex(1);
 }
 

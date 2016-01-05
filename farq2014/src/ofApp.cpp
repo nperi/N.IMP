@@ -647,7 +647,7 @@ void ofApp::createNode(textInputEvent &args){
     }
     
     nE = new NodeElement(newPatch);
-    nodeViewers[currentViewer]->addElement(nE);
+    nodeViewers[currentViewer]->addElement(nE, args.point);
     nodes.insert(std::pair<int, ImageOutput*>(newPatch->getId(), newPatch));
     nodesVector.push_back(newPatch);
     newPatch->setup();

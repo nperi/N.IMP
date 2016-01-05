@@ -32,19 +32,20 @@ GlitchLayer::GlitchLayer(string name_, int id_):VisualLayer(name_, id_){
     gui.add(do_CR_REDINVERT.setup("REDINVERT", do_CR_REDINVERT, 100,20));
     gui.add(do_CR_GREENINVERT.setup("GREENINVERT", do_CR_GREENINVERT, 100,20));
     gui.setWidthElements(INSPECTOR_WIDTH);
-
 }
 
 //------------------------------------------------------------------
 void GlitchLayer::setup() {
 
-    height = input[0]->getHeight();
-    width  = input[0]->getWidth();
-    
-    fbo.allocate(width, height);
-    myGlitch.setup(&fbo);
-    
-    drawFbo = true;
+    if(input.size()) {
+        height = input[0]->getHeight();
+        width  = input[0]->getWidth();
+        
+        fbo.allocate(width, height);
+        myGlitch.setup(&fbo);
+        
+        drawFbo = true;
+    }
 }
 
 //------------------------------------------------------------------
@@ -149,8 +150,6 @@ bool GlitchLayer::loadSettings(ofxXmlSettings &XML, int nTag_) {
     bVisible            = XML.getValue("visible", true);
     
     ImageOutput::loadSettings(XML, nTag_);
-    
-    addInputDot();
     
     XML.popTag();
     

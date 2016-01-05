@@ -36,8 +36,13 @@ void NodeViewer::draw() {
 
 //------------------------------------------------------------------
 void NodeViewer::addElement(NodeElement* elem_){
+    addElement(elem_, ofPoint(ofGetMouseX(), ofGetMouseY()));
+}
+
+//------------------------------------------------------------------
+void NodeViewer::addElement(NodeElement* elem_, ofPoint position_){
     elements.push_back(elem_);
-    addPatch(elem_->getImageOutput());
+    addPatch(elem_->getImageOutput(), position_);
 }
 
 //------------------------------------------------------------------

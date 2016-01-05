@@ -18,21 +18,32 @@ GlitchLayerAlt::GlitchLayerAlt(string name_, int id_):VisualLayer(name_, id_){;
     gui.add(dq.setup("DQ", 20,0,255));
     gui.add(qn.setup("QN", 40,0,255));
     gui.add(dht.setup("DHT", 80,0,255));
-
-    glitcher.setup(dq, qn, dht);
+    
+    gui.setWidthElements(INSPECTOR_WIDTH);
 }
 
 //------------------------------------------------------------------
-void GlitchLayerAlt::setup() {}
+void GlitchLayerAlt::setup() {
+
+    if(input.size()) {
+        height = input[0]->getHeight();
+        width  = input[0]->getWidth();
+        
+        glitcher.setup(dq, qn, dht);
+        
+        drawTexture = true;
+    }
+
+}
 
 
 //------------------------------------------------------------------
 void GlitchLayerAlt::draw(int x,int y, float scale) {
-    ofSetColor(255, 255, 255);
-    float ratio = (float)height/(float)width;
-    int w = 640*scale;
-    int h = w*ratio;
-    img.draw(x, y,w,h);
+//    ofSetColor(255, 255, 255);
+//    float ratio = (float)height/(float)width;
+//    int w = 640*scale;
+//    int h = w*ratio;
+//    img.draw(x, y,w,h);
 }
 
 //------------------------------------------------------------------
@@ -58,6 +69,7 @@ void GlitchLayerAlt::update(){
         
         img.update();
     }
+    tex = img.getTextureReference();
 }
 
 //------------------------------------------------------------------
@@ -80,8 +92,6 @@ bool GlitchLayerAlt::loadSettings(ofxXmlSettings &XML, int nTag_) {
     bVisible    = XML.getValue("visible", true);
     
     ImageOutput::loadSettings(XML, nTag_);
-    
-    addInputDot();
     
     XML.popTag();
     

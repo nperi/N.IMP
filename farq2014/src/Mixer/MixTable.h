@@ -17,21 +17,12 @@
 // Basic class for mixtables
 class MixTable : public ImageOutput{
 	
-  public:
-	
-    MixTable(string name_ = "mixtable", int id_ = -1):ImageOutput(name_, id_){
-        ofFbo::Settings s;
-        s.width			 = width;
-        s.height		 = height;
-        s.internalformat = GL_RGBA;
-        s.useDepth		 = true;
-        fbo.allocate(s);
-        
-        nodeType = MIXER;
-    }
+public:
     
+    MixTable(string name_ = "mixtable", int id_ = -1);
     
 protected:
+    
     //ofFbo fbo;
 };
 

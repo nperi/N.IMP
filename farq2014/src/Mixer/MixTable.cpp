@@ -8,3 +8,16 @@
  */
 
 #include "MixTable.h"
+
+MixTable::MixTable(string name_, int id_):ImageOutput(name_, id_){
+    ofFbo::Settings s;
+    s.width			 = width;
+    s.height		 = height;
+    s.internalformat = GL_RGBA;
+    s.useDepth		 = true;
+    fbo.allocate(s);
+    
+    nodeType = MIXER;
+    
+    addInputDot();
+}
