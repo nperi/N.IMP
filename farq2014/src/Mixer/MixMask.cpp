@@ -11,12 +11,15 @@
 
 MixMask::MixMask(string name_, int id_):MixTable(name_, id_){
     gui.add(spin.setup("spin", 90, 0, 360));
+    gui.setWidthElements(INSPECTOR_WIDTH);
     
     maxInputs = 2;
     maskShader.load("Shaders/composite");
     maskShader.begin();
     maskShader.end();
     //fbo.setDefaultTextureIndex(1);
+    
+    drawFbo = true;
 }
 
 //------------------------------------------------------------------
@@ -26,50 +29,55 @@ void MixMask::setup() {
 
 //------------------------------------------------------------------
 void MixMask::draw(int x,int y, float scale) {
-    ofSetColor(255, 255, 255);
-    float ratio = (float)height/(float)width;
-    int w = 640*scale;
-    int h = w*ratio;
-    fbo.draw(x, y,w,h);
-    ofDrawBitmapString(name, x + 10, y + 30);
+//    ofSetColor(255, 255, 255);
+//    float ratio = (float)height/(float)width;
+//    int w = 640*scale;
+//    int h = w*ratio;
+//    fbo.draw(x, y,w,h);
+//    ofDrawBitmapString(name, x + 10, y + 30);
 	
 }
 
 //------------------------------------------------------------------
 void MixMask::update(){
     
-    fbo.begin();
-    ofClear(255,255,255, 0);
-    input[0]->getTexture()->draw(0, 0);
-    ofEnableAlphaBlending();
-    ofPushMatrix();
-    ofTranslate(width/2, height/2);
-    ofPushMatrix();
-    ofRotate(spin);
-    ofPushMatrix();
-    ofTranslate(-width/2, -height/2);
-    drawShader();
-    ofPopMatrix();
-    ofPopMatrix();
-    ofPopMatrix();
-    ofDisableBlendMode();
-    fbo.end();
-    tex = fbo.getTextureReference();
+    if(input.size()) {
+        
+        fbo.begin();
+        ofClear(255,255,255, 0);
+        input[0]->getTexture()->draw(0, 0);
+        ofEnableAlphaBlending();
+        ofPushMatrix();
+        ofTranslate(width/2, height/2);
+        ofPushMatrix();
+        ofRotate(spin);
+        ofPushMatrix();
+        ofTranslate(-width/2, -height/2);
+        drawShader();
+        ofPopMatrix();
+        ofPopMatrix();
+        ofPopMatrix();
+        ofDisableBlendMode();
+        fbo.end();
+        tex = fbo.getTextureReference();
+    }
 }
 
 //------------------------------------------------------------------
 void MixMask::drawShader(){
     maskShader.begin();
     maskShader.setUniformTexture("Tex0", *input[0]->getTexture(), 0);
-    maskShader.setUniformTexture("Tex1", *input[1]->getTexture(), 1);
+    if (input.size() > 1) maskShader.setUniformTexture("Tex1", *input[1]->getTexture(), 1);
 
     //our shader uses two textures, the top layer and the alpha
     //we can load two textures into a shader using the multi texture coordinate extensions
     glActiveTexture(GL_TEXTURE0_ARB);
     input[0]->getTexture()->bind();
     
-    glActiveTexture(GL_TEXTURE1_ARB);
-    input[1]->getTexture()->bind();
+    if (input.size() > 1) {
+        glActiveTexture(GL_TEXTURE1_ARB);
+        input[1]->getTexture()->bind();
+    }
     
     //draw a quad the size of the frame
     glBegin(GL_QUADS);
@@ -95,11 +103,14 @@ void MixMask::drawShader(){
     glEnd();
     
     //deactive and clean up
+    //
     glActiveTexture(GL_TEXTURE1_ARB);
     input[0]->getTexture()->unbind();
     
-    glActiveTexture(GL_TEXTURE0_ARB);
-    input[1]->getTexture()->unbind();
+    if (input.size() > 1) {
+        glActiveTexture(GL_TEXTURE0_ARB);
+        input[1]->getTexture()->unbind();
+    }
     
     maskShader.end();
 }

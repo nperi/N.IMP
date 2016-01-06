@@ -11,8 +11,10 @@
 
 MultiChannelSwitch::MultiChannelSwitch(string name_, int id_):MixTable(name_, id_){
     maxInputs = 16;
+    
     //gui.add(selChannel.set("channel", 0, 0, 0));
-    gui.add(drawInputGui.set("show input Gui", true));
+    gui.add(drawInputGui.set("show input Gui", false));
+    
     selChannel.set("channel", 0, 0, 0);
     selChannel.addListener(this, &MultiChannelSwitch::cselChannel);
     labelGroup.setName("channels");
@@ -25,10 +27,12 @@ void MultiChannelSwitch::inputAdded(ImageOutput* in_){
         selChannel.setMax(selChannel.getMax()+1);
         labels.push_back(false);
         gui.add(labels[labels.size()-1].set(ofToString(input.size()-1) +  " : " + in_->getName(),false));
+        gui.setWidthElements(INSPECTOR_WIDTH);
     }else{
         //selChannel = 0;
         labels.push_back(true);
         gui.add(labels[labels.size()-1].set(ofToString(input.size()-1) +  " : " + in_->getName(),true));
+        gui.setWidthElements(INSPECTOR_WIDTH);
     }
     labels[labels.size()-1].addListener(this, &MultiChannelSwitch::cLabel);
 
@@ -38,11 +42,13 @@ void MultiChannelSwitch::inputAdded(ImageOutput* in_){
 
 //------------------------------------------------------------------
 void MultiChannelSwitch::setup() {
-	
+
+    drawTexture = true;
 }
 
 //------------------------------------------------------------------
 void MultiChannelSwitch::update() {
+    
     /*ofEnableAlphaBlending();
 
     for (int i=0; i<input.size(); ++i) {
@@ -65,26 +71,32 @@ void MultiChannelSwitch::update() {
         }
     }
     fbo.end();*/
-    img = *input[selChannel]->getImage();
-    tex = *input[selChannel]->getTexture();
+    
+    if (input.size()){
+        
+        img = *input[selChannel]->getImage();
+        tex = *input[selChannel]->getTexture();
+        
+        input[selChannel]->setDrawInspector(drawInputGui);
+    }
 }
 
 //------------------------------------------------------------------
 void MultiChannelSwitch::draw(int x,int y, float scale) {
-    ofSetColor(255, 255, 255);
-        float ratio = (float)height/(float)width;
-        int w = 640*scale;
-        int h = w*ratio;
-        tex.draw(x, y,w, h);
-    
-    ofPushMatrix();
-    ofTranslate(x+10, y+15);
-    ofDrawBitmapString(input[selChannel]->getName(), 0,0);
-    ofPopMatrix();
-    
-    if (drawInputGui) {
-        input[selChannel]->drawGui(x,y);
-    }
+//    ofSetColor(255, 255, 255);
+//        float ratio = (float)height/(float)width;
+//        int w = 640*scale;
+//        int h = w*ratio;
+//        tex.draw(x, y,w, h);
+//    
+//    ofPushMatrix();
+//    ofTranslate(x+10, y+15);
+//    ofDrawBitmapString(input[selChannel]->getName(), 0,0);
+//    ofPopMatrix();
+//    
+//    if (drawInputGui) {
+//        input[selChannel]->drawGui(x,y);
+//    }
 }
 
 //------------------------------------------------------------------

@@ -21,7 +21,7 @@ class MultiChannelSwitch : public MixTable{
 	
   public:
 	
-	MultiChannelSwitch(string name_ = "New Multi Channel Switch", int id_ = -1);
+	MultiChannelSwitch(string name_ = "New MultiChannel Switch", int id_ = -1);
 	
 	void setup();
 	void draw(int x,int y, float scale);

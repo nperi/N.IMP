@@ -45,33 +45,37 @@ void MixSimpleBlend::draw(int x,int y, float scale) {
 
 //------------------------------------------------------------------
 void MixSimpleBlend::update(){
-    fbo.begin();
-    ofClear(255,255,255, 0);
-    glPushAttrib(GL_ALL_ATTRIB_BITS);
-    glEnable(GL_BLEND);
-    glBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA,GL_ONE,GL_ONE_MINUS_SRC_ALPHA);
-    if (blendMode == 0) {
+    
+    if(input.size()) {
         
-        if (opacity < 255) {
-            ofSetColor(255, 255, 255);
-            input[selector1]->getTextureReference().draw(0, 0, width, height);
+        fbo.begin();
+        ofClear(255,255,255, 0);
+        glPushAttrib(GL_ALL_ATTRIB_BITS);
+        glEnable(GL_BLEND);
+        glBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA,GL_ONE,GL_ONE_MINUS_SRC_ALPHA);
+        if (blendMode == 0) {
+            
+            if (opacity < 255) {
+                ofSetColor(255, 255, 255);
+                input[selector1]->getTextureReference().draw(0, 0, width, height);
+            }
+            if (opacity>0) {
+                ofSetColor(255, 255, 255,opacity);
+                input[selector2]->getTextureReference().draw(0, 0, width, height);
+            }
         }
-        if (opacity>0) {
+        else{
+            psBlend.begin();
             ofSetColor(255, 255, 255,opacity);
-            input[selector2]->getTextureReference().draw(0, 0, width, height);
+            input[selector2]->getTextureReference().draw(0, 0);
+            psBlend.end();
+            psBlend.draw(input[selector1]->getTextureReference(), blendMode);
         }
+        glDisable(GL_BLEND);
+        glPopAttrib();
+        fbo.end();
+        tex = fbo.getTextureReference();
     }
-    else{
-        psBlend.begin();
-        ofSetColor(255, 255, 255,opacity);
-        input[selector2]->getTextureReference().draw(0, 0);
-        psBlend.end();
-        psBlend.draw(input[selector1]->getTextureReference(), blendMode);
-    }
-    glDisable(GL_BLEND);
-    glPopAttrib();
-    fbo.end();
-    tex = fbo.getTextureReference();
 }
 
 //------------------------------------------------------------------
