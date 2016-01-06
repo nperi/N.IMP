@@ -597,7 +597,7 @@ void ofApp::createNodeInput(float _x, float _y){
 void ofApp::createNode(textInputEvent &args){
     
     NodeElement* nE;
-    ImageOutput* newPatch;
+    ImageOutput* newPatch = NULL;
     
     if (args.type == "camera") {
         newPatch = new InputCamera();
@@ -608,7 +608,7 @@ void ofApp::createNode(textInputEvent &args){
         ((ImageInputList*)newPatch)->loadImage(args.name, args.path);
         inputs.push_back((ImageInputList*)newPatch);
     }
-    else if (args.type == "video") {
+    else if (args.type == "video player") {
         newPatch = new VideoPlayerMac();
         ((VideoPlayerMac*)newPatch)->loadVideo(args.path);
         inputs.push_back((VideoPlayerMac*)newPatch);
@@ -646,14 +646,17 @@ void ofApp::createNode(textInputEvent &args){
         mixtables.push_back((MultiChannelSwitch*)newPatch);
     }
     
-    nE = new NodeElement(newPatch);
-    nodeViewers[currentViewer]->addElement(nE, args.point);
-    nodes.insert(std::pair<int, ImageOutput*>(newPatch->getId(), newPatch));
-    nodesVector.push_back(newPatch);
-    newPatch->setup();
-    
-    ofRemoveListener(((textInput*)args.widget)->createNode , this, &ofApp::createNode);
-    widgetsToDelete.push_back(args.widget); // delete input from canvas
+    if (newPatch) {
+        nE = new NodeElement(newPatch);
+        nodeViewers[currentViewer]->addElement(nE, args.point);
+        nodes.insert(std::pair<int, ImageOutput*>(newPatch->getId(), newPatch));
+        nodesVector.push_back(newPatch);
+        newPatch->setup();
+        newPatch->resetSize();
+        
+        ofRemoveListener(((textInput*)args.widget)->createNode , this, &ofApp::createNode);
+        widgetsToDelete.push_back(args.widget); // delete input from canvas
+    }
 }
 
 //------------------------------------------------------------------

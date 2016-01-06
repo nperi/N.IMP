@@ -12,25 +12,33 @@
 VideoPlayerMac::VideoPlayerMac(string name, int id_) : InputSource(name, id_){
     //there always has to exist at least one player.
     currentPlayer=0;
-    img.allocate(width, height, OF_IMAGE_COLOR_ALPHA);
     
     play.addListener(this, &VideoPlayerMac::playVideo);
     stop.addListener(this, &VideoPlayerMac::stopVideo);
     
     gui.add(play.setup("Play"));
     gui.add(stop.setup("Stop"));
+    gui.setWidthElements(INSPECTOR_WIDTH);
 
-    drawVideo = true;
+    drawTexture = true;
 }
 
 //------------------------------------------------------------------
 void VideoPlayerMac::setup() {
-	
+    
+    if (players[currentPlayer]) {
+        
+        width  = players[currentPlayer]->getWidth();
+        height = players[currentPlayer]->getHeight();
+        
+        drawTexture = true;
+    }
 }
 
 //------------------------------------------------------------------
 void VideoPlayerMac::update() {
     if (players[currentPlayer]->isLoaded()) {
+        
         players[currentPlayer]->update();
         if (players[currentPlayer]->isFrameNew()){
             img.setFromPixels(players[currentPlayer]->getPixels(), players[currentPlayer]->getWidth(), players[currentPlayer]->getHeight(), OF_IMAGE_COLOR_ALPHA);
@@ -42,18 +50,19 @@ void VideoPlayerMac::update() {
 
 //------------------------------------------------------------------
 void VideoPlayerMac::draw(int x,int y, float scale) {
-	if (players[currentPlayer]->isLoaded()) {
-        float ratio = (float)height/(float)width;
-        int w = 640*scale;
-        int h = w*ratio;
-        players[currentPlayer]->draw(x, y, w,h);
-    }
-    ofSetColor(255, 255, 255);
-    ofDrawBitmapString(name, x + 10, y + 30);
+//	if (players[currentPlayer]->isLoaded()) {
+//        float ratio = (float)height/(float)width;
+//        int w = 640*scale;
+//        int h = w*ratio;
+//        players[currentPlayer]->draw(x, y, w,h);
+//    }
+//    ofSetColor(255, 255, 255);
+//    ofDrawBitmapString(name, x + 10, y + 30);
 }
 
 //------------------------------------------------------------------
 void VideoPlayerMac::loadVideo(string path) {
+    
     ofQTKitDecodeMode decodeMode = OF_QTKIT_DECODE_PIXELS_AND_TEXTURE;
     ofQTKitPlayer* vP = new ofQTKitPlayer();
     vP->setPixelFormat(OF_PIXELS_RGBA);

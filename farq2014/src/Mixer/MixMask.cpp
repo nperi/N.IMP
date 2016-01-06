@@ -129,8 +129,6 @@ bool MixMask::loadSettings(ofxXmlSettings &XML, int nTag_) {
     
     ImageOutput::loadSettings(XML, nTag_);
     
-    addInputDot();
-    
     XML.popTag();
     
     return true;

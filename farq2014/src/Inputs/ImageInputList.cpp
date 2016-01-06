@@ -22,12 +22,14 @@ ImageInputList::ImageInputList(string name, int id_) : InputSource(name, id_){
 //------------------------------------------------------------------
 void ImageInputList::setup(){
     
-    width  = inputs[currentSequence]->getWidth();
-    height = inputs[currentSequence]->getHeight();
-    
-    img.allocate(width, height, OF_IMAGE_COLOR_ALPHA);
-    
-    drawTexture = true;
+    if (inputs[currentSequence]) {
+        width  = inputs[currentSequence]->getWidth();
+        height = inputs[currentSequence]->getHeight();
+        
+        //img.allocate(width, height, OF_IMAGE_COLOR_ALPHA);
+        
+        drawTexture = true;
+    }
 }
 
 //------------------------------------------------------------------
