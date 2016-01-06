@@ -116,42 +116,44 @@ ImageProcessor::ImageProcessor(string name_, int id_):VisualLayer(name_, id_) {
 //------------------------------------------------------------------
 void ImageProcessor::setup() {
     
-    height = input[0]->getHeight();
-    width  = input[0]->getWidth();
-    
-    updateFromInputCoorners(getTextureCoorners().getVertices()[0]);
-    
-    fbo.allocate(width, height);
-    
-    drawFbo = true;
-    
-    // Setup post-processing chain
-    post.init(width,height);
-    post.createPass<BloomPass>()->setEnabled(isBloom);
-    post.createPass<ContrastPass>()->setEnabled(isContrast);
-    post.createPass<KaleidoscopePass>()->setEnabled(isKaleidoscope);
-    post.createPass<NoiseWarpPass>()->setEnabled(isNoise);
-    post.createPass<EdgePass>()->setEnabled(isEdge);
-    post.createPass<BleachBypassPass>()->setEnabled(isBleach);
-    post.createPass<RGBShiftPass>()->setEnabled(isRGBShift);
-    post.createPass<GodRaysPass>()->setEnabled(isGod);
-    post.createPass<ZoomBlurPass>()->setEnabled(isZoomBlur);
-    post.createPass<PixelatePass>()->setEnabled(isPixelate);
-
+    if(input.size()) {
+        
+        height = input[0]->getHeight();
+        width  = input[0]->getWidth();
+        
+        updateFromInputCoorners(getTextureCoorners().getVertices()[0]);
+        
+        fbo.allocate(width, height);
+        
+        drawFbo = true;
+        
+        // Setup post-processing chain
+        post.init(width,height);
+        post.createPass<BloomPass>()->setEnabled(isBloom);
+        post.createPass<ContrastPass>()->setEnabled(isContrast);
+        post.createPass<KaleidoscopePass>()->setEnabled(isKaleidoscope);
+        post.createPass<NoiseWarpPass>()->setEnabled(isNoise);
+        post.createPass<EdgePass>()->setEnabled(isEdge);
+        post.createPass<BleachBypassPass>()->setEnabled(isBleach);
+        post.createPass<RGBShiftPass>()->setEnabled(isRGBShift);
+        post.createPass<GodRaysPass>()->setEnabled(isGod);
+        post.createPass<ZoomBlurPass>()->setEnabled(isZoomBlur);
+        post.createPass<PixelatePass>()->setEnabled(isPixelate);
+    }
 }
 
 //------------------------------------------------------------------
 void ImageProcessor::update() {
     
-    fbo.begin();
-    glPushAttrib(GL_ALL_ATTRIB_BITS);
-    glEnable(GL_BLEND);
-    glBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA,GL_ONE,GL_ONE_MINUS_SRC_ALPHA);
-    ofSetColor(255);
-    ofClear(255,255,255,0);
-
     if(input.size()) {
-
+        
+        fbo.begin();
+        glPushAttrib(GL_ALL_ATTRIB_BITS);
+        glEnable(GL_BLEND);
+        glBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA,GL_ONE,GL_ONE_MINUS_SRC_ALPHA);
+        ofSetColor(255);
+        ofClear(255,255,255,0);
+        
         post.begin();
         ofClear(255,255,255,0);
         ofPushMatrix();
@@ -163,12 +165,13 @@ void ImageProcessor::update() {
         ofPopMatrix();
         ofPopMatrix();
         post.end();
-    }
 
-    glDisable(GL_BLEND);
-    glPopAttrib();
-    fbo.end();
-    tex = fbo.getTextureReference();
+        glDisable(GL_BLEND);
+        glPopAttrib();
+        fbo.end();
+        
+        tex = fbo.getTextureReference();
+    }
 }
 
 void ImageProcessor::updateParameter(Param* inputParam){
