@@ -15,7 +15,6 @@ ImageTypeMovie::ImageTypeMovie(string name_ ,string path_, ofQTKitPlayer* player
     //videoPlayer.setPixelFormat(OF_PIXELS_RGBA);
     //videoPlayer.loadMovie(path_, decodeMode);
     //videoPlayer.loadMovie(path_);
-    path = path_;
     videoPlayer = player;
     
     isPlaying.addListener(this, &ImageTypeMovie::cIsPlaying);

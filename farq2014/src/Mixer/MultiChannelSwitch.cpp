@@ -77,7 +77,7 @@ void MultiChannelSwitch::update() {
         img = *input[selChannel]->getImage();
         tex = *input[selChannel]->getTexture();
         
-        input[selChannel]->setDrawInspector(drawInputGui);
+        //input[selChannel]->setDrawInspector(drawInputGui);
     }
 }
 
@@ -148,7 +148,8 @@ void MultiChannelSwitch::setEnable(bool isEnabled_){
 //------------------------------------------------------------------
 bool MultiChannelSwitch::loadSettings(ofxXmlSettings &XML, int nTag_) {
     
-    nId = XML.getAttribute("NODE", "id", -1, nTag_);
+    nId             = XML.getAttribute("NODE", "id", -1, nTag_);
+    drawInputGui    = ofToBool(XML.getAttribute("NODE", "drawInputGui", "0", nTag_));
     
     XML.pushTag("NODE", nTag_);
     
@@ -194,7 +195,21 @@ bool MultiChannelSwitch::saveSettings(ofxXmlSettings &XML) {
         //
         if ( XML.getAttribute("NODE", "id", -1, i) == nId){
             
+            XML.setAttribute("NODE", "name", name, i);
+            XML.setAttribute("NODE", "drawInputGui", drawInputGui, i);
+            
             XML.pushTag("NODE", i);
+            
+            int numInputSource = XML.getNumTags("INPUT_SOURCE");
+            
+            for (int iS = 0; iS < input.size(); iS++){
+                
+                if (iS >= numInputSource) {
+                    XML.addTag("INPUT_SOURCE");
+                }
+                XML.setAttribute("INPUT_SOURCE", "nodeId", input[iS]->getId(), iS);
+            }
+            
             ofxPatch::saveSettings(XML, false, i);
             XML.popTag();
             break;
@@ -209,7 +224,19 @@ bool MultiChannelSwitch::saveSettings(ofxXmlSettings &XML) {
             // and fill it with the proper structure
             //
             int lastPlace = XML.addTag("NODE");
+            XML.addAttribute("NODE", "id", nId, lastPlace);
+            XML.addAttribute("NODE", "name", name, lastPlace);
+            XML.addAttribute("NODE", "type", "MULTI_CHANNEL", lastPlace);
+            
+            XML.addAttribute("NODE", "drawInputGui", drawInputGui, lastPlace);
+            
             if (XML.pushTag("NODE", lastPlace)){
+                
+                for (int iS = 0; iS < input.size(); iS++){
+                    
+                    XML.addTag("INPUT_SOURCE");
+                    XML.addAttribute("INPUT_SOURCE", "nodeId", input[iS]->getId(), iS);
+                }
                 
                 ofxPatch::saveSettings(XML, true, lastPlace);
                 XML.popTag();

@@ -73,3 +73,59 @@ void NodeViewer::setupGuiPositions(){
         elements[i]->setupGuiPositions();
     }
 }
+
+//------------------------------------------------------------------
+bool NodeViewer::saveSettings(ofxXmlSettings &XML) {
+    
+    bool saved = false;
+    bool found = false;
+    
+    int totalNodes = XML.getNumTags("NODE_VIEW");
+    
+    for (int i = 0; i <= totalNodes; i++){
+        
+        if ( XML.getAttribute("NODE_VIEW", "name", "", i) == name){
+            
+            XML.pushTag("NODE_VIEW");
+            
+            totalNodes = XML.getNumTags("NODE");
+            
+            for (int e = 0; e < elements.size(); e++) {
+                
+                found = false;
+                
+                for (int n = 0; n <= totalNodes; n++) {
+                    if (XML.getAttribute("NODE", "id", -1, n) == elements[e]->getImageOutput()->getId()) {
+                        XML.setAttribute("NODE", "name", elements[e]->getImageOutput()->getName(), n);
+                        found = true;
+                    }
+                }
+                
+                if (!found) {
+                    int lastPlace = XML.addTag("NODE");
+                    
+                    XML.addAttribute("NODE", "id", elements[e]->getImageOutput()->getId(), lastPlace);
+                    XML.addAttribute("NODE", "name", elements[e]->getImageOutput()->getName(), lastPlace);
+                }
+            }
+            
+            break;
+        }
+        else if (i >= totalNodes-1) {
+            
+            int lastPlace = XML.addTag("NODE_VIEW");
+            
+            XML.addAttribute("NODE_VIEW", "name", name, lastPlace);
+            XML.pushTag("NODE_VIEW");
+            
+            for (int e = 0; e < elements.size(); e++) {
+                
+                lastPlace = XML.addTag("NODE");
+                XML.addAttribute("NODE", "id", elements[e]->getImageOutput()->getId(), lastPlace);
+                XML.addAttribute("NODE", "name", elements[e]->getImageOutput()->getName(), lastPlace);
+            }
+        }
+
+        XML.popTag();
+    }
+}

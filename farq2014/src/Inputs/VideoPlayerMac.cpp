@@ -146,8 +146,6 @@ bool VideoPlayerMac::loadSettings(ofxXmlSettings &XML, int nTag_) {
         loaded = false;
     }
     
-    XML.popTag();
-    
     type        = XML.getValue("type","none");
     bVisible    = XML.getValue("visible", true);
     

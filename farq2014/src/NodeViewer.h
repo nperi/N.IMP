@@ -23,15 +23,17 @@ class NodeViewer : public ofxComposer {
 	
 	void setup();
     void update();
+    void draw();
+    
     void addElement(NodeElement* elem_);
     void addElement(NodeElement* elem_, ofPoint position_);
-	void draw();
-    void setupGuiPositions();
     
+    void setupGuiPositions();
     void createConnections();
     
     string getName();
 	
+    bool saveSettings(ofxXmlSettings &XML);
     
 private:
     vector<NodeElement*> elements;

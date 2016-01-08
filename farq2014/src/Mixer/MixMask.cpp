@@ -123,7 +123,8 @@ void MixMask::updateParameter(Param* inputParam){
 //------------------------------------------------------------------
 bool MixMask::loadSettings(ofxXmlSettings &XML, int nTag_) {
     
-    nId = XML.getAttribute("NODE", "id", -1, nTag_);
+    nId     = XML.getAttribute("NODE", "id", -1, nTag_);
+    spin    = XML.getAttribute("NODE", "spin", 90, nTag_);
     
     XML.pushTag("NODE", nTag_);
     
@@ -166,7 +167,21 @@ bool MixMask::saveSettings(ofxXmlSettings &XML) {
         //
         if ( XML.getAttribute("NODE", "id", -1, i) == nId){
             
+            XML.setAttribute("NODE", "name", name, i);
+            XML.setAttribute("NODE", "spin", spin, i);
+            
             XML.pushTag("NODE", i);
+            
+            int numInputSource = XML.getNumTags("INPUT_SOURCE");
+            
+            for (int iS = 0; iS < input.size(); iS++){
+                
+                if (iS >= numInputSource) {
+                    XML.addTag("INPUT_SOURCE");
+                }
+                XML.setAttribute("INPUT_SOURCE", "nodeId", input[iS]->getId(), iS);
+            }
+            
             ofxPatch::saveSettings(XML, false, i);
             XML.popTag();
             break;
@@ -181,7 +196,20 @@ bool MixMask::saveSettings(ofxXmlSettings &XML) {
             // and fill it with the proper structure
             //
             int lastPlace = XML.addTag("NODE");
+            
+            XML.addAttribute("NODE", "id", nId, lastPlace);
+            XML.addAttribute("NODE", "name", name, lastPlace);
+            XML.addAttribute("NODE", "type", "MASK", lastPlace);
+            
+            XML.addAttribute("NODE", "spin", spin, lastPlace);
+            
             if (XML.pushTag("NODE", lastPlace)){
+                
+                for (int iS = 0; iS < input.size(); iS++){
+                    
+                    XML.addTag("INPUT_SOURCE");
+                    XML.addAttribute("INPUT_SOURCE", "nodeId", input[iS]->getId(), iS);
+                }
                 
                 ofxPatch::saveSettings(XML, true, lastPlace);
                 XML.popTag();

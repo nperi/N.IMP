@@ -111,6 +111,17 @@ ImageProcessor::ImageProcessor(string name_, int id_):VisualLayer(name_, id_) {
     gui.add(zoomBlur);
     gui.add(pixelate);
     gui.setWidthElements(INSPECTOR_WIDTH);
+    
+    post.createPass<BloomPass>()->setEnabled(isBloom);
+    post.createPass<ContrastPass>()->setEnabled(isContrast);
+    post.createPass<KaleidoscopePass>()->setEnabled(isKaleidoscope);
+    post.createPass<NoiseWarpPass>()->setEnabled(isNoise);
+    post.createPass<EdgePass>()->setEnabled(isEdge);
+    post.createPass<BleachBypassPass>()->setEnabled(isBleach);
+    post.createPass<RGBShiftPass>()->setEnabled(isRGBShift);
+    post.createPass<GodRaysPass>()->setEnabled(isGod);
+    post.createPass<ZoomBlurPass>()->setEnabled(isZoomBlur);
+    post.createPass<PixelatePass>()->setEnabled(isPixelate);
 }
 
 //------------------------------------------------------------------
@@ -129,16 +140,6 @@ void ImageProcessor::setup() {
         
         // Setup post-processing chain
         post.init(width,height);
-        post.createPass<BloomPass>()->setEnabled(isBloom);
-        post.createPass<ContrastPass>()->setEnabled(isContrast);
-        post.createPass<KaleidoscopePass>()->setEnabled(isKaleidoscope);
-        post.createPass<NoiseWarpPass>()->setEnabled(isNoise);
-        post.createPass<EdgePass>()->setEnabled(isEdge);
-        post.createPass<BleachBypassPass>()->setEnabled(isBleach);
-        post.createPass<RGBShiftPass>()->setEnabled(isRGBShift);
-        post.createPass<GodRaysPass>()->setEnabled(isGod);
-        post.createPass<ZoomBlurPass>()->setEnabled(isZoomBlur);
-        post.createPass<PixelatePass>()->setEnabled(isPixelate);
     }
 }
 
@@ -399,7 +400,43 @@ void ImageProcessor::cpiRes(ofVec2f &b){
 //------------------------------------------------------------------
 bool ImageProcessor::loadSettings(ofxXmlSettings &XML, int nTag_) {
     
-    nId      = XML.getAttribute("NODE", "id", -1, nTag_);
+    nId             = XML.getAttribute("NODE", "id", -1, nTag_);
+    
+    isBloom         = ofToBool(XML.getAttribute("NODE","isBloom","false",nTag_));
+    
+    isContrast      = ofToBool(XML.getAttribute("NODE","isContrast","false",nTag_));
+    coContrast      = XML.getAttribute("NODE","coContrast",1.0,nTag_);
+    coBrightness    = XML.getAttribute("NODE","coBrightness",1.0,nTag_);
+    coMultiple      = XML.getAttribute("NODE","coMultiple",1.0,nTag_);
+    
+    isKaleidoscope  = ofToBool(XML.getAttribute("NODE","isKaleidoscope","false",nTag_));
+    kaSegments      = XML.getAttribute("NODE","kaSegments",2.0,nTag_);
+    
+    isNoise         = ofToBool(XML.getAttribute("NODE","isNoise","false",nTag_));
+    noFreq          = XML.getAttribute("NODE","noFreq",4.0,nTag_);
+    noAmp           = XML.getAttribute("NODE","noAmp",.1,nTag_);
+    noSpeed         = XML.getAttribute("NODE","noSpeed",.1,nTag_);
+    
+    isEdge          = ofToBool(XML.getAttribute("NODE","isEdge","false",nTag_));
+    edHue           = XML.getAttribute("NODE","edHue",0.5,nTag_);
+    edSat           = XML.getAttribute("NODE","edSat",0.0,nTag_);
+    
+    isBleach        = ofToBool(XML.getAttribute("NODE","isBleach","false",nTag_));
+    blOpacity       = XML.getAttribute("NODE","blOpacity",1.0,nTag_);
+    
+    isRGBShift      = ofToBool(XML.getAttribute("NODE","isRGBShift","false",nTag_));
+    rgAngle         = XML.getAttribute("NODE","rgAngle",0.0,nTag_);
+    rgAmount        = XML.getAttribute("NODE","rgAmount",0.005,nTag_);
+    
+    isGod           = ofToBool(XML.getAttribute("NODE","isGod","false",nTag_));
+    
+    isZoomBlur      = ofToBool(XML.getAttribute("NODE","isZoomBlur","false",nTag_));
+    zbCenterX       = XML.getAttribute("NODE","zbCenterX",0.5,nTag_);
+    zbCenterY       = XML.getAttribute("NODE","zbCenterY",0.5,nTag_);
+    zbExposure      = XML.getAttribute("NODE","zbExposure",0.48,nTag_);
+    zbDensity       = XML.getAttribute("NODE","zbDensity",0.25,nTag_);
+    zbWeight        = XML.getAttribute("NODE","zbWeight",0.25,nTag_);
+    zbClamp         = XML.getAttribute("NODE","zbClamp",1,nTag_);
     
     XML.pushTag("NODE", nTag_);
     
@@ -437,6 +474,42 @@ bool ImageProcessor::saveSettings(ofxXmlSettings &XML) {
             XML.setAttribute("NODE", "name", name, i);
             XML.setAttribute("NODE", "inputSource", input[0]->getId(), i);
             
+            XML.setAttribute("NODE","isBloom", isBloom, i);
+            
+            XML.setAttribute("NODE","isContrast", isContrast, i);
+            XML.setAttribute("NODE","coContrast", coContrast, i);
+            XML.setAttribute("NODE","coBrightness", coBrightness, i);
+            XML.setAttribute("NODE","coMultiple", coMultiple, i);
+            
+            XML.setAttribute("NODE","isKaleidoscope", isKaleidoscope, i);
+            XML.setAttribute("NODE","kaSegments", kaSegments, i);
+            
+            XML.setAttribute("NODE","isNoise", isNoise, i);
+            XML.setAttribute("NODE","noFreq", noFreq, i);
+            XML.setAttribute("NODE","noAmp", noAmp, i);
+            XML.setAttribute("NODE","noSpeed", noSpeed, i);
+            
+            XML.setAttribute("NODE","isEdge", isEdge, i);
+            XML.setAttribute("NODE","edHue", edHue, i);
+            XML.setAttribute("NODE","edSat", edSat, i);
+            
+            XML.setAttribute("NODE","isBleach", isBleach, i);
+            XML.setAttribute("NODE","blOpacity", blOpacity, i);
+            
+            XML.setAttribute("NODE","isRGBShift", isRGBShift, i);
+            XML.setAttribute("NODE","rgAngle", rgAngle, i);
+            XML.setAttribute("NODE","rgAmount", rgAmount, i);
+            
+            XML.setAttribute("NODE","isGod", isGod, i);
+            
+            XML.setAttribute("NODE","isZoomBlur", isZoomBlur, i);
+            XML.setAttribute("NODE","zbCenterX", zbCenterX, i);
+            XML.setAttribute("NODE","zbCenterY", zbCenterY, i);
+            XML.setAttribute("NODE","zbExposure", zbExposure, i);
+            XML.setAttribute("NODE","zbDensity", zbDensity, i);
+            XML.setAttribute("NODE","zbWeight", zbWeight, i);
+            XML.setAttribute("NODE","zbClamp", zbClamp, i);
+            
             XML.pushTag("NODE", i);
             
             ofxPatch::saveSettings(XML, false, i);
@@ -458,7 +531,43 @@ bool ImageProcessor::saveSettings(ofxXmlSettings &XML) {
             XML.addAttribute("NODE", "id", nId, lastPlace);
             XML.addAttribute("NODE", "name", name, lastPlace);
             XML.addAttribute("NODE", "type", "IMAGE_PROCESSOR", lastPlace);
-            XML.addAttribute("NODE", "inputSource", input[0]->getId(), lastPlace);
+            if (input.size()) XML.addAttribute("NODE", "inputSource", input[0]->getId(), lastPlace);
+            
+            XML.addAttribute("NODE","isBloom", isBloom, lastPlace);
+            
+            XML.addAttribute("NODE","isContrast", isContrast, lastPlace);
+            XML.addAttribute("NODE","coContrast", coContrast, lastPlace);
+            XML.addAttribute("NODE","coBrightness", coBrightness, lastPlace);
+            XML.addAttribute("NODE","coMultiple", coMultiple, lastPlace);
+            
+            XML.addAttribute("NODE","isKaleidoscope", isKaleidoscope, lastPlace);
+            XML.addAttribute("NODE","kaSegments", kaSegments, lastPlace);
+            
+            XML.addAttribute("NODE","isNoise", isNoise, lastPlace);
+            XML.addAttribute("NODE","noFreq", noFreq, lastPlace);
+            XML.addAttribute("NODE","noAmp", noAmp, lastPlace);
+            XML.addAttribute("NODE","noSpeed", noSpeed, lastPlace);
+            
+            XML.addAttribute("NODE","isEdge", isEdge, lastPlace);
+            XML.addAttribute("NODE","edHue", edHue, lastPlace);
+            XML.addAttribute("NODE","edSat", edSat, lastPlace);
+            
+            XML.addAttribute("NODE","isBleach", isBleach, lastPlace);
+            XML.addAttribute("NODE","blOpacity", blOpacity, lastPlace);
+            
+            XML.addAttribute("NODE","isRGBShift", isRGBShift, lastPlace);
+            XML.addAttribute("NODE","rgAngle", rgAngle, lastPlace);
+            XML.addAttribute("NODE","rgAmount", rgAmount, lastPlace);
+            
+            XML.addAttribute("NODE","isGod", isGod, lastPlace);
+            
+            XML.addAttribute("NODE","isZoomBlur", isZoomBlur, lastPlace);
+            XML.addAttribute("NODE","zbCenterX", zbCenterX, lastPlace);
+            XML.addAttribute("NODE","zbCenterY", zbCenterY, lastPlace);
+            XML.addAttribute("NODE","zbExposure", zbExposure, lastPlace);
+            XML.addAttribute("NODE","zbDensity", zbDensity, lastPlace);
+            XML.addAttribute("NODE","zbWeight", zbWeight, lastPlace);
+            XML.addAttribute("NODE","zbClamp", zbClamp, lastPlace);
             
             if (XML.pushTag("NODE", lastPlace)){
                 

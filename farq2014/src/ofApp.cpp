@@ -397,6 +397,18 @@ void ofApp::keyPressed  (int key){
                 newNodeInput->getDropdownList()->getRect()->setY(ofGetMouseY());
             }
             break;
+            
+            case 'j': case 'J' :
+                if ((newNodeInput == NULL) || (!newNodeInput->isClicked())) {
+                    nodeViewers[currentViewer]->loadSnippet();
+                }
+            break;
+            case 'k': case 'K' :
+                if ((newNodeInput == NULL) || (!newNodeInput->isClicked())) {
+                    nodeViewers[currentViewer]->saveSnippet();
+                }
+            break;
+        
         default:
             notAvailable = true;
             break;
@@ -635,11 +647,11 @@ void ofApp::createNode(textInputEvent &args){
     }
     else if (args.type == "mix simple blend") {
         newPatch = new MixSimpleBlend();
-        mixtables.push_back((MultiChannelSwitch*)newPatch);
+        mixtables.push_back((MixSimpleBlend*)newPatch);
     }
     else if (args.type == "mix mask") {
         newPatch = new MixMask();
-        mixtables.push_back((MultiChannelSwitch*)newPatch);
+        mixtables.push_back((MixMask*)newPatch);
     }
     else if (args.type == "multi channel switch") {
         newPatch = new MultiChannelSwitch();
@@ -1239,7 +1251,7 @@ bool ofApp::saveToXML() {
         //
         XML.pushTag("NODE_VIEWS");
         for (int nv = 0; nv < nodeViewers.size(); nv++) {
-            //nodeViewers[nv]->saveSettings(XML);
+            nodeViewers[nv]->saveSettings(XML);
         }
         XML.popTag(); // tag NODE_VIEWS
         

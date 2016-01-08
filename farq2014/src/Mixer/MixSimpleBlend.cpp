@@ -199,7 +199,6 @@ bool MixSimpleBlend::saveSettings(ofxXmlSettings &XML) {
             XML.addAttribute("NODE", "name", name, lastPlace);
             XML.addAttribute("NODE", "type", "SIMPLE_BLEND", lastPlace);
             
-            XML.addAttribute("NODE", "name", name, lastPlace);
             XML.addAttribute("NODE", "selectorLeft", selector1, lastPlace);
             XML.addAttribute("NODE", "selectorRight", selector2, lastPlace);
             XML.addAttribute("NODE", "blendmode", blendMode, lastPlace);

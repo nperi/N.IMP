@@ -42,7 +42,7 @@ void ImageInputList::update(){
 //------------------------------------------------------------------
 void ImageInputList::draw(int x,int y, float scale){
     
-//    ofPushMatrix();
+//    ofPushMatrix();Ï
 //    glMultMatrixf(glMatrix);
 //    tex.draw(0,0);
 //    ofPopMatrix();
@@ -280,7 +280,7 @@ bool ImageInputList::loadSettings(ofxXmlSettings &XML, int nTag_) {
     isPalindromLoop = ofToBool(XML.getAttribute("NODE", "palindrom","true", nTag_));
     isMatchBpmToSequenceLength = ofToBool(XML.getAttribute("NODE", "matchBPMtoSequence","false", nTag_));
     
-    if (path == "none") {
+    if ((path == "none") || (path == "")) {
         XML.pushTag("NODE",nTag_);
         int numVideoTag = XML.getNumTags("ASSET");
         if(numVideoTag>0){
@@ -343,7 +343,7 @@ bool ImageInputList::saveSettings(ofxXmlSettings &XML) {
             
             XML.pushTag("NODE", i);
             
-            if (path == "none") {
+            if ((path == "none") || (path == "")) {
 
                 int numAssetTag = XML.getNumTags("ASSET");
                 
@@ -387,7 +387,7 @@ bool ImageInputList::saveSettings(ofxXmlSettings &XML) {
             
             if (XML.pushTag("NODE", lastPlace)){
                 
-                if (path == "none") {
+                if ((path == "none") || (path == "")) {
                     
                     for (int v = 0; v < inputs.size(); v++){
                         

@@ -121,9 +121,6 @@ bool AudioInputGenerator::loadSettings(ofxXmlSettings &XML) {
     bool result = true;
     XML.pushTag("FFT_SETTINGS");
     
-    if (audioMap != NULL)
-        delete audioMap;
-    
     audioMap = new vector<DTAudioMap*>();
 
     int numAudioMapTag = XML.getNumTags("AUDIO_MAP");
