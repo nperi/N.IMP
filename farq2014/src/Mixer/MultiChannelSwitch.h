@@ -38,6 +38,7 @@ private:
     void update();
     
     void cselChannel(int& s);
+    void cGui(bool& g);
     void cLabel(bool& b);
     
     ofParameterGroup labelGroup;

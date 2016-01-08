@@ -14,6 +14,8 @@ MultiChannelSwitch::MultiChannelSwitch(string name_, int id_):MixTable(name_, id
     
     //gui.add(selChannel.set("channel", 0, 0, 0));
     gui.add(drawInputGui.set("show input Gui", false));
+    drawInputGui.addListener(this, &MultiChannelSwitch::cGui);
+
     
     selChannel.set("channel", 0, 0, 0);
     selChannel.addListener(this, &MultiChannelSwitch::cselChannel);
@@ -117,6 +119,12 @@ void MultiChannelSwitch::cselChannel(int& s){
 }
 
 //------------------------------------------------------------------
+void MultiChannelSwitch::cGui(bool& g){
+    
+    input[selChannel]->setDrawInspector(g);
+}
+
+//------------------------------------------------------------------
 void MultiChannelSwitch::cLabel(bool& b){
     if (ofGetElapsedTimeMillis()-lastClicked > 200) {
         //hacked radio button
@@ -149,13 +157,12 @@ void MultiChannelSwitch::setEnable(bool isEnabled_){
 bool MultiChannelSwitch::loadSettings(ofxXmlSettings &XML, int nTag_) {
     
     nId             = XML.getAttribute("NODE", "id", -1, nTag_);
-    drawInputGui    = ofToBool(XML.getAttribute("NODE", "drawInputGui", "0", nTag_));
+    selChannel      = ofToInt(XML.getAttribute("INPUT_SOURCE","selChannel","0",nTag_));
+    //drawInputGui    = ofToBool(XML.getAttribute("NODE", "drawInputGui", "0", nTag_));
     
     XML.pushTag("NODE", nTag_);
     
     int numINPUTTag = XML.getNumTags("INPUT_SOURCE");
-    
-    selChannel =  ofToInt(XML.getAttribute("INPUT_SOURCE","selChannel","0",nTag_));
     
     std::map<string,ImageOutput*>::iterator it;
 
@@ -196,7 +203,8 @@ bool MultiChannelSwitch::saveSettings(ofxXmlSettings &XML) {
         if ( XML.getAttribute("NODE", "id", -1, i) == nId){
             
             XML.setAttribute("NODE", "name", name, i);
-            XML.setAttribute("NODE", "drawInputGui", drawInputGui, i);
+            XML.setAttribute("NODE", "selChannel", selChannel, i);
+            //XML.setAttribute("NODE", "drawInputGui", drawInputGui, i);
             
             XML.pushTag("NODE", i);
             
@@ -228,7 +236,8 @@ bool MultiChannelSwitch::saveSettings(ofxXmlSettings &XML) {
             XML.addAttribute("NODE", "name", name, lastPlace);
             XML.addAttribute("NODE", "type", "MULTI_CHANNEL", lastPlace);
             
-            XML.addAttribute("NODE", "drawInputGui", drawInputGui, lastPlace);
+            XML.addAttribute("NODE", "selChannel", selChannel, lastPlace);
+            //XML.addAttribute("NODE", "drawInputGui", drawInputGui, lastPlace);
             
             if (XML.pushTag("NODE", lastPlace)){
                 
