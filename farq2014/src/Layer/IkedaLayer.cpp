@@ -34,6 +34,9 @@ IkedaLayer::IkedaLayer(string name_, int id_, bool isCanny_,bool isThreshold_, b
 void IkedaLayer::setup() {
 
     if(input.size()) {
+        
+        updateFromInputCoorners(getTextureCoorners().getVertices()[0]);
+        
         drawTexture = true;
     }
 }
@@ -157,7 +160,10 @@ bool IkedaLayer::saveSettings(ofxXmlSettings &XML) {
         if ( XML.getAttribute("NODE", "id", -1, i) == nId){
             
             XML.setAttribute("NODE", "name", name, i);
-            XML.setAttribute("NODE", "inputSource", input[0]->getId(), i);
+            if (input.size())
+                XML.setAttribute("NODE", "inputSource", input[0]->getId(), i);
+            else
+                XML.removeAttribute("NODE", "inputSource", i);
             
             XML.setAttribute("NODE", "isCanny", isCanny, i);
             XML.setAttribute("NODE", "isThreshold", isThreshold, i);
@@ -189,7 +195,7 @@ bool IkedaLayer::saveSettings(ofxXmlSettings &XML) {
             XML.addAttribute("NODE", "id", nId, lastPlace);
             XML.addAttribute("NODE", "name", name, lastPlace);
             XML.addAttribute("NODE", "type", "IKEDA", lastPlace);
-            XML.addAttribute("NODE", "inputSource", input[0]->getId(), lastPlace);
+            if (input.size()) XML.addAttribute("NODE", "inputSource", input[0]->getId(), lastPlace);
             
             XML.addAttribute("NODE", "isCanny", isCanny, lastPlace);
             XML.addAttribute("NODE", "isThreshold", isThreshold, lastPlace);

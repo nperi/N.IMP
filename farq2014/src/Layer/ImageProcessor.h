@@ -70,8 +70,6 @@ class ImageProcessor : public VisualLayer{
     bool loadSettings(ofxXmlSettings &XML, int nTag_);
     bool saveSettings(ofxXmlSettings &XML);
     
-    void updateFromInputCoorners(ofPoint pos_);
-    
 private:
     void update();
     ofxPostProcessing post;

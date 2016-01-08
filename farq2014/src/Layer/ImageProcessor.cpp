@@ -472,7 +472,10 @@ bool ImageProcessor::saveSettings(ofxXmlSettings &XML) {
         if ( XML.getAttribute("NODE", "id", -1, i) == nId){
             
             XML.setAttribute("NODE", "name", name, i);
-            XML.setAttribute("NODE", "inputSource", input[0]->getId(), i);
+            if (input.size())
+                XML.setAttribute("NODE", "inputSource", input[0]->getId(), i);
+            else
+                XML.removeAttribute("NODE", "inputSource", i);
             
             XML.setAttribute("NODE","isBloom", isBloom, i);
             
@@ -579,21 +582,6 @@ bool ImageProcessor::saveSettings(ofxXmlSettings &XML) {
     
     return saved;
     
-}
-
-//------------------------------------------------------------------
-void ImageProcessor::updateFromInputCoorners(ofPoint pos_) {
-    
-    vector<ofPoint> iC = input[0]->getTextureCoorners().getVertices();
-    float dist_x = iC[1].x - iC[0].x;
-    float dist_y = iC[2].y - iC[0].y;
-    
-    iC[0] = pos_;
-    iC[1] = ofPoint(pos_.x + dist_x, pos_.y);
-    iC[2] = ofPoint(pos_.x + dist_x, pos_.y + dist_y);
-    iC[3] = ofPoint(pos_.x, pos_.y + dist_y);
-    
-    setCoorners(iC);
 }
 
 

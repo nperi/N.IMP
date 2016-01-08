@@ -26,8 +26,11 @@ GlitchLayerAlt::GlitchLayerAlt(string name_, int id_):VisualLayer(name_, "Glitch
 void GlitchLayerAlt::setup() {
 
     if(input.size()) {
+        
         height = input[0]->getHeight();
         width  = input[0]->getWidth();
+        
+        updateFromInputCoorners(getTextureCoorners().getVertices()[0]);
         
         glitcher.setup(dq, qn, dht);
         
@@ -120,7 +123,10 @@ bool GlitchLayerAlt::saveSettings(ofxXmlSettings &XML) {
         if ( XML.getAttribute("NODE", "id", -1, i) == nId){
             
             XML.setAttribute("NODE", "name", name, i);
-            XML.setAttribute("NODE", "inputSource", input[0]->getId(), i);
+            if (input.size())
+                XML.setAttribute("NODE", "inputSource", input[0]->getId(), i);
+            else
+                XML.removeAttribute("NODE", "inputSource", i);
 
             XML.setAttribute("NODE","dq", dq, i);
             XML.setAttribute("NODE","qn", qn, i);
@@ -147,7 +153,7 @@ bool GlitchLayerAlt::saveSettings(ofxXmlSettings &XML) {
             XML.addAttribute("NODE", "id", nId, lastPlace);
             XML.addAttribute("NODE", "name", name, lastPlace);
             XML.addAttribute("NODE", "type", "GLITCH_2", lastPlace);
-            XML.addAttribute("NODE", "inputSource", input[0]->getId(), lastPlace);
+            if (input.size()) XML.addAttribute("NODE", "inputSource", input[0]->getId(), lastPlace);
             
             XML.addAttribute("NODE","dq", dq, lastPlace);
             XML.addAttribute("NODE","qn", qn, lastPlace);

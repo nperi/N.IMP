@@ -41,6 +41,8 @@ void GlitchLayer::setup() {
         height = input[0]->getHeight();
         width  = input[0]->getWidth();
         
+        updateFromInputCoorners(getTextureCoorners().getVertices()[0]);
+        
         fbo.allocate(width, height);
         myGlitch.setup(&fbo);
         
@@ -178,7 +180,10 @@ bool GlitchLayer::saveSettings(ofxXmlSettings &XML) {
         if ( XML.getAttribute("NODE", "id", -1, i) == nId){
             
             XML.setAttribute("NODE", "name", name, i);
-            XML.setAttribute("NODE", "inputSource", input[0]->getId(), i);
+            if (input.size())
+                XML.setAttribute("NODE", "inputSource", input[0]->getId(), i);
+            else
+                XML.removeAttribute("NODE", "inputSource", i);
             
             XML.setAttribute("NODE","do_CONVERGENCE", do_CONVERGENCE, i);
             XML.setAttribute("NODE","do_GLOW", do_GLOW, i);
@@ -220,7 +225,7 @@ bool GlitchLayer::saveSettings(ofxXmlSettings &XML) {
             XML.addAttribute("NODE", "id", nId, lastPlace);
             XML.addAttribute("NODE", "name", name, lastPlace);
             XML.addAttribute("NODE", "type", "GLITCH_1", lastPlace);
-            XML.setAttribute("NODE", "inputSource", input[0]->getId(), lastPlace);
+            if (input.size()) XML.setAttribute("NODE", "inputSource", input[0]->getId(), lastPlace);
             
             XML.addAttribute("NODE","do_CONVERGENCE", do_CONVERGENCE, lastPlace);
             XML.addAttribute("NODE","do_GLOW", do_GLOW, lastPlace);
