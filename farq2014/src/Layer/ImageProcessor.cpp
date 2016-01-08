@@ -157,14 +157,14 @@ void ImageProcessor::update() {
         
         post.begin();
         ofClear(255,255,255,0);
-        ofPushMatrix();
-        ofScale(1, -1);
-        ofPushMatrix();
-        ofTranslate(0, -height);
+//        ofPushMatrix();
+//        ofScale(1, -1);
+//        ofPushMatrix();
+//        ofTranslate(0, -height);
         //input[0]->getTexture()->draw(0,0,width,height);
         input[0]->getTextureReference().draw(0,0);
-        ofPopMatrix();
-        ofPopMatrix();
+//        ofPopMatrix();
+//        ofPopMatrix();
         post.end();
 
         glDisable(GL_BLEND);

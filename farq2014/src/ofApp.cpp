@@ -9,6 +9,40 @@ using namespace ofxCv;
 /* ================================================ */
 
 void ofApp::setup() {
+    // ******* Initialize windows ******//
+    glfw = (ofxMultiGLFWWindow*)ofGetWindowPtr();
+    // vector of windows, count set in main
+    windows = &glfw->windows;
+    
+    // configure first window
+    glfw->setWindow(windows->at(0));    // set window pointer
+    glfw->initializeWindow();       // initialize events (mouse, keyboard, etc) on window (optional)
+    ofSetWindowPosition(0, -600);    // business as usual...
+    ofSetWindowShape(1438, 658);
+    ofSetWindowTitle("n.imp");
+    //ofSetFullscreen(true);        // order important with fullscreen
+    
+    
+    // configure second window
+    glfw->setWindow(windows->at(1));
+    glfw->initializeWindow();
+    ofSetWindowPosition(0, 55);
+    ofSetWindowShape(1438, 100);
+    ofSetWindowTitle("Console");
+    
+    showConsole = true;
+    
+    
+    //    // create third window dynamically
+    //    glfw->createWindow();
+    //    glfw->setWindow(windows->at(2));
+    //    glfw->initializeWindow();
+    //    ofSetWindowPosition(500+500, 100);
+    //    ofSetWindowShape(500, 800);
+    //    ofSetWindowTitle("Window 3");
+    
+    glfw->setWindow(windows->at(0));
+    // ******* End initialize windows ******//
     
     ofSetWindowTitle("n.imp");
     ofSetFrameRate(30);
@@ -77,6 +111,12 @@ void ofApp::setup() {
     menu->addWidget(spacer);
     spacer->setColorFill(ofxUIColor(120, 120, 120, 200));
     new menuItem(menu, "MultiImageToggle", "Edit Mode on/off", "assets/edit_mode.png", false, RIGHT_MENU_WIDTH + MENU_ITEM_SIZE*9 + MENU_ITEM_PADDING*13, 20);
+    
+    spacer = new ofxUISpacer(RIGHT_MENU_WIDTH + MENU_ITEM_SIZE*10 + MENU_ITEM_PADDING*14, 20, 1,MENU_ITEM_SIZE);
+    menu->addWidget(spacer);
+    spacer->setColorFill(ofxUIColor(120, 120, 120, 200));
+    new menuItem(menu, "MultiImageButton", "Console on/off", "assets/show_console.png", false, RIGHT_MENU_WIDTH + MENU_ITEM_SIZE*10 + MENU_ITEM_PADDING*15, 20);
+    new menuItem(menu, "MultiImageButton", "Clear Console", "assets/clear_console.png", false, RIGHT_MENU_WIDTH + MENU_ITEM_SIZE*11 + MENU_ITEM_PADDING*16, 20);
     ofAddListener(menu->newGUIEvent,this,&ofApp::menuEvent);
     
     
@@ -151,6 +191,10 @@ void ofApp::setup() {
         scrollBars->setup();
     }
     
+    //*** CONSOLE LOGGER ***//
+    glfw->setWindow(windows->at(1));
+    ConsoleLog::getInstance()->setupScrollBar(&pad);
+    glfw->setWindow(windows->at(0));
   }
 
 //------------------------------------------------------------------
@@ -256,44 +300,54 @@ void ofApp::update() {
 
 //------------------------------------------------------------------
 void ofApp::draw() {
+    wIndex = glfw->getWindowIndex();
     
-    //create bg
-    ofClear(35);
-    
-    // draw nodes
-    if(loadingOK){
-        
-        cam.begin();
-        nodeViewers[currentViewer]->draw();
-        cam.end();
-        
-        string info = "";
-        info += "  (";
-        info += ofToString(currentViewer+1);
-        info += "/";
-        info += ofToString(nodeViewers.size());
-        info += ")";
-        info += "    switch layers <- ->";
-        
-        ofDrawBitmapString(info, 20, ofGetHeight()-20);
-        string info2 = nodeViewers[currentViewer]->getName();
-        
-        ofDrawBitmapString(ofToString(info2,0), ofGetWidth() - 300, ofGetHeight()-20);
-        ofDrawBitmapString(ofToString(ofGetFrameRate(),0), ofGetWidth() - 50, ofGetHeight()-35);
-        
-        
-        //update menu's width and height
-        menu->setWidth(ofGetWidth());
-        right_menu->setHeight(ofGetHeight() - (MENU_HEIGHT + MENU_TOP_PADDING));
-        
-        //draw scrollbars
-        scrollBars->draw();
-        
-        //draw inspectors
-        nodeViewers[currentViewer]->drawInspectorGUIs();
-    }
-    else{
-        ofDrawBitmapString("ERROR LOADING XML", 50, 50);
+    switch (wIndex) { // switch on window index
+        case 0:
+            //create bg
+            ofClear(35);
+            
+            // draw nodes
+            if(loadingOK){
+                
+                cam.begin();
+                nodeViewers[currentViewer]->draw();
+                cam.end();
+                
+                string info = "";
+                info += "  (";
+                info += ofToString(currentViewer+1);
+                info += "/";
+                info += ofToString(nodeViewers.size());
+                info += ")";
+                info += "    switch layers <- ->";
+                
+                ofDrawBitmapString(info, 20, ofGetHeight()-20);
+                string info2 = nodeViewers[currentViewer]->getName();
+                
+                ofDrawBitmapString(ofToString(info2,0), ofGetWidth() - 300, ofGetHeight()-20);
+                ofDrawBitmapString(ofToString(ofGetFrameRate(),0), ofGetWidth() - 50, ofGetHeight()-35);
+                
+                
+                //update menu's width and height
+                menu->setWidth(ofGetWidth());
+                right_menu->setHeight(ofGetHeight() - (MENU_HEIGHT + MENU_TOP_PADDING));
+                
+                //draw scrollbars
+                scrollBars->draw();
+                
+                //draw inspectors
+                nodeViewers[currentViewer]->drawInspectorGUIs();
+            }
+            else{
+                ofDrawBitmapString("ERROR LOADING XML", 50, 50);
+            }
+            break;
+        case 1:
+            ofBackground(0,0,0); // change background color on each window
+            ofSetColor(200, 200, 200);
+            ConsoleLog::getInstance()->printMessages();
+            break;
     }
 }
 
@@ -435,6 +489,11 @@ void ofApp::keyReleased(int key){
 
 //------------------------------------------------------------------
 void ofApp::mouseDragged(int x, int y, int button){
+    if (glfw->getEventWindow() == windows->at(0)){
+        EventHandler::getInstance()->setMainEvent();
+    } else if (glfw->getEventWindow() == windows->at(1)){
+        EventHandler::getInstance()->setConsoleEvent();
+    }
     
     if(do_zoom){
         ofVec3f mouse = ofVec3f(x, y,0);
@@ -447,6 +506,11 @@ void ofApp::mouseDragged(int x, int y, int button){
 
 //------------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button){
+    if (glfw->getEventWindow() == windows->at(0)){
+        EventHandler::getInstance()->setMainEvent();
+    } else if (glfw->getEventWindow() == windows->at(1)){
+        EventHandler::getInstance()->setConsoleEvent();
+    }
     
     if(button == 2){
         do_zoom = true;
@@ -455,6 +519,11 @@ void ofApp::mousePressed(int x, int y, int button){
 
 //------------------------------------------------------------------
 void ofApp::mouseReleased(int x, int y, int button){
+    if (glfw->getEventWindow() == windows->at(0)){
+        EventHandler::getInstance()->setMainEvent();
+    } else if (glfw->getEventWindow() == windows->at(1)){
+        EventHandler::getInstance()->setConsoleEvent();
+    }
     
     do_zoom = false;
     zoom_in = false;
@@ -463,11 +532,25 @@ void ofApp::mouseReleased(int x, int y, int button){
 
 //------------------------------------------------------------------
 void ofApp::dragEvent(ofDragInfo dragInfo){
+    if (glfw->getEventWindow() == windows->at(0)){
+        EventHandler::getInstance()->setMainEvent();
+    } else if (glfw->getEventWindow() == windows->at(1)){
+        EventHandler::getInstance()->setConsoleEvent();
+    }
     
     if( dragInfo.files.size() > 0 ){
         for(int i = 0; i < dragInfo.files.size(); i++){
             nodeViewers[currentViewer]->addPatchFromFile( dragInfo.files[i], dragInfo.position );
         }
+    }
+}
+
+//------------------------------------------------------------------
+void ofApp::windowResized(int w, int h){
+    if (glfw->getEventWindow() == windows->at(0)){
+        EventHandler::getInstance()->setMainEvent();
+    } else if (glfw->getEventWindow() == windows->at(1)){
+        EventHandler::getInstance()->setConsoleEvent();
     }
 }
 
@@ -551,6 +634,20 @@ void ofApp::menuEvent(ofxUIEventArgs &e)
             saveToXML();
         }
     }
+    else if (name == "Console on/off"){
+        if(((ofxUIMultiImageButton*)e.widget)->getValue() == 1){
+            if(showConsole){
+                glfw->hideWindow(windows->at(1));
+            } else {
+                glfw->showWindow(windows->at(1));
+            }
+            showConsole = !showConsole;
+        }
+    }
+    else if (name == "Clear Console"){
+        ConsoleLog::getInstance()->clearMessages();
+    }
+    
 }
 /* ================================================ */
 /* ================================================ */

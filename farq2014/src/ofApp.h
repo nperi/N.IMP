@@ -45,6 +45,10 @@
 #include "textInput.h"
 #include "enumerations.h"
 
+#include "ofxMultiGLFWWindow.h"
+#include "ConsoleLog.h"
+#include "EventHandler.h"
+
 enum InputType {VIDEO, CAM, IMAGE, PARTICLE};
 enum VisualLayerType {IKEDA, GLITCH_1, GLITCH_2,IMAGE_PROCESSOR};
 enum MixerType {SIMPLE_BLEND, MASK, MULTI_CHANNEL};
@@ -67,6 +71,7 @@ public:
     void mouseReleased(int x, int y, int button);
     void dragEvent(ofDragInfo dragInfo);
     void menuEvent(ofxUIEventArgs &e);
+    void windowResized(int w, int h);
     
     //other functions
     void createNodeInput(float _x = ofGetMouseX(), float _y = ofGetMouseY());
@@ -145,5 +150,13 @@ public:
     //create new node
     vector<ofxUIWidget*> widgetsToDelete;
     textInput* newNodeInput;
+    
+    // multi window
+    ofxMultiGLFWWindow *glfw;
+    int wIndex;
+    vector<GLFWwindow*> *windows;
+    
+    // console
+    bool showConsole;
 
 };

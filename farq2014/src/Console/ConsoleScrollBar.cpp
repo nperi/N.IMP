@@ -64,12 +64,11 @@ void ConsoleScrollBar::setup(){
 /* ================================================ */
 
 void ConsoleScrollBar::update(){
+    ofVec3f diffVec = ofVec3f(0,0,0);
     if(EventHandler::getInstance()->isConsoleEvent()){
         //** touchpad scroll **//
         std::vector<MTouch> mTouches = pad->getTouches();
         if(mTouches.size() == 2) {
-            ofVec3f diffVec = ofVec3f(0,0,0);
-
             if (!touchpad_scroll) {
                 touchpad_scroll = true;
                 touchpad_scroll_x = ((mTouches[0].x + mTouches[1].x))*100 / 2;
@@ -107,7 +106,6 @@ void ConsoleScrollBar::update(){
                 }
             }
         
-            updateScrollBar(diffVec);
     //        updateHScrollBar(diffVec);
         }
         else {
@@ -115,6 +113,7 @@ void ConsoleScrollBar::update(){
         }
         //** **//
     }
+    updateScrollBar(diffVec);
 }
 
 void ConsoleScrollBar::draw(){
@@ -266,162 +265,55 @@ void ConsoleScrollBar::windowResized(ofResizeEventArgs &e){
 /* ================================================ */
 
 void ConsoleScrollBar::updateScrollBar(ofVec3f diffVec){
-    // TODO: con la flechita no puedo ir a los topes de la barra
-        if(diffVec.y != 0){
-            if(!(gripRectangle.y < 0) && !(gripRectangle.getBottom() > scrollBarRectangle.getBottom())){
-//                composer->movePatches(diffVec);
-                //move messages
-                ConsoleLog::getInstance()->setDiffStartY(diffVec.y);
-            }
-    
-            // Check if the grip is still in the scroll bar
-            if (gripRectangle.y < 0) {
-                gripRectangle.y = 0;
-            }
-            if (gripRectangle.getBottom() > scrollBarRectangle.getBottom()) {
-                gripRectangle.y = scrollBarRectangle.getBottom() - gripRectangle.width;
-            }
+    if(diffVec.y != 0){
+        if(!(gripRectangle.y < 0) && !(gripRectangle.getBottom() > scrollBarRectangle.getBottom())){
+            ConsoleLog::getInstance()->setDiffStartY(diffVec.y);
         }
-    
-    
-//        // The size of the panel. All the screen except margins
-//        panelWidth = ofGetWidth();
-//        panelHeight = ofGetHeight();
-    
-        // La altura del scroll bar = a la altura de la pantalla
-        scrollBarRectangle.height = panelHeight;
-    
-        gripRectangle.x = scrollBarRectangle.x; // Also adjust the grip x coordinate
-//        int unTransformedLeft = getUntransformedCoords(composer->getPatchesLeftMostCoord(),0).x - margin - BEGIN_X;
-//        int unTransformedRight = getUntransformedCoords(composer->getPatchesRightMostCoord(),0).x - margin;
-        int highestCoordMessage = ConsoleLog::getInstance()->getLowestCoord();   // 160
-        int lowestCoordMessage = ConsoleLog::getInstance()->getHighestCoord();           // -13
-    
-    cout << "lowest " << lowestCoordMessage << endl;
-        cout << "highest " << highestCoordMessage << endl;
-        cout << "panelHeight " << panelHeight << endl;
-        cout << "scrollBar Height " << scrollBarRectangle.height << endl;
-    
-        // Muestro la scrollBar
-        isScrollBarVisible = true;
-    
-        // estos ratios son la proporcion de lo que hay que dibujar que esta por encima y por debajo de lo que se muestra
-        // al ser ratio, van de 0 a 1, y calculo dependiendo el caso
-        float gripSizeRatioLeft = 1.f;
-        float gripSizeRatioRight = 1.f;
-        if ( (lowestCoordMessage + SCROLL_TOLERANCE < 0)  && (highestCoordMessage - SCROLL_TOLERANCE > panelHeight) ) {
-            gripSizeRatioRight = (float)panelHeight / (panelHeight - (float)lowestCoordMessage);
-            gripSizeRatioLeft = (float)panelHeight / ( (float)highestCoordMessage );
-        } else if ( lowestCoordMessage + SCROLL_TOLERANCE < 0 ){
-            gripSizeRatioRight = (float)panelHeight / (panelHeight - (float)lowestCoordMessage);
-        } else if ( highestCoordMessage - SCROLL_TOLERANCE > panelHeight ) {
-            gripSizeRatioLeft = (float)panelHeight / ( (float)highestCoordMessage );
+
+        // Check if the grip is still in the scroll bar
+        if (gripRectangle.y < 0) {
+            gripRectangle.y = 0;
         }
-    
-    
-        cout << "gripSizeRatio H " << gripSizeRatioRight << endl;
-        cout << "gripSizeRatio L " << gripSizeRatioLeft << endl;
-    
-        // La altura del grip es el panel por los ratios fuera de la pantalla
-        gripRectangle.height = panelHeight * gripSizeRatioLeft * gripSizeRatioRight;
-    
-        // La 'x' del grip esta en la scrollbar por la relacion de lo que queda por la izquierda de la pantalla
-        gripRectangle.y = (1-gripSizeRatioRight)*scrollBarRectangle.height;
-    
-        // Si las alturas del grip y del scroll son iguales, es porque tengo todo a la vista
-        // hago que la resta sea menor a 2 para dejar un margen, si no, queda a veces la barra cuando no es necesario
-        if( (scrollBarRectangle.height - gripRectangle.height) < 2 ){
-            isScrollBarVisible = false;
+        if (gripRectangle.getBottom() > scrollBarRectangle.getBottom()) {
+            gripRectangle.y = scrollBarRectangle.getBottom() - gripRectangle.width;
         }
-    
-    
-    
-    
-    
-    cout << "grip height " << gripRectangle.height << endl;
-        cout << "grip y " << gripRectangle.y << endl;
-    
-        cout << endl;
-    
-    
-    
-    
-    
-    
-    
-    // TODO: con la flechita no puedo ir a los topes de la barra
-//    if(diffVec.y != 0){
-//        if(!(gripRectangle.y < 0) && !(gripRectangle.getBottom() > scrollBarRectangle.getBottom())){
-////            composer->movePatches(diffVec);
-//            // TODO: MOVE MESSAGES
-//            ConsoleLog::getInstance()->setDiffStartY(diffVec.y);
-//        }
-//        
-//        // Check if the grip is still in the scroll bar
-//        if (gripRectangle.y < 0) {
-//            gripRectangle.y = 0;
-//        }
-//        if (gripRectangle.getBottom() > scrollBarRectangle.getBottom()) {
-//            gripRectangle.y = scrollBarRectangle.getBottom() - gripRectangle.height;
-//        }
-//    }
-//    
-//    
-//    // The size of the panel. All the screen except margins
-////    cout << "ofGetWidth() = " << ofGetWidth() << endl;   // 1438
-////    cout << "ofGetHeight() = " << ofGetHeight() << endl; // 100
-//    panelWidth = ofGetWidth() - margin;
-//    panelHeight = ofGetHeight() - margin;
-//    
-//    gripRectangle.x = scrollBarRectangle.x;                   // Also adjust the grip x coordinate
-//    int highestCoordMessage = ConsoleLog::getInstance()->getLowestCoord();   // 160
-//    int lowestCoordMessage = ConsoleLog::getInstance()->getHighestCoord();           // -13
-//    
-//    // Muestro la scrollBar
-//    isScrollBarVisible = true;
-//    // La altura del scroll bar = a la altura de la pantalla
-//    scrollBarRectangle.height = panelHeight;
-//    
-//    // estos ratios son la proporcion de lo que hay que dibujar que esta por encima y por debajo de lo que se muestra
-//    // al ser ratio, van de 0 a 1, y calculo dependiendo el caso
-//    float gripSizeRatioLow = 1.f;
-//    float gripSizeRatioHigh = 1.f;
-//    
-//    
-//    cout << "lowest " << lowestCoordMessage << endl;
-//    cout << "highest " << highestCoordMessage << endl;
-//    cout << "panelHeight " << panelHeight << endl;
-//    cout << "scrollBar Height " << scrollBarRectangle.height << endl;
-//    
-//    if ( (lowestCoordMessage + CONSOLE_SCROLL_TOLERANCE < 0)  && (highestCoordMessage - CONSOLE_SCROLL_TOLERANCE > panelHeight) ) {
-//        gripSizeRatioHigh = (float)panelHeight / (panelHeight - (float)lowestCoordMessage);
-//        gripSizeRatioLow = (float)panelHeight / ( (float)highestCoordMessage );
-//    } else if ( lowestCoordMessage + CONSOLE_SCROLL_TOLERANCE < 0 ){
-//        gripSizeRatioHigh = (float)panelHeight / (panelHeight - (float)lowestCoordMessage);
-//    } else if ( highestCoordMessage - CONSOLE_SCROLL_TOLERANCE > panelHeight ) {
-//        gripSizeRatioLow = (float)panelHeight / ( (float)highestCoordMessage );
-//    }
-//    
-//    cout << "gripSizeRatio H " << gripSizeRatioHigh << endl;
-//    cout << "gripSizeRatio L " << gripSizeRatioLow << endl;
-//    
-//    // La altura del grip es el panel por los ratios fuera de la pantalla
-//    gripRectangle.height = panelHeight * gripSizeRatioLow * gripSizeRatioHigh;
-//    
-//    // La 'y' del grip esta en la scrollbar por la relacion de lo que queda por arriba de la pantalla
-//    gripRectangle.y = (1-gripSizeRatioHigh)*scrollBarRectangle.height;
-//    
-//    cout << "grip height " << gripRectangle.height << endl;
-//    cout << "grip y " << gripRectangle.y << endl;
-//
-//    cout << endl;
-//    
-//    // Si las alturas del grip y del scroll son iguales, es porque tengo todo a la vista
-//    // hago que la resta sea menor a 2 para dejar un margen, si no, queda a veces la barra cuando no es necesario
-//    if( (scrollBarRectangle.height - gripRectangle.height) < 2 ){
-//        isScrollBarVisible = false;
-//    }
-    
+    }
+
+    // La altura del scroll bar = a la altura de la pantalla
+    scrollBarRectangle.height = panelHeight;
+
+    gripRectangle.x = scrollBarRectangle.x; // Also adjust the grip x coordinate
+    int highestCoordMessage = ConsoleLog::getInstance()->getLowestCoord();
+    int lowestCoordMessage = ConsoleLog::getInstance()->getHighestCoord();
+
+    // Muestro la scrollBar
+    isScrollBarVisible = true;
+
+    // estos ratios son la proporcion de lo que hay que dibujar que esta por encima y por debajo de lo que se muestra
+    // al ser ratio, van de 0 a 1, y calculo dependiendo el caso
+    float gripSizeRatioLeft = 1.f;
+    float gripSizeRatioRight = 1.f;
+    if ( (lowestCoordMessage + SCROLL_TOLERANCE < 0)  && (highestCoordMessage - SCROLL_TOLERANCE > panelHeight) ) {
+        gripSizeRatioRight = (float)panelHeight / (panelHeight - (float)lowestCoordMessage);
+        gripSizeRatioLeft = (float)panelHeight / ( (float)highestCoordMessage );
+    } else if ( lowestCoordMessage + SCROLL_TOLERANCE < 0 ){
+        gripSizeRatioRight = (float)panelHeight / (panelHeight - (float)lowestCoordMessage);
+    } else if ( highestCoordMessage - SCROLL_TOLERANCE > panelHeight ) {
+        gripSizeRatioLeft = (float)panelHeight / ( (float)highestCoordMessage );
+    }
+
+    // La altura del grip es el panel por los ratios fuera de la pantalla
+    gripRectangle.height = panelHeight * gripSizeRatioLeft * gripSizeRatioRight;
+
+    // La 'x' del grip esta en la scrollbar por la relacion de lo que queda por la izquierda de la pantalla
+    gripRectangle.y = (1-gripSizeRatioRight)*scrollBarRectangle.height;
+
+    // Si las alturas del grip y del scroll son iguales, es porque tengo todo a la vista
+    // hago que la resta sea menor a 2 para dejar un margen, si no, queda a veces la barra cuando no es necesario
+    if( (scrollBarRectangle.height - gripRectangle.height) < 2 ){
+        isScrollBarVisible = false;
+    }
+
 }
 
 //void ConsoleScrollBar::updateHScrollBar(ofVec3f diffVec){
@@ -481,10 +373,4 @@ void ConsoleScrollBar::updateScrollBar(ofVec3f diffVec){
 //    if( (hScrollBarRectangle.width - hGripRectangle.width) < 2 ){
 //        isHScrollBarVisible = false;
 //    }
-//}
-
-//ofVec4f scrollBar::getUntransformedCoords(int x, int y){
-//    ofMatrix4x4 inverseTransformMatrix = composer->getGlobalTransformMatrix().getInverse();
-//    ofVec4f aux2 = ofVec4f(x,y,0,0);
-//    return aux2*inverseTransformMatrix;
 //}

@@ -99,7 +99,7 @@ void ParticleGenerator::draw(int x,int y, float scale) {
     ofSetColor(255, 255, 255);
     ofEnableAlphaBlending();
     ofPushMatrix();
-    glMultMatrixf(glMatrix);
+    ofMultMatrix(glMatrix);
     fbo.draw(0,0);
     ofNoFill();
     ofSetColor(0, 0, 0);

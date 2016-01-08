@@ -50,12 +50,13 @@ void ConsoleLog::pushMessage(string message){
     messages.push_back(message);
 }
 
-vector<string> ConsoleLog::getMessages(){
-    return messages;
-}
+//vector<string> ConsoleLog::getMessages(){
+//    return messages;
+//}
 
 void ConsoleLog::clearMessages(){
     messages.clear();
+    startY = 0.f;
 }
 
 void ConsoleLog::printMessages(){
@@ -68,19 +69,19 @@ void ConsoleLog::printMessages(){
     }
 }
 
-int ConsoleLog::getMessagesHeight(){
-    return messages.size()*font.getLineHeight();
-}
-
-int ConsoleLog::getMaxLineWidth(){
-    int maxWidth = 0;
-    for (int i = 0; i < messages.size();i++){
-        if(maxWidth < font.stringWidth(messages[i])){
-            maxWidth = font.stringWidth(messages[i]);
-        }
-    }
-    return maxWidth;
-}
+//int ConsoleLog::getMessagesHeight(){
+//    return messages.size()*font.getLineHeight();
+//}
+//
+//int ConsoleLog::getMaxLineWidth(){
+//    int maxWidth = 0;
+//    for (int i = 0; i < messages.size();i++){
+//        if(maxWidth < font.stringWidth(messages[i])){
+//            maxWidth = font.stringWidth(messages[i]);
+//        }
+//    }
+//    return maxWidth;
+//}
 
 
 int ConsoleLog::getLowestCoord(){
