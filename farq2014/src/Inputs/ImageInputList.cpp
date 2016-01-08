@@ -10,7 +10,7 @@
 #include "ImageInputList.h"
 
 
-ImageInputList::ImageInputList(string name, int id_) : InputSource(name, id_){
+ImageInputList::ImageInputList(string name, int id_) : InputSource(name, "Image", id_){
     
     currentSequence = 0;
     lastSequence = currentSequence;

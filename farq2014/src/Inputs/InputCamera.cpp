@@ -24,7 +24,7 @@ InputCamera::InputCamera() : InputSource("New Camera"){
 }
 
 //------------------------------------------------------------------
-InputCamera::InputCamera(string name, int id_) : InputSource(name, id_){
+InputCamera::InputCamera(string name, int id_) : InputSource(name, "Camera", id_){
     //cam.initGrabber(width, height);
     //img.allocate(640, 480, OF_IMAGE_COLOR);
     

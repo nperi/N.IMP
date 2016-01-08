@@ -9,7 +9,7 @@
 
 #include "VideoPlayerMac.h"
 
-VideoPlayerMac::VideoPlayerMac(string name, int id_) : InputSource(name, id_){
+VideoPlayerMac::VideoPlayerMac(string name, int id_) : InputSource(name, "Video Player", id_){
     //there always has to exist at least one player.
     currentPlayer=0;
     

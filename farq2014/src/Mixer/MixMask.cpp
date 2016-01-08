@@ -9,7 +9,7 @@
 
 #include "MixMask.h"
 
-MixMask::MixMask(string name_, int id_):MixTable(name_, id_){
+MixMask::MixMask(string name_, int id_):MixTable(name_, "Mix Mask", id_){
     gui.add(spin.setup("spin", 90, 0, 360));
     gui.setWidthElements(INSPECTOR_WIDTH);
     

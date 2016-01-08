@@ -10,7 +10,7 @@
 
 
 //------------------------------------------------------------------
-GlitchLayer::GlitchLayer(string name_, int id_):VisualLayer(name_, id_){
+GlitchLayer::GlitchLayer(string name_, int id_):VisualLayer(name_, "Glitch Layer", id_){
     
     gui.add(isEnabled.setup("Enabled",isEnabled, 100,20));
     gui.add(do_CONVERGENCE.setup("CONVERGENCE", do_CONVERGENCE, 100,20));

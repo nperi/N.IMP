@@ -11,7 +11,7 @@
 // DEPRECATED - Processing is too slow.
 
 //------------------------------------------------------------------
-GlitchLayerAlt::GlitchLayerAlt(string name_, int id_):VisualLayer(name_, id_){;
+GlitchLayerAlt::GlitchLayerAlt(string name_, int id_):VisualLayer(name_, "Glitch Layer Alt", id_){;
     
     //gui.add(name.setup("layer", name));
     gui.add(isEnabled.setup("Enabled",isEnabled, 100,20));

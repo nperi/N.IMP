@@ -9,7 +9,7 @@
 
 #include "MultiChannelSwitch.h"
 
-MultiChannelSwitch::MultiChannelSwitch(string name_, int id_):MixTable(name_, id_){
+MultiChannelSwitch::MultiChannelSwitch(string name_, int id_):MixTable(name_, "Multi Channel Switch", id_){
     maxInputs = 16;
     
     //gui.add(selChannel.set("channel", 0, 0, 0));

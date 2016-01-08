@@ -9,7 +9,7 @@
 
 #include "MixSimpleBlend.h"
 
-MixSimpleBlend::MixSimpleBlend(string name_, int id_):MixTable(name_, id_){
+MixSimpleBlend::MixSimpleBlend(string name_, int id_):MixTable(name_, "Mix Simple Blend", id_){
     psBlend.setup(width, height);
     
     maxInputs = 16;

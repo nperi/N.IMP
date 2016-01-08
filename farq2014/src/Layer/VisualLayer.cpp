@@ -10,7 +10,7 @@
 #include "VisualLayer.h"
 
 
-VisualLayer::VisualLayer(string name_, int id_) : ImageOutput(name_, id_){
+VisualLayer::VisualLayer(string name_, string typeName_, int id_) : ImageOutput(name_, typeName_, id_){
     isEnabled = true;
     firstInit = true;
     nodeType = VISUAL_LAYER;

@@ -30,7 +30,7 @@ class ImageOutput : public ofxPatch {
 	
   public:
 	
-    ImageOutput(string name_, int id_, int maxInputs_ = 1, int width_ = NODE_WIDTH, int height_ = NODE_HEIGHT);
+    ImageOutput(string name_, string typeName_, int id_, int maxInputs_ = 1, int width_ = NODE_WIDTH, int height_ = NODE_HEIGHT);
     
     string getName();
     ofImage* getImage();
@@ -70,6 +70,7 @@ protected:
     virtual void inputAdded(ImageOutput* in_){}; //called when input is added
     
     string name;
+    string typeName;
     ofImage img;
     
     vector<ImageOutput*> input;

@@ -9,7 +9,7 @@
 
 #include "MixTable.h"
 
-MixTable::MixTable(string name_, int id_):ImageOutput(name_, id_){
+MixTable::MixTable(string name_, string typeName_, int id_):ImageOutput(name_, typeName_, id_){
     ofFbo::Settings s;
     s.width			 = width;
     s.height		 = height;

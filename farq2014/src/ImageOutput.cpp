@@ -8,17 +8,19 @@
 
 #include "ImageOutput.h"
 
-ImageOutput::ImageOutput(string name_, int id_, int maxInputs_, int width_, int height_) : ofxPatch(){
-    nId = id_;
-    name = name_;
-    width = width_;
-    height = height_;
+ImageOutput::ImageOutput(string name_, string typeName_, int id_, int maxInputs_, int width_, int height_) : ofxPatch(){
+    nId         = id_;
+    name        = name_;
+    typeName    = typeName_;
+    width       = width_;
+    height      = height_;
+    
     img.allocate(width, height, OF_IMAGE_COLOR);
     img.setUseTexture(true);
     tex.allocate(width,height, GL_RGBA);
-    maxInputs = maxInputs_;
+    maxInputs   = maxInputs_;
     panel.setup();
-    panel.add(gui.setup(name));
+    panel.add(gui.setup(typeName));
     panel.setDraggable(false);
 };
 

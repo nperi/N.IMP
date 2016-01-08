@@ -14,7 +14,7 @@ using namespace ofxCv;
 
 
 //------------------------------------------------------------------
-IkedaLayer::IkedaLayer(string name_, int id_, bool isCanny_,bool isThreshold_, bool isColumns_, bool isInvert_):VisualLayer(name_, id_) {
+IkedaLayer::IkedaLayer(string name_, int id_, bool isCanny_,bool isThreshold_, bool isColumns_, bool isInvert_):VisualLayer(name_, "Ikeda", id_) {
    // gui.setup();
     
     gui.add(isEnabled.setup("Enabled",isEnabled, 100,20));

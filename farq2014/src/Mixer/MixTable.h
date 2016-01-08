@@ -19,7 +19,7 @@ class MixTable : public ImageOutput{
 	
 public:
     
-    MixTable(string name_ = "mixtable", int id_ = -1);
+    MixTable(string name_ = "mixtable", string typeName_ = "MIXER", int id_ = -1);
     
 protected:
     

@@ -9,7 +9,7 @@
 
 #include "ImageProcessor.h"
 
-ImageProcessor::ImageProcessor(string name_, int id_):VisualLayer(name_, id_) {
+ImageProcessor::ImageProcessor(string name_, int id_):VisualLayer(name_, "Image Processor", id_) {
     
     bloom.setName("bloom");
     contrast.setName("contrast");
