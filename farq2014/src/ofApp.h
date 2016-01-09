@@ -71,6 +71,7 @@ public:
     //other functions
     void createNodeInput(float _x = ofGetMouseX(), float _y = ofGetMouseY());
     void createNode(textInputEvent &args);
+    void closePatch(int &_nID);
     bool loadFromXML();
     bool saveToXML();
     void audioIn(float * input, int bufferSize, int nChannels);

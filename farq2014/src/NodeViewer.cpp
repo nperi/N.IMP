@@ -21,6 +21,10 @@ void NodeViewer::setup() {
 //------------------------------------------------------------------
 void NodeViewer::update() {
     
+    for (int i=0; i<elements.size(); ++i) {
+        elements[i]->getImageOutput()->update();
+    }
+    
     ofxComposer::update();
 }
 
@@ -58,6 +62,38 @@ void NodeViewer::createConnections(){
         
         for (int j = 0; j < inputs.size(); j++) {
             connect(inputs[j]->getId(), elements[i]->getImageOutput()->getId(), 0, false);
+        }
+    }
+}
+
+//------------------------------------------------------------------
+void NodeViewer::closePatch( int _nID ){
+    
+    bool deleted = false;
+    
+    if (_nID != -1) {
+        int i = 0;
+        while (i < elements.size()) {
+            if (elements[i]->getImageOutput()->getId() == _nID) {
+                
+                patches.erase(_nID);
+                delete elements[i];
+                elements.erase(elements.begin() + i);
+                i = elements.size();
+                
+                //Delete links and input Dependences
+                //
+                for(map<int,ofxPatch*>::iterator it = patches.begin(); it != patches.end(); it++ ){
+                    for (int j = it->second->outPut.size()-1; j >= 0 ; j--){
+                        if ( it->second->outPut[j].toId == _nID){
+                            it->second->outPut.erase( it->second->outPut.begin() + j );
+                        }
+                        
+                        ((ImageOutput*)it->second)->removeInput(_nID);
+                    }
+                }
+            }
+            i++;
         }
     }
 }

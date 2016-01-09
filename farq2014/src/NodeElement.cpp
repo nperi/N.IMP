@@ -22,19 +22,29 @@ NodeElement::NodeElement(ImageOutput* imo_, int x_, int y_, int guiX_,int guiY_,
 }
 
 //------------------------------------------------------------------
+NodeElement::~NodeElement() {
+    delete imageOutput;
+    imageOutput = NULL;
+}
+
+//------------------------------------------------------------------
 void NodeElement::draw() {
     imageOutput->draw(x, y,scale);
 	
 }
+
+//------------------------------------------------------------------
 void NodeElement::drawGui() {
     imageOutput->drawGui();
     
 }
 
+//------------------------------------------------------------------
 void NodeElement::setupGuiPositions(){
     imageOutput->setGui(guiX, guiY, guiWidth);
 }
 
+//------------------------------------------------------------------
 ImageOutput* NodeElement::getImageOutput(){
     return imageOutput;
 }

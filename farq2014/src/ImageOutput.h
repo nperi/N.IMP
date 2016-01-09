@@ -37,6 +37,7 @@ class ImageOutput : public ofxPatch {
     ofTexture* getTexture();
     vector<ImageOutput*> getInputs();
     vector<string> getInputNames();
+    vector<ImageOutput*> input;
     
     virtual void setup() = 0;
     
@@ -73,7 +74,6 @@ protected:
     string typeName;
     ofImage img;
     
-    vector<ImageOutput*> input;
     vector<int> inputIdentifiers;
     int maxInputs;
     

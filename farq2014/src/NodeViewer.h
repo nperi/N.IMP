@@ -30,7 +30,7 @@ class NodeViewer : public ofxComposer {
     
     void setupGuiPositions();
     void createConnections();
-    
+    void closePatch(int _nID);
     string getName();
 	
     bool saveSettings(ofxXmlSettings &XML);

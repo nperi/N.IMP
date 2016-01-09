@@ -122,6 +122,7 @@ void ofApp::setup() {
             nodesVector[i]->setParent(cam);
             nodesVector[i]->setMainCanvas(gui);
             nodesVector[i]->setup();
+            ofAddListener( nodesVector[i]->title->close , this, &ofApp::closePatch);
         }
         
         //starting input generators theads (the not threadeds will not start)
@@ -197,10 +198,10 @@ void ofApp::update() {
         }
         
         //resetting processed flags
-        for (int i=0; i<nodesVector.size(); ++i) {
-            //nodesVector[i]->resetProcessedFlag();
-            nodesVector[i]->update();
-        }
+//        for (int i=0; i<nodesVector.size(); ++i) {
+//            //nodesVector[i]->resetProcessedFlag();
+//            nodesVector[i]->update();
+//        }
         
         //getting new paraminputs
         for (int i=0; i<inputGenerators.size(); ++i) {
@@ -669,6 +670,12 @@ void ofApp::createNode(textInputEvent &args){
         ofRemoveListener(((textInput*)args.widget)->createNode , this, &ofApp::createNode);
         widgetsToDelete.push_back(args.widget); // delete input from canvas
     }
+}
+
+//------------------------------------------------------------------
+void ofApp::closePatch(int &_nID) {
+    nodes.erase(_nID);
+    nodeViewers[currentViewer]->closePatch(_nID);
 }
 
 //------------------------------------------------------------------
