@@ -17,17 +17,6 @@ ConsoleLog::ConsoleLog() {
     font.loadFont("Fonts/verdana.ttf", 14);
     font.setLineHeight(18.0f);
     font.setLetterSpacing(1.037);
-    
-    messages.push_back("hola0");
-    messages.push_back("hola1");
-    messages.push_back("hola2");
-    messages.push_back("hola3");
-    messages.push_back("hola4");
-    messages.push_back("hola5");
-    messages.push_back("hola6");
-    messages.push_back("hola7");
-    messages.push_back("hola8");
-    messages.push_back("hola9");
 }
 
 ConsoleLog::~ConsoleLog(){
@@ -50,9 +39,6 @@ void ConsoleLog::pushMessage(string message){
     messages.push_back(message);
 }
 
-//vector<string> ConsoleLog::getMessages(){
-//    return messages;
-//}
 
 void ConsoleLog::clearMessages(){
     messages.clear();
@@ -68,20 +54,6 @@ void ConsoleLog::printMessages(){
         y += font.getLineHeight();
     }
 }
-
-//int ConsoleLog::getMessagesHeight(){
-//    return messages.size()*font.getLineHeight();
-//}
-//
-//int ConsoleLog::getMaxLineWidth(){
-//    int maxWidth = 0;
-//    for (int i = 0; i < messages.size();i++){
-//        if(maxWidth < font.stringWidth(messages[i])){
-//            maxWidth = font.stringWidth(messages[i]);
-//        }
-//    }
-//    return maxWidth;
-//}
 
 
 int ConsoleLog::getLowestCoord(){

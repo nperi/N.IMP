@@ -69,12 +69,11 @@ void scrollBar::setup(){
 /* ================================================ */
 
 void scrollBar::update(){
+    ofVec3f diffVec = ofVec3f(0,0,0);
     if(EventHandler::getInstance()->isMainEvent()){
         //** touchpad scroll **//
         std::vector<MTouch> mTouches = pad->getTouches();
         if(mTouches.size() == 2) {
-            ofVec3f diffVec = ofVec3f(0,0,0);
-            
             if (!touchpad_scroll) {
                 touchpad_scroll = true;
                 touchpad_scroll_x = ((mTouches[0].x + mTouches[1].x))*100 / 2;
@@ -111,15 +110,16 @@ void scrollBar::update(){
                     
                 }
             }
-            
-            updateScrollBar(diffVec);
-            updateHScrollBar(diffVec);
         }
         else {
             touchpad_scroll = false;
         }
         //** **//
     }
+
+    updateScrollBar(diffVec);
+    updateHScrollBar(diffVec);
+
 }
 
 void scrollBar::draw(){

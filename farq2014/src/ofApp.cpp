@@ -333,11 +333,11 @@ void ofApp::draw() {
                 menu->setWidth(ofGetWidth());
                 right_menu->setHeight(ofGetHeight() - (MENU_HEIGHT + MENU_TOP_PADDING));
                 
-                //draw scrollbars
-                scrollBars->draw();
-                
                 //draw inspectors
                 nodeViewers[currentViewer]->drawInspectorGUIs();
+                
+                //draw scrollbars
+                scrollBars->draw();
             }
             else{
                 ofDrawBitmapString("ERROR LOADING XML", 50, 50);

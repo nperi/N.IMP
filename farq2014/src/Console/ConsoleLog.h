@@ -17,12 +17,9 @@ class ConsoleLog {
 public:
     
     void pushMessage(string message);
-//    vector<string> getMessages();
     void clearMessages();
     void printMessages();
     static ConsoleLog* getInstance();
-//    int getMessagesHeight();
-//    int getMaxLineWidth();
     int getLowestCoord();
     int getHighestCoord();
     void setDiffStartY(int newY);

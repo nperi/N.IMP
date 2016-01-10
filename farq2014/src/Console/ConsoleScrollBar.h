@@ -32,14 +32,12 @@ public:
     //*** EVENTS ***//
     //
     void    mouseMoved(ofMouseEventArgs &e);
-//    void    keyPressed(ofKeyEventArgs &e);
     void    mousePressed(ofMouseEventArgs &e);
     void    mouseReleased(ofMouseEventArgs &e);
     void    windowResized(ofResizeEventArgs &e);
     void    mouseDragged(ofMouseEventArgs &e);
     
     void updateScrollBar(ofVec3f diffVec);
-//    void updateHScrollBar(ofVec3f diffVec);
     
 private:
     /* Display parameters for the panel */
@@ -59,15 +57,6 @@ private:
     int mousePreviousY;
     
     
-    //*** HORIZONTAL SCROLLBAR ***//
-    //
-    bool isHScrollBarVisible;
-    bool mouseOverHGrip;
-    ofRectangle hScrollBarRectangle;
-    ofRectangle hGripRectangle;
-    int mousePreviousX;
-    
-    
     //*** TOUCHPAD ***//
     //
     ofxMultiTouchPad* pad;
@@ -75,14 +64,7 @@ private:
     bool touchpad_scroll;
     float touchpad_scroll_x;
     float touchpad_scroll_y;
-    
-    // CONSTANTS
-    int BEGIN_X;
-    int BEGIN_Y;
-    
-//    ofxComposer* composer;
-    
-//    ofVec4f getUntransformedCoords(int x, int y);
+
 };
 
 
