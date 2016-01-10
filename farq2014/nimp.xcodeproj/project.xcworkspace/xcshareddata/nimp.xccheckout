@@ -7,7 +7,7 @@
 	<key>IDESourceControlProjectIdentifier</key>
 	<string>AD29777C-A75C-48E9-821F-C5295F5C172B</string>
 	<key>IDESourceControlProjectName</key>
-	<string>project</string>
+	<string>nimp</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>210A84CB64DBE001319448A793DFC671846EB46E</key>
@@ -46,7 +46,7 @@
 		<string>https://github.com/MiliGaricoits/ofxMSAInteractiveObject_nimp</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>farq2014/nimp.xcodeproj/project.xcworkspace</string>
+	<string>farq2014/nimp.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>210A84CB64DBE001319448A793DFC671846EB46E</key>
