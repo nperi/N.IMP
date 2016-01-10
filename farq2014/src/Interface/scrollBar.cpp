@@ -215,8 +215,6 @@ void scrollBar::mousePressed(ofMouseEventArgs &e){
                 mousePreviousX = e.x;
             }
         }
-        
-        ConsoleLog::getInstance()->pushMessage("fui pusheado");
     }
 }
 
