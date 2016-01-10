@@ -69,7 +69,8 @@ class ImageOutput : public ofxPatch {
 protected:
 
     virtual void inputAdded(ImageOutput* in_){}; //called when input is added
-    
+    virtual void inputRemoved(int id_){}; //called when input is removed
+
     string name;
     string typeName;
     ofImage img;

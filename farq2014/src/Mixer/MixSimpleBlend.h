@@ -39,6 +39,7 @@ class MixSimpleBlend : public MixTable{
 private:
     void update();
     void inputAdded(ImageOutput* in_);
+    void inputRemoved(int id_);
     
     ofxPSBlend psBlend;
     void blendModeChanged(int& i);

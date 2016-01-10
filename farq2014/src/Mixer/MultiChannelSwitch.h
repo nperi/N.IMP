@@ -35,6 +35,7 @@ class MultiChannelSwitch : public MixTable{
     
 private:
     void inputAdded(ImageOutput* in_);
+    void inputRemoved(int id_);
     void update();
     
     void cselChannel(int& s);

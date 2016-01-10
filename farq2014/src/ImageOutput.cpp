@@ -76,6 +76,7 @@ void ImageOutput::removeInput(int inputId_){
         if((*it)->getId() == inputId_){
             input.erase(it);
             input[input.size()] = NULL;
+            inputRemoved(inputId_);
             break;
         }
     }

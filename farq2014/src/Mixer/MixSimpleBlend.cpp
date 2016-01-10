@@ -59,7 +59,7 @@ void MixSimpleBlend::update(){
                 ofSetColor(255, 255, 255);
                 input[selector1]->getTextureReference().draw(0, 0, width, height);
             }
-            if (opacity>0) {
+            if (opacity > 0) {
                 ofSetColor(255, 255, 255,opacity);
                 input[selector2]->getTextureReference().draw(0, 0, width, height);
             }
@@ -88,6 +88,18 @@ void MixSimpleBlend::inputAdded(ImageOutput* in_){
 
     selector1.setMax(input.size()-1);
     selector2.setMax(input.size()-1);
+}
+
+//------------------------------------------------------------------
+void MixSimpleBlend::inputRemoved(int id_){
+    
+    selector1.setMax(input.size()-1);
+    selector2.setMax(input.size()-1);
+    
+    if (selector1 >= input.size())
+        selector1 = input.size()-1;
+    if (selector2 >= input.size())
+        selector2 = input.size()-1;
 }
 
 //------------------------------------------------------------------
