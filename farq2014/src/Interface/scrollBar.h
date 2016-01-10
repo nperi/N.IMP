@@ -50,6 +50,9 @@ private:
     float panelWidth;
     float panelHeight;
     
+    float windowWidth;
+    float windowHeight;
+    
     
     //*** VERTICAL SCROLLBAR ***//
     //

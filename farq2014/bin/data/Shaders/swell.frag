@@ -1,3 +1,4 @@
+#version 150
 uniform sampler2DRect image;
 uniform int imgWidth,imgHeight;
 uniform float rand;
@@ -6,7 +7,9 @@ uniform vec2 blur_vec;
 uniform float timer;
 int flgs;
 float pix_w,pix_h;
-varying vec3 pos;
+
+in vec3 pos;
+out vec4 outputColor;
 
 void main (void)
 {
@@ -15,13 +18,13 @@ void main (void)
     flgs = flags;
     
     vec2 texCoord = vec2(pos.x,pos.y);
-    vec4 col = texture2DRect(image,texCoord);
-    vec4 col_s = texture2DRect(image,texCoord + vec2(sin(pos.y*0.03+timer*20.0)*(6.0+12.0*rand),0));
+    vec4 col = texture(image,texCoord);
+    vec4 col_s = texture(image,texCoord + vec2(sin(pos.y*0.03+timer*20.0)*(6.0+12.0*rand),0));
     
     col = col_s;
 //    col.r = col.r * sin(rand);
 //	col.g = col.g * sin(rand*1.34+pos.y);
 //	col.b = col.b * cos(rand*1.56+pos.x*pos.y);
 	
-    gl_FragColor.rgba = col.rgba;
+    outputColor.rgba = col.rgba;
 }
