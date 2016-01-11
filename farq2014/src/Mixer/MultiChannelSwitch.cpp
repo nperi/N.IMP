@@ -46,11 +46,11 @@ void MultiChannelSwitch::inputAdded(ImageOutput* in_){
 void MultiChannelSwitch::inputRemoved(int id_){
     
     selChannel.setMax(selChannel.getMax()+1);
-    
-    if (selector1 >= input.size())
-        selector1 = input.size()-1;
-    if (selector2 >= input.size())
-        selector2 = input.size()-1;
+//    
+//    if (selector1 >= input.size())
+//        selector1 = input.size()-1;
+//    if (selector2 >= input.size())
+//        selector2 = input.size()-1;
 }
 
 //------------------------------------------------------------------

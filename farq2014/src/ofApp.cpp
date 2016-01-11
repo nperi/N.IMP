@@ -115,7 +115,7 @@ void ofApp::setup() {
     spacer = new ofxUISpacer(RIGHT_MENU_WIDTH + MENU_ITEM_SIZE*10 + MENU_ITEM_PADDING*14, 20, 1,MENU_ITEM_SIZE);
     menu->addWidget(spacer);
     spacer->setColorFill(ofxUIColor(120, 120, 120, 200));
-    new menuItem(menu, "MultiImageButton", "Console on/off", "assets/show_console.png", false, RIGHT_MENU_WIDTH + MENU_ITEM_SIZE*10 + MENU_ITEM_PADDING*15, 20);
+    new menuItem(menu, "MultiImageToggle", "Console on/off", "assets/console.png", false, RIGHT_MENU_WIDTH + MENU_ITEM_SIZE*10 + MENU_ITEM_PADDING*15, 20);
     new menuItem(menu, "MultiImageButton", "Clear Console", "assets/clear_console.png", false, RIGHT_MENU_WIDTH + MENU_ITEM_SIZE*11 + MENU_ITEM_PADDING*16, 20);
     ofAddListener(menu->newGUIEvent,this,&ofApp::menuEvent);
     
@@ -635,14 +635,12 @@ void ofApp::menuEvent(ofxUIEventArgs &e)
         }
     }
     else if (name == "Console on/off"){
-        if(((ofxUIMultiImageButton*)e.widget)->getValue() == 1){
-            if(showConsole){
-                glfw->hideWindow(windows->at(1));
-            } else {
-                glfw->showWindow(windows->at(1));
-            }
-            showConsole = !showConsole;
+        if(showConsole){
+            glfw->hideWindow(windows->at(1));
+        } else {
+            glfw->showWindow(windows->at(1));
         }
+        showConsole = !showConsole;
     }
     else if (name == "Clear Console"){
         ConsoleLog::getInstance()->clearMessages();
