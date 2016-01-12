@@ -1,6 +1,7 @@
 <MAIN_SETTINGS>
     <link_type>1</link_type>
     <total_nodes>11</total_nodes>
+    <show_console>0</show_console>
     <SETTINGS>
         <INPUTS>
             <NODE id="1" name="New Camera" type="CAM">

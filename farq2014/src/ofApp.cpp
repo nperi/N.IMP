@@ -9,7 +9,9 @@ using namespace ofxCv;
 /* ================================================ */
 
 void ofApp::setup() {
-    // ******* Initialize windows ******//
+    
+    //*** WINDOWS SETUP ***//
+    //
     glfw = (ofxMultiGLFWWindow*)ofGetWindowPtr();
     // vector of windows, count set in main
     windows = &glfw->windows;
@@ -32,7 +34,6 @@ void ofApp::setup() {
     
     showConsole = true;
     
-    
     //    // create third window dynamically
     //    glfw->createWindow();
     //    glfw->setWindow(windows->at(2));
@@ -42,7 +43,7 @@ void ofApp::setup() {
     //    ofSetWindowTitle("Window 3");
     
     glfw->setWindow(windows->at(0));
-    // ******* End initialize windows ******//
+    // ******* END WINDOWS SETUP ******//
     
     ofSetWindowTitle("n.imp");
     ofSetFrameRate(30);
@@ -147,6 +148,8 @@ void ofApp::setup() {
     
     if(loadingOK){
         
+        ConsoleLog::getInstance()->pushMessage("XML load correctly.");
+        
         //TODO: change mixtable assignment.
         //  ofAddListener(mixtables[0]->textureEvent, this, &ofApp::updateSyphon);
         
@@ -192,9 +195,12 @@ void ofApp::setup() {
     }
     
     //*** CONSOLE LOGGER ***//
+    //
     glfw->setWindow(windows->at(1));
     ConsoleLog::getInstance()->setupScrollBar(&pad);
     glfw->setWindow(windows->at(0));
+    
+    ConsoleLog::getInstance()->pushMessage("fin.");
   }
 
 //------------------------------------------------------------------
@@ -810,7 +816,8 @@ bool ofApp::loadFromXML(){
                     break;
             }
             
-            nodesCount = XML.getValue("total_nodes", -1);
+            nodesCount  = XML.getValue("total_nodes", -1);
+            showConsole = ofToBool(XML.getValue("show_console", "0"));
             
             int numSettingsTag = XML.getNumTags("SETTINGS");
             
@@ -1316,6 +1323,7 @@ bool ofApp::saveToXML() {
         
         XML.setValue("link_type", nodeViewers[currentViewer]->getLinkType() );
         XML.setValue("total_nodes", nodeViewers[currentViewer]->getNodesCount() );
+        XML.setValue("show_console", showConsole );
         
         XML.pushTag("SETTINGS");
         
