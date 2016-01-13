@@ -148,7 +148,7 @@ void ofApp::setup() {
     
     if(loadingOK){
         
-        ConsoleLog::getInstance()->pushMessage("XML load correctly.");
+        ConsoleLog::getInstance()->pushMessage("All nodes loaded correctly.");
         
         //TODO: change mixtable assignment.
         //  ofAddListener(mixtables[0]->textureEvent, this, &ofApp::updateSyphon);
@@ -200,7 +200,6 @@ void ofApp::setup() {
     ConsoleLog::getInstance()->setupScrollBar(&pad);
     glfw->setWindow(windows->at(0));
     
-    ConsoleLog::getInstance()->pushMessage("fin.");
   }
 
 //------------------------------------------------------------------

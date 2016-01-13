@@ -1,6 +1,6 @@
 <MAIN_SETTINGS>
-    <link_type>1</link_type>
-    <total_nodes>11</total_nodes>
+    <link_type>2</link_type>
+    <total_nodes>12</total_nodes>
     <show_console>0</show_console>
     <SETTINGS>
         <INPUTS>
@@ -11,19 +11,19 @@
                 <texture>
                     <point>
                         <x>40.967102051</x>
-                        <y>35.425445557</y>
+                        <y>25.090581894</y>
                     </point>
                     <point>
                         <x>183.919738770</x>
-                        <y>35.425323486</y>
+                        <y>25.090459824</y>
                     </point>
                     <point>
                         <x>183.919830322</x>
-                        <y>142.639831543</y>
+                        <y>132.304977417</y>
                     </point>
                     <point>
                         <x>40.967193604</x>
-                        <y>142.639831543</y>
+                        <y>132.304977417</y>
                     </point>
                 </texture>
                 <mask>
@@ -60,19 +60,19 @@
                 <texture>
                     <point>
                         <x>40.000000000</x>
-                        <y>168.199996948</y>
+                        <y>157.865142822</y>
                     </point>
                     <point>
                         <x>244.799987793</x>
-                        <y>168.199996948</y>
+                        <y>157.865142822</y>
                     </point>
                     <point>
                         <x>244.799987793</x>
-                        <y>283.399993896</y>
+                        <y>273.065124512</y>
                     </point>
                     <point>
                         <x>40.000000000</x>
-                        <y>283.399993896</y>
+                        <y>273.065124512</y>
                     </point>
                 </texture>
                 <mask>
@@ -109,19 +109,19 @@
                 <texture>
                     <point>
                         <x>39.740600586</x>
-                        <y>309.853515625</y>
+                        <y>299.518646240</y>
                     </point>
                     <point>
                         <x>177.631958008</x>
-                        <y>309.853637695</y>
+                        <y>299.518768311</y>
                     </point>
                     <point>
                         <x>177.631958008</x>
-                        <y>493.708801270</y>
+                        <y>483.373931885</y>
                     </point>
                     <point>
                         <x>39.740478516</x>
-                        <y>493.708801270</y>
+                        <y>483.373931885</y>
                     </point>
                 </texture>
                 <mask>
@@ -153,19 +153,19 @@
                 <texture>
                     <point>
                         <x>40.347717285</x>
-                        <y>517.461181641</y>
+                        <y>507.126281738</y>
                     </point>
                     <point>
                         <x>197.748107910</x>
-                        <y>517.460937500</y>
+                        <y>507.126037598</y>
                     </point>
                     <point>
                         <x>197.748107910</x>
-                        <y>635.511230469</y>
+                        <y>625.176330566</y>
                     </point>
                     <point>
                         <x>40.348022461</x>
-                        <y>635.511169434</y>
+                        <y>625.176269531</y>
                     </point>
                 </texture>
                 <mask>
@@ -198,6 +198,53 @@
                     </dot>
                 </out>
             </NODE>
+            <NODE id="12" name="New Particle Generator" type="PARTICLE">
+                <type>none</type>
+                <path>none</path>
+                <visible>1</visible>
+                <texture>
+                    <point>
+                        <x>303.000000000</x>
+                        <y>200.199996948</y>
+                    </point>
+                    <point>
+                        <x>559.000000000</x>
+                        <y>200.199996948</y>
+                    </point>
+                    <point>
+                        <x>559.000000000</x>
+                        <y>392.200012207</y>
+                    </point>
+                    <point>
+                        <x>303.000000000</x>
+                        <y>392.200012207</y>
+                    </point>
+                </texture>
+                <mask>
+                    <point>
+                        <x>0.000000000</x>
+                        <y>0.000000000</y>
+                    </point>
+                    <point>
+                        <x>1.000000000</x>
+                        <y>0.000000000</y>
+                    </point>
+                    <point>
+                        <x>1.000000000</x>
+                        <y>1.000000000</y>
+                    </point>
+                    <point>
+                        <x>0.000000000</x>
+                        <y>1.000000000</y>
+                    </point>
+                </mask>
+                <out>
+                    <active>1</active>
+                    <dot>
+                        <to>10</to>
+                    </dot>
+                </out>
+            </NODE>
         </INPUTS>
         <VISUAL_LAYERS>
             <NODE id="5" name="New Ikeda Layer" type="IKEDA" inputSource="1" isCanny="1" isThreshold="1" isColumns="0" isInvert="1" pNColumns="8" pCannyX="12.000000" pCannyY="12.000000" pThreshold="12">
@@ -207,19 +254,19 @@
                 <texture>
                     <point>
                         <x>358.000000000</x>
-                        <y>35.200012207</y>
+                        <y>24.865146637</y>
                     </point>
                     <point>
                         <x>500.952636719</x>
-                        <y>35.200012207</y>
+                        <y>24.865146637</y>
                     </point>
                     <point>
                         <x>500.952636719</x>
-                        <y>142.414398193</y>
+                        <y>132.079544067</y>
                     </point>
                     <point>
                         <x>358.000000000</x>
-                        <y>142.414398193</y>
+                        <y>132.079544067</y>
                     </point>
                 </texture>
                 <mask>
@@ -255,19 +302,19 @@
                 <texture>
                     <point>
                         <x>357.223419189</x>
-                        <y>197.368499756</y>
+                        <y>187.033645630</y>
                     </point>
                     <point>
                         <x>562.023437500</x>
-                        <y>197.368499756</y>
+                        <y>187.033645630</y>
                     </point>
                     <point>
                         <x>562.023437500</x>
-                        <y>312.568481445</y>
+                        <y>302.233642578</y>
                     </point>
                     <point>
                         <x>357.223419189</x>
-                        <y>312.568481445</y>
+                        <y>302.233642578</y>
                     </point>
                 </texture>
                 <mask>
@@ -303,19 +350,19 @@
                 <texture>
                     <point>
                         <x>358.000000000</x>
-                        <y>516.200012207</y>
+                        <y>505.865112305</y>
                     </point>
                     <point>
                         <x>515.400390625</x>
-                        <y>516.200012207</y>
+                        <y>505.865112305</y>
                     </point>
                     <point>
                         <x>515.400390625</x>
-                        <y>634.250061035</y>
+                        <y>623.915161133</y>
                     </point>
                     <point>
                         <x>358.000000000</x>
-                        <y>634.250061035</y>
+                        <y>623.915161133</y>
                     </point>
                 </texture>
                 <mask>
@@ -351,19 +398,19 @@
                 <texture>
                     <point>
                         <x>358.000000000</x>
-                        <y>370.200012207</y>
+                        <y>359.865142822</y>
                     </point>
                     <point>
                         <x>515.400390625</x>
-                        <y>370.200012207</y>
+                        <y>359.865142822</y>
                     </point>
                     <point>
                         <x>515.400390625</x>
-                        <y>488.250061035</y>
+                        <y>477.915191650</y>
                     </point>
                     <point>
                         <x>358.000000000</x>
-                        <y>488.250061035</y>
+                        <y>477.915191650</y>
                     </point>
                 </texture>
                 <mask>
@@ -402,20 +449,20 @@
                 <visible>1</visible>
                 <texture>
                     <point>
-                        <x>659.000000000</x>
-                        <y>58.200012207</y>
+                        <x>710.000000000</x>
+                        <y>37.865150452</y>
                     </point>
                     <point>
-                        <x>915.000000000</x>
-                        <y>58.200012207</y>
+                        <x>966.000000000</x>
+                        <y>37.865150452</y>
                     </point>
                     <point>
-                        <x>915.000000000</x>
-                        <y>250.200012207</y>
+                        <x>966.000000000</x>
+                        <y>229.865158081</y>
                     </point>
                     <point>
-                        <x>659.000000000</x>
-                        <y>250.200012207</y>
+                        <x>710.000000000</x>
+                        <y>229.865158081</y>
                     </point>
                 </texture>
                 <mask>
@@ -452,19 +499,19 @@
                 <texture>
                     <point>
                         <x>659.000000000</x>
-                        <y>276.200012207</y>
+                        <y>265.865142822</y>
                     </point>
                     <point>
                         <x>915.000000000</x>
-                        <y>276.200012207</y>
+                        <y>265.865142822</y>
                     </point>
                     <point>
                         <x>915.000000000</x>
-                        <y>468.200012207</y>
+                        <y>457.865142822</y>
                     </point>
                     <point>
                         <x>659.000000000</x>
-                        <y>468.200012207</y>
+                        <y>457.865142822</y>
                     </point>
                 </texture>
                 <mask>
@@ -488,6 +535,7 @@
                 <out>
                     <active>1</active>
                 </out>
+                <INPUT_SOURCE nodeId="12"></INPUT_SOURCE>
             </NODE>
             <NODE id="11" name="New MultiChannel Switch" type="MULTI_CHANNEL" selChannel="0">
                 <INPUT_SOURCE nodeId="9" />
@@ -498,19 +546,19 @@
                 <texture>
                     <point>
                         <x>959.799804688</x>
-                        <y>480.039978027</y>
+                        <y>469.705108643</y>
                     </point>
                     <point>
                         <x>1215.799804688</x>
-                        <y>480.039978027</y>
+                        <y>469.705108643</y>
                     </point>
                     <point>
                         <x>1215.799804688</x>
-                        <y>672.039978027</y>
+                        <y>661.705078125</y>
                     </point>
                     <point>
                         <x>959.799804688</x>
-                        <y>672.039978027</y>
+                        <y>661.705078125</y>
                     </point>
                 </texture>
                 <mask>
@@ -551,6 +599,7 @@
             <NODE id="9" name="New Mix Simple Blend" />
             <NODE id="10" name="New Mix Mask" />
             <NODE id="11" name="New MultiChannel Switch" />
+            <NODE id="12" name="New Particle Generator" />
         </NODE_VIEW>
         <INPUT_GEN name="FFT1" type="FFT">
             <FFT_SETTINGS>

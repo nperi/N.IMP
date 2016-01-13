@@ -157,6 +157,7 @@ bool ImageOutput::loadSettings(ofxXmlSettings &XML, int nTag_) {
     }
     
     // Load the mask path
+    //
     if ( XML.pushTag("mask") ){
         int totalMaskCorners = XML.getNumTags("point");
         if (totalMaskCorners > 0){
@@ -182,6 +183,10 @@ bool ImageOutput::loadSettings(ofxXmlSettings &XML, int nTag_) {
             bMasking = true;
         }
     }
+    
+//    if ( XML.pushTag("out") ){
+//        int totalDots = XML.getNumTags("dot");
+//    }
     
     bUpdateMask = true;
     bUpdateCoord = true;
