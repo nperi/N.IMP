@@ -184,9 +184,29 @@ bool ImageOutput::loadSettings(ofxXmlSettings &XML, int nTag_) {
         }
     }
     
-//    if ( XML.pushTag("out") ){
-//        int totalDots = XML.getNumTags("dot");
-//    }
+    if ( XML.pushTag("out") ){
+        int totalDots = XML.getNumTags("dot");
+        for(int i = 0; i < totalDots; i++){
+            
+            LinkDot newDot;
+            newDot.toId = XML.getValue("dot:to", -1);
+            XML.pushTag("dot");
+            
+            if (XML.pushTag("vertices",i)){
+                
+                int totalVertex = XML.getNumTags("vertex");
+                for(int j = 0; j < totalVertex; j++){
+                    
+                    newDot.link_vertices.push_back(ofPoint(XML.getAttribute("vertex", "x", 50, j), XML.getAttribute("vertex", "y", 50, j)));
+                }
+                
+                XML.popTag(); // Pop "vertices"
+                outPut.push_back( newDot );
+            }
+            XML.popTag(); // Pop "dot"
+        }
+        XML.popTag(); // Pop "out"
+    }
     
     bUpdateMask = true;
     bUpdateCoord = true;

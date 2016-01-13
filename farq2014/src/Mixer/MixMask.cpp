@@ -104,11 +104,11 @@ void MixMask::drawShader(){
     
     //deactive and clean up
     //
-    glActiveTexture(GL_TEXTURE1_ARB);
+    glActiveTexture(GL_TEXTURE0_ARB);
     input[0]->getTexture()->unbind();
     
     if (input.size() > 1) {
-        glActiveTexture(GL_TEXTURE0_ARB);
+        glActiveTexture(GL_TEXTURE1_ARB);
         input[1]->getTexture()->unbind();
     }
     

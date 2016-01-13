@@ -1,6 +1,6 @@
 <MAIN_SETTINGS>
     <link_type>2</link_type>
-    <total_nodes>12</total_nodes>
+    <total_nodes>11</total_nodes>
     <show_console>0</show_console>
     <SETTINGS>
         <INPUTS>
@@ -98,6 +98,9 @@
                     <dot>
                         <to>6</to>
                         <tex>0</tex>
+                        <vertices>
+                            <vertex x="247.000000" y="365.000000"></vertex>
+                        </vertices>
                     </dot>
                 </out>
             </NODE>
@@ -198,53 +201,6 @@
                     </dot>
                 </out>
             </NODE>
-            <NODE id="12" name="New Particle Generator" type="PARTICLE">
-                <type>none</type>
-                <path>none</path>
-                <visible>1</visible>
-                <texture>
-                    <point>
-                        <x>303.000000000</x>
-                        <y>200.199996948</y>
-                    </point>
-                    <point>
-                        <x>559.000000000</x>
-                        <y>200.199996948</y>
-                    </point>
-                    <point>
-                        <x>559.000000000</x>
-                        <y>392.200012207</y>
-                    </point>
-                    <point>
-                        <x>303.000000000</x>
-                        <y>392.200012207</y>
-                    </point>
-                </texture>
-                <mask>
-                    <point>
-                        <x>0.000000000</x>
-                        <y>0.000000000</y>
-                    </point>
-                    <point>
-                        <x>1.000000000</x>
-                        <y>0.000000000</y>
-                    </point>
-                    <point>
-                        <x>1.000000000</x>
-                        <y>1.000000000</y>
-                    </point>
-                    <point>
-                        <x>0.000000000</x>
-                        <y>1.000000000</y>
-                    </point>
-                </mask>
-                <out>
-                    <active>1</active>
-                    <dot>
-                        <to>10</to>
-                    </dot>
-                </out>
-            </NODE>
         </INPUTS>
         <VISUAL_LAYERS>
             <NODE id="5" name="New Ikeda Layer" type="IKEDA" inputSource="1" isCanny="1" isThreshold="1" isColumns="0" isInvert="1" pNColumns="8" pCannyX="12.000000" pCannyY="12.000000" pThreshold="12">
@@ -292,6 +248,10 @@
                     <dot>
                         <to>9</to>
                         <tex>0</tex>
+                        <vertices>
+                            <vertex x="534.000000" y="137.000000"></vertex>
+                            <vertex x="610.000000" y="78.000000"></vertex>
+                        </vertices>
                     </dot>
                 </out>
             </NODE>
@@ -388,6 +348,10 @@
                     <dot>
                         <to>11</to>
                         <tex>0</tex>
+                        <vertices>
+                            <vertex x="601.000000" y="485.000000"></vertex>
+                            <vertex x="794.000000" y="591.000000"></vertex>
+                        </vertices>
                     </dot>
                 </out>
             </NODE>
@@ -535,7 +499,6 @@
                 <out>
                     <active>1</active>
                 </out>
-                <INPUT_SOURCE nodeId="12"></INPUT_SOURCE>
             </NODE>
             <NODE id="11" name="New MultiChannel Switch" type="MULTI_CHANNEL" selChannel="0">
                 <INPUT_SOURCE nodeId="9" />
@@ -599,7 +562,6 @@
             <NODE id="9" name="New Mix Simple Blend" />
             <NODE id="10" name="New Mix Mask" />
             <NODE id="11" name="New MultiChannel Switch" />
-            <NODE id="12" name="New Particle Generator" />
         </NODE_VIEW>
         <INPUT_GEN name="FFT1" type="FFT">
             <FFT_SETTINGS>
