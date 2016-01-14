@@ -234,16 +234,16 @@ void ofApp::update() {
         if (zoom_in) {
             scale -= 10*SCALE_SENSITIVITY;
             cam.setScale(scale);
-            ofVec3f diffVec = ofVec3f(ZOOM_DIFF, ZOOM_DIFF,0);
-            scrollBars->updateHScrollBar(diffVec);
-            scrollBars->updateScrollBar(diffVec);
+//            ofVec3f diffVec = ofVec3f(ZOOM_DIFF, ZOOM_DIFF,0);
+//            scrollBars->updateHScrollBar(diffVec);
+//            scrollBars->updateScrollBar(diffVec);
         }
         else if (zoom_out) {
             scale += 10*SCALE_SENSITIVITY;
             cam.setScale(scale);
-            ofVec3f diffVec = ofVec3f(-ZOOM_DIFF, -ZOOM_DIFF,0);
-            scrollBars->updateHScrollBar(diffVec);
-            scrollBars->updateScrollBar(diffVec);
+//            ofVec3f diffVec = ofVec3f(-ZOOM_DIFF, -ZOOM_DIFF,0);
+//            scrollBars->updateHScrollBar(diffVec);
+//            scrollBars->updateScrollBar(diffVec);
         }
         
         //resetting processed flags
