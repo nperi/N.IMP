@@ -37,7 +37,7 @@ void menuItem::draw() {
         
     if(isMouseOver()) {
 
-        if (counter < 30)
+        if (counter < 10)
             counter++;
         else ofDrawBitmapStringHighlight(label, ofGetMouseX()+10, ofGetMouseY()+30);
     }

@@ -15,8 +15,9 @@ scrollBar::scrollBar(){
 }
 
 scrollBar::scrollBar(class ofxComposer* _composer, ofxMultiTouchPad* _pad, int eventPriority){
-    this->composer = _composer;
-    this->pad = _pad;
+    this->composer  = _composer;
+    this->pad       = _pad;
+    this->cam       = (ofCamera*)composer->getParent();
     
     //  Event listeners
     //
@@ -117,8 +118,8 @@ void scrollBar::update(){
         //** **//
     }
 
-    //updateScrollBar(diffVec);
-    //updateHScrollBar(diffVec);
+    updateScrollBar(diffVec);
+    updateHScrollBar(diffVec);
 
 }
 
@@ -282,8 +283,8 @@ void scrollBar::updateScrollBar(ofVec3f diffVec){
     // TODO: con la flechita no puedo ir a los topes de la barra
     if(diffVec.y != 0){
         if(!(gripRectangle.y < BEGIN_Y) && !(gripRectangle.getBottom() > scrollBarRectangle.getBottom())){
-            composer->movePatches(diffVec);
-            //composer->setPosition(composer->getPosition().x, composer->getPosition().y + diffVec.y, composer->getPosition().z);
+            //composer->movePatches(diffVec);
+            cam->setPosition(cam->getPosition().x, cam->getPosition().y + diffVec.y, cam->getPosition().z);
         }
         
         // Check if the grip is still in the scroll bar
@@ -342,8 +343,9 @@ void scrollBar::updateHScrollBar(ofVec3f diffVec){
     // TODO: con la flechita no puedo ir a los topes de la barra
     if(diffVec.x != 0){
         if(!(hGripRectangle.x < BEGIN_X) && !(hGripRectangle.getRight() > hScrollBarRectangle.getRight())){
-            composer->movePatches(diffVec);
+            //composer->movePatches(diffVec);
             //composer->setPosition(composer->getPosition().x + diffVec.x, composer->getPosition().y, composer->getPosition().z);
+            cam->setPosition(cam->getPosition().x + diffVec.x, cam->getPosition().y, cam->getPosition().z);
         }
         
         // Check if the grip is still in the scroll bar

@@ -80,11 +80,15 @@ private:
     float touchpad_scroll_x;
     float touchpad_scroll_y;
     
-    // CONSTANTS
+    //*** CONSTANTS ***//
+    //
     int BEGIN_X;
     int BEGIN_Y;
     
+    //*** VARIABLES ***//
+    //
     ofxComposer* composer;
+    ofCamera*    cam;
     
     ofVec4f getUntransformedCoords(int x, int y);
 };
