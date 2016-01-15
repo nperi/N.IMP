@@ -53,7 +53,7 @@
                 </out>
             </NODE>
             <NODE id="2" name="New Video Player" type="VIDEO" path="">
-                <VIDEO path="/Users/miligaricoits/Development/of_v0.8.4_osx_release/apps/myApps/NIMP_prototipe/bin/data/duck.mp4" />
+                <VIDEO path="./duck.mp4" />
                 <type>none</type>
                 <path>none</path>
                 <visible>1</visible>
@@ -102,7 +102,7 @@
                 </out>
             </NODE>
             <NODE id="3" name="New Image Input" type="IMAGE" path="" bpm="100.000000" multiplier_divider="4" isPlaying="0" palindrom="1" matchBPMtoSequence="0">
-                <ASSET name="P161210_18.36_[01].jpg" path="/Users/miligaricoits/Development/of_v0.8.4_osx_release/apps/myApps/NIMP_prototipe/bin/data/P161210_18.36_[01].jpg" />
+                <ASSET name="P161210_18.36_[01].jpg" path="./P161210_18.36_[01].jpg" />
                 <type>none</type>
                 <path>none</path>
                 <visible>1</visible>
