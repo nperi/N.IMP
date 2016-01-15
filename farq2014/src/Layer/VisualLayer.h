@@ -30,7 +30,7 @@ class VisualLayer : public ImageOutput{
     void inputEvent(map<string, Param*>* params);
     void setEnable(bool isEnabled_);
     
-    void updateFromInputCoorners(ofPoint pos_);
+    //void updateFromInputCoorners(ofPoint pos_);
     
 protected:
     

@@ -131,15 +131,14 @@ void ImageProcessor::setup() {
     
     if(input.size()) {
         
-        height = input[0]->getHeight();
-        width  = input[0]->getWidth();
+//        height = input[0]->getHeight();
+//        width  = input[0]->getWidth();
+//        updateFromInputCoorners(getTextureCoorners().getVertices()[0]);
+//        drawNoInputs = false;
         
-        updateFromInputCoorners(getTextureCoorners().getVertices()[0]);
+        drawFbo = true;
         
         fbo.allocate(width, height);
-        
-        drawFbo      = true;
-        drawNoInputs = false;
         
         // Setup post-processing chain
         post.init(width,height);
@@ -150,9 +149,6 @@ void ImageProcessor::setup() {
 void ImageProcessor::update() {
     
     if(input.size()) {
-        
-        drawNoInputs = false;
-        drawFbo      = true;
         
         fbo.begin();
         glPushAttrib(GL_ALL_ATTRIB_BITS);
@@ -178,10 +174,6 @@ void ImageProcessor::update() {
         fbo.end();
         
         tex = fbo.getTextureReference();
-    }
-    else {
-        drawNoInputs = true;
-        drawFbo      = false;
     }
 }
 

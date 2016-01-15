@@ -37,10 +37,10 @@ void IkedaLayer::setup() {
 
     if(input.size()) {
         
-        updateFromInputCoorners(getTextureCoorners().getVertices()[0]);
+//        updateFromInputCoorners(getTextureCoorners().getVertices()[0]);
+//        drawNoInputs = false;
         
-        drawTexture  = true;
-        drawNoInputs = false;
+        drawTexture = true;
     }
 }
 
@@ -57,9 +57,6 @@ void IkedaLayer::draw(int x,int y, float scale) {
 void IkedaLayer::update(){
     
     if(input.size()) {
-        
-        drawNoInputs = false;
-        drawTexture  = true;
         
         //process pipeline
         //img.setFromPixels(img_.getPixels(), 640, 480, OF_IMAGE_COLOR);
@@ -109,11 +106,6 @@ void IkedaLayer::update(){
         img.update();
         tex = img.getTextureReference();// .loadData(img.getPixels(), img.getWidth(), img.getHeight(), GL_RGB);
     }
-    else {
-        drawNoInputs = true;
-        drawTexture  = false;
-    }
-    
 }
 
 //------------------------------------------------------------------

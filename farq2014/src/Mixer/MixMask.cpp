@@ -25,6 +25,9 @@ MixMask::MixMask(string name_, int id_):MixTable(name_, "Mix Mask", id_){
 //------------------------------------------------------------------
 void MixMask::setup() {
     
+    if(input.size()) {
+        drawFbo = true;
+    }
 }
 
 //------------------------------------------------------------------
@@ -43,9 +46,6 @@ void MixMask::update(){
     
     if(input.size()) {
         
-        drawNoInputs = false;
-        drawFbo      = true;
-        
         fbo.begin();
         ofClear(255,255,255, 0);
         input[0]->getTexture()->draw(0, 0);
@@ -63,10 +63,6 @@ void MixMask::update(){
         ofDisableBlendMode();
         fbo.end();
         tex = fbo.getTextureReference();
-    }
-    else {
-        drawNoInputs = true;
-        drawFbo      = false;
     }
 }
 

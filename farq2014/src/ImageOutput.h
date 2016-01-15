@@ -51,7 +51,7 @@ class ImageOutput : public ofxPatch {
     void setGui(int x,int y, int width = 240);
     
     //methods for adding input//
-    void addInput(ofxPatch* layer_);
+    bool addInput(ofxPatch* layer_);
     void addInputIdentifier(int inputId_);
     bool findAndAssignInputs(map<int,ImageOutput*> &nodeCollection);
     void removeInput(int inputId_);

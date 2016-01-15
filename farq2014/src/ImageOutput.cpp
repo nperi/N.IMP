@@ -30,11 +30,31 @@ string ImageOutput::getName(){
 }
 
 //------------------------------------------------------------------
-void ImageOutput::addInput(ofxPatch* layer_){
+bool ImageOutput::addInput(ofxPatch* layer_){
     if (input.size()<maxInputs) {
         input.push_back((ImageOutput*)layer_);
+        
+        if (input.size() == 1) {
+            drawNoInputs = false;
+            
+            height = input[0]->getHeight();
+            width  = input[0]->getWidth();
+            
+            ofPoint pos_ = getTextureCoorners().getVertices()[0];
+            vector<ofPoint> iC = input[0]->getTextureCoorners().getVertices();
+            float dist_x = iC[1].x - iC[0].x;
+            float dist_y = iC[2].y - iC[0].y;
+            
+            iC[0] = pos_;
+            iC[1] = ofPoint(pos_.x + dist_x, pos_.y);
+            iC[2] = ofPoint(pos_.x + dist_x, pos_.y + dist_y);
+            iC[3] = ofPoint(pos_.x, pos_.y + dist_y);
+            
+            setCoorners(iC);
+        }
         inputAdded((ImageOutput*)layer_);
     }
+    
 }
 
 //------------------------------------------------------------------
@@ -76,6 +96,21 @@ void ImageOutput::removeInput(int inputId_){
         if((*it)->getId() == inputId_){
             input.erase(it);
             input[input.size()] = NULL;
+            
+            if (input.size() == 0) {
+                drawNoInputs = true;
+                
+                ofPoint iC[4];
+                ofPoint pos_ = getTextureCoorners().getVertices()[0];
+                
+                iC[0] = pos_;
+                iC[1] = ofPoint(pos_.x + 640/4, pos_.y);
+                iC[2] = ofPoint(pos_.x + 640/4, pos_.y + 480/4);
+                iC[3] = ofPoint(pos_.x, pos_.y + 480/4);
+                
+                setCoorners(iC);
+            }
+            
             inputRemoved(inputId_);
             break;
         }

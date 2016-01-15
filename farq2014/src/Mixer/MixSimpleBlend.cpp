@@ -30,6 +30,9 @@ MixSimpleBlend::MixSimpleBlend(string name_, int id_):MixTable(name_, "Mix Simpl
 //------------------------------------------------------------------
 void MixSimpleBlend::setup() {
     
+    if(input.size()) {
+        drawFbo = true;
+    }
 }
 
 //------------------------------------------------------------------
@@ -46,10 +49,7 @@ void MixSimpleBlend::draw(int x,int y, float scale) {
 void MixSimpleBlend::update(){
     
     if(input.size()) {
-        
-        drawNoInputs = false;
-        drawFbo      = true;
-        
+
         fbo.begin();
         ofClear(255,255,255, 0);
         glPushAttrib(GL_ALL_ATTRIB_BITS);
@@ -86,10 +86,6 @@ void MixSimpleBlend::update(){
         fbo.end();
         tex = fbo.getTextureReference();
     }
-    else {
-        drawNoInputs = true;
-        drawFbo      = false;
-    }
 }
 
 //------------------------------------------------------------------
@@ -107,13 +103,15 @@ void MixSimpleBlend::inputAdded(ImageOutput* in_){
 //------------------------------------------------------------------
 void MixSimpleBlend::inputRemoved(int id_){
     
-    selector1.setMax(input.size()-1);
-    selector2.setMax(input.size()-1);
-    
-    if (selector1 >= input.size())
-        selector1 = input.size()-1;
-    if (selector2 >= input.size())
-        selector2 = input.size()-1;
+    if (input.size() > 0) {
+        selector1.setMax(input.size()-1);
+        selector2.setMax(input.size()-1);
+        
+        if (selector1 >= input.size())
+            selector1 = input.size()-1;
+        if (selector2 >= input.size())
+            selector2 = input.size()-1;
+    }
 }
 
 //------------------------------------------------------------------

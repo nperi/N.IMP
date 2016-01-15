@@ -42,9 +42,6 @@ void MultiChannelSwitch::inputAdded(ImageOutput* in_){
 
     //hack
     lastClicked = ofGetElapsedTimeMillis();
-    
-    drawNoInputs = false;
-    drawTexture  = true;
 }
 
 //------------------------------------------------------------------
@@ -57,6 +54,9 @@ void MultiChannelSwitch::inputRemoved(int id_){
 //------------------------------------------------------------------
 void MultiChannelSwitch::setup() {
 
+    if(input.size()) {
+        drawTexture  = true;
+    }
 }
 
 //------------------------------------------------------------------
@@ -87,17 +87,10 @@ void MultiChannelSwitch::update() {
     
     if (input.size()){
         
-        drawNoInputs = false;
-        drawTexture  = true;
-        
         img = *input[selChannel]->getImage();
         tex = *input[selChannel]->getTexture();
         
         //input[selChannel]->setDrawInspector(drawInputGui);
-    }
-    else {
-        drawNoInputs = true;
-        drawTexture  = false;
     }
 }
 
