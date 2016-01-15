@@ -21,6 +21,8 @@ MultiChannelSwitch::MultiChannelSwitch(string name_, int id_):MixTable(name_, "M
     selChannel.addListener(this, &MultiChannelSwitch::cselChannel);
     labelGroup.setName("channels");
     
+    drawNoInputs = true;
+    
 }
 
 //------------------------------------------------------------------
@@ -40,23 +42,21 @@ void MultiChannelSwitch::inputAdded(ImageOutput* in_){
 
     //hack
     lastClicked = ofGetElapsedTimeMillis();
+    
+    drawNoInputs = false;
+    drawTexture  = true;
 }
 
 //------------------------------------------------------------------
 void MultiChannelSwitch::inputRemoved(int id_){
     
     selChannel.setMax(selChannel.getMax()+1);
-//    
-//    if (selector1 >= input.size())
-//        selector1 = input.size()-1;
-//    if (selector2 >= input.size())
-//        selector2 = input.size()-1;
+
 }
 
 //------------------------------------------------------------------
 void MultiChannelSwitch::setup() {
 
-    drawTexture = true;
 }
 
 //------------------------------------------------------------------
@@ -87,10 +87,17 @@ void MultiChannelSwitch::update() {
     
     if (input.size()){
         
+        drawNoInputs = false;
+        drawTexture  = true;
+        
         img = *input[selChannel]->getImage();
         tex = *input[selChannel]->getTexture();
         
         //input[selChannel]->setDrawInspector(drawInputGui);
+    }
+    else {
+        drawNoInputs = true;
+        drawTexture  = false;
     }
 }
 

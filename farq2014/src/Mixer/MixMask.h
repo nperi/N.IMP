@@ -31,6 +31,8 @@ class MixMask : public MixTable{
 private:
     
     void update();
+    void inputAdded(ImageOutput* in_);
+    void inputRemoved(int id_);
     
     ofShader maskShader;
     void drawShader();

@@ -24,8 +24,7 @@ MixSimpleBlend::MixSimpleBlend(string name_, int id_):MixTable(name_, "Mix Simpl
     
     blendMode.addListener(this, &MixSimpleBlend::blendModeChanged);
     
-    drawFbo = true;
-
+    drawNoInputs = true;
 }
 
 //------------------------------------------------------------------
@@ -47,6 +46,9 @@ void MixSimpleBlend::draw(int x,int y, float scale) {
 void MixSimpleBlend::update(){
     
     if(input.size()) {
+        
+        drawNoInputs = false;
+        drawFbo      = true;
         
         fbo.begin();
         ofClear(255,255,255, 0);
@@ -83,6 +85,10 @@ void MixSimpleBlend::update(){
         glPopAttrib();
         fbo.end();
         tex = fbo.getTextureReference();
+    }
+    else {
+        drawNoInputs = true;
+        drawFbo      = false;
     }
 }
 

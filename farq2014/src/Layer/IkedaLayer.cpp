@@ -28,6 +28,8 @@ IkedaLayer::IkedaLayer(string name_, int id_, bool isCanny_,bool isThreshold_, b
     gui.add(isInvert.setup("Invert", isInvert_));
     
     gui.setWidthElements(INSPECTOR_WIDTH);
+    
+    drawNoInputs = true;
 }
 
 //------------------------------------------------------------------
@@ -37,7 +39,8 @@ void IkedaLayer::setup() {
         
         updateFromInputCoorners(getTextureCoorners().getVertices()[0]);
         
-        drawTexture = true;
+        drawTexture  = true;
+        drawNoInputs = false;
     }
 }
 
@@ -54,6 +57,9 @@ void IkedaLayer::draw(int x,int y, float scale) {
 void IkedaLayer::update(){
     
     if(input.size()) {
+        
+        drawNoInputs = false;
+        drawTexture  = true;
         
         //process pipeline
         //img.setFromPixels(img_.getPixels(), 640, 480, OF_IMAGE_COLOR);
@@ -101,9 +107,12 @@ void IkedaLayer::update(){
             img.setFromPixels(input[0]->getImage()->getPixels(), width, height, OF_IMAGE_COLOR);
         }
         img.update();
+        tex = img.getTextureReference();// .loadData(img.getPixels(), img.getWidth(), img.getHeight(), GL_RGB);
     }
-    
-    tex = img.getTextureReference();// .loadData(img.getPixels(), img.getWidth(), img.getHeight(), GL_RGB);
+    else {
+        drawNoInputs = true;
+        drawTexture  = false;
+    }
     
 }
 

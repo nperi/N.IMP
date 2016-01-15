@@ -122,6 +122,8 @@ ImageProcessor::ImageProcessor(string name_, int id_):VisualLayer(name_, "Image 
     post.createPass<GodRaysPass>()->setEnabled(isGod);
     post.createPass<ZoomBlurPass>()->setEnabled(isZoomBlur);
     post.createPass<PixelatePass>()->setEnabled(isPixelate);
+    
+    drawNoInputs = true;
 }
 
 //------------------------------------------------------------------
@@ -136,7 +138,8 @@ void ImageProcessor::setup() {
         
         fbo.allocate(width, height);
         
-        drawFbo = true;
+        drawFbo      = true;
+        drawNoInputs = false;
         
         // Setup post-processing chain
         post.init(width,height);
@@ -147,6 +150,9 @@ void ImageProcessor::setup() {
 void ImageProcessor::update() {
     
     if(input.size()) {
+        
+        drawNoInputs = false;
+        drawFbo      = true;
         
         fbo.begin();
         glPushAttrib(GL_ALL_ATTRIB_BITS);
@@ -172,6 +178,10 @@ void ImageProcessor::update() {
         fbo.end();
         
         tex = fbo.getTextureReference();
+    }
+    else {
+        drawNoInputs = true;
+        drawFbo      = false;
     }
 }
 

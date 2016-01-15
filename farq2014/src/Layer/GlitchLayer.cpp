@@ -32,6 +32,8 @@ GlitchLayer::GlitchLayer(string name_, int id_):VisualLayer(name_, "Glitch Layer
     gui.add(do_CR_REDINVERT.setup("REDINVERT", do_CR_REDINVERT, 100,20));
     gui.add(do_CR_GREENINVERT.setup("GREENINVERT", do_CR_GREENINVERT, 100,20));
     gui.setWidthElements(INSPECTOR_WIDTH);
+    
+    drawNoInputs = true;
 }
 
 //------------------------------------------------------------------
@@ -46,7 +48,8 @@ void GlitchLayer::setup() {
         fbo.allocate(width, height);
         myGlitch.setup(&fbo);
         
-        drawFbo = true;
+        drawFbo      = true;
+        drawNoInputs = false;
     }
 }
 
@@ -65,6 +68,9 @@ void GlitchLayer::update(){
     //process pipeline
     
     if(input.size()) {
+        
+        drawNoInputs = false;
+        drawFbo      = true;
         
         img.setFromPixels(input[0]->getImage()->getPixels(), width, height, OF_IMAGE_COLOR);
 
@@ -90,8 +96,12 @@ void GlitchLayer::update(){
         }
 
         img.update();
+        tex = img.getTextureReference();
     }
-    tex = img.getTextureReference();
+    else {
+        drawNoInputs = true;
+        drawFbo      = false;
+    }
 }
 
 //------------------------------------------------------------------

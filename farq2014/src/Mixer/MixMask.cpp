@@ -19,7 +19,7 @@ MixMask::MixMask(string name_, int id_):MixTable(name_, "Mix Mask", id_){
     maskShader.end();
     //fbo.setDefaultTextureIndex(1);
     
-    drawFbo = true;
+    drawNoInputs = true;
 }
 
 //------------------------------------------------------------------
@@ -43,6 +43,9 @@ void MixMask::update(){
     
     if(input.size()) {
         
+        drawNoInputs = false;
+        drawFbo      = true;
+        
         fbo.begin();
         ofClear(255,255,255, 0);
         input[0]->getTexture()->draw(0, 0);
@@ -61,13 +64,19 @@ void MixMask::update(){
         fbo.end();
         tex = fbo.getTextureReference();
     }
+    else {
+        drawNoInputs = true;
+        drawFbo      = false;
+    }
 }
 
 //------------------------------------------------------------------
 void MixMask::drawShader(){
     maskShader.begin();
     maskShader.setUniformTexture("Tex0", input[0]->getTextureReference(), 0);
-    if (input.size() > 1) maskShader.setUniformTexture("Tex1", input[1]->getTextureReference(), 1);
+    if (input.size() > 1)
+        maskShader.setUniformTexture("Tex1", input[1]->getTextureReference(), 1);
+    else maskShader.setUniformTexture("Tex1", input[0]->getTextureReference(), 1);
 
     ofMesh a;
     a.addVertex(ofVec2f(0, height));
@@ -142,6 +151,25 @@ void MixMask::drawShader(){
 //------------------------------------------------------------------
 void MixMask::updateParameter(Param* inputParam){
     
+}
+
+//------------------------------------------------------------------
+void MixMask::inputAdded(ImageOutput* in_){
+    
+//    selector1.setMax(input.size()-1);
+//    selector2.setMax(input.size()-1);
+}
+
+//------------------------------------------------------------------
+void MixMask::inputRemoved(int id_){
+    
+//    selector1.setMax(input.size()-1);
+//    selector2.setMax(input.size()-1);
+//    
+//    if (selector1 >= input.size())
+//        selector1 = input.size()-1;
+//    if (selector2 >= input.size())
+//        selector2 = input.size()-1;
 }
 
 //------------------------------------------------------------------
