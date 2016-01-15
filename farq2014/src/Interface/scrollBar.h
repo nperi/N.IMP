@@ -90,7 +90,9 @@ private:
     ofxComposer* composer;
     ofCamera*    cam;
     
-    ofVec4f getUntransformedCoords(int x, int y);
+//    ofVec4f getUntransformedCoords(int x, int y);
+    
+    bool enableScroll;
 };
 
 
