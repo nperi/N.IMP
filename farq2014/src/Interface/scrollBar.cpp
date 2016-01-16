@@ -314,12 +314,10 @@ void scrollBar::updateScrollBar(ofVec3f diffVec){
     // al ser ratio, van de 0 a 1, y calculo dependiendo el caso
     float gripSizeRatioLow = 1.f;
     float gripSizeRatioHigh = 1.f;
-    if ( (unTransformedLowest + SCROLL_TOLERANCE < 0)  && (unTransformedHighest - SCROLL_TOLERANCE > panelHeight) ) {
+    if ( unTransformedLowest + SCROLL_TOLERANCE < 0 ){
         gripSizeRatioHigh = (float)panelHeight / (panelHeight - (float)unTransformedLowest);
-        gripSizeRatioLow = (float)panelHeight / ( (float)unTransformedHighest );
-    } else if ( unTransformedLowest + SCROLL_TOLERANCE < 0 ){
-        gripSizeRatioHigh = (float)panelHeight / (panelHeight - (float)unTransformedLowest);
-    } else if ( unTransformedHighest - SCROLL_TOLERANCE > panelHeight ) {
+    }
+    if ( unTransformedHighest - SCROLL_TOLERANCE > panelHeight ) {
         gripSizeRatioLow = (float)panelHeight / ( (float)unTransformedHighest );
     }
     
