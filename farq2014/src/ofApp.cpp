@@ -16,22 +16,22 @@ void ofApp::setup() {
     // vector of windows, count set in main
     windows = &glfw->windows;
     
-    // configure main window
-    //
-    glfw->setWindow(windows->at(MAIN_WINDOW));  // set window pointer
-    glfw->initializeWindow();                   // initialize events (mouse, keyboard, etc) on window (optional)
-    glfw->setWindowTitle("n.imp");
-    //ofSetFullscreen(true);                    // order important with fullscreen
-    
     // configure console window
     //
     glfw->setWindow(windows->at(CONSOLE_WINDOW));
     glfw->initializeWindow();
+    //glfw->setWindowShape(400,300);
     glfw->setWindowPosition(ofGetWidth()/2 - 200, -ofGetHeight()/2);
-    glfw->setWindowShape(400,300);
     glfw->setWindowTitle("Console");
     
-    glfw->setWindow(windows->at(MAIN_WINDOW));
+    // configure main window
+    //
+    glfw->setWindow(windows->at(MAIN_WINDOW));  // set window pointer
+    glfw->initializeWindow();                   // initialize events (mouse, keyboard, etc) on window (optional)
+    //glfw->setWindowShape(1280,700);
+    glfw->setWindowTitle("n.imp");
+    //ofSetFullscreen(true);                    // order important with fullscreen
+
     
     //    // create third window dynamically
     //    glfw->createWindow();
@@ -938,9 +938,9 @@ bool ofApp::loadFromXML(){
                                 case IKEDA:
                                 {
                                     IkedaLayer* iL = new IkedaLayer(layerName, layerId);
+                                    if (inputSourceId != 0)
+                                        iL->addInputIdentifier(inputSourceId);
                                     iL->loadSettings(XML, i);
-                                    
-                                    iL->addInputIdentifier(inputSourceId);
                                     
                                     visualLayers.push_back(iL);
                                     nodes.insert(std::pair<int,ImageOutput*>(layerId,iL));
@@ -950,7 +950,8 @@ bool ofApp::loadFromXML(){
                                 case GLITCH_1:
                                 {
                                     GlitchLayer* gL = new GlitchLayer(layerName, layerId);
-                                    gL->addInputIdentifier(inputSourceId);
+                                    if (inputSourceId != 0)
+                                        gL->addInputIdentifier(inputSourceId);
                                     gL->loadSettings(XML, i);
 
                                     visualLayers.push_back(gL);
@@ -961,7 +962,8 @@ bool ofApp::loadFromXML(){
                                 case GLITCH_2:
                                 {
                                     GlitchLayerAlt* gLA = new GlitchLayerAlt(layerName, layerId);
-                                    gLA->addInputIdentifier(inputSourceId);
+                                    if (inputSourceId != 0)
+                                        gLA->addInputIdentifier(inputSourceId);
                                     gLA->loadSettings(XML, i);
                                     
                                     visualLayers.push_back(gLA);
@@ -973,7 +975,8 @@ bool ofApp::loadFromXML(){
                                 {
                                     
                                     ImageProcessor* gLA = new ImageProcessor(layerName, layerId);
-                                    gLA->addInputIdentifier(inputSourceId);
+                                    if (inputSourceId != 0)
+                                        gLA->addInputIdentifier(inputSourceId);
                                     gLA->loadSettings(XML, i);
 
                                     

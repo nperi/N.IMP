@@ -102,7 +102,7 @@
                 </out>
             </NODE>
             <NODE id="3" name="New Image Input" type="IMAGE" path="" bpm="100.000000" multiplier_divider="4" isPlaying="0" palindrom="1" matchBPMtoSequence="0">
-                <ASSET name="P161210_18.36_[01].jpg" path="./pancakes.jpg" />
+                <ASSET name="pancakes.jpg.jpg" path="./pancakes.jpg" />
                 <type>none</type>
                 <path>none</path>
                 <visible>1</visible>
@@ -522,11 +522,11 @@
                     </point>
                     <point>
                         <x>1270.438964844</x>
-                        <y>353.905090332</y>
+                        <y>353.905120850</y>
                     </point>
                     <point>
                         <x>1065.639038086</x>
-                        <y>353.905090332</y>
+                        <y>353.905120850</y>
                     </point>
                 </texture>
                 <mask>
