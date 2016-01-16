@@ -28,6 +28,8 @@ scrollBar::scrollBar(class ofxComposer* _composer, ofxMultiTouchPad* _pad, int e
     ofAddListener(ofEvents().windowResized, this, &scrollBar::windowResized, eventPriority);
     
     ofAddListener(ofEvents().mouseDragged, this, &scrollBar::mouseDragged, eventPriority);
+    
+    enableScroll = true;
 }
 
 
@@ -74,7 +76,7 @@ void scrollBar::update(){
     if(EventHandler::getInstance()->isMainEvent()){
         //** touchpad scroll **//
         std::vector<MTouch> mTouches = pad->getTouches();
-        if(mTouches.size() == 2) {
+        if(mTouches.size() == 2 && enableScroll) {
             if (!touchpad_scroll) {
                 touchpad_scroll = true;
                 touchpad_scroll_x = ((mTouches[0].x + mTouches[1].x))*100 / 2;
@@ -94,7 +96,6 @@ void scrollBar::update(){
                     touchpad_scroll_y = new_y;
                     float dy = new_y - touchpad_scroll_y;
                     gripRectangle.y -= diffVec.y;
-                    
                 }
                 if(isHScrollBarVisible){
                     
@@ -194,6 +195,8 @@ void scrollBar::mouseReleased(ofMouseEventArgs &e){
         composer->setDraggingGrip(false);
         composer->setDraggingHGrip(false);
     }
+    
+    enableScroll = true;
 }
 
 void scrollBar::mousePressed(ofMouseEventArgs &e){
@@ -216,6 +219,10 @@ void scrollBar::mousePressed(ofMouseEventArgs &e){
                 mousePreviousX = e.x;
             }
         }
+    }
+    
+    if(e.button == 2){
+        enableScroll = false;
     }
 }
 
@@ -279,12 +286,11 @@ void scrollBar::windowResized(ofResizeEventArgs &e){
 /* ================================================ */
 
 void scrollBar::updateScrollBar(ofVec3f diffVec){
-    
     // TODO: con la flechita no puedo ir a los topes de la barra
     if(diffVec.y != 0){
         if(!(gripRectangle.y < BEGIN_Y) && !(gripRectangle.getBottom() > scrollBarRectangle.getBottom())){
             //composer->movePatches(diffVec);
-            cam->setPosition(cam->getPosition().x, cam->getPosition().y + diffVec.y, cam->getPosition().z);
+            cam->setPosition(cam->getPosition().x, cam->getPosition().y - diffVec.y, cam->getPosition().z);
         }
         
         // Check if the grip is still in the scroll bar
@@ -296,14 +302,13 @@ void scrollBar::updateScrollBar(ofVec3f diffVec){
         }
     }
     
-    
     // The size of the panel. All the screen except margins
     panelWidth = windowWidth - margin;
     panelHeight = windowHeight - margin - BEGIN_Y;
     
     gripRectangle.x = scrollBarRectangle.x;                   // Also adjust the grip x coordinate
-    int unTransformedLowest = getUntransformedCoords(0, composer->getPatchesLowestCoord()).y - margin - BEGIN_Y;
-    int unTransformedHighest = getUntransformedCoords(0, composer->getPatchesHighestCoord()).y - margin;
+    int unTransformedLowest = (composer->getPatchesLowestCoord() - cam->getPosition().y)/cam->getScale().y - margin - BEGIN_Y;
+    int unTransformedHighest = (composer->getPatchesHighestCoord() - cam->getPosition().y)/cam->getScale().y - margin;
     
     // Muestro la scrollBar
     isScrollBarVisible = true;
@@ -343,7 +348,7 @@ void scrollBar::updateHScrollBar(ofVec3f diffVec){
         if(!(hGripRectangle.x < BEGIN_X) && !(hGripRectangle.getRight() > hScrollBarRectangle.getRight())){
             //composer->movePatches(diffVec);
             //composer->setPosition(composer->getPosition().x + diffVec.x, composer->getPosition().y, composer->getPosition().z);
-            cam->setPosition(cam->getPosition().x + diffVec.x, cam->getPosition().y, cam->getPosition().z);
+            cam->setPosition(cam->getPosition().x - diffVec.x, cam->getPosition().y, cam->getPosition().z);
         }
         
         // Check if the grip is still in the scroll bar
@@ -364,8 +369,8 @@ void scrollBar::updateHScrollBar(ofVec3f diffVec){
     hScrollBarRectangle.width = panelWidth;
     
     hGripRectangle.y = hScrollBarRectangle.y; // Also adjust the grip x coordinate
-    int unTransformedLeft = getUntransformedCoords(composer->getPatchesLeftMostCoord(),0).x - margin - BEGIN_X;
-    int unTransformedRight = getUntransformedCoords(composer->getPatchesRightMostCoord(),0).x - margin;
+    int unTransformedLeft = (composer->getPatchesLeftMostCoord() - cam->getPosition().x)/cam->getScale().x - margin - BEGIN_X;
+    int unTransformedRight = (composer->getPatchesRightMostCoord() - cam->getPosition().x)/cam->getScale().x - margin;
     
     // Muestro la scrollBar
     isHScrollBarVisible = true;
@@ -397,11 +402,13 @@ void scrollBar::updateHScrollBar(ofVec3f diffVec){
     }
 }
 
-ofVec4f scrollBar::getUntransformedCoords(int x, int y){
-    ofMatrix4x4 inverseTransformMatrix = composer->getGlobalTransformMatrix().getInverse();
-    ofVec4f aux2 = ofVec4f(x,y,0,0);
-    return aux2*inverseTransformMatrix;
-}
+
+//ofVec4f scrollBar::getUntransformedCoords(int x, int y){
+////    ofMatrix4x4 inverseTransformMatrix = composer->getGlobalTransformMatrix().getInverse();
+//    ofMatrix4x4 inverseTransformMatrix = cam->getGlobalTransformMatrix().getInverse();
+//    ofVec4f aux2 = ofVec4f(x,y,0,0);
+//    return aux2*inverseTransformMatrix;
+//}
 
 /* ================================================ */
 /* ================================================ */
