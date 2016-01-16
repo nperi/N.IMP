@@ -76,7 +76,7 @@ void scrollBar::update(){
     if(EventHandler::getInstance()->isMainEvent()){
         //** touchpad scroll **//
         std::vector<MTouch> mTouches = pad->getTouches();
-        if(mTouches.size() == 2 && enableScroll) {
+        if(mTouches.size() == 2 && enableScroll && !composer->arePatchesDeactivated()) {
             if (!touchpad_scroll) {
                 touchpad_scroll = true;
                 touchpad_scroll_x = ((mTouches[0].x + mTouches[1].x))*100 / 2;
