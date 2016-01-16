@@ -16,23 +16,22 @@ void ofApp::setup() {
     // vector of windows, count set in main
     windows = &glfw->windows;
     
-    // configure first window
-    glfw->setWindow(windows->at(0));    // set window pointer
-    glfw->initializeWindow();       // initialize events (mouse, keyboard, etc) on window (optional)
-    ofSetWindowPosition(0, -600);    // business as usual...
-    ofSetWindowShape(1438, 658);
-    ofSetWindowTitle("n.imp");
-    //ofSetFullscreen(true);        // order important with fullscreen
+    // configure main window
+    //
+    glfw->setWindow(windows->at(MAIN_WINDOW));  // set window pointer
+    glfw->initializeWindow();                   // initialize events (mouse, keyboard, etc) on window (optional)
+    glfw->setWindowTitle("n.imp");
+    //ofSetFullscreen(true);                    // order important with fullscreen
     
-    
-    // configure second window
-    glfw->setWindow(windows->at(1));
+    // configure console window
+    //
+    glfw->setWindow(windows->at(CONSOLE_WINDOW));
     glfw->initializeWindow();
-    ofSetWindowPosition(0, 55);
-    ofSetWindowShape(1438, 100);
-    ofSetWindowTitle("Console");
+    glfw->setWindowPosition(ofGetWidth()/2 - 200, -ofGetHeight()/2);
+    glfw->setWindowShape(400,300);
+    glfw->setWindowTitle("Console");
     
-    showConsole = true;
+    glfw->setWindow(windows->at(MAIN_WINDOW));
     
     //    // create third window dynamically
     //    glfw->createWindow();
@@ -42,10 +41,11 @@ void ofApp::setup() {
     //    ofSetWindowShape(500, 800);
     //    ofSetWindowTitle("Window 3");
     
-    glfw->setWindow(windows->at(0));
     // ******* END WINDOWS SETUP ******//
     
-    ofSetWindowTitle("n.imp");
+    
+    //*** MAIN SETUP ***//
+    //
     ofSetFrameRate(30);
     loadingOK = false;
     isFullScreen = false;
@@ -196,9 +196,11 @@ void ofApp::setup() {
     
     //*** CONSOLE LOGGER ***//
     //
-    glfw->setWindow(windows->at(1));
+    glfw->setWindow(windows->at(CONSOLE_WINDOW));
     ConsoleLog::getInstance()->setupScrollBar(&pad);
-    glfw->setWindow(windows->at(0));
+    glfw->iconify(!showConsole);
+    
+    glfw->setWindow(windows->at(MAIN_WINDOW));
     
   }
 
@@ -228,6 +230,7 @@ void ofApp::setupAudio(){
 /* ================================================ */
 
 void ofApp::update() {
+    
     if(loadingOK){
         
         //if pressing zoom in/out buttons
@@ -308,7 +311,7 @@ void ofApp::draw() {
     wIndex = glfw->getWindowIndex();
     
     switch (wIndex) { // switch on window index
-        case 0:
+        case MAIN_WINDOW:
             //create bg
             ofClear(35);
             
@@ -348,7 +351,7 @@ void ofApp::draw() {
                 ofDrawBitmapString("ERROR LOADING XML", 50, 50);
             }
             break;
-        case 1:
+        case CONSOLE_WINDOW:
             ofBackground(0,0,0); // change background color on each window
             ofSetColor(200, 200, 200);
             ConsoleLog::getInstance()->printMessages();
@@ -494,9 +497,9 @@ void ofApp::keyReleased(int key){
 
 //------------------------------------------------------------------
 void ofApp::mouseDragged(int x, int y, int button){
-    if (glfw->getEventWindow() == windows->at(0)){
+    if (glfw->getEventWindow() == windows->at(MAIN_WINDOW)){
         EventHandler::getInstance()->setMainEvent();
-    } else if (glfw->getEventWindow() == windows->at(1)){
+    } else if (glfw->getEventWindow() == windows->at(CONSOLE_WINDOW)){
         EventHandler::getInstance()->setConsoleEvent();
     }
     
@@ -511,9 +514,9 @@ void ofApp::mouseDragged(int x, int y, int button){
 
 //------------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button){
-    if (glfw->getEventWindow() == windows->at(0)){
+    if (glfw->getEventWindow() == windows->at(MAIN_WINDOW)){
         EventHandler::getInstance()->setMainEvent();
-    } else if (glfw->getEventWindow() == windows->at(1)){
+    } else if (glfw->getEventWindow() == windows->at(CONSOLE_WINDOW)){
         EventHandler::getInstance()->setConsoleEvent();
     }
     
@@ -524,9 +527,9 @@ void ofApp::mousePressed(int x, int y, int button){
 
 //------------------------------------------------------------------
 void ofApp::mouseReleased(int x, int y, int button){
-    if (glfw->getEventWindow() == windows->at(0)){
+    if (glfw->getEventWindow() == windows->at(MAIN_WINDOW)){
         EventHandler::getInstance()->setMainEvent();
-    } else if (glfw->getEventWindow() == windows->at(1)){
+    } else if (glfw->getEventWindow() == windows->at(CONSOLE_WINDOW)){
         EventHandler::getInstance()->setConsoleEvent();
     }
     
@@ -537,9 +540,9 @@ void ofApp::mouseReleased(int x, int y, int button){
 
 //------------------------------------------------------------------
 void ofApp::dragEvent(ofDragInfo dragInfo){
-    if (glfw->getEventWindow() == windows->at(0)){
+    if (glfw->getEventWindow() == windows->at(MAIN_WINDOW)){
         EventHandler::getInstance()->setMainEvent();
-    } else if (glfw->getEventWindow() == windows->at(1)){
+    } else if (glfw->getEventWindow() == windows->at(CONSOLE_WINDOW)){
         EventHandler::getInstance()->setConsoleEvent();
     }
     
@@ -552,9 +555,9 @@ void ofApp::dragEvent(ofDragInfo dragInfo){
 
 //------------------------------------------------------------------
 void ofApp::windowResized(int w, int h){
-    if (glfw->getEventWindow() == windows->at(0)){
+    if (glfw->getEventWindow() == windows->at(MAIN_WINDOW)){
         EventHandler::getInstance()->setMainEvent();
-    } else if (glfw->getEventWindow() == windows->at(1)){
+    } else if (glfw->getEventWindow() == windows->at(CONSOLE_WINDOW)){
         EventHandler::getInstance()->setConsoleEvent();
     }
 }
@@ -640,12 +643,16 @@ void ofApp::menuEvent(ofxUIEventArgs &e)
         }
     }
     else if (name == "Console on/off"){
-        if(showConsole){
-            glfw->hideWindow(windows->at(1));
-        } else {
-            glfw->showWindow(windows->at(1));
-        }
+//        if(showConsole){
+//            glfw->hideWindow(windows->at(1));
+//        } else {
+//            glfw->showWindow(windows->at(1));
+//        }
+        glfw->setWindow(windows->at(CONSOLE_WINDOW));
+        glfw->iconify(showConsole);
         showConsole = !showConsole;
+        glfw->setWindow(windows->at(MAIN_WINDOW));
+        
     }
     else if (name == "Clear Console"){
         ConsoleLog::getInstance()->clearMessages();

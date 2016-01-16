@@ -9,7 +9,7 @@ int main() {
     glfw.setOpenGLVersion(3,2); // must be set
     glfw.windowCount = 2;
     
-    ofSetupOpenGL(&glfw,1024,768,OF_WINDOW);
+    ofSetupOpenGL(&glfw,1280,700,OF_WINDOW);
     ofRunApp(new ofApp());
     //	ofSetupOpenGL(1600, 900, OF_WINDOW);
     //	ofRunApp(new ofApp());
