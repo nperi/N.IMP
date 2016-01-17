@@ -568,13 +568,6 @@
             <NODE id="10" name="New Mix Mask" />
             <NODE id="11" name="New MultiChannel Switch" />
         </NODE_VIEW>
-        <INPUT_GEN name="FFT1" type="FFT">
-            <FFT_SETTINGS>
-                <AUDIO_MAP band="1" nodeId="4" param="coBrightness" inputMinValue="0.000000" inputMaxValue="50.000000" paramMinValue="0" paramMaxValue="255" />
-            </FFT_SETTINGS>
-            <MIDI_SETTINGS />
-        </INPUT_GEN>
-        <INPUT_GEN name="MIDI1" type="MIDI" midiDeviceName="Oxygen 25" />
     </NODE_VIEWS>
     <PARAM_INPUT_GENERATORS>
         <INPUT_GEN name="FFT1" type="FFT">

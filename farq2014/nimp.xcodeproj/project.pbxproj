@@ -412,7 +412,7 @@
 		0A51BA7C1C11058E000AC121 /* textInput.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = textInput.cpp; sourceTree = "<group>"; };
 		0A51BA7D1C11058E000AC121 /* textInput.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = textInput.h; sourceTree = "<group>"; };
 		0A51BA7E1C11058E000AC121 /* textInputEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = textInputEvent.h; sourceTree = "<group>"; };
-		0AE1F56D1C4C1B8600A3B168 /* ofxMultiGLFWWindow.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxMultiGLFWWindow.cpp; sourceTree = "<group>"; };
+		0AE1F56D1C4C1B8600A3B168 /* ofxMultiGLFWWindow.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = ofxMultiGLFWWindow.cpp; sourceTree = "<group>"; };
 		0AE1F56E1C4C1B8600A3B168 /* ofxMultiGLFWWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxMultiGLFWWindow.h; sourceTree = "<group>"; };
 		0AFFF74A1C2F0E3F0034AE53 /* BleachBypassPass.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BleachBypassPass.cpp; sourceTree = "<group>"; };
 		0AFFF74B1C2F0E3F0034AE53 /* BleachBypassPass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BleachBypassPass.h; sourceTree = "<group>"; };

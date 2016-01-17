@@ -115,10 +115,12 @@ bool NodeViewer::saveSettings(ofxXmlSettings &XML) {
     
     bool saved = false;
     bool found = false;
+    int totalNodes = 0;
+    int totalViews = 0;
     
-    int totalNodes = XML.getNumTags("NODE_VIEW");
+    totalViews = XML.getNumTags("NODE_VIEW");
     
-    for (int i = 0; i <= totalNodes; i++){
+    for (int i = 0; i <= totalViews; i++){
         
         if ( XML.getAttribute("NODE_VIEW", "name", "", i) == name){
             
@@ -145,6 +147,7 @@ bool NodeViewer::saveSettings(ofxXmlSettings &XML) {
                 }
             }
             
+            XML.popTag();
             break;
         }
         else if (i >= totalNodes-1) {
@@ -161,7 +164,5 @@ bool NodeViewer::saveSettings(ofxXmlSettings &XML) {
                 XML.addAttribute("NODE", "name", elements[e]->getImageOutput()->getName(), lastPlace);
             }
         }
-
-        XML.popTag();
     }
 }

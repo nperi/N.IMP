@@ -13,7 +13,7 @@
 		<key>210A84CB64DBE001319448A793DFC671846EB46E</key>
 		<string>https://github.com/maxillacult/ofxPostGlitch.git</string>
 		<key>252C87C319FBC1068CD046C09D8C5E406AB96AF3</key>
-		<string>https://github.com/nperi/N.IMP</string>
+		<string>https://github.com/nperi/N.IMP.git</string>
 		<key>37526DA425E5430474A14FBFA1BC4525160B5FC1</key>
 		<string>https://github.com/kylemcdonald/ofxCv.git</string>
 		<key>8F000071CE7F4AC671BD6E9084D7C2A0B99F7D99</key>
@@ -21,7 +21,7 @@
 		<key>90E2F969A762FB62C413A0C44D1F334E6EC3F531</key>
 		<string>https://github.com/danomatika/ofxMidi.git</string>
 		<key>948EE651663C32063606289EDDFF747A436F0AF9</key>
-		<string>https://github.com/brinoausrino/ofxImageSequencePlayer.git</string>
+		<string>https://github.com/julapy/ofxImageSequencePlayer.git</string>
 		<key>95F70890EFD46183734FEDFE52CF53391DE6937E</key>
 		<string>https://github.com/neilmendoza/ofxPostProcessing.git</string>
 		<key>9F24B140E362DCBFDD8B74297D6CA071351FB1FC</key>
@@ -31,19 +31,19 @@
 		<key>D513395B3B2672F06879738DB1BEEA65E2B146B1</key>
 		<string>https://github.com/MiliGaricoits/ofxComposer_nimp.git</string>
 		<key>DA298CE2AB975BA2CF43E11863DF98F71A466522</key>
-		<string>https://github.com/Akira-Hayasaka/ofxGLEditor.git</string>
+		<string>https://github.com/Akira-Hayasaka/ofxGLEditor</string>
 		<key>DF8CF2077679A8E9DC1BA352D6E976FCED7DE749</key>
 		<string>https://github.com/Akira-Hayasaka/ofxPSBlend.git</string>
 		<key>E57FBE9611406DF2667239BE7FA21B32E179F886</key>
-		<string>https://github.com/patriciogonzalezvivo/ofxPulseSensor.git</string>
+		<string>https://github.com/patriciogonzalezvivo/ofxPulseSensor</string>
 		<key>E62FC086B0CC7B479279A8687B6BE70ED74AEDAD</key>
-		<string>https://github.com/MiliGaricoits/ofxUI_nimp.git</string>
+		<string>https://github.com/MiliGaricoits/ofxUI_nimp</string>
 		<key>EBC5E2A29F125165AEBCAA19E4D8FC06D99494BA</key>
 		<string>https://github.com/kronick/ofxAVFVideoPlayer.git</string>
 		<key>F4CCB893AFADB97238A965FD2F28717F1CAAE613</key>
 		<string>https://github.com/astellato/ofxSyphon.git</string>
 		<key>F7E083AAB3EC4A58EF654FC28444C64C193E627F</key>
-		<string>https://github.com/MiliGaricoits/ofxMSAInteractiveObject_nimp.git</string>
+		<string>https://github.com/MiliGaricoits/ofxMSAInteractiveObject_nimp</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>farq2014/nimp.xcodeproj</string>
@@ -85,7 +85,7 @@
 		<string>../../../../addons/ofxMSAInteractiveObject_nimp</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>https://github.com/nperi/N.IMP</string>
+	<string>https://github.com/nperi/N.IMP.git</string>
 	<key>IDESourceControlProjectVersion</key>
 	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
@@ -98,7 +98,7 @@
 			<key>IDESourceControlWCCIdentifierKey</key>
 			<string>252C87C319FBC1068CD046C09D8C5E406AB96AF3</string>
 			<key>IDESourceControlWCCName</key>
-			<string>N.IMP</string>
+			<string>N.IMP%20fork</string>
 		</dict>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
