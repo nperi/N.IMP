@@ -74,6 +74,7 @@
 		0A51BA831C11058E000AC121 /* scrollBar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A51BA7A1C11058E000AC121 /* scrollBar.cpp */; };
 		0A51BA841C11058E000AC121 /* textInput.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A51BA7C1C11058E000AC121 /* textInput.cpp */; };
 		0A51BA851C110902000AC121 /* ofxUIEventArgs.h in Sources */ = {isa = PBXBuildFile; fileRef = 0A51B7ED1C0FE42B000AC121 /* ofxUIEventArgs.h */; };
+		0AE1F5761C4C1B8600A3B168 /* ofxMultiGLFWWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0AE1F56D1C4C1B8600A3B168 /* ofxMultiGLFWWindow.cpp */; };
 		0AFFF77F1C2F0E3F0034AE53 /* BleachBypassPass.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0AFFF74A1C2F0E3F0034AE53 /* BleachBypassPass.cpp */; };
 		0AFFF7801C2F0E3F0034AE53 /* BloomPass.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0AFFF74C1C2F0E3F0034AE53 /* BloomPass.cpp */; };
 		0AFFF7811C2F0E3F0034AE53 /* ContrastPass.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0AFFF74E1C2F0E3F0034AE53 /* ContrastPass.cpp */; };
@@ -104,7 +105,6 @@
 		311DF864378748129984EA1D /* Kalman.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 77A1A692522820F935B58762 /* Kalman.cpp */; };
 		45CC483A999BF1065A6B926C /* Distance.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9DBD717072C35D324E101669 /* Distance.cpp */; };
 		483908258D00B98B4BE69F07 /* ofxLabel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 78D67A00EB899FAC09430597 /* ofxLabel.cpp */; };
-		4990BDB61C2ADEDF002710AF /* ofxMultiGLFWWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4990BDB51C2ADEDF002710AF /* ofxMultiGLFWWindow.cpp */; };
 		4990BDDF1C3CE0DA002710AF /* ConsoleLog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4990BDDB1C3CE0DA002710AF /* ConsoleLog.cpp */; };
 		4990BDE01C3CE0DA002710AF /* ConsoleScrollBar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4990BDDD1C3CE0DA002710AF /* ConsoleScrollBar.cpp */; };
 		4990BDE61C3CE143002710AF /* EventHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4990BDE41C3CE143002710AF /* EventHandler.cpp */; };
@@ -412,7 +412,8 @@
 		0A51BA7C1C11058E000AC121 /* textInput.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = textInput.cpp; sourceTree = "<group>"; };
 		0A51BA7D1C11058E000AC121 /* textInput.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = textInput.h; sourceTree = "<group>"; };
 		0A51BA7E1C11058E000AC121 /* textInputEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = textInputEvent.h; sourceTree = "<group>"; };
-		0AFFF7241C2775480034AE53 /* ofxMultiGLFWWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxMultiGLFWWindow.h; sourceTree = "<group>"; };
+		0AE1F56D1C4C1B8600A3B168 /* ofxMultiGLFWWindow.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxMultiGLFWWindow.cpp; sourceTree = "<group>"; };
+		0AE1F56E1C4C1B8600A3B168 /* ofxMultiGLFWWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxMultiGLFWWindow.h; sourceTree = "<group>"; };
 		0AFFF74A1C2F0E3F0034AE53 /* BleachBypassPass.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BleachBypassPass.cpp; sourceTree = "<group>"; };
 		0AFFF74B1C2F0E3F0034AE53 /* BleachBypassPass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BleachBypassPass.h; sourceTree = "<group>"; };
 		0AFFF74C1C2F0E3F0034AE53 /* BloomPass.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BloomPass.cpp; sourceTree = "<group>"; };
@@ -470,7 +471,6 @@
 		325BD94FFB93161BBC68336E /* ofxCv.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxCv.h; path = ../../../addons/ofxCv/src/ofxCv.h; sourceTree = SOURCE_ROOT; };
 		402C8F4015542356D362AC88 /* Calibration.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = Calibration.cpp; path = ../../../addons/ofxCv/libs/ofxCv/src/Calibration.cpp; sourceTree = SOURCE_ROOT; };
 		4524C0ED0C2DD3E085CE3350 /* ObjectFinder.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ObjectFinder.h; path = ../../../addons/ofxCv/libs/ofxCv/include/ofxCv/ObjectFinder.h; sourceTree = SOURCE_ROOT; };
-		4990BDB51C2ADEDF002710AF /* ofxMultiGLFWWindow.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = ofxMultiGLFWWindow.cpp; sourceTree = "<group>"; };
 		4990BDDB1C3CE0DA002710AF /* ConsoleLog.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ConsoleLog.cpp; path = Console/ConsoleLog.cpp; sourceTree = "<group>"; };
 		4990BDDC1C3CE0DA002710AF /* ConsoleLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ConsoleLog.h; path = Console/ConsoleLog.h; sourceTree = "<group>"; };
 		4990BDDD1C3CE0DA002710AF /* ConsoleScrollBar.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ConsoleScrollBar.cpp; path = Console/ConsoleScrollBar.cpp; sourceTree = "<group>"; };
@@ -1047,20 +1047,20 @@
 			path = Interface;
 			sourceTree = "<group>";
 		};
-		0AFFF6F41C2775480034AE53 /* ofxMultiGLFWWindow */ = {
+		0AE1F53E1C4C1B8500A3B168 /* ofxMultiGLFWWindow_nimp */ = {
 			isa = PBXGroup;
 			children = (
-				0AFFF7231C2775480034AE53 /* src */,
+				0AE1F56C1C4C1B8600A3B168 /* src */,
 			);
-			name = ofxMultiGLFWWindow;
-			path = ../../../addons/ofxMultiGLFWWindow;
+			name = ofxMultiGLFWWindow_nimp;
+			path = ../../../addons/ofxMultiGLFWWindow_nimp;
 			sourceTree = "<group>";
 		};
-		0AFFF7231C2775480034AE53 /* src */ = {
+		0AE1F56C1C4C1B8600A3B168 /* src */ = {
 			isa = PBXGroup;
 			children = (
-				4990BDB51C2ADEDF002710AF /* ofxMultiGLFWWindow.cpp */,
-				0AFFF7241C2775480034AE53 /* ofxMultiGLFWWindow.h */,
+				0AE1F56D1C4C1B8600A3B168 /* ofxMultiGLFWWindow.cpp */,
+				0AE1F56E1C4C1B8600A3B168 /* ofxMultiGLFWWindow.h */,
 			);
 			path = src;
 			sourceTree = "<group>";
@@ -1491,7 +1491,7 @@
 		BB4B014C10F69532006C3DED /* addons */ = {
 			isa = PBXGroup;
 			children = (
-				0AFFF6F41C2775480034AE53 /* ofxMultiGLFWWindow */,
+				0AE1F53E1C4C1B8500A3B168 /* ofxMultiGLFWWindow_nimp */,
 				0A49EEFA1C18A3BF00346EB5 /* ofxComposer_nimp */,
 				0A51B7D51C0FE42B000AC121 /* ofxUI_nimp */,
 				0A51B8951C0FE57A000AC121 /* ofxMSAInteractiveObject_nimp */,
@@ -2073,6 +2073,7 @@
 				0AFFF78A1C2F0E3F0034AE53 /* KaleidoscopePass.cpp in Sources */,
 				6B0E60EB1A2FCA84006AE261 /* GlitchLayer.cpp in Sources */,
 				D34E96521A3FA2850089BFE4 /* ofxOscParameterSync.cpp in Sources */,
+				0AE1F5761C4C1B8600A3B168 /* ofxMultiGLFWWindow.cpp in Sources */,
 				D3A226B81A311C3E005DD5AF /* NodeViewer.cpp in Sources */,
 				6BFCC2E31A3C82D9009D68F0 /* ofxMidi.cpp in Sources */,
 				D3A226D61A36452E005DD5AF /* ImageProcessor.cpp in Sources */,
@@ -2131,7 +2132,6 @@
 				0A51B8411C0FE42B000AC121 /* ofxUIFPS.cpp in Sources */,
 				2023EF517ED2D8B397511D4B /* Helpers.cpp in Sources */,
 				0A51BA831C11058E000AC121 /* scrollBar.cpp in Sources */,
-				4990BDB61C2ADEDF002710AF /* ofxMultiGLFWWindow.cpp in Sources */,
 				0A51B8591C0FE42B000AC121 /* ofxUISuperCanvas.cpp in Sources */,
 				0A51B84B1C0FE42B000AC121 /* ofxUIMinimalSlider.cpp in Sources */,
 				0A49EF461C18A3BF00346EB5 /* ofxComposer.cpp in Sources */,
