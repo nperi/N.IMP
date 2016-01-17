@@ -773,6 +773,7 @@ void ofApp::createNode(textInputEvent &args){
         nodesVector.push_back(newPatch);
         newPatch->setup();
         newPatch->resetSize();
+        ofAddListener( newPatch->title->close , this, &ofApp::closePatch);
         
         ofRemoveListener(((textInput*)args.widget)->createNode , this, &ofApp::createNode);
         widgetsToDelete.push_back(args.widget); // delete input from canvas
