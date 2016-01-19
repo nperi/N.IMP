@@ -29,7 +29,9 @@ scrollBar::scrollBar(class ofxComposer* _composer, ofxMultiTouchPad* _pad, int e
     
     ofAddListener(ofEvents().mouseDragged, this, &scrollBar::mouseDragged, eventPriority);
     
-    enableScroll = true;
+//    enableScroll = true;
+    scale = 1.f;
+    updating = false;
 }
 
 
@@ -76,45 +78,70 @@ void scrollBar::update(){
     if(EventHandler::getInstance()->isMainEvent()){
         //** touchpad scroll **//
         std::vector<MTouch> mTouches = pad->getTouches();
-        if(mTouches.size() == 2 && enableScroll && !composer->arePatchesDeactivated()) {
+        if(mTouches.size() == 2 && !composer->arePatchesDeactivated()) {
             if (!touchpad_scroll) {
                 touchpad_scroll = true;
                 touchpad_scroll_x = ((mTouches[0].x + mTouches[1].x))*100 / 2;
                 touchpad_scroll_y = ((mTouches[0].y + mTouches[1].y))*100 / 2;
+                
+                prevDist = ofDist(mTouches[0].x, mTouches[0].y, mTouches[1].x, mTouches[1].y);
+                prev0 = ofPoint(mTouches[0].x, mTouches[0].y);
+                prev1 = ofPoint(mTouches[1].x, mTouches[1].y);
             }
             else {
                 
-                if (isScrollBarVisible) {
-                    
-                    float new_y = ((mTouches[0].y + mTouches[1].y)*100) / 2;
-                    float diff_y = (touchpad_scroll_y - new_y)*1.1;
-                    
-                    if (-3 < diff_y && diff_y < 3) diff_y = 0;
-                    
-                    diffVec.y = diff_y;
-                    
-                    touchpad_scroll_y = new_y;
-                    float dy = new_y - touchpad_scroll_y;
-                    gripRectangle.y -= diffVec.y;
+                if(!updating){
+                    post0 = ofPoint(mTouches[0].x, mTouches[0].y);
+                    post1 = ofPoint(mTouches[1].x, mTouches[1].y);
+                    zooming = isZooming();
                 }
-                if(isHScrollBarVisible){
-                    
-                    float new_x = ((mTouches[0].x + mTouches[1].x)*100) / 2;
-                    float diff_x = (touchpad_scroll_x - new_x)*1.2;
-                    
-                    if (-4 < diff_x && diff_x < 4) diff_x = 0;
-                    
-                    diffVec.x = diff_x;
-                    
-                    touchpad_scroll_x = new_x;
-                    float dx = new_x - touchpad_scroll_x;
-                    hGripRectangle.x -= diffVec.x;
-                    
+                
+                updating = true;
+                
+                if(zooming){
+                    scale = cam->getScale().x;
+                    newDist = ofDist(mTouches[0].x, mTouches[0].y, mTouches[1].x, mTouches[1].y);
+                    diffDist = (newDist - prevDist)*120;
+                    scale -= diffDist*SCALE_SENSITIVITY;
+                    cam->setScale(scale);
+                    prevDist = newDist;
+                }else{
+                    if (isScrollBarVisible) {
+                        
+                        float new_y = ((mTouches[0].y + mTouches[1].y)*100) / 2;
+                        float diff_y = (touchpad_scroll_y - new_y)*1.1;
+                        
+                        if (-3 < diff_y && diff_y < 3) diff_y = 0;
+                        
+                        diffVec.y = diff_y;
+                        
+                        touchpad_scroll_y = new_y;
+                        float dy = new_y - touchpad_scroll_y;
+                        gripRectangle.y -= diffVec.y;
+                    }
+                    if(isHScrollBarVisible){
+                        
+                        float new_x = ((mTouches[0].x + mTouches[1].x)*100) / 2;
+                        float diff_x = (touchpad_scroll_x - new_x)*1.2;
+                        
+                        if (-4 < diff_x && diff_x < 4) diff_x = 0;
+                        
+                        diffVec.x = diff_x;
+                        
+                        touchpad_scroll_x = new_x;
+                        float dx = new_x - touchpad_scroll_x;
+                        hGripRectangle.x -= diffVec.x;
+                        
+                    }
                 }
+                
+                prev0 = post0;
+                prev1 = post1;
             }
         }
         else {
             touchpad_scroll = false;
+            updating = false;
         }
         //** **//
     }
@@ -196,7 +223,7 @@ void scrollBar::mouseReleased(ofMouseEventArgs &e){
         composer->setDraggingHGrip(false);
     }
     
-    enableScroll = true;
+//    enableScroll = true;
 }
 
 void scrollBar::mousePressed(ofMouseEventArgs &e){
@@ -221,9 +248,9 @@ void scrollBar::mousePressed(ofMouseEventArgs &e){
         }
     }
     
-    if(e.button == 2){
-        enableScroll = false;
-    }
+//    if(e.button == 2){
+//        enableScroll = false;
+//    }
 }
 
 void scrollBar::mouseMoved(ofMouseEventArgs &e){
@@ -412,3 +439,12 @@ void scrollBar::updateHScrollBar(ofVec3f diffVec){
 
 /* ================================================ */
 /* ================================================ */
+
+bool scrollBar::isZooming(){
+    
+    if( (prev0.y < post0.y && prev1.y > post1.y) ||
+       (prev0.y > post0.y && prev1.y < post1.y) ){
+        return true;
+    }
+    return false;
+}

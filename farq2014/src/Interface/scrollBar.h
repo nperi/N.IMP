@@ -92,7 +92,14 @@ private:
     
 //    ofVec4f getUntransformedCoords(int x, int y);
     
-    bool enableScroll;
+//    bool enableScroll;
+    
+    bool zooming, updating;
+    bool isZooming();
+    
+    float scale;
+    float prevDist, newDist, diffDist;
+    ofPoint prev0, prev1, post0, post1;
 };
 
 
