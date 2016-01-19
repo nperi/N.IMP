@@ -28,14 +28,18 @@ void ImageInputList::setup(){
         
         //img.allocate(width, height, OF_IMAGE_COLOR_ALPHA);
         
-        drawTexture = true;
+        //drawTexture = true;
+    }
+    else {
+        drawNoInputs = true;
     }
 }
 
 //------------------------------------------------------------------
 void ImageInputList::update(){
     
-    inputs[currentSequence]->update(img, tex);
+//    inputs[currentSequence]->update(img, tex);
+    inputs[currentSequence]->update(img);
     playPos2 = inputs[currentSequence]->getPosition();
 }
 
@@ -47,6 +51,21 @@ void ImageInputList::draw(int x,int y, float scale){
 //    tex.draw(0,0);
 //    ofPopMatrix();
     
+}
+
+//------------------------------------------------------------------
+void ImageInputList::updateParameter(Param* inputParam){
+    
+}
+
+//------------------------------------------------------------------
+ofImage* ImageInputList::getImage(){
+    return &img;
+}
+
+//------------------------------------------------------------------
+ofTexture* ImageInputList::getTexture(){
+    return &img.getTextureReference();
 }
 
 //------------------------------------------------------------------
@@ -118,7 +137,8 @@ void ImageInputList::loadImage(string name_, string path_){
         inputs[0]->isPlayingBackwards = isPlayingBackwards;
         inputs[0]->setLoopState(l);
         inputs[0]->calculateFPS();
-        inputs[0]->activate(img, tex);
+        //inputs[0]->activate(img, tex);
+        inputs[0]->activate(img);
     }
 }
 
@@ -186,17 +206,20 @@ void ImageInputList::setEnableChanged(bool &b){
 //------------------------------------------------------------------
 void ImageInputList::playPositionChanged(float &pos){
     isPlaying = false;
-    inputs[currentSequence]->setPosition(pos,img,tex);
+    //inputs[currentSequence]->setPosition(pos,img,tex);
+    inputs[currentSequence]->setPosition(pos,img);
 }
 
 //------------------------------------------------------------------
 void ImageInputList::prevSequenceChanged(){
-    currentSequence = (currentSequence+1)%inputs.size();
+    if (isEnabled)
+        currentSequence = (currentSequence+1)%inputs.size();
 }
 
 //------------------------------------------------------------------
 void ImageInputList::nextSequenceChanged(){
-    currentSequence = (currentSequence -1 <0) ? currentSequence = inputs.size()-1 : currentSequence-1;
+    if (isEnabled)
+        currentSequence = (currentSequence -1 <0) ? currentSequence = inputs.size()-1 : currentSequence-1;
 }
 
 //------------------------------------------------------------------
@@ -205,7 +228,8 @@ void ImageInputList::sequenceChanged(int &s){
         inputs[lastSequence]->isPlaying = false;
         lastSequence = currentSequence;
         
-        inputs[currentSequence]->activate(img, tex);
+//        inputs[currentSequence]->activate(img, tex);
+        inputs[currentSequence]->activate(img);
         inputs[currentSequence]->isPlaying = isPlaying;
         
         inputs[0]->bpm = bpm;
@@ -215,15 +239,14 @@ void ImageInputList::sequenceChanged(int &s){
         ofLoopType l = (isPalindromLoop) ? OF_LOOP_PALINDROME : OF_LOOP_NORMAL;
         inputs[0]->setLoopState(l);
         inputs[0]->calculateFPS();
+        
+        width  = getBox().width/SCALE_RATIO;
+        height = (width*inputs[currentSequence]->getHeight())/inputs[currentSequence]->getWidth();
+        
+        resetSize();
     }
     
-    
     //change gui appeareance
-}
-
-//------------------------------------------------------------------
-void ImageInputList::updateParameter(Param* inputParam){
-    
 }
 
 //------------------------------------------------------------------
@@ -235,6 +258,9 @@ void ImageInputList::setOriginalPlaySpeedChanged(bool &b){
 
 //------------------------------------------------------------------
 void ImageInputList::setEnable(bool isEnabled_){
+    
+    isEnabled = isEnabled_;
+    
     //all to manage videoplayer
     
     //does it need player
@@ -253,7 +279,8 @@ void ImageInputList::setEnable(bool isEnabled_){
                 }
             }
             
-            inputs[currentSequence]->activate(img, tex);
+            //inputs[currentSequence]->activate(img, tex);
+            inputs[currentSequence]->activate(img);
             inputs[currentSequence]->isPlaying = isPlaying;
         }
         else if (!isEnabled_ && nEnabled>1){

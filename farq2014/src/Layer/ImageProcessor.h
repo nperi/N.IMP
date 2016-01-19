@@ -24,6 +24,9 @@ class ImageProcessor : public VisualLayer{
     void draw(int x,int y, float scale);
     void updateParameter(Param* inputParam);
     
+    ofImage*    getImage();
+    ofTexture*  getTexture();
+    
     ofParameter<bool> isBloom;
     ofParameter<bool> isContrast;
     ofParameter<float> coContrast;
@@ -74,6 +77,7 @@ private:
     void update();
     ofxPostProcessing post;
     //ofFbo fbo;
+    ofPixels buff;
     
     void cIsBloom(bool &b);
     void cIsContrast(bool &b);

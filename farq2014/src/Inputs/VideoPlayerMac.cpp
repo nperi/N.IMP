@@ -20,7 +20,7 @@ VideoPlayerMac::VideoPlayerMac(string name, int id_) : InputSource(name, "Video 
     gui.add(stop.setup("Stop"));
     gui.setWidthElements(INSPECTOR_WIDTH);
 
-    drawTexture = true;
+    //drawTexture = true;
 }
 
 //------------------------------------------------------------------
@@ -31,7 +31,10 @@ void VideoPlayerMac::setup() {
         width  = players[currentPlayer]->getWidth();
         height = players[currentPlayer]->getHeight();
         
-        drawTexture = true;
+        //drawTexture = true;
+    }
+    else {
+        drawNoInputs = true;
     }
 }
 
@@ -43,7 +46,7 @@ void VideoPlayerMac::update() {
         if (players[currentPlayer]->isFrameNew()){
             img.setFromPixels(players[currentPlayer]->getPixels(), players[currentPlayer]->getWidth(), players[currentPlayer]->getHeight(), OF_IMAGE_COLOR_ALPHA);
             //img.resize(width, height);
-            tex = img.getTextureReference();
+            //tex = img.getTextureReference();
         }
     }
 }
@@ -58,6 +61,21 @@ void VideoPlayerMac::draw(int x,int y, float scale) {
 //    }
 //    ofSetColor(255, 255, 255);
 //    ofDrawBitmapString(name, x + 10, y + 30);
+}
+
+//------------------------------------------------------------------
+void VideoPlayerMac::updateParameter(Param* inputParam){
+    
+}
+
+//------------------------------------------------------------------
+ofImage* VideoPlayerMac::getImage(){
+    return &img;
+}
+
+//------------------------------------------------------------------
+ofTexture* VideoPlayerMac::getTexture(){
+    return &img.getTextureReference();
 }
 
 //------------------------------------------------------------------
@@ -117,11 +135,6 @@ void VideoPlayerMac::setSpeed(float speed){
 //------------------------------------------------------------------
 float VideoPlayerMac::getSpeed(){
     return players[currentPlayer]->getSpeed();
-}
-
-//------------------------------------------------------------------
-void VideoPlayerMac::updateParameter(Param* inputParam){
-    
 }
 
 //------------------------------------------------------------------

@@ -34,6 +34,9 @@ class ImageInputList : public InputSource{
     void updateParameter(Param* inputParam);
     void setEnable(bool isEnabled_);
     
+    ofImage*    getImage();
+    ofTexture*  getTexture();
+    
     bool loadSettings(ofxXmlSettings &XML, int nTag_);
     bool saveSettings(ofxXmlSettings &XML);
     

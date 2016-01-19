@@ -33,8 +33,8 @@ class ImageOutput : public ofxPatch {
     ImageOutput(string name_, string typeName_, int id_, int maxInputs_ = 1, int width_ = NODE_WIDTH, int height_ = NODE_HEIGHT);
     
     string getName();
-    ofImage* getImage();
-    ofTexture* getTexture();
+    virtual ofImage* getImage(){};
+    virtual ofTexture* getTexture(){};
     vector<ImageOutput*> getInputs();
     vector<string> getInputNames();
     vector<ImageOutput*> input;

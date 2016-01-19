@@ -19,12 +19,15 @@ ImageTypePicture::ImageTypePicture(string name_ ,string path_, bool isResize, in
     tex.loadData(p, img.getWidth(), img.getHeight(), GL_RGB);
     
 }
-void ImageTypePicture::activate(ofImage& _img, ofTexture& _tex){
+//void ImageTypePicture::activate(ofImage& _img, ofTexture& _tex){
+void ImageTypePicture::activate(ofImage& _img){
     _img = img;
-    _tex = tex;
+    //_tex = tex;
 }
-void ImageTypePicture::update(ofImage& _img, ofTexture& _tex){
-    
+
+//void ImageTypePicture::update(ofImage& _img, ofTexture& _tex){
+void ImageTypePicture::update(ofImage& _img){
+
 }
 
 int ImageTypePicture::getFrameRate(){
@@ -39,7 +42,8 @@ void ImageTypePicture::calculateFPS(){
     
 }
 
-void ImageTypePicture::setPosition(float p, ofImage& _img, ofTexture& _tex){
+//void ImageTypePicture::setPosition(float p, ofImage& _img, ofTexture& _tex){
+void ImageTypePicture::setPosition(float p, ofImage& _img){
     
 }
 

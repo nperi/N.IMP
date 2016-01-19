@@ -25,6 +25,9 @@ public:
     void draw(int x,int y, float scale);
     void updateParameter(Param* inputParam);
     
+    ofImage*    getImage();
+    ofTexture*  getTexture();
+    
     bool loadSettings(ofxXmlSettings &XML, int nTag_);
     bool saveSettings(ofxXmlSettings &XML);
     
@@ -34,6 +37,8 @@ public:
     ofxIntSlider dht;
     
     ofxJpegGlitch glitcher;
+    
+    ofPixels buff;
     
 private:
     

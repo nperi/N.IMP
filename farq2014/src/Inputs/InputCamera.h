@@ -23,8 +23,10 @@ class InputCamera : public InputSource{
     InputCamera(string name, int id_ = -1);
 	
 	void setup();
-	
 	void draw(int x,int y, float scale);
+    
+    ofImage*    getImage();
+    ofTexture*  getTexture();
     
     void updateParameter(Param* inputParam);
     

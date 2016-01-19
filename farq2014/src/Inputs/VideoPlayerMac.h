@@ -30,6 +30,9 @@ class VideoPlayerMac : public InputSource{
     void setSpeed(float speed);
     float getSpeed();
     
+    ofImage*    getImage();
+    ofTexture*  getTexture();
+    
     void updateParameter(Param* inputParam);
     
     bool loadSettings(ofxXmlSettings &XML, int nTag_);

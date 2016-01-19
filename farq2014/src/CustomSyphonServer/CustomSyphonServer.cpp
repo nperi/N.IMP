@@ -16,7 +16,7 @@ CustomSyphonServer::CustomSyphonServer(string exportName_, ImageOutput* feeder_)
 
 //------------------------------------------------------------------
 void CustomSyphonServer::publishTexture(){
-   server.publishTexture(feeder->getTexture());
+   server.publishTexture(&feeder->getTextureReference());
 }
 
 //------------------------------------------------------------------

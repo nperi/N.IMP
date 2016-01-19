@@ -26,9 +26,14 @@ class MultiChannelSwitch : public MixTable{
 	void setup();
 	void draw(int x,int y, float scale);
     void updateParameter(Param* inputParam);
+    
+    ofImage*    getImage();
+    ofTexture*  getTexture();
+    
+    void setEnable(bool isEnabled_);
+    
     ofParameter<int> selChannel;
     ofParameter<bool> drawInputGui;
-    void setEnable(bool isEnabled_);
     
     bool loadSettings(ofxXmlSettings &XML, int nTag_);
     bool saveSettings(ofxXmlSettings &XML);

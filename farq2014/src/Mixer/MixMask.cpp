@@ -25,8 +25,8 @@ MixMask::MixMask(string name_, int id_):MixTable(name_, "Mix Mask", id_){
 //------------------------------------------------------------------
 void MixMask::setup() {
     
-    if(input.size()) {
-        drawFbo = true;
+    if(!input.size()) {
+        drawNoInputs = true;
     }
 }
 
@@ -48,7 +48,7 @@ void MixMask::update(){
         
         fbo.begin();
         ofClear(255,255,255, 0);
-        input[0]->getTexture()->draw(0, 0);
+        input[0]->getTextureReference().draw(0, 0);
         ofEnableAlphaBlending();
         ofPushMatrix();
         ofTranslate(width/2, height/2);
@@ -62,7 +62,7 @@ void MixMask::update(){
         ofPopMatrix();
         ofDisableBlendMode();
         fbo.end();
-        tex = fbo.getTextureReference();
+        //tex = fbo.getTextureReference();
     }
 }
 
@@ -147,6 +147,25 @@ void MixMask::drawShader(){
 //------------------------------------------------------------------
 void MixMask::updateParameter(Param* inputParam){
     
+}
+
+//------------------------------------------------------------------
+ofImage* MixMask::getImage(){
+    if (drawNoInputs)
+        return &noInputs;
+    else {
+        fbo.readToPixels(buff);
+        img.setFromPixels(buff);
+        return &img;
+    }
+}
+
+//------------------------------------------------------------------
+ofTexture* MixMask::getTexture(){
+    if (drawNoInputs)
+        return &noInputs.getTextureReference();
+    else
+        return &fbo.getTextureReference();
 }
 
 //------------------------------------------------------------------

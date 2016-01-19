@@ -18,11 +18,13 @@ ImageTypePictureSequence::ImageTypePictureSequence(string name_ ,string path_): 
     img.loadImage(dir.getPath(0));
 }
 
-void ImageTypePictureSequence::update(ofImage& _img, ofTexture& _tex){
+//void ImageTypePictureSequence::update(ofImage& _img, ofTexture& _tex){
+void ImageTypePictureSequence::update(ofImage& _img){
     if (isPlaying) {
         player.update();
         if (player.isFrameNew()) {
-            _tex = *player.getTexture();
+            _img.setFromPixels(player.getPixels(), player.getWidth(), player.getHeight(), OF_IMAGE_COLOR_ALPHA);
+            //_tex = *player.getTexture();
         }
     }
 }
@@ -49,14 +51,18 @@ void ImageTypePictureSequence::calculateFPS(){
     player.setFrameRate(fps);
 }
 
-void ImageTypePictureSequence::setPosition(float p, ofImage& _img, ofTexture& _tex){
+//void ImageTypePictureSequence::setPosition(float p, ofImage& _img, ofTexture& _tex){
+void ImageTypePictureSequence::setPosition(float p, ofImage& _img){
     player.setPosition(p);
-    _tex = *player.getTexture();
+    _img.setFromPixels(player.getPixels(), player.getWidth(), player.getHeight(), OF_IMAGE_COLOR_ALPHA);
+    //_tex = *player.getTexture();
 }
-void ImageTypePictureSequence::activate(ofImage& _img, ofTexture& _tex){
+//void ImageTypePictureSequence::activate(ofImage& _img, ofTexture& _tex){
+void ImageTypePictureSequence::activate(ofImage& _img){
     player.play();
-    _tex = *player.getTexture();
-    _img = img;
+    _img.setFromPixels(player.getPixels(), player.getWidth(), player.getHeight(), OF_IMAGE_COLOR_ALPHA);
+    //_img = img;
+    //_tex = *player.getTexture();
 }
 
 float ImageTypePictureSequence::getHeight() {

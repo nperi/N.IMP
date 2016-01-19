@@ -20,12 +20,16 @@ class ImageTypePictureSequence : public ImageType{
 	
 	ImageTypePictureSequence(string name_ ,string path_);
 	
-    void activate(ofImage& _img, ofTexture& _tex);
-    void update(ofImage& _img, ofTexture& _tex);
+//    void activate(ofImage& _img, ofTexture& _tex);
+//    void update(ofImage& _img, ofTexture& _tex);
+    void activate(ofImage& _img);
+    void update(ofImage& _img);
+    
     int getFrameRate();
     float getPosition();
     void calculateFPS();
-    void setPosition(float p, ofImage& _img, ofTexture& _tex);
+//    void setPosition(float p, ofImage& _img, ofTexture& _tex);
+    void setPosition(float p, ofImage& _img);
     void setLoopState(ofLoopType l);
     
     float getHeight();

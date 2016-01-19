@@ -22,12 +22,18 @@ public:
     void setup();
     void draw(int x,int y, float scale);
     void updateParameter(Param* inputParam);
+    
+    ofImage*    getImage();
+    ofTexture*  getTexture();
+    
     bool loadSettings(ofxXmlSettings &XML, int nTag_);
     bool saveSettings(ofxXmlSettings &XML);
     
     //ofFbo			myFbo;
     ofTexture		texture;
     ofxPostGlitch	myGlitch;
+    
+    ofPixels        buff;
     
     //glitch parameters
     

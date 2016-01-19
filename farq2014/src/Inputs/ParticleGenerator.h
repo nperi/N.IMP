@@ -28,6 +28,9 @@ class ParticleGenerator : public InputSource{
 	void draw(int x,int y, float scale);
     void updateParameter(Param* inputParam);
     
+    ofImage*    getImage();
+    ofTexture*  getTexture();
+    
     void addForce(ParticleForce f);
     
     ofParameter<bool>   isClearBg;
@@ -60,6 +63,8 @@ private:
     ofxButton bAddParticles,bRemoveParticles;
     
     long int lastGen = 0;
+    
+    ofPixels buff;
 };
 
 

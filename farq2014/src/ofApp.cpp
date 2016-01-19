@@ -283,10 +283,6 @@ void ofApp::update() {
             }
         }
 
-        for(int i=0; i<syphonServers.size();i++){
-            syphonServers[i]->publishTexture();
-        }
-        
         //delete removed widgets
         if (widgetsToDelete.size() > 0) {
             for(auto widget : widgetsToDelete) {
@@ -303,6 +299,10 @@ void ofApp::update() {
         
         scrollBars->update();
         nodeViewers[currentViewer]->update();
+        
+        for(int i=0; i<syphonServers.size();i++){
+            syphonServers[i]->publishTexture();
+        }
     }
 }
 
@@ -768,7 +768,7 @@ void ofApp::createNode(textInputEvent &args){
     
     if (newPatch) {
         nE = new NodeElement(newPatch);
-        nodeViewers[currentViewer]->addElement(nE, args.point);
+        nodeViewers[currentViewer]->addElement(nE, ofVec3f(args.point.x, args.point.y, 0.0)*cam.getGlobalTransformMatrix());
         nodes.insert(std::pair<int, ImageOutput*>(newPatch->getId(), newPatch));
         nodesVector.push_back(newPatch);
         newPatch->setup();

@@ -20,7 +20,7 @@ InputCamera::InputCamera() : InputSource("New Camera"){
         height  = videoGrabber->getHeight();
     }
     
-    drawCamera = true;
+    //drawCamera = true;
 }
 
 //------------------------------------------------------------------
@@ -28,7 +28,7 @@ InputCamera::InputCamera(string name, int id_) : InputSource(name, "Camera", id_
     //cam.initGrabber(width, height);
     //img.allocate(640, 480, OF_IMAGE_COLOR);
     
-    drawCamera = true;
+    //drawCamera = true;
 }
 
 //------------------------------------------------------------------
@@ -42,7 +42,7 @@ void InputCamera::update() {
     videoGrabber->update();
     if(videoGrabber->isFrameNew()) {
         img.setFromPixels(videoGrabber->getPixels(), width, height, OF_IMAGE_COLOR);
-        tex = img.getTextureReference();
+        //tex = img.getTextureReference();
     }
 }
 
@@ -56,8 +56,18 @@ void InputCamera::draw(int x,int y, float scale) {
 }
 
 //------------------------------------------------------------------
-void InputCamera::updateParameter(Param* inputParam){
+ofImage* InputCamera::getImage(){
+    return &img;
+}
 
+//------------------------------------------------------------------
+ofTexture* InputCamera::getTexture(){
+    return &videoGrabber->getTextureReference();
+}
+
+//------------------------------------------------------------------
+void InputCamera::updateParameter(Param* inputParam){
+    
 }
 
 //------------------------------------------------------------------

@@ -17,7 +17,7 @@ ParticleGenerator::ParticleGenerator(string name, int id_) : InputSource(name, "
     s.useDepth			= false;
     fbo.allocate(s);
     
-    drawFbo = true;
+    //drawFbo = true;
     
     gui.add(bAddParticles.setup("add Particles"));
     gui.add(bRemoveParticles.setup("remove Particles"));
@@ -87,7 +87,7 @@ void ParticleGenerator::update() {
     particle->draw();
     ofDisableAlphaBlending();
     fbo.end();
-    tex = fbo.getTextureReference();
+    //tex = fbo.getTextureReference();
     
     force.clear();
 }
@@ -140,6 +140,19 @@ void ParticleGenerator::updateParameter(Param* inputParam){
     }else if(inputParam->name.compare("clearBg")==0){
         isClearBg = inputParam->intVal;
     }
+}
+
+//------------------------------------------------------------------
+ofImage* ParticleGenerator::getImage(){
+    
+    fbo.readToPixels(buff);
+    img.setFromPixels(buff);
+    return &img;
+}
+
+//------------------------------------------------------------------
+ofTexture* ParticleGenerator::getTexture(){
+    return &fbo.getTextureReference();
 }
 
 //------------------------------------------------------------------

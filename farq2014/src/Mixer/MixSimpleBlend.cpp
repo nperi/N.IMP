@@ -30,8 +30,8 @@ MixSimpleBlend::MixSimpleBlend(string name_, int id_):MixTable(name_, "Mix Simpl
 //------------------------------------------------------------------
 void MixSimpleBlend::setup() {
     
-    if(input.size()) {
-        drawFbo = true;
+    if(!input.size()) {
+        drawNoInputs = true;
     }
 }
 
@@ -84,7 +84,7 @@ void MixSimpleBlend::update(){
         glDisable(GL_BLEND);
         glPopAttrib();
         fbo.end();
-        tex = fbo.getTextureReference();
+        //tex = fbo.getTextureReference();
     }
 }
 
@@ -125,6 +125,25 @@ void MixSimpleBlend::updateParameter(Param* inputParam){
     }else if(inputParam->name.compare("blendmode")==0){
         this->blendMode = inputParam->intVal;
     }
+}
+
+//------------------------------------------------------------------
+ofImage* MixSimpleBlend::getImage(){
+    if (drawNoInputs)
+        return &noInputs;
+    else {
+        fbo.readToPixels(buff);
+        img.setFromPixels(buff);
+        return &img;
+    }
+}
+
+//------------------------------------------------------------------
+ofTexture* MixSimpleBlend::getTexture(){
+    if (drawNoInputs)
+        return &noInputs.getTextureReference();
+    else
+        return &fbo.getTextureReference();
 }
 
 //------------------------------------------------------------------

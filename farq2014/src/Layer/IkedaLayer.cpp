@@ -35,12 +35,12 @@ IkedaLayer::IkedaLayer(string name_, int id_, bool isCanny_,bool isThreshold_, b
 //------------------------------------------------------------------
 void IkedaLayer::setup() {
 
-    if(input.size()) {
+    if(!input.size()) {
         
 //        updateFromInputCoorners(getTextureCoorners().getVertices()[0]);
 //        drawNoInputs = false;
         
-        drawTexture = true;
+        drawNoInputs = true;
     }
 }
 
@@ -101,16 +101,36 @@ void IkedaLayer::update(){
         }
         else{
             //we bypass the image
+//            input[0]->getTexture()->readToPixels(buff);
+//            img.setFromPixels(buff);
+            
             img.setFromPixels(input[0]->getImage()->getPixels(), width, height, OF_IMAGE_COLOR);
         }
         img.update();
-        tex = img.getTextureReference();// .loadData(img.getPixels(), img.getWidth(), img.getHeight(), GL_RGB);
+        //tex = img.getTextureReference();// .loadData(img.getPixels(), img.getWidth(), img.getHeight(), GL_RGB);
     }
 }
 
 //------------------------------------------------------------------
 void IkedaLayer::updateParameter(Param* inputParam){
     
+}
+
+//------------------------------------------------------------------
+ofImage* IkedaLayer::getImage(){
+    if (drawNoInputs)
+        return &noInputs;
+    else
+        return &img;
+}
+
+//------------------------------------------------------------------
+ofTexture* IkedaLayer::getTexture(){
+    
+    if (drawNoInputs)
+        return &noInputs.getTextureReference();
+    else
+        return &img.getTextureReference();
 }
 
 //------------------------------------------------------------------

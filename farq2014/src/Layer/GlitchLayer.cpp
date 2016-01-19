@@ -46,10 +46,13 @@ void GlitchLayer::setup() {
 //        updateFromInputCoorners(getTextureCoorners().getVertices()[0]);
 //        drawNoInputs = false;
         
-        drawFbo = true;
+        //drawFbo = true;
         
         fbo.allocate(width, height);
         myGlitch.setup(&fbo);
+    }
+    else {
+        drawNoInputs = true;
     }
 }
 
@@ -69,7 +72,7 @@ void GlitchLayer::update(){
     
     if(input.size()) {
         
-        img.setFromPixels(input[0]->getImage()->getPixels(), width, height, OF_IMAGE_COLOR);
+        //img.setFromPixels(input[0]->getImage()->getPixels(), width, height, OF_IMAGE_COLOR);
 
         if(isEnabled){
             
@@ -86,14 +89,18 @@ void GlitchLayer::update(){
             
             /* Apply effects */
             myGlitch.generateFx();
-
-            ofPixels buff;
-            fbo.readToPixels(buff);
-            img.setFromPixels(buff);
         }
-
+        else {
+            fbo.begin();
+            input[0]->getTextureReference().draw(0,0,width,height);
+            fbo.end();
+        }
+        
+        fbo.readToPixels(buff);
+        img.setFromPixels(buff);
+        
         img.update();
-        tex = img.getTextureReference();
+        //tex = img.getTextureReference();
     }
 }
 
@@ -123,6 +130,22 @@ void GlitchLayer::setGlitchParameters(){
 //------------------------------------------------------------------
 void GlitchLayer::updateParameter(Param* inputParam){
     
+}
+
+//------------------------------------------------------------------
+ofImage* GlitchLayer::getImage(){
+    if (drawNoInputs)
+        return &noInputs;
+    else
+        return &img;
+}
+
+//------------------------------------------------------------------
+ofTexture* GlitchLayer::getTexture(){
+    if (drawNoInputs)
+        return &noInputs.getTextureReference();
+    else
+        return &img.getTextureReference();
 }
 
 //------------------------------------------------------------------

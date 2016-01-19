@@ -34,9 +34,12 @@ void GlitchLayerAlt::setup() {
 //        updateFromInputCoorners(getTextureCoorners().getVertices()[0]);
 //        drawNoInputs = false;
         
-        drawTexture = true;
+        //drawTexture = true;
         
         glitcher.setup(dq, qn, dht);
+    }
+    else {
+        drawNoInputs = true;
     }
 
 }
@@ -57,7 +60,9 @@ void GlitchLayerAlt::update(){
     
     if(input.size()) {
         
-        img.setFromPixels(input[0]->getImage()->getPixels(), width, height, OF_IMAGE_COLOR);
+        input[0]->getTextureReference().readToPixels(buff);
+        img.setFromPixels(buff);
+        //img.setFromPixels(input[0]->getImage()->getPixels(), width, height, OF_IMAGE_COLOR);
         
         if(isEnabled){
            
@@ -73,13 +78,29 @@ void GlitchLayerAlt::update(){
         }
         
         img.update();
-        tex = img.getTextureReference();
+        //tex = img.getTextureReference();
     }
 }
 
 //------------------------------------------------------------------
 void GlitchLayerAlt::updateParameter(Param* inputParam){
     
+}
+
+//------------------------------------------------------------------
+ofImage* GlitchLayerAlt::getImage(){
+    if (drawNoInputs)
+        return &noInputs;
+    else
+        return &img;
+}
+
+//------------------------------------------------------------------
+ofTexture* GlitchLayerAlt::getTexture(){
+    if (drawNoInputs)
+        return &noInputs.getTextureReference();
+    else
+        return &img.getTextureReference();
 }
 
 //------------------------------------------------------------------

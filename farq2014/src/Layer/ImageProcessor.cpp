@@ -136,12 +136,15 @@ void ImageProcessor::setup() {
 //        updateFromInputCoorners(getTextureCoorners().getVertices()[0]);
 //        drawNoInputs = false;
         
-        drawFbo = true;
+        //drawFbo = true;
         
         fbo.allocate(width, height);
         
         // Setup post-processing chain
         post.init(width,height);
+    }
+    else {
+        drawNoInputs = true;
     }
 }
 
@@ -173,10 +176,11 @@ void ImageProcessor::update() {
         glPopAttrib();
         fbo.end();
         
-        tex = fbo.getTextureReference();
+        //tex = fbo.getTextureReference();
     }
 }
 
+//------------------------------------------------------------------
 void ImageProcessor::updateParameter(Param* inputParam){
     if(inputParam->name.compare("isBloom")==0){
         isBloom = inputParam->intVal;
@@ -239,6 +243,25 @@ void ImageProcessor::draw(int x,int y, float scale) {
 //    ofSetColor(255);
 //    fbo.draw(0,0);
 //    ofPopMatrix();
+}
+
+//------------------------------------------------------------------
+ofImage* ImageProcessor::getImage(){
+    if (drawNoInputs)
+        return &noInputs;
+    else {
+        fbo.readToPixels(buff);
+        img.setFromPixels(buff);
+        return &img;
+    }
+}
+
+//------------------------------------------------------------------
+ofTexture* ImageProcessor::getTexture(){
+    if (drawNoInputs)
+        return &noInputs.getTextureReference();
+    else
+        return &fbo.getTextureReference();
 }
 
 //------------------------------------------------------------------

@@ -25,6 +25,9 @@ class IkedaLayer : public VisualLayer{
 	void draw(int x,int y, float scale);
     void updateParameter(Param* inputParam);
     
+    ofImage*    getImage();
+    ofTexture*  getTexture();
+    
     bool loadSettings(ofxXmlSettings &XML, int nTag_);
     bool saveSettings(ofxXmlSettings &XML);
     
@@ -33,10 +36,12 @@ class IkedaLayer : public VisualLayer{
     ofxToggle isColumns;
     ofxToggle isInvert;
     
-    ofxIntSlider                  pNColumns;
-    ofxFloatSlider                pCannyX;
-    ofxFloatSlider                pCannyY;
-    ofxIntSlider                  pThreshold;
+    ofxIntSlider    pNColumns;
+    ofxFloatSlider  pCannyX;
+    ofxFloatSlider  pCannyY;
+    ofxIntSlider    pThreshold;
+    
+    ofPixels        buff;
     
 private:
     void update();

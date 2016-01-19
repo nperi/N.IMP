@@ -21,9 +21,11 @@ class MixMask : public MixTable{
 	MixMask(string name_ = "New Mix Mask", int id_ = -1);
 	
 	void setup();
+    void draw(int x,int y, float scale);
     void updateParameter(Param* inputParam);
 	
-	void draw(int x,int y, float scale);
+    ofImage*    getImage();
+    ofTexture*  getTexture();
     
     bool loadSettings(ofxXmlSettings &XML, int nTag_);
     bool saveSettings(ofxXmlSettings &XML);
@@ -38,6 +40,7 @@ private:
     void drawShader();
     
     ofxSlider<float> spin;
+    ofPixels buff;
 	
 };
 
