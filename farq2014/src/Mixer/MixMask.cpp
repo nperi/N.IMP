@@ -31,15 +31,15 @@ void MixMask::setup() {
 }
 
 //------------------------------------------------------------------
-void MixMask::draw(int x,int y, float scale) {
+//void MixMask::draw(int x,int y, float scale) {
 //    ofSetColor(255, 255, 255);
 //    float ratio = (float)height/(float)width;
 //    int w = 640*scale;
 //    int h = w*ratio;
 //    fbo.draw(x, y,w,h);
 //    ofDrawBitmapString(name, x + 10, y + 30);
-	
-}
+//	
+//}
 
 //------------------------------------------------------------------
 void MixMask::update(){

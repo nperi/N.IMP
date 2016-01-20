@@ -21,7 +21,7 @@ class VideoPlayerMac : public InputSource{
 	
 	void setup();
 
-	void draw(int x,int y, float scale);
+	//void draw(int x,int y, float scale);
     void loadVideo(string path);
     void nextVideo();
     void prevVideo();

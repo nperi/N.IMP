@@ -44,14 +44,14 @@ void ImageInputList::update(){
 }
 
 //------------------------------------------------------------------
-void ImageInputList::draw(int x,int y, float scale){
-    
+//void ImageInputList::draw(int x,int y, float scale){
+//
 //    ofPushMatrix();Ï
 //    glMultMatrixf(glMatrix);
 //    tex.draw(0,0);
 //    ofPopMatrix();
-    
-}
+//    
+//}
 
 //------------------------------------------------------------------
 void ImageInputList::updateParameter(Param* inputParam){

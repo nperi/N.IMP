@@ -93,27 +93,27 @@ void ParticleGenerator::update() {
 }
 
 //------------------------------------------------------------------
-void ParticleGenerator::draw(int x,int y, float scale) {
-
-    ofPushStyle();
-    ofSetColor(255, 255, 255);
-    ofEnableAlphaBlending();
-    ofPushMatrix();
-    ofMultMatrix(glMatrix);
-    fbo.draw(0,0);
-    ofNoFill();
-    ofSetColor(0, 0, 0);
-    ofRect(0, 0, width, height);
-    ofFill();
-    for(int i=0; i<force.size();++i){
-        int mult = (force[i].isAttracting) ? 255 : 0;
-        ofSetColor(255-mult, mult, 0,force[i].scale*50);
-        ofCircle(force[i].pos->x, force[i].pos->y, force[i].radius);
-    }
-    ofDisableAlphaBlending();
-    ofPopMatrix();
-    ofPopStyle();
-}
+//void ParticleGenerator::draw(int x,int y, float scale) {
+//
+//    ofPushStyle();
+//    ofSetColor(255, 255, 255);
+//    ofEnableAlphaBlending();
+//    ofPushMatrix();
+//    ofMultMatrix(glMatrix);
+//    fbo.draw(0,0);
+//    ofNoFill();
+//    ofSetColor(0, 0, 0);
+//    ofRect(0, 0, width, height);
+//    ofFill();
+//    for(int i=0; i<force.size();++i){
+//        int mult = (force[i].isAttracting) ? 255 : 0;
+//        ofSetColor(255-mult, mult, 0,force[i].scale*50);
+//        ofCircle(force[i].pos->x, force[i].pos->y, force[i].radius);
+//    }
+//    ofDisableAlphaBlending();
+//    ofPopMatrix();
+//    ofPopStyle();
+//}
 
 //------------------------------------------------------------------
 void ParticleGenerator::addForce(ParticleForce f){

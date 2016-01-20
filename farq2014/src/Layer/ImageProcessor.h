@@ -21,7 +21,7 @@ class ImageProcessor : public VisualLayer{
 	ImageProcessor(string name_ = "New Image Processor", int id_ = -1);
 	
     void setup();
-    void draw(int x,int y, float scale);
+//    void draw(int x,int y, float scale);
     void updateParameter(Param* inputParam);
     
     ofImage*    getImage();
@@ -77,7 +77,6 @@ private:
     void update();
     ofxPostProcessing post;
     //ofFbo fbo;
-    ofPixels buff;
     
     void cIsBloom(bool &b);
     void cIsContrast(bool &b);

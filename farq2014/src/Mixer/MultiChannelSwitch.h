@@ -24,7 +24,7 @@ class MultiChannelSwitch : public MixTable{
 	MultiChannelSwitch(string name_ = "New MultiChannel Switch", int id_ = -1);
 	
 	void setup();
-	void draw(int x,int y, float scale);
+//	void draw(int x,int y, float scale);
     void updateParameter(Param* inputParam);
     
     ofImage*    getImage();

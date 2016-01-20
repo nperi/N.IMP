@@ -236,14 +236,14 @@ void ImageProcessor::updateParameter(Param* inputParam){
 }
 
 //------------------------------------------------------------------
-void ImageProcessor::draw(int x,int y, float scale) {
-    
+//void ImageProcessor::draw(int x,int y, float scale) {
+//
 //    ofPushMatrix();
 //    glMultMatrixf(glMatrix);
 //    ofSetColor(255);
 //    fbo.draw(0,0);
 //    ofPopMatrix();
-}
+//}
 
 //------------------------------------------------------------------
 ofImage* ImageProcessor::getImage(){

@@ -43,7 +43,7 @@ class ImageOutput : public ofxPatch {
     
     virtual void update() = 0;
     //draws the node (whatever there is defined), in general the Output-picture
-    virtual void draw(int x,int y, float scale = 1.0) = 0;
+//    virtual void draw(int x,int y, float scale = 1.0) = 0;
     
     //gui methods
     void drawGui();
@@ -74,6 +74,7 @@ protected:
     string name;
     string typeName;
     ofImage img;
+    ofPixels buff;
     
     vector<int> inputIdentifiers;
     int maxInputs;

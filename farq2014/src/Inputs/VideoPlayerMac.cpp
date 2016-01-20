@@ -52,7 +52,7 @@ void VideoPlayerMac::update() {
 }
 
 //------------------------------------------------------------------
-void VideoPlayerMac::draw(int x,int y, float scale) {
+//void VideoPlayerMac::draw(int x,int y, float scale) {
 //	if (players[currentPlayer]->isLoaded()) {
 //        float ratio = (float)height/(float)width;
 //        int w = 640*scale;
@@ -61,7 +61,7 @@ void VideoPlayerMac::draw(int x,int y, float scale) {
 //    }
 //    ofSetColor(255, 255, 255);
 //    ofDrawBitmapString(name, x + 10, y + 30);
-}
+//}
 
 //------------------------------------------------------------------
 void VideoPlayerMac::updateParameter(Param* inputParam){

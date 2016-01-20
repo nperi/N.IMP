@@ -29,7 +29,7 @@ class ImageInputList : public InputSource{
     ImageInputList(string name = "New Image Input", int id_ = -1);
     
     void setup();
-    void draw(int x,int y, float scale);
+//    void draw(int x,int y, float scale);
     void loadImage(string name_,string path_);
     void updateParameter(Param* inputParam);
     void setEnable(bool isEnabled_);

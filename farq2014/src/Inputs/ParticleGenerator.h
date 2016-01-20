@@ -25,7 +25,7 @@ class ParticleGenerator : public InputSource{
 	ParticleGenerator(string name = "New Particle Generator", int id_ = -1);
 	
 	void setup();
-	void draw(int x,int y, float scale);
+//	void draw(int x,int y, float scale);
     void updateParameter(Param* inputParam);
     
     ofImage*    getImage();
@@ -63,8 +63,6 @@ private:
     ofxButton bAddParticles,bRemoveParticles;
     
     long int lastGen = 0;
-    
-    ofPixels buff;
 };
 
 

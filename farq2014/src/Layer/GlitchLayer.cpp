@@ -57,14 +57,14 @@ void GlitchLayer::setup() {
 }
 
 //------------------------------------------------------------------
-void GlitchLayer::draw(int x,int y, float scale) {
-    
+//void GlitchLayer::draw(int x,int y, float scale) {
+
 //    ofSetColor(255, 255, 255);
 //    ofPushMatrix();
 //    glMultMatrixf(glMatrix);
 //    img.draw(0, 0);
 //    ofPopMatrix();
-}
+//}
 
 //------------------------------------------------------------------
 void GlitchLayer::update(){

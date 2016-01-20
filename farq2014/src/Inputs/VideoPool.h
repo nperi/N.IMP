@@ -12,26 +12,25 @@
 #include "ofMain.h"
 #define MAX_PLAYERS 8
 
-    class VideoPool{
-    
+class VideoPool{
+
     public:
         static VideoPool* getInstance();
-		
-		void update();
+        
+        void update();
         ofQTKitPlayer* getPlayer();
         void releasePlayer(ofQTKitPlayer* player);
         
-    
+
     protected:
         VideoPool() {};
-    
+
     private:
         static VideoPool* instance;
-         void setup();
+        void setup();
         vector<std::pair<bool,ofQTKitPlayer*> > pool;
-        
-        
-    };
+    
+};
 
 
 #endif

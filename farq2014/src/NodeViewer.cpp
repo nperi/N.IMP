@@ -31,9 +31,9 @@ void NodeViewer::update() {
 //------------------------------------------------------------------
 void NodeViewer::draw() {
     
-    for (int i=0; i<elements.size(); ++i) {
-        elements[i]->draw();
-    }
+//    for (int i=0; i<elements.size(); ++i) {
+//        elements[i]->draw();
+//    }
     
     ofxComposer::customDraw();
 }

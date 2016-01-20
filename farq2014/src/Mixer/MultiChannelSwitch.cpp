@@ -95,7 +95,7 @@ void MultiChannelSwitch::update() {
 }
 
 //------------------------------------------------------------------
-void MultiChannelSwitch::draw(int x,int y, float scale) {
+//void MultiChannelSwitch::draw(int x,int y, float scale) {
 //    ofSetColor(255, 255, 255);
 //        float ratio = (float)height/(float)width;
 //        int w = 640*scale;
@@ -110,7 +110,7 @@ void MultiChannelSwitch::draw(int x,int y, float scale) {
 //    if (drawInputGui) {
 //        input[selChannel]->drawGui(x,y);
 //    }
-}
+//}
 
 //------------------------------------------------------------------
 void MultiChannelSwitch::updateParameter(Param* inputParam){

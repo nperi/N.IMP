@@ -36,14 +36,14 @@ void MixSimpleBlend::setup() {
 }
 
 //------------------------------------------------------------------
-void MixSimpleBlend::draw(int x,int y, float scale) {
-    
+//void MixSimpleBlend::draw(int x,int y, float scale) {
+//
 //    ofSetColor(255, 255, 255);
 //    ofPushMatrix();
 //    glMultMatrixf(glMatrix);
 //    fbo.draw(0, 0);
 //    ofPopMatrix();
-}
+//}
 
 //------------------------------------------------------------------
 void MixSimpleBlend::update(){

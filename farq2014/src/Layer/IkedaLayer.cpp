@@ -45,13 +45,13 @@ void IkedaLayer::setup() {
 }
 
 //------------------------------------------------------------------
-void IkedaLayer::draw(int x,int y, float scale) {
+//void IkedaLayer::draw(int x,int y, float scale) {
 //    ofSetColor(255, 255, 255);
 //    float ratio = (float)height/(float)width;
 //    int w = 640*scale;
 //    int h = w*ratio;
 //    tex.draw(x, y,w,h);
-}
+//}
 
 //------------------------------------------------------------------
 void IkedaLayer::update(){
