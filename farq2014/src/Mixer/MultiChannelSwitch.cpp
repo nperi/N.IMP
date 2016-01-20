@@ -87,7 +87,9 @@ void MultiChannelSwitch::update() {
     
     if (input.size()){
         
-        img = *input[selChannel]->getImage();
+        input[selChannel]->getTextureReference().readToPixels(buff);
+        img.setFromPixels(buff);
+        //img = *input[selChannel]->getImage();
         //tex = *input[selChannel]->getTexture();
         
         //input[selChannel]->setDrawInspector(drawInputGui);

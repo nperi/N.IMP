@@ -40,6 +40,9 @@ void IkedaLayer::setup() {
 //        updateFromInputCoorners(getTextureCoorners().getVertices()[0]);
 //        drawNoInputs = false;
         
+        imgAux.allocate(width, height, OF_IMAGE_COLOR);
+        imgAux.setUseTexture(true);
+        
         drawNoInputs = true;
     }
 }
@@ -58,13 +61,16 @@ void IkedaLayer::update(){
     
     if(input.size()) {
         
+        input[0]->getTextureReference().readToPixels(buff);
+        imgAux.setFromPixels(buff);
+        
         //process pipeline
         //img.setFromPixels(img_.getPixels(), 640, 480, OF_IMAGE_COLOR);
         //canny edge detection
         if(isEnabled){
             img.setImageType(OF_IMAGE_GRAYSCALE);
             //to gray image
-            convertColor(*(input[0]->getImage()), img, CV_RGB2GRAY);
+            convertColor(imgAux, img, CV_RGB2GRAY);
             
             if (isCanny) {
                 // canny edge detection
@@ -104,7 +110,9 @@ void IkedaLayer::update(){
 //            input[0]->getTexture()->readToPixels(buff);
 //            img.setFromPixels(buff);
             
-            img.setFromPixels(input[0]->getImage()->getPixels(), width, height, OF_IMAGE_COLOR);
+            //img.setFromPixels(input[0]->getImageReference()->getPixels(), width, height, OF_IMAGE_COLOR);
+            
+            img = imgAux;
         }
         img.update();
         //tex = img.getTextureReference();// .loadData(img.getPixels(), img.getWidth(), img.getHeight(), GL_RGB);

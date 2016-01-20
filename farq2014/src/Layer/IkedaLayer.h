@@ -41,7 +41,7 @@ class IkedaLayer : public VisualLayer{
     ofxFloatSlider  pCannyY;
     ofxIntSlider    pThreshold;
     
-    ofPixels        buff;
+    ofImage         imgAux;
     
 private:
     void update();

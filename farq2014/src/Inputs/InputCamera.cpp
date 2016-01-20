@@ -62,7 +62,7 @@ ofImage* InputCamera::getImage(){
 
 //------------------------------------------------------------------
 ofTexture* InputCamera::getTexture(){
-    return &videoGrabber->getTextureReference();
+    return &img.getTextureReference();
 }
 
 //------------------------------------------------------------------
