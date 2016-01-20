@@ -145,7 +145,7 @@ public:
     scrollBar* scrollBars;
     
     //zoom
-    bool zoom_in, zoom_out, do_zoom;
+    bool menu_zoom_in, menu_zoom_out;
     
     //create new node
     vector<ofxUIWidget*> widgetsToDelete;

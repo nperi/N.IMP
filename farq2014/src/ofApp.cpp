@@ -82,7 +82,6 @@ void ofApp::setup() {
     cam.setVFlip(true);
     scale = 1.f;
     
-    
     //*** TOP MENU ***//
     //
     menu = new ofxUISuperCanvas("menu", 0, MENU_TOP_PADDING, ofGetWidth(), MENU_HEIGHT);
@@ -234,21 +233,23 @@ void ofApp::update() {
     if(loadingOK){
         
         //if pressing zoom in/out buttons
-        if (zoom_in) {
+        if (menu_zoom_in) {
+            scale = cam.getScale().x;
             scale -= 10*SCALE_SENSITIVITY;
             cam.setScale(scale);
 //            ofVec3f diffVec = ofVec3f(ZOOM_DIFF, ZOOM_DIFF,0);
 //            scrollBars->updateHScrollBar(diffVec);
 //            scrollBars->updateScrollBar(diffVec);
         }
-        else if (zoom_out) {
+        else if (menu_zoom_out) {
+            scale = cam.getScale().x;
             scale += 10*SCALE_SENSITIVITY;
             cam.setScale(scale);
 //            ofVec3f diffVec = ofVec3f(-ZOOM_DIFF, -ZOOM_DIFF,0);
 //            scrollBars->updateHScrollBar(diffVec);
 //            scrollBars->updateScrollBar(diffVec);
         }
-        
+    
         //resetting processed flags
 //        for (int i=0; i<nodesVector.size(); ++i) {
 //            //nodesVector[i]->resetProcessedFlag();
@@ -503,13 +504,13 @@ void ofApp::mouseDragged(int x, int y, int button){
         EventHandler::getInstance()->setConsoleEvent();
     }
     
-    if(do_zoom){
-        ofVec3f mouse = ofVec3f(x, y,0);
-        ofVec3f mouseLast = ofVec3f(ofGetPreviousMouseX(),ofGetPreviousMouseY(),0);
-        float dify = mouse.y - mouseLast.y;
-        scale += dify*SCALE_SENSITIVITY;
-        cam.setScale(scale);
-    }
+//    if(do_zoom){
+//        ofVec3f mouse = ofVec3f(x, y,0);
+//        ofVec3f mouseLast = ofVec3f(ofGetPreviousMouseX(),ofGetPreviousMouseY(),0);
+//        float dify = mouse.y - mouseLast.y;
+//        scale += dify*SCALE_SENSITIVITY;
+//        cam.setScale(scale);
+//    }
 }
 
 //------------------------------------------------------------------
@@ -520,9 +521,10 @@ void ofApp::mousePressed(int x, int y, int button){
         EventHandler::getInstance()->setConsoleEvent();
     }
     
-    if(button == 2){
-        do_zoom = true;
-    }
+    
+//    if(button == 2){
+//        do_zoom = true;
+//    }
 }
 
 //------------------------------------------------------------------
@@ -533,9 +535,9 @@ void ofApp::mouseReleased(int x, int y, int button){
         EventHandler::getInstance()->setConsoleEvent();
     }
     
-    do_zoom = false;
-    zoom_in = false;
-    zoom_out = false;
+//    do_zoom = false;
+    menu_zoom_in = false;
+    menu_zoom_out = false;
 }
 
 //------------------------------------------------------------------
@@ -565,8 +567,8 @@ void ofApp::windowResized(int w, int h){
 //------------------------------------------------------------------
 void ofApp::menuEvent(ofxUIEventArgs &e)
 {
-    zoom_in = false;
-    zoom_out = false;
+//    zoom_in = false;
+//    zoom_out = false;
     
     string name = e.getName();
     if (name == "Straight Links") {
@@ -614,17 +616,17 @@ void ofApp::menuEvent(ofxUIEventArgs &e)
     else if (name == "Zoom In"){
         
         if(((ofxUIMultiImageButton*)e.widget)->getValue() == 1){
-            zoom_in = true;
-            scale -= 10*SCALE_SENSITIVITY;
-            cam.setScale(scale);
+            menu_zoom_in = true;
+//            scale -= 10*SCALE_SENSITIVITY;
+//            cam.setScale(scale);
         }
     }
     else if (name == "Zoom Out"){
         
         if(((ofxUIMultiImageButton*)e.widget)->getValue() == 1){
-            zoom_out = true;
-            scale += 10*SCALE_SENSITIVITY;
-            cam.setScale(scale);
+            menu_zoom_out = true;
+//            scale += 10*SCALE_SENSITIVITY;
+//            cam.setScale(scale);
         }
     }
     else if (name == "Save Snippet"){
@@ -1404,7 +1406,3 @@ bool ofApp::saveToXML() {
 }
 /* ================================================ */
 /* ================================================ */
-
-
-
-
