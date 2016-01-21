@@ -137,7 +137,6 @@ void ImageProcessor::setup() {
 //        drawNoInputs = false;
         
         //drawFbo = true;
-        
         fbo.allocate(width, height);
         
         // Setup post-processing chain

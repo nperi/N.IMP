@@ -94,6 +94,9 @@ void ImageOutput::removeInput(int inputId_){
                 
                 setCoorners(iC);
             }
+            else {
+                resetSizeBasedOnInput(input[0]);
+            }
             
             inputRemoved(inputId_);
             break;
