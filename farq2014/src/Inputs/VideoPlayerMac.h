@@ -21,7 +21,6 @@ class VideoPlayerMac : public InputSource{
 	
 	void setup();
 
-	//void draw(int x,int y, float scale);
     void loadVideo(string path);
     void nextVideo();
     void prevVideo();
@@ -50,8 +49,6 @@ private:
     
     string path;
     vector<string> playerPaths;
-    
-    //ofImage img;
 };
 
 #endif

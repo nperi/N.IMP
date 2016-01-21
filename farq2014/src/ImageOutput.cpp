@@ -17,7 +17,6 @@ ImageOutput::ImageOutput(string name_, string typeName_, int id_, int maxInputs_
     
     img.allocate(width, height, OF_IMAGE_COLOR);
     img.setUseTexture(true);
-    //tex.allocate(width,height, GL_RGBA);
     maxInputs   = maxInputs_;
     panel.setup();
     panel.add(gui.setup(typeName));
@@ -139,24 +138,6 @@ void ImageOutput::setGui(int x,int y, int width){
 void ImageOutput::resetProcessedFlag(){
     isProcessed = false;
 }
-
-//------------------------------------------------------------------
-//ofImage* ImageOutput::getImage(){
-//    if(!isProcessed){
-//        update();
-//        isProcessed = true;
-//    }
-//    return &img;
-//}
-
-//------------------------------------------------------------------
-//ofTexture* ImageOutput::getTexture(){
-//    if(!isProcessed){
-//        update();
-//        isProcessed = true;
-//    }
-//    return &tex;
-//}
 
 //------------------------------------------------------------------
 void ImageOutput::setEnable(bool isEnabled_){

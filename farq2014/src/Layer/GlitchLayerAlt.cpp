@@ -13,7 +13,6 @@
 //------------------------------------------------------------------
 GlitchLayerAlt::GlitchLayerAlt(string name_, int id_):VisualLayer(name_, "Glitch Layer Alt", id_){;
     
-    //gui.add(name.setup("layer", name));
     gui.add(isEnabled.setup("Enabled",isEnabled, 100,20));
     gui.add(dq.setup("DQ", 20,0,255));
     gui.add(qn.setup("QN", 40,0,255));
@@ -27,32 +26,13 @@ GlitchLayerAlt::GlitchLayerAlt(string name_, int id_):VisualLayer(name_, "Glitch
 //------------------------------------------------------------------
 void GlitchLayerAlt::setup() {
 
-    if(input.size()) {
-        
-//        height = input[0]->getHeight();
-//        width  = input[0]->getWidth();
-//        updateFromInputCoorners(getTextureCoorners().getVertices()[0]);
-//        drawNoInputs = false;
-        
-        //drawTexture = true;
-        
-        glitcher.setup(dq, qn, dht);
-    }
-    else {
+    if(!input.size()) {
         drawNoInputs = true;
     }
-
+    else {
+        glitcher.setup(dq, qn, dht);
+    }
 }
-
-
-//------------------------------------------------------------------
-//void GlitchLayerAlt::draw(int x,int y, float scale) {
-//    ofSetColor(255, 255, 255);
-//    float ratio = (float)height/(float)width;
-//    int w = 640*scale;
-//    int h = w*ratio;
-//    img.draw(x, y,w,h);
-//}
 
 //------------------------------------------------------------------
 void GlitchLayerAlt::update(){
@@ -62,7 +42,6 @@ void GlitchLayerAlt::update(){
         
         input[0]->getTextureReference().readToPixels(buff);
         img.setFromPixels(buff);
-        //img.setFromPixels(input[0]->getImage()->getPixels(), width, height, OF_IMAGE_COLOR);
         
         if(isEnabled){
            
@@ -78,7 +57,6 @@ void GlitchLayerAlt::update(){
         }
         
         img.update();
-        //tex = img.getTextureReference();
     }
 }
 

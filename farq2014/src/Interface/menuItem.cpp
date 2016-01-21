@@ -33,6 +33,7 @@ menuItem::menuItem(ofxUISuperCanvas* menu, string type, string name, string img,
     enableMouseEvents();
 }
 
+//------------------------------------------------------------------
 void menuItem::draw() {
         
     if(isMouseOver()) {

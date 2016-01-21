@@ -29,7 +29,6 @@ class ImageInputList : public InputSource{
     ImageInputList(string name = "New Image Input", int id_ = -1);
     
     void setup();
-//    void draw(int x,int y, float scale);
     void loadImage(string name_,string path_);
     void updateParameter(Param* inputParam);
     void setEnable(bool isEnabled_);
@@ -58,8 +57,6 @@ class ImageInputList : public InputSource{
     ofxButton nextFrame;
     ofxButton previousFrame;
     ofParameter<bool> setOriginalPlaySpeed;
-    
-//void setParameters(float bpm_,int bpmMultiplier_,bpmMultiplier);
 	
 private:
     vector<ImageType*> inputs;

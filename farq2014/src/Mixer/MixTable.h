@@ -21,9 +21,6 @@ public:
     
     MixTable(string name_ = "mixtable", string typeName_ = "MIXER", int id_ = -1);
     
-protected:
-    
-    //ofFbo fbo;
 };
 
 #endif

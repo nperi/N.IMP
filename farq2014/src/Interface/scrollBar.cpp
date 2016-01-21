@@ -14,6 +14,7 @@
 scrollBar::scrollBar(){
 }
 
+//------------------------------------------------------------------
 scrollBar::scrollBar(class ofxComposer* _composer, ofxMultiTouchPad* _pad, int eventPriority){
     this->composer  = _composer;
     this->pad       = _pad;
@@ -34,7 +35,7 @@ scrollBar::scrollBar(class ofxComposer* _composer, ofxMultiTouchPad* _pad, int e
     updating = false;
 }
 
-
+//------------------------------------------------------------------
 void scrollBar::setup(){
     /*
      The "panel" is a frame. This frame contains the displayed images, and the scroll bar.
@@ -151,6 +152,7 @@ void scrollBar::update(){
 
 }
 
+//------------------------------------------------------------------
 void scrollBar::draw(){
     // Add a translation to bring the panel to the good position
     ofPushMatrix();
@@ -217,6 +219,7 @@ void scrollBar::mouseDragged(ofMouseEventArgs &e){
     }
 }
 
+//------------------------------------------------------------------
 void scrollBar::mouseReleased(ofMouseEventArgs &e){
     if(EventHandler::getInstance()->isMainEvent()){
         composer->setDraggingGrip(false);
@@ -226,6 +229,7 @@ void scrollBar::mouseReleased(ofMouseEventArgs &e){
 //    enableScroll = true;
 }
 
+//------------------------------------------------------------------
 void scrollBar::mousePressed(ofMouseEventArgs &e){
     if(EventHandler::getInstance()->isMainEvent()){
         // Check if the click occur on the grip
@@ -253,6 +257,7 @@ void scrollBar::mousePressed(ofMouseEventArgs &e){
 //    }
 }
 
+//------------------------------------------------------------------
 void scrollBar::mouseMoved(ofMouseEventArgs &e){
     if(EventHandler::getInstance()->isMainEvent()){
         if (isScrollBarVisible) {
@@ -271,6 +276,7 @@ void scrollBar::mouseMoved(ofMouseEventArgs &e){
     }
 }
 
+//------------------------------------------------------------------
 void scrollBar::keyPressed(ofKeyEventArgs &e){
     if(EventHandler::getInstance()->isMainEvent()){
         // hacer que si es flechita mover el scroll
@@ -298,6 +304,7 @@ void scrollBar::keyPressed(ofKeyEventArgs &e){
     }
 }
 
+//------------------------------------------------------------------
 void scrollBar::windowResized(ofResizeEventArgs &e){
     if(EventHandler::getInstance()->isMainEvent()){
         this->setup();
@@ -368,6 +375,7 @@ void scrollBar::updateScrollBar(ofVec3f diffVec){
     
 }
 
+//------------------------------------------------------------------
 void scrollBar::updateHScrollBar(ofVec3f diffVec){
     
     // TODO: con la flechita no puedo ir a los topes de la barra

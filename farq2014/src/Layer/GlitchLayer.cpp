@@ -39,52 +39,32 @@ GlitchLayer::GlitchLayer(string name_, int id_):VisualLayer(name_, "Glitch Layer
 //------------------------------------------------------------------
 void GlitchLayer::setup() {
 
-    if(input.size()) {
-        
-//        height = input[0]->getHeight();
-//        width  = input[0]->getWidth();
-//        updateFromInputCoorners(getTextureCoorners().getVertices()[0]);
-//        drawNoInputs = false;
-        
-        //drawFbo = true;
+    if(!input.size()) {
+        drawNoInputs = true;
+    }
+    else {
+        height = input[0]->getHeight();
+        width  = input[0]->getWidth();
         
         fbo.allocate(width, height);
         myGlitch.setup(&fbo);
     }
-    else {
-        drawNoInputs = true;
-    }
 }
 
 //------------------------------------------------------------------
-//void GlitchLayer::draw(int x,int y, float scale) {
-
-//    ofSetColor(255, 255, 255);
-//    ofPushMatrix();
-//    glMultMatrixf(glMatrix);
-//    img.draw(0, 0);
-//    ofPopMatrix();
-//}
-
-//------------------------------------------------------------------
 void GlitchLayer::update(){
-    //process pipeline
     
+    //process pipeline
     if(input.size()) {
-        
-        //img.setFromPixels(input[0]->getImage()->getPixels(), width, height, OF_IMAGE_COLOR);
 
         if(isEnabled){
             
             setGlitchParameters();
             
             fbo.begin();
-            
             ofClear(0, 0, 0,255);
             ofSetColor(255);
-            //img.draw(0, 0);
             input[0]->getTextureReference().draw(0,0,width,height);
-            
             fbo.end();
             
             /* Apply effects */
@@ -100,7 +80,6 @@ void GlitchLayer::update(){
         img.setFromPixels(buff);
         
         img.update();
-        //tex = img.getTextureReference();
     }
 }
 

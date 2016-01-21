@@ -25,10 +25,6 @@ void ImageInputList::setup(){
     if (inputs[currentSequence]) {
         width  = inputs[currentSequence]->getWidth();
         height = inputs[currentSequence]->getHeight();
-        
-        //img.allocate(width, height, OF_IMAGE_COLOR_ALPHA);
-        
-        //drawTexture = true;
     }
     else {
         drawNoInputs = true;
@@ -38,20 +34,9 @@ void ImageInputList::setup(){
 //------------------------------------------------------------------
 void ImageInputList::update(){
     
-//    inputs[currentSequence]->update(img, tex);
     inputs[currentSequence]->update(img);
     playPos2 = inputs[currentSequence]->getPosition();
 }
-
-//------------------------------------------------------------------
-//void ImageInputList::draw(int x,int y, float scale){
-//
-//    ofPushMatrix();Ï
-//    glMultMatrixf(glMatrix);
-//    tex.draw(0,0);
-//    ofPopMatrix();
-//    
-//}
 
 //------------------------------------------------------------------
 void ImageInputList::updateParameter(Param* inputParam){
@@ -102,7 +87,6 @@ void ImageInputList::loadImage(string name_, string path_){
         isPlaying.addListener(this, &ImageInputList::isPlayingChanged);
         isEnabledOn.addListener(this, &ImageInputList::setEnableChanged);
         
-        
         nextSequence.addListener(this, &ImageInputList::nextSequenceChanged);
         prevSequence.addListener(this, &ImageInputList::prevSequenceChanged);
         currentSequence.addListener(this, &ImageInputList::sequenceChanged);
@@ -113,7 +97,6 @@ void ImageInputList::loadImage(string name_, string path_){
         gui.add(currentSequence.set("current", 0, 0, 0));
         
         seqSettings.setName("Sequence Settings");
-       // seqSettings.add(setOriginalPlaySpeed.set("original play speed",true));
         seqSettings.add(isPlaying.set("Play",true));
         seqSettings.add(isPalindromLoop.set("LoopPalindrom",true));
         seqSettings.add(isMatchBpmToSequenceLength.set("match BPM to Sequence Length",false));
@@ -137,7 +120,6 @@ void ImageInputList::loadImage(string name_, string path_){
         inputs[0]->isPlayingBackwards = isPlayingBackwards;
         inputs[0]->setLoopState(l);
         inputs[0]->calculateFPS();
-        //inputs[0]->activate(img, tex);
         inputs[0]->activate(img);
     }
 }
@@ -206,7 +188,6 @@ void ImageInputList::setEnableChanged(bool &b){
 //------------------------------------------------------------------
 void ImageInputList::playPositionChanged(float &pos){
     isPlaying = false;
-    //inputs[currentSequence]->setPosition(pos,img,tex);
     inputs[currentSequence]->setPosition(pos,img);
 }
 
@@ -228,7 +209,6 @@ void ImageInputList::sequenceChanged(int &s){
         inputs[lastSequence]->isPlaying = false;
         lastSequence = currentSequence;
         
-//        inputs[currentSequence]->activate(img, tex);
         inputs[currentSequence]->activate(img);
         inputs[currentSequence]->isPlaying = isPlaying;
         
@@ -279,7 +259,6 @@ void ImageInputList::setEnable(bool isEnabled_){
                 }
             }
             
-            //inputs[currentSequence]->activate(img, tex);
             inputs[currentSequence]->activate(img);
             inputs[currentSequence]->isPlaying = isPlaying;
         }
@@ -434,10 +413,3 @@ bool ImageInputList::saveSettings(ofxXmlSettings &XML) {
     return saved;
     
 }
-
-
-
-/*
-void ImageInputList::setParameters(int bpm_){
-    bpm = bpm_;
-}*/

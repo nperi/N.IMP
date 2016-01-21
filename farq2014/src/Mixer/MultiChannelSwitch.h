@@ -19,12 +19,11 @@
 
 class MultiChannelSwitch : public MixTable{
 	
-  public:
+public:
 	
 	MultiChannelSwitch(string name_ = "New MultiChannel Switch", int id_ = -1);
 	
 	void setup();
-//	void draw(int x,int y, float scale);
     void updateParameter(Param* inputParam);
     
     ofImage*    getImage();
@@ -39,6 +38,7 @@ class MultiChannelSwitch : public MixTable{
     bool saveSettings(ofxXmlSettings &XML);
     
 private:
+    
     void inputAdded(ImageOutput* in_);
     void inputRemoved(int id_);
     void update();
@@ -50,7 +50,6 @@ private:
     ofParameterGroup labelGroup;
     vector<ofParameter<bool> > labels;
     bool notificationSendedSlider,notificationSendedRadio;
-    
     
     //hack to kill double callback
     long lastClicked;

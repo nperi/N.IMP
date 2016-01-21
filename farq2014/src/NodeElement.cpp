@@ -29,7 +29,6 @@ NodeElement::~NodeElement() {
 
 //------------------------------------------------------------------
 void NodeElement::draw() {
-    //imageOutput->draw(x, y,scale);
 	
 }
 

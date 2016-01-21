@@ -18,12 +18,11 @@
 //simple sample mixtable
 class MixSimpleBlend : public MixTable{
 	
-  public:
+public:
 	
     MixSimpleBlend(string name_ = "New Mix Simple Blend", int id_ = -1);
 	
 	void setup();
-//    void draw(int x,int y, float scale);
     void updateParameter(Param* inputParam);
     
     ofImage*    getImage();
@@ -40,6 +39,7 @@ class MixSimpleBlend : public MixTable{
     bool saveSettings(ofxXmlSettings &XML);
     
 private:
+    
     void update();
     void inputAdded(ImageOutput* in_);
     void inputRemoved(int id_);

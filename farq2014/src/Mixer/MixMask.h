@@ -16,12 +16,11 @@
 
 class MixMask : public MixTable{
 	
-  public:
+public:
 	
 	MixMask(string name_ = "New Mix Mask", int id_ = -1);
 	
 	void setup();
-//    void draw(int x,int y, float scale);
     void updateParameter(Param* inputParam);
 	
     ofImage*    getImage();

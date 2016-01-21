@@ -129,21 +129,15 @@ ImageProcessor::ImageProcessor(string name_, int id_):VisualLayer(name_, "Image 
 //------------------------------------------------------------------
 void ImageProcessor::setup() {
     
-    if(input.size()) {
-        
-//        height = input[0]->getHeight();
-//        width  = input[0]->getWidth();
-//        updateFromInputCoorners(getTextureCoorners().getVertices()[0]);
-//        drawNoInputs = false;
-        
-        //drawFbo = true;
-        fbo.allocate(width, height);
-        
-        // Setup post-processing chain
-        post.init(width,height);
+    if(!input.size()) {
+        drawNoInputs = true;
     }
     else {
-        drawNoInputs = true;
+        height = input[0]->getHeight();
+        width  = input[0]->getWidth();
+        
+        post.init(width,height);
+        fbo.allocate(width, height);
     }
 }
 
@@ -161,21 +155,12 @@ void ImageProcessor::update() {
         
         post.begin();
         ofClear(255,255,255,0);
-//        ofPushMatrix();
-//        ofScale(1, -1);
-//        ofPushMatrix();
-//        ofTranslate(0, -height);
-        //input[0]->getTexture()->draw(0,0,width,height);
         input[0]->getTextureReference().draw(0,0);
-//        ofPopMatrix();
-//        ofPopMatrix();
         post.end();
 
         glDisable(GL_BLEND);
         glPopAttrib();
         fbo.end();
-        
-        //tex = fbo.getTextureReference();
     }
 }
 
@@ -233,16 +218,6 @@ void ImageProcessor::updateParameter(Param* inputParam){
         }
     }
 }
-
-//------------------------------------------------------------------
-//void ImageProcessor::draw(int x,int y, float scale) {
-//
-//    ofPushMatrix();
-//    glMultMatrixf(glMatrix);
-//    ofSetColor(255);
-//    fbo.draw(0,0);
-//    ofPopMatrix();
-//}
 
 //------------------------------------------------------------------
 ofImage* ImageProcessor::getImage(){

@@ -16,9 +16,11 @@ EventHandler::EventHandler() {
     mainEvent = true;
 }
 
+//------------------------------------------------------------------
 EventHandler::~EventHandler(){
 }
 
+//------------------------------------------------------------------
 EventHandler* EventHandler::getInstance(){
     if(!instance){
         instance = new EventHandler();
@@ -26,18 +28,23 @@ EventHandler* EventHandler::getInstance(){
     return instance;
 }
 
+//------------------------------------------------------------------
 bool EventHandler::isMainEvent(){
     return (instance->mainEvent == true);
 }
 
+//------------------------------------------------------------------
 bool EventHandler::isConsoleEvent(){
     return (instance->consoleEvent == true);
 }
 
+//------------------------------------------------------------------
 void EventHandler::setMainEvent(){
     instance->mainEvent = true;
     instance->consoleEvent = false;
 }
+
+//------------------------------------------------------------------
 void EventHandler::setConsoleEvent(){
     instance->consoleEvent = true;
     instance->mainEvent = false;

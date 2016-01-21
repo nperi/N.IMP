@@ -10,7 +10,6 @@
 #include "MixSimpleBlend.h"
 
 MixSimpleBlend::MixSimpleBlend(string name_, int id_):MixTable(name_, "Mix Simple Blend", id_){
-    //psBlend.setup(width, height);
     
     maxInputs = 16;
 
@@ -41,16 +40,6 @@ void MixSimpleBlend::setup() {
         psBlend.setup(width, height);
     }
 }
-
-//------------------------------------------------------------------
-//void MixSimpleBlend::draw(int x,int y, float scale) {
-//
-//    ofSetColor(255, 255, 255);
-//    ofPushMatrix();
-//    glMultMatrixf(glMatrix);
-//    fbo.draw(0, 0);
-//    ofPopMatrix();
-//}
 
 //------------------------------------------------------------------
 void MixSimpleBlend::update(){
@@ -91,7 +80,6 @@ void MixSimpleBlend::update(){
         glDisable(GL_BLEND);
         glPopAttrib();
         fbo.end();
-        //tex = fbo.getTextureReference();
     }
 }
 

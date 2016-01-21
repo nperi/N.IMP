@@ -26,13 +26,11 @@ class ImageType {
     };
 	
     imgType getType(){return mediaType;};
-    //virtual void update(ofImage& _img, ofTexture& _tex) = 0;
     virtual void update(ofImage& _img) = 0;
     
     virtual int getFrameRate() = 0;
     virtual float getPosition() = 0;
     virtual void calculateFPS() = 0;
-    //virtual void setPosition(float p, ofImage& _img, ofTexture& _tex) = 0;
     virtual void setPosition(float p, ofImage& _img) = 0;
     
     ofParameter<bool> isPlayingBackwards;
@@ -40,7 +38,6 @@ class ImageType {
     ofParameter<float> bpm;
     ofParameter<int> bpmMultiplier;
     
-    //virtual void activate(ofImage& _img, ofTexture& _tex) = 0;
     virtual void activate(ofImage& _img) = 0;
     virtual void setLoopState(ofLoopType l) = 0;
     ofParameter<bool> isPlaying;

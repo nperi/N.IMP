@@ -25,7 +25,6 @@ class ParticleGenerator : public InputSource{
 	ParticleGenerator(string name = "New Particle Generator", int id_ = -1);
 	
 	void setup();
-//	void draw(int x,int y, float scale);
     void updateParameter(Param* inputParam);
     
     ofImage*    getImage();
@@ -58,7 +57,6 @@ private:
     ofxParticleSystem* particle;
     int nForces = 3;
     vector<ParticleForce> force;
-    //ofFbo fbo;
     
     ofxButton bAddParticles,bRemoveParticles;
     

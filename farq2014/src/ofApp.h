@@ -120,13 +120,12 @@ public:
     bool isFullScreen;
     
     // START AUDIO FUNCTIONS AND PARAMETERS
-    
+    //
     float*  left;
     float*  right;
     int     bufferCounter;
     
     ofSoundStream soundStream;
-    
     //END AUDIO PARAMETRERS
     
     //gui

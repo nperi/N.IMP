@@ -20,7 +20,6 @@ public:
     GlitchLayer(string name_ = "New Glitch Layer", int id_ = -1);
     
     void setup();
-//    void draw(int x,int y, float scale);
     void updateParameter(Param* inputParam);
     
     ofImage*    getImage();
@@ -29,14 +28,12 @@ public:
     bool loadSettings(ofxXmlSettings &XML, int nTag_);
     bool saveSettings(ofxXmlSettings &XML);
     
-    //ofFbo			myFbo;
     ofTexture		texture;
     ofxPostGlitch	myGlitch;
     
     ofPixels        buff;
     
     //glitch parameters
-    
     ofxToggle do_CONVERGENCE;
     ofxToggle do_GLOW;
     ofxToggle do_SHAKER;
@@ -59,7 +56,6 @@ public:
 private:
     
     void update();
-    
     void setGlitchParameters();
     
 };

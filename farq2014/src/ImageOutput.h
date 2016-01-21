@@ -40,10 +40,7 @@ class ImageOutput : public ofxPatch {
     vector<ImageOutput*> input;
     
     virtual void setup() = 0;
-    
     virtual void update() = 0;
-    //draws the node (whatever there is defined), in general the Output-picture
-//    virtual void draw(int x,int y, float scale = 1.0) = 0;
     
     //gui methods
     void drawGui();
@@ -79,8 +76,6 @@ protected:
     vector<int> inputIdentifiers;
     int maxInputs;
     
-    //resolution
-    //int width, height;
     bool isProcessed;
     
     ofxToggle isEnabled;

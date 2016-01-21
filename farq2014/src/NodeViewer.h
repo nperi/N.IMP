@@ -16,8 +16,8 @@
 
 
 class NodeViewer : public ofxComposer {
-	
-  public:
+
+public:
 	
 	NodeViewer(string name_="default");
 	
@@ -36,6 +36,7 @@ class NodeViewer : public ofxComposer {
     bool saveSettings(ofxXmlSettings &XML);
     
 private:
+    
     vector<NodeElement*> elements;
     vector<std::pair<ofVec2f,ofVec2f> > connections;
     string name;

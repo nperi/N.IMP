@@ -47,15 +47,6 @@ void InputCamera::update() {
 }
 
 //------------------------------------------------------------------
-//void InputCamera::draw(int x,int y, float scale) {
-//    
-//    ofPushMatrix();
-//    glMultMatrixf(glMatrix);
-//    videoGrabber->draw(0,0);
-//    ofPopMatrix();
-//}
-
-//------------------------------------------------------------------
 ofImage* InputCamera::getImage(){
     return &img;
 }

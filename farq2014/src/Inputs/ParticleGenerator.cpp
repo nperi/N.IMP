@@ -17,8 +17,6 @@ ParticleGenerator::ParticleGenerator(string name, int id_) : InputSource(name, "
     s.useDepth			= false;
     fbo.allocate(s);
     
-    //drawFbo = true;
-    
     gui.add(bAddParticles.setup("add Particles"));
     gui.add(bRemoveParticles.setup("remove Particles"));
     gui.add(isClearBg.set("Clear BG",true));
@@ -41,12 +39,6 @@ ParticleGenerator::ParticleGenerator(string name, int id_) : InputSource(name, "
     gui.setWidthElements(INSPECTOR_WIDTH);
     
     particle = new ofxParticleSystem(200,width,height,minRadius,(unityScale) ? minRadius : maxRadius,minLifetime,maxLifetime,fadeOut);
-    
-   /* for(int i=0; i<nForces; ++i){
-        force.push_back(ParticleForce());
-        if (i%2) force[i].isAttracting = true;
-        gui.add(force[i].parameters);
-    }*/
     
 }
 
@@ -87,33 +79,9 @@ void ParticleGenerator::update() {
     particle->draw();
     ofDisableAlphaBlending();
     fbo.end();
-    //tex = fbo.getTextureReference();
     
     force.clear();
 }
-
-//------------------------------------------------------------------
-//void ParticleGenerator::draw(int x,int y, float scale) {
-//
-//    ofPushStyle();
-//    ofSetColor(255, 255, 255);
-//    ofEnableAlphaBlending();
-//    ofPushMatrix();
-//    ofMultMatrix(glMatrix);
-//    fbo.draw(0,0);
-//    ofNoFill();
-//    ofSetColor(0, 0, 0);
-//    ofRect(0, 0, width, height);
-//    ofFill();
-//    for(int i=0; i<force.size();++i){
-//        int mult = (force[i].isAttracting) ? 255 : 0;
-//        ofSetColor(255-mult, mult, 0,force[i].scale*50);
-//        ofCircle(force[i].pos->x, force[i].pos->y, force[i].radius);
-//    }
-//    ofDisableAlphaBlending();
-//    ofPopMatrix();
-//    ofPopStyle();
-//}
 
 //------------------------------------------------------------------
 void ParticleGenerator::addForce(ParticleForce f){

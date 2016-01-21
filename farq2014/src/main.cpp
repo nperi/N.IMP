@@ -11,6 +11,4 @@ int main() {
     
     ofSetupOpenGL(&glfw,1280,700,OF_WINDOW);
     ofRunApp(new ofApp());
-    //	ofSetupOpenGL(1600, 900, OF_WINDOW);
-    //	ofRunApp(new ofApp());
 }

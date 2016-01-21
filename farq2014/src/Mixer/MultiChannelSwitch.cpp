@@ -12,11 +12,9 @@
 MultiChannelSwitch::MultiChannelSwitch(string name_, int id_):MixTable(name_, "Multi Channel Switch", id_){
     maxInputs = 16;
     
-    //gui.add(selChannel.set("channel", 0, 0, 0));
     gui.add(drawInputGui.set("show input Gui", false));
     drawInputGui.addListener(this, &MultiChannelSwitch::cGui);
 
-    
     selChannel.set("channel", 0, 0, 0);
     selChannel.addListener(this, &MultiChannelSwitch::cselChannel);
     labelGroup.setName("channels");
@@ -62,57 +60,12 @@ void MultiChannelSwitch::setup() {
 //------------------------------------------------------------------
 void MultiChannelSwitch::update() {
     
-    /*ofEnableAlphaBlending();
-
-    for (int i=0; i<input.size(); ++i) {
-        ofSetColor(255, 255, 255);
-        if (opacity[i] != 0) {
-            renderLayers[i]->begin();
-            input[i]->getTexture()->draw(0, 0);
-            renderLayers[i]->end();
-        }
-    }
-    
-    fbo.begin();
-    ofClear(255,255,255, 0);
-    for (int i=0; i<input.size(); ++i) {
-        ofSetColor(255, 255, 255);
-        if (opacity[i] != 0) {
-            //opacity layers
-            ofSetColor(255, 255, 255,opacity[i]);
-            input[i]->getTexture()->draw(0, 0);
-        }
-    }
-    fbo.end();*/
-    
     if (input.size()){
         
         input[selChannel]->getTextureReference().readToPixels(buff);
         img.setFromPixels(buff);
-        //img = *input[selChannel]->getImage();
-        //tex = *input[selChannel]->getTexture();
-        
-        //input[selChannel]->setDrawInspector(drawInputGui);
     }
 }
-
-//------------------------------------------------------------------
-//void MultiChannelSwitch::draw(int x,int y, float scale) {
-//    ofSetColor(255, 255, 255);
-//        float ratio = (float)height/(float)width;
-//        int w = 640*scale;
-//        int h = w*ratio;
-//        tex.draw(x, y,w, h);
-//    
-//    ofPushMatrix();
-//    ofTranslate(x+10, y+15);
-//    ofDrawBitmapString(input[selChannel]->getName(), 0,0);
-//    ofPopMatrix();
-//    
-//    if (drawInputGui) {
-//        input[selChannel]->drawGui(x,y);
-//    }
-//}
 
 //------------------------------------------------------------------
 void MultiChannelSwitch::updateParameter(Param* inputParam){
@@ -187,7 +140,6 @@ bool MultiChannelSwitch::loadSettings(ofxXmlSettings &XML, int nTag_) {
     
     nId             = XML.getAttribute("NODE", "id", -1, nTag_);
     selChannel      = ofToInt(XML.getAttribute("INPUT_SOURCE","selChannel","0",nTag_));
-    //drawInputGui    = ofToBool(XML.getAttribute("NODE", "drawInputGui", "0", nTag_));
     
     XML.pushTag("NODE", nTag_);
     

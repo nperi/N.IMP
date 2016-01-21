@@ -18,28 +18,33 @@ ImageTypePictureSequence::ImageTypePictureSequence(string name_ ,string path_): 
     img.loadImage(dir.getPath(0));
 }
 
-//void ImageTypePictureSequence::update(ofImage& _img, ofTexture& _tex){
+//------------------------------------------------------------------
 void ImageTypePictureSequence::update(ofImage& _img){
     if (isPlaying) {
         player.update();
         if (player.isFrameNew()) {
             _img.setFromPixels(player.getPixels(), player.getWidth(), player.getHeight(), OF_IMAGE_COLOR_ALPHA);
-            //_tex = *player.getTexture();
         }
     }
 }
+
+//------------------------------------------------------------------
 void ImageTypePictureSequence::setLoopState(ofLoopType l){
     player.setLoopState(l);
     
 }
+
+//------------------------------------------------------------------
 int ImageTypePictureSequence::getFrameRate(){
     return player.getFrameRate();
 }
 
+//------------------------------------------------------------------
 float ImageTypePictureSequence::getPosition(){
     return player.getPosition();
 }
 
+//------------------------------------------------------------------
 void ImageTypePictureSequence::calculateFPS(){
     float fps;
     if (!isMatchBpmToSequenceLength) {
@@ -51,24 +56,24 @@ void ImageTypePictureSequence::calculateFPS(){
     player.setFrameRate(fps);
 }
 
-//void ImageTypePictureSequence::setPosition(float p, ofImage& _img, ofTexture& _tex){
+//------------------------------------------------------------------
 void ImageTypePictureSequence::setPosition(float p, ofImage& _img){
     player.setPosition(p);
     _img.setFromPixels(player.getPixels(), player.getWidth(), player.getHeight(), OF_IMAGE_COLOR_ALPHA);
-    //_tex = *player.getTexture();
 }
-//void ImageTypePictureSequence::activate(ofImage& _img, ofTexture& _tex){
+
+//------------------------------------------------------------------
 void ImageTypePictureSequence::activate(ofImage& _img){
     player.play();
     _img.setFromPixels(player.getPixels(), player.getWidth(), player.getHeight(), OF_IMAGE_COLOR_ALPHA);
-    //_img = img;
-    //_tex = *player.getTexture();
 }
 
+//------------------------------------------------------------------
 float ImageTypePictureSequence::getHeight() {
     return img.getHeight();
 }
 
+//------------------------------------------------------------------
 float ImageTypePictureSequence::getWidth() {
     return img.getWidth();
 }

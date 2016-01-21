@@ -20,14 +20,11 @@ class ImageTypePicture : public ImageType{
 	
 	ImageTypePicture(string name_ ,string path_, bool isResize = false, int width = 1024, int height = 768);
 	
-//    void update(ofImage& _img, ofTexture& _tex);
     void update(ofImage& _img);
     
     int getFrameRate();
     float getPosition();
     void calculateFPS();
-//    void setPosition(float p, ofImage& _img, ofTexture& _tex);
-//    void activate(ofImage& _img, ofTexture& _tex);
     void setPosition(float p, ofImage& _img);
     void activate(ofImage& _img);
     
@@ -37,6 +34,7 @@ class ImageTypePicture : public ImageType{
     float getWidth();
     
 private:
+    
     ofImage img;
     ofTexture tex;
 };
