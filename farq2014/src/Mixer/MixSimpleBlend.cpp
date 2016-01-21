@@ -10,7 +10,7 @@
 #include "MixSimpleBlend.h"
 
 MixSimpleBlend::MixSimpleBlend(string name_, int id_):MixTable(name_, "Mix Simple Blend", id_){
-    psBlend.setup(width, height);
+    //psBlend.setup(width, height);
     
     maxInputs = 16;
 
@@ -32,6 +32,13 @@ void MixSimpleBlend::setup() {
     
     if(!input.size()) {
         drawNoInputs = true;
+    }
+    else {
+        width  = input[selector2]->getWidth();
+        height = input[selector2]->getHeight();
+
+        fbo.allocate(width, height);
+        psBlend.setup(width, height);
     }
 }
 
@@ -74,7 +81,7 @@ void MixSimpleBlend::update(){
             
             psBlend.begin();
             ofSetColor(255, 255, 255,opacity);
-            input[selector2]->getTextureReference().draw(0, 0);
+            input[selector2]->getTextureReference().draw(0, 0, width, height);
             psBlend.end();
             psBlend.draw(input[selector1]->getTextureReference(), blendMode);
             

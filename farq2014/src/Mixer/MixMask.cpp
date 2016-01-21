@@ -28,6 +28,11 @@ void MixMask::setup() {
     if(!input.size()) {
         drawNoInputs = true;
     }
+    else {
+        width  = input[0]->getWidth();
+        height = input[0]->getHeight();
+        fbo.allocate(width, height);
+    }
 }
 
 //------------------------------------------------------------------
@@ -48,7 +53,7 @@ void MixMask::update(){
         
         fbo.begin();
         ofClear(255,255,255, 0);
-        input[0]->getTextureReference().draw(0, 0);
+        input[0]->getTextureReference().draw(0, 0, width, height);
         ofEnableAlphaBlending();
         ofPushMatrix();
         ofTranslate(width/2, height/2);
