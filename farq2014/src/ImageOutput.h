@@ -60,8 +60,8 @@ class ImageOutput : public ofxPatch {
     virtual void setEnable(bool isEnabled_);
     
     //load patch settings
-    bool loadSettings(ofxXmlSettings &XML, int nTag_);
     virtual bool saveSettings(ofxXmlSettings &XML)=0;
+    virtual bool saveSettingsToSnippet(ofxXmlSettings &XML, map<int,int> newIdsMap)=0;
     
 protected:
 

@@ -36,8 +36,9 @@ class ImageInputList : public InputSource{
     ofImage*    getImage();
     ofTexture*  getTexture();
     
-    bool loadSettings(ofxXmlSettings &XML, int nTag_);
+    bool loadSettings(ofxXmlSettings &XML, int nTag_, int nodesCount_ = 0);
     bool saveSettings(ofxXmlSettings &XML);
+    bool saveSettingsToSnippet(ofxXmlSettings &XML, map<int,int> newIdsMap);
     
     ofxButton nextSequence;
     ofxButton prevSequence;

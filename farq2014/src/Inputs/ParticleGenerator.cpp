@@ -124,7 +124,7 @@ ofTexture* ParticleGenerator::getTexture(){
 }
 
 //------------------------------------------------------------------
-bool ParticleGenerator::loadSettings(ofxXmlSettings &XML, int nTag_) {
+bool ParticleGenerator::loadSettings(ofxXmlSettings &XML, int nTag_, int nodesCount_) {
     
     isClearBg       = ofToBool(XML.getAttribute("NODE", "isClearBg","true", nTag_));
     alphaParticles  = ofToFloat(XML.getAttribute("NODE", "alphaParticles","0.4", nTag_));
@@ -136,14 +136,14 @@ bool ParticleGenerator::loadSettings(ofxXmlSettings &XML, int nTag_) {
     minLifetime     = ofToFloat(XML.getAttribute("NODE", "minLifetime","0", nTag_));
     maxLifetime     = ofToFloat(XML.getAttribute("NODE", "maxLifetime","0", nTag_));
     
-    nId             = XML.getAttribute("NODE", "id", -1, nTag_);
+    nId             = XML.getAttribute("NODE", "id", -1, nTag_) + nodesCount_;
     
     XML.pushTag("NODE", nTag_);
     
     type            = XML.getValue("type","none");
     bVisible        = XML.getValue("visible", true);
     
-    ImageOutput::loadSettings(XML, nTag_);
+    ofxPatch::loadSettings(XML, nTag_, nodesCount_);
     
     XML.popTag();
     
@@ -208,3 +208,23 @@ bool ParticleGenerator::saveSettings(ofxXmlSettings &XML) {
     
 }
 
+//------------------------------------------------------------------
+bool ParticleGenerator::saveSettingsToSnippet(ofxXmlSettings &XML, map<int,int> newIdsMap) {
+    
+    bool saved = false;
+    int lastPlace = XML.addTag("NODE");
+    
+    XML.addAttribute("NODE", "id", newIdsMap[nId], lastPlace);
+    XML.addAttribute("NODE", "name", name, lastPlace);
+    XML.addAttribute("NODE", "type", "PARTICLE", lastPlace);
+
+    if (XML.pushTag("NODE", lastPlace)){
+        
+        saved = ofxPatch::saveSettingsToSnippet(XML, lastPlace, newIdsMap);
+        
+        XML.popTag();
+    }
+    
+    return saved;
+    
+}

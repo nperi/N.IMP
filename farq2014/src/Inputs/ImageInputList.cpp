@@ -273,11 +273,11 @@ void ImageInputList::setEnable(bool isEnabled_){
 }
 
 //------------------------------------------------------------------
-bool ImageInputList::loadSettings(ofxXmlSettings &XML, int nTag_) {
+bool ImageInputList::loadSettings(ofxXmlSettings &XML, int nTag_, int nodesCount_) {
     
     bool loaded = true;
     
-    nId     = XML.getAttribute("NODE", "id", -1, nTag_);
+    nId     = XML.getAttribute("NODE", "id", -1, nTag_) + nodesCount_;
     path    = XML.getAttribute("NODE", "path","none", nTag_);
     
     bpm             = ofToFloat(XML.getAttribute("NODE", "bpm","120", nTag_));
@@ -310,7 +310,7 @@ bool ImageInputList::loadSettings(ofxXmlSettings &XML, int nTag_) {
     type        = XML.getValue("type","none");
     bVisible    = XML.getValue("visible", true);
         
-    InputSource::loadSettings(XML, nTag_);
+    ofxPatch::loadSettings(XML, nTag_, nodesCount_);
     
     XML.popTag();
     
@@ -412,4 +412,42 @@ bool ImageInputList::saveSettings(ofxXmlSettings &XML) {
     
     return saved;
     
+}
+
+//------------------------------------------------------------------
+bool ImageInputList::saveSettingsToSnippet(ofxXmlSettings &XML, map<int,int> newIdsMap) {
+    
+    
+    bool saved = false;
+    int lastPlace = XML.addTag("NODE");
+    
+    XML.addAttribute("NODE", "id", newIdsMap[nId], lastPlace);
+    XML.addAttribute("NODE", "name", name, lastPlace);
+    XML.addAttribute("NODE", "type", "IMAGE", lastPlace);
+    XML.addAttribute("NODE", "path", path, lastPlace);
+    
+    XML.addAttribute("NODE", "bpm", bpm, lastPlace);
+    XML.addAttribute("NODE", "multiplier_divider", bpmMultiplier, lastPlace);
+    XML.addAttribute("NODE", "isPlaying", isPlaying, lastPlace);
+    XML.addAttribute("NODE", "palindrom", isPalindromLoop, lastPlace);
+    XML.addAttribute("NODE", "matchBPMtoSequence", isMatchBpmToSequenceLength, lastPlace);
+    
+    if (XML.pushTag("NODE", lastPlace)){
+        
+        if ((path == "none") || (path == "")) {
+            
+            for (int v = 0; v < inputs.size(); v++){
+                
+                XML.addTag("ASSET");
+                XML.addAttribute("ASSET", "name", inputs[v]->getName(), v);
+                XML.addAttribute("ASSET", "path", inputs[v]->getPath(), v);
+            }
+        }
+        
+        saved = ofxPatch::saveSettingsToSnippet(XML, lastPlace, newIdsMap);
+        
+        XML.popTag();
+    }
+    
+    return saved;
 }

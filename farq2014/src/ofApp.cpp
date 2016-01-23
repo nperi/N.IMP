@@ -161,10 +161,7 @@ void ofApp::setup() {
         //invoking nodes setup functions and setting main canvas and camera
         //
         for (int i=0; i<nodesVector.size(); ++i) {
-            nodesVector[i]->setParent(cam);
-            nodesVector[i]->setMainCanvas(gui);
-            nodesVector[i]->setup();
-            ofAddListener( nodesVector[i]->title->close , this, &ofApp::closePatch);
+            initNode(nodesVector[i]);
         }
         
         //starting input generators theads (the not threadeds will not start)
@@ -237,17 +234,11 @@ void ofApp::update() {
             scale = cam.getScale().x;
             scale -= 10*SCALE_SENSITIVITY;
             cam.setScale(scale);
-//            ofVec3f diffVec = ofVec3f(ZOOM_DIFF, ZOOM_DIFF,0);
-//            scrollBars->updateHScrollBar(diffVec);
-//            scrollBars->updateScrollBar(diffVec);
         }
         else if (menu_zoom_out) {
             scale = cam.getScale().x;
             scale += 10*SCALE_SENSITIVITY;
             cam.setScale(scale);
-//            ofVec3f diffVec = ofVec3f(-ZOOM_DIFF, -ZOOM_DIFF,0);
-//            scrollBars->updateHScrollBar(diffVec);
-//            scrollBars->updateScrollBar(diffVec);
         }
     
         //resetting processed flags
@@ -464,12 +455,12 @@ void ofApp::keyPressed  (int key){
             
             case 'j': case 'J' :
                 if ((newNodeInput == NULL) || (!newNodeInput->isClicked())) {
-                    nodeViewers[currentViewer]->loadSnippet();
+                    loadSnippet();
                 }
             break;
             case 'k': case 'K' :
                 if ((newNodeInput == NULL) || (!newNodeInput->isClicked())) {
-                    nodeViewers[currentViewer]->saveSnippet();
+                    saveSnippet();
                 }
             break;
         
@@ -550,7 +541,7 @@ void ofApp::dragEvent(ofDragInfo dragInfo){
     
     if( dragInfo.files.size() > 0 ){
         for(int i = 0; i < dragInfo.files.size(); i++){
-            nodeViewers[currentViewer]->addPatchFromFile( dragInfo.files[i], dragInfo.position );
+            //nodeViewers[currentViewer]->addPatchFromFile( dragInfo.files[i], dragInfo.position );
         }
     }
 }
@@ -617,26 +608,22 @@ void ofApp::menuEvent(ofxUIEventArgs &e)
         
         if(((ofxUIMultiImageButton*)e.widget)->getValue() == 1){
             menu_zoom_in = true;
-//            scale -= 10*SCALE_SENSITIVITY;
-//            cam.setScale(scale);
         }
     }
     else if (name == "Zoom Out"){
         
         if(((ofxUIMultiImageButton*)e.widget)->getValue() == 1){
             menu_zoom_out = true;
-//            scale += 10*SCALE_SENSITIVITY;
-//            cam.setScale(scale);
         }
     }
     else if (name == "Save Snippet"){
         if(((ofxUIMultiImageButton*)e.widget)->getValue() == 1){
-            nodeViewers[currentViewer]->saveSnippet();
+            saveSnippet();
         }
     }
     else if (name == "Open Snippet"){
         if(((ofxUIMultiImageButton*)e.widget)->getValue() == 1){
-            nodeViewers[currentViewer]->loadSnippet();
+            loadSnippet();
         }
     }
     else if (name == "Save Patcher"){
@@ -773,13 +760,20 @@ void ofApp::createNode(textInputEvent &args){
         nodeViewers[currentViewer]->addElement(nE, ofVec3f(args.point.x, args.point.y, 0.0)*cam.getGlobalTransformMatrix());
         nodes.insert(std::pair<int, ImageOutput*>(newPatch->getId(), newPatch));
         nodesVector.push_back(newPatch);
-        newPatch->setup();
+        initNode(newPatch);
         newPatch->resetSize();
-        ofAddListener( newPatch->title->close , this, &ofApp::closePatch);
         
         ofRemoveListener(((textInput*)args.widget)->createNode , this, &ofApp::createNode);
         widgetsToDelete.push_back(args.widget); // delete input from canvas
     }
+}
+
+void ofApp::initNode(ofxPatch* node) {
+    node->setParent(cam);
+    node->setMainCanvas(gui);
+    node->setup();
+    node->setLinkType(nodeViewers[currentViewer]->getLinkType());
+    ofAddListener( node->title->close , this, &ofApp::closePatch);
 }
 
 //------------------------------------------------------------------
@@ -833,259 +827,12 @@ bool ofApp::loadFromXML(){
             if(numSettingsTag==1){
                 
                 XML.pushTag("SETTINGS");
-                
-                int numInputTag = XML.getNumTags("INPUTS");
-                
-                // LOADING INPUTS
-                
-                if(numInputTag==1){
-                    XML.pushTag("INPUTS");
-                    
-                    int numInputTag = XML.getNumTags("NODE");
-                    for(int i=0; i < numInputTag; i++){
-                        int    inputId   = XML.getAttribute("NODE","id",-1,i);
-                        string inputName = XML.getAttribute("NODE","name","default",i);
-                        string inputType = XML.getAttribute("NODE","type","CAM",i);
-                        
-                        switch(inputTypes[inputType]){
-                            case VIDEO:
-                            {
-                                VideoPlayerMac* vP = new VideoPlayerMac(inputName, inputId);
-                                
-                                if (vP->loadSettings(XML, i)) {
-                                    inputs.push_back(vP);
-                                    nodes.insert(std::pair<int,ImageOutput*>(inputId,vP));
-                                }
-                                else {
-                                    result = false;
-                                    message = "no videos to be loaded!";
-                                }
-                                
-                                break;
-                            };
-                            case CAM:
-                            {
-                                InputCamera* iC = new InputCamera(inputName, inputId);
-                                iC->loadSettings(XML, i);
-                                
-                                inputs.push_back(iC);
-                                nodes.insert(std::pair<int,ImageOutput*>(inputId,iC));
-                                
-                                break;
-                            };
-                            case IMAGE:
-                            {
-                                ImageInputList* iI = new ImageInputList(inputName, inputId);
-                                
-                                if (iI->loadSettings(XML, i)) {
-                                    inputs.push_back(iI);
-                                    nodes.insert(std::pair<int,ImageOutput*>(inputId,iI));
-                                }
-                                else {
-                                    result = false;
-                                    message = "no images to be loaded!";
-                                }
-                                
-                                break;
-                            };
-                            case PARTICLE:
-                            {
-                                ParticleGenerator* iI = new ParticleGenerator(inputName, inputId);
-                                iI->loadSettings(XML, i);
-                                
-                                inputs.push_back(iI);
-                                nodes.insert(std::pair<int,ImageOutput*>(inputId,iI));
-                                
-                                break;
-                            };
-                            default:
-                            {
-                                result = false;
-                                message = "unknown input type!";
-                                break;
-                            };
-                        }
-                        
-                        if(!result){
-                            //there has been an error
-                            //exit the loop
-                            break;
-                        }
-                        
-                    }
-                    XML.popTag();
-                    
-                }
-                else{
-                    message = "inputs tag missing";
-                    result = false;
-                }
-                
-                //LOADING VISUAL LAYERS
-                
-                if(result){
-                    int numVLsTag = XML.getNumTags("VISUAL_LAYERS");
-                    if(numVLsTag==1){
-                        
-                        XML.pushTag("VISUAL_LAYERS");
-                        
-                        int numVLTag = XML.getNumTags("NODE");
-                        
-                        for(int i=0; i < numVLTag; i++){
-                            int    layerId    = XML.getAttribute("NODE","id",-1,i);
-                            string layerName  = XML.getAttribute("NODE","name","default",i);
-                            string layerType  = XML.getAttribute("NODE","type","IKEDA",i);
-                            int inputSourceId = XML.getAttribute("NODE","inputSource",0,i);
-                            
-                            switch(visualLayerTypes[layerType]){
-                                case IKEDA:
-                                {
-                                    IkedaLayer* iL = new IkedaLayer(layerName, layerId);
-                                    if (inputSourceId != 0)
-                                        iL->addInputIdentifier(inputSourceId);
-                                    iL->loadSettings(XML, i);
-                                    
-                                    visualLayers.push_back(iL);
-                                    nodes.insert(std::pair<int,ImageOutput*>(layerId,iL));
-                                    
-                                    break;
-                                };
-                                case GLITCH_1:
-                                {
-                                    GlitchLayer* gL = new GlitchLayer(layerName, layerId);
-                                    if (inputSourceId != 0)
-                                        gL->addInputIdentifier(inputSourceId);
-                                    gL->loadSettings(XML, i);
 
-                                    visualLayers.push_back(gL);
-                                    nodes.insert(std::pair<int,ImageOutput*>(layerId,gL));
-                                    
-                                    break;
-                                };
-                                case GLITCH_2:
-                                {
-                                    GlitchLayerAlt* gLA = new GlitchLayerAlt(layerName, layerId);
-                                    if (inputSourceId != 0)
-                                        gLA->addInputIdentifier(inputSourceId);
-                                    gLA->loadSettings(XML, i);
-                                    
-                                    visualLayers.push_back(gLA);
-                                    nodes.insert(std::pair<int,ImageOutput*>(layerId,gLA));
-                                    
-                                    break;
-                                };
-                                case IMAGE_PROCESSOR:
-                                {
-                                    
-                                    ImageProcessor* gLA = new ImageProcessor(layerName, layerId);
-                                    if (inputSourceId != 0)
-                                        gLA->addInputIdentifier(inputSourceId);
-                                    gLA->loadSettings(XML, i);
-
-                                    
-                                    visualLayers.push_back(gLA);
-                                    nodes.insert(std::pair<int,ImageOutput*>(layerId,gLA));
-                                    
-                                    break;
-                                };
-                                default:
-                                {
-                                    result = false;
-                                    message = "unknown visual layer type!";
-                                    break;
-                                };
-                            }
-                            
-                            if(!result){
-                                //there has been an error
-                                //exit the loop
-                                break;
-                            }
-
-                        }
-                        
-                        XML.popTag();
-                    }
-                    else{
-                        message = "visual layers tag missing";
-                        result = false;
-                    }
-                }
+                result = this->loadNodes(XML);
                 
-                //LOADING MIXERS
-                if(result){
-                    int numMXsTag = XML.getNumTags("MIXERS");
-                    if(numMXsTag==1){
-                        XML.pushTag("MIXERS");
-                        
-                        int numMXTag = XML.getNumTags("NODE");
-                        
-                        for(int i = 0; i < numMXTag; i++){
-                            int    mixerId   = XML.getAttribute("NODE","id",-1,i);
-                            string mixerName = XML.getAttribute("NODE","name","default",i);
-                            string mixerType = XML.getAttribute("NODE","type","SIMPLE_BLEND", i);
-                            
-                            switch(mixerTypes[mixerType]){
-                                case SIMPLE_BLEND:
-                                {
-                                    MixSimpleBlend* mSB = new MixSimpleBlend(mixerName, mixerId);
-                                    mSB->loadSettings(XML, i);
-                                    
-                                    mixtables.push_back(mSB);
-                                    nodes.insert(std::pair<int, ImageOutput*>(mixerId, mSB));
-                                    
-                                    break;
-                                };
-                                case MASK:
-                                {
-                                    MixMask* mMM = new MixMask(mixerName, mixerId);
-                                    mMM->loadSettings(XML, i);
-                                    
-                                    mixtables.push_back(mMM);
-                                    nodes.insert(std::pair<int, ImageOutput*>(mixerId, mMM));
-                                    
-                                    break;
-                                };
-                                case MULTI_CHANNEL:
-                                {
-                                    MultiChannelSwitch* mMM = new MultiChannelSwitch(mixerName, mixerId);
-                                    mMM->loadSettings(XML, i);
-                                    
-                                    mixtables.push_back(mMM);
-                                    nodes.insert(std::pair<int, ImageOutput*>(mixerId, mMM));
-                                    
-                                    break;
-                                };
-                                default:
-                                {
-                                    result = false;
-                                    message = "unknown mixer type!";
-                                    break;
-                                };
-                                    
-                            }
-                            
-                            if(!result){
-                                //there has been an error
-                                //exit the loop
-                                break;
-                            }
-                            
-                        }
-                        //MIXERS POP
-                        XML.popTag();
-
-                    }
-
-                }
-                else{
-                    message = "mixers tag missing";
-                    result = false;
-                }
-                //SETTINGS POP
                 XML.popTag();
             }
-            else{
+            else {
                 result = false;
                 message = "missing SETTINGS tag!";
             }
@@ -1266,7 +1013,6 @@ bool ofApp::loadFromXML(){
                         result = false;
                         message = "missing SYPHON_SERVERS tag!";
                     }
-                    
                 }
             }
         }
@@ -1404,5 +1150,495 @@ bool ofApp::saveToXML() {
     }
     else ofLog(OF_LOG_ERROR, "Couldn't load the .xml file. The file appSettings.xml was not found");
 }
+
+//------------------------------------------------------------------
+bool ofApp::loadNodes(ofxXmlSettings &XML){
+    
+    bool result = true;
+    int  numInputTag = XML.getNumTags("INPUTS");
+    
+    // LOADING INPUTS
+    
+    if(numInputTag==1){
+        XML.pushTag("INPUTS");
+        
+        int numInputTag = XML.getNumTags("NODE");
+        for(int i=0; i < numInputTag; i++){
+            int    inputId   = XML.getAttribute("NODE","id",-1,i);
+            string inputName = XML.getAttribute("NODE","name","default",i);
+            string inputType = XML.getAttribute("NODE","type","CAM",i);
+            
+            switch(inputTypes[inputType]){
+                case VIDEO:
+                {
+                    VideoPlayerMac* vP = new VideoPlayerMac(inputName, inputId);
+                    
+                    if (vP->loadSettings(XML, i)) {
+                        inputs.push_back(vP);
+                        nodes.insert(std::pair<int,ImageOutput*>(inputId,vP));
+                    }
+                    else {
+                        result = false;
+                        ConsoleLog::getInstance()->pushMessage("no videos to be loaded!");
+                    }
+                    
+                    break;
+                };
+                case CAM:
+                {
+                    InputCamera* iC = new InputCamera(inputName, inputId);
+                    iC->loadSettings(XML, i);
+                    
+                    inputs.push_back(iC);
+                    nodes.insert(std::pair<int,ImageOutput*>(inputId,iC));
+                    
+                    break;
+                };
+                case IMAGE:
+                {
+                    ImageInputList* iI = new ImageInputList(inputName, inputId);
+                    
+                    if (iI->loadSettings(XML, i)) {
+                        inputs.push_back(iI);
+                        nodes.insert(std::pair<int,ImageOutput*>(inputId,iI));
+                    }
+                    else {
+                        result = false;
+                        ConsoleLog::getInstance()->pushMessage("no images to be loaded!");
+                    }
+                    
+                    break;
+                };
+                case PARTICLE:
+                {
+                    ParticleGenerator* iI = new ParticleGenerator(inputName, inputId);
+                    iI->loadSettings(XML, i);
+                    
+                    inputs.push_back(iI);
+                    nodes.insert(std::pair<int,ImageOutput*>(inputId,iI));
+                    
+                    break;
+                };
+                default:
+                {
+                    result = false;
+                    ConsoleLog::getInstance()->pushMessage("unknown input type!");
+                    break;
+                };
+            }
+            
+            if(!result){
+                //there has been an error
+                //exit the loop
+                break;
+            }
+            
+        }
+        XML.popTag();
+        
+    }
+    else{
+        ConsoleLog::getInstance()->pushMessage("inputs tag missing");
+        result = false;
+    }
+    
+    //LOADING VISUAL LAYERS
+    
+    if(result){
+        int numVLsTag = XML.getNumTags("VISUAL_LAYERS");
+        if(numVLsTag==1){
+            
+            XML.pushTag("VISUAL_LAYERS");
+            
+            int numVLTag = XML.getNumTags("NODE");
+            
+            for(int i=0; i < numVLTag; i++){
+                int    layerId    = XML.getAttribute("NODE","id",-1,i);
+                string layerName  = XML.getAttribute("NODE","name","default",i);
+                string layerType  = XML.getAttribute("NODE","type","IKEDA",i);
+                int inputSourceId = XML.getAttribute("NODE","inputSource",0,i);
+                
+                switch(visualLayerTypes[layerType]){
+                    case IKEDA:
+                    {
+                        IkedaLayer* iL = new IkedaLayer(layerName, layerId);
+                        if (inputSourceId != 0)
+                            iL->addInputIdentifier(inputSourceId);
+                        iL->loadSettings(XML, i);
+                        
+                        visualLayers.push_back(iL);
+                        nodes.insert(std::pair<int,ImageOutput*>(layerId,iL));
+                        
+                        break;
+                    };
+                    case GLITCH_1:
+                    {
+                        GlitchLayer* gL = new GlitchLayer(layerName, layerId);
+                        if (inputSourceId != 0)
+                            gL->addInputIdentifier(inputSourceId);
+                        gL->loadSettings(XML, i);
+                        
+                        visualLayers.push_back(gL);
+                        nodes.insert(std::pair<int,ImageOutput*>(layerId,gL));
+                        
+                        break;
+                    };
+                    case GLITCH_2:
+                    {
+                        GlitchLayerAlt* gLA = new GlitchLayerAlt(layerName, layerId);
+                        if (inputSourceId != 0)
+                            gLA->addInputIdentifier(inputSourceId);
+                        gLA->loadSettings(XML, i);
+                        
+                        visualLayers.push_back(gLA);
+                        nodes.insert(std::pair<int,ImageOutput*>(layerId,gLA));
+                        
+                        break;
+                    };
+                    case IMAGE_PROCESSOR:
+                    {
+                        
+                        ImageProcessor* gLA = new ImageProcessor(layerName, layerId);
+                        if (inputSourceId != 0)
+                            gLA->addInputIdentifier(inputSourceId);
+                        gLA->loadSettings(XML, i);
+                        
+                        
+                        visualLayers.push_back(gLA);
+                        nodes.insert(std::pair<int,ImageOutput*>(layerId,gLA));
+                        
+                        break;
+                    };
+                    default:
+                    {
+                        result = false;
+                        ConsoleLog::getInstance()->pushMessage("unknown visual layer type!");
+                        break;
+                    };
+                }
+                
+                if(!result){
+                    //there has been an error
+                    //exit the loop
+                    break;
+                }
+                
+            }
+            
+            XML.popTag();
+        }
+        else {
+            ConsoleLog::getInstance()->pushMessage("visual layers tag missing");
+            result = false;
+        }
+    }
+    
+    //LOADING MIXERS
+    if(result){
+        int numMXsTag = XML.getNumTags("MIXERS");
+        if(numMXsTag==1){
+            XML.pushTag("MIXERS");
+            
+            int numMXTag = XML.getNumTags("NODE");
+            
+            for(int i = 0; i < numMXTag; i++){
+                int    mixerId   = XML.getAttribute("NODE","id",-1,i);
+                string mixerName = XML.getAttribute("NODE","name","default",i);
+                string mixerType = XML.getAttribute("NODE","type","SIMPLE_BLEND", i);
+                
+                switch(mixerTypes[mixerType]){
+                    case SIMPLE_BLEND:
+                    {
+                        MixSimpleBlend* mSB = new MixSimpleBlend(mixerName, mixerId);
+                        mSB->loadSettings(XML, i);
+                        
+                        mixtables.push_back(mSB);
+                        nodes.insert(std::pair<int, ImageOutput*>(mixerId, mSB));
+                        
+                        break;
+                    };
+                    case MASK:
+                    {
+                        MixMask* mMM = new MixMask(mixerName, mixerId);
+                        mMM->loadSettings(XML, i);
+                        
+                        mixtables.push_back(mMM);
+                        nodes.insert(std::pair<int, ImageOutput*>(mixerId, mMM));
+                        
+                        break;
+                    };
+                    case MULTI_CHANNEL:
+                    {
+                        MultiChannelSwitch* mMM = new MultiChannelSwitch(mixerName, mixerId);
+                        mMM->loadSettings(XML, i);
+                        
+                        mixtables.push_back(mMM);
+                        nodes.insert(std::pair<int, ImageOutput*>(mixerId, mMM));
+                        
+                        break;
+                    };
+                    default:
+                    {
+                        result = false;
+                        ConsoleLog::getInstance()->pushMessage("unknown mixer type!");
+                        break;
+                    };
+                        
+                }
+                
+                if(!result){
+                    //there has been an error
+                    //exit the loop
+                    break;
+                }
+                
+            }
+            //MIXERS POP
+            XML.popTag();
+            
+        }
+        
+    }
+    else{
+        ConsoleLog::getInstance()->pushMessage("mixers tag missing");
+        result = false;
+    }
+    
+    return result;
+}
+
+/* ================================================ */
+/* ================================================ */
+
+// -----------------------------------------------------------
+// ------------------------------------------------- SNNIPPETS
+// -----------------------------------------------------------
+bool ofApp::loadSnippet() {
+    
+    string snippetName = "";
+    bool result = true;
+    
+    ofFileDialogResult openFileResult;
+    openFileResult = ofSystemLoadDialog("Select a snippet (.xml)");
+    
+    if (openFileResult.bSuccess){
+        ofFile file (openFileResult.getPath());
+        if (file.exists()){
+            string fileExtension = ofToUpper(file.getExtension());
+            
+            if(fileExtension == "XML"){
+                snippetName = openFileResult.getPath();
+            } else return false;
+        }
+        file.close();
+    }
+    ofxXmlSettings XML;
+    
+    nodeViewers[currentViewer]->deactivateAllPatches();
+    int nodesCount = nodeViewers[currentViewer]->getNodesCount();
+    
+    if (XML.loadFile(snippetName)){
+        
+        vector<ImageOutput*> aux_nodesVector;
+        map<int, ImageOutput*> aux_nodes;
+        vector<NodeElement*> snnipetNodeElements;
+        bool result = true;
+        int  numNodes = XML.getNumTags("NODE");
+    
+        for(int i = 0; i < numNodes; i++){
+            
+            int    nodeId     = XML.getAttribute("NODE","id",0,i) + nodesCount;
+            string nodeName   = XML.getAttribute("NODE","name","default",i);
+            string nodeType   = XML.getAttribute("NODE","type","CAM",i);
+            int inputSourceId = XML.getAttribute("NODE","inputSource",0,i) + nodesCount;
+            
+            if (nodeType == "VIDEO") {
+                
+                VideoPlayerMac* vP = new VideoPlayerMac(nodeName, nodeId);
+                
+                if (vP->loadSettings(XML, i, nodesCount)) {
+                    inputs.push_back(vP);
+                    aux_nodes.insert(std::pair<int,ImageOutput*>(nodeId,vP));
+                    aux_nodesVector.push_back(vP);
+                }
+                else {
+                    result = false;
+                    ConsoleLog::getInstance()->pushMessage("no videos to be loaded!");
+                }
+            }
+            else if (nodeType == "CAM") {
+                 
+                InputCamera* iC = new InputCamera(nodeName, nodeId);
+                iC->loadSettings(XML, i, nodesCount);
+                inputs.push_back(iC);
+                aux_nodes.insert(std::pair<int,ImageOutput*>(nodeId,iC));
+                aux_nodesVector.push_back(iC);
+            }
+            else if (nodeType == "IMAGE") {
+                
+                ImageInputList* iI = new ImageInputList(nodeName, nodeId);
+                
+                if (iI->loadSettings(XML, i, nodesCount)) {
+                    inputs.push_back(iI);
+                    aux_nodes.insert(std::pair<int,ImageOutput*>(nodeId,iI));
+                    aux_nodesVector.push_back(iI);
+                }
+                else {
+                    result = false;
+                    ConsoleLog::getInstance()->pushMessage("no images to be loaded!");
+                }
+            }
+            else if (nodeType == "PARTICLE") {
+                
+                ParticleGenerator* iI = new ParticleGenerator(nodeName, nodeId);
+                iI->loadSettings(XML, i, nodesCount);
+                inputs.push_back(iI);
+                aux_nodes.insert(std::pair<int,ImageOutput*>(nodeId,iI));
+                aux_nodesVector.push_back(iI);
+            }
+            else if (nodeType == "IKEDA") {
+                
+                IkedaLayer* iL = new IkedaLayer(nodeName, nodeId);
+                if (inputSourceId != nodesCount)
+                    iL->addInputIdentifier(inputSourceId);
+                iL->loadSettings(XML, i, nodesCount);
+                visualLayers.push_back(iL);
+                aux_nodes.insert(std::pair<int,ImageOutput*>(nodeId,iL));
+                aux_nodesVector.push_back(iL);
+            }
+            else if (nodeType == "GLITCH_1") {
+                
+                GlitchLayer* gL = new GlitchLayer(nodeName, nodeId);
+                if (inputSourceId != nodesCount)
+                    gL->addInputIdentifier(inputSourceId);
+                gL->loadSettings(XML, i, nodesCount);
+                visualLayers.push_back(gL);
+                aux_nodes.insert(std::pair<int,ImageOutput*>(nodeId,gL));
+                aux_nodesVector.push_back(gL);
+            }
+            else if (nodeType == "GLITCH_2") {
+                
+                GlitchLayerAlt* gLA = new GlitchLayerAlt(nodeName, nodeId);
+                if (inputSourceId != nodesCount)
+                    gLA->addInputIdentifier(inputSourceId);
+                gLA->loadSettings(XML, i, nodesCount);
+                visualLayers.push_back(gLA);
+                aux_nodes.insert(std::pair<int,ImageOutput*>(nodeId,gLA));
+                aux_nodesVector.push_back(gLA);
+            }
+            else if (nodeType == "IMAGE_PROCESSOR") {
+                
+                ImageProcessor* gLA = new ImageProcessor(nodeName, nodeId);
+                if (inputSourceId != nodesCount)
+                    gLA->addInputIdentifier(inputSourceId);
+                gLA->loadSettings(XML, i, nodesCount);
+                visualLayers.push_back(gLA);
+                aux_nodes.insert(std::pair<int,ImageOutput*>(nodeId,gLA));
+                aux_nodesVector.push_back(gLA);
+            }
+            else if (nodeType == "SIMPLE_BLEND") {
+                
+                MixSimpleBlend* mSB = new MixSimpleBlend(nodeName, nodeId);
+                mSB->loadSettings(XML, i, nodesCount);
+                mixtables.push_back(mSB);
+                aux_nodes.insert(std::pair<int, ImageOutput*>(nodeId, mSB));
+                aux_nodesVector.push_back(mSB);
+            }
+            else if (nodeType == "MASK") {
+                
+                MixMask* mMM = new MixMask(nodeName, nodeId);
+                mMM->loadSettings(XML, i, nodesCount);
+                mixtables.push_back(mMM);
+                aux_nodes.insert(std::pair<int, ImageOutput*>(nodeId, mMM));
+                aux_nodesVector.push_back(mMM);
+            }
+            else if (nodeType == "MULTI_CHANNEL") {
+                
+                MultiChannelSwitch* mMM = new MultiChannelSwitch(nodeName, nodeId);
+                mMM->loadSettings(XML, i, nodesCount);
+                mixtables.push_back(mMM);
+                aux_nodes.insert(std::pair<int, ImageOutput*>(nodeId, mMM));
+                aux_nodesVector.push_back(mMM);
+            }
+            else {
+                result = false;
+                ConsoleLog::getInstance()->pushMessage("unknown input type!");
+            }
+        }
+    
+        XML.popTag(); // pop "NODE"
+    
+        if (result) {
+            //setting inputs to every node
+            for(int i = 0; i < aux_nodesVector.size(); i++){
+                if (aux_nodesVector[i]->findAndAssignInputs(aux_nodes)) {
+                    ConsoleLog::getInstance()->pushMessage("node not found");
+                    result = false;
+                    break;
+                }
+                NodeElement* nE = new NodeElement(aux_nodesVector[i]);
+                snnipetNodeElements.push_back(nE);
+                nodeViewers[currentViewer]->addElement(nE);
+                nodesVector.push_back(aux_nodesVector[i]);
+            }
+        }
+        
+        if (result) {
+            //create connections in nodeView
+            nodeViewers[currentViewer]->createConnections(snnipetNodeElements);
+            nodeViewers[currentViewer]->setNodesCount(nodesCount + aux_nodes.size());
+            
+            for(int i = 0; i < aux_nodesVector.size(); i++){
+                initNode(aux_nodesVector[i]);
+            }
+        }
+    }
+    
+    return result;
+}
+
+//------------------------------------------------------------------
+bool ofApp::saveSnippet() {
+    
+    string snippetName = "";
+    ofxXmlSettings XML;
+    
+    ofFileDialogResult openFileResult;
+    openFileResult = ofSystemSaveDialog("snippet.xml", "Save your Snippet");
+    
+    if(openFileResult.bSuccess){
+        snippetName = openFileResult.getPath();
+    }
+    
+    bool saveOk = true;
+    bool a;
+    bool b;
+    // Delete and create xml file
+    if (XML.loadFile(snippetName)) {
+        XML.clear();
+    } else {
+        b = XML.saveFile(snippetName);
+        XML.loadFile(snippetName);
+    }
+    
+    map<int,ofxPatch*> activePatches = nodeViewers[currentViewer]->getActivePatches();
+    map<int,int> newIdsMap;
+    newIdsMap.clear();
+    int nextNodeId = 1;
+    
+    for(map<int,ofxPatch*>::iterator it = activePatches.begin(); it != activePatches.end(); it++ ){
+        newIdsMap[it->second->getId()] = nextNodeId;
+        nextNodeId++;
+    }
+    
+    for(map<int,ofxPatch*>::iterator it = activePatches.begin(); it != activePatches.end(); it++ ){
+        saveOk = ((ImageOutput*)it->second)->saveSettingsToSnippet(XML, newIdsMap);
+    }
+    
+    XML.saveFile(snippetName);
+    
+    return saveOk;
+}
+
 /* ================================================ */
 /* ================================================ */

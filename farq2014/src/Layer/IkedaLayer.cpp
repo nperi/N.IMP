@@ -127,7 +127,7 @@ ofTexture* IkedaLayer::getTexture(){
 }
 
 //------------------------------------------------------------------
-bool IkedaLayer::loadSettings(ofxXmlSettings &XML, int nTag_) {
+bool IkedaLayer::loadSettings(ofxXmlSettings &XML, int nTag_, int nodesCount_) {
     
     isCanny     = ofToBool(XML.getAttribute("NODE","isCanny","true",nTag_));
     isThreshold = ofToBool(XML.getAttribute("NODE","isThreshold","true",nTag_));
@@ -138,14 +138,14 @@ bool IkedaLayer::loadSettings(ofxXmlSettings &XML, int nTag_) {
     pCannyY     = ofToInt(XML.getAttribute("NODE","pCannyY","12",nTag_));
     pThreshold  = ofToInt(XML.getAttribute("NODE","pThreshold","12",nTag_));
     
-    nId         = XML.getAttribute("NODE", "id", -1, nTag_);
+    nId         = XML.getAttribute("NODE", "id", -1, nTag_) + nodesCount_;
     
     XML.pushTag("NODE", nTag_);
     
     type        = XML.getValue("type","none");
     bVisible    = XML.getValue("visible", true);
     
-    ImageOutput::loadSettings(XML, nTag_);
+    ofxPatch::loadSettings(XML, nTag_, nodesCount_);
     
     XML.popTag();
     
@@ -231,3 +231,33 @@ bool IkedaLayer::saveSettings(ofxXmlSettings &XML) {
     return saved;
 }
 
+//------------------------------------------------------------------
+bool IkedaLayer::saveSettingsToSnippet(ofxXmlSettings &XML, map<int,int> newIdsMap) {
+
+    bool saved = false;
+    int lastPlace = XML.addTag("NODE");
+    
+    XML.addAttribute("NODE", "id", newIdsMap[nId], lastPlace);
+    XML.addAttribute("NODE", "name", name, lastPlace);
+    XML.addAttribute("NODE", "type", "IKEDA", lastPlace);
+    if (input.size() && newIdsMap[input[0]->getId()])
+        XML.addAttribute("NODE", "inputSource", newIdsMap[input[0]->getId()], lastPlace);
+    
+    XML.addAttribute("NODE", "isCanny", isCanny, lastPlace);
+    XML.addAttribute("NODE", "isThreshold", isThreshold, lastPlace);
+    XML.addAttribute("NODE", "isColumns", isColumns, lastPlace);
+    XML.addAttribute("NODE", "isInvert", isInvert, lastPlace);
+    XML.addAttribute("NODE", "pNColumns", pNColumns, lastPlace);
+    XML.addAttribute("NODE", "pCannyX", pCannyX, lastPlace);
+    XML.addAttribute("NODE", "pCannyY", pCannyY, lastPlace);
+    XML.addAttribute("NODE", "pThreshold", pThreshold, lastPlace);
+    
+    if (XML.pushTag("NODE", lastPlace)){
+        
+        saved = ofxPatch::saveSettingsToSnippet(XML, lastPlace, newIdsMap);
+
+        XML.popTag();
+    }
+    
+    return saved;
+}

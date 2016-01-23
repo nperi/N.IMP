@@ -82,20 +82,20 @@ ofTexture* GlitchLayerAlt::getTexture(){
 }
 
 //------------------------------------------------------------------
-bool GlitchLayerAlt::loadSettings(ofxXmlSettings &XML, int nTag_) {
+bool GlitchLayerAlt::loadSettings(ofxXmlSettings &XML, int nTag_, int nodesCount_) {
     
     dq  = ofToInt(XML.getAttribute("NODE","dq","20",nTag_));
     qn  = ofToInt(XML.getAttribute("NODE","qn","40",nTag_));
     dht = ofToInt(XML.getAttribute("NODE","dht","80",nTag_));
     
-    nId = XML.getAttribute("NODE", "id", -1, nTag_);
+    nId = XML.getAttribute("NODE", "id", -1, nTag_) + nodesCount_;
     
     XML.pushTag("NODE", nTag_);
     
     type        = XML.getValue("type","none");
     bVisible    = XML.getValue("visible", true);
     
-    ImageOutput::loadSettings(XML, nTag_);
+    ofxPatch::loadSettings(XML, nTag_, nodesCount_);
     
     XML.popTag();
     
@@ -166,6 +166,33 @@ bool GlitchLayerAlt::saveSettings(ofxXmlSettings &XML) {
                 XML.popTag();
             }
         }
+    }
+    
+    return saved;
+    
+}
+
+//------------------------------------------------------------------
+bool GlitchLayerAlt::saveSettingsToSnippet(ofxXmlSettings &XML, map<int,int> newIdsMap) {
+    
+    bool saved = false;
+    int lastPlace = XML.addTag("NODE");
+    
+    XML.addAttribute("NODE", "id", newIdsMap[nId], lastPlace);
+    XML.addAttribute("NODE", "name", name, lastPlace);
+    XML.addAttribute("NODE", "type", "GLITCH_2", lastPlace);
+    if (input.size() && newIdsMap[input[0]->getId()])
+        XML.addAttribute("NODE", "inputSource", newIdsMap[input[0]->getId()], lastPlace);
+    
+    XML.addAttribute("NODE","dq", dq, lastPlace);
+    XML.addAttribute("NODE","qn", qn, lastPlace);
+    XML.addAttribute("NODE","dht", dht, lastPlace);
+    
+    if (XML.pushTag("NODE", lastPlace)){
+        
+        saved = ofxPatch::saveSettingsToSnippet(XML, lastPlace, newIdsMap);
+        
+        XML.popTag();
     }
     
     return saved;

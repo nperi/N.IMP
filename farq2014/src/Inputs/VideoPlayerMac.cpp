@@ -126,12 +126,12 @@ float VideoPlayerMac::getSpeed(){
 }
 
 //------------------------------------------------------------------
-bool VideoPlayerMac::loadSettings(ofxXmlSettings &XML, int nTag_) {
+bool VideoPlayerMac::loadSettings(ofxXmlSettings &XML, int nTag_, int nodesCount_) {
     
     bool loaded = true;
     
     path    = XML.getAttribute("NODE", "path","none", nTag_);
-    nId     = XML.getAttribute("NODE", "id", -1, nTag_);
+    nId     = XML.getAttribute("NODE", "id", -1, nTag_ + nodesCount_);
     
     XML.pushTag("NODE",nTag_);
     
@@ -150,7 +150,7 @@ bool VideoPlayerMac::loadSettings(ofxXmlSettings &XML, int nTag_) {
     type        = XML.getValue("type","none");
     bVisible    = XML.getValue("visible", true);
     
-    InputSource::loadSettings(XML, nTag_);
+    ofxPatch::loadSettings(XML, nTag_, nodesCount_);
     
     XML.popTag();
     
@@ -232,3 +232,27 @@ bool VideoPlayerMac::saveSettings(ofxXmlSettings &XML) {
     
 }
 
+//------------------------------------------------------------------
+bool VideoPlayerMac::saveSettingsToSnippet(ofxXmlSettings &XML, map<int,int> newIdsMap) {
+
+    bool saved = false;
+    int lastPlace = XML.addTag("NODE");
+    
+    XML.addAttribute("NODE", "id", newIdsMap[nId], lastPlace);
+    XML.addAttribute("NODE", "name", name, lastPlace);
+    XML.addAttribute("NODE", "type", "VIDEO", lastPlace);
+    XML.addAttribute("NODE", "path", path, lastPlace);
+    
+    if (XML.pushTag("NODE", lastPlace)){
+        
+        for (int v = 0; v < playerPaths.size(); v++){
+            XML.addTag("VIDEO");
+            XML.addAttribute("VIDEO", "path", playerPaths[v], v);
+        }
+        
+        saved = ofxPatch::saveSettingsToSnippet(XML, lastPlace, newIdsMap);
+        XML.popTag();
+    }
+    
+    return saved;
+}

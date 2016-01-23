@@ -26,5 +26,7 @@ void VisualLayer::inputEvent(map<string, Param*>* params){
 //------------------------------------------------------------------
 void VisualLayer::setEnable(bool isEnabled_){
     isEnabled = isEnabled_;
-    input[0]->setEnable(isEnabled);
+    
+    if (input.size())
+        input[0]->setEnable(isEnabled);
 }

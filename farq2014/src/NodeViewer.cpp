@@ -48,7 +48,7 @@ void NodeViewer::addElement(NodeElement* elem_, ofPoint position_){
 //------------------------------------------------------------------
 void NodeViewer::createConnections(){
     
-    connections.clear();
+    //connections.clear();
     vector<string> elemNames;
     
     vector<ImageOutput*> inputs;
@@ -63,11 +63,28 @@ void NodeViewer::createConnections(){
 }
 
 //------------------------------------------------------------------
+void NodeViewer::createConnections(vector<NodeElement*> _elements){
+    
+    //connections.clear();
+    vector<string> elemNames;
+    
+    vector<ImageOutput*> inputs;
+    
+    for (int i = 0; i < _elements.size(); ++i) {
+        inputs = _elements[i]->getImageOutput()->getInputs();
+        
+        for (int j = 0; j < inputs.size(); j++) {
+            connect(inputs[j]->getId(), _elements[i]->getImageOutput()->getId(), 0, false);
+        }
+    }
+}
+
+//------------------------------------------------------------------
 void NodeViewer::closePatch( int _nID ){
     
     bool deleted = false;
     
-    if (_nID != -1) {
+    if (_nID > 0) {
         int i = 0;
         while (i < elements.size()) {
             if (elements[i]->getImageOutput()->getId() == _nID) {
@@ -84,9 +101,8 @@ void NodeViewer::closePatch( int _nID ){
                         if ( it->second->outPut[j].toId == _nID){
                             it->second->outPut.erase( it->second->outPut.begin() + j );
                         }
-                        
-                        ((ImageOutput*)it->second)->removeInput(_nID);
                     }
+                    ((ImageOutput*)it->second)->removeInput(_nID);
                 }
             }
             i++;

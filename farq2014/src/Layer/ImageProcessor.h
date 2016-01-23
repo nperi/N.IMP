@@ -69,8 +69,9 @@ class ImageProcessor : public VisualLayer{
     ofParameterGroup bloom,contrast,kaleidoscope,noise,pixelate,edge,
                      god,bleach,rgbshift,zoomBlur;
     
-    bool loadSettings(ofxXmlSettings &XML, int nTag_);
+    bool loadSettings(ofxXmlSettings &XML, int nTag_, int nodesCount_ = 0);
     bool saveSettings(ofxXmlSettings &XML);
+    bool saveSettingsToSnippet(ofxXmlSettings &XML, map<int,int> newIdsMap);
     
 private:
     

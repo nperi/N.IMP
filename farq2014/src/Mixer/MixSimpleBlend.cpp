@@ -149,7 +149,7 @@ void MixSimpleBlend::setEnable(bool isEnabled_){
 }
 
 //------------------------------------------------------------------
-bool MixSimpleBlend::loadSettings(ofxXmlSettings &XML, int nTag_) {
+bool MixSimpleBlend::loadSettings(ofxXmlSettings &XML, int nTag_, int nodesCount_) {
     
     
     selector1   = ofToInt(XML.getAttribute("NODE","selectorLeft","0", nTag_));
@@ -157,21 +157,21 @@ bool MixSimpleBlend::loadSettings(ofxXmlSettings &XML, int nTag_) {
     blendMode   = ofToInt(XML.getAttribute("NODE","blendmode","0", nTag_));
     opacity     = ofToFloat(XML.getAttribute("NODE","opacity","0", nTag_));
     
-    nId         = XML.getAttribute("NODE", "id", -1, nTag_);
+    nId         = XML.getAttribute("NODE", "id", -1, nTag_) + nodesCount_;
     
     XML.pushTag("NODE", nTag_);
     
     int numINPUTTag = XML.getNumTags("INPUT_SOURCE");
     
     for(int j=0; j<numINPUTTag; j++){
-        int inputId = XML.getAttribute("INPUT_SOURCE","nodeId",0,j);
+        int inputId = XML.getAttribute("INPUT_SOURCE","nodeId",0,j) + nodesCount_;
         addInputIdentifier(inputId);
     }
     
     type        = XML.getValue("type","none");
     bVisible    = XML.getValue("visible", true);
     
-    ImageOutput::loadSettings(XML, nTag_);
+    ofxPatch::loadSettings(XML, nTag_, nodesCount_);
     
     XML.popTag();
     
@@ -259,3 +259,43 @@ bool MixSimpleBlend::saveSettings(ofxXmlSettings &XML) {
     return saved;
 }
 
+//------------------------------------------------------------------
+bool MixSimpleBlend::saveSettingsToSnippet(ofxXmlSettings &XML, map<int,int> newIdsMap) {
+    
+    bool saved = false;
+    int lastPlace = XML.addTag("NODE");
+    
+    XML.addAttribute("NODE", "id", newIdsMap[nId], lastPlace);
+    XML.addAttribute("NODE", "name", name, lastPlace);
+    XML.addAttribute("NODE", "type", "SIMPLE_BLEND", lastPlace);
+    
+    XML.addAttribute("NODE", "blendmode", blendMode, lastPlace);
+    XML.addAttribute("NODE", "opacity", opacity, lastPlace);
+    
+    if (XML.pushTag("NODE", lastPlace)){
+        
+        int count = 0;
+        for (int iS = 0; iS < input.size(); iS++){
+            
+            if (newIdsMap[input[iS]->getId()]) {
+                XML.addTag("INPUT_SOURCE");
+                XML.addAttribute("INPUT_SOURCE", "nodeId", newIdsMap[input[iS]->getId()], count);
+                count++;
+            }
+        }
+        
+        saved = ofxPatch::saveSettingsToSnippet(XML, lastPlace, newIdsMap);
+        XML.popTag();
+        
+        if (selector1 >= count)
+            XML.addAttribute("NODE", "selectorLeft", 0, lastPlace);
+        else
+            XML.addAttribute("NODE", "selectorLeft", selector1, lastPlace);
+        if (selector2 >= count)
+            XML.addAttribute("NODE", "selectorRight", 0, lastPlace);
+        else
+            XML.addAttribute("NODE", "selectorRight", selector2, lastPlace);
+    }
+    
+    return saved;
+}

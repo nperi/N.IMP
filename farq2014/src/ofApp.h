@@ -76,9 +76,11 @@ public:
     //other functions
     void createNodeInput(float _x = ofGetMouseX(), float _y = ofGetMouseY());
     void createNode(textInputEvent &args);
+    void initNode(ofxPatch* node);
     void closePatch(int &_nID);
     bool loadFromXML();
     bool saveToXML();
+    bool loadNodes(ofxXmlSettings &XML);
     void audioIn(float * input, int bufferSize, int nChannels);
     
     //change current viewer
@@ -157,5 +159,9 @@ public:
     
     // console
     bool showConsole;
+    
+    // snippet
+    bool loadSnippet();
+    bool saveSnippet();
 
 };

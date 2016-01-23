@@ -128,9 +128,9 @@ void MixMask::inputRemoved(int id_){
 }
 
 //------------------------------------------------------------------
-bool MixMask::loadSettings(ofxXmlSettings &XML, int nTag_) {
+bool MixMask::loadSettings(ofxXmlSettings &XML, int nTag_, int nodesCount_) {
     
-    nId     = XML.getAttribute("NODE", "id", -1, nTag_);
+    nId     = XML.getAttribute("NODE", "id", -1, nTag_) + nodesCount_;
     spin    = XML.getAttribute("NODE", "spin", 90, nTag_);
     
     XML.pushTag("NODE", nTag_);
@@ -139,14 +139,14 @@ bool MixMask::loadSettings(ofxXmlSettings &XML, int nTag_) {
     std::map<string,ImageOutput*>::iterator it;
     
     for(int j=0; j<numINPUTTag; j++){
-        int inputId = XML.getAttribute("INPUT_SOURCE","nodeId",0,j);
+        int inputId = XML.getAttribute("INPUT_SOURCE","nodeId",0,j) + nodesCount_;
         addInputIdentifier(inputId);
     }
     
     type     = XML.getValue("type","none");
     bVisible = XML.getValue("visible", true);
     
-    ImageOutput::loadSettings(XML, nTag_);
+    ofxPatch::loadSettings(XML, nTag_, nodesCount_);
     
     XML.popTag();
     
@@ -222,6 +222,37 @@ bool MixMask::saveSettings(ofxXmlSettings &XML) {
                 XML.popTag();
             }
         }
+    }
+    
+    return saved;
+}
+
+//------------------------------------------------------------------
+bool MixMask::saveSettingsToSnippet(ofxXmlSettings &XML, map<int,int> newIdsMap) {
+    
+    bool saved = false;
+    int lastPlace = XML.addTag("NODE");
+    
+    XML.addAttribute("NODE", "id", newIdsMap[nId], lastPlace);
+    XML.addAttribute("NODE", "name", name, lastPlace);
+    XML.addAttribute("NODE", "type", "MASK", lastPlace);
+    
+    XML.addAttribute("NODE", "spin", spin, lastPlace);
+    
+    if (XML.pushTag("NODE", lastPlace)){
+        
+        int count = 0;
+        for (int iS = 0; iS < input.size(); iS++){
+            
+            if (newIdsMap[input[iS]->getId()]) {
+                XML.addTag("INPUT_SOURCE");
+                XML.addAttribute("INPUT_SOURCE", "nodeId", newIdsMap[input[iS]->getId()], count);
+                count++;
+            }
+        }
+        
+        saved = ofxPatch::saveSettingsToSnippet(XML, lastPlace, newIdsMap);
+        XML.popTag();
     }
     
     return saved;

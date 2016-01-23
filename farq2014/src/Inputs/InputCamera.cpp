@@ -62,13 +62,13 @@ void InputCamera::updateParameter(Param* inputParam){
 }
 
 //------------------------------------------------------------------
-bool InputCamera::loadSettings(ofxXmlSettings &XML, int nTag_) {
+bool InputCamera::loadSettings(ofxXmlSettings &XML, int nTag_, int nodesCount_) {
     
     bool loaded = false;
         
     //not used yet
     string cameraId = XML.getAttribute("NODE", "id","default", nTag_);
-    nId             = XML.getAttribute("NODE", "id", -1, nTag_);
+    nId             = XML.getAttribute("NODE", "id", -1, nTag_) + nodesCount_;
     
     XML.pushTag("NODE", nTag_);
     
@@ -84,7 +84,7 @@ bool InputCamera::loadSettings(ofxXmlSettings &XML, int nTag_) {
         width   = videoGrabber->getWidth();
         height  = videoGrabber->getHeight();
 
-        InputSource::loadSettings(XML, nTag_);
+        ofxPatch::loadSettings(XML, nTag_, nodesCount_);
     }
     
     XML.popTag();
@@ -149,4 +149,24 @@ bool InputCamera::saveSettings(ofxXmlSettings &XML) {
 
     return saved;
     
+}
+
+//------------------------------------------------------------------
+bool InputCamera::saveSettingsToSnippet(ofxXmlSettings &XML, map<int,int> newIdsMap) {
+    
+    bool saved = false;
+    int lastPlace = XML.addTag("NODE");
+    
+    XML.addAttribute("NODE", "id", newIdsMap[nId], lastPlace);
+    XML.addAttribute("NODE", "name", name, lastPlace);
+    XML.addAttribute("NODE", "type", "CAM", lastPlace);
+    
+    if (XML.pushTag("NODE", lastPlace)){
+        
+        saved = ofxPatch::saveSettingsToSnippet(XML, lastPlace, newIdsMap);
+        
+        XML.popTag();
+    }
+    
+    return saved;
 }

@@ -47,8 +47,9 @@ class ParticleGenerator : public InputSource{
     
     ofParameter<float> fadeOut;
     
-    bool loadSettings(ofxXmlSettings &XML, int nTag_);
+    bool loadSettings(ofxXmlSettings &XML, int nTag_, int nodesCount_ = 0);
     bool saveSettings(ofxXmlSettings &XML);
+    bool saveSettingsToSnippet(ofxXmlSettings &XML, map<int,int> newIdsMap);
     
 private:
     
