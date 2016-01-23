@@ -15,6 +15,7 @@
 #include "Param.h"
 #include "ofxPatch.h"
 #include "enumerations.h"
+#include "ofxComposer.h"
 
 /* abstract class that covers all image output classes
  * includes an image and some events
@@ -33,11 +34,13 @@ class ImageOutput : public ofxPatch {
     ImageOutput(string name_, string typeName_, int id_, int maxInputs_ = 1, int width_ = NODE_WIDTH, int height_ = NODE_HEIGHT);
     
     string getName();
-    virtual ofImage* getImage(){};
-    virtual ofTexture* getTexture(){};
+    virtual ofImage*     getImage(){};
+    virtual ofTexture*   getTexture(){};
     vector<ImageOutput*> getInputs();
-    vector<string> getInputNames();
+    vector<string>       getInputNames();
     vector<ImageOutput*> input;
+    ofxComposer*         getNodeViewerIBelong();
+    void                 setNodeViewerIBelong(ofxComposer* viewer);
     
     virtual void setup() = 0;
     virtual void update() = 0;
@@ -77,9 +80,9 @@ protected:
     int maxInputs;
     
     bool isProcessed;
-    
     ofxToggle isEnabled;
 	
+    ofxComposer* viewer;
 };
 
 #endif

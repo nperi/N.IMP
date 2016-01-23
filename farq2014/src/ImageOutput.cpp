@@ -29,6 +29,16 @@ string ImageOutput::getName(){
 }
 
 //------------------------------------------------------------------
+ofxComposer* ImageOutput::getNodeViewerIBelong() {
+    return viewer;
+}
+
+//------------------------------------------------------------------
+void ImageOutput::setNodeViewerIBelong(ofxComposer* viewer_) {
+    viewer = viewer_;
+}
+
+//------------------------------------------------------------------
 bool ImageOutput::addInput(ofxPatch* layer_){
     if (input.size()<maxInputs) {
         input.push_back((ImageOutput*)layer_);

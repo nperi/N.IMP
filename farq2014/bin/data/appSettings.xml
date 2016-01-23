@@ -107,7 +107,8 @@
             </NODE>
             <NODE id="3" name="New Image Input" type="IMAGE" path="" bpm="100.000000" multiplier_divider="4" isPlaying="0" palindrom="1" matchBPMtoSequence="0">
                 <ASSET name="pancakes.jpg" path="./pancakes.jpg" />
-                <ASSET name="juanmayo.jpg" path="./juanmayo.jpg" />
+                <ASSET name="picture.jpg" path="./picture.jpg" />
+                <ASSET name="duck.mp4" path="duck.mp4" />
                 <type>none</type>
                 <path>none</path>
                 <visible>1</visible>

@@ -155,7 +155,7 @@ void ImageProcessor::update() {
         
         post.begin();
         ofClear(255,255,255,0);
-        input[0]->getTextureReference().draw(0,0);
+        input[0]->getTextureReference().draw(0, 0, width, height);
         post.end();
 
         glDisable(GL_BLEND);

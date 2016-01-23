@@ -82,6 +82,8 @@ void MultiChannelSwitch::cselChannel(int& s){
         }
         labels[selChannel] = true;
      */
+    if (input.size())
+        resetSizeBasedOnInput(input[selChannel]);
 }
 
 //------------------------------------------------------------------
@@ -108,9 +110,7 @@ void MultiChannelSwitch::cLabel(bool& b){
                 input[selChannel]->setEnable(true);
             }
         }
-        
     }
-    
 }
 
 //------------------------------------------------------------------
@@ -133,6 +133,14 @@ ofTexture* MultiChannelSwitch::getTexture(){
 void MultiChannelSwitch::setEnable(bool isEnabled_){
     isEnabled = isEnabled_;
     input[selChannel]->setEnable(isEnabled);
+}
+
+//------------------------------------------------------------------
+void MultiChannelSwitch::resetSizeBasedOnInput(ofxPatch* input_){
+    
+    if (input_ == input[selChannel]) {
+        ofxPatch::resetSizeBasedOnInput(input_);
+    }
 }
 
 //------------------------------------------------------------------

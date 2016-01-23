@@ -16,6 +16,8 @@ ImageTypeMovie::ImageTypeMovie(string name_ ,string path_, ofQTKitPlayer* player
     //videoPlayer.loadMovie(path_, decodeMode);
     //videoPlayer.loadMovie(path_);
     videoPlayer = player;
+    path = path_;
+    name = name_;
     
     isPlaying.addListener(this, &ImageTypeMovie::cIsPlaying);
 }

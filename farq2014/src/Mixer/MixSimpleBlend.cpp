@@ -33,8 +33,23 @@ void MixSimpleBlend::setup() {
         drawNoInputs = true;
     }
     else {
-        width  = input[selector2]->getWidth();
-        height = input[selector2]->getHeight();
+        
+        if (input.size() > selector2) {
+            width  = input[selector2]->getWidth();
+            height = input[selector2]->getHeight();
+        }
+        else if (input.size() > selector1) {
+            selector2 = 0;
+            
+            width  = input[selector1]->getWidth();
+            height = input[selector1]->getHeight();
+        }
+        else {
+            selector1 = 0;
+            
+            width  = input[0]->getWidth();
+            height = input[0]->getHeight();
+        }
 
         fbo.allocate(width, height);
         psBlend.setup(width, height);
@@ -144,8 +159,16 @@ ofTexture* MixSimpleBlend::getTexture(){
 //------------------------------------------------------------------
 void MixSimpleBlend::setEnable(bool isEnabled_){
     isEnabled = isEnabled_;
-    input[0]->setEnable(isEnabled);
-    input[1]->setEnable(isEnabled);
+    if (input.size() > 0) input[0]->setEnable(isEnabled);
+    if (input.size() > 1) input[1]->setEnable(isEnabled);
+}
+
+//------------------------------------------------------------------
+void MixSimpleBlend::resetSizeBasedOnInput(ofxPatch* input_){
+    
+    if (input_ == input[selector2]) {
+        ofxPatch::resetSizeBasedOnInput(input_);
+    }
 }
 
 //------------------------------------------------------------------

@@ -23,6 +23,7 @@ ImageInputList::ImageInputList(string name, int id_) : InputSource(name, "Image"
 void ImageInputList::setup(){
     
     if (inputs[currentSequence]) {
+        
         width  = inputs[currentSequence]->getWidth();
         height = inputs[currentSequence]->getHeight();
     }
@@ -56,7 +57,9 @@ ofTexture* ImageInputList::getTexture(){
 //------------------------------------------------------------------
 void ImageInputList::loadImage(string name_, string path_){
     
-    if (ofIsStringInString(path_, ".mov")) {
+    if (ofIsStringInString(path_, ".mov") || ofIsStringInString(path_, ".mp4") ||
+        ofIsStringInString(path_, ".mpg") || ofIsStringInString(path_, ".mpg") ) {
+        
         inputs.push_back(new ImageTypeMovie(name_,path_,videoPlayer));
         hasMovie = true;
     }
@@ -192,15 +195,21 @@ void ImageInputList::playPositionChanged(float &pos){
 }
 
 //------------------------------------------------------------------
-void ImageInputList::prevSequenceChanged(){
-    if (isEnabled)
+void ImageInputList::nextSequenceChanged(){
+    if (isEnabled) {
         currentSequence = (currentSequence+1)%inputs.size();
+        
+        getNodeViewerIBelong()->updateConnectionsSize(this);
+    }
 }
 
 //------------------------------------------------------------------
-void ImageInputList::nextSequenceChanged(){
-    if (isEnabled)
+void ImageInputList::prevSequenceChanged(){
+    if (isEnabled) {
         currentSequence = (currentSequence -1 <0) ? currentSequence = inputs.size()-1 : currentSequence-1;
+
+        getNodeViewerIBelong()->updateConnectionsSize(this);
+    }
 }
 
 //------------------------------------------------------------------
@@ -291,9 +300,9 @@ bool ImageInputList::loadSettings(ofxXmlSettings &XML, int nTag_, int nodesCount
         int numVideoTag = XML.getNumTags("ASSET");
         if(numVideoTag>0){
             for (int v=0; v<numVideoTag; v++){
-                string name = XML.getAttribute("ASSET","name","default",v);
+                string name_ = XML.getAttribute("ASSET","name","default",v);
                 string path_ = XML.getAttribute("ASSET","path","default",v);
-                loadImage(name, path_);
+                loadImage(name_, path_);
             }
         }
         else{

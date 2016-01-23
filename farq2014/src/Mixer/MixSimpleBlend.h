@@ -35,6 +35,8 @@ public:
     ofParameter<int> blendMode;
     ofParameter<float> opacity;
     
+    void resetSizeBasedOnInput(ofxPatch* input_);
+    
     bool loadSettings(ofxXmlSettings &XML, int nTag_, int nodesCount_ = 0);
     bool saveSettings(ofxXmlSettings &XML);
     bool saveSettingsToSnippet(ofxXmlSettings &XML, map<int,int> newIdsMap);

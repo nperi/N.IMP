@@ -41,6 +41,7 @@ void NodeViewer::addElement(NodeElement* elem_){
 
 //------------------------------------------------------------------
 void NodeViewer::addElement(NodeElement* elem_, ofPoint position_){
+    elem_->getImageOutput()->setNodeViewerIBelong(this);
     elements.push_back(elem_);
     addPatch(elem_->getImageOutput(), position_);
 }
