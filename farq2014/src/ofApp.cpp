@@ -10,6 +10,8 @@ using namespace ofxCv;
 
 void ofApp::setup() {
     
+    ofHideCursor();
+    
     //*** WINDOWS SETUP ***//
     //
     glfw = (ofxMultiGLFWWindow*)ofGetWindowPtr();
@@ -31,16 +33,6 @@ void ofApp::setup() {
     //glfw->setWindowShape(1280,700);
     glfw->setWindowTitle("n.imp");
     //ofSetFullscreen(true);                    // order important with fullscreen
-
-    
-    //    // create third window dynamically
-    //    glfw->createWindow();
-    //    glfw->setWindow(windows->at(2));
-    //    glfw->initializeWindow();
-    //    ofSetWindowPosition(500+500, 100);
-    //    ofSetWindowShape(500, 800);
-    //    ofSetWindowTitle("Window 3");
-    
     // ******* END WINDOWS SETUP ******//
     
     
@@ -117,6 +109,13 @@ void ofApp::setup() {
     spacer->setColorFill(ofxUIColor(120, 120, 120, 200));
     new menuItem(menu, "MultiImageToggle", "Console on/off", "assets/console.png", false, RIGHT_MENU_WIDTH + MENU_ITEM_SIZE*10 + MENU_ITEM_PADDING*15, 20);
     new menuItem(menu, "MultiImageButton", "Clear Console", "assets/clear_console.png", false, RIGHT_MENU_WIDTH + MENU_ITEM_SIZE*11 + MENU_ITEM_PADDING*16, 20);
+    
+    spacer = new ofxUISpacer(RIGHT_MENU_WIDTH + MENU_ITEM_SIZE*12 + MENU_ITEM_PADDING*18, 20, 1,MENU_ITEM_SIZE);
+    menu->addWidget(spacer);
+    spacer->setColorFill(ofxUIColor(120, 120, 120, 200));
+    new menuItem(menu, "MultiImageToggle", "Encapsulate", "assets/console.png", false, RIGHT_MENU_WIDTH + MENU_ITEM_SIZE*12 + MENU_ITEM_PADDING*18, 20);
+    new menuItem(menu, "MultiImageToggle", "Uncapsulate", "assets/clear_console.png", false, RIGHT_MENU_WIDTH + MENU_ITEM_SIZE*13 + MENU_ITEM_PADDING*19, 20);
+    new menuItem(menu, "MultiImageButton", "Open encapsulated", "assets/clear_console.png", false, RIGHT_MENU_WIDTH + MENU_ITEM_SIZE*14 + MENU_ITEM_PADDING*20, 20);
     ofAddListener(menu->newGUIEvent,this,&ofApp::menuEvent);
     
     
@@ -295,12 +294,24 @@ void ofApp::update() {
         for(int i=0; i<syphonServers.size();i++){
             syphonServers[i]->publishTexture();
         }
+        
+        
+        for(int i=2; i < windows->size(); i++){
+            if(glfwWindowShouldClose(windows->at(i))){
+                nodeViewers[currentViewer]->restoreWindowsForEncapsulated(i);
+                glfw->destroyWindow(windows->at(i));
+                windows->erase(windows->begin() + i);
+            }
+        }
     }
 }
 
 //------------------------------------------------------------------
 void ofApp::draw() {
     wIndex = glfw->getWindowIndex();
+    
+    // set in global variable the id of the windows which is being drawn
+    EventHandler::getInstance()->setWindowIdDraw(wIndex);
     
     switch (wIndex) { // switch on window index
         case MAIN_WINDOW:
@@ -347,6 +358,17 @@ void ofApp::draw() {
             ofBackground(0,0,0); // change background color on each window
             ofSetColor(200, 200, 200);
             ConsoleLog::getInstance()->printMessages();
+            break;
+        default:
+            glfw->ofAppBaseWindow::showCursor();
+            ofClear(35);
+            cam.begin();
+            nodeViewers[currentViewer]->draw();
+            cam.end();
+            
+            //draw inspectors
+            nodeViewers[currentViewer]->drawInspectorGUIs();
+
             break;
     }
 }
@@ -463,7 +485,6 @@ void ofApp::keyPressed  (int key){
                     saveSnippet();
                 }
             break;
-        
         default:
             notAvailable = true;
             break;
@@ -506,6 +527,13 @@ void ofApp::mouseDragged(int x, int y, int button){
 
 //------------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button){
+    for(int i = 0; i < windows->size(); i++) {
+        if (glfw->getEventWindow() == windows->at(i)) {
+            EventHandler::getInstance()->setWindowEvent(i);
+            break;
+        }
+    }
+
     if (glfw->getEventWindow() == windows->at(MAIN_WINDOW)){
         EventHandler::getInstance()->setMainEvent();
     } else if (glfw->getEventWindow() == windows->at(CONSOLE_WINDOW)){
@@ -547,6 +575,11 @@ void ofApp::dragEvent(ofDragInfo dragInfo){
 }
 
 //------------------------------------------------------------------
+void ofApp::mouseMoved(int x, int y){
+    ofShowCursor();
+}
+
+
 void ofApp::windowResized(int w, int h){
     if (glfw->getEventWindow() == windows->at(MAIN_WINDOW)){
         EventHandler::getInstance()->setMainEvent();
@@ -645,6 +678,44 @@ void ofApp::menuEvent(ofxUIEventArgs &e)
     }
     else if (name == "Clear Console"){
         ConsoleLog::getInstance()->clearMessages();
+    }
+    
+    else if (name == "Encapsulate"){
+        if(((ofxUIMultiImageButton*)e.widget)->getValue() == 1){
+            nodeViewers[currentViewer]->encapsulate();
+        }
+    }
+    
+    else if (name == "Uncapsulate"){
+        if(((ofxUIMultiImageButton*)e.widget)->getValue() == 1){
+            int encapsulatedId = nodeViewers[currentViewer]->getSelectedEncapsulated();
+            if(encapsulatedId < 0){
+                ConsoleLog::getInstance()->pushError("No encapsulated patch is selected");
+            } else {
+                int lastPatchId = nodeViewers[currentViewer]->getLastPatchEncapsulated(encapsulatedId);
+                nodeViewers[currentViewer]->restoreOutputEncapsulated(lastPatchId);
+                nodeViewers[currentViewer]->uncapsulate(encapsulatedId);
+            }
+        }
+    }
+    else if (name == "Open encapsulated"){
+        if(((ofxUIMultiImageButton*)e.widget)->getValue() == 1){
+            int encapsulatedId = nodeViewers[currentViewer]->getSelectedEncapsulated();
+            if(encapsulatedId < 0){
+                ConsoleLog::getInstance()->pushError("No encapsulated patch is selected");
+            } else {
+                glfw->createWindow();
+                glfw->setWindow(windows->at(windows->size()-1));
+                glfw->initializeWindow();
+                
+                nodeViewers[currentViewer]->setWindowsIdForEncapsulated(encapsulatedId, windows->size() - 1);
+                
+                ofSetWindowPosition(ofGetWindowPositionX(), ofGetWindowPositionX());
+                ofSetWindowShape(ofGetWidth(), ofGetHeight());
+                ofSetWindowTitle(nodeViewers[currentViewer]->getName());
+            }
+        }
+        
     }
     
 }

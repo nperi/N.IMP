@@ -11,12 +11,26 @@
 
 #include "ofMain.h"
 #include "ConsoleScrollBar.h"
+#include "ConsoleMessageType.cpp"
+
+struct Message{
+    Message(ConsoleMessageType mT, string m){
+        messageType = mT;
+        message = m;
+    }
+    
+    ConsoleMessageType     messageType;
+    string                 message;
+};
 
 class ConsoleLog {
     
 public:
     
     void pushMessage(string message);
+    void pushError(string error);
+    void pushSuccess(string success);
+    void pushWarning(string warning);
     void clearMessages();
     void printMessages();
     static ConsoleLog* getInstance();
@@ -33,10 +47,11 @@ private:
     ~ConsoleLog();
     static ConsoleLog* instance;
     
-    vector<string> messages;
+    vector<Message> messages;
     ofTrueTypeFont font;
     int startY;
     ConsoleScrollBar* scrollBar;
+    
 };
 
 
