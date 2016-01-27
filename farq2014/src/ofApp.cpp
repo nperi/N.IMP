@@ -1252,7 +1252,7 @@ bool ofApp::loadNodes(ofxXmlSettings &XML){
             
             int numVLTag = XML.getNumTags("NODE");
             
-            for(int i=0; i < numVLTag; i++){
+            for(int i = 0; i < numVLTag; i++){
                 int    layerId    = XML.getAttribute("NODE","id",-1,i);
                 string layerName  = XML.getAttribute("NODE","name","default",i);
                 string layerType  = XML.getAttribute("NODE","type","IKEDA",i);

@@ -20,6 +20,7 @@ ImageOutput::ImageOutput(string name_, string typeName_, int id_, int maxInputs_
     maxInputs   = maxInputs_;
     panel.setup();
     panel.add(gui.setup(typeName));
+    gui.add(patchName.setup("Name", name, 100, 20));
     panel.setDraggable(false);
 };
 
