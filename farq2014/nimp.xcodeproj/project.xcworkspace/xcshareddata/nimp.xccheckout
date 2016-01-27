@@ -7,9 +7,11 @@
 	<key>IDESourceControlProjectIdentifier</key>
 	<string>AD29777C-A75C-48E9-821F-C5295F5C172B</string>
 	<key>IDESourceControlProjectName</key>
-	<string>nimp</string>
+	<string>project</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
+		<key>0E95F194A4D50714D81A77DBDBA41B2B06F4468C</key>
+		<string>https://github.com/MiliGaricoits/ofxGui_nimp.git</string>
 		<key>210A84CB64DBE001319448A793DFC671846EB46E</key>
 		<string>https://github.com/maxillacult/ofxPostGlitch.git</string>
 		<key>252C87C319FBC1068CD046C09D8C5E406AB96AF3</key>
@@ -44,9 +46,11 @@
 		<string>https://github.com/MiliGaricoits/ofxMSAInteractiveObject_nimp</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>farq2014/nimp.xcodeproj</string>
+	<string>farq2014/nimp.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
+		<key>0E95F194A4D50714D81A77DBDBA41B2B06F4468C</key>
+		<string>../../../../../addons/ofxGui_nimp</string>
 		<key>210A84CB64DBE001319448A793DFC671846EB46E</key>
 		<string>../../../../../addons/ofxPostGlitch</string>
 		<key>252C87C319FBC1068CD046C09D8C5E406AB96AF3</key>
@@ -119,6 +123,14 @@
 			<string>37526DA425E5430474A14FBFA1BC4525160B5FC1</string>
 			<key>IDESourceControlWCCName</key>
 			<string>ofxCv</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>0E95F194A4D50714D81A77DBDBA41B2B06F4468C</string>
+			<key>IDESourceControlWCCName</key>
+			<string>ofxGui_nimp</string>
 		</dict>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
