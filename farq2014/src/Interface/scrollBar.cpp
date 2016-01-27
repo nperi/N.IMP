@@ -343,6 +343,11 @@ void scrollBar::updateScrollBar(ofVec3f diffVec){
     gripRectangle.x = scrollBarRectangle.x;                   // Also adjust the grip x coordinate
     int unTransformedLowest = (composer->getPatchesLowestCoord() - cam->getPosition().y)/cam->getScale().y - margin - BEGIN_Y;
     int unTransformedHighest = (composer->getPatchesHighestCoord() - cam->getPosition().y)/cam->getScale().y - margin;
+    int inspectorHighestY = composer->getPatchesHighestYInspectorCoord();
+    
+    if(unTransformedHighest < inspectorHighestY){
+        unTransformedHighest = inspectorHighestY;
+    }
     
     // Muestro la scrollBar
     isScrollBarVisible = true;
@@ -406,6 +411,11 @@ void scrollBar::updateHScrollBar(ofVec3f diffVec){
     hGripRectangle.y = hScrollBarRectangle.y; // Also adjust the grip x coordinate
     int unTransformedLeft = (composer->getPatchesLeftMostCoord() - cam->getPosition().x)/cam->getScale().x - margin - BEGIN_X;
     int unTransformedRight = (composer->getPatchesRightMostCoord() - cam->getPosition().x)/cam->getScale().x - margin;
+    int inspectorHighestX = composer->getPatchesHighestXInspectorCoord();
+    
+    if(unTransformedRight < inspectorHighestX){
+        unTransformedRight = inspectorHighestX;
+    }
     
     // Muestro la scrollBar
     isHScrollBarVisible = true;

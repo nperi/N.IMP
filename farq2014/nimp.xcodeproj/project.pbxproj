@@ -104,6 +104,8 @@
 		2023EF517ED2D8B397511D4B /* Helpers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B9076967F8C54A04362C04AA /* Helpers.cpp */; };
 		311DF864378748129984EA1D /* Kalman.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 77A1A692522820F935B58762 /* Kalman.cpp */; };
 		45CC483A999BF1065A6B926C /* Distance.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9DBD717072C35D324E101669 /* Distance.cpp */; };
+		483908258D00B98B4BE69F07 /* ofxLabel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 78D67A00EB899FAC09430597 /* ofxLabel.cpp */; };
+		496C45631C51A670009F2A14 /* ConsoleMessageType.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 496C45621C51A670009F2A14 /* ConsoleMessageType.cpp */; };
 		4990BDDF1C3CE0DA002710AF /* ConsoleLog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4990BDDB1C3CE0DA002710AF /* ConsoleLog.cpp */; };
 		4990BDE01C3CE0DA002710AF /* ConsoleScrollBar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4990BDDD1C3CE0DA002710AF /* ConsoleScrollBar.cpp */; };
 		4990BDE61C3CE143002710AF /* EventHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4990BDE41C3CE143002710AF /* EventHandler.cpp */; };
@@ -455,6 +457,7 @@
 		325BD94FFB93161BBC68336E /* ofxCv.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxCv.h; path = ../../../addons/ofxCv/src/ofxCv.h; sourceTree = SOURCE_ROOT; };
 		402C8F4015542356D362AC88 /* Calibration.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = Calibration.cpp; path = ../../../addons/ofxCv/libs/ofxCv/src/Calibration.cpp; sourceTree = SOURCE_ROOT; };
 		4524C0ED0C2DD3E085CE3350 /* ObjectFinder.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ObjectFinder.h; path = ../../../addons/ofxCv/libs/ofxCv/include/ofxCv/ObjectFinder.h; sourceTree = SOURCE_ROOT; };
+		496C45621C51A670009F2A14 /* ConsoleMessageType.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ConsoleMessageType.cpp; path = Console/ConsoleMessageType.cpp; sourceTree = "<group>"; };
 		4990BDDB1C3CE0DA002710AF /* ConsoleLog.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ConsoleLog.cpp; path = Console/ConsoleLog.cpp; sourceTree = "<group>"; };
 		4990BDDC1C3CE0DA002710AF /* ConsoleLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ConsoleLog.h; path = Console/ConsoleLog.h; sourceTree = "<group>"; };
 		4990BDDD1C3CE0DA002710AF /* ConsoleScrollBar.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ConsoleScrollBar.cpp; path = Console/ConsoleScrollBar.cpp; sourceTree = "<group>"; };
@@ -1104,6 +1107,7 @@
 				4990BDDC1C3CE0DA002710AF /* ConsoleLog.h */,
 				4990BDDD1C3CE0DA002710AF /* ConsoleScrollBar.cpp */,
 				4990BDDE1C3CE0DA002710AF /* ConsoleScrollBar.h */,
+				496C45621C51A670009F2A14 /* ConsoleMessageType.cpp */,
 			);
 			name = Console;
 			sourceTree = "<group>";
@@ -2013,6 +2017,7 @@
 				F76B4A79BD8DE4854141CB47 /* fdog.cpp in Sources */,
 				0AFFF7861C2F0E3F0034AE53 /* FakeSSSPass.cpp in Sources */,
 				6B67DE0B1A40F02300588367 /* fft.cpp in Sources */,
+				496C45631C51A670009F2A14 /* ConsoleMessageType.cpp in Sources */,
 				0A51B8561C0FE42B000AC121 /* ofxUISortableList.cpp in Sources */,
 				EBCDE831EFAE08274E799C97 /* Calibration.cpp in Sources */,
 				0A51B8391C0FE42B000AC121 /* ofxUIBaseDraws.cpp in Sources */,

@@ -36,7 +36,23 @@ void ConsoleLog::setupScrollBar(ofxMultiTouchPad* pad){
 }
 
 void ConsoleLog::pushMessage(string message){
-    messages.push_back(message);
+    Message m = Message(DEFAULT, message);
+    messages.push_back(m);
+}
+
+void ConsoleLog::pushError(string error){
+    Message m = Message(ERROR, error);
+    messages.push_back(m);
+}
+
+void ConsoleLog::pushSuccess(string success){
+    Message m = Message(SUCCESS, success);
+    messages.push_back(m);
+}
+
+void ConsoleLog::pushWarning(string warning){
+    Message m = Message(WARNING, warning);
+    messages.push_back(m);
 }
 
 
@@ -49,10 +65,21 @@ void ConsoleLog::printMessages(){
     instance->scrollBar->update();
     instance->scrollBar->draw();
     float y = startY + font.getLineHeight();
+    ofPushStyle();
     for (int i = 0; i < messages.size();i++){
-        font.drawString(messages[i], 10.f, y);
+        if(messages.at(i).messageType == DEFAULT){
+            ofSetColor(255, 255, 255);
+        } else if(messages.at(i).messageType == ERROR){
+            ofSetColor(255, 0, 0);
+        } else if(messages.at(i).messageType == WARNING){
+            ofSetColor(255, 255, 0);
+        } else if(messages.at(i).messageType == SUCCESS){
+            ofSetColor(0, 255, 0);
+        }
+        font.drawString(messages.at(i).message, 10.f, y);
         y += font.getLineHeight();
     }
+    ofPopStyle();
 }
 
 

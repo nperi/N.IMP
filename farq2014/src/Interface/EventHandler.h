@@ -19,8 +19,12 @@ public:
     static EventHandler* getInstance();
     bool isMainEvent();
     bool isConsoleEvent();
+    int  getWindowIdDraw();
+    int  getWindowEvent();
     void setMainEvent();
     void setConsoleEvent();
+    void setWindowIdDraw(int winId);
+    void setWindowEvent(int winId);
     
 private:
     EventHandler();
@@ -32,6 +36,9 @@ private:
     
     bool consoleEvent;
     bool mainEvent;
+    int  windowIdDraw;
+    int  windowEvent;
+    
 };
 
 #endif /* defined(__nimp__EventHandler__) */

@@ -68,6 +68,7 @@ public:
     void keyReleased(int key);
     void mouseDragged(int x, int y, int button);
     void mousePressed(int x, int y, int button);
+    void mouseMoved(int x, int y);
     void mouseReleased(int x, int y, int button);
     void dragEvent(ofDragInfo dragInfo);
     void menuEvent(ofxUIEventArgs &e);
