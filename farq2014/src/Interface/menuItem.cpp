@@ -23,7 +23,12 @@ menuItem::menuItem(ofxUISuperCanvas* menu, string type, string name, string img,
     }
     else if (type == "MultiImageToggle") {
         
-        ofxUIMultiImageToggle* toggle = new ofxUIMultiImageToggle(x, y, MENU_ITEM_SIZE, MENU_ITEM_SIZE, active, img, name);
+        ofxUIMultiImageToggle* toggle;
+        
+        if (name == "Midi Learn")
+            toggle = new ofxUIMultiImageToggle(x, y, MENU_ITEM_SIZE*4, MENU_ITEM_SIZE, active, img, name);
+        else toggle = new ofxUIMultiImageToggle(x, y, MENU_ITEM_SIZE, MENU_ITEM_SIZE, active, img, name);
+
         menu->addWidget(toggle);
         
         this->setPos(toggle->getRect()->getX(), toggle->getRect()->getY());
