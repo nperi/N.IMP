@@ -345,9 +345,10 @@ void scrollBar::updateScrollBar(ofVec3f diffVec){
     int unTransformedHighest = (composer->getPatchesHighestCoord() - cam->getPosition().y)/cam->getScale().y - margin;
     int inspectorHighestY = composer->getPatchesHighestYInspectorCoord();
     
-    if(unTransformedHighest < inspectorHighestY){
+    if(unTransformedHighest < inspectorHighestY && inspectorHighestY > 0){
         unTransformedHighest = inspectorHighestY;
     }
+    
     
     // Muestro la scrollBar
     isScrollBarVisible = true;
@@ -413,7 +414,7 @@ void scrollBar::updateHScrollBar(ofVec3f diffVec){
     int unTransformedRight = (composer->getPatchesRightMostCoord() - cam->getPosition().x)/cam->getScale().x - margin;
     int inspectorHighestX = composer->getPatchesHighestXInspectorCoord();
     
-    if(unTransformedRight < inspectorHighestX){
+    if(unTransformedRight < inspectorHighestX && inspectorHighestX > 0){
         unTransformedRight = inspectorHighestX;
     }
     
