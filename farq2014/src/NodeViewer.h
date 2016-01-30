@@ -29,6 +29,8 @@ public:
     void addElement(NodeElement* elem_, ofPoint position_);
     
     void setupGuiPositions();
+    void setMidiLearnActive(bool active_);
+    
     void createConnections(vector<NodeElement*> _elements);
     void createConnections();
     void closePatch(int _nID);

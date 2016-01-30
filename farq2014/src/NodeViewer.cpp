@@ -35,6 +35,16 @@ void NodeViewer::draw() {
 }
 
 //------------------------------------------------------------------
+void NodeViewer::setMidiLearnActive(bool active_){
+    
+    for (int i=0; i<elements.size(); ++i) {
+        elements[i]->getImageOutput()->setMidiLearnActive(active_);
+    }
+    
+    this->midiLearnActive = active_;
+}
+
+//------------------------------------------------------------------
 void NodeViewer::addElement(NodeElement* elem_){
     addElement(elem_, ofPoint(ofGetMouseX(), ofGetMouseY()));
 }

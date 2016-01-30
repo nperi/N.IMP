@@ -164,5 +164,8 @@ public:
     // snippet
     bool loadSnippet();
     bool saveSnippet();
+    
+    // MIDI learn
+    bool midiLearnActive;
 
 };

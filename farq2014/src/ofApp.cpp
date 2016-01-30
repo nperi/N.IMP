@@ -41,6 +41,7 @@ void ofApp::setup() {
     ofSetFrameRate(30);
     loadingOK = false;
     isFullScreen = false;
+    midiLearnActive = false;
     
     ofSetLogLevel(OF_LOG_ERROR);
     
@@ -150,6 +151,7 @@ void ofApp::setup() {
     gui->setDraggable(false);
     gui->setOtherSelected(false);
 
+    
     //*** LOADING NODES FROM XML ***//
     //
     ofDrawBitmapString("LOADING XML ...", 50, 50);
@@ -552,6 +554,17 @@ void ofApp::mousePressed(int x, int y, int button){
     }
     
     
+    // if i'm not over any menu, execute mouse pressed on composer and patches
+    //
+    if (!menu->isHit(x, y) && !right_menu->isHit(x, y)) {
+        
+        ofMouseEventArgs a;
+        a.set(x, y);
+        a.button = button;
+        nodeViewers[currentViewer]->_mousePressed(a);
+    }
+    
+    
 //    if(button == 2){
 //        do_zoom = true;
 //    }
@@ -726,9 +739,11 @@ void ofApp::menuEvent(ofxUIEventArgs &e)
                 ofSetWindowTitle(nodeViewers[currentViewer]->getName());
             }
         }
-        
     }
-    
+    else if (name == "Midi Learn") {
+        midiLearnActive = !midiLearnActive;
+        nodeViewers[currentViewer]->setMidiLearnActive(midiLearnActive);
+    }
 }
 /* ================================================ */
 /* ================================================ */
