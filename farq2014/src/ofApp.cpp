@@ -127,7 +127,6 @@ void ofApp::setup() {
     spacer->setColorFill(ofxUIColor(120, 120, 120, 200));
     new menuItem(menu, "MultiImageToggle", "Midi Learn", "assets/midi_learn.png", false, RIGHT_MENU_WIDTH + MENU_ITEM_SIZE*15 + MENU_ITEM_PADDING*22, 20);
     
-    
     ofAddListener(menu->newGUIEvent,this,&ofApp::menuEvent);
     
     
@@ -613,10 +612,7 @@ void ofApp::windowResized(int w, int h){
 }
 
 //------------------------------------------------------------------
-void ofApp::menuEvent(ofxUIEventArgs &e)
-{
-//    zoom_in = false;
-//    zoom_out = false;
+void ofApp::menuEvent(ofxUIEventArgs &e) {
     
     string name = e.getName();
     if (name == "Straight Links") {
@@ -639,8 +635,9 @@ void ofApp::menuEvent(ofxUIEventArgs &e)
     }
     else if (name == "Create Node") {
         
-        if (newNodeInput == NULL)
+        if (newNodeInput == NULL) {
             this->createNodeInput((ofGetWidth()/2)-75, ofGetHeight()/2);
+        }
         else if (!newNodeInput->isClicked()){
             newNodeInput->getRect()->setX((ofGetWidth()/2)-75);
             newNodeInput->getRect()->setY(ofGetHeight()/2);
@@ -698,7 +695,6 @@ void ofApp::menuEvent(ofxUIEventArgs &e)
         glfw->iconify(showConsole);
         showConsole = !showConsole;
         glfw->setWindow(windows->at(MAIN_WINDOW));
-        
     }
     else if (name == "Clear Console"){
         ConsoleLog::getInstance()->clearMessages();
