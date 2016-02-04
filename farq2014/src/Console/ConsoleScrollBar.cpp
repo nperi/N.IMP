@@ -58,7 +58,8 @@ void ConsoleScrollBar::setup(){
 
 void ConsoleScrollBar::update(){
     ofVec3f diffVec = ofVec3f(0,0,0);
-    if(EventHandler::getInstance()->isConsoleEvent()){
+//    if(EventHandler::getInstance()->isConsoleEvent()){
+    if(EventHandler::getInstance()->getWindowEvent() == CONSOLE_WINDOW){
         //** touchpad scroll **//
         std::vector<MTouch> mTouches = pad->getTouches();
         if(mTouches.size() == 2) {
@@ -119,7 +120,8 @@ void ConsoleScrollBar::draw(){
 /* ================================================ */
 
 void ConsoleScrollBar::mouseDragged(ofMouseEventArgs &e){
-    if(EventHandler::getInstance()->isConsoleEvent()){
+//    if(EventHandler::getInstance()->isConsoleEvent()){
+    if(EventHandler::getInstance()->getWindowEvent() == CONSOLE_WINDOW){
         ofVec3f mouse = ofVec3f(e.x, e.y,0);
         ofVec3f mouseLast = ofVec3f(ofGetPreviousMouseX(),ofGetPreviousMouseY(),0);
         
@@ -139,13 +141,11 @@ void ConsoleScrollBar::mouseDragged(ofMouseEventArgs &e){
 }
 
 void ConsoleScrollBar::mouseReleased(ofMouseEventArgs &e){
-    if(EventHandler::getInstance()->isConsoleEvent()){
-        
-    }
 }
 
 void ConsoleScrollBar::mousePressed(ofMouseEventArgs &e){
-    if(EventHandler::getInstance()->isConsoleEvent()){
+//    if(EventHandler::getInstance()->isConsoleEvent()){
+    if(EventHandler::getInstance()->getWindowEvent() == CONSOLE_WINDOW){
         // Check if the click occur on the grip
         if (isScrollBarVisible) {
             ofRectangle r = gripRectangle;
@@ -157,7 +157,8 @@ void ConsoleScrollBar::mousePressed(ofMouseEventArgs &e){
 }
 
 void ConsoleScrollBar::mouseMoved(ofMouseEventArgs &e){
-    if(EventHandler::getInstance()->isConsoleEvent()){
+//    if(EventHandler::getInstance()->isConsoleEvent()){
+    if(EventHandler::getInstance()->getWindowEvent() == CONSOLE_WINDOW){
         if (isScrollBarVisible) {
             ofRectangle r = gripRectangle;
             mouseOverGrip = r.inside(e.x, e.y);
@@ -169,7 +170,8 @@ void ConsoleScrollBar::mouseMoved(ofMouseEventArgs &e){
 }
 
 void ConsoleScrollBar::windowResized(ofResizeEventArgs &e){
-    if(EventHandler::getInstance()->isConsoleEvent()){
+//    if(EventHandler::getInstance()->isConsoleEvent()){
+    if(EventHandler::getInstance()->getWindowEvent() == CONSOLE_WINDOW){
         this->setup();
     }
 }

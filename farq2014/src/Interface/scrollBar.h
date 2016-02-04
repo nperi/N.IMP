@@ -19,7 +19,8 @@ class scrollBar {
 public:
     
     scrollBar();
-    scrollBar(ofxComposer* composer, ofxMultiTouchPad* pad, int eventPriority = OF_EVENT_ORDER_AFTER_APP);
+//    scrollBar(ofxComposer* composer, ofxMultiTouchPad* pad, int eventPriority = OF_EVENT_ORDER_AFTER_APP, int windowId = MAIN_WINDOW);
+    scrollBar(ofxComposer* composer, ofxMultiTouchPad* pad, ofEasyCam* cam, int eventPriority = OF_EVENT_ORDER_AFTER_APP, int windowId = MAIN_WINDOW);
     //    ~scrollBar();
     
     
@@ -39,8 +40,8 @@ public:
     void    windowResized(ofResizeEventArgs &e);
     void    mouseDragged(ofMouseEventArgs &e);
     
-    void updateScrollBar(ofVec3f diffVec);
-    void updateHScrollBar(ofVec3f diffVec);
+    void updateScrollBar(ofVec2f diffVec);
+    void updateHScrollBar(ofVec2f diffVec);
     
 private:
     /* Display parameters for the panel */
@@ -100,6 +101,9 @@ private:
     float scale;
     float prevDist, newDist, diffDist;
     ofPoint prev0, prev1, post0, post1;
+    
+    
+    int windowId;
 };
 
 

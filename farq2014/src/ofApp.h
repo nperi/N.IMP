@@ -145,6 +145,8 @@ public:
     
     //scrollbar
     scrollBar* scrollBars;
+    vector<scrollBar*> encapsulatedWindowsScrollBars;
+    vector<ofEasyCam*> encapsulatedWindowsCameras;
     
     //zoom
     bool menu_zoom_in, menu_zoom_out;

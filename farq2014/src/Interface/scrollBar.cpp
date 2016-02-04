@@ -15,10 +15,31 @@ scrollBar::scrollBar(){
 }
 
 //------------------------------------------------------------------
-scrollBar::scrollBar(class ofxComposer* _composer, ofxMultiTouchPad* _pad, int eventPriority){
+//scrollBar::scrollBar(class ofxComposer* _composer, ofxMultiTouchPad* _pad, int eventPriority, int windowId){
+//    this->composer  = _composer;
+//    this->pad       = _pad;
+//    this->cam       = (ofCamera*)composer->getParent();
+//    
+//    //  Event listeners
+//    //
+//    ofAddListener(ofEvents().mouseMoved, this, &scrollBar::mouseMoved, eventPriority);
+//    ofAddListener(ofEvents().mousePressed, this, &scrollBar::mousePressed, eventPriority);
+//    ofAddListener(ofEvents().mouseReleased, this, &scrollBar::mouseReleased, eventPriority);
+//    ofAddListener(ofEvents().keyPressed, this, &scrollBar::keyPressed, eventPriority);
+//    ofAddListener(ofEvents().windowResized, this, &scrollBar::windowResized, eventPriority);
+//    
+//    ofAddListener(ofEvents().mouseDragged, this, &scrollBar::mouseDragged, eventPriority);
+//    
+////    enableScroll = true;
+//    scale = 1.f;
+//    updating = false;
+//    this->windowId = windowId;
+//}
+
+scrollBar::scrollBar(class ofxComposer* _composer, ofxMultiTouchPad* _pad, ofEasyCam* cam, int eventPriority, int windowId){
     this->composer  = _composer;
     this->pad       = _pad;
-    this->cam       = (ofCamera*)composer->getParent();
+    this->cam       = cam;
     
     //  Event listeners
     //
@@ -30,9 +51,13 @@ scrollBar::scrollBar(class ofxComposer* _composer, ofxMultiTouchPad* _pad, int e
     
     ofAddListener(ofEvents().mouseDragged, this, &scrollBar::mouseDragged, eventPriority);
     
-//    enableScroll = true;
+    //    enableScroll = true;
     scale = 1.f;
     updating = false;
+    this->windowId = windowId;
+    
+    windowWidth = ofGetWidth();
+    windowHeight = ofGetHeight();
 }
 
 //------------------------------------------------------------------
@@ -65,9 +90,6 @@ void scrollBar::setup(){
     
     updateScrollBar(ofVec3f(0,0,0));
     updateHScrollBar(ofVec3f(0,0,0));
-    
-    windowWidth = ofGetWidth();
-    windowHeight = ofGetHeight();
 }
 
 /* ================================================ */
@@ -75,11 +97,12 @@ void scrollBar::setup(){
 /* ================================================ */
 
 void scrollBar::update(){
-    ofVec3f diffVec = ofVec3f(0,0,0);
-    if(EventHandler::getInstance()->isMainEvent()){
+    ofVec2f diffVec = ofVec2f(0,0);
+    if(EventHandler::getInstance()->getWindowEvent() == windowId){
         //** touchpad scroll **//
         std::vector<MTouch> mTouches = pad->getTouches();
-        if(mTouches.size() == 2 && !composer->arePatchesDeactivated()) {
+//        if(mTouches.size() == 2 && !composer->arePatchesDeactivated()) {
+        if(mTouches.size() == 2) {
             if (!touchpad_scroll) {
                 touchpad_scroll = true;
                 touchpad_scroll_x = ((mTouches[0].x + mTouches[1].x))*100 / 2;
@@ -155,30 +178,32 @@ void scrollBar::update(){
 //------------------------------------------------------------------
 void scrollBar::draw(){
     // Add a translation to bring the panel to the good position
-    ofPushMatrix();
-    // Draw the scroll bar, is needed
-    if (isScrollBarVisible) {
-        ofSetColor(40);
-        ofRect(scrollBarRectangle);
-        if (composer->isDraggingGrip() || mouseOverGrip) {
-            ofSetColor(230);
-        } else {
-            ofSetColor(100);
+    if(EventHandler::getInstance()->getWindowIdDraw() == windowId){
+        ofPushMatrix();
+        // Draw the scroll bar, is needed
+        if (isScrollBarVisible) {
+            ofSetColor(40);
+            ofRect(scrollBarRectangle);
+            if (composer->isDraggingGrip() || mouseOverGrip) {
+                ofSetColor(230);
+            } else {
+                ofSetColor(100);
+            }
+            ofRect(gripRectangle);
         }
-        ofRect(gripRectangle);
-    }
-    
-    if (isHScrollBarVisible) {
-        ofSetColor(40);
-        ofRect(hScrollBarRectangle);
-        if (composer->isDraggingHGrip() || mouseOverHGrip) {
-            ofSetColor(230);
-        } else {
-            ofSetColor(100);
+        
+        if (isHScrollBarVisible) {
+            ofSetColor(40);
+            ofRect(hScrollBarRectangle);
+            if (composer->isDraggingHGrip() || mouseOverHGrip) {
+                ofSetColor(230);
+            } else {
+                ofSetColor(100);
+            }
+            ofRect(hGripRectangle);
         }
-        ofRect(hGripRectangle);
+        ofPopMatrix();
     }
-    ofPopMatrix();
 }
 
 /* ================================================ */
@@ -190,7 +215,7 @@ void scrollBar::draw(){
 /* ================================================ */
 
 void scrollBar::mouseDragged(ofMouseEventArgs &e){
-    if(EventHandler::getInstance()->isMainEvent()){
+    if(EventHandler::getInstance()->getWindowEvent() == windowId){
         ofVec3f mouse = ofVec3f(e.x, e.y,0);
         ofVec3f mouseLast = ofVec3f(ofGetPreviousMouseX(),ofGetPreviousMouseY(),0);
         
@@ -221,7 +246,7 @@ void scrollBar::mouseDragged(ofMouseEventArgs &e){
 
 //------------------------------------------------------------------
 void scrollBar::mouseReleased(ofMouseEventArgs &e){
-    if(EventHandler::getInstance()->isMainEvent()){
+    if(EventHandler::getInstance()->getWindowEvent() == windowId){
         composer->setDraggingGrip(false);
         composer->setDraggingHGrip(false);
     }
@@ -231,7 +256,7 @@ void scrollBar::mouseReleased(ofMouseEventArgs &e){
 
 //------------------------------------------------------------------
 void scrollBar::mousePressed(ofMouseEventArgs &e){
-    if(EventHandler::getInstance()->isMainEvent()){
+    if(EventHandler::getInstance()->getWindowEvent() == windowId){
         // Check if the click occur on the grip
         if (isScrollBarVisible) {
             ofRectangle r = gripRectangle;
@@ -259,7 +284,7 @@ void scrollBar::mousePressed(ofMouseEventArgs &e){
 
 //------------------------------------------------------------------
 void scrollBar::mouseMoved(ofMouseEventArgs &e){
-    if(EventHandler::getInstance()->isMainEvent()){
+    if(EventHandler::getInstance()->getWindowEvent() == windowId){
         if (isScrollBarVisible) {
             ofRectangle r = gripRectangle;
             mouseOverGrip = r.inside(e.x, e.y);
@@ -278,8 +303,7 @@ void scrollBar::mouseMoved(ofMouseEventArgs &e){
 
 //------------------------------------------------------------------
 void scrollBar::keyPressed(ofKeyEventArgs &e){
-    if(EventHandler::getInstance()->isMainEvent()){
-        // hacer que si es flechita mover el scroll
+    if(EventHandler::getInstance()->getWindowEvent() == windowId){
         ofVec3f diffVec = ofVec3f(0, 0, 0);
         if (isScrollBarVisible) {
             if (e.key == OF_KEY_UP ){
@@ -306,7 +330,9 @@ void scrollBar::keyPressed(ofKeyEventArgs &e){
 
 //------------------------------------------------------------------
 void scrollBar::windowResized(ofResizeEventArgs &e){
-    if(EventHandler::getInstance()->isMainEvent()){
+    if(EventHandler::getInstance()->getWindowEvent() == windowId){
+        windowWidth = e.width;
+        windowHeight = e.height;
         this->setup();
     }
 }
@@ -319,8 +345,7 @@ void scrollBar::windowResized(ofResizeEventArgs &e){
 /*                  OTHER FUNCTIONS                 */
 /* ================================================ */
 
-void scrollBar::updateScrollBar(ofVec3f diffVec){
-    // TODO: con la flechita no puedo ir a los topes de la barra
+void scrollBar::updateScrollBar(ofVec2f diffVec){
     if(diffVec.y != 0){
         if(!(gripRectangle.y < BEGIN_Y) && !(gripRectangle.getBottom() > scrollBarRectangle.getBottom())){
             //composer->movePatches(diffVec);
@@ -341,9 +366,9 @@ void scrollBar::updateScrollBar(ofVec3f diffVec){
     panelHeight = windowHeight - margin - BEGIN_Y;
     
     gripRectangle.x = scrollBarRectangle.x;                   // Also adjust the grip x coordinate
-    int unTransformedLowest = (composer->getPatchesLowestCoord() - cam->getPosition().y)/cam->getScale().y - margin - BEGIN_Y;
-    int unTransformedHighest = (composer->getPatchesHighestCoord() - cam->getPosition().y)/cam->getScale().y - margin;
-    int inspectorHighestY = composer->getPatchesHighestYInspectorCoord();
+    int unTransformedLowest = (composer->getPatchesLowestCoord(windowId) - cam->getPosition().y)/cam->getScale().y - margin - BEGIN_Y;
+    int unTransformedHighest = (composer->getPatchesHighestCoord(windowId) - cam->getPosition().y)/cam->getScale().y - margin;
+    int inspectorHighestY = composer->getPatchesHighestYInspectorCoord(windowId);
     
     if(unTransformedHighest < inspectorHighestY && inspectorHighestY > 0){
         unTransformedHighest = inspectorHighestY;
@@ -365,8 +390,7 @@ void scrollBar::updateScrollBar(ofVec3f diffVec){
     if ( unTransformedHighest - SCROLL_TOLERANCE > panelHeight ) {
         gripSizeRatioLow = (float)panelHeight / ( (float)unTransformedHighest );
     }
-    
-    
+
     // La altura del grip es el panel por los ratios fuera de la pantalla
     gripRectangle.height = panelHeight * gripSizeRatioLow * gripSizeRatioHigh;
     
@@ -382,9 +406,7 @@ void scrollBar::updateScrollBar(ofVec3f diffVec){
 }
 
 //------------------------------------------------------------------
-void scrollBar::updateHScrollBar(ofVec3f diffVec){
-    
-    // TODO: con la flechita no puedo ir a los topes de la barra
+void scrollBar::updateHScrollBar(ofVec2f diffVec){
     if(diffVec.x != 0){
         if(!(hGripRectangle.x < BEGIN_X) && !(hGripRectangle.getRight() > hScrollBarRectangle.getRight())){
             //composer->movePatches(diffVec);
@@ -410,10 +432,10 @@ void scrollBar::updateHScrollBar(ofVec3f diffVec){
     hScrollBarRectangle.width = panelWidth;
     
     hGripRectangle.y = hScrollBarRectangle.y; // Also adjust the grip x coordinate
-    int unTransformedLeft = (composer->getPatchesLeftMostCoord() - cam->getPosition().x)/cam->getScale().x - margin - BEGIN_X;
-    int unTransformedRight = (composer->getPatchesRightMostCoord() - cam->getPosition().x)/cam->getScale().x - margin;
-    int inspectorHighestX = composer->getPatchesHighestXInspectorCoord();
-    
+    int unTransformedLeft = (composer->getPatchesLeftMostCoord(windowId) - cam->getPosition().x)/cam->getScale().x - margin - BEGIN_X;
+    int unTransformedRight = (composer->getPatchesRightMostCoord(windowId) - cam->getPosition().x)/cam->getScale().x - margin;
+    int inspectorHighestX = composer->getPatchesHighestXInspectorCoord(windowId);
+
     if(unTransformedRight < inspectorHighestX && inspectorHighestX > 0){
         unTransformedRight = inspectorHighestX;
     }
@@ -433,7 +455,6 @@ void scrollBar::updateHScrollBar(ofVec3f diffVec){
     } else if ( unTransformedRight - SCROLL_TOLERANCE > panelWidth ) {
         gripSizeRatioLeft = (float)panelWidth / ( (float)unTransformedRight );
     }
-    
     
     // La altura del grip es el panel por los ratios fuera de la pantalla
     hGripRectangle.width = panelWidth * gripSizeRatioLeft * gripSizeRatioRight;
