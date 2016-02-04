@@ -96,6 +96,9 @@ void MixMask::drawShader(){
 //------------------------------------------------------------------
 void MixMask::updateParameter(Param* inputParam){
     
+    if(inputParam->name.compare("spin")==0){
+        spin = inputParam->intVal;
+    }
 }
 
 //------------------------------------------------------------------

@@ -12,6 +12,7 @@ AudioListenerInput::AudioListenerInput(string name_):ParamInputGenerator(name_,t
     left = NULL;
     right = NULL;
     hasNewData = false;
+    type = FFT;
 }
 
 void AudioListenerInput::processInput(){

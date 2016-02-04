@@ -57,9 +57,9 @@ void ofApp::setup() {
     mixerTypes.insert(std::pair<string,MixerType>("MASK", MASK));
     mixerTypes.insert(std::pair<string,MixerType>("SIMPLE_BLEND", SIMPLE_BLEND));
     mixerTypes.insert(std::pair<string,MixerType>("MULTI_CHANNEL", MULTI_CHANNEL));
-    inputGenTypes.insert(std::pair<string,InputGeneratorsType>("MIDI", MIDI));
-    inputGenTypes.insert(std::pair<string,InputGeneratorsType>("FFT", FFT));
-    inputGenTypes.insert(std::pair<string,InputGeneratorsType>("OSC", OSC));
+    inputGenTypes.insert(std::pair<string,paramInputType>("MIDI", MIDI));
+    inputGenTypes.insert(std::pair<string,paramInputType>("FFT", FFT));
+    inputGenTypes.insert(std::pair<string,paramInputType>("OSC", OSC));
     
     
     //*** TRACKPAD SETUP ***//
@@ -269,16 +269,26 @@ void ofApp::update() {
                 
                 //sending param info to the destination node
                 if(param != NULL){
-                    ImageOutput* destinationNode = NULL;
-                    std::map<int,ImageOutput*>::iterator it;
-
-                    it = nodes.find(param->imageInputId);
                     
-                    if(it!=nodes.end()){
-                        it->second->updateParameter(param);
-                        delete param;
+                    if (p->getParamInputType() == MIDI && midiLearnActive) {
+                        map<int, vector<string> > attributesSelected = nodeViewers[currentViewer]->getAttributesSelectedForMidiLearn();
+                        
+                        for(map<int, vector<string> >::iterator it = attributesSelected.begin(); it != attributesSelected.end(); it++ ){
+                            ((MidiInputGenerator*)p)->addNewMidiMap(param->midiControl, it->first, it->second);
+                        }
                     }
-                    maxParams += 1;
+                    else if (!midiLearnActive){
+                        ImageOutput* destinationNode = NULL;
+                        std::map<int,ImageOutput*>::iterator it;
+
+                        it = nodes.find(param->imageInputId);
+                        
+                        if(it!=nodes.end()){
+                            it->second->updateParameter(param);
+                            delete param;
+                        }
+                        maxParams += 1;
+                    }
                 }
                 else{
                     continueProcessing = false;
@@ -739,6 +749,14 @@ void ofApp::menuEvent(ofxUIEventArgs &e) {
     else if (name == "Midi Learn") {
         midiLearnActive = !midiLearnActive;
         nodeViewers[currentViewer]->setMidiLearnActive(midiLearnActive);
+        
+        int i = 0;
+        while (i < inputGenerators.size() && inputGenerators[i]->getParamInputType() != MIDI) {
+            i++;
+        }
+        if (i < inputGenerators.size()) {
+            ((MidiInputGenerator*)inputGenerators[i])->setMidiLearnActive(midiLearnActive);
+        }
     }
 }
 /* ================================================ */

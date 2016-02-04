@@ -59,4 +59,35 @@ enum nodeType
     MIXER = 2
 };
 
+enum paramInputType
+{
+    MIDI,
+    OSC,
+    FFT
+};
+
+enum InputType
+{
+    VIDEO,
+    CAM,
+    IMAGE,
+    PARTICLE
+};
+
+enum VisualLayerType
+{
+    IKEDA,
+    GLITCH_1,
+    GLITCH_2,
+    IMAGE_PROCESSOR
+};
+
+enum MixerType
+{
+    SIMPLE_BLEND,
+    MASK,
+    MULTI_CHANNEL
+};
+
+
 #endif

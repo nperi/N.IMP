@@ -49,10 +49,10 @@
 #include "ConsoleLog.h"
 #include "EventHandler.h"
 
-enum InputType {VIDEO, CAM, IMAGE, PARTICLE};
-enum VisualLayerType {IKEDA, GLITCH_1, GLITCH_2,IMAGE_PROCESSOR};
-enum MixerType {SIMPLE_BLEND, MASK, MULTI_CHANNEL};
-enum InputGeneratorsType {MIDI, FFT, OSC};
+//enum InputType {VIDEO, CAM, IMAGE, PARTICLE};
+//enum VisualLayerType {IKEDA, GLITCH_1, GLITCH_2,IMAGE_PROCESSOR};
+//enum MixerType {SIMPLE_BLEND, MASK, MULTI_CHANNEL};
+//enum InputGeneratorsType {MIDI, FFT, OSC};
 
 class ofApp : public ofBaseApp {
 public:
@@ -117,7 +117,7 @@ public:
     map<string, InputType> inputTypes;
     map<string, VisualLayerType> visualLayerTypes;
     map<string, MixerType> mixerTypes;
-    map<string, InputGeneratorsType> inputGenTypes;
+    map<string, paramInputType> inputGenTypes;
     
     bool loadingOK;
     bool isFullScreen;

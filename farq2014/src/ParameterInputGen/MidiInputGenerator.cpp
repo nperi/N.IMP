@@ -11,6 +11,7 @@
 MidiInputGenerator::MidiInputGenerator(string name_, string midiInputName_):ParamInputGenerator(name_,false){
     midiInputName = midiInputName_;
     midiMaps = new vector<std::map<int,vector<DTMidiMap*>* >*>();
+    type = MIDI;
 }
 
 //------------------------------------------------------------------
@@ -123,10 +124,14 @@ void MidiInputGenerator::newMidiMessage(ofxMidiMessage& msg){
     midiMessage = msg;
     
     std::map<int,vector<DTMidiMap*>* >::iterator it;
-    
     it = midiMaps->at(activeMidiMap)->find(msg.control);
     
-    if(it!=midiMaps->at(activeMidiMap)->end()){
+    if (midiLearnActive) {
+        Param* p       = new Param();
+        p->midiControl = msg.control;
+        storeMessage(p);
+    }
+    else if(it != midiMaps->at(activeMidiMap)->end()){
         vector<DTMidiMap*>* vMaps = it->second;
         for(int i = 0; i<vMaps->size(); i++){
             Param* p        = new Param();
@@ -139,7 +144,7 @@ void MidiInputGenerator::newMidiMessage(ofxMidiMessage& msg){
         }
     }
     
-    //cout << "got midi" << endl;
+//    cout << "got midi " << msg.control << endl;
    
 }
 
@@ -166,6 +171,33 @@ void MidiInputGenerator::keyPressed (int key){
         }
     }
     
+}
+
+//------------------------------------------------------------------
+bool MidiInputGenerator::addNewMidiMap(int control_, int nodeId_, vector<string> params_) {
+    
+    vector<DTMidiMap*>* vMap = new vector<DTMidiMap*>();
+    
+    for (int i = 0; i < params_.size(); i++) {
+    
+        DTMidiMap* dtM = new DTMidiMap();
+        
+        dtM->control        = control_;
+        dtM->nodeId         = nodeId_;
+        dtM->paramId        = params_[i];
+        dtM->inputMinValue  = 0;
+        dtM->inputMaxValue  = 127;
+        dtM->paramMinValue  = 0;
+        dtM->paramMaxValue  = 360;
+        
+        //std::map<int,vector<DTMidiMap*>* >* mMap = new std::map<int,vector<DTMidiMap*>* >();
+        std::map<int,vector<DTMidiMap*>*>::iterator it;
+        
+        //mMap->insert(std::pair<int,vector<DTMidiMap*>* >(dtM->control,vMap));
+        vMap->push_back(dtM);
+        
+        midiMaps->at(activeMidiMap)->insert(std::pair<int,vector<DTMidiMap*>* >(dtM->control,vMap));
+    }
 }
 
 //------------------------------------------------------------------

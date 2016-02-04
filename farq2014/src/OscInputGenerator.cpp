@@ -12,6 +12,7 @@
 
 OscInputGenerator::OscInputGenerator(string name_):ParamInputGenerator(name_,true){
     oscMap = new std::map<string,DTOscMap* >();
+    type = OSC;
 }
 
 //------------------------------------------------------------------

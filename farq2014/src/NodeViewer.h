@@ -36,6 +36,7 @@ public:
     void closePatch(int _nID);
     
     string getName();
+    map<int, vector <string> > getAttributesSelectedForMidiLearn();
 	
     bool saveSettings(ofxXmlSettings &XML);
     

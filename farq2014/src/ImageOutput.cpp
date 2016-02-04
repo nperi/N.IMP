@@ -154,3 +154,9 @@ void ImageOutput::resetProcessedFlag(){
 void ImageOutput::setEnable(bool isEnabled_){
     isEnabled = isEnabled_;
 }
+
+//------------------------------------------------------------------
+vector<string> ImageOutput::getAttributesForMidiLearn() {
+    
+    return panel.getAttributesForMidiLearn();
+}

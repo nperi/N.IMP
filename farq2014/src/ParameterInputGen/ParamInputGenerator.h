@@ -12,6 +12,7 @@
 #include "ofMain.h"
 #include "Param.h"
 #include "ofxXmlSettings.h"
+#include "enumerations.h"
 
 class ParamInputGenerator: public ofThread {
     
@@ -27,6 +28,7 @@ public:
     Param* getNextInputMessage();
     void storeMessage(Param* p);
     void deleteAllMessages();
+    paramInputType getParamInputType() { return type; };
     virtual void keyPressed (int key);
     
     virtual bool saveSettings(ofxXmlSettings &XML)=0;
@@ -42,6 +44,7 @@ protected:
     int samplingMs;
     int bufferSize;
     ofxXmlSettings XML;
+    paramInputType type;
 };
 
 #endif /* defined(_ParameterInputGenerator) */

@@ -50,7 +50,7 @@ class ImageOutput : public ofxPatch {
     void drawGui(int x, int y);
     void setGui(int x,int y, int width = 240);
     
-    //methods for adding input//
+    //methods for adding input
     bool addInput(ofxPatch* layer_);
     void addInputIdentifier(int inputId_);
     bool findAndAssignInputs(map<int,ImageOutput*> &nodeCollection);
@@ -65,6 +65,9 @@ class ImageOutput : public ofxPatch {
     //load patch settings
     virtual bool saveSettings(ofxXmlSettings &XML)=0;
     virtual bool saveSettingsToSnippet(ofxXmlSettings &XML, map<int,int> newIdsMap)=0;
+    
+    //midi learn
+    vector<string> getAttributesForMidiLearn();
     
 protected:
 

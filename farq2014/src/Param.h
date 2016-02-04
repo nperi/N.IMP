@@ -23,7 +23,7 @@ class Param {
     int     intVal;
     string  stringVal;
     float   floatVal;
-	
+    int     midiControl;
 };
 
 #endif

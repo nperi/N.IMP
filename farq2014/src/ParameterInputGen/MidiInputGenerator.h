@@ -25,6 +25,9 @@ public:
     void keyPressed (int key);
     void nextMidiMap();
     void prevMidiMap();
+    bool addNewMidiMap(int control_, int nodeId_, vector<string> params_);
+    void setMidiLearnActive(bool active_) { midiLearnActive = active_; };
+    
     //for storing midi control ids and map them to Node id and parameter.
     vector<std::map<int,vector<DTMidiMap*>* >*>* midiMaps;
     int activeMidiMap;
@@ -37,6 +40,7 @@ private:
     string midiInputName;
     ofxMidiIn midiIn;
     ofxMidiMessage midiMessage;
+    bool midiLearnActive;
     
 };
 
