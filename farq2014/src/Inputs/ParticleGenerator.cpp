@@ -111,6 +111,30 @@ void ParticleGenerator::updateParameter(Param* inputParam){
 }
 
 //------------------------------------------------------------------
+float ParticleGenerator::getMidiMin(string param_){
+    
+    if(param_.compare("forceX")==0){
+
+    }else if (param_.compare("forceY")==0){
+
+    }else if(param_.compare("clearBg")==0){
+
+    }
+}
+
+//------------------------------------------------------------------
+float ParticleGenerator::getMidiMax(string param_){
+    
+    if(param_.compare("forceX")==0){
+
+    }else if (param_.compare("forceY")==0){
+
+    }else if(param_.compare("clearBg")==0){
+
+    }
+}
+
+//------------------------------------------------------------------
 ofImage* ParticleGenerator::getImage(){
     
     fbo.readToPixels(buff);

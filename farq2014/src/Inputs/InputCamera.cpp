@@ -57,11 +57,6 @@ ofTexture* InputCamera::getTexture(){
 }
 
 //------------------------------------------------------------------
-void InputCamera::updateParameter(Param* inputParam){
-    
-}
-
-//------------------------------------------------------------------
 bool InputCamera::loadSettings(ofxXmlSettings &XML, int nTag_, int nodesCount_) {
     
     bool loaded = false;

@@ -272,9 +272,13 @@ void ofApp::update() {
                     
                     if (p->getParamInputType() == MIDI && midiLearnActive) {
                         map<int, vector<string> > attributesSelected = nodeViewers[currentViewer]->getAttributesSelectedForMidiLearn();
+                        std::map<int, ImageOutput*>::iterator node_;
                         
                         for(map<int, vector<string> >::iterator it = attributesSelected.begin(); it != attributesSelected.end(); it++ ){
-                            ((MidiInputGenerator*)p)->addNewMidiMap(param->midiControl, it->first, it->second);
+                            node_ = nodes.find(it->first);
+                            if (node_ != nodes.end()) {
+                                ((MidiInputGenerator*)p)->addNewMidiMap(param->midiControl, node_->second, it->second);
+                            }
                         }
                     }
                     else if (!midiLearnActive){
@@ -1033,8 +1037,8 @@ bool ofApp::loadFromXML(){
                             switch(inputGenTypes[inputType]){
                                 case MIDI:
                                 {
-                                    MidiInputGenerator* mI = new MidiInputGenerator(inputName,midiDeviceName);
-                                    mI->loadSettings(XML);
+                                    MidiInputGenerator* mI = new MidiInputGenerator(inputName, midiDeviceName);
+                                    mI->loadSettings(XML, nodes);
                                     
                                     inputGenerators.push_back(mI);
                                     

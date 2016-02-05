@@ -34,6 +34,9 @@ class VideoPlayerMac : public InputSource{
     
     void updateParameter(Param* inputParam);
     
+    float getMidiMin(string param_);
+    float getMidiMax(string param_);
+    
     bool loadSettings(ofxXmlSettings &XML, int nTag_, int nodesCount_ = 0);
     bool saveSettings(ofxXmlSettings &XML);
     bool saveSettingsToSnippet(ofxXmlSettings &XML, map<int,int> newIdsMap);

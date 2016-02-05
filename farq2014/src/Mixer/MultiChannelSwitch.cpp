@@ -46,7 +46,6 @@ void MultiChannelSwitch::inputAdded(ImageOutput* in_){
 void MultiChannelSwitch::inputRemoved(int id_){
     
     selChannel.setMax(selChannel.getMax()+1);
-
 }
 
 //------------------------------------------------------------------
@@ -69,6 +68,16 @@ void MultiChannelSwitch::update() {
 
 //------------------------------------------------------------------
 void MultiChannelSwitch::updateParameter(Param* inputParam){
+    
+}
+
+//------------------------------------------------------------------
+float MultiChannelSwitch::getMidiMin(string param_){
+    
+}
+
+//------------------------------------------------------------------
+float MultiChannelSwitch::getMidiMax(string param_){
     
 }
 

@@ -66,8 +66,10 @@ class ImageOutput : public ofxPatch {
     virtual bool saveSettings(ofxXmlSettings &XML)=0;
     virtual bool saveSettingsToSnippet(ofxXmlSettings &XML, map<int,int> newIdsMap)=0;
     
-    //midi learn
+    //midi learn methods
     vector<string> getAttributesForMidiLearn();
+    virtual float getMidiMin(string param_)=0;
+    virtual float getMidiMax(string param_)=0;
     
 protected:
 

@@ -57,6 +57,16 @@ void VideoPlayerMac::updateParameter(Param* inputParam){
 }
 
 //------------------------------------------------------------------
+float VideoPlayerMac::getMidiMin(string param_){
+    
+}
+
+//------------------------------------------------------------------
+float VideoPlayerMac::getMidiMax(string param_){
+    
+}
+
+//------------------------------------------------------------------
 ofImage* VideoPlayerMac::getImage(){
     return &img;
 }

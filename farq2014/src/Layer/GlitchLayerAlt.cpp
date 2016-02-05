@@ -66,6 +66,16 @@ void GlitchLayerAlt::updateParameter(Param* inputParam){
 }
 
 //------------------------------------------------------------------
+float GlitchLayerAlt::getMidiMin(string param_){
+    
+}
+
+//------------------------------------------------------------------
+float GlitchLayerAlt::getMidiMax(string param_){
+    
+}
+
+//------------------------------------------------------------------
 ofImage* GlitchLayerAlt::getImage(){
     if (drawNoInputs)
         return &noInputs;

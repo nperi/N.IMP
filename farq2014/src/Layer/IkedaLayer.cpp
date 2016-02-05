@@ -107,6 +107,43 @@ void IkedaLayer::update(){
 //------------------------------------------------------------------
 void IkedaLayer::updateParameter(Param* inputParam){
     
+    if(inputParam->name.compare("CannyX")==0){
+        this->pCannyX = inputParam->intVal;
+    }else if(inputParam->name.compare("CannyY")==0){
+        this->pCannyY = inputParam->intVal;
+    }else if(inputParam->name.compare("n Columns")==0){
+        this->pNColumns = inputParam->intVal;
+    }else if(inputParam->name.compare("amount")==0){
+        this->pThreshold = inputParam->intVal;
+    }
+}
+
+//------------------------------------------------------------------
+float IkedaLayer::getMidiMin(string param_){
+    
+    if(param_.compare("CannyX")==0){
+        return 0;
+    }else if(param_.compare("CannyY")==0){
+        return 0;
+    }else if(param_.compare("n Columns")==0){
+        return 1;
+    }else if(param_.compare("amount")==0){
+        return 0;
+    }
+}
+
+//------------------------------------------------------------------
+float IkedaLayer::getMidiMax(string param_){
+    
+    if(param_.compare("CannyX")==0){
+        return 255;
+    }else if(param_.compare("CannyY")==0){
+        return 255;
+    }else if(param_.compare("n Columns")==0){
+        return 14;
+    }else if(param_.compare("amount")==0){
+        return 255;
+    }
 }
 
 //------------------------------------------------------------------

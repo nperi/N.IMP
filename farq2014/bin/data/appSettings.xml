@@ -1,6 +1,6 @@
 <MAIN_SETTINGS>
     <link_type>2</link_type>
-    <total_nodes>11</total_nodes>
+    <total_nodes>12</total_nodes>
     <show_console>0</show_console>
     <SETTINGS>
         <INPUTS>
@@ -10,20 +10,20 @@
                 <visible>1</visible>
                 <texture>
                     <point>
-                        <x>59.806312561</x>
-                        <y>22.090583801</y>
+                        <x>75.806312561</x>
+                        <y>23.090583801</y>
                     </point>
                     <point>
-                        <x>202.758956909</x>
-                        <y>22.090461731</y>
+                        <x>218.758956909</x>
+                        <y>23.090461731</y>
                     </point>
                     <point>
-                        <x>202.759048462</x>
-                        <y>129.304977417</y>
+                        <x>218.759048462</x>
+                        <y>130.304977417</y>
                     </point>
                     <point>
-                        <x>59.806404114</x>
-                        <y>129.304977417</y>
+                        <x>75.806404114</x>
+                        <y>130.304977417</y>
                     </point>
                 </texture>
                 <mask>
@@ -206,7 +206,7 @@
             </NODE>
         </INPUTS>
         <VISUAL_LAYERS>
-            <NODE id="5" name="New Ikeda Layer" type="IKEDA" inputSource="1" isCanny="0" isThreshold="1" isColumns="0" isInvert="0" pNColumns="8" pCannyX="12.000000" pCannyY="12.000000" pThreshold="76">
+            <NODE id="5" name="New Ikeda Layer" type="IKEDA" inputSource="1" isCanny="0" isThreshold="1" isColumns="0" isInvert="0" pNColumns="1" pCannyX="0.000000" pCannyY="0.000000" pThreshold="174">
                 <type>none</type>
                 <path>none</path>
                 <visible>1</visible>
@@ -358,7 +358,7 @@
                     </dot>
                 </out>
             </NODE>
-            <NODE id="8" name="New Image Processor" type="IMAGE_PROCESSOR" inputSource="4" isBloom="0" isContrast="0" coContrast="1.000000" coBrightness="1.000000" coMultiple="1.000000" isKaleidoscope="1" kaSegments="2.000000" isNoise="0" noFreq="4.000000" noAmp="0.100000" noSpeed="0.100000" isEdge="0" edHue="0.500000" edSat="0.000000" isBleach="0" blOpacity="1.000000" isRGBShift="0" rgAngle="0.000000" rgAmount="0.005000" isGod="0" isZoomBlur="0" zbCenterX="0.500000" zbCenterY="0.500000" zbExposure="0.480000" zbDensity="0.250000" zbWeight="0.250000" zbClamp="1.000000">
+            <NODE id="8" name="New Image Processor" type="IMAGE_PROCESSOR" inputSource="4" isBloom="0" isContrast="0" coContrast="0.682497" coBrightness="5.906599" coMultiple="2.854200" isKaleidoscope="1" kaSegments="8.715662" isNoise="0" noFreq="3.208401" noAmp="0.000000" noSpeed="0.000000" isEdge="0" edHue="0.586146" edSat="-35.262932" isBleach="0" blOpacity="1.000000" isRGBShift="0" rgAngle="0.000000" rgAmount="0.100000" isGod="0" isZoomBlur="0" zbCenterX="0.500000" zbCenterY="0.500000" zbExposure="0.480000" zbDensity="0.250000" zbWeight="0.250000" zbClamp="1.000000">
                 <type>none</type>
                 <path>none</path>
                 <visible>1</visible>
@@ -412,7 +412,7 @@
             </NODE>
         </VISUAL_LAYERS>
         <MIXERS>
-            <NODE id="9" name="New Mix Simple Blend" type="SIMPLE_BLEND" selectorLeft="1" selectorRight="0" blendmode="9" opacity="67.574997">
+            <NODE id="9" name="New Mix Simple Blend" type="SIMPLE_BLEND" selectorLeft="1" selectorRight="0" blendmode="10" opacity="136.000000">
                 <INPUT_SOURCE nodeId="6" />
                 <INPUT_SOURCE nodeId="5" />
                 <type>none</type>
@@ -466,7 +466,7 @@
                     </dot>
                 </out>
             </NODE>
-            <NODE id="10" name="New Mix Mask" type="MASK" spin="90.000000">
+            <NODE id="10" name="Particle Mix Mask" type="MASK" spin="133.000000">
                 <INPUT_SOURCE nodeId="8" />
                 <type>none</type>
                 <path>none</path>
@@ -511,7 +511,7 @@
                     <active>1</active>
                 </out>
             </NODE>
-            <NODE id="11" name="New MultiChannel Switch" type="MULTI_CHANNEL" selChannel="0">
+            <NODE id="11" name="Channel Switch" type="MULTI_CHANNEL" selChannel="0">
                 <INPUT_SOURCE nodeId="9" />
                 <INPUT_SOURCE nodeId="7" />
                 <type>none</type>
@@ -571,30 +571,29 @@
             <NODE id="7" name="New Glitch Layer Alt" />
             <NODE id="8" name="New Image Processor" />
             <NODE id="9" name="New Mix Simple Blend" />
-            <NODE id="10" name="New Mix Mask" />
-            <NODE id="11" name="New MultiChannel Switch" />
+            <NODE id="10" name="Particle Mix Mask" />
+            <NODE id="11" name="Channel Switch" />
         </NODE_VIEW>
     </NODE_VIEWS>
     <PARAM_INPUT_GENERATORS>
-        <INPUT_GEN name="FFT1" type="FFT">
+        <!--<INPUT_GEN name="FFT1" type="FFT">
             <FFT_SETTINGS>
                 <AUDIO_MAP band="1" nodeId="8" param="coBrightness" inputMinValue="0.000000" inputMaxValue="50.000000" paramMinValue="0" paramMaxValue="255" />
             </FFT_SETTINGS>
-        </INPUT_GEN>
-        <INPUT_GEN name="MIDI1" type="MIDI" midiDeviceName="Oxygen 25">
+        </INPUT_GEN>-->
+        <INPUT_GEN name="MIDI1" type="MIDI" midiDeviceName="USB Trigger Finger">
             <MIDI_SETTINGS>
-                <MAIN_MIDI_MAP>
-                    <MIDI_MAP midiId="27" nodeName="mainMix" param="opacity" inputMinValue="0" inputMaxValue="127" paramMinValue="0" paramMaxValue="255" />
-                    <MIDI_MAP midiId="29" nodeName="V_GLITCH1" param="p2" inputMinValue="0" inputMaxValue="127" paramMinValue="0" paramMaxValue="255" />
-                    <MIDI_MAP midiId="13" nodeName="V_GLITCH1" param="p3" inputMinValue="0" inputMaxValue="127" paramMinValue="0" paramMaxValue="255" />
-                    <MIDI_MAP midiId="76" nodeName="V_GLITCH1" param="p4" inputMinValue="0" inputMaxValue="127" paramMinValue="0" paramMaxValue="255" />
-                </MAIN_MIDI_MAP>
-                <MAIN_MIDI_MAP>
-                    <MIDI_MAP midiId="27" nodeName="mainMix" param="opacity" inputMinValue="0" inputMaxValue="127" paramMinValue="0" paramMaxValue="255" />
-                    <MIDI_MAP midiId="29" nodeName="V_GLITCH1" param="p2" inputMinValue="0" inputMaxValue="127" paramMinValue="0" paramMaxValue="255" />
-                    <MIDI_MAP midiId="13" nodeName="V_GLITCH1" param="p3" inputMinValue="0" inputMaxValue="127" paramMinValue="0" paramMaxValue="255" />
-                    <MIDI_MAP midiId="76" nodeName="V_GLITCH1" param="p4" inputMinValue="0" inputMaxValue="127" paramMinValue="0" paramMaxValue="255" />
-                </MAIN_MIDI_MAP>
+                <MIDI_MAP midiId="1" nodeId="5" param="n Columns"></MIDI_MAP>
+                <MIDI_MAP midiId="1" nodeId="8" param="Amplitude"></MIDI_MAP>
+                <MIDI_MAP midiId="2" nodeId="5" param="CannyX"></MIDI_MAP>
+                <MIDI_MAP midiId="2" nodeId="5" param="CannyY"></MIDI_MAP>
+                <MIDI_MAP midiId="2" nodeId="8" param="Speed"></MIDI_MAP>
+                <MIDI_MAP midiId="7" nodeId="9" param="opacity"></MIDI_MAP>
+                <MIDI_MAP midiId="8" nodeId="9" param="BlendPinLight"></MIDI_MAP>
+                <MIDI_MAP midiId="10" nodeId="10" param="spin"></MIDI_MAP>
+                <MIDI_MAP midiId="12" nodeId="8" param="angle"></MIDI_MAP>
+                <MIDI_MAP midiId="13" nodeId="8" param="amount"></MIDI_MAP>
+                <MIDI_MAP midiId="91" nodeId="5" param="amount"></MIDI_MAP>
             </MIDI_SETTINGS>
         </INPUT_GEN>
     </PARAM_INPUT_GENERATORS>

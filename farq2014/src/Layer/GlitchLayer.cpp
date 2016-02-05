@@ -112,6 +112,16 @@ void GlitchLayer::updateParameter(Param* inputParam){
 }
 
 //------------------------------------------------------------------
+float GlitchLayer::getMidiMin(string param_){
+    
+}
+
+//------------------------------------------------------------------
+float GlitchLayer::getMidiMax(string param_){
+ 
+}
+
+//------------------------------------------------------------------
 ofImage* GlitchLayer::getImage(){
     if (drawNoInputs)
         return &noInputs;

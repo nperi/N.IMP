@@ -27,7 +27,10 @@ class InputCamera : public InputSource{
     ofImage*    getImage();
     ofTexture*  getTexture();
     
-    void updateParameter(Param* inputParam);
+    void updateParameter(Param* inputParam){};
+    
+    float getMidiMin(string param_){};
+    float getMidiMax(string param_){};
     
     bool loadSettings(ofxXmlSettings &XML, int nTag_, int nodesCount_ = 0);
     bool saveSettings(ofxXmlSettings &XML);

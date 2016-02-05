@@ -45,6 +45,16 @@ void ImageInputList::updateParameter(Param* inputParam){
 }
 
 //------------------------------------------------------------------
+float ImageInputList::getMidiMin(string param_){
+    
+}
+
+//------------------------------------------------------------------
+float ImageInputList::getMidiMax(string param_){
+    
+}
+
+//------------------------------------------------------------------
 ofImage* ImageInputList::getImage(){
     return &img;
 }

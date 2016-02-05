@@ -40,6 +40,9 @@ class ImageInputList : public InputSource{
     bool saveSettings(ofxXmlSettings &XML);
     bool saveSettingsToSnippet(ofxXmlSettings &XML, map<int,int> newIdsMap);
     
+    float getMidiMin(string param_);
+    float getMidiMax(string param_);
+    
     ofxButton nextSequence;
     ofxButton prevSequence;
     

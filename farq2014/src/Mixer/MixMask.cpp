@@ -102,6 +102,22 @@ void MixMask::updateParameter(Param* inputParam){
 }
 
 //------------------------------------------------------------------
+float MixMask::getMidiMin(string param_){
+    
+    if(param_.compare("spin")==0){
+        return 0;
+    }
+}
+
+//------------------------------------------------------------------
+float MixMask::getMidiMax(string param_){
+    
+    if(param_.compare("spin")==0){
+        return 360;
+    }
+}
+
+//------------------------------------------------------------------
 ofImage* MixMask::getImage(){
     if (drawNoInputs)
         return &noInputs;

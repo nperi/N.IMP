@@ -21,8 +21,8 @@ public:
     string  paramId;
     int     inputMinValue;
     int     inputMaxValue;
-    int     paramMinValue;
-    int     paramMaxValue;
+    float     paramMinValue;
+    float     paramMaxValue;
 };
 
 
