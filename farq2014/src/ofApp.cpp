@@ -197,7 +197,7 @@ void ofApp::setup() {
         
         //*** SCROLL BAR SETUP ***//
         //
-        this->scrollBars = new scrollBar(nodeViewers[currentViewer], &this->pad, SCROLL_BAR_EVENT_PRIORITY);
+        this->scrollBars = new scrollBar(nodeViewers[currentViewer], &this->pad, &cam, SCROLL_BAR_EVENT_PRIORITY);
         scrollBars->setup();
     }
     
@@ -323,10 +323,17 @@ void ofApp::update() {
         
         
         for(int i=2; i < windows->size(); i++){
+            encapsulatedWindowsScrollBars.at(i-2)->update();
+            
             if(glfwWindowShouldClose(windows->at(i))){
                 nodeViewers[currentViewer]->restoreWindowsForEncapsulated(i);
+//                nodeViewers[currentViewer]->setCameraForWindow(i, cam);
+                nodeViewers[currentViewer]->setParent(cam);
+                
                 glfw->destroyWindow(windows->at(i));
                 windows->erase(windows->begin() + i);
+                encapsulatedWindowsScrollBars.erase(encapsulatedWindowsScrollBars.begin() + i - 2);
+                encapsulatedWindowsCameras.erase(encapsulatedWindowsCameras.begin() + i -2);
             }
         }
     }
@@ -388,12 +395,14 @@ void ofApp::draw() {
         default:
             glfw->ofAppBaseWindow::showCursor();
             ofClear(35);
-            cam.begin();
+            encapsulatedWindowsCameras[wIndex-2]->begin();
             nodeViewers[currentViewer]->draw();
-            cam.end();
+            encapsulatedWindowsCameras[wIndex-2]->end();
             
             //draw inspectors
             nodeViewers[currentViewer]->drawInspectorGUIs();
+            
+            encapsulatedWindowsScrollBars.at(wIndex-2)->draw();
 
             break;
     }
@@ -536,10 +545,16 @@ void ofApp::keyReleased(int key){
 
 //------------------------------------------------------------------
 void ofApp::mouseDragged(int x, int y, int button){
-    if (glfw->getEventWindow() == windows->at(MAIN_WINDOW)){
-        EventHandler::getInstance()->setMainEvent();
-    } else if (glfw->getEventWindow() == windows->at(CONSOLE_WINDOW)){
-        EventHandler::getInstance()->setConsoleEvent();
+//    if (glfw->getEventWindow() == windows->at(MAIN_WINDOW)){
+//        EventHandler::getInstance()->setMainEvent();
+//    } else if (glfw->getEventWindow() == windows->at(CONSOLE_WINDOW)){
+//        EventHandler::getInstance()->setConsoleEvent();
+//    }
+    for(int i = 0; i < windows->size(); i++) {
+        if (glfw->getEventWindow() == windows->at(i)) {
+            EventHandler::getInstance()->setWindowEvent(i);
+            break;
+        }
     }
     
 //    if(do_zoom){
@@ -556,15 +571,21 @@ void ofApp::mousePressed(int x, int y, int button){
     for(int i = 0; i < windows->size(); i++) {
         if (glfw->getEventWindow() == windows->at(i)) {
             EventHandler::getInstance()->setWindowEvent(i);
+            if(i == MAIN_WINDOW){
+                nodeViewers[currentViewer]->setParent(cam);
+            } else if( i != CONSOLE_WINDOW){
+                nodeViewers[currentViewer]->setParent(*encapsulatedWindowsCameras.at(i-2));
+            }
+                
             break;
         }
     }
 
-    if (glfw->getEventWindow() == windows->at(MAIN_WINDOW)){
-        EventHandler::getInstance()->setMainEvent();
-    } else if (glfw->getEventWindow() == windows->at(CONSOLE_WINDOW)){
-        EventHandler::getInstance()->setConsoleEvent();
-    }
+//    if (glfw->getEventWindow() == windows->at(MAIN_WINDOW)){
+//        EventHandler::getInstance()->setMainEvent();
+//    } else if (glfw->getEventWindow() == windows->at(CONSOLE_WINDOW)){
+//        EventHandler::getInstance()->setConsoleEvent();
+//    }
     
     
     // if i'm not over any menu, execute mouse pressed on composer and patches
@@ -585,10 +606,17 @@ void ofApp::mousePressed(int x, int y, int button){
 
 //------------------------------------------------------------------
 void ofApp::mouseReleased(int x, int y, int button){
-    if (glfw->getEventWindow() == windows->at(MAIN_WINDOW)){
-        EventHandler::getInstance()->setMainEvent();
-    } else if (glfw->getEventWindow() == windows->at(CONSOLE_WINDOW)){
-        EventHandler::getInstance()->setConsoleEvent();
+//    if (glfw->getEventWindow() == windows->at(MAIN_WINDOW)){
+//        EventHandler::getInstance()->setMainEvent();
+//    } else if (glfw->getEventWindow() == windows->at(CONSOLE_WINDOW)){
+//        EventHandler::getInstance()->setConsoleEvent();
+//    }
+    
+    for(int i = 0; i < windows->size(); i++) {
+        if (glfw->getEventWindow() == windows->at(i)) {
+            EventHandler::getInstance()->setWindowEvent(i);
+            break;
+        }
     }
     
 //    do_zoom = false;
@@ -598,10 +626,16 @@ void ofApp::mouseReleased(int x, int y, int button){
 
 //------------------------------------------------------------------
 void ofApp::dragEvent(ofDragInfo dragInfo){
-    if (glfw->getEventWindow() == windows->at(MAIN_WINDOW)){
-        EventHandler::getInstance()->setMainEvent();
-    } else if (glfw->getEventWindow() == windows->at(CONSOLE_WINDOW)){
-        EventHandler::getInstance()->setConsoleEvent();
+//    if (glfw->getEventWindow() == windows->at(MAIN_WINDOW)){
+//        EventHandler::getInstance()->setMainEvent();
+//    } else if (glfw->getEventWindow() == windows->at(CONSOLE_WINDOW)){
+//        EventHandler::getInstance()->setConsoleEvent();
+//    }
+    for(int i = 0; i < windows->size(); i++) {
+        if (glfw->getEventWindow() == windows->at(i)) {
+            EventHandler::getInstance()->setWindowEvent(i);
+            break;
+        }
     }
     
     if( dragInfo.files.size() > 0 ){
@@ -618,10 +652,16 @@ void ofApp::mouseMoved(int x, int y){
 
 
 void ofApp::windowResized(int w, int h){
-    if (glfw->getEventWindow() == windows->at(MAIN_WINDOW)){
-        EventHandler::getInstance()->setMainEvent();
-    } else if (glfw->getEventWindow() == windows->at(CONSOLE_WINDOW)){
-        EventHandler::getInstance()->setConsoleEvent();
+//    if (glfw->getEventWindow() == windows->at(MAIN_WINDOW)){
+//        EventHandler::getInstance()->setMainEvent();
+//    } else if (glfw->getEventWindow() == windows->at(CONSOLE_WINDOW)){
+//        EventHandler::getInstance()->setConsoleEvent();
+//    }
+    for(int i = 0; i < windows->size(); i++) {
+        if (glfw->getEventWindow() == windows->at(i)) {
+            EventHandler::getInstance()->setWindowEvent(i);
+            break;
+        }
     }
 }
 
@@ -747,6 +787,21 @@ void ofApp::menuEvent(ofxUIEventArgs &e) {
                 ofSetWindowPosition(ofGetWindowPositionX(), ofGetWindowPositionX());
                 ofSetWindowShape(ofGetWidth(), ofGetHeight());
                 ofSetWindowTitle(nodeViewers[currentViewer]->getName());
+                
+                ofEasyCam* newCam = new ofEasyCam();
+                newCam->setDistance(cam.getDistance());
+                newCam->disableMouseInput();
+                newCam->enableOrtho();
+                newCam->setVFlip(true);
+                newCam->setScale(cam.getScale());
+                encapsulatedWindowsCameras.push_back(newCam);
+                
+//                nodeViewers[currentViewer]->setCameraForWindow(windows->size()-1, *newCam);
+                nodeViewers[currentViewer]->setParent(*newCam);
+                
+                scrollBar* newScroll = new scrollBar(nodeViewers[currentViewer], &this->pad, newCam, SCROLL_BAR_EVENT_PRIORITY, windows->size()-1);
+                newScroll->setup();
+                encapsulatedWindowsScrollBars.push_back(newScroll);
             }
         }
     }
