@@ -204,16 +204,21 @@ void ImageProcessor::updateParameter(Param* inputParam){
     }else if(inputParam->name.compare("clamp")==0){
         zbClamp = inputParam->floatVal;
     }else if(inputParam->name.compare("x")==0){
-        ofVec2f b = ofVec2f(inputParam->intVal,inputParam->intVal);
+        ofVec2f b = piRes;
+        b.x = inputParam->intVal;
+        piRes = b;
         if (piIsUnityScale) {
             (static_pointer_cast<PixelatePass>(post[9]))->setResolution(ofVec2f((int)b.x, (int)(b.x*height/width)));
         }else{
             (static_pointer_cast<PixelatePass>(post[9]))->setResolution(ofVec2f((int)b.x, (int)(b.y*height/width)));
         }
     }else if(inputParam->name.compare("y")==0){
-        ofVec2f b = ofVec2f(inputParam->intVal,inputParam->intVal);
+//        ofVec2f b = ofVec2f(inputParam->intVal,inputParam->intVal);
+        ofVec2f b = piRes;
+        b.y = inputParam->intVal;
+        piRes = b;
         if (piIsUnityScale) {
-            (static_pointer_cast<PixelatePass>(post[9]))->setResolution(ofVec2f((int)b.x, (int)(b.x*height/width)));
+            (static_pointer_cast<PixelatePass>(post[9]))->setResolution(ofVec2f((int)b.y, (int)(b.y*height/width)));
         }else{
             (static_pointer_cast<PixelatePass>(post[9]))->setResolution(ofVec2f((int)b.x, (int)(b.y*height/width)));
         }
