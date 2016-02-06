@@ -11,32 +11,31 @@
 
 ImageProcessor::ImageProcessor(string name_, int id_):VisualLayer(name_, "Image Processor", id_) {
     
-    bloom.setName("bloom");
-    contrast.setName("contrast");
-    kaleidoscope.setName("kaleidoscope");
-    noise.setName("noise");
     pixelate.setName("pixelate");
     pixelate.add(isPixelate.set("active", false));
     pixelate.add(piIsUnityScale.set("Unity scale", true));
     pixelate.add(piRes.set("Res", ofVec2f(100, 100), ofVec2f(3,3), ofVec2f(100, 100)));
     
-    edge.setName("edge");
-    god.setName("god");
-    
+    bloom.setName("bloom");
     bloom.add(isBloom.set("active", false));
+    
+    contrast.setName("contrast");
     contrast.add(isContrast.set("active", false));
     contrast.add(coContrast.set("contrast", 1.0, 0.0, 2.0));
     contrast.add(coBrightness.set("brightness", 1.0, 0.0, 20.0));
     contrast.add(coMultiple.set("multiple", 1.0, 0.0, 5.0));
     
+    kaleidoscope.setName("kaleidoscope");
     kaleidoscope.add(isKaleidoscope.set("active", false));
     kaleidoscope.add(kaSegments.set("Segments",2.0,0.0,15.0));
     
+    noise.setName("noise");
     noise.add(isNoise.set("active", false));
     noise.add(noFreq.set("Frequency", 4.0, 0.0, 10));
     noise.add(noAmp.set("Amplitude", .1, 0.0, .5));
     noise.add(noSpeed.set("Speed", .1, 0.0, 2.5));
     
+    edge.setName("edge");
     edge.add(isEdge.set("active", false));
     edge.add(edHue.set("hue",0.5,0,1));
     edge.add(edSat.set("saturation",0.0,-100,0));
@@ -50,6 +49,7 @@ ImageProcessor::ImageProcessor(string name_, int id_):VisualLayer(name_, "Image 
     rgbshift.add(rgAngle.set("angle",0.0,0.0,TWO_PI));
     rgbshift.add(rgAmount.set("amount",0.005,0.0,0.1));
     
+    god.setName("god");
     god.add(isGod.set("active", false));
     
     zoomBlur.setName("zoomBlur");
@@ -213,7 +213,6 @@ void ImageProcessor::updateParameter(Param* inputParam){
             (static_pointer_cast<PixelatePass>(post[9]))->setResolution(ofVec2f((int)b.x, (int)(b.y*height/width)));
         }
     }else if(inputParam->name.compare("y")==0){
-//        ofVec2f b = ofVec2f(inputParam->intVal,inputParam->intVal);
         ofVec2f b = piRes;
         b.y = inputParam->intVal;
         piRes = b;
