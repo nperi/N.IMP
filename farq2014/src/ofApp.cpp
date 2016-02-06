@@ -586,22 +586,6 @@ void ofApp::mousePressed(int x, int y, int button){
 //    } else if (glfw->getEventWindow() == windows->at(CONSOLE_WINDOW)){
 //        EventHandler::getInstance()->setConsoleEvent();
 //    }
-    
-    
-    // if i'm not over any menu, execute mouse pressed on composer and patches
-    //
-    if (!menu->isHit(x, y) && !right_menu->isHit(x, y)) {
-        
-        ofMouseEventArgs a;
-        a.set(x, y);
-        a.button = button;
-        nodeViewers[currentViewer]->_mousePressed(a);
-    }
-    
-    
-//    if(button == 2){
-//        do_zoom = true;
-//    }
 }
 
 //------------------------------------------------------------------
@@ -740,13 +724,9 @@ void ofApp::menuEvent(ofxUIEventArgs &e) {
         }
     }
     else if (name == "Console on/off"){
-//        if(showConsole){
-//            glfw->hideWindow(windows->at(1));
-//        } else {
-//            glfw->showWindow(windows->at(1));
-//        }
         glfw->setWindow(windows->at(CONSOLE_WINDOW));
         glfw->iconify(showConsole);
+//        showConsole ? glfw->hideWindow(windows->at(CONSOLE_WINDOW)) : glfw->showWindow(windows->at(CONSOLE_WINDOW));
         showConsole = !showConsole;
         glfw->setWindow(windows->at(MAIN_WINDOW));
     }

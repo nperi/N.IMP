@@ -8,22 +8,23 @@
 
 #include "menuItem.h"
 
-menuItem::menuItem(ofxUISuperCanvas* menu, string type, string name, string img, bool active, float x, float y) {
+menuItem::menuItem(ofxUISuperCanvas* menu_, string type, string name, string img, bool active, float x, float y) {
     
-    this->label = name;
+    this->label   = name;
     this->counter = 0;
+    this->toggle  = NULL;
+    this->button  = NULL;
+    this->menu    = menu_;
     
     if (type == "MultiImageButton") {
         
-        ofxUIMultiImageButton* button = new ofxUIMultiImageButton(x, y, MENU_ITEM_SIZE, MENU_ITEM_SIZE, active, img, name);
+        button = new ofxUIMultiImageButton(x, y, MENU_ITEM_SIZE, MENU_ITEM_SIZE, active, img, name);
         menu->addWidget(button);
         
         this->setPos(button->getRect()->getX(), button->getRect()->getY());
         this->setSize(button->getRect()->getWidth(), button->getRect()->getHeight());
     }
     else if (type == "MultiImageToggle") {
-        
-        ofxUIMultiImageToggle* toggle;
         
         if (name == "Midi Learn")
             toggle = new ofxUIMultiImageToggle(x, y, MENU_ITEM_SIZE*4, MENU_ITEM_SIZE, active, img, name);
@@ -36,6 +37,7 @@ menuItem::menuItem(ofxUISuperCanvas* menu, string type, string name, string img,
     }
     
     enableMouseEvents();
+    registerMouseEvents();
 }
 
 //------------------------------------------------------------------
@@ -51,3 +53,41 @@ void menuItem::draw() {
         counter = 0;
     }
 }
+
+//------------------------------------------------------------------
+void menuItem::onMouseMove(ofMouseEventArgs &e){
+    
+    this->toggle != NULL ? this->toggle->mouseMoved(e.x, e.y) : this->button->mouseMoved(e.x, e.y);
+//    this->menu->onMouseMoved(e);
+}
+
+//------------------------------------------------------------------
+void menuItem::onRollOut(ofMouseEventArgs &e) {
+    
+    this->toggle != NULL ? this->toggle->mouseMoved(e.x, e.y) : this->button->mouseMoved(e.x, e.y);
+//    this->menu->onMouseMoved(e);
+}
+
+//------------------------------------------------------------------
+void menuItem::onPress(ofMouseEventArgs &e){
+    
+    this->toggle != NULL ? this->toggle->mousePressed(e.x, e.y, e.button) : this->button->mousePressed(e.x, e.y, e.button);
+//    this->menu->onMousePressed(e);
+}
+
+//------------------------------------------------------------------
+void menuItem::onRelease(ofMouseEventArgs &e){
+    
+    this->toggle != NULL ? this->toggle->mouseReleased(e.x, e.y, e.button) : this->button->mouseReleased(e.x, e.y, e.button);
+//    this->menu->onMouseReleased(e);
+}
+
+//------------------------------------------------------------------
+void menuItem::onReleaseOutside(ofMouseEventArgs &e){
+    
+    this->toggle != NULL ? this->toggle->mouseReleased(e.x, e.y, e.button) : this->button->mouseReleased(e.x, e.y, e.button);
+//    this->menu->onMouseReleased(e);
+}
+
+
+

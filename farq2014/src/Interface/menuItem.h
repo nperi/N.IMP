@@ -22,9 +22,18 @@ public:
     
     void draw();
     
+    void onMouseMove(ofMouseEventArgs &e);
+    void onRollOut(ofMouseEventArgs &e);
+    void onPress(ofMouseEventArgs &e);
+    void onRelease(ofMouseEventArgs &e);
+    void onReleaseOutside(ofMouseEventArgs &e);
+    
 private:
     string label;
     int counter;
+    ofxUIMultiImageButton* button;
+    ofxUIMultiImageToggle* toggle;
+    ofxUISuperCanvas* menu;
 };
 
 #endif /* defined(__NIMP_Prototipe__menuItem__) */
