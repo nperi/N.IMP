@@ -200,18 +200,24 @@ bool MidiInputGenerator::addNewMidiMap(int control_, ImageOutput* node_, vector<
     
     vector<DTMidiMap*>* vMap = new vector<DTMidiMap*>();
     
+    // first we delete all previous setups for this midi control number
+    midiControlMaps[control_].clear();
+    
     for (int i = 0; i < params_.size(); i++) {
     
-        // first we control it doesn't exists other maps for this param
+        // then we control it doesn't exists other maps for this param
         for(map<int, vector<DTMidiMap*> >::iterator it = midiControlMaps.begin(); it != midiControlMaps.end(); it++ ){
             for (int j = 0; j < it->second.size(); j++){
-                if (it->second[j]->nodeId == node_->getId() && it->second[j]->paramId == params_[i]) {
+                if ( it->second[j]->nodeId == node_->getId() && ( (it->second[j]->paramId == params_[i]) ||
+                    ( (params_[i].compare(0, 5, "Blend") == 0) && (it->second[j]->paramId.compare(0, 5, "Blend") == 0) ))){
+                    
                     it->second.erase(it->second.begin() + j);
                     break;
                 }
             }
         }
         
+        // Now we add new maps for this midi control
         DTMidiMap* dtM = new DTMidiMap();
         
         dtM->control        = control_;
