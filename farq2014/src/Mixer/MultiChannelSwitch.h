@@ -19,6 +19,13 @@
 
 class MultiChannelSwitch : public MixTable{
 	
+struct Channel{
+    
+    ofParameter<bool>   selected;
+    int                 nodeId;
+    string              label;
+};
+
 public:
 	
 	MultiChannelSwitch(string name_ = "New MultiChannel Switch", int id_ = -1);
@@ -54,8 +61,8 @@ private:
     void cLabel(bool& b);
     
     ofParameterGroup labelGroup;
-    vector<ofParameter<bool> > labels;
-    bool notificationSendedSlider,notificationSendedRadio;
+//    bool notificationSendedSlider,notificationSendedRadio;
+    vector<Channel*> channels;
     
     //hack to kill double callback
     long lastClicked;

@@ -25,19 +25,23 @@ MultiChannelSwitch::MultiChannelSwitch(string name_, int id_):MixTable(name_, "M
 
 //------------------------------------------------------------------
 void MultiChannelSwitch::inputAdded(ImageOutput* in_){
+    
+    Channel* c = new Channel();
+    c->nodeId = in_->getId();
+    c->label = in_->getName();
     if (input.size()>1) {
         selChannel.setMax(selChannel.getMax()+1);
-        labels.push_back(false);
-        gui.add(labels[labels.size()-1].set(ofToString(input.size()-1) +  " : " + in_->getName(),false));
-        gui.setWidthElements(INSPECTOR_WIDTH);
-    }else{
-        //selChannel = 0;
-        labels.push_back(true);
-        gui.add(labels[labels.size()-1].set(ofToString(input.size()-1) +  " : " + in_->getName(),true));
-        gui.setWidthElements(INSPECTOR_WIDTH);
+        c->selected.set(in_->getName(),false);
+    } else {
+        c->selected.set(in_->getName(),true);
+        in_->setDrawInspector(drawInputGui);
     }
-    labels[labels.size()-1].addListener(this, &MultiChannelSwitch::cLabel);
-
+    
+    gui.add(c->selected);
+    c->selected.addListener(this, &MultiChannelSwitch::cLabel);
+    channels.push_back(c);
+    gui.setWidthElements(INSPECTOR_WIDTH);
+    
     //hack
     lastClicked = ofGetElapsedTimeMillis();
 }
@@ -46,6 +50,17 @@ void MultiChannelSwitch::inputAdded(ImageOutput* in_){
 void MultiChannelSwitch::inputRemoved(int id_){
     
     selChannel.setMax(selChannel.getMax()+1);
+    if (selChannel == input.size() && input.size() != 0){
+        selChannel -= 1;
+        channels[selChannel]->selected = true;
+    }
+    for (int i = 0; i < channels.size(); i++) {
+        if(channels[i]->nodeId == id_){
+            gui.remove(channels[i]->label);
+            channels.erase(channels.begin() + i);
+        }
+    }
+    gui.setWidthElements(INSPECTOR_WIDTH);
 }
 
 //------------------------------------------------------------------
@@ -59,7 +74,7 @@ void MultiChannelSwitch::setup() {
 //------------------------------------------------------------------
 void MultiChannelSwitch::update() {
     
-    if (input.size()){
+    if (input.size() > 0 && input[selChannel] != NULL){
         
         input[selChannel]->getTextureReference().readToPixels(buff);
         img.setFromPixels(buff);
@@ -83,14 +98,7 @@ float MultiChannelSwitch::getMidiMax(string param_){
 
 //------------------------------------------------------------------
 void MultiChannelSwitch::cselChannel(int& s){
-    /*
-        notificationSendedSlider = true;
-        selChannel.setName(input[selChannel]->getName());
-        for (int i=0; i<labels.size(); ++i) {
-            labels[i] = false;
-        }
-        labels[selChannel] = true;
-     */
+    
     if (input.size())
         resetSizeBasedOnInput(input[selChannel]);
 }
@@ -98,7 +106,8 @@ void MultiChannelSwitch::cselChannel(int& s){
 //------------------------------------------------------------------
 void MultiChannelSwitch::cGui(bool& g){
     
-    input[selChannel]->setDrawInspector(g);
+    if (input.size() > 0)
+        input[selChannel]->setDrawInspector(g);
 }
 
 //------------------------------------------------------------------
@@ -107,16 +116,23 @@ void MultiChannelSwitch::cLabel(bool& b){
         //hacked radio button
         lastClicked = ofGetElapsedTimeMillis();
         if (b) {
-            for (int i=0; i<labels.size(); ++i) {
-                labels[i] = false;
+            for (int i = 0; i < channels.size(); ++i) {
+                channels[i]->selected = false;
             }
             b = true;
+            drawNoInputs = false;
         }
-        for (int i=0; i<labels.size(); ++i) {
-            if (labels[i] == true) {
+        else {
+            drawNoInputs = true;
+        }
+        for (int i = 0; i < channels.size(); ++i) {
+            if (channels[i]->selected == true) {
                 input[selChannel]->setEnable(false);
-                selChannel = ofToInt(labels[i].getName().substr(0,1));
+                if(drawInputGui)
+                    input[selChannel]->setDrawInspector(false);
+                selChannel = i;
                 input[selChannel]->setEnable(true);
+                input[selChannel]->setDrawInspector(drawInputGui);
             }
         }
     }
