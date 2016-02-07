@@ -326,12 +326,14 @@ void ofApp::update() {
             encapsulatedWindowsScrollBars.at(i-2)->update();
             
             if(glfwWindowShouldClose(windows->at(i))){
-                nodeViewers[currentViewer]->restoreWindowsForEncapsulated(i);
-//                nodeViewers[currentViewer]->setCameraForWindow(i, cam);
                 nodeViewers[currentViewer]->setParent(cam);
+                nodeViewers[currentViewer]->setCameraForWindow(i, cam);
+                nodeViewers[currentViewer]->restoreWindowsForEncapsulated(i);
                 
                 glfw->destroyWindow(windows->at(i));
                 windows->erase(windows->begin() + i);
+                delete encapsulatedWindowsScrollBars.at(i-2);
+                delete encapsulatedWindowsCameras.at(i-2);
                 encapsulatedWindowsScrollBars.erase(encapsulatedWindowsScrollBars.begin() + i - 2);
                 encapsulatedWindowsCameras.erase(encapsulatedWindowsCameras.begin() + i -2);
             }
@@ -545,11 +547,6 @@ void ofApp::keyReleased(int key){
 
 //------------------------------------------------------------------
 void ofApp::mouseDragged(int x, int y, int button){
-//    if (glfw->getEventWindow() == windows->at(MAIN_WINDOW)){
-//        EventHandler::getInstance()->setMainEvent();
-//    } else if (glfw->getEventWindow() == windows->at(CONSOLE_WINDOW)){
-//        EventHandler::getInstance()->setConsoleEvent();
-//    }
     for(int i = 0; i < windows->size(); i++) {
         if (glfw->getEventWindow() == windows->at(i)) {
             EventHandler::getInstance()->setWindowEvent(i);
@@ -572,30 +569,21 @@ void ofApp::mousePressed(int x, int y, int button){
         if (glfw->getEventWindow() == windows->at(i)) {
             EventHandler::getInstance()->setWindowEvent(i);
             if(i == MAIN_WINDOW){
+                nodeViewers[currentViewer]->setCameraForWindow(MAIN_WINDOW, cam);
                 nodeViewers[currentViewer]->setParent(cam);
             } else if( i != CONSOLE_WINDOW){
-                nodeViewers[currentViewer]->setParent(*encapsulatedWindowsCameras.at(i-2));
+                nodeViewers[currentViewer]->setCameraForWindow(i, cam);
+                nodeViewers[currentViewer]->setParent(*(encapsulatedWindowsCameras.at(i-2)));
             }
                 
             break;
         }
     }
 
-//    if (glfw->getEventWindow() == windows->at(MAIN_WINDOW)){
-//        EventHandler::getInstance()->setMainEvent();
-//    } else if (glfw->getEventWindow() == windows->at(CONSOLE_WINDOW)){
-//        EventHandler::getInstance()->setConsoleEvent();
-//    }
 }
 
 //------------------------------------------------------------------
 void ofApp::mouseReleased(int x, int y, int button){
-//    if (glfw->getEventWindow() == windows->at(MAIN_WINDOW)){
-//        EventHandler::getInstance()->setMainEvent();
-//    } else if (glfw->getEventWindow() == windows->at(CONSOLE_WINDOW)){
-//        EventHandler::getInstance()->setConsoleEvent();
-//    }
-    
     for(int i = 0; i < windows->size(); i++) {
         if (glfw->getEventWindow() == windows->at(i)) {
             EventHandler::getInstance()->setWindowEvent(i);
@@ -603,18 +591,12 @@ void ofApp::mouseReleased(int x, int y, int button){
         }
     }
     
-//    do_zoom = false;
     menu_zoom_in = false;
     menu_zoom_out = false;
 }
 
 //------------------------------------------------------------------
 void ofApp::dragEvent(ofDragInfo dragInfo){
-//    if (glfw->getEventWindow() == windows->at(MAIN_WINDOW)){
-//        EventHandler::getInstance()->setMainEvent();
-//    } else if (glfw->getEventWindow() == windows->at(CONSOLE_WINDOW)){
-//        EventHandler::getInstance()->setConsoleEvent();
-//    }
     for(int i = 0; i < windows->size(); i++) {
         if (glfw->getEventWindow() == windows->at(i)) {
             EventHandler::getInstance()->setWindowEvent(i);
@@ -636,11 +618,6 @@ void ofApp::mouseMoved(int x, int y){
 
 
 void ofApp::windowResized(int w, int h){
-//    if (glfw->getEventWindow() == windows->at(MAIN_WINDOW)){
-//        EventHandler::getInstance()->setMainEvent();
-//    } else if (glfw->getEventWindow() == windows->at(CONSOLE_WINDOW)){
-//        EventHandler::getInstance()->setConsoleEvent();
-//    }
     for(int i = 0; i < windows->size(); i++) {
         if (glfw->getEventWindow() == windows->at(i)) {
             EventHandler::getInstance()->setWindowEvent(i);
@@ -766,7 +743,7 @@ void ofApp::menuEvent(ofxUIEventArgs &e) {
                 
                 ofSetWindowPosition(ofGetWindowPositionX(), ofGetWindowPositionX());
                 ofSetWindowShape(ofGetWidth(), ofGetHeight());
-                ofSetWindowTitle(nodeViewers[currentViewer]->getName());
+                ofSetWindowTitle(nodeViewers[currentViewer]->getLastEncapsulatedName(encapsulatedId));
                 
                 ofEasyCam* newCam = new ofEasyCam();
                 newCam->setDistance(cam.getDistance());
@@ -774,10 +751,11 @@ void ofApp::menuEvent(ofxUIEventArgs &e) {
                 newCam->enableOrtho();
                 newCam->setVFlip(true);
                 newCam->setScale(cam.getScale());
+                newCam->setPosition(cam.getPosition().x, cam.getPosition().y, cam.getPosition().z);
                 encapsulatedWindowsCameras.push_back(newCam);
                 
-//                nodeViewers[currentViewer]->setCameraForWindow(windows->size()-1, *newCam);
                 nodeViewers[currentViewer]->setParent(*newCam);
+                nodeViewers[currentViewer]->setCameraForWindow(windows->size()-1, *newCam);
                 
                 scrollBar* newScroll = new scrollBar(nodeViewers[currentViewer], &this->pad, newCam, SCROLL_BAR_EVENT_PRIORITY, windows->size()-1);
                 newScroll->setup();
