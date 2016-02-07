@@ -10,25 +10,18 @@
 #include "InputCamera.h"
 
 
-InputCamera::InputCamera() : InputSource("New Camera"){
+InputCamera::InputCamera(string name, int id_) : InputSource(name, "Camera", id_){
     
+    drawNoInputs = true;
     videoGrabber = new ofVideoGrabber();
+    videoGrabber->setUseTexture(false);
     bool loaded = videoGrabber->initGrabber(width, height);
     
     if (loaded){
         width   = videoGrabber->getWidth();
         height  = videoGrabber->getHeight();
+        drawNoInputs = false;
     }
-    
-    //drawCamera = true;
-}
-
-//------------------------------------------------------------------
-InputCamera::InputCamera(string name, int id_) : InputSource(name, "Camera", id_){
-    //cam.initGrabber(width, height);
-    //img.allocate(640, 480, OF_IMAGE_COLOR);
-    
-    //drawCamera = true;
 }
 
 //------------------------------------------------------------------
@@ -39,21 +32,34 @@ void InputCamera::setup() {
 //------------------------------------------------------------------
 void InputCamera::update() {
     
-    videoGrabber->update();
-    if(videoGrabber->isFrameNew()) {
-        img.setFromPixels(videoGrabber->getPixels(), width, height, OF_IMAGE_COLOR);
-        //tex = img.getTextureReference();
+    if (videoGrabber->isInitialized()) {
+        videoGrabber->update();
+        if(videoGrabber->isFrameNew()) {
+            img.setFromPixels(videoGrabber->getPixels(), width, height, OF_IMAGE_COLOR);
+        }
     }
 }
 
 //------------------------------------------------------------------
 ofImage* InputCamera::getImage(){
-    return &img;
+    
+    if (!videoGrabber->isInitialized()) {
+        return &noInputs;
+    }
+    else {
+        return &img;
+    }
 }
 
 //------------------------------------------------------------------
 ofTexture* InputCamera::getTexture(){
-    return &img.getTextureReference();
+    
+    if (!videoGrabber->isInitialized()) {
+        return &noInputs.getTextureReference();
+    }
+    else {
+        return &img.getTextureReference();
+    }
 }
 
 //------------------------------------------------------------------
@@ -70,17 +76,8 @@ bool InputCamera::loadSettings(ofxXmlSettings &XML, int nTag_, int nodesCount_) 
     type            = XML.getValue("type","none");
     bVisible        = XML.getValue("visible", true);
     filePath        = XML.getValue("path", "none" );
-    
-    videoGrabber = new ofVideoGrabber();
-    videoGrabber->setDeviceID( XML.getValue("path", 0 ) );
-    loaded = videoGrabber->initGrabber(width, height);
-    
-    if (loaded){
-        width   = videoGrabber->getWidth();
-        height  = videoGrabber->getHeight();
 
-        ofxPatch::loadSettings(XML, nTag_, nodesCount_);
-    }
+    ofxPatch::loadSettings(XML, nTag_, nodesCount_);
     
     XML.popTag();
     
