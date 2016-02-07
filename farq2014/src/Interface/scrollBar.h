@@ -53,7 +53,11 @@ private:
     
     float windowWidth;
     float windowHeight;
-    
+    bool applyInertia;
+    float drag;
+    float minScrollDifference;
+    ofVec2f prevDiff;
+    float mousePositionX, mousePositionY;
     
     //*** VERTICAL SCROLLBAR ***//
     //

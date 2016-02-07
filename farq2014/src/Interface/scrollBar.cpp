@@ -58,6 +58,10 @@ scrollBar::scrollBar(class ofxComposer* _composer, ofxMultiTouchPad* _pad, ofEas
     
     windowWidth = ofGetWidth();
     windowHeight = ofGetHeight();
+    
+    applyInertia = false;
+    drag = 0.9f;
+    minScrollDifference = 0.1e-5f;
 }
 
 //------------------------------------------------------------------
@@ -142,6 +146,7 @@ void scrollBar::update(){
                         touchpad_scroll_y = new_y;
                         float dy = new_y - touchpad_scroll_y;
                         gripRectangle.y -= diffVec.y;
+                        prevDiff.y = diffVec.y;
                     }
                     if(isHScrollBarVisible){
                         
@@ -155,6 +160,7 @@ void scrollBar::update(){
                         touchpad_scroll_x = new_x;
                         float dx = new_x - touchpad_scroll_x;
                         hGripRectangle.x -= diffVec.x;
+                        prevDiff.x = diffVec.x;
                         
                     }
                 }
@@ -166,8 +172,34 @@ void scrollBar::update(){
         else {
             touchpad_scroll = false;
             updating = false;
+            applyInertia = true;
         }
         //** **//
+    }
+    
+    if(applyInertia){
+        if(zooming){
+            diffDist *= drag;
+            scale = cam->getScale().x;
+            scale -= diffDist*SCALE_SENSITIVITY;
+            cam->setScale(scale);
+
+            if(ABS(diffDist) <= minScrollDifference){
+                applyInertia = false;
+            }
+            
+        } else{
+            prevDiff.x *= drag;
+            prevDiff.y *= drag;
+            diffVec.x = prevDiff.x;
+            diffVec.y = prevDiff.y;
+            gripRectangle.y -= diffVec.y;
+            hGripRectangle.x -= diffVec.x;
+            
+            if(ABS(prevDiff.x) <= minScrollDifference || ABS(prevDiff.y) <= minScrollDifference){
+                applyInertia = false;
+            }
+        }
     }
 
     updateScrollBar(diffVec);
@@ -216,6 +248,9 @@ void scrollBar::draw(){
 
 void scrollBar::mouseDragged(ofMouseEventArgs &e){
     if(EventHandler::getInstance()->getWindowEvent() == windowId){
+        mousePositionX = e.x;
+        mousePositionY = e.y;
+        
         ofVec3f mouse = ofVec3f(e.x, e.y,0);
         ofVec3f mouseLast = ofVec3f(ofGetPreviousMouseX(),ofGetPreviousMouseY(),0);
         
@@ -238,25 +273,33 @@ void scrollBar::mouseDragged(ofMouseEventArgs &e){
             mousePreviousX = e.x;
             hGripRectangle.x += dx;
         }
-        
+
+        applyInertia = false;
         updateScrollBar(diffVec);
         updateHScrollBar(diffVec);
     }
+
 }
 
 //------------------------------------------------------------------
 void scrollBar::mouseReleased(ofMouseEventArgs &e){
     if(EventHandler::getInstance()->getWindowEvent() == windowId){
+        mousePositionX = e.x;
+        mousePositionY = e.y;
+        
         composer->setDraggingGrip(false);
         composer->setDraggingHGrip(false);
+        applyInertia = false;
     }
-    
 //    enableScroll = true;
 }
 
 //------------------------------------------------------------------
 void scrollBar::mousePressed(ofMouseEventArgs &e){
     if(EventHandler::getInstance()->getWindowEvent() == windowId){
+        mousePositionX = e.x;
+        mousePositionY = e.y;
+        
         // Check if the click occur on the grip
         if (isScrollBarVisible) {
             ofRectangle r = gripRectangle;
@@ -275,6 +318,7 @@ void scrollBar::mousePressed(ofMouseEventArgs &e){
                 mousePreviousX = e.x;
             }
         }
+        applyInertia = false;
     }
     
 //    if(e.button == 2){
@@ -285,6 +329,8 @@ void scrollBar::mousePressed(ofMouseEventArgs &e){
 //------------------------------------------------------------------
 void scrollBar::mouseMoved(ofMouseEventArgs &e){
     if(EventHandler::getInstance()->getWindowEvent() == windowId){
+        mousePositionX = e.x;
+        mousePositionY = e.y;
         if (isScrollBarVisible) {
             ofRectangle r = gripRectangle;
             mouseOverGrip = r.inside(e.x, e.y);
