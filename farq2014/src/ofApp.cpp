@@ -606,7 +606,36 @@ void ofApp::dragEvent(ofDragInfo dragInfo){
     
     if( dragInfo.files.size() > 0 ){
         for(int i = 0; i < dragInfo.files.size(); i++){
-            //nodeViewers[currentViewer]->addPatchFromFile( dragInfo.files[i], dragInfo.position );
+            
+            textInputEvent* ev = new textInputEvent();
+            ofFile file = ofFile(dragInfo.files[i]);
+            string ext = file.getExtension();
+            
+            if ((ext == "jpg") || (ext == "JPG") ||
+                (ext == "jpeg")|| (ext == "JPEG")||
+                (ext == "png") || (ext == "PNG") ||
+                (ext == "gif") || (ext == "GIF") ||
+                (ext == "bmp") || (ext == "BMP") ){
+                
+                ev->type = "image";
+            }
+            else if ((ext == "mov") || (ext == "MOV") ||
+                     (ext == "mpg") || (ext == "MPG") ||
+                     (ext == "mp4") || (ext == "MP4") ||
+                     (ext == "m4v") || (ext == "M4V") ){
+                
+                 ev->type = "video player";
+            }
+            else {
+                ConsoleLog::getInstance()->pushError("Not valid format to create a node.");
+                return;
+            }
+            
+            ev->path   = dragInfo.files[i];
+            ev->point  = dragInfo.position;
+            ev->name   = file.getFileName();
+            ev->widget = NULL;
+            createNode(*ev);
         }
     }
 }
@@ -891,8 +920,10 @@ void ofApp::createNode(textInputEvent &args){
         initNode(newPatch);
         newPatch->resetSize();
         
-        ofRemoveListener(((textInput*)args.widget)->createNode , this, &ofApp::createNode);
-        widgetsToDelete.push_back(args.widget); // delete input from canvas
+        if (args.widget != NULL) {
+            ofRemoveListener(((textInput*)args.widget)->createNode , this, &ofApp::createNode);
+            widgetsToDelete.push_back(args.widget); // delete input from canvas
+        }
     }
 }
 
