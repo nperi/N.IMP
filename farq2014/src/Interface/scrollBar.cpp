@@ -131,13 +131,7 @@ void scrollBar::update(){
                     newDist = ofDist(mTouches[0].x, mTouches[0].y, mTouches[1].x, mTouches[1].y);
                     diffDist = (newDist - prevDist)*120;
                     scale -= diffDist*SCALE_SENSITIVITY;
-                    
-                    float camX = cam->getPosition().x;
-                    float camY = cam->getPosition().y;
-                    float camZ = cam->getPosition().z;
                     cam->setScale(scale);
-//                    cam->setPosition(camX + mousePositionX, camY + mousePositionY, camZ);
-//                    cam->setPosition(camX, camY, camZ);
                     prevDist = newDist;
                 }else{
                     if (isScrollBarVisible) {
