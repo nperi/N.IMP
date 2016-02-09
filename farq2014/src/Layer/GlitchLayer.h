@@ -35,7 +35,7 @@ public:
     ofTexture		texture;
     ofxPostGlitch	myGlitch;
     
-    ofPixels        buff;
+//    ofPixels        buff;
     
     //glitch parameters
     ofxToggle do_CONVERGENCE;

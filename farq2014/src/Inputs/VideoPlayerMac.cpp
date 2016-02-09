@@ -31,7 +31,8 @@ void VideoPlayerMac::setup() {
         width  = players[currentPlayer]->getWidth();
         height = players[currentPlayer]->getHeight();
         
-        //drawTexture = true;
+        img.allocate(width, height, OF_IMAGE_COLOR_ALPHA);
+        img.setUseTexture(true);
     }
     else {
         drawNoInputs = true;

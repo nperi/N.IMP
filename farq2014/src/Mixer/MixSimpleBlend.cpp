@@ -53,6 +53,9 @@ void MixSimpleBlend::setup() {
 
         fbo.allocate(width, height);
         psBlend.setup(width, height);
+        
+        img.allocate(width, height, OF_IMAGE_COLOR_ALPHA);
+        img.setUseTexture(true);
     }
 }
 

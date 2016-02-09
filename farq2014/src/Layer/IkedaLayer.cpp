@@ -15,7 +15,6 @@ using namespace ofxCv;
 
 //------------------------------------------------------------------
 IkedaLayer::IkedaLayer(string name_, int id_, bool isCanny_,bool isThreshold_, bool isColumns_, bool isInvert_):VisualLayer(name_, "Ikeda", id_) {
-   // gui.setup();
     
     gui.add(isEnabled.setup("Enabled",isEnabled, 100,20));
     gui.add(isCanny.setup("Canny", isCanny_));
@@ -42,8 +41,11 @@ void IkedaLayer::setup() {
         width  = input[0]->getWidth();
         height = input[0]->getHeight();
         
-        imgAux.allocate(width, height, OF_IMAGE_COLOR);
+        img.allocate(width, height, OF_IMAGE_COLOR_ALPHA);
+        imgAux.allocate(width, height, OF_IMAGE_COLOR_ALPHA);
+        img.setUseTexture(true);
         imgAux.setUseTexture(true);
+        
     }
 }
 
@@ -53,16 +55,16 @@ void IkedaLayer::update(){
     if(input.size()) {
         
         input[0]->getTextureReference().readToPixels(buff);
-        imgAux.setFromPixels(buff);
         
         //process pipeline
         //canny edge detection
         if(isEnabled){
             
-            img.setImageType(OF_IMAGE_GRAYSCALE);
+            imgAux.setFromPixels(buff);
             
             //to gray image
-            convertColor(imgAux, img, CV_RGB2GRAY);
+            copyGray(imgAux, img);
+//            convertColor(imgAux, img, CV_RGBA2GRAY);
             
             if (isCanny) {
                 // canny edge detection
@@ -96,9 +98,10 @@ void IkedaLayer::update(){
             if (isInvert) {
                 invert(img);
             }
+            img.setImageType(OF_IMAGE_COLOR_ALPHA);
         }
         else {
-            img = imgAux;
+            img.setFromPixels(buff);
         }
         img.update();
     }

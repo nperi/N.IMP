@@ -26,6 +26,9 @@ void ImageInputList::setup(){
         
         width  = inputs[currentSequence]->getWidth();
         height = inputs[currentSequence]->getHeight();
+        
+        img.allocate(width, height, OF_IMAGE_COLOR);
+        img.setUseTexture(true);
     }
     else {
         drawNoInputs = true;

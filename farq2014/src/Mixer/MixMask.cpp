@@ -32,6 +32,9 @@ void MixMask::setup() {
         height = input[0]->getHeight();
         
         fbo.allocate(width, height);
+        
+        img.allocate(width, height, OF_IMAGE_COLOR_ALPHA);
+        img.setUseTexture(true);
     }
 }
 

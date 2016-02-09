@@ -48,6 +48,9 @@ void GlitchLayer::setup() {
         
         fbo.allocate(width, height);
         myGlitch.setup(&fbo);
+        
+        img.allocate(width, height, OF_IMAGE_COLOR_ALPHA);
+        img.setUseTexture(true);
     }
 }
 

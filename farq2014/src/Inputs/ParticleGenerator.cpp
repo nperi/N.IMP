@@ -17,6 +17,9 @@ ParticleGenerator::ParticleGenerator(string name, int id_) : InputSource(name, "
     s.useDepth			= false;
     fbo.allocate(s);
     
+    img.allocate(width, height, OF_IMAGE_COLOR_ALPHA);
+    img.setUseTexture(true);
+    
     gui.add(bAddParticles.setup("add Particles"));
     gui.add(bRemoveParticles.setup("remove Particles"));
     gui.add(isClearBg.set("Clear BG",true));

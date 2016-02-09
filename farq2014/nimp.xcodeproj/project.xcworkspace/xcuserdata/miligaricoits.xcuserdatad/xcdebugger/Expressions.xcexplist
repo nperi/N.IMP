@@ -3,10 +3,51 @@
    version = "1.0">
    <ContextStates>
       <ContextState
-         contextName = "ofxComposer::_mouseReleased(ofMouseEventArgs&amp;):ofxComposer.cpp">
+         contextName = "ofxComposer::getPatchesLowestCoord():ofxComposer.cpp">
          <PersistentStrings>
             <PersistentString
-               value = "patches[selectedDot]-&gt;outPut">
+               value = "NODE_HEADER_HEIGHT">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "ImageInputList::setup():ImageInputList.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "img">
+            </PersistentString>
+            <PersistentString
+               value = "img.isAllocated()">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "MixSimpleBlend::update():MixSimpleBlend.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "input[selector1]">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "MidiInputGenerator::newMidiMessage(ofxMidiMessage&amp;):MidiInputGenerator.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "midiMaps-&gt;at(activeMidiMap)">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "menuItem::menuItem(ofxUISuperCanvas*, std::string, std::string, std::string, bool, float, float):menuItem.cpp">
+      </ContextState>
+      <ContextState
+         contextName = "ofxUISuperCanvas::onMousePressed(ofMouseEventArgs&amp;):ofxUISuperCanvas.cpp">
+      </ContextState>
+      <ContextState
+         contextName = "ofxGuiGroup::remove(std::string):ofxGuiGroup.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "collection[i]-&gt;getName()">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -15,6 +56,59 @@
          <PersistentStrings>
             <PersistentString
                value = "canvas">
+            </PersistentString>
+            <PersistentString
+               value = "link_vertices[j+1].y - link_vertices[j].y">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "ofxComposer::_mouseReleased(ofMouseEventArgs&amp;):ofxComposer.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "patches[selectedDot]-&gt;outPut">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "ofxTextInput::keyPressed(ofKeyEventArgs&amp;):ofxTextInput.cpp">
+      </ContextState>
+      <ContextState
+         contextName = "ofApp::saveToXML():ofApp.cpp">
+      </ContextState>
+      <ContextState
+         contextName = "MultiChannelSwitch::inputRemoved(int):MultiChannelSwitch.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "gui">
+            </PersistentString>
+            <PersistentString
+               value = "input[1]">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "ofApp::update():ofApp.cpp">
+      </ContextState>
+      <ContextState
+         contextName = "GlitchLayerAlt::update():GlitchLayerAlt.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "input[0]-&gt;getTextureReference()">
+            </PersistentString>
+            <PersistentString
+               value = "input[0]">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "ofxUISuperCanvas::getOtherSelected():ofxUISuperCanvas.cpp">
+      </ContextState>
+      <ContextState
+         contextName = "ofxTextInput::setup(ofParameter&lt;std::string&gt;, float, float):ofxTextInput.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "text.length()">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -27,7 +121,52 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "ofApp::update():ofApp.cpp">
+         contextName = "ofxPatch::saveSettings(ofxXmlSettings&amp;, bool, int):ofxPatch.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "outPut[j].link_vertices">
+            </PersistentString>
+            <PersistentString
+               value = "ofToString(outPut[j].link_vertices[v].x) + &quot;|&quot; + ofToString(outPut[j].link_vertices[v].y)">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "MixSimpleBlend::setup():MixSimpleBlend.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "selector1">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "ofxUICanvas::mousePressed(int, int, int):ofxUICanvas.cpp">
+      </ContextState>
+      <ContextState
+         contextName = "ofxGuiGroup::mousePressed(ofMouseEventArgs&amp;):ofxGuiGroup.cpp">
+      </ContextState>
+      <ContextState
+         contextName = "ofxUIToggle::mouseReleased(int, int, int):ofxUIToggle.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "rect-&gt;inside(x, y)">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "MidiInputGenerator::loadSettings(ofxXmlSettings&amp;):MidiInputGenerator.cpp">
+      </ContextState>
+      <ContextState
+         contextName = "ofxGuiGroup::setMidiLearnActive(bool):ofxGuiGroup.cpp">
+      </ContextState>
+      <ContextState
+         contextName = "NodeViewer::saveSettings(ofxXmlSettings&amp;):NodeViewer.cpp">
+      </ContextState>
+      <ContextState
+         contextName = "ofxTextInput::render():ofxTextInput.cpp">
+      </ContextState>
+      <ContextState
+         contextName = "ofxPatch::update():ofxPatch.cpp">
       </ContextState>
       <ContextState
          contextName = "ImageProcessor::update():ImageProcessor.cpp">
@@ -39,9 +178,6 @@
                value = "input[0]">
             </PersistentString>
          </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "ofxUISuperCanvas::getOtherSelected():ofxUISuperCanvas.cpp">
       </ContextState>
    </ContextStates>
 </VariablesViewState>

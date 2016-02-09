@@ -15,8 +15,8 @@ ImageOutput::ImageOutput(string name_, string typeName_, int id_, int maxInputs_
     width       = width_;
     height      = height_;
     
-    img.allocate(width, height, OF_IMAGE_COLOR);
-    img.setUseTexture(true);
+//    img.allocate(width, height, OF_IMAGE_COLOR);
+//    img.setUseTexture(true);
     maxInputs   = maxInputs_;
     panel.setup();
     panel.add(gui.setup(typeName));

@@ -74,11 +74,6 @@ void MultiChannelSwitch::setup() {
 //------------------------------------------------------------------
 void MultiChannelSwitch::update() {
     
-    if (input.size() > 0 && input[selChannel] != NULL){
-        
-        input[selChannel]->getTextureReference().readToPixels(buff);
-        img.setFromPixels(buff);
-    }
 }
 
 //------------------------------------------------------------------
@@ -99,8 +94,10 @@ float MultiChannelSwitch::getMidiMax(string param_){
 //------------------------------------------------------------------
 void MultiChannelSwitch::cselChannel(int& s){
     
-    if (input.size())
+    if (input.size()) {
         resetSizeBasedOnInput(input[selChannel]);
+        getNodeViewerIBelong()->updateConnectionsSize(this);
+    }
 }
 
 //------------------------------------------------------------------
@@ -142,8 +139,9 @@ void MultiChannelSwitch::cLabel(bool& b){
 ofImage* MultiChannelSwitch::getImage(){
     if (drawNoInputs)
         return &noInputs;
-    else
-        return &img;
+    else {
+        return input[selChannel]->getImage();
+    }
 }
 
 //------------------------------------------------------------------
@@ -151,7 +149,7 @@ ofTexture* MultiChannelSwitch::getTexture(){
     if (drawNoInputs)
         return &noInputs.getTextureReference();
     else
-        return &img.getTextureReference();
+        return &input[selChannel]->getTextureReference();
 }
 
 //------------------------------------------------------------------

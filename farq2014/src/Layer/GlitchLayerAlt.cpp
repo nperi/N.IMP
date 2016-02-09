@@ -21,6 +21,8 @@ GlitchLayerAlt::GlitchLayerAlt(string name_, int id_):VisualLayer(name_, "Glitch
     gui.setWidthElements(INSPECTOR_WIDTH);
     
     drawNoInputs = true;
+    
+    
 }
 
 //------------------------------------------------------------------
@@ -31,6 +33,14 @@ void GlitchLayerAlt::setup() {
     }
     else {
         glitcher.setup(dq, qn, dht);
+        
+        width  = input[0]->getWidth();
+        height = input[0]->getHeight();
+        
+//        buff.allocate(width, height, OF_IMAGE_COLOR_ALPHA);
+        
+        img.allocate(width, height, OF_IMAGE_COLOR_ALPHA);
+        img.setUseTexture(true);
     }
 }
 
@@ -41,7 +51,6 @@ void GlitchLayerAlt::update(){
     if(input.size()) {
         
         input[0]->getTextureReference().readToPixels(buff);
-        img.setFromPixels(buff);
         
         if(isEnabled){
            
@@ -50,10 +59,12 @@ void GlitchLayerAlt::update(){
             glitcher.setQNGlitchness(qn);
             glitcher.setDHTGlitchness(dht);
             
-            glitcher.setPixels(img.getPixelsRef());
+            glitcher.setPixels(buff);
             glitcher.glitch();
             img.setFromPixels(glitcher.getImage().getPixelsRef());
-            
+        }
+        else {
+            img.setFromPixels(buff);
         }
         
         img.update();

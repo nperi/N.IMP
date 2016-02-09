@@ -138,6 +138,9 @@ void ImageProcessor::setup() {
         
         post.init(width,height);
         fbo.allocate(width, height);
+        
+        img.allocate(width, height, OF_IMAGE_COLOR_ALPHA);
+        img.setUseTexture(true);
     }
 }
 

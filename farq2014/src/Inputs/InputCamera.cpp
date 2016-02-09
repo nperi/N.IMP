@@ -21,6 +21,9 @@ InputCamera::InputCamera(string name, int id_) : InputSource(name, "Camera", id_
         width   = videoGrabber->getWidth();
         height  = videoGrabber->getHeight();
         drawNoInputs = false;
+        
+        img.allocate(width, height, OF_IMAGE_COLOR_ALPHA);
+        img.setUseTexture(true);
     }
 }
 
