@@ -631,11 +631,20 @@ void ofApp::dragEvent(ofDragInfo dragInfo){
                 return;
             }
             
+            for (int j = 0; j < inputs.size(); j ++) {
+                if (inputs[j]->getTypeName() == "Image" && inputs[j]->isOver(dragInfo.position)){
+                    ((ImageInputList*)inputs[j])->loadImage(file.getFileName(), dragInfo.files[i]);
+                    file.close();
+                    return;
+                }
+            }
+            
             ev->path   = dragInfo.files[i];
             ev->point  = dragInfo.position;
             ev->name   = file.getFileName();
             ev->widget = NULL;
             createNode(*ev);
+            file.close();
         }
     }
 }

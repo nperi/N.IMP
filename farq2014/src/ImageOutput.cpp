@@ -30,6 +30,11 @@ string ImageOutput::getName(){
 }
 
 //------------------------------------------------------------------
+string ImageOutput::getTypeName(){
+    return typeName;
+}
+
+//------------------------------------------------------------------
 ofxComposer* ImageOutput::getNodeViewerIBelong() {
     return viewer;
 }
