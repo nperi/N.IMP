@@ -11,10 +11,7 @@
 #define _ImageType
 
 #include "ofMain.h"
-
-enum imgType {
-    T_IMAGE, T_IMAGE_SEQUENCE, T_MOVIE
-};
+#include "enumerations.h"
 
 class ImageType {
 	
@@ -44,6 +41,7 @@ class ImageType {
     
     string getName(){return name;};
     string getPath(){return path;};
+    imgExt getFileExtension(){return ext;};
     
     virtual float getHeight() = 0;
     virtual float getWidth() = 0;
@@ -52,6 +50,8 @@ class ImageType {
     imgType mediaType;
     string name;
     string path;
+    imgExt ext;
+    
 };
 
 #endif

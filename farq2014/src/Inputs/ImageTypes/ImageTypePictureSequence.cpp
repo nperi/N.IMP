@@ -16,6 +16,8 @@ ImageTypePictureSequence::ImageTypePictureSequence(string name_ ,string path_): 
     player.loadMovie(path_);
     player.setLoopState(OF_LOOP_NORMAL);
     img.loadImage(dir.getPath(0));
+    
+    ofIsStringInString(path_, ".png") ? ext = PNG : ext = OTHER;
 }
 
 //------------------------------------------------------------------

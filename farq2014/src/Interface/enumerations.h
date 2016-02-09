@@ -90,5 +90,18 @@ enum MixerType
     MULTI_CHANNEL
 };
 
+enum imgType
+{
+    T_IMAGE,
+    T_IMAGE_SEQUENCE,
+    T_MOVIE
+};
+
+enum imgExt
+{
+    PNG,
+    OTHER
+};
+
 
 #endif

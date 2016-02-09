@@ -27,7 +27,10 @@ void ImageInputList::setup(){
         width  = inputs[currentSequence]->getWidth();
         height = inputs[currentSequence]->getHeight();
         
-        img.allocate(width, height, OF_IMAGE_COLOR);
+        inputs[currentSequence]->getFileExtension() == PNG
+        ? img.allocate(width, height, OF_IMAGE_COLOR_ALPHA)
+        : img.allocate(width, height, OF_IMAGE_COLOR);
+
         img.setUseTexture(true);
     }
     else {
@@ -211,8 +214,11 @@ void ImageInputList::playPositionChanged(float &pos){
 void ImageInputList::nextSequenceChanged(){
     if (isEnabled) {
         currentSequence = (currentSequence+1)%inputs.size();
-        
         getNodeViewerIBelong()->updateConnectionsSize(this);
+        
+        inputs[currentSequence]->getFileExtension() == PNG
+        ? img.setImageType(OF_IMAGE_COLOR_ALPHA)
+        : img.setImageType(OF_IMAGE_COLOR);
     }
 }
 
@@ -220,8 +226,11 @@ void ImageInputList::nextSequenceChanged(){
 void ImageInputList::prevSequenceChanged(){
     if (isEnabled) {
         currentSequence = (currentSequence -1 <0) ? currentSequence = inputs.size()-1 : currentSequence-1;
-
         getNodeViewerIBelong()->updateConnectionsSize(this);
+        
+        inputs[currentSequence]->getFileExtension() == PNG
+        ? img.setImageType(OF_IMAGE_COLOR_ALPHA)
+        : img.setImageType(OF_IMAGE_COLOR);
     }
 }
 

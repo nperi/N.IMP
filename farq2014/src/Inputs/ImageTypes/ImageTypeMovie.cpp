@@ -18,8 +18,10 @@ ImageTypeMovie::ImageTypeMovie(string name_ ,string path_, ofQTKitPlayer* player
     videoPlayer = player;
     path = path_;
     name = name_;
+    ext  = OTHER;
     
     isPlaying.addListener(this, &ImageTypeMovie::cIsPlaying);
+    
 }
 
 
