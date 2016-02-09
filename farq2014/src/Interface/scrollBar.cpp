@@ -172,7 +172,14 @@ void scrollBar::update(){
         else {
             touchpad_scroll = false;
             updating = false;
-            applyInertia = true;
+            if(mTouches.size() == 0) {
+                applyInertia = true;
+            }else{
+                applyInertia = false;
+                diffDist = 0;
+                prevDiff.x = 0;
+                prevDiff.y = 0;
+            }
         }
         //** **//
     }
@@ -274,7 +281,6 @@ void scrollBar::mouseDragged(ofMouseEventArgs &e){
             hGripRectangle.x += dx;
         }
 
-        applyInertia = false;
         updateScrollBar(diffVec);
         updateHScrollBar(diffVec);
     }
@@ -289,7 +295,6 @@ void scrollBar::mouseReleased(ofMouseEventArgs &e){
         
         composer->setDraggingGrip(false);
         composer->setDraggingHGrip(false);
-        applyInertia = false;
     }
 //    enableScroll = true;
 }
@@ -318,7 +323,6 @@ void scrollBar::mousePressed(ofMouseEventArgs &e){
                 mousePreviousX = e.x;
             }
         }
-        applyInertia = false;
     }
     
 //    if(e.button == 2){
