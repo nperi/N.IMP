@@ -162,6 +162,7 @@ public:
     
     // console
     bool showConsole;
+    ConsoleLog* console;
     
     // snippet
     bool loadSnippet();

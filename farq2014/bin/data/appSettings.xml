@@ -109,7 +109,6 @@
                 <ASSET name="pancakes.jpg" path="./pancakes.jpg" />
                 <ASSET name="picture.jpg" path="./picture.jpg" />
                 <ASSET name="duck.mp4" path="duck.mp4" />
-                <ASSET name="guacamayo.png" path="guacamayo.png" />
                 <type>none</type>
                 <path>none</path>
                 <visible>1</visible>
@@ -405,7 +404,7 @@
             </NODE>
         </VISUAL_LAYERS>
         <MIXERS>
-            <NODE id="9" name="New Mix Simple Blend" type="SIMPLE_BLEND" selectorLeft="1" selectorRight="0" blendmode="10" opacity="136.000000">
+            <NODE id="9" name="New Mix Simple Blend" type="SIMPLE_BLEND" blendmode="10" opacity="136.000000" selector1="1" selector2="1">
                 <INPUT_SOURCE nodeId="6" />
                 <INPUT_SOURCE nodeId="5" />
                 <type>none</type>
@@ -417,16 +416,16 @@
                         <y>76.865150452</y>
                     </point>
                     <point>
-                        <x>902.639282227</x>
+                        <x>840.791870117</x>
                         <y>76.865150452</y>
                     </point>
                     <point>
-                        <x>902.639282227</x>
-                        <y>192.065155029</y>
+                        <x>840.791870117</x>
+                        <y>184.079559326</y>
                     </point>
                     <point>
                         <x>697.839233398</x>
-                        <y>192.065155029</y>
+                        <y>184.079559326</y>
                     </point>
                 </texture>
                 <mask>

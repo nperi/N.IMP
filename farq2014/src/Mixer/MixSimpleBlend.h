@@ -15,6 +15,13 @@
 #include "ofxGui.h"
 #include "ofxPSBlend.h"
 
+struct Entry{
+    
+    ofParameter<bool>   selected;
+    int                 nodeId;
+    string              label;
+};
+
 //simple sample mixtable
 class MixSimpleBlend : public MixTable{
 	
@@ -30,8 +37,6 @@ public:
     
     void setEnable(bool isEnabled_);
 	
-    ofParameter<int> selector1;
-    ofParameter<int> selector2;
     ofParameter<int> blendMode;
     ofParameter<float> opacity;
     
@@ -52,6 +57,11 @@ private:
     
     ofxPSBlend psBlend;
     void blendModeChanged(int& i);
+    void entryChanged(bool& b);
+    
+    vector<Entry*> entries;
+    
+    int selector1, selector2;
     
 };
 

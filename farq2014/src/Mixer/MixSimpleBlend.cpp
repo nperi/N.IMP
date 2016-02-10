@@ -15,11 +15,11 @@ MixSimpleBlend::MixSimpleBlend(string name_, int id_):MixTable(name_, "Mix Simpl
 
     gui.add(blendMode.set("normal", 0, 0, 24));
     gui.add(opacity.set("opacity", 0, 0, 255));
-    gui.add(selector1.set("Left Source", 0, 0, 0));
-    gui.add(selector2.set("Right Source", 0, 0, 0));
     gui.setWidthElements(INSPECTOR_WIDTH);
     
     isEnabled = false;
+    selector1 = 0;
+    selector1 = 0;
     
     blendMode.addListener(this, &MixSimpleBlend::blendModeChanged);
     
@@ -33,23 +33,10 @@ void MixSimpleBlend::setup() {
         drawNoInputs = true;
     }
     else {
+        drawNoInputs  = false;
         
-        if (input.size() > selector2) {
-            width  = input[selector2]->getWidth();
-            height = input[selector2]->getHeight();
-        }
-        else if (input.size() > selector1) {
-            selector2 = 0;
-            
-            width  = input[selector1]->getWidth();
-            height = input[selector1]->getHeight();
-        }
-        else {
-            selector1 = 0;
-            
-            width  = input[0]->getWidth();
-            height = input[0]->getHeight();
-        }
+        width  = input[selector1]->getWidth();
+        height = input[selector1]->getHeight();
 
         fbo.allocate(width, height);
         psBlend.setup(width, height);
@@ -107,24 +94,79 @@ void MixSimpleBlend::blendModeChanged(int& i){
 }
 
 //------------------------------------------------------------------
-void MixSimpleBlend::inputAdded(ImageOutput* in_){
+void MixSimpleBlend::entryChanged(bool& b){
+    
+    if (entries.size() == 1) {
+        if (entries[0]->selected) {
+            selector1 = 0;
+            selector2 = 0;
+            drawNoInputs = false;
+        }
+        else {
+            drawNoInputs = true;
+        }
+    }
+    else {
+        if (entries[0]->selected && entries[1]->selected) {
+            selector1 = 0;
+            selector2 = 1;
+            drawNoInputs = false;
+        }
+        else if (entries[0]->selected && !entries[1]->selected) {
+            selector1 = 0;
+            selector2 = 0;
+            drawNoInputs = false;
+        }
+        else if (!entries[0]->selected && entries[1]->selected) {
+            selector1 = 1;
+            selector2 = 1;
+            drawNoInputs = false;
+        }
+        else {
+            drawNoInputs = true;
+        }
+    }
+    drawNoInputs ? resetSizeToNoInputs() : resetSizeBasedOnInput(input[selector1]);
+    getNodeViewerIBelong()->updateConnectionsSize(this);
+}
 
-    selector1.setMax(input.size()-1);
-    selector2.setMax(input.size()-1);
+//------------------------------------------------------------------
+void MixSimpleBlend::inputAdded(ImageOutput* in_){
+    
+    Entry* e = new Entry();
+    e->nodeId = in_->getId();
+    e->label = in_->getName();
+    if (entries.size() == 0) {
+        selector1 == 0 ? e->selected.set(in_->getName(),true) : e->selected.set(in_->getName(),false);
+        
+    } else {
+        selector2 == 1 ? e->selected.set(in_->getName(),true) : e->selected.set(in_->getName(),false);
+    }
+    
+    gui.add(e->selected);
+    e->selected.addListener(this, &MixSimpleBlend::entryChanged);
+    entries.push_back(e);
+    gui.setWidthElements(INSPECTOR_WIDTH);
 }
 
 //------------------------------------------------------------------
 void MixSimpleBlend::inputRemoved(int id_){
     
-    if (input.size() > 0) {
-        selector1.setMax(input.size()-1);
-        selector2.setMax(input.size()-1);
-        
-        if (selector1 >= input.size())
-            selector1 = input.size()-1;
-        if (selector2 >= input.size())
-            selector2 = input.size()-1;
+    selector1 = 0;
+    selector2 = 0;
+    
+    for (int i = 0; i < entries.size(); i++) {
+        if(entries[i]->nodeId == id_){
+            gui.remove(entries[i]->label);
+            entries.erase(entries.begin() + i);
+        }
     }
+    if (entries.size() != 0) {
+        entries[0]->selected = true;
+        resetSizeBasedOnInput(input[selector1]);
+        getNodeViewerIBelong()->updateConnectionsSize(this);
+    }
+    gui.setWidthElements(INSPECTOR_WIDTH);
 }
 
 //------------------------------------------------------------------
@@ -194,8 +236,8 @@ void MixSimpleBlend::resetSizeBasedOnInput(ofxPatch* input_){
 bool MixSimpleBlend::loadSettings(ofxXmlSettings &XML, int nTag_, int nodesCount_) {
     
     
-    selector1   = ofToInt(XML.getAttribute("NODE","selectorLeft","0", nTag_));
-    selector2   = ofToInt(XML.getAttribute("NODE","selectorRight","0", nTag_));
+    selector1   = ofToInt(XML.getAttribute("NODE","selector1","0", nTag_));
+    selector2   = ofToInt(XML.getAttribute("NODE","selector2","0", nTag_));
     blendMode   = ofToInt(XML.getAttribute("NODE","blendmode","0", nTag_));
     opacity     = ofToFloat(XML.getAttribute("NODE","opacity","0", nTag_));
     
@@ -242,8 +284,8 @@ bool MixSimpleBlend::saveSettings(ofxXmlSettings &XML) {
         if ( XML.getAttribute("NODE", "id", -1, i) == nId){
             
             XML.setAttribute("NODE", "name", name, i);
-            XML.setAttribute("NODE", "selectorLeft", selector1, i);
-            XML.setAttribute("NODE", "selectorRight", selector2, i);
+            XML.setAttribute("NODE", "selector1", selector1, i);
+            XML.setAttribute("NODE", "selector2", selector2, i);
             XML.setAttribute("NODE", "blendmode", blendMode, i);
             XML.setAttribute("NODE", "opacity", opacity, i);
             
@@ -279,8 +321,8 @@ bool MixSimpleBlend::saveSettings(ofxXmlSettings &XML) {
             XML.addAttribute("NODE", "name", name, lastPlace);
             XML.addAttribute("NODE", "type", "SIMPLE_BLEND", lastPlace);
             
-            XML.addAttribute("NODE", "selectorLeft", selector1, lastPlace);
-            XML.addAttribute("NODE", "selectorRight", selector2, lastPlace);
+            XML.addAttribute("NODE", "selector1", selector1, lastPlace);
+            XML.addAttribute("NODE", "selector2", selector2, lastPlace);
             XML.addAttribute("NODE", "blendmode", blendMode, lastPlace);
             XML.addAttribute("NODE", "opacity", opacity, lastPlace);
             
@@ -330,13 +372,13 @@ bool MixSimpleBlend::saveSettingsToSnippet(ofxXmlSettings &XML, map<int,int> new
         XML.popTag();
         
         if (selector1 >= count)
-            XML.addAttribute("NODE", "selectorLeft", 0, lastPlace);
+            XML.addAttribute("NODE", "selector1", 0, lastPlace);
         else
-            XML.addAttribute("NODE", "selectorLeft", selector1, lastPlace);
+            XML.addAttribute("NODE", "selector1", selector1, lastPlace);
         if (selector2 >= count)
-            XML.addAttribute("NODE", "selectorRight", 0, lastPlace);
+            XML.addAttribute("NODE", "selector2", 0, lastPlace);
         else
-            XML.addAttribute("NODE", "selectorRight", selector2, lastPlace);
+            XML.addAttribute("NODE", "selector2", selector2, lastPlace);
     }
     
     return saved;

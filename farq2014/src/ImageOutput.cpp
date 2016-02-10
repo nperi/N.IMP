@@ -98,16 +98,7 @@ void ImageOutput::removeInput(int inputId_){
             
             if (input.size() == 0) {
                 drawNoInputs = true;
-                
-                ofPoint iC[4];
-                ofPoint pos_ = getTextureCoorners().getVertices()[0];
-                
-                iC[0] = pos_;
-                iC[1] = ofPoint(pos_.x + 640/4, pos_.y);
-                iC[2] = ofPoint(pos_.x + 640/4, pos_.y + 480/4);
-                iC[3] = ofPoint(pos_.x, pos_.y + 480/4);
-                
-                setCoorners(iC);
+                resetSizeToNoInputs();
             }
             else {
                 resetSizeBasedOnInput(input[0]);

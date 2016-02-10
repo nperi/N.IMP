@@ -204,11 +204,11 @@ void ofApp::setup() {
     //*** CONSOLE LOGGER ***//
     //
     glfw->setWindow(windows->at(CONSOLE_WINDOW));
-    ConsoleLog::getInstance()->setupScrollBar(&pad);
+    console = ConsoleLog::getInstance();
+    console->setupScrollBar(&pad);
     glfw->iconify(!showConsole);
     
     glfw->setWindow(windows->at(MAIN_WINDOW));
-    
   }
 
 //------------------------------------------------------------------
@@ -392,7 +392,7 @@ void ofApp::draw() {
         case CONSOLE_WINDOW:
             ofBackground(0,0,0); // change background color on each window
             ofSetColor(200, 200, 200);
-            ConsoleLog::getInstance()->printMessages();
+            console->printMessages();
             break;
         default:
             glfw->ofAppBaseWindow::showCursor();
@@ -627,13 +627,16 @@ void ofApp::dragEvent(ofDragInfo dragInfo){
                  ev->type = "video player";
             }
             else {
-                ConsoleLog::getInstance()->pushError("Not valid format to create a node.");
+                console->pushError("Not valid format to create a node.");
                 return;
             }
             
             for (int j = 0; j < inputs.size(); j ++) {
                 if (inputs[j]->getTypeName() == "Image" && inputs[j]->isOver(dragInfo.position)){
                     ((ImageInputList*)inputs[j])->loadImage(file.getFileName(), dragInfo.files[i]);
+                    console->pushSuccess("File " + file.getFileName()
+                                         + " was succesfully added as a new sequence to the node "
+                                         + inputs[j]->getName() + ".");
                     file.close();
                     return;
                 }
@@ -652,6 +655,7 @@ void ofApp::dragEvent(ofDragInfo dragInfo){
 //------------------------------------------------------------------
 void ofApp::mouseMoved(int x, int y){
     ofShowCursor();
+
 }
 
 
@@ -746,7 +750,7 @@ void ofApp::menuEvent(ofxUIEventArgs &e) {
         glfw->setWindow(windows->at(MAIN_WINDOW));
     }
     else if (name == "Clear Console"){
-        ConsoleLog::getInstance()->clearMessages();
+        console->clearMessages();
     }
     
     else if (name == "Encapsulate"){
@@ -759,7 +763,7 @@ void ofApp::menuEvent(ofxUIEventArgs &e) {
         if(((ofxUIMultiImageButton*)e.widget)->getValue() == 1){
             int encapsulatedId = nodeViewers[currentViewer]->getSelectedEncapsulated();
             if(encapsulatedId < 0){
-                ConsoleLog::getInstance()->pushError("No encapsulated patch is selected");
+                console->pushError("No encapsulated patch is selected");
             } else {
                 int lastPatchId = nodeViewers[currentViewer]->getLastPatchEncapsulated(encapsulatedId);
                 nodeViewers[currentViewer]->restoreOutputEncapsulated(lastPatchId);
@@ -771,7 +775,7 @@ void ofApp::menuEvent(ofxUIEventArgs &e) {
         if(((ofxUIMultiImageButton*)e.widget)->getValue() == 1){
             int encapsulatedId = nodeViewers[currentViewer]->getSelectedEncapsulated();
             if(encapsulatedId < 0){
-                ConsoleLog::getInstance()->pushError("No encapsulated patch is selected");
+                console->pushError("No encapsulated patch is selected");
             } else {
                 glfw->createWindow();
                 glfw->setWindow(windows->at(windows->size()-1));
@@ -1347,7 +1351,7 @@ bool ofApp::loadNodes(ofxXmlSettings &XML){
                     }
                     else {
                         result = false;
-                        ConsoleLog::getInstance()->pushMessage("no videos to be loaded!");
+                        console->pushMessage("no videos to be loaded!");
                     }
                     
                     break;
@@ -1372,7 +1376,7 @@ bool ofApp::loadNodes(ofxXmlSettings &XML){
                     }
                     else {
                         result = false;
-                        ConsoleLog::getInstance()->pushMessage("no images to be loaded!");
+                        console->pushMessage("no images to be loaded!");
                     }
                     
                     break;
@@ -1390,7 +1394,7 @@ bool ofApp::loadNodes(ofxXmlSettings &XML){
                 default:
                 {
                     result = false;
-                    ConsoleLog::getInstance()->pushMessage("unknown input type!");
+                    console->pushMessage("unknown input type!");
                     break;
                 };
             }
@@ -1406,7 +1410,7 @@ bool ofApp::loadNodes(ofxXmlSettings &XML){
         
     }
     else{
-        ConsoleLog::getInstance()->pushMessage("inputs tag missing");
+        console->pushMessage("inputs tag missing");
         result = false;
     }
     
@@ -1480,7 +1484,7 @@ bool ofApp::loadNodes(ofxXmlSettings &XML){
                     default:
                     {
                         result = false;
-                        ConsoleLog::getInstance()->pushMessage("unknown visual layer type!");
+                        console->pushMessage("unknown visual layer type!");
                         break;
                     };
                 }
@@ -1496,7 +1500,7 @@ bool ofApp::loadNodes(ofxXmlSettings &XML){
             XML.popTag();
         }
         else {
-            ConsoleLog::getInstance()->pushMessage("visual layers tag missing");
+            console->pushMessage("visual layers tag missing");
             result = false;
         }
     }
@@ -1548,7 +1552,7 @@ bool ofApp::loadNodes(ofxXmlSettings &XML){
                     default:
                     {
                         result = false;
-                        ConsoleLog::getInstance()->pushMessage("unknown mixer type!");
+                        console->pushMessage("unknown mixer type!");
                         break;
                     };
                         
@@ -1568,7 +1572,7 @@ bool ofApp::loadNodes(ofxXmlSettings &XML){
         
     }
     else{
-        ConsoleLog::getInstance()->pushMessage("mixers tag missing");
+        console->pushMessage("mixers tag missing");
         result = false;
     }
     
@@ -1631,7 +1635,7 @@ bool ofApp::loadSnippet() {
                 }
                 else {
                     result = false;
-                    ConsoleLog::getInstance()->pushMessage("no videos to be loaded!");
+                    console->pushMessage("no videos to be loaded!");
                 }
             }
             else if (nodeType == "CAM") {
@@ -1653,7 +1657,7 @@ bool ofApp::loadSnippet() {
                 }
                 else {
                     result = false;
-                    ConsoleLog::getInstance()->pushMessage("no images to be loaded!");
+                    console->pushMessage("no images to be loaded!");
                 }
             }
             else if (nodeType == "PARTICLE") {
@@ -1730,7 +1734,7 @@ bool ofApp::loadSnippet() {
             }
             else {
                 result = false;
-                ConsoleLog::getInstance()->pushMessage("unknown input type!");
+                console->pushMessage("unknown input type!");
             }
         }
     
@@ -1740,7 +1744,7 @@ bool ofApp::loadSnippet() {
             //setting inputs to every node
             for(int i = 0; i < aux_nodesVector.size(); i++){
                 if (aux_nodesVector[i]->findAndAssignInputs(aux_nodes)) {
-                    ConsoleLog::getInstance()->pushMessage("node not found");
+                    console->pushMessage("node not found");
                     result = false;
                     break;
                 }
