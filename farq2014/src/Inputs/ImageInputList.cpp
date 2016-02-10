@@ -76,6 +76,8 @@ void ImageInputList::loadImage(string name_, string path_){
     if (ofIsStringInString(path_, ".mov") || ofIsStringInString(path_, ".mp4") ||
         ofIsStringInString(path_, ".mpg") || ofIsStringInString(path_, ".mpg") ) {
         
+        if (inputs.size() == 0)
+            videoPlayer = VideoPool::getInstance()->getPlayer();
         inputs.push_back(new ImageTypeMovie(name_,path_,videoPlayer));
         hasMovie = true;
     }
@@ -109,11 +111,13 @@ void ImageInputList::loadImage(string name_, string path_){
         nextSequence.addListener(this, &ImageInputList::nextSequenceChanged);
         prevSequence.addListener(this, &ImageInputList::prevSequenceChanged);
         currentSequence.addListener(this, &ImageInputList::sequenceChanged);
+        deleteCurrentSequence.addListener(this, &ImageInputList::deleteSequence);
         
         gui.add(isEnabledOn.set("Enabled",false));
         gui.add(nextSequence.setup(">> next"));
         gui.add(prevSequence.setup("<< prev"));
         gui.add(currentSequence.set("current", 0, 0, 0));
+        gui.add(deleteCurrentSequence.setup("Delete Current Sequence"));
         
         seqSettings.setName("Sequence Settings");
         seqSettings.add(isPlaying.set("Play",true));
@@ -261,6 +265,22 @@ void ImageInputList::sequenceChanged(int &s){
 }
 
 //------------------------------------------------------------------
+void ImageInputList::deleteSequence() {
+    if (isEnabled && inputs.size() > 1) {
+        inputs.erase(inputs.begin() + currentSequence);
+        if (currentSequence == inputs.size()) {
+            currentSequence--;
+        }
+        else {
+            currentSequence = currentSequence;
+        }
+        currentSequence.setMax(inputs.size()-1);
+
+    }
+    
+}
+
+//------------------------------------------------------------------
 void ImageInputList::setOriginalPlaySpeedChanged(bool &b){
     if (b) {
       
@@ -381,16 +401,16 @@ bool ImageInputList::saveSettings(ofxXmlSettings &XML) {
             XML.pushTag("NODE", i);
             
             if ((path == "none") || (path == "")) {
-
+                
                 int numAssetTag = XML.getNumTags("ASSET");
+                for (int v = 0; v < numAssetTag; v++){
+                    XML.removeTag("ASSET");
+                }
                 
                 for (int v = 0; v < inputs.size(); v++){
-                    
-                    if (v >= numAssetTag) {
-                        XML.addTag("ASSET");
-                    }
-                    XML.setAttribute("ASSET", "name", inputs[v]->getName(), v);
-                    XML.setAttribute("ASSET", "path", inputs[v]->getPath(), v);
+                    XML.addTag("ASSET");
+                    XML.addAttribute("ASSET", "name", inputs[v]->getName(), v);
+                    XML.addAttribute("ASSET", "path", inputs[v]->getPath(), v);
                 }
             }
             
@@ -427,7 +447,6 @@ bool ImageInputList::saveSettings(ofxXmlSettings &XML) {
                 if ((path == "none") || (path == "")) {
                     
                     for (int v = 0; v < inputs.size(); v++){
-                        
                         XML.addTag("ASSET");
                         XML.addAttribute("ASSET", "name", inputs[v]->getName(), v);
                         XML.addAttribute("ASSET", "path", inputs[v]->getPath(), v);

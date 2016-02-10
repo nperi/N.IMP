@@ -20,6 +20,8 @@ ImageTypeMovie::ImageTypeMovie(string name_ ,string path_, ofQTKitPlayer* player
     name = name_;
     ext  = OTHER;
     
+    if (!isPlaying && videoPlayer != NULL)
+        videoPlayer->stop();
     isPlaying.addListener(this, &ImageTypeMovie::cIsPlaying);
     
 }
@@ -43,6 +45,9 @@ void ImageTypeMovie::update(ofImage& _img){
         if (videoPlayer->isFrameNew()){
             _img.setFromPixels(videoPlayer->getPixels(), videoPlayer->getWidth(), videoPlayer->getHeight(), OF_IMAGE_COLOR_ALPHA);
         }
+    }
+    else {
+        _img.setFromPixels(videoPlayer->getPixels(), videoPlayer->getWidth(), videoPlayer->getHeight(), OF_IMAGE_COLOR_ALPHA);
     }
 }
 

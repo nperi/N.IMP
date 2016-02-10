@@ -47,6 +47,7 @@ class ImageInputList : public InputSource{
     ofxButton prevSequence;
     
     ofParameter<int> currentSequence;
+    ofxButton deleteCurrentSequence;
     
     ofParameterGroup seqSettings;
     ofParameter<float> bpm;
@@ -83,6 +84,7 @@ private:
     void calculateFPS();
     void isPlayingChanged(bool &b);
     void setEnableChanged(bool &b);
+    void deleteSequence();
     
     int lastSequence;
     bool hasMovie;

@@ -61,7 +61,6 @@ private:
     void cLabel(bool& b);
     
     ofParameterGroup labelGroup;
-//    bool notificationSendedSlider,notificationSendedRadio;
     vector<Channel*> channels;
     
     //hack to kill double callback
