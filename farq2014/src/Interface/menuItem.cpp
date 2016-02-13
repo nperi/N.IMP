@@ -57,35 +57,35 @@ void menuItem::draw() {
 //------------------------------------------------------------------
 void menuItem::onMouseMove(ofMouseEventArgs &e){
     
-    this->toggle != NULL ? this->toggle->mouseMoved(e.x, e.y) : this->button->mouseMoved(e.x, e.y);
+    this->toggle != NULL ? this->toggle->mouseMoved(e) : this->button->mouseMoved(e);
 //    this->menu->onMouseMoved(e);
 }
 
 //------------------------------------------------------------------
 void menuItem::onRollOut(ofMouseEventArgs &e) {
     
-    this->toggle != NULL ? this->toggle->mouseMoved(e.x, e.y) : this->button->mouseMoved(e.x, e.y);
+    this->toggle != NULL ? this->toggle->mouseMoved(e) : this->button->mouseMoved(e);
 //    this->menu->onMouseMoved(e);
 }
 
 //------------------------------------------------------------------
 void menuItem::onPress(ofMouseEventArgs &e){
     
-    this->toggle != NULL ? this->toggle->mousePressed(e.x, e.y, e.button) : this->button->mousePressed(e.x, e.y, e.button);
+    this->toggle != NULL ? this->toggle->mousePressed(e) : this->button->mousePressed(e);
 //    this->menu->onMousePressed(e);
 }
 
 //------------------------------------------------------------------
 void menuItem::onRelease(ofMouseEventArgs &e){
     
-    this->toggle != NULL ? this->toggle->mouseReleased(e.x, e.y, e.button) : this->button->mouseReleased(e.x, e.y, e.button);
+    this->toggle != NULL ? this->toggle->mouseReleased(e) : this->button->mouseReleased(e);
 //    this->menu->onMouseReleased(e);
 }
 
 //------------------------------------------------------------------
 void menuItem::onReleaseOutside(ofMouseEventArgs &e){
     
-    this->toggle != NULL ? this->toggle->mouseReleased(e.x, e.y, e.button) : this->button->mouseReleased(e.x, e.y, e.button);
+    this->toggle != NULL ? this->toggle->mouseReleased(e) : this->button->mouseReleased(e);
 //    this->menu->onMouseReleased(e);
 }
 

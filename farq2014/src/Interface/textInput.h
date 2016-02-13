@@ -24,8 +24,8 @@ public:
     ~textInput();
     
     void keyPressed(int key);
-    void mouseDragged(int x, int y, int button);
-    void mouseReleased(int x, int y, int button);
+    bool mouseDragged(ofMouseEventArgs &e);
+    bool mouseReleased(ofMouseEventArgs &e);
     void guiEvent(ofxUIEventArgs &e);
     
     void setDropdownList(ofxUIDropDownList* dl);
@@ -37,7 +37,6 @@ private:
     
     ofxUIDropDownList *dropdownList;
     vector<string> nodes;
-    bool imSelected;
 
 };
 

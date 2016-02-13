@@ -26,8 +26,6 @@ textInput::textInput(string _name, string _textstring, float w, float h, float x
     nodes.push_back("mix simple blend");
     nodes.push_back("mix mask");
     nodes.push_back("multi channel switch");
-    
-    imSelected = false;
 }
 
 //------------------------------------------------------------------
@@ -60,27 +58,23 @@ void textInput::keyPressed(int key) {
 }
 
 //------------------------------------------------------------------
-void textInput::mouseDragged(int x, int y, int button) {
+bool textInput::mouseDragged(ofMouseEventArgs &e) {
     
-    if ( (this->hit && !((ofxUISuperCanvas*)this->getCanvasParent())->getOtherSelected()) || (this->hit && imSelected) ) {
-        ofxUITextInput::mouseDragged(x, y, button);
+    if  (this->hit) {
+        ofxUITextInput::mouseDragged(e);
         
         if ((this->draggable) and (this->hit)) {
-            this->dropdownList->getRect()->setX(x - hitPoint.x);
-            this->dropdownList->getRect()->setY(y - hitPoint.y);
-            
-            ((ofxUISuperCanvas*)this->getCanvasParent())->setOtherSelected(true);
-            imSelected = true;
+            this->dropdownList->getRect()->setX(e.x - hitPoint.x);
+            this->dropdownList->getRect()->setY(e.y - hitPoint.y);
         }
     }
+    return this->hit;
 }
 
 //------------------------------------------------------------------
-void textInput::mouseReleased(int x, int y, int button) {
+bool textInput::mouseReleased(ofMouseEventArgs &e) {
     
     if (hit) {
-        ((ofxUISuperCanvas*)this->getCanvasParent())->setOtherSelected(false);
-        imSelected = false;
         
         if (isFocused())
             this->dropdownList->setVisible(true);
@@ -89,7 +83,7 @@ void textInput::mouseReleased(int x, int y, int button) {
             this->dropdownList->setVisible(false);
         }
     }
-    ofxUITextInput::mouseReleased(x, y, button);
+    return ofxUITextInput::mouseReleased(e);
 }
 
 //------------------------------------------------------------------

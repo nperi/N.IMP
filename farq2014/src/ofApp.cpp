@@ -148,7 +148,6 @@ void ofApp::setup() {
     gui = new ofxUISuperCanvas("", RIGHT_MENU_WIDTH, MENU_HEIGHT + MENU_TOP_PADDING, ofGetWidth() - RIGHT_MENU_WIDTH, ofGetHeight() - (MENU_HEIGHT +MENU_TOP_PADDING));
     gui->setColorBack(ofxUIColor(255,255,255,0));
     gui->setDraggable(false);
-    gui->setOtherSelected(false);
 
     
     //*** LOADING NODES FROM XML ***//
@@ -189,7 +188,7 @@ void ofApp::setup() {
         //
         setCurrentViewer(0);
         nodeViewers[currentViewer]->setParent(cam);
-        nodeViewers[currentViewer]->setMainCanvas(gui);
+        gui->setMainComposer(nodeViewers[currentViewer]);
         
         //*** AUDIO SETUP ***//
         //
@@ -658,7 +657,7 @@ void ofApp::mouseMoved(int x, int y){
 
 }
 
-
+//------------------------------------------------------------------
 void ofApp::windowResized(int w, int h){
     for(int i = 0; i < windows->size(); i++) {
         if (glfw->getEventWindow() == windows->at(i)) {
@@ -940,9 +939,9 @@ void ofApp::createNode(textInputEvent &args){
     }
 }
 
+//------------------------------------------------------------------
 void ofApp::initNode(ofxPatch* node) {
     node->setParent(cam);
-    node->setMainCanvas(gui);
     node->setup();
     node->setLinkType(nodeViewers[currentViewer]->getLinkType());
     ofAddListener( node->title->close , this, &ofApp::closePatch);
