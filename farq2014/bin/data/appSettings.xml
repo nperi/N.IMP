@@ -560,11 +560,11 @@
         </NODE_VIEW>
     </NODE_VIEWS>
     <PARAM_INPUT_GENERATORS>
-        <!--<INPUT_GEN name="FFT1" type="FFT">
+        <INPUT_GEN name="FFT1" type="FFT">
             <FFT_SETTINGS>
-                <AUDIO_MAP band="1" nodeId="8" param="coBrightness" inputMinValue="0.000000" inputMaxValue="50.000000" paramMinValue="0" paramMaxValue="255" />
+                <AUDIO_MAP band="1" nodeId="8" param="brightness" inputMinValue="0.000000" inputMaxValue="50.000000" paramMinValue="0" paramMaxValue="20" />
             </FFT_SETTINGS>
-        </INPUT_GEN>-->
+        </INPUT_GEN>
         <INPUT_GEN name="MIDI1" type="MIDI" midiDeviceName="USB Trigger Finger">
             <MIDI_SETTINGS>
                 <MIDI_MAP midiId="1" nodeId="5" param="n Columns"></MIDI_MAP>

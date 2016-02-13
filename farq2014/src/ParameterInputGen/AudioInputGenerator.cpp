@@ -102,6 +102,7 @@ void AudioInputGenerator::processInput(){
                     p->imageInputId = audioMap->at(i)->nodeId;
                     p->name         = audioMap->at(i)->paramId;
                     p->intVal       = ofMap(magnitude[band], audioMap->at(i)->inputMinValue, audioMap->at(i)->inputMaxValue, audioMap->at(i)->paramMinValue, audioMap->at(i)->paramMaxValue);
+                    p->floatVal     = ofMap(magnitude[band], audioMap->at(i)->inputMinValue, audioMap->at(i)->inputMaxValue, audioMap->at(i)->paramMinValue, audioMap->at(i)->paramMaxValue);
                     
                     storeMessage(p);
                 }

@@ -225,6 +225,15 @@ void ofApp::setupAudio(){
     left = new float[BUFFER_SIZE];
     right = new float[BUFFER_SIZE];
     
+    fft = new ofxUIWaveform(100, 100, 200, 100, left, BUFFER_SIZE, -1.0, 1.0, "FFT");
+    gui->addWidget(fft);
+    fft->setDraggable(true);
+    fft->setColorBack(ofxUIColor(0, 0, 0, 210));
+    fft->setDrawOutline(true);
+    fft->setColorOutline(ofxUIColor(140, 140, 140, 210));
+    fft->setColorOutlineHighlight(ofxUIColor(150,150,250));
+
+    
     //soundStream.setup(this, 0, 2, 44100, bufferSize, 4);
 }
 /* ================================================ */

@@ -170,5 +170,8 @@ public:
     
     // MIDI learn
     bool midiLearnActive;
+    
+    // Audio
+    ofxUIWaveform* fft;
 
 };
