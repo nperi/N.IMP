@@ -118,6 +118,7 @@ public:
     map<string, VisualLayerType> visualLayerTypes;
     map<string, MixerType> mixerTypes;
     map<string, paramInputType> inputGenTypes;
+    vector<int> encapsulatedIds;
     
     bool loadingOK;
     bool isFullScreen;
