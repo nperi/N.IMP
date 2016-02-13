@@ -15,17 +15,19 @@ textInput::textInput(string _name, string _textstring, float w, float h, float x
 {
     init(_name, _textstring, w, h, x, y, _size);
 
+    nodes.push_back("audio in - left");
+    nodes.push_back("audio in - right");
     nodes.push_back("camera");
-    nodes.push_back("video player");
-    nodes.push_back("image");
-    nodes.push_back("particle generator");
-    nodes.push_back("ikeda");
     nodes.push_back("glitch 1");
     nodes.push_back("glitch 2");
+    nodes.push_back("ikeda");
+    nodes.push_back("image");
     nodes.push_back("image processor");
-    nodes.push_back("mix simple blend");
     nodes.push_back("mix mask");
+    nodes.push_back("mix simple blend");
     nodes.push_back("multi channel switch");
+    nodes.push_back("particle generator");
+    nodes.push_back("video player");
 }
 
 //------------------------------------------------------------------

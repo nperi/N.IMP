@@ -18,6 +18,7 @@
 
 #include "MidiInputGenerator.h"
 
+#include "AudioIn.h"
 #include "InputCamera.h"
 #include "VideoPlayerMac.h"
 #include "ImageInput.h"
@@ -170,8 +171,5 @@ public:
     
     // MIDI learn
     bool midiLearnActive;
-    
-    // Audio
-    ofxUIWaveform* fft;
 
 };

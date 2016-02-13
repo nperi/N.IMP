@@ -225,15 +225,6 @@ void ofApp::setupAudio(){
     left = new float[BUFFER_SIZE];
     right = new float[BUFFER_SIZE];
     
-    fft = new ofxUIWaveform(100, 100, 200, 100, left, BUFFER_SIZE, -1.0, 1.0, "FFT");
-    gui->addWidget(fft);
-    fft->setDraggable(true);
-    fft->setColorBack(ofxUIColor(0, 0, 0, 210));
-    fft->setDrawOutline(true);
-    fft->setColorOutline(ofxUIColor(140, 140, 140, 210));
-    fft->setColorOutlineHighlight(ofxUIColor(150,150,250));
-
-    
     //soundStream.setup(this, 0, 2, 44100, bufferSize, 4);
 }
 /* ================================================ */
@@ -885,28 +876,20 @@ void ofApp::createNode(textInputEvent &args){
     
     NodeElement* nE;
     ImageOutput* newPatch = NULL;
+    ofVec3f position(args.point.x, args.point.y, 0.0);
+    position = position*cam.getGlobalTransformMatrix();
     
-    if (args.type == "camera") {
+    if (args.type == "audio in - left") {
+        newPatch = new AudioIn(gui, position, left, "New Audio In - Left", "Audio In - Left");
+        inputs.push_back((AudioIn*)newPatch);
+    }
+    else if (args.type == "audio in - right") {
+        newPatch = new AudioIn(gui, position, right, "New Audio In - Right", "Audio In - Right");
+        inputs.push_back((AudioIn*)newPatch);
+    }
+    else if (args.type == "camera") {
         newPatch = new InputCamera();
         inputs.push_back((InputCamera*)newPatch);
-    }
-    else if (args.type == "image") {
-        newPatch = new ImageInputList();
-        ((ImageInputList*)newPatch)->loadImage(args.name, args.path);
-        inputs.push_back((ImageInputList*)newPatch);
-    }
-    else if (args.type == "video player") {
-        newPatch = new VideoPlayerMac();
-        ((VideoPlayerMac*)newPatch)->loadVideo(args.path);
-        inputs.push_back((VideoPlayerMac*)newPatch);
-    }
-    else if (args.type == "particle generator") {
-        newPatch = new ParticleGenerator();
-        inputs.push_back((ParticleGenerator*)newPatch);
-    }
-    else if (args.type == "ikeda") {
-        newPatch = new IkedaLayer();
-        visualLayers.push_back((IkedaLayer*)newPatch);
     }
     else if (args.type == "glitch 1") {
         newPatch = new GlitchLayer();
@@ -916,26 +899,44 @@ void ofApp::createNode(textInputEvent &args){
         newPatch = new GlitchLayerAlt();
         visualLayers.push_back((GlitchLayerAlt*)newPatch);
     }
+    else if (args.type == "ikeda") {
+        newPatch = new IkedaLayer();
+        visualLayers.push_back((IkedaLayer*)newPatch);
+    }
+    else if (args.type == "image") {
+        newPatch = new ImageInputList();
+        ((ImageInputList*)newPatch)->loadImage(args.name, args.path);
+        inputs.push_back((ImageInputList*)newPatch);
+    }
     else if (args.type == "image processor") {
         newPatch = new ImageProcessor();
         visualLayers.push_back((ImageProcessor*)newPatch);
-    }
-    else if (args.type == "mix simple blend") {
-        newPatch = new MixSimpleBlend();
-        mixtables.push_back((MixSimpleBlend*)newPatch);
     }
     else if (args.type == "mix mask") {
         newPatch = new MixMask();
         mixtables.push_back((MixMask*)newPatch);
     }
+    else if (args.type == "mix simple blend") {
+        newPatch = new MixSimpleBlend();
+        mixtables.push_back((MixSimpleBlend*)newPatch);
+    }
     else if (args.type == "multi channel switch") {
         newPatch = new MultiChannelSwitch();
         mixtables.push_back((MultiChannelSwitch*)newPatch);
     }
+    else if (args.type == "particle generator") {
+        newPatch = new ParticleGenerator();
+        inputs.push_back((ParticleGenerator*)newPatch);
+    }
+    else if (args.type == "video player") {
+        newPatch = new VideoPlayerMac();
+        ((VideoPlayerMac*)newPatch)->loadVideo(args.path);
+        inputs.push_back((VideoPlayerMac*)newPatch);
+    }
     
     if (newPatch) {
         nE = new NodeElement(newPatch);
-        nodeViewers[currentViewer]->addElement(nE, ofVec3f(args.point.x, args.point.y, 0.0)*cam.getGlobalTransformMatrix());
+        nodeViewers[currentViewer]->addElement(nE, position);
         nodes.insert(std::pair<int, ImageOutput*>(newPatch->getId(), newPatch));
         nodesVector.push_back(newPatch);
         initNode(newPatch);
