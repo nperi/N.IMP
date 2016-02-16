@@ -122,8 +122,8 @@ void ofApp::setup() {
     spacer = new ofxUISpacer(RIGHT_MENU_WIDTH + MENU_ITEM_SIZE*12 + MENU_ITEM_PADDING*17, 20, 1,MENU_ITEM_SIZE);
     menu->addWidget(spacer);
     spacer->setColorFill(ofxUIColor(120, 120, 120, 200));
-    new menuItem(menu, "MultiImageToggle", "Encapsulate", "assets/console.png", false, RIGHT_MENU_WIDTH + MENU_ITEM_SIZE*12 + MENU_ITEM_PADDING*18, 20);
-    new menuItem(menu, "MultiImageToggle", "Uncapsulate", "assets/clear_console.png", false, RIGHT_MENU_WIDTH + MENU_ITEM_SIZE*13 + MENU_ITEM_PADDING*19, 20);
+    new menuItem(menu, "MultiImageButton", "Encapsulate", "assets/console.png", false, RIGHT_MENU_WIDTH + MENU_ITEM_SIZE*12 + MENU_ITEM_PADDING*18, 20);
+    new menuItem(menu, "MultiImageButton", "Uncapsulate", "assets/clear_console.png", false, RIGHT_MENU_WIDTH + MENU_ITEM_SIZE*13 + MENU_ITEM_PADDING*19, 20);
     new menuItem(menu, "MultiImageButton", "Open encapsulated", "assets/clear_console.png", false, RIGHT_MENU_WIDTH + MENU_ITEM_SIZE*14 + MENU_ITEM_PADDING*20, 20);
     
     spacer = new ofxUISpacer(RIGHT_MENU_WIDTH + MENU_ITEM_SIZE*15 + MENU_ITEM_PADDING*21, 20, 1,MENU_ITEM_SIZE);
@@ -758,7 +758,8 @@ void ofApp::menuEvent(ofxUIEventArgs &e) {
     
     else if (name == "Encapsulate"){
         if(((ofxUIMultiImageButton*)e.widget)->getValue() == 1){
-            nodeViewers[currentViewer]->encapsulate();
+            int encapsulatedId = nodeViewers[currentViewer]->encapsulate();
+            encapsulatedIds.push_back(encapsulatedId);
         }
     }
     
@@ -771,6 +772,12 @@ void ofApp::menuEvent(ofxUIEventArgs &e) {
                 int lastPatchId = nodeViewers[currentViewer]->getLastPatchEncapsulated(encapsulatedId);
                 nodeViewers[currentViewer]->restoreOutputEncapsulated(lastPatchId);
                 nodeViewers[currentViewer]->uncapsulate(encapsulatedId);
+                for (std::vector<int>::iterator it = encapsulatedIds.begin() ; it != encapsulatedIds.end(); ++it){
+                    if(*it == encapsulatedId){
+                        encapsulatedIds.erase(it);
+                        break;
+                    }
+                }
             }
         }
     }
@@ -1351,32 +1358,44 @@ bool ofApp::saveToXML() {
         
         XML.pushTag("SETTINGS");
         
+        // Save Inputs
+        //
+        XML.pushTag("INPUTS");
+        for (int i = 0; i < inputs.size(); i++) {
+            inputs[i]->saveSettings(XML);
+        }
+        XML.popTag();
         
-            // Save Inputs
-            //
-            XML.pushTag("INPUTS");
-            for (int i = 0; i < inputs.size(); i++) {
-                inputs[i]->saveSettings(XML);
+        
+        // Save Visual Layers
+        //
+        XML.pushTag("VISUAL_LAYERS");
+        for (int vl = 0; vl < visualLayers.size(); vl++) {
+            visualLayers[vl]->saveSettings(XML);
+        }
+        XML.popTag();
+        
+        
+        // Save Mixers
+        //
+        XML.pushTag("MIXERS");
+        for (int m = 0; m < mixtables.size(); m++) {
+            mixtables[m]->saveSettings(XML);
+        }
+        XML.popTag();
+        
+        
+        // Save Encapsulated Nodes
+        if(encapsulatedIds.size() == 0){
+            XML.clearTagContents("ENCAPSULATED_NODES");
+        }else{
+            XML.pushTag("ENCAPSULATED_NODES");
+            for(int e = 0; e < encapsulatedIds.size(); e++){
+                nodeViewers[currentViewer]->saveEncapsulatedSettings(XML, encapsulatedIds[e]);
             }
             XML.popTag();
-            
-            
-            // Save Visual Layers
-            //
-            XML.pushTag("VISUAL_LAYERS");
-            for (int vl = 0; vl < visualLayers.size(); vl++) {
-                visualLayers[vl]->saveSettings(XML);
-            }
-            XML.popTag();
-            
-            
-            // Save Mixers
-            //
-            XML.pushTag("MIXERS");
-            for (int m = 0; m < mixtables.size(); m++) {
-                mixtables[m]->saveSettings(XML);
-            }
-            XML.popTag();
+        }
+        
         
         XML.popTag(); // tag SETTINGS
         
@@ -1668,6 +1687,57 @@ bool ofApp::loadNodes(ofxXmlSettings &XML){
     else{
         console->pushMessage("mixers tag missing");
         result = false;
+    }
+    
+    // LOAD ENCAPSULATED NODES
+    if(result){
+        int numENsTag = XML.getNumTags("ENCAPSULATED_NODES");
+        if(numENsTag==1){
+            XML.pushTag("ENCAPSULATED_NODES");
+            
+            int numENTag = XML.getNumTags("ENCAPSULATED_NODE");
+            
+            for(int i = 0; i < numENTag; i++){
+                int encapsulatedId     = XML.getAttribute("ENCAPSULATED_NODE","id",-1,i);
+                int lastEncapsulatedId = XML.getAttribute("ENCAPSULATED_NODE","lastEncapsulatedId",false,i);
+
+                nodes.at(lastEncapsulatedId)->setEncapsulatedId(encapsulatedId);
+                nodes.at(lastEncapsulatedId)->setLastEncapsulated(true);
+                
+                XML.pushTag("ENCAPSULATED_NODE", i);
+                int numEncapsulatedTag = XML.getNumTags("NODE");
+                for(int j = 0; j < numEncapsulatedTag; j++){
+                    int patchId = XML.getValue("NODE", -1, j);
+                    if(patchId == -1){
+                        result = false;
+                        ConsoleLog::getInstance()->pushError("Encapsulated data is wrong");
+                        break;
+                    }
+                    nodes.at(patchId)->setEncapsulatedId(encapsulatedId);
+                    nodes.at(patchId)->setWindowId(-1);
+                    nodes.at(patchId)->setToEncapsulatedId(lastEncapsulatedId);
+                }
+                
+                encapsulatedIds.push_back(encapsulatedId);
+                
+                // ENCAPSULATED_NODE POP
+                XML.popTag();
+                
+                if(!result){
+                    //there has been an error
+                    //exit the loop
+                    break;
+                }
+                
+            }
+            //ENCAPSULATED_NODES POP
+            XML.popTag();
+            
+        } else {
+            result = false;
+            ConsoleLog::getInstance()->pushError("Encapsulated tag missing");
+        }
+        
     }
     
     return result;
