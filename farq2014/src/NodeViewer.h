@@ -30,6 +30,7 @@ public:
     
     void setupGuiPositions();
     void setMidiLearnActive(bool active_);
+    void setEditAudioInActive(bool active_);
     
     void createConnections(vector<NodeElement*> _elements);
     void createConnections();
@@ -37,6 +38,7 @@ public:
     
     string getName();
     map<int, vector <string> > getAttributesSelectedForMidiLearn();
+    map<int, vector <string> > getAttributesSelectedForAudioIn();
 	
     bool saveSettings(ofxXmlSettings &XML);
     

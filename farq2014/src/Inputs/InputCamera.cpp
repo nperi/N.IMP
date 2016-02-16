@@ -25,6 +25,8 @@ InputCamera::InputCamera(string name, int id_) : InputSource(name, "Camera", id_
         img.allocate(width, height, OF_IMAGE_COLOR_ALPHA);
         img.setUseTexture(true);
     }
+    
+    gui.setWidthElements(INSPECTOR_WIDTH);
 }
 
 //------------------------------------------------------------------

@@ -80,6 +80,9 @@ public:
     void createNode(textInputEvent &args);
     void initNode(ofxPatch* node);
     void closePatch(int &_nID);
+    void editLeftAudioIn(bool &edit_);
+    void editRightAudioIn(bool &edit_);
+    void editAudioIn();
     bool loadFromXML();
     bool saveToXML();
     bool loadNodes(ofxXmlSettings &XML);
@@ -171,5 +174,11 @@ public:
     
     // MIDI learn
     bool midiLearnActive;
+    
+    // Audio In
+    bool editLeftAudioInActive;
+    bool editRightAudioInActive;
+    AudioIn* leftAudioPatch;
+    AudioIn* rightAudioPatch;
 
 };

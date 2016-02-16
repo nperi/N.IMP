@@ -23,10 +23,15 @@ public:
     void setup();
     void customDraw();
     
+    void _mouseDragged(ofMouseEventArgs &e);
+    
     ofImage*    getImage(){};
     ofTexture*  getTexture(){};
     
     void updateParameter(Param* inputParam){};
+    
+    ofParameter<bool> editFFTInputs;
+    ofEvent<bool> editAudioIn;
     
     float getMidiMin(string param_){};
     float getMidiMax(string param_){};
@@ -41,6 +46,8 @@ private:
     
     ofxUIWaveform* waveform;
     float* inputBuffer;
+    
+    void editInputs(bool& g);
     
 };
 

@@ -117,6 +117,32 @@ void AudioInputGenerator::processInput(){
 }
 
 //------------------------------------------------------------------
+bool AudioInputGenerator::addNewAudioMap(int band_, ImageOutput* node_, vector<string> params_) {
+    
+    vector<DTAudioMap*>* vMap = new vector<DTAudioMap*>();
+    
+    for (int i = 0; i < params_.size(); i++) {
+        
+        DTAudioMap* dtM = new DTAudioMap();
+        
+        dtM->band           = band_;
+        dtM->nodeId         = node_->getId();
+        dtM->paramId        = params_[i];
+        dtM->inputMinValue  = -1.0;
+        dtM->inputMaxValue  = 1.0;
+        dtM->paramMinValue  = node_->getMidiMin(dtM->paramId);
+        dtM->paramMaxValue  = node_->getMidiMax(dtM->paramId);
+        
+        audioMap->push_back(dtM);
+    }
+}
+
+//------------------------------------------------------------------
+void AudioInputGenerator::clearAudioMap() {
+    audioMap->clear();
+}
+
+//------------------------------------------------------------------
 bool AudioInputGenerator::loadSettings(ofxXmlSettings &XML) {
     
     bool result = true;

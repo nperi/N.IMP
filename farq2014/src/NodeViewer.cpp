@@ -45,6 +45,16 @@ void NodeViewer::setMidiLearnActive(bool active_){
 }
 
 //------------------------------------------------------------------
+void NodeViewer::setEditAudioInActive(bool active_){
+    
+    for (int i=0; i<elements.size(); ++i) {
+        elements[i]->getImageOutput()->setEditAudioInActive(active_);
+    }
+    
+    this->editAudioInActive = active_;
+}
+
+//------------------------------------------------------------------
 void NodeViewer::addElement(NodeElement* elem_){
     addElement(elem_, ofPoint(ofGetMouseX(), ofGetMouseY()));
 }
@@ -133,6 +143,20 @@ map<int, vector <string> > NodeViewer::getAttributesSelectedForMidiLearn() {
     vector<string> partialResult;
     for (int i = 0; i < elements.size(); ++i) {
         partialResult = elements[i]->getImageOutput()->getAttributesForMidiLearn();
+        if (partialResult.size() > 0) {
+            result[elements[i]->getImageOutput()->getId()] = partialResult;
+        }
+    }
+    return result;
+}
+
+//------------------------------------------------------------------
+map<int, vector <string> > NodeViewer::getAttributesSelectedForAudioIn() {
+    
+    map<int, vector <string> > result;
+    vector<string> partialResult;
+    for (int i = 0; i < elements.size(); ++i) {
+        partialResult = elements[i]->getImageOutput()->getAttributesForAudioIn();
         if (partialResult.size() > 0) {
             result[elements[i]->getImageOutput()->getId()] = partialResult;
         }

@@ -15,6 +15,7 @@
 #include "Param.h"
 #include "DTAudioMap.h"
 #include "fft.h"
+#include "ImageOutput.h"
 
 #define BUFFER_SIZE 256
 #define NUM_WINDOWS 80
@@ -28,6 +29,9 @@ public:
     //bool setupFromXML();
     //for storing audio feature mapping
     std::vector<DTAudioMap*>* audioMap;
+    
+    bool addNewAudioMap(int band_, ImageOutput* node_, vector<string> params_);
+    void clearAudioMap();
     
     bool loadSettings(ofxXmlSettings &XML);
     bool saveSettings(ofxXmlSettings &XML);

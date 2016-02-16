@@ -22,6 +22,7 @@ ImageOutput::ImageOutput(string name_, string typeName_, int id_, int maxInputs_
     panel.add(gui.setup(typeName));
     gui.add(patchName.setup("Name", name, 100, 20));
     panel.setDraggable(false);
+    gui.setWidthElements(INSPECTOR_WIDTH);
 };
 
 //------------------------------------------------------------------
@@ -153,6 +154,12 @@ void ImageOutput::setEnable(bool isEnabled_){
 
 //------------------------------------------------------------------
 vector<string> ImageOutput::getAttributesForMidiLearn() {
+    
+    return panel.getAttributesForMidiLearn();
+}
+
+//------------------------------------------------------------------
+vector<string> ImageOutput::getAttributesForAudioIn() {
     
     return panel.getAttributesForMidiLearn();
 }

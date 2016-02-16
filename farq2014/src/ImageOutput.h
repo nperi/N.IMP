@@ -72,6 +72,9 @@ class ImageOutput : public ofxPatch {
     virtual float getMidiMin(string param_)=0;
     virtual float getMidiMax(string param_)=0;
     
+    //audio in methods
+    vector<string> getAttributesForAudioIn();
+    
 protected:
 
     virtual void inputAdded(ImageOutput* in_){}; //called when input is added

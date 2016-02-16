@@ -39,9 +39,13 @@ void ofApp::setup() {
     //*** MAIN SETUP ***//
     //
     ofSetFrameRate(30);
-    loadingOK = false;
-    isFullScreen = false;
-    midiLearnActive = false;
+    loadingOK              = false;
+    isFullScreen           = false;
+    midiLearnActive        = false;
+    editLeftAudioInActive  = false;
+    editRightAudioInActive = false;
+    rightAudioPatch        = NULL;
+    leftAudioPatch         = NULL;
     
     ofSetLogLevel(OF_LOG_ERROR);
     
@@ -878,14 +882,33 @@ void ofApp::createNode(textInputEvent &args){
     ImageOutput* newPatch = NULL;
     ofVec3f position(args.point.x, args.point.y, 0.0);
     position = position*cam.getGlobalTransformMatrix();
+    bool exist = false;
     
     if (args.type == "audio in - left") {
-        newPatch = new AudioIn(gui, position, left, "New Audio In - Left", "Audio In - Left");
-        inputs.push_back((AudioIn*)newPatch);
+        if (leftAudioPatch) {
+            nodeViewers[currentViewer]->deactivateAllPatches();
+            leftAudioPatch->bActive = true;
+            exist = true;
+        }
+        else {
+            newPatch = new AudioIn(gui, position, left, "New Audio In - Left", "Audio In - Left");
+            inputs.push_back((AudioIn*)newPatch);
+            ofAddListener( ((AudioIn*)newPatch)->editAudioIn , this, &ofApp::editLeftAudioIn);
+            leftAudioPatch = (AudioIn*)newPatch;
+        }
     }
     else if (args.type == "audio in - right") {
-        newPatch = new AudioIn(gui, position, right, "New Audio In - Right", "Audio In - Right");
-        inputs.push_back((AudioIn*)newPatch);
+        if (rightAudioPatch) {
+            nodeViewers[currentViewer]->deactivateAllPatches();
+            rightAudioPatch->bActive = true;
+            exist = true;
+        }
+        else {
+            newPatch = new AudioIn(gui, position, right, "New Audio In - Right", "Audio In - Right");
+            inputs.push_back((AudioIn*)newPatch);
+            ofAddListener( ((AudioIn*)newPatch)->editAudioIn , this, &ofApp::editRightAudioIn);
+            rightAudioPatch = (AudioIn*)newPatch;
+        }
     }
     else if (args.type == "camera") {
         newPatch = new InputCamera();
@@ -934,18 +957,17 @@ void ofApp::createNode(textInputEvent &args){
         inputs.push_back((VideoPlayerMac*)newPatch);
     }
     
-    if (newPatch) {
+    if (newPatch && !exist) {
         nE = new NodeElement(newPatch);
         nodeViewers[currentViewer]->addElement(nE, position);
         nodes.insert(std::pair<int, ImageOutput*>(newPatch->getId(), newPatch));
         nodesVector.push_back(newPatch);
         initNode(newPatch);
         newPatch->resetSize();
-        
-        if (args.widget != NULL) {
-            ofRemoveListener(((textInput*)args.widget)->createNode , this, &ofApp::createNode);
-            widgetsToDelete.push_back(args.widget); // delete input from canvas
-        }
+    }
+    if (args.widget != NULL) {
+        ofRemoveListener(((textInput*)args.widget)->createNode , this, &ofApp::createNode);
+        widgetsToDelete.push_back(args.widget); // delete input from canvas
     }
 }
 
@@ -962,6 +984,69 @@ void ofApp::closePatch(int &_nID) {
     nodes.erase(_nID);
     nodeViewers[currentViewer]->closePatch(_nID);
 }
+
+//------------------------------------------------------------------
+void ofApp::editLeftAudioIn(bool &edit_){
+
+    editAudioIn();
+    editLeftAudioInActive = !editLeftAudioInActive;
+}
+
+//------------------------------------------------------------------
+void ofApp::editRightAudioIn(bool &edit_){
+    
+    editAudioIn();
+    editRightAudioInActive = !editRightAudioInActive;
+}
+
+//------------------------------------------------------------------
+void ofApp::editAudioIn(){
+    
+    if (midiLearnActive) {
+        ((ofxUIMultiImageToggle*)menu->getWidget("Midi Learn"))->setValue(false);
+        
+        midiLearnActive = false;
+        
+        int i = 0;
+        while (i < inputGenerators.size() && inputGenerators[i]->getParamInputType() != MIDI) {
+            i++;
+        }
+        if (i < inputGenerators.size()) {
+            ((MidiInputGenerator*)inputGenerators[i])->setMidiLearnActive(false);
+        }
+    }
+    
+    if (editLeftAudioInActive || editRightAudioInActive){
+        
+        for (int i=0; i<inputGenerators.size(); ++i) {
+            ParamInputGenerator* p = inputGenerators[i];
+            if (p->getParamInputType() == FFT) {
+                ((AudioInputGenerator*)p)->clearAudioMap();
+                
+                map<int, vector<string> > attributesSelected = nodeViewers[currentViewer]->getAttributesSelectedForAudioIn();
+                std::map<int, ImageOutput*>::iterator node_;
+                
+                for(map<int, vector<string> >::iterator it = attributesSelected.begin(); it != attributesSelected.end(); it++ ){
+                    node_ = nodes.find(it->first);
+                    if (node_ != nodes.end()) {
+                        if (editRightAudioInActive)
+                            ((AudioInputGenerator*)p)->addNewAudioMap(1, node_->second, it->second);
+                        if(editLeftAudioInActive)
+                            ((AudioInputGenerator*)p)->addNewAudioMap(2, node_->second, it->second);
+                    }
+                }
+            }
+        }
+        
+        nodeViewers[currentViewer]->setEditAudioInActive(false);
+    }
+    else {
+        nodeViewers[currentViewer]->setEditAudioInActive(true);
+    }
+    
+    
+};
+
 
 //------------------------------------------------------------------
 bool ofApp::loadFromXML(){
