@@ -313,6 +313,17 @@ void ofApp::update() {
             widgetsToDelete.clear();
         }
         
+        //delete removed widgets
+        if (widgetsToAdd.size() > 0) {
+            for(auto widget : widgetsToAdd) {
+                gui->addWidget(widget);
+                widget->setNoDraw(true);
+                widget->setDraggable(true);
+                widget->setColorBack(ofxUIColor(0, 0, 0, 210));
+            }
+            widgetsToAdd.clear();
+        }
+        
         //update right menu menuitems in case window have been resized
         right_menu->getWidget("Zoom In")->getRect()->setY(right_menu->getRect()->getHeight()-30);
         right_menu->getWidget("Zoom Out")->getRect()->setY(right_menu->getRect()->getHeight()-60);
@@ -971,6 +982,10 @@ void ofApp::createNode(textInputEvent &args){
         nodesVector.push_back(newPatch);
         initNode(newPatch);
         newPatch->resetSize();
+        
+        if (newPatch->getIsAudio()){
+            widgetsToAdd.push_back(((AudioIn*)newPatch)->getWaveForm());
+        }
     }
     if (args.widget != NULL) {
         ofRemoveListener(((textInput*)args.widget)->createNode , this, &ofApp::createNode);
@@ -988,6 +1003,25 @@ void ofApp::initNode(ofxPatch* node) {
 
 //------------------------------------------------------------------
 void ofApp::closePatch(int &_nID) {
+    
+    ImageOutput* n = nodes.find(_nID)->second;
+    if (n->getIsAudio()) {
+        int i = 0;
+        while (i < inputGenerators.size()) {
+            if (inputGenerators[i]->getParamInputType() == FFT && ((AudioListenerInput*)inputGenerators[i])->getNodeID() == _nID) {
+                inputGenerators.erase(inputGenerators.begin() + i);
+                leftAudioPatch == n ? leftAudioPatch = NULL : rightAudioPatch = NULL;
+            }
+            i++;
+        }
+        i = 0;
+        while (i < audioListeners.size() && audioListeners[i]->getParamInputType() != MIDI) {
+            if (audioListeners[i]->getParamInputType() == FFT && ((AudioListenerInput*)audioListeners[i])->getNodeID() == _nID) {
+                audioListeners.erase(audioListeners.begin() + i);
+            }
+            i++;
+        }
+    }
     nodes.erase(_nID);
     nodeViewers[currentViewer]->closePatch(_nID);
 }
@@ -1187,10 +1221,11 @@ bool ofApp::loadFromXML(){
 
                         int numInputGen = XML.getNumTags("INPUT_GEN");
                         
-                        for(int j=0; j<numInputGen; j++){
+                        for(int j = 0; j < numInputGen; j++){
                             string inputName = XML.getAttribute("INPUT_GEN","name","default",j);
                             string inputType = XML.getAttribute("INPUT_GEN","type","MIDI",j);
                             string midiDeviceName = XML.getAttribute("INPUT_GEN","midiDeviceName","Oxygen 25",j);
+                            int    nodeID = XML.getAttribute("INPUT_GEN","nodeId",-1,j);
                             XML.pushTag("INPUT_GEN",j);
                             switch(inputGenTypes[inputType]){
                                 case MIDI:
@@ -1204,7 +1239,7 @@ bool ofApp::loadFromXML(){
                                 }
                                 case FFT:
                                 {
-                                    AudioInputGenerator* aI = new AudioInputGenerator(inputName);
+                                    AudioInputGenerator* aI = new AudioInputGenerator(inputName, nodeID);
                                     aI->loadSettings(XML);
                                     
                                     inputGenerators.push_back(aI);

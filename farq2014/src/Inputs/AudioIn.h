@@ -27,6 +27,7 @@ public:
     
     ofImage*    getImage(){};
     ofTexture*  getTexture(){};
+    ofxUIWaveform* getWaveForm(){ return waveform; };
     
     void updateParameter(Param* inputParam){};
     

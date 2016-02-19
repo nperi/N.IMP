@@ -1,6 +1,6 @@
 <MAIN_SETTINGS>
     <link_type>2</link_type>
-    <total_nodes>12</total_nodes>
+    <total_nodes>11</total_nodes>
     <show_console>0</show_console>
     <SETTINGS>
         <INPUTS>
@@ -106,9 +106,6 @@
                 </out>
             </NODE>
             <NODE id="3" name="New Image Input" type="IMAGE" path="" bpm="100.000000" multiplier_divider="4" isPlaying="0" palindrom="1" matchBPMtoSequence="0">
-                <ASSET name="pancakes.jpg" path="./pancakes.jpg" />
-                <ASSET name="picture.jpg" path="./picture.jpg" />
-                <ASSET name="duck.mp4" path="duck.mp4" />
                 <type>none</type>
                 <path>none</path>
                 <visible>1</visible>
@@ -118,16 +115,16 @@
                         <y>293.518646240</y>
                     </point>
                     <point>
-                        <x>195.471176147</x>
-                        <y>293.518768311</y>
+                        <x>195.471282959</x>
+                        <y>293.518646240</y>
                     </point>
                     <point>
-                        <x>195.471176147</x>
-                        <y>477.373931885</y>
+                        <x>195.471282959</x>
+                        <y>431.410125732</y>
                     </point>
                     <point>
-                        <x>57.579689026</x>
-                        <y>477.373931885</y>
+                        <x>57.579811096</x>
+                        <y>431.410125732</y>
                     </point>
                 </texture>
                 <mask>
@@ -151,6 +148,7 @@
                 <out>
                     <active>1</active>
                 </out>
+                <ASSET name="picture.jpg" path="/Users/miligaricoits/Development/of_v0.8.4_osx_release/apps/N.IMP fork/farq2014/bin/data/picture.jpg"></ASSET>
             </NODE>
             <NODE id="4" name="New Particle Generator" type="PARTICLE">
                 <type>none</type>
@@ -542,6 +540,8 @@
                 </out>
             </NODE>
         </MIXERS>
+        <ENCAPSULATED_NODES>
+        </ENCAPSULATED_NODES>
     </SETTINGS>
     <NODE_VIEWS>
         <!-- Final Mix Node View -->
@@ -560,7 +560,7 @@
         </NODE_VIEW>
     </NODE_VIEWS>
     <PARAM_INPUT_GENERATORS>
-        <INPUT_GEN name="FFT1" type="FFT">
+        <INPUT_GEN name="FFT1" type="FFT" nodeId="12">
             <FFT_SETTINGS>
                 <AUDIO_MAP band="1" nodeId="8" param="brightness" inputMinValue="0.000000" inputMaxValue="50.000000" paramMinValue="0" paramMaxValue="20" />
             </FFT_SETTINGS>

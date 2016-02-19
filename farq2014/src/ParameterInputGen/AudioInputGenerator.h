@@ -24,7 +24,7 @@ class AudioInputGenerator: public AudioListenerInput {
     
 public:
     
-    AudioInputGenerator(string name_);
+    AudioInputGenerator(string name_, int nodeID_);
     void processInput();
     //bool setupFromXML();
     //for storing audio feature mapping

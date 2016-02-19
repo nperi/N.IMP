@@ -22,11 +22,13 @@ class AudioListenerInput: public ParamInputGenerator {
     
 public:
     
-    AudioListenerInput(string name_);
+    AudioListenerInput(string name_, int nodeID_);
     void processInput();
     //bool setupFromXML();
     bool fillNewData(float* left_, float* right_, int bufferLen_);
     void disposeData();
+    
+    int getNodeID(){ return nodeID; };
 
 protected:
     
@@ -36,6 +38,7 @@ protected:
     int bufferLen;
     float* left;
     float* right;
+    int nodeID;
     
 };
 

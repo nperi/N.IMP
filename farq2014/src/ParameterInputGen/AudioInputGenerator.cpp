@@ -9,7 +9,7 @@
 #include "AudioInputGenerator.h"
 
 
-AudioInputGenerator::AudioInputGenerator(string name_):AudioListenerInput(name_){
+AudioInputGenerator::AudioInputGenerator(string name_, int nodeID_):AudioListenerInput(name_, nodeID_){
     
 }
 

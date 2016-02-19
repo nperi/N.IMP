@@ -158,6 +158,7 @@ public:
     
     //create new node
     vector<ofxUIWidget*> widgetsToDelete;
+    vector<ofxUIWidget*> widgetsToAdd;
     textInput* newNodeInput;
     
     // multi window

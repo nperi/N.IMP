@@ -8,11 +8,12 @@
 
 #include "AudioListenerInput.h"
 
-AudioListenerInput::AudioListenerInput(string name_):ParamInputGenerator(name_,true){
+AudioListenerInput::AudioListenerInput(string name_, int nodeID_):ParamInputGenerator(name_,true){
     left = NULL;
     right = NULL;
     hasNewData = false;
     type = FFT;
+    nodeID = nodeID_;
 }
 
 void AudioListenerInput::processInput(){

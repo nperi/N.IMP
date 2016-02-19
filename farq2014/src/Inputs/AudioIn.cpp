@@ -16,10 +16,10 @@ AudioIn::AudioIn(ofxUISuperCanvas* &gui_, ofVec3f pos_, float* &inputBuffer_, st
     height      = 250;
 
     waveform = new ofxUIWaveform(pos_.x-39, pos_.y-45.5, 200, 100, inputBuffer_, BUFFER_SIZE, -1.0, 1.0, "FFT");
-    gui_->addWidget(waveform);
-    waveform->setNoDraw(true);
-    waveform->setDraggable(true);
-    waveform->setColorBack(ofxUIColor(0, 0, 0, 210));
+    //gui_->addWidget(waveform);
+//    waveform->setNoDraw(true);
+//    waveform->setDraggable(true);
+//    waveform->setColorBack(ofxUIColor(0, 0, 0, 210));
 //    waveform->setDrawOutline(true);
 //    waveform->setColorOutline(ofxUIColor(140, 140, 140, 210));
 //    waveform->setColorOutlineHighlight(ofxUIColor(150,150,250));
