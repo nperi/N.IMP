@@ -18,7 +18,7 @@ class AudioIn : public InputSource{
     
 public:
     
-    AudioIn(ofxUISuperCanvas* &gui_, ofVec3f pos_, float* &inputBuffer_, string type_, string name_= "New Audio In", int id_ = -1);
+    AudioIn(ofxUISuperCanvas* &gui_, float* &inputBuffer_, string type_, string name_= "New Audio In", int id_ = -1);
     
     void setup();
     void customDraw();
@@ -28,17 +28,20 @@ public:
     ofImage*    getImage(){};
     ofTexture*  getTexture(){};
     ofxUIWaveform* getWaveForm(){ return waveform; };
+    float getMidiMin(string param_){};
+    float getMidiMax(string param_){};
+    
+    void setWaveFormPosition();
+    void resetSize(int _width, int _height);
     
     void updateParameter(Param* inputParam){};
     
     ofParameter<bool> editFFTInputs;
     ofEvent<bool> editAudioIn;
     
-    float getMidiMin(string param_){};
-    float getMidiMax(string param_){};
     
-    bool loadSettings(ofxXmlSettings &XML, int nTag_, int nodesCount_ = 0){};
-    bool saveSettings(ofxXmlSettings &XML){};
+    bool loadSettings(ofxXmlSettings &XML, int nTag_, int nodesCount_ = 0);
+    bool saveSettings(ofxXmlSettings &XML);
     bool saveSettingsToSnippet(ofxXmlSettings &XML, map<int,int> newIdsMap){};
     
 private:

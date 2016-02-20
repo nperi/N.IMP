@@ -348,25 +348,25 @@
                     </dot>
                 </out>
             </NODE>
-            <NODE id="8" name="New Image Processor" type="IMAGE_PROCESSOR" isBloom="0" isContrast="0" coContrast="0.682497" coBrightness="5.906599" coMultiple="2.854200" isKaleidoscope="1" kaSegments="8.715662" isNoise="0" noFreq="3.208401" noAmp="0.000000" noSpeed="0.000000" isEdge="0" edHue="0.586146" edSat="-35.262932" isBleach="0" blOpacity="1.000000" isRGBShift="0" rgAngle="0.000000" rgAmount="0.072441" isGod="0" isZoomBlur="0" zbCenterX="0.500000" zbCenterY="0.500000" zbExposure="0.480000" zbDensity="0.250000" zbWeight="0.250000" zbClamp="1.000000" inputSource="4">
+            <NODE id="8" name="New Image Processor" type="IMAGE_PROCESSOR" isBloom="0" isContrast="0" coContrast="0.682497" coBrightness="10.228257" coMultiple="2.854200" isKaleidoscope="1" kaSegments="8.715662" isNoise="0" noFreq="3.208401" noAmp="0.000000" noSpeed="0.000000" isEdge="0" edHue="0.586146" edSat="-35.262932" isBleach="0" blOpacity="1.000000" isRGBShift="0" rgAngle="0.000000" rgAmount="0.072441" isGod="0" isZoomBlur="0" zbCenterX="0.500000" zbCenterY="0.500000" zbExposure="0.480000" zbDensity="0.250000" zbWeight="0.250000" zbClamp="1.000000" inputSource="4">
                 <type>none</type>
                 <path>none</path>
                 <visible>1</visible>
                 <texture>
                     <point>
-                        <x>342.839202881</x>
+                        <x>383.839202881</x>
                         <y>356.865142822</y>
                     </point>
                     <point>
-                        <x>500.239593506</x>
+                        <x>541.239624023</x>
                         <y>356.865142822</y>
                     </point>
                     <point>
-                        <x>500.239593506</x>
+                        <x>541.239624023</x>
                         <y>474.915191650</y>
                     </point>
                     <point>
-                        <x>342.839202881</x>
+                        <x>383.839202881</x>
                         <y>474.915191650</y>
                     </point>
                 </texture>
@@ -394,8 +394,8 @@
                         <to>10</to>
                         <tex>0</tex>
                         <vertices>
-                            <vertex x="556.000000" y="415.000000"></vertex>
-                            <vertex x="556.000000" y="359.000000"></vertex>
+                            <vertex x="597.000000" y="415.000000"></vertex>
+                            <vertex x="597.000000" y="359.000000"></vertex>
                         </vertices>
                     </dot>
                 </out>
@@ -540,8 +540,7 @@
                 </out>
             </NODE>
         </MIXERS>
-        <ENCAPSULATED_NODES>
-        </ENCAPSULATED_NODES>
+        <ENCAPSULATED_NODES></ENCAPSULATED_NODES>
     </SETTINGS>
     <NODE_VIEWS>
         <!-- Final Mix Node View -->
@@ -560,11 +559,6 @@
         </NODE_VIEW>
     </NODE_VIEWS>
     <PARAM_INPUT_GENERATORS>
-        <INPUT_GEN name="FFT1" type="FFT" nodeId="12">
-            <FFT_SETTINGS>
-                <AUDIO_MAP band="1" nodeId="8" param="brightness" inputMinValue="0.000000" inputMaxValue="50.000000" paramMinValue="0" paramMaxValue="20" />
-            </FFT_SETTINGS>
-        </INPUT_GEN>
         <INPUT_GEN name="MIDI1" type="MIDI" midiDeviceName="USB Trigger Finger">
             <MIDI_SETTINGS>
                 <MIDI_MAP midiId="1" nodeId="5" param="n Columns"></MIDI_MAP>

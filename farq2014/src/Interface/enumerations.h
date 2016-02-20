@@ -72,7 +72,9 @@ enum InputType
     VIDEO,
     CAM,
     IMAGE,
-    PARTICLE
+    PARTICLE,
+    RIGHT_AUDIO_IN,
+    LEFT_AUDIO_IN
 };
 
 enum VisualLayerType

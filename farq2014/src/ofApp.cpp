@@ -54,6 +54,8 @@ void ofApp::setup() {
     inputTypes.insert(std::pair<string,InputType>("CAM",CAM));
     inputTypes.insert(std::pair<string,InputType>("IMAGE",IMAGE));
     inputTypes.insert(std::pair<string,InputType>("PARTICLE",PARTICLE));
+    inputTypes.insert(std::pair<string,InputType>("LEFT_AUDIO_IN",LEFT_AUDIO_IN));
+    inputTypes.insert(std::pair<string,InputType>("RIGHT_AUDIO_IN",RIGHT_AUDIO_IN));
     visualLayerTypes.insert(std::pair<string,VisualLayerType>("IKEDA", IKEDA));
     visualLayerTypes.insert(std::pair<string,VisualLayerType>("GLITCH_1", GLITCH_1));
     visualLayerTypes.insert(std::pair<string,VisualLayerType>("GLITCH_2", GLITCH_2));
@@ -166,24 +168,30 @@ void ofApp::setup() {
         //TODO: change mixtable assignment.
         //  ofAddListener(mixtables[0]->textureEvent, this, &ofApp::updateSyphon);
         
-        //invoking input generators setup functions
+        //*** AUDIO SETUP ***//
+        //
+        setupAudio();
+        
+        //*** invoking input generators setup functions  ***//
         //
         for(int i=0; i<inputGenerators.size(); i++){
             inputGenerators[i]->setup();
         }
         
-        //invoking nodes setup functions and setting main canvas and camera
+        //*** invoking nodes setup functions and setting main canvas and camera  ***//
         //
         for (int i=0; i<nodesVector.size(); ++i) {
             initNode(nodesVector[i]);
         }
         
-        //starting input generators theads (the not threadeds will not start)
+        //*** starting input generators theads (the not threadeds will not start)  ***//
         //
         for(int i=0; i<inputGenerators.size(); i++){
             inputGenerators[i]->start();
         }
         
+        //*** SYPHON SERVERS SETUP ***//
+        //
         for(int i=0; i<syphonServers.size();i++){
             syphonServers[i]->setup();
         }
@@ -193,10 +201,6 @@ void ofApp::setup() {
         setCurrentViewer(0);
         nodeViewers[currentViewer]->setParent(cam);
         gui->setMainComposer(nodeViewers[currentViewer]);
-        
-        //*** AUDIO SETUP ***//
-        //
-        setupAudio();
         
         //*** SCROLL BAR SETUP ***//
         //
@@ -225,9 +229,16 @@ void ofApp::setupAudio(){
     // BUFFER_SIZE samples per buffer
     // 4 num buffers (latency)
     
-    ofSoundStreamSetup(0,2,this, 44100,BUFFER_SIZE, 4);
+    ofSoundStreamSetup(0, 2, this, 44100, BUFFER_SIZE, 4);
     left = new float[BUFFER_SIZE];
     right = new float[BUFFER_SIZE];
+    
+    if (rightAudioPatch != NULL) {
+        rightAudioPatch->getWaveForm()->setBuffer(right);
+    }
+    if (leftAudioPatch != NULL) {
+        leftAudioPatch->getWaveForm()->setBuffer(left);
+    }
     
     //soundStream.setup(this, 0, 2, 44100, bufferSize, 4);
 }
@@ -313,16 +324,15 @@ void ofApp::update() {
             widgetsToDelete.clear();
         }
         
-        //delete removed widgets
-        if (widgetsToAdd.size() > 0) {
-            for(auto widget : widgetsToAdd) {
-                gui->addWidget(widget);
-                widget->setNoDraw(true);
-                widget->setDraggable(true);
-                widget->setColorBack(ofxUIColor(0, 0, 0, 210));
-            }
-            widgetsToAdd.clear();
-        }
+//        if (widgetsToAdd.size() > 0) {
+//            for(auto widget : widgetsToAdd) {
+//                gui->addWidget(widget);
+//                widget->setNoDraw(true);
+//                widget->setDraggable(true);
+//                widget->setColorBack(ofxUIColor(0, 0, 0, 210));
+//            }
+//            widgetsToAdd.clear();
+//        }
         
         //update right menu menuitems in case window have been resized
         right_menu->getWidget("Zoom In")->getRect()->setY(right_menu->getRect()->getHeight()-30);
@@ -909,7 +919,7 @@ void ofApp::createNode(textInputEvent &args){
             exist = true;
         }
         else {
-            newPatch = new AudioIn(gui, position, left, "New Audio In - Left", "Audio In - Left");
+            newPatch = new AudioIn(gui, left, "Audio In - Left", "New Audio In - Left");
             inputs.push_back((AudioIn*)newPatch);
             ofAddListener( ((AudioIn*)newPatch)->editAudioIn , this, &ofApp::editLeftAudioIn);
             leftAudioPatch = (AudioIn*)newPatch;
@@ -922,7 +932,7 @@ void ofApp::createNode(textInputEvent &args){
             exist = true;
         }
         else {
-            newPatch = new AudioIn(gui, position, right, "New Audio In - Right", "Audio In - Right");
+            newPatch = new AudioIn(gui, right, "New Audio In - Right", "Audio In - Right");
             inputs.push_back((AudioIn*)newPatch);
             ofAddListener( ((AudioIn*)newPatch)->editAudioIn , this, &ofApp::editRightAudioIn);
             rightAudioPatch = (AudioIn*)newPatch;
@@ -984,7 +994,15 @@ void ofApp::createNode(textInputEvent &args){
         newPatch->resetSize();
         
         if (newPatch->getIsAudio()){
-            widgetsToAdd.push_back(((AudioIn*)newPatch)->getWaveForm());
+//            widgetsToAdd.push_back(((AudioIn*)newPatch)->getWaveForm());
+            
+            AudioInputGenerator* aI = new AudioInputGenerator(newPatch->getName(), newPatch->getId());
+            aI->loadSettings(XML);
+            
+            inputGenerators.push_back(aI);
+            audioListeners.push_back(aI);
+            aI->setup();
+            aI->start();
         }
     }
     if (args.widget != NULL) {
@@ -1239,12 +1257,15 @@ bool ofApp::loadFromXML(){
                                 }
                                 case FFT:
                                 {
-                                    AudioInputGenerator* aI = new AudioInputGenerator(inputName, nodeID);
-                                    aI->loadSettings(XML);
+                                    std::map<int,ImageOutput*>::iterator it = nodes.find(nodeID);
                                     
-                                    inputGenerators.push_back(aI);
-                                    audioListeners.push_back(aI);
-                                    
+                                    if(it!=nodes.end()){
+                                        AudioInputGenerator* aI = new AudioInputGenerator(inputName, nodeID);
+                                        aI->loadSettings(XML);
+                                        
+                                        inputGenerators.push_back(aI);
+                                        audioListeners.push_back(aI);
+                                    }
                                     break;
                                 }
                                 case OSC:
@@ -1536,6 +1557,30 @@ bool ofApp::loadNodes(ofxXmlSettings &XML){
                     
                     inputs.push_back(iI);
                     nodes.insert(std::pair<int,ImageOutput*>(inputId,iI));
+                    
+                    break;
+                };
+                case RIGHT_AUDIO_IN:
+                {
+                    AudioIn* aI = new AudioIn(gui, right, inputName, "Audio In - Right", inputId);
+                    aI->loadSettings(XML, i);
+                    
+                    inputs.push_back(aI);
+                    nodes.insert(std::pair<int,ImageOutput*>(inputId,aI));
+                    
+                    rightAudioPatch = aI;
+                    
+                    break;
+                };
+                case LEFT_AUDIO_IN:
+                {
+                    AudioIn* aI = new AudioIn(gui, left, inputName, "Audio In - Left", inputId);
+                    aI->loadSettings(XML, i);
+                    
+                    inputs.push_back(aI);
+                    nodes.insert(std::pair<int,ImageOutput*>(inputId,aI));
+                    
+                    leftAudioPatch = aI;
                     
                     break;
                 };

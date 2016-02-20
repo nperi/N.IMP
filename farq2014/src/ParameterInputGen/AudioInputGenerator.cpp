@@ -196,21 +196,19 @@ bool AudioInputGenerator::saveSettings(ofxXmlSettings &XML) {
         
         // Once it found the right one ...
         //
-        if ( XML.getAttribute("INPUT_GEN", "name", "", i) == generatorName){
+        if ( XML.getAttribute("INPUT_GEN", "nodeId", -1, i) == nodeID){
             
-            XML.setAttribute("INPUT_GEN", "name", generatorName, i);
-            
-            XML.pushTag("INPUT_GEN");
+            XML.pushTag("INPUT_GEN", i);
             XML.pushTag("FFT_SETTINGS");
             
             int numAudioMapTag = XML.getNumTags("AUDIO_MAP");
+            for (int v = 0; v < numAudioMapTag; v++){
+                XML.removeTag("AUDIO_MAP");
+            }
             
             for(int i = 0; i < audioMap->size(); i++){
                 
-                if (i >= numAudioMapTag) {
-                    XML.addTag("AUDIO_MAP");
-                }
-                
+                XML.addTag("AUDIO_MAP");
                 XML.setAttribute("AUDIO_MAP","band", audioMap->at(i)->band,i);
                 XML.setAttribute("AUDIO_MAP","nodeId", audioMap->at(i)->nodeId,i);
                 XML.setAttribute("AUDIO_MAP","param", audioMap->at(i)->paramId,i);
@@ -238,16 +236,16 @@ bool AudioInputGenerator::saveSettings(ofxXmlSettings &XML) {
             int lastPlace = XML.addTag("INPUT_GEN");
             
             XML.addAttribute("INPUT_GEN", "name", generatorName, lastPlace);
+            XML.addAttribute("INPUT_GEN", "nodeId", nodeID, lastPlace);
             XML.addAttribute("INPUT_GEN", "type", "FFT", lastPlace);
             
-            XML.pushTag("INPUT_GEN");
-            XML.addTag("FFT_SETTINGS");
-            XML.pushTag("FFT_SETTINGS");
+            XML.pushTag("INPUT_GEN", lastPlace);
+            lastPlace = XML.addTag("FFT_SETTINGS");
+            XML.pushTag("FFT_SETTINGS", lastPlace);
             
             for(int i = 0; i < audioMap->size(); i++){
                 
                 XML.addTag("AUDIO_MAP");
-                
                 XML.addAttribute("AUDIO_MAP","band", audioMap->at(i)->band,i);
                 XML.addAttribute("AUDIO_MAP","nodeId", audioMap->at(i)->nodeId,i);
                 XML.addAttribute("AUDIO_MAP","param", audioMap->at(i)->paramId,i);
