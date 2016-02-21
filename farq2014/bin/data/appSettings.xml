@@ -1,6 +1,6 @@
 <MAIN_SETTINGS>
     <link_type>2</link_type>
-    <total_nodes>12</total_nodes>
+    <total_nodes>13</total_nodes>
     <show_console>0</show_console>
     <SETTINGS>
         <INPUTS>
@@ -197,26 +197,70 @@
                     </dot>
                 </out>
             </NODE>
-            <NODE id="12" name="New Audio In - Left" type="LEFT_AUDIO_IN">
+            <NODE id="12" name="New Audio In - Right" type="RIGHT_AUDIO_IN">
                 <type>none</type>
                 <path>none</path>
                 <visible>1</visible>
                 <texture>
                     <point>
-                        <x>846.000000000</x>
-                        <y>105.199996948</y>
+                        <x>898.000000000</x>
+                        <y>75.199996948</y>
                     </point>
                     <point>
-                        <x>1046.000000000</x>
-                        <y>105.199996948</y>
+                        <x>1098.000000000</x>
+                        <y>75.199996948</y>
                     </point>
                     <point>
-                        <x>1046.000000000</x>
-                        <y>205.199996948</y>
+                        <x>1098.000000000</x>
+                        <y>175.199996948</y>
                     </point>
                     <point>
-                        <x>846.000000000</x>
-                        <y>205.199996948</y>
+                        <x>898.000000000</x>
+                        <y>175.199996948</y>
+                    </point>
+                </texture>
+                <mask>
+                    <point>
+                        <x>0.000000000</x>
+                        <y>0.000000000</y>
+                    </point>
+                    <point>
+                        <x>1.000000000</x>
+                        <y>0.000000000</y>
+                    </point>
+                    <point>
+                        <x>1.000000000</x>
+                        <y>1.000000000</y>
+                    </point>
+                    <point>
+                        <x>0.000000000</x>
+                        <y>1.000000000</y>
+                    </point>
+                </mask>
+                <out>
+                    <active>1</active>
+                </out>
+            </NODE>
+            <NODE id="13" name="New Audio In - Left" type="LEFT_AUDIO_IN">
+                <type>none</type>
+                <path>none</path>
+                <visible>1</visible>
+                <texture>
+                    <point>
+                        <x>888.000000000</x>
+                        <y>456.200012207</y>
+                    </point>
+                    <point>
+                        <x>1088.000000000</x>
+                        <y>456.200012207</y>
+                    </point>
+                    <point>
+                        <x>1088.000000000</x>
+                        <y>556.200012207</y>
+                    </point>
+                    <point>
+                        <x>888.000000000</x>
+                        <y>556.200012207</y>
                     </point>
                 </texture>
                 <mask>
@@ -454,20 +498,20 @@
                 <visible>1</visible>
                 <texture>
                     <point>
-                        <x>642.839233398</x>
-                        <y>24.865150452</y>
+                        <x>643.839233398</x>
+                        <y>75.865150452</y>
                     </point>
                     <point>
-                        <x>785.791870117</x>
-                        <y>24.865150452</y>
+                        <x>786.791870117</x>
+                        <y>75.865150452</y>
                     </point>
                     <point>
-                        <x>785.791870117</x>
-                        <y>132.079559326</y>
+                        <x>786.791870117</x>
+                        <y>183.079559326</y>
                     </point>
                     <point>
-                        <x>642.839233398</x>
-                        <y>132.079559326</y>
+                        <x>643.839233398</x>
+                        <y>183.079559326</y>
                     </point>
                 </texture>
                 <mask>
@@ -600,7 +644,8 @@
             <NODE id="9" name="New Mix Simple Blend" />
             <NODE id="10" name="Particle Mix Mask" />
             <NODE id="11" name="Channel Switch" />
-            <NODE id="12" name="New Audio In - Left"></NODE>
+            <NODE id="12" name="New Audio In - Right" />
+            <NODE id="13" name="New Audio In - Left"></NODE>
         </NODE_VIEW>
     </NODE_VIEWS>
     <PARAM_INPUT_GENERATORS>
@@ -619,7 +664,12 @@
                 <MIDI_MAP midiId="91" nodeId="5" param="amount"></MIDI_MAP>
             </MIDI_SETTINGS>
         </INPUT_GEN>
-        <INPUT_GEN name="New Audio In - Left" nodeId="12" type="FFT">
+        <INPUT_GEN nodeId="12" type="FFT">
+            <FFT_SETTINGS>
+                <AUDIO_MAP band="1" nodeId="9" param="opacity" inputMinValue="0.000000" inputMaxValue="50.000000" paramMinValue="0" paramMaxValue="255"></AUDIO_MAP>
+            </FFT_SETTINGS>
+        </INPUT_GEN>
+        <INPUT_GEN nodeId="13" type="FFT">
             <FFT_SETTINGS>
                 <AUDIO_MAP band="2" nodeId="10" param="spin" inputMinValue="0.000000" inputMaxValue="50.000000" paramMinValue="0" paramMaxValue="360"></AUDIO_MAP>
             </FFT_SETTINGS>

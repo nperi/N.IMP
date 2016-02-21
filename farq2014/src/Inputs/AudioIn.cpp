@@ -30,6 +30,8 @@ AudioIn::AudioIn(ofxUISuperCanvas* &gui_, float* &inputBuffer_, string type_, st
     
     gui.setWidthElements(INSPECTOR_WIDTH);
     
+    title->removeButton('r');
+    title->removeButton('m');    
 }
 
 //------------------------------------------------------------------
@@ -52,8 +54,11 @@ void AudioIn::update() {
 void AudioIn::customDraw(){
     
     ofxPatch::customDraw();
-    waveform->drawBack();
-    waveform->drawFill();
+    
+    if ( bEditMode || bVisible ) {
+        waveform->drawBack();
+        waveform->drawFill();
+    }
     
 }
 

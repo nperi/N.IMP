@@ -235,7 +235,7 @@ bool AudioInputGenerator::saveSettings(ofxXmlSettings &XML) {
             //
             int lastPlace = XML.addTag("INPUT_GEN");
             
-            XML.addAttribute("INPUT_GEN", "name", generatorName, lastPlace);
+//            XML.addAttribute("INPUT_GEN", "name", generatorName, lastPlace);
             XML.addAttribute("INPUT_GEN", "nodeId", nodeID, lastPlace);
             XML.addAttribute("INPUT_GEN", "type", "FFT", lastPlace);
             

@@ -26,19 +26,20 @@ public:
     
     void _mouseDragged(ofMouseEventArgs &e);
     
-    ofImage*    getImage(){};
-    ofTexture*  getTexture(){};
-    ofxUIWaveform* getWaveForm(){ return waveform; };
-    float getMidiMin(string param_){};
-    float getMidiMax(string param_){};
+    ofImage*        getImage(){};
+    ofTexture*      getTexture(){};
+    ofxUIWaveform*  getWaveForm(){ return waveform; };
+    float           getMidiMin(string param_){};
+    float           getMidiMax(string param_){};
+    AudioInType     getAudioInType(){ return audioInType; };
     
     void setWaveFormPosition();
     void resetSize(int _width, int _height);
     
     void updateParameter(Param* inputParam){};
     
-    ofParameter<bool> editFFTInputs;
-    ofEvent<bool> editAudioIn;
+    ofParameter<bool>   editFFTInputs;
+    ofEvent<bool>       editAudioIn;
     
     
     bool loadSettings(ofxXmlSettings &XML, int nTag_, int nodesCount_ = 0);

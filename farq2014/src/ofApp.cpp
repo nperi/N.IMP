@@ -1,4 +1,4 @@
-#include "ofApp.h"
+ #include "ofApp.h"
 
 using namespace cv;
 using namespace ofxCv;
@@ -1120,18 +1120,27 @@ void ofApp::editAudioIn(){
         for (int i=0; i<inputGenerators.size(); ++i) {
             ParamInputGenerator* p = inputGenerators[i];
             if (p->getParamInputType() == FFT) {
-                ((AudioInputGenerator*)p)->clearAudioMap();
                 
-                map<int, vector<string> > attributesSelected = nodeViewers[currentViewer]->getAttributesSelectedForAudioIn();
-                std::map<int, ImageOutput*>::iterator node_;
+                std::map<int, ImageOutput*>::iterator audioInNode_;
+                audioInNode_ = nodes.find(((AudioInputGenerator*)p)->getNodeID());
                 
-                for(map<int, vector<string> >::iterator it = attributesSelected.begin(); it != attributesSelected.end(); it++ ){
-                    node_ = nodes.find(it->first);
-                    if (node_ != nodes.end()) {
-                        if (editRightAudioInActive)
-                            ((AudioInputGenerator*)p)->addNewAudioMap(1, node_->second, it->second);
-                        if(editLeftAudioInActive)
-                            ((AudioInputGenerator*)p)->addNewAudioMap(2, node_->second, it->second);
+                if (audioInNode_ != nodes.end() &&
+                    ((((AudioIn*)audioInNode_->second)->getAudioInType() == LEFT && editLeftAudioInActive) ||
+                    (((AudioIn*)audioInNode_->second)->getAudioInType() == RIGHT && editRightAudioInActive))) {
+                
+                    ((AudioInputGenerator*)p)->clearAudioMap();
+                    
+                    map<int, vector<string> > attributesSelected = nodeViewers[currentViewer]->getAttributesSelectedForAudioIn();
+                    std::map<int, ImageOutput*>::iterator node_;
+                    
+                    for(map<int, vector<string> >::iterator it = attributesSelected.begin(); it != attributesSelected.end(); it++ ){
+                        node_ = nodes.find(it->first);
+                        if (node_ != nodes.end()) {
+                            if (editRightAudioInActive)
+                                ((AudioInputGenerator*)p)->addNewAudioMap(1, node_->second, it->second);
+                            if(editLeftAudioInActive)
+                                ((AudioInputGenerator*)p)->addNewAudioMap(2, node_->second, it->second);
+                        }
                     }
                 }
             }
