@@ -36,7 +36,7 @@ ParticleGenerator::ParticleGenerator(string name, int id_) : InputSource(name, "
     
     pLifetime.setName("Lifetime");
     pLifetime.add(minLifetime.set("min Lifetime", 0, 0, 60000));
-    pLifetime.add(maxLifetime.set("min Lifetime", 0, 0, 60000));
+    pLifetime.add(maxLifetime.set("max Lifetime", 0, 0, 60000));
     gui.add(pLifetime);
     
     gui.setWidthElements(INSPECTOR_WIDTH);

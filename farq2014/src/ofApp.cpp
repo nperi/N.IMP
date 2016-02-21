@@ -390,18 +390,18 @@ void ofApp::draw() {
                 nodeViewers[currentViewer]->draw();
                 cam.end();
                 
-                string info = "";
-                info += "  (";
-                info += ofToString(currentViewer+1);
-                info += "/";
-                info += ofToString(nodeViewers.size());
-                info += ")";
-                info += "    switch layers <- ->";
+//                string info = "";
+//                info += "  (";
+//                info += ofToString(currentViewer+1);
+//                info += "/";
+//                info += ofToString(nodeViewers.size());
+//                info += ")";
+//                info += "    switch layers <- ->";
+//                
+//                ofDrawBitmapString(info, 20, ofGetHeight()-20);
+//                string info2 = nodeViewers[currentViewer]->getName();
+//                ofDrawBitmapString(ofToString(info2,0), ofGetWidth() - 300, ofGetHeight()-20);
                 
-                ofDrawBitmapString(info, 20, ofGetHeight()-20);
-                string info2 = nodeViewers[currentViewer]->getName();
-                
-                ofDrawBitmapString(ofToString(info2,0), ofGetWidth() - 300, ofGetHeight()-20);
                 ofDrawBitmapString(ofToString(ofGetFrameRate(),0), ofGetWidth() - 50, ofGetHeight()-35);
                 
                 

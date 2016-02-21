@@ -105,26 +105,26 @@
                     </dot>
                 </out>
             </NODE>
-            <NODE id="3" name="New Image Input" type="IMAGE" path="" bpm="100.000000" multiplier_divider="4" isPlaying="0" palindrom="1" matchBPMtoSequence="0">
+            <NODE id="3" name="New Image Input" type="IMAGE" path="" bpm="100.000000" multiplier_divider="4" isPlaying="0" palindrom="1" matchBPMtoSequence="0" currentSequence="0">
                 <type>none</type>
                 <path>none</path>
                 <visible>1</visible>
                 <texture>
                     <point>
-                        <x>57.579811096</x>
-                        <y>293.518646240</y>
+                        <x>65.825988770</x>
+                        <y>302.747131348</y>
                     </point>
                     <point>
-                        <x>195.471282959</x>
-                        <y>293.518646240</y>
+                        <x>234.440368652</x>
+                        <y>302.747131348</y>
                     </point>
                     <point>
-                        <x>195.471282959</x>
-                        <y>431.410125732</y>
+                        <x>234.440368652</x>
+                        <y>471.361511230</y>
                     </point>
                     <point>
-                        <x>57.579811096</x>
-                        <y>431.410125732</y>
+                        <x>65.825988770</x>
+                        <y>471.361511230</y>
                     </point>
                 </texture>
                 <mask>
@@ -149,6 +149,10 @@
                     <active>1</active>
                 </out>
                 <ASSET name="picture.jpg" path="/Users/miligaricoits/Development/of_v0.8.4_osx_release/apps/N.IMP fork/farq2014/bin/data/picture.jpg"></ASSET>
+                <ASSET name="guacamayo.png" path="/Users/miligaricoits/Development/of_v0.8.4_osx_release/apps/N.IMP fork/farq2014/bin/data/guacamayo.png"></ASSET>
+                <ASSET name="pancakes.jpg" path="/Users/miligaricoits/Development/of_v0.8.4_osx_release/apps/N.IMP fork/farq2014/bin/data/pancakes.jpg"></ASSET>
+                <ASSET name="mar2.mov" path="/Users/miligaricoits/Development/of_v0.8.4_osx_release/apps/N.IMP fork/farq2014/bin/data/mar2.mov"></ASSET>
+                <ASSET name="duck.mp4" path="/Users/miligaricoits/Development/of_v0.8.4_osx_release/apps/N.IMP fork/farq2014/bin/data/duck.mp4"></ASSET>
             </NODE>
             <NODE id="4" name="New Particle Generator" type="PARTICLE">
                 <type>none</type>
@@ -287,7 +291,7 @@
             </NODE>
         </INPUTS>
         <VISUAL_LAYERS>
-            <NODE id="5" name="New Ikeda Layer" type="IKEDA" inputSource="1" isCanny="0" isThreshold="0" isColumns="0" isInvert="0" pNColumns="1" pCannyX="0.000000" pCannyY="0.000000" pThreshold="174">
+            <NODE id="5" name="New Ikeda Layer" type="IKEDA" inputSource="1" isCanny="0" isThreshold="0" isColumns="0" isInvert="0" pNColumns="1" pCannyX="46.000000" pCannyY="46.000000" pThreshold="255">
                 <type>none</type>
                 <path>none</path>
                 <visible>1</visible>
@@ -436,7 +440,7 @@
                     </dot>
                 </out>
             </NODE>
-            <NODE id="8" name="New Image Processor" type="IMAGE_PROCESSOR" isBloom="0" isContrast="0" coContrast="0.682497" coBrightness="10.228257" coMultiple="2.854200" isKaleidoscope="1" kaSegments="8.715662" isNoise="0" noFreq="3.208401" noAmp="0.000000" noSpeed="0.000000" isEdge="0" edHue="0.586146" edSat="-35.262932" isBleach="0" blOpacity="1.000000" isRGBShift="0" rgAngle="0.000000" rgAmount="0.072441" isGod="0" isZoomBlur="0" zbCenterX="0.500000" zbCenterY="0.500000" zbExposure="0.480000" zbDensity="0.250000" zbWeight="0.250000" zbClamp="1.000000" inputSource="4">
+            <NODE id="8" name="New Image Processor" type="IMAGE_PROCESSOR" isBloom="0" isContrast="0" coContrast="0.682497" coBrightness="10.228257" coMultiple="2.854200" isKaleidoscope="1" kaSegments="8.715662" isNoise="0" noFreq="3.208401" noAmp="0.000000" noSpeed="0.452756" isEdge="0" edHue="0.586146" edSat="-35.262932" isBleach="0" blOpacity="1.000000" isRGBShift="0" rgAngle="2.523169" rgAmount="0.072441" isGod="0" isZoomBlur="0" zbCenterX="0.500000" zbCenterY="0.500000" zbExposure="0.480000" zbDensity="0.250000" zbWeight="0.250000" zbClamp="1.000000" inputSource="4">
                 <type>none</type>
                 <path>none</path>
                 <visible>1</visible>
@@ -490,7 +494,7 @@
             </NODE>
         </VISUAL_LAYERS>
         <MIXERS>
-            <NODE id="9" name="New Mix Simple Blend" type="SIMPLE_BLEND" blendmode="10" opacity="0.000000" selector1="1" selector2="1">
+            <NODE id="9" name="New Mix Simple Blend" type="SIMPLE_BLEND" blendmode="13" opacity="0.000000" selector1="1" selector2="1">
                 <INPUT_SOURCE nodeId="6" />
                 <INPUT_SOURCE nodeId="5" />
                 <type>none</type>
@@ -645,7 +649,7 @@
             <NODE id="10" name="Particle Mix Mask" />
             <NODE id="11" name="Channel Switch" />
             <NODE id="12" name="New Audio In - Right" />
-            <NODE id="13" name="New Audio In - Left"></NODE>
+            <NODE id="13" name="New Audio In - Left" />
         </NODE_VIEW>
     </NODE_VIEWS>
     <PARAM_INPUT_GENERATORS>
@@ -657,10 +661,12 @@
                 <MIDI_MAP midiId="2" nodeId="5" param="CannyY"></MIDI_MAP>
                 <MIDI_MAP midiId="2" nodeId="8" param="Speed"></MIDI_MAP>
                 <MIDI_MAP midiId="7" nodeId="9" param="opacity"></MIDI_MAP>
-                <MIDI_MAP midiId="8" nodeId="9" param="BlendPinLight"></MIDI_MAP>
                 <MIDI_MAP midiId="10" nodeId="10" param="spin"></MIDI_MAP>
                 <MIDI_MAP midiId="12" nodeId="8" param="angle"></MIDI_MAP>
-                <MIDI_MAP midiId="13" nodeId="8" param="amount"></MIDI_MAP>
+                <MIDI_MAP midiId="13" nodeId="3" param="current Sequence"></MIDI_MAP>
+                <MIDI_MAP midiId="17" nodeId="3" param="bpm"></MIDI_MAP>
+                <MIDI_MAP midiId="18" nodeId="3" param="bpmMultiplier"></MIDI_MAP>
+                <MIDI_MAP midiId="19" nodeId="3" param="playPosition"></MIDI_MAP>
                 <MIDI_MAP midiId="91" nodeId="5" param="amount"></MIDI_MAP>
             </MIDI_SETTINGS>
         </INPUT_GEN>

@@ -32,6 +32,7 @@ void ImageInputList::setup(){
         : img.allocate(width, height, OF_IMAGE_COLOR);
 
         img.setUseTexture(true);
+        isEnabledOn = true;
     }
     else {
         drawNoInputs = true;
@@ -48,16 +49,44 @@ void ImageInputList::update(){
 //------------------------------------------------------------------
 void ImageInputList::updateParameter(Param* inputParam){
     
+    if(inputParam->name.compare("bpm")==0){
+        this->bpm = inputParam->floatVal;
+    }else if(inputParam->name.compare("bpmMultiplier")==0){
+        this->bpmMultiplier = inputParam->intVal;
+    }else if(inputParam->name.compare("playPosition")==0){
+        this->playPosition = inputParam->floatVal;
+    }else if(inputParam->name.compare("current Sequence")==0){
+        this->currentSequence = ofMap(inputParam->intVal, 0, getMidiMax("current Sequence"), 0, inputs.size()-1);
+        isEnabledOn = true;
+    }
 }
 
 //------------------------------------------------------------------
 float ImageInputList::getMidiMin(string param_){
     
+    if(param_.compare("bpm")==0){
+        return 10;
+    }else if(param_.compare("bpmMultiplier")==0){
+        return 1;
+    }else if(param_.compare("playPosition")==0){
+        return 0;
+    }else if(param_.compare("current Sequence")==0){
+        return 0;
+    }
 }
 
 //------------------------------------------------------------------
 float ImageInputList::getMidiMax(string param_){
     
+    if(param_.compare("bpm")==0){
+        return 200;
+    }else if(param_.compare("bpmMultiplier")==0){
+        return 120;
+    }else if(param_.compare("playPosition")==0){
+        return 1.0;
+    }else if(param_.compare("current Sequence")==0){
+        return inputs.size()-1;
+    }
 }
 
 //------------------------------------------------------------------
@@ -76,7 +105,7 @@ void ImageInputList::loadImage(string name_, string path_){
     if (ofIsStringInString(path_, ".mov") || ofIsStringInString(path_, ".mp4") ||
         ofIsStringInString(path_, ".mpg") || ofIsStringInString(path_, ".mpg") ) {
         
-        if (inputs.size() == 0)
+        if (inputs.size() == 0 || videoPlayer == NULL)
             videoPlayer = VideoPool::getInstance()->getPlayer();
         inputs.push_back(new ImageTypeMovie(name_,path_,videoPlayer));
         hasMovie = true;
@@ -116,7 +145,7 @@ void ImageInputList::loadImage(string name_, string path_){
         gui.add(isEnabledOn.set("Enabled",false));
         gui.add(nextSequence.setup(">> next"));
         gui.add(prevSequence.setup("<< prev"));
-        gui.add(currentSequence.set("current", 0, 0, 0));
+        gui.add(currentSequence.set("current Sequence", 0, 0, 0));
         gui.add(deleteCurrentSequence.setup("Delete Current Sequence"));
         
         seqSettings.setName("Sequence Settings");
@@ -337,6 +366,7 @@ bool ImageInputList::loadSettings(ofxXmlSettings &XML, int nTag_, int nodesCount
     isPalindromLoop = ofToBool(XML.getAttribute("NODE", "palindrom","true", nTag_));
     isMatchBpmToSequenceLength = ofToBool(XML.getAttribute("NODE", "matchBPMtoSequence","false", nTag_));
     
+    
     if ((path == "none") || (path == "")) {
         XML.pushTag("NODE",nTag_);
         int numVideoTag = XML.getNumTags("ASSET");
@@ -355,7 +385,9 @@ bool ImageInputList::loadSettings(ofxXmlSettings &XML, int nTag_, int nodesCount
     else{
         loadImage(name, path);
     }
-
+    
+    currentSequence = ofToInt(XML.getAttribute("NODE", "currentSequence", "0", nTag_));
+    
     XML.pushTag("NODE", nTag_);
     
     type        = XML.getValue("type","none");
@@ -397,6 +429,7 @@ bool ImageInputList::saveSettings(ofxXmlSettings &XML) {
             XML.setAttribute("NODE", "isPlaying", isPlaying, i);
             XML.setAttribute("NODE", "palindrom", isPalindromLoop, i);
             XML.setAttribute("NODE", "matchBPMtoSequence", isMatchBpmToSequenceLength, i);
+            XML.addAttribute("NODE", "currentSequence", currentSequence, i);
             
             XML.pushTag("NODE", i);
             
@@ -441,6 +474,7 @@ bool ImageInputList::saveSettings(ofxXmlSettings &XML) {
             XML.addAttribute("NODE", "isPlaying", isPlaying, lastPlace);
             XML.addAttribute("NODE", "palindrom", isPalindromLoop, lastPlace);
             XML.addAttribute("NODE", "matchBPMtoSequence", isMatchBpmToSequenceLength, lastPlace);
+            XML.addAttribute("NODE", "currentSequence", currentSequence, lastPlace);
             
             if (XML.pushTag("NODE", lastPlace)){
                 
@@ -481,6 +515,7 @@ bool ImageInputList::saveSettingsToSnippet(ofxXmlSettings &XML, map<int,int> new
     XML.addAttribute("NODE", "isPlaying", isPlaying, lastPlace);
     XML.addAttribute("NODE", "palindrom", isPalindromLoop, lastPlace);
     XML.addAttribute("NODE", "matchBPMtoSequence", isMatchBpmToSequenceLength, lastPlace);
+    XML.addAttribute("NODE", "currentSequence", currentSequence, lastPlace);
     
     if (XML.pushTag("NODE", lastPlace)){
         
