@@ -128,8 +128,8 @@ bool AudioInputGenerator::addNewAudioMap(int band_, ImageOutput* node_, vector<s
         dtM->band           = band_;
         dtM->nodeId         = node_->getId();
         dtM->paramId        = params_[i];
-        dtM->inputMinValue  = -1.0;
-        dtM->inputMaxValue  = 1.0;
+        dtM->inputMinValue  = 0;
+        dtM->inputMaxValue  = 50;
         dtM->paramMinValue  = node_->getMidiMin(dtM->paramId);
         dtM->paramMaxValue  = node_->getMidiMax(dtM->paramId);
         

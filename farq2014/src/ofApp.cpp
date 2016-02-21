@@ -240,6 +240,22 @@ void ofApp::setupAudio(){
         leftAudioPatch->getWaveForm()->setBuffer(left);
     }
     
+    // setting nodes attributes selected for audio in
+    //
+    vector<DTAudioMap*>* am;
+    bool left_ = false;
+    std::map<int, ImageOutput*>::iterator node_;
+    for (int i = 0; i < audioListeners.size(); i++){
+        am = audioListeners[i]->getAudioMap();
+        left_ = (nodes.find(audioListeners[i]->getNodeID())->second->getTypeName() == "Audio In - Left");
+        for (int j = 0; j < am->size(); j++){
+            node_ = nodes.find(am->at(j)->nodeId);
+            if (node_ != nodes.end()) {
+                node_->second->setAttributesForAudioIn(am->at(j)->paramId, left_);
+            }
+        }
+    }
+    
     //soundStream.setup(this, 0, 2, 44100, bufferSize, 4);
 }
 /* ================================================ */
@@ -323,17 +339,7 @@ void ofApp::update() {
             }
             widgetsToDelete.clear();
         }
-        
-//        if (widgetsToAdd.size() > 0) {
-//            for(auto widget : widgetsToAdd) {
-//                gui->addWidget(widget);
-//                widget->setNoDraw(true);
-//                widget->setDraggable(true);
-//                widget->setColorBack(ofxUIColor(0, 0, 0, 210));
-//            }
-//            widgetsToAdd.clear();
-//        }
-        
+    
         //update right menu menuitems in case window have been resized
         right_menu->getWidget("Zoom In")->getRect()->setY(right_menu->getRect()->getHeight()-30);
         right_menu->getWidget("Zoom Out")->getRect()->setY(right_menu->getRect()->getHeight()-60);
@@ -932,7 +938,7 @@ void ofApp::createNode(textInputEvent &args){
             exist = true;
         }
         else {
-            newPatch = new AudioIn(gui, right, "New Audio In - Right", "Audio In - Right");
+            newPatch = new AudioIn(gui, right, "Audio In - Right", "New Audio In - Right");
             inputs.push_back((AudioIn*)newPatch);
             ofAddListener( ((AudioIn*)newPatch)->editAudioIn , this, &ofApp::editRightAudioIn);
             rightAudioPatch = (AudioIn*)newPatch;
@@ -994,7 +1000,6 @@ void ofApp::createNode(textInputEvent &args){
         newPatch->resetSize();
         
         if (newPatch->getIsAudio()){
-//            widgetsToAdd.push_back(((AudioIn*)newPatch)->getWaveForm());
             
             AudioInputGenerator* aI = new AudioInputGenerator(newPatch->getName(), newPatch->getId());
             aI->loadSettings(XML);
@@ -1023,8 +1028,9 @@ void ofApp::initNode(ofxPatch* node) {
 void ofApp::closePatch(int &_nID) {
     
     ImageOutput* n = nodes.find(_nID)->second;
+    int i = 0;
+    
     if (n->getIsAudio()) {
-        int i = 0;
         while (i < inputGenerators.size()) {
             if (inputGenerators[i]->getParamInputType() == FFT && ((AudioListenerInput*)inputGenerators[i])->getNodeID() == _nID) {
                 inputGenerators.erase(inputGenerators.begin() + i);
@@ -1040,6 +1046,38 @@ void ofApp::closePatch(int &_nID) {
             i++;
         }
     }
+    
+    bool found = false;
+    i = 0;
+    
+    if (n->getNodeType() == INPUT) {
+        while (i < inputs.size() && !found) {
+            if (inputs[i]->getId() == _nID) {
+                inputs.erase(inputs.begin() + i);
+                found = true;
+            }
+            i++;
+        }
+    }
+    else if (n->getNodeType() == VISUAL_LAYER) {
+        while (i < visualLayers.size() && !found) {
+            if (visualLayers[i]->getId() == _nID) {
+                visualLayers.erase(visualLayers.begin() + i);
+                found = true;
+            }
+            i++;
+        }
+    }
+    else if (n->getNodeType() == MIXER) {
+        while (i < inputs.size() && !found) {
+            if (inputs[i]->getId() == _nID) {
+                inputs.erase(inputs.begin() + i);
+                found = true;
+            }
+            i++;
+        }
+    }
+    
     nodes.erase(_nID);
     nodeViewers[currentViewer]->closePatch(_nID);
 }
@@ -1049,6 +1087,7 @@ void ofApp::editLeftAudioIn(bool &edit_){
 
     editAudioIn();
     editLeftAudioInActive = !editLeftAudioInActive;
+    nodeViewers[currentViewer]->setEditLeftAudioInActive(editLeftAudioInActive);
 }
 
 //------------------------------------------------------------------
@@ -1056,6 +1095,7 @@ void ofApp::editRightAudioIn(bool &edit_){
     
     editAudioIn();
     editRightAudioInActive = !editRightAudioInActive;
+    nodeViewers[currentViewer]->setEditRightAudioInActive(editRightAudioInActive);
 }
 
 //------------------------------------------------------------------
@@ -1096,14 +1136,7 @@ void ofApp::editAudioIn(){
                 }
             }
         }
-        
-        nodeViewers[currentViewer]->setEditAudioInActive(false);
     }
-    else {
-        nodeViewers[currentViewer]->setEditAudioInActive(true);
-    }
-    
-    
 };
 
 
@@ -1562,25 +1595,27 @@ bool ofApp::loadNodes(ofxXmlSettings &XML){
                 };
                 case RIGHT_AUDIO_IN:
                 {
-                    AudioIn* aI = new AudioIn(gui, right, inputName, "Audio In - Right", inputId);
+                    AudioIn* aI = new AudioIn(gui, right, "Audio In - Right", inputName, inputId);
                     aI->loadSettings(XML, i);
                     
                     inputs.push_back(aI);
                     nodes.insert(std::pair<int,ImageOutput*>(inputId,aI));
                     
                     rightAudioPatch = aI;
+                    ofAddListener(aI->editAudioIn , this, &ofApp::editRightAudioIn);
                     
                     break;
                 };
                 case LEFT_AUDIO_IN:
                 {
-                    AudioIn* aI = new AudioIn(gui, left, inputName, "Audio In - Left", inputId);
+                    AudioIn* aI = new AudioIn(gui, left, "Audio In - Left", inputName, inputId);
                     aI->loadSettings(XML, i);
                     
                     inputs.push_back(aI);
                     nodes.insert(std::pair<int,ImageOutput*>(inputId,aI));
                     
                     leftAudioPatch = aI;
+                    ofAddListener(aI->editAudioIn , this, &ofApp::editLeftAudioIn);
                     
                     break;
                 };

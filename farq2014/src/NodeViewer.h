@@ -30,7 +30,8 @@ public:
     
     void setupGuiPositions();
     void setMidiLearnActive(bool active_);
-    void setEditAudioInActive(bool active_);
+    void setEditLeftAudioInActive(bool active_);
+    void setEditRightAudioInActive(bool active_);
     
     void createConnections(vector<NodeElement*> _elements);
     void createConnections();

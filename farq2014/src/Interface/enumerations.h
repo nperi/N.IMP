@@ -105,5 +105,11 @@ enum imgExt
     OTHER
 };
 
+enum AudioInType
+{
+    LEFT,
+    RIGHT
+};
+
 
 #endif

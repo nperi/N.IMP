@@ -13,6 +13,7 @@
 #include "InputSource.h"
 #include "ofxUIWaveform.h"
 #include "ofxUISuperCanvas.h"
+#include "enumerations.h"
 
 class AudioIn : public InputSource{
     
@@ -52,6 +53,7 @@ private:
     float* inputBuffer;
     
     void editInputs(bool& g);
+    AudioInType audioInType;
     
 };
 

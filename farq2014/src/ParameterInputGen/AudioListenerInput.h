@@ -11,6 +11,7 @@
 
 #include "ofMain.h"
 #include "ParamInputGenerator.h"
+#include "DTAudioMap.h"
 
 // this class implements the behavior of a audio listener.
 // it runs on its own thread, and receives audio data fro the main thread.
@@ -29,6 +30,7 @@ public:
     void disposeData();
     
     int getNodeID(){ return nodeID; };
+    vector<DTAudioMap*>* getAudioMap(){ return audioMap; };
 
 protected:
     
@@ -39,6 +41,9 @@ protected:
     float* left;
     float* right;
     int nodeID;
+    
+    //for storing audio feature mapping
+    std::vector<DTAudioMap*>* audioMap;
     
 };
 

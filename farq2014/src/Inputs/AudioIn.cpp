@@ -14,10 +14,18 @@ AudioIn::AudioIn(ofxUISuperCanvas* &gui_, float* &inputBuffer_, string type_, st
     isAudio     = true;
     width       = 500;
     height      = 250;
-
+    
     waveform = new ofxUIWaveform(0, 0, 200, 100, inputBuffer_, BUFFER_SIZE, -1.0, 1.0, "FFT");
     
-    gui.add(editFFTInputs.set("Edit FFT Inputs", false));
+    if (type_ == "Audio In - Left") {
+        audioInType = LEFT;
+        gui.add(editFFTInputs.set("Edit Left FFT Inputs", false));
+    }
+    else {
+        audioInType = RIGHT;
+        gui.add(editFFTInputs.set("Edit Right FFT Inputs", false));
+    }
+    
     editFFTInputs.addListener(this, &AudioIn::editInputs);
     
     gui.setWidthElements(INSPECTOR_WIDTH);
@@ -29,7 +37,7 @@ void AudioIn::setup() {
     waveform->ofNode::setParent(*this->getParent());
     waveform->setNoDraw(true);
     waveform->setDraggable(true);
-    waveform->setColorBack(ofxUIColor(0, 0, 0, 210));
+//    waveform->setColorBack(ofxUIColor(0, 0, 0, 210));
     
     setWaveFormPosition();
 }
@@ -149,7 +157,7 @@ bool AudioIn::saveSettings(ofxXmlSettings &XML) {
             
             XML.addAttribute("NODE", "id", nId, lastPlace);
             XML.addAttribute("NODE", "name", name, lastPlace);
-            typeName == "Audio In - Left" ? XML.addAttribute("NODE", "type", "LEFT_AUDIO_IN", lastPlace) : XML.addAttribute("NODE", "type", "RIGHT_AUDIO_IN", lastPlace);
+            audioInType == LEFT ? XML.addAttribute("NODE", "type", "LEFT_AUDIO_IN", lastPlace) : XML.addAttribute("NODE", "type", "RIGHT_AUDIO_IN", lastPlace);
             
             if (XML.pushTag("NODE", lastPlace)){
                 

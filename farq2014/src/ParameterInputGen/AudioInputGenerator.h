@@ -13,7 +13,6 @@
 #include "AudioListenerInput.h"
 #include "ParamInputGenerator.h"
 #include "Param.h"
-#include "DTAudioMap.h"
 #include "fft.h"
 #include "ImageOutput.h"
 
@@ -27,8 +26,6 @@ public:
     AudioInputGenerator(string name_, int nodeID_);
     void processInput();
     //bool setupFromXML();
-    //for storing audio feature mapping
-    std::vector<DTAudioMap*>* audioMap;
     
     bool addNewAudioMap(int band_, ImageOutput* node_, vector<string> params_);
     void clearAudioMap();

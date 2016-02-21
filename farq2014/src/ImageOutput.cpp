@@ -163,3 +163,16 @@ vector<string> ImageOutput::getAttributesForAudioIn() {
     
     return panel.getAttributesForMidiLearn();
 }
+
+//------------------------------------------------------------------
+bool ImageOutput::setAttributesForAudioIn(string name_, bool left) {
+    
+    ofxBaseGui* control = gui.getControl(name_);
+    if (control) {
+        left ? control->setSelectedForLeftAudio(true) : control->setSelectedForRightAudio(true);
+        return true;
+    }
+    else {
+        return false;
+    }
+}
