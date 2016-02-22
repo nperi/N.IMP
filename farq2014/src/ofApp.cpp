@@ -168,10 +168,6 @@ void ofApp::setup() {
         //TODO: change mixtable assignment.
         //  ofAddListener(mixtables[0]->textureEvent, this, &ofApp::updateSyphon);
         
-        //*** AUDIO SETUP ***//
-        //
-        setupAudio();
-        
         //*** invoking input generators setup functions  ***//
         //
         for(int i=0; i<inputGenerators.size(); i++){
@@ -206,6 +202,10 @@ void ofApp::setup() {
         //
         this->scrollBars = new scrollBar(nodeViewers[currentViewer], &this->pad, &cam, SCROLL_BAR_EVENT_PRIORITY);
         scrollBars->setup();
+        
+        //*** AUDIO SETUP ***//
+        //
+        setupAudio();
     }
     
     //*** CONSOLE LOGGER ***//

@@ -100,16 +100,31 @@ void ParticleGenerator::updateParameter(Param* inputParam){
         f.scale = 1;
         f.pos.set(ofVec2f(inputParam->floatVal,0));
         addForce(f);
-        
-        cout <<"x: " << f.pos->x;
-    }else if (inputParam->name.compare("forceY")==0){
-        if (force.size()>0) {
-            ofVec2f v = force[force.size()-1].pos;
-            v.y = inputParam->floatVal;
-            cout <<" y: " << v.y <<endl;
-        }
-    }else if(inputParam->name.compare("clearBg")==0){
+//        cout <<"x: " << f.pos->x;
+    }else if (inputParam->name.compare("forceY") == 0 && force.size() > 0){
+        ofVec2f v = force[force.size()-1].pos;
+        v.y = inputParam->floatVal;
+//        cout <<" y: " << v.y <<endl;
+    }else if(inputParam->name.compare("Clear BG")==0){
         isClearBg = inputParam->intVal;
+    }else if(inputParam->name.compare("Particles Alpha")==0){
+        alphaParticles = inputParam->intVal;
+    }else if(inputParam->name.compare("autogen particle")==0){
+        autoGenParticle = inputParam->intVal;
+    }else if(inputParam->name.compare("autogen amount")==0){
+        autoGenAmount = inputParam->intVal;
+    }else if(inputParam->name.compare("fade out")==0){
+        fadeOut = inputParam->intVal;
+    }else if(inputParam->name.compare("Same Size")==0){
+        unityScale = inputParam->intVal;
+    }else if(inputParam->name.compare("min Size")==0){
+        minRadius = inputParam->intVal;
+    }else if(inputParam->name.compare("max Size")==0){
+        maxRadius = inputParam->intVal;
+    }else if(inputParam->name.compare("min Lifetime")==0){
+        minLifetime = inputParam->intVal;
+    }else if(inputParam->name.compare("max Lifetime")==0){
+        maxLifetime = inputParam->intVal;
     }
 }
 
@@ -117,11 +132,29 @@ void ParticleGenerator::updateParameter(Param* inputParam){
 float ParticleGenerator::getMidiMin(string param_){
     
     if(param_.compare("forceX")==0){
-
+        return 0;
     }else if (param_.compare("forceY")==0){
-
-    }else if(param_.compare("clearBg")==0){
-
+        return 0;
+    }else if(param_.compare("Clear BG")==0){
+        return 0;
+    }else if(param_.compare("Particles Alpha")==0){
+        return 0;
+    }else if(param_.compare("autogen particle")==0){
+        return 0;
+    }else if(param_.compare("autogen amount")==0){
+        return 0;
+    }else if(param_.compare("fade out")==0){
+        return 0.0;
+    }else if(param_.compare("Same Size")==0){
+        return 0;
+    }else if(param_.compare("min Size")==0){
+        return 1;
+    }else if(param_.compare("max Size")==0){
+        return 1;
+    }else if(param_.compare("min Lifetime")==0){
+        return 0;
+    }else if(param_.compare("max Lifetime")==0){
+        return 0;
     }
 }
 
@@ -129,11 +162,29 @@ float ParticleGenerator::getMidiMin(string param_){
 float ParticleGenerator::getMidiMax(string param_){
     
     if(param_.compare("forceX")==0){
-
+        return 0;
     }else if (param_.compare("forceY")==0){
-
-    }else if(param_.compare("clearBg")==0){
-
+        return 0;
+    }else if(param_.compare("Clear BG")==0){
+        return 1;
+    }else if(param_.compare("Particles Alpha")==0){
+        return 255;
+    }else if(param_.compare("autogen particle")==0){
+        return 1;
+    }else if(param_.compare("autogen amount")==0){
+        return 5;
+    }else if(param_.compare("fade out")==0){
+        return 1.0;
+    }else if(param_.compare("Same Size")==0){
+        return 1;
+    }else if(param_.compare("min Size")==0){
+        return 50;
+    }else if(param_.compare("max Size")==0){
+        return 50;
+    }else if(param_.compare("min Lifetime")==0){
+        return 60000;
+    }else if(param_.compare("max Lifetime")==0){
+        return 60000;
     }
 }
 
