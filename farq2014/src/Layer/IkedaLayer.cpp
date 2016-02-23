@@ -20,10 +20,10 @@ IkedaLayer::IkedaLayer(string name_, int id_, bool isCanny_,bool isThreshold_, b
     gui.add(isCanny.setup("Canny", isCanny_));
     gui.add(pCannyX.setup("CannyX", 12,0,255));
     gui.add(pCannyY.setup("CannyY", 12,0,255));
-    gui.add(isColumns.setup("Colums", isColumns_));
+    gui.add(isColumns.setup("Columns", isColumns_));
     gui.add(pNColumns.setup("n Columns", 8,1,14));
     gui.add(isThreshold.setup("Threshold", isThreshold_));
-    gui.add(pThreshold.setup("amount", 12,0,255));
+    gui.add(pThreshold.setup("Amount", 12,0,255));
     gui.add(isInvert.setup("Invert", isInvert_));
     
     gui.setWidthElements(INSPECTOR_WIDTH);
@@ -110,13 +110,23 @@ void IkedaLayer::update(){
 //------------------------------------------------------------------
 void IkedaLayer::updateParameter(Param* inputParam){
     
-    if(inputParam->name.compare("CannyX")==0){
+    if(inputParam->name.compare("Enabled")==0){
+        this->isEnabled = inputParam->intVal;
+    }else if(inputParam->name.compare("Canny")==0){
+        this->isCanny = inputParam->intVal;
+    }else if(inputParam->name.compare("Threshold")==0){
+        this->isThreshold = inputParam->intVal;
+    }else if(inputParam->name.compare("Columns")==0){
+        this->isColumns = inputParam->intVal;
+    }else if(inputParam->name.compare("Invert")==0){
+        this->isInvert = inputParam->intVal;
+    }else if(inputParam->name.compare("CannyX")==0){
         this->pCannyX = inputParam->intVal;
     }else if(inputParam->name.compare("CannyY")==0){
         this->pCannyY = inputParam->intVal;
     }else if(inputParam->name.compare("n Columns")==0){
         this->pNColumns = inputParam->intVal;
-    }else if(inputParam->name.compare("amount")==0){
+    }else if(inputParam->name.compare("Amount")==0){
         this->pThreshold = inputParam->intVal;
     }
 }
@@ -124,13 +134,23 @@ void IkedaLayer::updateParameter(Param* inputParam){
 //------------------------------------------------------------------
 float IkedaLayer::getMidiMin(string param_){
     
-    if(param_.compare("CannyX")==0){
+    if(param_.compare("Enabled")==0){
+        return 0;
+    }else if(param_.compare("Canny")==0){
+        return 0;
+    }else if(param_.compare("Threshold")==0){
+        return 0;
+    }else if(param_.compare("Columns")==0){
+        return 0;
+    }else if(param_.compare("Invert")==0){
+        return 0;
+    }else if(param_.compare("CannyX")==0){
         return 0;
     }else if(param_.compare("CannyY")==0){
         return 0;
     }else if(param_.compare("n Columns")==0){
         return 1;
-    }else if(param_.compare("amount")==0){
+    }else if(param_.compare("Amount")==0){
         return 0;
     }
 }
@@ -138,13 +158,23 @@ float IkedaLayer::getMidiMin(string param_){
 //------------------------------------------------------------------
 float IkedaLayer::getMidiMax(string param_){
     
-    if(param_.compare("CannyX")==0){
+    if(param_.compare("Enabled")==0){
+        return 1;
+    }else if(param_.compare("Canny")==0){
+        return 1;
+    }else if(param_.compare("Threshold")==0){
+        return 1;
+    }else if(param_.compare("Columns")==0){
+        return 1;
+    }else if(param_.compare("Invert")==0){
+        return 1;
+    }else if(param_.compare("CannyX")==0){
         return 255;
     }else if(param_.compare("CannyY")==0){
         return 255;
     }else if(param_.compare("n Columns")==0){
         return 14;
-    }else if(param_.compare("amount")==0){
+    }else if(param_.compare("Amount")==0){
         return 255;
     }
 }

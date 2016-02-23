@@ -12,54 +12,54 @@
 ImageProcessor::ImageProcessor(string name_, int id_):VisualLayer(name_, "Image Processor", id_) {
     
     pixelate.setName("pixelate");
-    pixelate.add(isPixelate.set("active", false));
+    pixelate.add(isPixelate.set("Activate Pixelate", false));
     pixelate.add(piIsUnityScale.set("Unity scale", true));
     pixelate.add(piRes.set("Res", ofVec2f(100, 100), ofVec2f(3,3), ofVec2f(100, 100)));
     
     bloom.setName("bloom");
-    bloom.add(isBloom.set("active", false));
+    bloom.add(isBloom.set("Activate Bloom", false));
     
     contrast.setName("contrast");
-    contrast.add(isContrast.set("active", false));
-    contrast.add(coContrast.set("contrast", 1.0, 0.0, 2.0));
-    contrast.add(coBrightness.set("brightness", 1.0, 0.0, 20.0));
-    contrast.add(coMultiple.set("multiple", 1.0, 0.0, 5.0));
+    contrast.add(isContrast.set("Activate Contrast", false));
+    contrast.add(coContrast.set("Contrast", 1.0, 0.0, 2.0));
+    contrast.add(coBrightness.set("Brightness", 1.0, 0.0, 20.0));
+    contrast.add(coMultiple.set("Multiple", 1.0, 0.0, 5.0));
     
     kaleidoscope.setName("kaleidoscope");
-    kaleidoscope.add(isKaleidoscope.set("active", false));
+    kaleidoscope.add(isKaleidoscope.set("Activate Kaleidoscope", false));
     kaleidoscope.add(kaSegments.set("Segments",2.0,0.0,15.0));
     
     noise.setName("noise");
-    noise.add(isNoise.set("active", false));
+    noise.add(isNoise.set("Activate Noise", false));
     noise.add(noFreq.set("Frequency", 4.0, 0.0, 10));
     noise.add(noAmp.set("Amplitude", .1, 0.0, .5));
     noise.add(noSpeed.set("Speed", .1, 0.0, 2.5));
     
     edge.setName("edge");
-    edge.add(isEdge.set("active", false));
-    edge.add(edHue.set("hue",0.5,0,1));
-    edge.add(edSat.set("saturation",0.0,-100,0));
+    edge.add(isEdge.set("Activate Edge", false));
+    edge.add(edHue.set("Hue",0.5,0,1));
+    edge.add(edSat.set("Saturation",0.0,-100,0));
     
     bleach.setName("bleach");
-    bleach.add(isBleach.set("active",false));
-    bleach.add(blOpacity.set("opacity",1.0,-5.0,5.0));
+    bleach.add(isBleach.set("Activate Bleach",false));
+    bleach.add(blOpacity.set("Opacity",1.0,-5.0,5.0));
     
     rgbshift.setName("RGBShift");
-    rgbshift.add(isRGBShift.set("active", false));
-    rgbshift.add(rgAngle.set("angle",0.0,0.0,TWO_PI));
-    rgbshift.add(rgAmount.set("amount",0.005,0.0,0.1));
+    rgbshift.add(isRGBShift.set("Activate RGB Shift", false));
+    rgbshift.add(rgAngle.set("Angle",0.0,0.0,TWO_PI));
+    rgbshift.add(rgAmount.set("Amount",0.005,0.0,0.1));
     
     god.setName("god");
-    god.add(isGod.set("active", false));
+    god.add(isGod.set("Activate God", false));
     
     zoomBlur.setName("zoomBlur");
-    zoomBlur.add(isZoomBlur.set("active",false));
-    zoomBlur.add(zbCenterX.set("center x", 0.5, 0, 1));
-    zoomBlur.add(zbCenterY.set("center y", 0.5, 0, 1));
-    zoomBlur.add(zbExposure.set("exposure", 0.48, 0, 5));
-    zoomBlur.add(zbDensity.set("density", 0.25, 0, 1));
-    zoomBlur.add(zbWeight.set("weight", 0.25, 0, 1));
-    zoomBlur.add(zbClamp.set("clamp", 1, 0, 1));
+    zoomBlur.add(isZoomBlur.set("Activate Zoom Blur",false));
+    zoomBlur.add(zbCenterX.set("Center X", 0.5, 0, 1));
+    zoomBlur.add(zbCenterY.set("Center Y", 0.5, 0, 1));
+    zoomBlur.add(zbExposure.set("Exposure", 0.48, 0, 5));
+    zoomBlur.add(zbDensity.set("Density", 0.25, 0, 1));
+    zoomBlur.add(zbWeight.set("Weight", 0.25, 0, 1));
+    zoomBlur.add(zbClamp.set("Clamp", 1, 0, 1));
     
     
     //setting listeners
@@ -170,42 +170,62 @@ void ImageProcessor::update() {
 //------------------------------------------------------------------
 void ImageProcessor::updateParameter(Param* inputParam){
     
-    if(inputParam->name.compare("contrast")==0){
+    if(inputParam->name.compare("Activate Bloom")==0){
+        isBloom = inputParam->intVal;
+    }else if(inputParam->name.compare("Activate Contrast")==0){
+        isContrast = inputParam->intVal;
+    }else if(inputParam->name.compare("Contrast")==0){
         coContrast = inputParam->floatVal;
-    }else if(inputParam->name.compare("brightness")==0){
+    }else if(inputParam->name.compare("Brightness")==0){
         coBrightness = inputParam->floatVal;
-    }else if(inputParam->name.compare("multiple")==0){
+    }else if(inputParam->name.compare("Multiple")==0){
         coMultiple = inputParam->floatVal;
+    }else if(inputParam->name.compare("Activate Kaleidoscope")==0){
+        isKaleidoscope = inputParam->intVal;
     }else if(inputParam->name.compare("Segments")==0){
         kaSegments = inputParam->floatVal;
+    }else if(inputParam->name.compare("Activate Noise")==0){
+        isNoise = inputParam->intVal;
     }else if(inputParam->name.compare("Frequency")==0){
         noFreq = inputParam->floatVal;
     }else if(inputParam->name.compare("Amplitude")==0){
         noAmp = inputParam->floatVal;
     }else if(inputParam->name.compare("Speed")==0){
         noSpeed = inputParam->floatVal;
-    }else if(inputParam->name.compare("hue")==0){
+    }else if(inputParam->name.compare("Activate Edge")==0){
+        isEdge = inputParam->intVal;
+    }else if(inputParam->name.compare("Hue")==0){
         edHue = inputParam->floatVal;
-    }else if(inputParam->name.compare("saturation")==0){
+    }else if(inputParam->name.compare("Saturation")==0){
         edSat = inputParam->intVal;
-    }else if(inputParam->name.compare("opacity")==0){
+    }else if(inputParam->name.compare("Activate Bleach")==0){
+        isBleach = inputParam->intVal;
+    }else if(inputParam->name.compare("Opacity")==0){
         blOpacity = inputParam->floatVal;
-    }else if(inputParam->name.compare("angle")==0){
+    }else if(inputParam->name.compare("Activate RGB Shift")==0){
+        isRGBShift = inputParam->intVal;
+    }else if(inputParam->name.compare("Angle")==0){
         rgAngle = inputParam->floatVal;
-    }else if(inputParam->name.compare("amount")==0){
+    }else if(inputParam->name.compare("Amount")==0){
         rgAmount = inputParam->floatVal;
-    }else if(inputParam->name.compare("center x")==0){
+    }else if(inputParam->name.compare("Activate Zoom Blur")==0){
+        isZoomBlur = inputParam->intVal;
+    }else if(inputParam->name.compare("Center X")==0){
         zbCenterX = inputParam->floatVal;
-    }else if(inputParam->name.compare("center y")==0){
+    }else if(inputParam->name.compare("Center Y")==0){
         zbCenterY = inputParam->floatVal;
-    }else if(inputParam->name.compare("exposure")==0){
+    }else if(inputParam->name.compare("Exposure")==0){
         zbExposure = inputParam->floatVal;
-    }else if(inputParam->name.compare("density")==0){
+    }else if(inputParam->name.compare("Density")==0){
         zbDensity = inputParam->floatVal;
-    }else if(inputParam->name.compare("weight")==0){
+    }else if(inputParam->name.compare("Weight")==0){
         zbWeight = inputParam->floatVal;
-    }else if(inputParam->name.compare("clamp")==0){
+    }else if(inputParam->name.compare("Clamp")==0){
         zbClamp = inputParam->floatVal;
+    }else if(inputParam->name.compare("Activate Pixelate")==0){
+        isPixelate = inputParam->intVal;
+    }else if(inputParam->name.compare("Unity scale")==0){
+        piIsUnityScale = inputParam->intVal;
     }else if(inputParam->name.compare("x")==0){
         ofVec2f b = piRes;
         b.x = inputParam->intVal;
@@ -225,70 +245,26 @@ void ImageProcessor::updateParameter(Param* inputParam){
             (static_pointer_cast<PixelatePass>(post[9]))->setResolution(ofVec2f((int)b.x, (int)(b.y*height/width)));
         }
     }
-    
-//    if(inputParam->name.compare("isBloom")==0){
-//        isBloom = inputParam->intVal;
-//    }
-//    else if(inputParam->name.compare("isEdge")==0){
-//        isEdge = inputParam->intVal;
-//    }
-//    else if(inputParam->name.compare("isContrast")==0){
-//        isContrast = inputParam->intVal;
-//    }
-//    else if(inputParam->name.compare("coBrightness")==0){
-//        coBrightness = ofMap(inputParam->intVal,0,255,0,20);
-//    }
-//    else if(inputParam->name.compare("coMultiple")==0){
-//        coMultiple = ofMap(inputParam->intVal,0,255,0,5);
-//    }
-//    else if(inputParam->name.compare("isZoomBlur")==0){
-//        isZoomBlur = inputParam->intVal;
-//    }
-//    else if(inputParam->name.compare("zbCenterX")==0){
-//        zbCenterX = ofMap(inputParam->intVal,0,255,0,1);
-//    }
-//    else if(inputParam->name.compare("zbExposure")==0){
-//        zbExposure = ofMap(inputParam->intVal,0,255,0,5);
-//    }
-//    else if(inputParam->name.compare("isRGBShift")==0){
-//        isRGBShift = inputParam->intVal;
-//    }
-//    else if(inputParam->name.compare("rgAngle")==0){
-//        rgAngle = ofMap(inputParam->intVal,0,255,0,360);
-//    }
-//    else if(inputParam->name.compare("rgAngle")==0){
-//        rgAngle = ofMap(inputParam->intVal,0,255,0,360);
-//    }
-//    else if(inputParam->name.compare("rgAmount")==0){
-//        rgAmount = ofMap(inputParam->intVal,0,255,0,0.1);
-//    }
-//    else if(inputParam->name.compare("isPixelate")==0){
-//        isPixelate = inputParam->intVal;
-//    }
-//    else if(inputParam->name.compare("piIsUnityScale")==0){
-//        piIsUnityScale = inputParam->intVal;
-//    }
-//    else if(inputParam->name.compare("piRes")==0){
-//        int bv = ofMap(inputParam->intVal,0,255,0,100);
-//        ofVec2f b = ofVec2f(bv,bv);
-//        if (piIsUnityScale) {
-//            (static_pointer_cast<PixelatePass>(post[9]))->setResolution(ofVec2f((int)b.x, (int)(b.x*height/width)));
-//        }else{
-//            (static_pointer_cast<PixelatePass>(post[9]))->setResolution(ofVec2f((int)b.x, (int)(b.y*height/width)));
-//        }
-//    }
 }
 
 //------------------------------------------------------------------
 float ImageProcessor::getMidiMin(string param_){
     
-    if(param_.compare("contrast")==0){
+    if(param_.compare("Activate Bloom")==0){
         return 0;
-    }else if(param_.compare("brightness")==0){
+    }else if(param_.compare("Activate Contrast")==0){
         return 0;
-    }else if(param_.compare("multiple")==0){
+    }else if(param_.compare("Contrast")==0){
+        return 0;
+    }else if(param_.compare("Brightness")==0){
+        return 0;
+    }else if(param_.compare("Multiple")==0){
+        return 0;
+    }else if(param_.compare("Activate Kaleidoscope")==0){
         return 0;
     }else if(param_.compare("Segments")==0){
+        return 0;
+    }else if(param_.compare("Activate Noise")==0){
         return 0;
     }else if(param_.compare("Frequency")==0){
         return 0;
@@ -296,27 +272,39 @@ float ImageProcessor::getMidiMin(string param_){
         return 0;
     }else if(param_.compare("Speed")==0){
         return 0;
-    }else if(param_.compare("hue")==0){
+    }else if(param_.compare("Activate Edge")==0){
         return 0;
-    }else if(param_.compare("saturation")==0){
+    }else if(param_.compare("Hue")==0){
+        return 0;
+    }else if(param_.compare("Saturation")==0){
         return -100;
-    }else if(param_.compare("opacity")==0){
+    }else if(param_.compare("Activate Bleach")==0){
+        return 0;
+    }else if(param_.compare("Opacity")==0){
         return -5;
-    }else if(param_.compare("angle")==0){
+    }else if(param_.compare("Activate RGB Shift")==0){
         return 0;
-    }else if(param_.compare("amount")==0){
+    }else if(param_.compare("Angle")==0){
         return 0;
-    }else if(param_.compare("center x")==0){
+    }else if(param_.compare("Amount")==0){
         return 0;
-    }else if(param_.compare("center y")==0){
+    }else if(param_.compare("Activate Zoom Blur")==0){
         return 0;
-    }else if(param_.compare("exposure")==0){
+    }else if(param_.compare("Center X")==0){
         return 0;
-    }else if(param_.compare("density")==0){
+    }else if(param_.compare("Center Y")==0){
         return 0;
-    }else if(param_.compare("weight")==0){
+    }else if(param_.compare("Exposure")==0){
         return 0;
-    }else if(param_.compare("clamp")==0){
+    }else if(param_.compare("Density")==0){
+        return 0;
+    }else if(param_.compare("Weight")==0){
+        return 0;
+    }else if(param_.compare("Clamp")==0){
+        return 0;
+    }else if(param_.compare("Activate Pixelate")==0){
+        return 0;
+    }else if(param_.compare("Unity scale")==0){
         return 0;
     }else if(param_.compare("x")==0){
         return 3;
@@ -328,42 +316,62 @@ float ImageProcessor::getMidiMin(string param_){
 //------------------------------------------------------------------
 float ImageProcessor::getMidiMax(string param_){
     
-    if(param_.compare("contrast")==0){
+    if(param_.compare("Activate Bloom")==0){
+        return 1;
+    }else if(param_.compare("Activate Contrast")==0){
+        return 1;
+    }else if(param_.compare("Contrast")==0){
         return 2;
-    }else if(param_.compare("brightness")==0){
+    }else if(param_.compare("Brightness")==0){
         return 20;
-    }else if(param_.compare("multiple")==0){
+    }else if(param_.compare("Multiple")==0){
         return 5;
+    }else if(param_.compare("Activate Kaleidoscope")==0){
+        return 1;
     }else if(param_.compare("Segments")==0){
         return 15;
+    }else if(param_.compare("Activate Noise")==0){
+        return 1;
     }else if(param_.compare("Frequency")==0){
         return 10;
     }else if(param_.compare("Amplitude")==0){
         return 0.5;
     }else if(param_.compare("Speed")==0){
         return 2.5;
-    }else if(param_.compare("hue")==0){
+    }else if(param_.compare("Activate Edge")==0){
         return 1;
-    }else if(param_.compare("saturation")==0){
+    }else if(param_.compare("Hue")==0){
+        return 1;
+    }else if(param_.compare("Saturation")==0){
         return 0;
-    }else if(param_.compare("opacity")==0){
+    }else if(param_.compare("Activate Bleach")==0){
+        return 1;
+    }else if(param_.compare("Opacity")==0){
         return 5;
-    }else if(param_.compare("angle")==0){
+    }else if(param_.compare("Activate RGB Shift")==0){
+        return 1;
+    }else if(param_.compare("Angle")==0){
         return TWO_PI;
-    }else if(param_.compare("amount")==0){
+    }else if(param_.compare("Amount")==0){
         return 0.1;
-    }else if(param_.compare("center x")==0){
+    }else if(param_.compare("Activate Zoom Blur")==0){
+        return 1;
+    }else if(param_.compare("Center X")==0){
         return 1.0;
-    }else if(param_.compare("center y")==0){
+    }else if(param_.compare("Center Y")==0){
         return 1.0;
-    }else if(param_.compare("exposure")==0){
+    }else if(param_.compare("Exposure")==0){
         return 5;
-    }else if(param_.compare("density")==0){
+    }else if(param_.compare("Density")==0){
         return 1.0;
-    }else if(param_.compare("weight")==0){
+    }else if(param_.compare("Weight")==0){
         return 1.0;
-    }else if(param_.compare("clamp")==0){
+    }else if(param_.compare("Clamp")==0){
         return 1.0;
+    }else if(param_.compare("Activate Pixelate")==0){
+        return 1;
+    }else if(param_.compare("Unity scale")==0){
+        return 1;
     }else if(param_.compare("x")==0){
         return 100;
     }else if(param_.compare("y")==0){

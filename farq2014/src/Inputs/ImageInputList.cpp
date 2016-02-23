@@ -51,13 +51,23 @@ void ImageInputList::updateParameter(Param* inputParam){
     
     if(inputParam->name.compare("bpm")==0){
         this->bpm = inputParam->floatVal;
-    }else if(inputParam->name.compare("bpmMultiplier")==0){
-        this->bpmMultiplier = inputParam->intVal;
+    }else if(inputParam->name.compare("bpmMultiplier")==0 || inputParam->name.compare("loop length in beats")==0){
+        isMatchBpmToSequenceLength
+        ? this->bpmMultiplier = ofMap(inputParam->intVal, 0, 255, 0, 16)
+        : this->bpmMultiplier = ofMap(inputParam->intVal, 0, 255, 0, 120);
     }else if(inputParam->name.compare("playPosition")==0){
         this->playPosition = inputParam->floatVal;
     }else if(inputParam->name.compare("current Sequence")==0){
         this->currentSequence = ofMap(inputParam->intVal, 0, getMidiMax("current Sequence"), 0, inputs.size()-1);
         isEnabledOn = true;
+    }else if(inputParam->name.compare("Play")==0){
+        this->isPlaying = inputParam->intVal;
+    }else if(inputParam->name.compare("LoopPalindrom")==0){
+        this->isPalindromLoop = inputParam->intVal;
+    }else if(inputParam->name.compare("match BPM to Sequence Length")==0){
+        this->isMatchBpmToSequenceLength = inputParam->intVal;
+    }else if(inputParam->name.compare("Enabled")==0){
+        this->isEnabledOn = inputParam->intVal;
     }
 }
 
@@ -66,11 +76,21 @@ float ImageInputList::getMidiMin(string param_){
     
     if(param_.compare("bpm")==0){
         return 10;
-    }else if(param_.compare("bpmMultiplier")==0){
-        return 1;
+    }else if(param_.compare("bpmMultiplier")==0 || param_.compare("loop length in beats")==0){
+        return 0;
+    }else if(param_.compare("loop length in beats")==0){
+        return 0;
     }else if(param_.compare("playPosition")==0){
         return 0;
     }else if(param_.compare("current Sequence")==0){
+        return 0;
+    }else if(param_.compare("Play")==0){
+        return 0;
+    }else if(param_.compare("LoopPalindrom")==0){
+        return 0;
+    }else if(param_.compare("match BPM to Sequence Length")==0){
+        return 0;
+    }else if(param_.compare("Enabled")==0){
         return 0;
     }
 }
@@ -80,12 +100,20 @@ float ImageInputList::getMidiMax(string param_){
     
     if(param_.compare("bpm")==0){
         return 200;
-    }else if(param_.compare("bpmMultiplier")==0){
-        return 120;
+    }else if(param_.compare("bpmMultiplier")==0 || param_.compare("loop length in beats")==0){
+        return 255;
     }else if(param_.compare("playPosition")==0){
         return 1.0;
     }else if(param_.compare("current Sequence")==0){
         return inputs.size()-1;
+    }else if(param_.compare("Play")==0){
+        return 1;
+    }else if(param_.compare("LoopPalindrom")==0){
+        return 1;
+    }else if(param_.compare("match BPM to Sequence Length")==0){
+        return 1;
+    }else if(param_.compare("Enabled")==0){
+        return 1;
     }
 }
 

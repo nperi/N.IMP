@@ -111,17 +111,128 @@ void GlitchLayer::setGlitchParameters(){
 
 //------------------------------------------------------------------
 void GlitchLayer::updateParameter(Param* inputParam){
-    
+ 
+    if(inputParam->name.compare("Enabled")==0){
+        this->isEnabled = inputParam->intVal;
+    }else if(inputParam->name.compare("CONVERGENCE")==0){
+        this->do_CONVERGENCE = inputParam->intVal;
+    }else if(inputParam->name.compare("GLOW")==0){
+        this->do_GLOW = inputParam->intVal;
+    }else if(inputParam->name.compare("SHAKER")==0){
+        this->do_SHAKER = inputParam->intVal;
+    }else if(inputParam->name.compare("CUTSLIDER")==0){
+        this->do_CUTSLIDER = inputParam->intVal;
+    }else if(inputParam->name.compare("TWIST")==0){
+        this->do_TWIST = inputParam->intVal;
+    }else if(inputParam->name.compare("OUTLINE")==0){
+        this->do_OUTLINE = inputParam->intVal;
+    }else if(inputParam->name.compare("NOISE")==0){
+        this->do_NOISE = inputParam->intVal;
+    }else if(inputParam->name.compare("SLITSCAN")==0){
+        this->do_SLITSCAN = inputParam->intVal;
+    }else if(inputParam->name.compare("SWELL")==0){
+        this->do_SWELL = inputParam->intVal;
+    }else if(inputParam->name.compare("INVERT")==0){
+        this->do_INVERT = inputParam->intVal;
+    }else if(inputParam->name.compare("HIGHCONTRAST")==0){
+        this->do_CR_HIGHCONTRAST = inputParam->intVal;
+    }else if(inputParam->name.compare("BLUERAISE")==0){
+        this->do_CR_BLUERAISE = inputParam->intVal;
+    }else if(inputParam->name.compare("REDRAISE")==0){
+        this->do_CR_REDRAISE = inputParam->intVal;
+    }else if(inputParam->name.compare("GREENRAISE")==0){
+        this->do_CR_GREENRAISE = inputParam->intVal;
+    }else if(inputParam->name.compare("BLUEINVERT")==0){
+        this->do_CR_BLUEINVERT = inputParam->intVal;
+    }else if(inputParam->name.compare("REDINVERT")==0){
+        this->do_CR_REDINVERT = inputParam->intVal;
+    }else if(inputParam->name.compare("GREENINVERT")==0){
+        this->do_CR_GREENINVERT = inputParam->intVal;
+    }
 }
 
 //------------------------------------------------------------------
 float GlitchLayer::getMidiMin(string param_){
     
+    if(param_.compare("Enabled")==0){
+        return 0;
+    }else if(param_.compare("CONVERGENCE")==0){
+        return 0;
+    }else if(param_.compare("GLOW")==0){
+        return 0;
+    }else if(param_.compare("SHAKER")==0){
+        return 0;
+    }else if(param_.compare("CUTSLIDER")==0){
+        return 0;
+    }else if(param_.compare("TWIST")==0){
+        return 0;
+    }else if(param_.compare("OUTLINE")==0){
+        return 0;
+    }else if(param_.compare("NOISE")==0){
+        return 0;
+    }else if(param_.compare("SLITSCAN")==0){
+        return 0;
+    }else if(param_.compare("SWELL")==0){
+        return 0;
+    }else if(param_.compare("INVERT")==0){
+        return 0;
+    }else if(param_.compare("HIGHCONTRAST")==0){
+        return 0;
+    }else if(param_.compare("BLUERAISE")==0){
+        return 0;
+    }else if(param_.compare("REDRAISE")==0){
+        return 0;
+    }else if(param_.compare("GREENRAISE")==0){
+        return 0;
+    }else if(param_.compare("BLUEINVERT")==0){
+        return 0;
+    }else if(param_.compare("REDINVERT")==0){
+        return 0;
+    }else if(param_.compare("GREENINVERT")==0){
+        return 0;
+    }
 }
 
 //------------------------------------------------------------------
 float GlitchLayer::getMidiMax(string param_){
  
+    if(param_.compare("Enabled")==0){
+        return 1;
+    }else if(param_.compare("CONVERGENCE")==0){
+        return 1;
+    }else if(param_.compare("GLOW")==0){
+        return 1;
+    }else if(param_.compare("SHAKER")==0){
+        return 1;
+    }else if(param_.compare("CUTSLIDER")==0){
+        return 1;
+    }else if(param_.compare("TWIST")==0){
+        return 1;
+    }else if(param_.compare("OUTLINE")==0){
+        return 1;
+    }else if(param_.compare("NOISE")==0){
+        return 1;
+    }else if(param_.compare("SLITSCAN")==0){
+        return 1;
+    }else if(param_.compare("SWELL")==0){
+        return 1;
+    }else if(param_.compare("INVERT")==0){
+        return 1;
+    }else if(param_.compare("HIGHCONTRAST")==0){
+        return 1;
+    }else if(param_.compare("BLUERAISE")==0){
+        return 1;
+    }else if(param_.compare("REDRAISE")==0){
+        return 1;
+    }else if(param_.compare("GREENRAISE")==0){
+        return 1;
+    }else if(param_.compare("BLUEINVERT")==0){
+        return 1;
+    }else if(param_.compare("REDINVERT")==0){
+        return 1;
+    }else if(param_.compare("GREENINVERT")==0){
+        return 1;
+    }
 }
 
 //------------------------------------------------------------------
