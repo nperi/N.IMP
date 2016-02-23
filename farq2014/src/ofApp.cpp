@@ -10,7 +10,7 @@ using namespace ofxCv;
 
 void ofApp::setup() {
     
-    ofHideCursor();
+//    ofHideCursor();
     
     //*** WINDOWS SETUP ***//
     //
@@ -352,6 +352,13 @@ void ofApp::update() {
         }
         
         
+        // hide/show console
+        if(glfwWindowShouldClose(windows->at(CONSOLE_WINDOW))){
+            glfw->hideWindow(windows->at(CONSOLE_WINDOW));
+            glfwSetWindowShouldClose(windows->at(CONSOLE_WINDOW), 0);
+        }
+        
+        // destroy encapsulated windows
         for(int i=2; i < windows->size(); i++){
             encapsulatedWindowsScrollBars.at(i-2)->update();
             
@@ -425,7 +432,7 @@ void ofApp::draw() {
             console->printMessages();
             break;
         default:
-            glfw->ofAppBaseWindow::showCursor();
+//            glfw->ofAppBaseWindow::showCursor();
             ofClear(35);
             encapsulatedWindowsCameras[wIndex-2]->begin();
             nodeViewers[currentViewer]->draw();
@@ -773,11 +780,13 @@ void ofApp::menuEvent(ofxUIEventArgs &e) {
         }
     }
     else if (name == "Console on/off"){
-        glfw->setWindow(windows->at(CONSOLE_WINDOW));
-        glfw->iconify(showConsole);
-//        showConsole ? glfw->hideWindow(windows->at(CONSOLE_WINDOW)) : glfw->showWindow(windows->at(CONSOLE_WINDOW));
+        if(showConsole){
+            glfw->hideWindow(windows->at(CONSOLE_WINDOW));
+        }else{
+            glfw->showWindow(windows->at(CONSOLE_WINDOW));
+            glfw->setWindow(windows->at(CONSOLE_WINDOW));
+        }
         showConsole = !showConsole;
-        glfw->setWindow(windows->at(MAIN_WINDOW));
     }
     else if (name == "Clear Console"){
         console->clearMessages();
