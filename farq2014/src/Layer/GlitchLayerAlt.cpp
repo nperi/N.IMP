@@ -74,16 +74,43 @@ void GlitchLayerAlt::update(){
 //------------------------------------------------------------------
 void GlitchLayerAlt::updateParameter(Param* inputParam){
     
+    if(inputParam->name.compare("Enabled")==0){
+        this->isEnabled = inputParam->intVal;
+    }else if(inputParam->name.compare("DQ")==0){
+        this->dq = inputParam->intVal;
+    }else if(inputParam->name.compare("QN")==0){
+        this->qn = inputParam->intVal;
+    }else if(inputParam->name.compare("DHT")==0){
+        this->dht = inputParam->intVal;
+    }
 }
 
 //------------------------------------------------------------------
 float GlitchLayerAlt::getMidiMin(string param_){
     
+    if(param_.compare("Enabled")==0){
+        return 0;
+    }else if(param_.compare("DQ")==0){
+        return 0;
+    }else if(param_.compare("QN")==0){
+        return 0;
+    }else if(param_.compare("DHT")==0){
+        return 0;
+    }
 }
 
 //------------------------------------------------------------------
 float GlitchLayerAlt::getMidiMax(string param_){
     
+    if(param_.compare("Enabled")==0){
+        return 1;
+    }else if(param_.compare("DQ")==0){
+        return 255;
+    }else if(param_.compare("QN")==0){
+        return 255;
+    }else if(param_.compare("DHT")==0){
+        return 255;
+    }
 }
 
 //------------------------------------------------------------------

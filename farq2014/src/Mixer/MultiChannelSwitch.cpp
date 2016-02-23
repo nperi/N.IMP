@@ -12,7 +12,7 @@
 MultiChannelSwitch::MultiChannelSwitch(string name_, int id_):MixTable(name_, "Multi Channel Switch", id_){
     maxInputs = 16;
     
-    gui.add(drawInputGui.set("show input Gui", false));
+    gui.add(drawInputGui.set("Show Input Gui", false));
     drawInputGui.addListener(this, &MultiChannelSwitch::cGui);
 
     selChannel.set("channel", 0, 0, 0);
@@ -79,16 +79,25 @@ void MultiChannelSwitch::update() {
 //------------------------------------------------------------------
 void MultiChannelSwitch::updateParameter(Param* inputParam){
     
+    if(inputParam->name.compare("Show Input Gui")==0){
+        this->drawInputGui = inputParam->intVal;
+    }
 }
 
 //------------------------------------------------------------------
 float MultiChannelSwitch::getMidiMin(string param_){
     
+    if(param_.compare("Show Input Gui")==0){
+        return 0;
+    }
 }
 
 //------------------------------------------------------------------
 float MultiChannelSwitch::getMidiMax(string param_){
     
+    if(param_.compare("Show Input Gui")==0){
+        return 1;
+    }
 }
 
 //------------------------------------------------------------------
