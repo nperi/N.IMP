@@ -144,7 +144,7 @@ void ofApp::setup() {
     
     new menuItem(right_menu, "MultiImageButton", "Zoom In", "assets/zoom_in.png", false, 3, right_menu->getRect()->getHeight()-30);
     new menuItem(right_menu, "MultiImageButton", "Zoom Out", "assets/zoom_out.png", false, 3, right_menu->getRect()->getHeight()-60);
-    //new menuItem(right_menu, "MultiImageToggle", "Inspect", "assets/open_flyout.png", false, 5, right_menu->getRect()->getHeight()-100);
+    new menuItem(right_menu, "MultiImageToggle", "Analizer", "assets/analizer.png", true, 3, right_menu->getRect()->getHeight()-100);
     
     ofAddListener(right_menu->newGUIEvent,this,&ofApp::menuEvent);
     
@@ -180,12 +180,6 @@ void ofApp::setup() {
             initNode(nodesVector[i]);
         }
         
-        //*** starting input generators theads (the not threadeds will not start)  ***//
-        //
-        for(int i=0; i<inputGenerators.size(); i++){
-            inputGenerators[i]->start();
-        }
-        
         //*** SYPHON SERVERS SETUP ***//
         //
         for(int i=0; i<syphonServers.size();i++){
@@ -206,6 +200,12 @@ void ofApp::setup() {
         //*** AUDIO SETUP ***//
         //
         setupAudio();
+        
+        //*** starting input generators theads (the not threadeds will not start)  ***//
+        //
+        for(int i=0; i<inputGenerators.size(); i++){
+            inputGenerators[i]->start();
+        }
     }
     
     //*** CONSOLE LOGGER ***//
@@ -220,6 +220,10 @@ void ofApp::setup() {
 
 //------------------------------------------------------------------
 void ofApp::setupAudio(){
+    
+    audioAnalizer = new AudioAnalizer();
+    initNode(audioAnalizer);
+    nodeViewers[currentViewer]->addPatch(audioAnalizer, ofPoint(50,50));
     
     bufferCounter	= 0;
    
@@ -343,6 +347,7 @@ void ofApp::update() {
         //update right menu menuitems in case window have been resized
         right_menu->getWidget("Zoom In")->getRect()->setY(right_menu->getRect()->getHeight()-30);
         right_menu->getWidget("Zoom Out")->getRect()->setY(right_menu->getRect()->getHeight()-60);
+        right_menu->getWidget("Analizer")->getRect()->setY(right_menu->getRect()->getHeight()-100);
         
         scrollBars->update();
         nodeViewers[currentViewer]->update();
@@ -476,8 +481,9 @@ void ofApp::audioIn(float * input, int bufferSize, int nChannels){
             delete[] rightToGo;
         }
     }
-    
     bufferCounter++;
+    
+    audioAnalizer->analyze(input);
 }
 /* ================================================ */
 /* ================================================ */
@@ -764,6 +770,16 @@ void ofApp::menuEvent(ofxUIEventArgs &e) {
             menu_zoom_out = true;
         }
     }
+    else if (name == "Analizer"){
+        
+        if(((ofxUIMultiImageToggle*)e.widget)->getValue() == false){
+            audioAnalizer->setDrawAudioAnalizer(false);
+            audioAnalizer->setDrawInspector(false);
+        }
+        else {
+            audioAnalizer->setDrawAudioAnalizer(true);
+        }
+    }
     else if (name == "Save Snippet"){
         if(((ofxUIMultiImageButton*)e.widget)->getValue() == 1){
             saveSnippet();
@@ -1036,59 +1052,66 @@ void ofApp::initNode(ofxPatch* node) {
 //------------------------------------------------------------------
 void ofApp::closePatch(int &_nID) {
     
-    ImageOutput* n = nodes.find(_nID)->second;
-    int i = 0;
-    
-    if (n->getIsAudio()) {
-        while (i < inputGenerators.size()) {
-            if (inputGenerators[i]->getParamInputType() == FFT && ((AudioListenerInput*)inputGenerators[i])->getNodeID() == _nID) {
-                inputGenerators.erase(inputGenerators.begin() + i);
-                leftAudioPatch == n ? leftAudioPatch = NULL : rightAudioPatch = NULL;
+    if (audioAnalizer->getId() == _nID) {
+        audioAnalizer->setDrawAudioAnalizer(false);
+        audioAnalizer->setDrawInspector(false);
+        ((ofxUIMultiImageToggle*)right_menu->getWidget("Analizer"))->setValue(false);
+    }
+    else {
+        ImageOutput* n = nodes.find(_nID)->second;
+        int i = 0;
+        
+        if (n->getIsAudio()) {
+            while (i < inputGenerators.size()) {
+                if (inputGenerators[i]->getParamInputType() == FFT && ((AudioListenerInput*)inputGenerators[i])->getNodeID() == _nID) {
+                    inputGenerators.erase(inputGenerators.begin() + i);
+                    leftAudioPatch == n ? leftAudioPatch = NULL : rightAudioPatch = NULL;
+                }
+                i++;
             }
-            i++;
+            i = 0;
+            while (i < audioListeners.size() && audioListeners[i]->getParamInputType() != MIDI) {
+                if (audioListeners[i]->getParamInputType() == FFT && ((AudioListenerInput*)audioListeners[i])->getNodeID() == _nID) {
+                    audioListeners.erase(audioListeners.begin() + i);
+                }
+                i++;
+            }
         }
+        
+        bool found = false;
         i = 0;
-        while (i < audioListeners.size() && audioListeners[i]->getParamInputType() != MIDI) {
-            if (audioListeners[i]->getParamInputType() == FFT && ((AudioListenerInput*)audioListeners[i])->getNodeID() == _nID) {
-                audioListeners.erase(audioListeners.begin() + i);
+        
+        if (n->getNodeType() == INPUT) {
+            while (i < inputs.size() && !found) {
+                if (inputs[i]->getId() == _nID) {
+                    inputs.erase(inputs.begin() + i);
+                    found = true;
+                }
+                i++;
             }
-            i++;
         }
-    }
-    
-    bool found = false;
-    i = 0;
-    
-    if (n->getNodeType() == INPUT) {
-        while (i < inputs.size() && !found) {
-            if (inputs[i]->getId() == _nID) {
-                inputs.erase(inputs.begin() + i);
-                found = true;
+        else if (n->getNodeType() == VISUAL_LAYER) {
+            while (i < visualLayers.size() && !found) {
+                if (visualLayers[i]->getId() == _nID) {
+                    visualLayers.erase(visualLayers.begin() + i);
+                    found = true;
+                }
+                i++;
             }
-            i++;
         }
-    }
-    else if (n->getNodeType() == VISUAL_LAYER) {
-        while (i < visualLayers.size() && !found) {
-            if (visualLayers[i]->getId() == _nID) {
-                visualLayers.erase(visualLayers.begin() + i);
-                found = true;
+        else if (n->getNodeType() == MIXER) {
+            while (i < inputs.size() && !found) {
+                if (inputs[i]->getId() == _nID) {
+                    inputs.erase(inputs.begin() + i);
+                    found = true;
+                }
+                i++;
             }
-            i++;
         }
+        
+        nodes.erase(_nID);
+        nodeViewers[currentViewer]->closePatch(_nID);
     }
-    else if (n->getNodeType() == MIXER) {
-        while (i < inputs.size() && !found) {
-            if (inputs[i]->getId() == _nID) {
-                inputs.erase(inputs.begin() + i);
-                found = true;
-            }
-            i++;
-        }
-    }
-    
-    nodes.erase(_nID);
-    nodeViewers[currentViewer]->closePatch(_nID);
 }
 
 //------------------------------------------------------------------
@@ -1146,9 +1169,9 @@ void ofApp::editAudioIn(){
                         node_ = nodes.find(it->first);
                         if (node_ != nodes.end()) {
                             if (editRightAudioInActive)
-                                ((AudioInputGenerator*)p)->addNewAudioMap(1, node_->second, it->second);
+                                ((AudioInputGenerator*)p)->addNewAudioMap(0, node_->second, it->second);
                             if(editLeftAudioInActive)
-                                ((AudioInputGenerator*)p)->addNewAudioMap(2, node_->second, it->second);
+                                ((AudioInputGenerator*)p)->addNewAudioMap(1, node_->second, it->second);
                         }
                     }
                 }

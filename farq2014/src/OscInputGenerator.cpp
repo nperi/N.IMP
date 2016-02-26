@@ -81,12 +81,11 @@ void OscInputGenerator::processInput() {
             if(it!=oscMap->end()){
                 for (int j=0; j<m.getNumArgs(); ++j) {
                     
-                        Param* p        = new Param();
-                        p->imageInputId = it->second->nodeId[j];
-                        p->name         = it->second->paramId[j];
-                        p->floatVal     = ofMap(m.getArgAsFloat(j), it->second->inputMinValue[j], it->second->inputMaxValue[j], it->second->paramMinValue[j], it->second->paramMaxValue[j]);
-                        storeMessage(p);
-                
+                    Param* p        = new Param();
+                    p->imageInputId = it->second->nodeId[j];
+                    p->name         = it->second->paramId[j];
+                    p->floatVal     = ofMap(m.getArgAsFloat(j), it->second->inputMinValue[j], it->second->inputMaxValue[j], it->second->paramMinValue[j], it->second->paramMaxValue[j]);
+                    storeMessage(p);
                 }
             }
         }

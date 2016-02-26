@@ -15,7 +15,7 @@ AudioIn::AudioIn(ofxUISuperCanvas* &gui_, float* &inputBuffer_, string type_, st
     width       = 500;
     height      = 250;
     
-    waveform = new ofxUIWaveform(0, 0, 200, 100, inputBuffer_, BUFFER_SIZE, -1.0, 1.0, "FFT");
+    waveform = new ofxUIWaveform(0, 0, 200, 100, inputBuffer_, BUFFER_SIZE, -1.5, 1.5, "FFT");
     
     if (type_ == "Audio In - Left") {
         audioInType = LEFT;

@@ -14,56 +14,6 @@ AudioInputGenerator::AudioInputGenerator(string name_, int nodeID_):AudioListene
 }
 
 //------------------------------------------------------------------
-/*bool AudioInputGenerator::setupFromXML(){
-    
-    bool result = true;
-    
-    audioMap = new vector<DTAudioMap*>();
-    
-    if( XML.loadFile("paramGen_" + generatorName + ".xml") ){
-        
-        //get midi mapping data
-        
-        XML.pushTag("FFT_SETTINGS");
-        
-        int getNumAudioMapTag = XML.getNumTags("AUDIO_MAP");
-        
-        for(int i = 0;i<getNumAudioMapTag ; i++){
-            
-            int band = ofToInt(XML.getAttribute("AUDIO_MAP","band","1",i));
-            string nodeName = XML.getAttribute("AUDIO_MAP","nodeName","",i);
-            string param = XML.getAttribute("AUDIO_MAP","param","",i);
-            float inputMinValue = ofToInt(XML.getAttribute("AUDIO_MAP","inputMinValue","0",i));
-            float inputMaxValue = ofToInt(XML.getAttribute("AUDIO_MAP","inputMaxValue","127",i));
-            int paramMinValue = ofToInt(XML.getAttribute("AUDIO_MAP","paramMinValue","0",i));
-            int paramMaxValue = ofToInt(XML.getAttribute("AUDIO_MAP","paramMaxValue","127",i));
-            
-            DTAudioMap* dtM = new DTAudioMap();
-            
-            dtM->band = band;
-            dtM->nodeId = nodeName;
-            dtM->paramId = param;
-            dtM->inputMinValue = inputMinValue;
-            dtM->inputMaxValue = inputMaxValue;
-            dtM->paramMinValue = paramMinValue;
-            dtM->paramMaxValue = paramMaxValue;
-            
-            audioMap->push_back(dtM);
-        }
-        
-        XML.popTag();
-        result = true;
-    }
-    
-    hasNewData = false;
-    isDataProcessed = false;
-    bufferCounter = 0;
-        
-    return result;
-   
-}*/
-
-//------------------------------------------------------------------
 void AudioInputGenerator::processInput(){
     
     if(lock()){

@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0A1297311C7FCEDD00A9D6D4 /* AudioAnalizer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A12972F1C7FCEDD00A9D6D4 /* AudioAnalizer.cpp */; settings = {ASSET_TAGS = (); }; };
+		0A1297501C7FF42A00A9D6D4 /* fb_funcs.c in Sources */ = {isa = PBXBuildFile; fileRef = 0A1297481C7FF42A00A9D6D4 /* fb_funcs.c */; settings = {ASSET_TAGS = (); }; };
+		0A1297511C7FF42A00A9D6D4 /* ofxFilterbank.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A12974A1C7FF42A00A9D6D4 /* ofxFilterbank.cpp */; settings = {ASSET_TAGS = (); }; };
 		0A1D5D3A1C6F5EDF003CE2C5 /* AudioIn.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A1D5D381C6F5EDF003CE2C5 /* AudioIn.cpp */; settings = {ASSET_TAGS = (); }; };
 		0A49EF451C18A3BF00346EB5 /* ofxBasePatch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A49EF0D1C18A3BF00346EB5 /* ofxBasePatch.cpp */; };
 		0A49EF461C18A3BF00346EB5 /* ofxComposer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A49EF0F1C18A3BF00346EB5 /* ofxComposer.cpp */; };
@@ -249,6 +252,12 @@
 
 /* Begin PBXFileReference section */
 		03A75A648BC4CF1D9DEDD0CE /* Flow.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = Flow.cpp; path = ../../../addons/ofxCv/libs/ofxCv/src/Flow.cpp; sourceTree = SOURCE_ROOT; };
+		0A12972F1C7FCEDD00A9D6D4 /* AudioAnalizer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AudioAnalizer.cpp; sourceTree = "<group>"; };
+		0A1297301C7FCEDD00A9D6D4 /* AudioAnalizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioAnalizer.h; sourceTree = "<group>"; };
+		0A1297481C7FF42A00A9D6D4 /* fb_funcs.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = fb_funcs.c; sourceTree = "<group>"; };
+		0A1297491C7FF42A00A9D6D4 /* fb_funcs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fb_funcs.h; sourceTree = "<group>"; };
+		0A12974A1C7FF42A00A9D6D4 /* ofxFilterbank.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxFilterbank.cpp; sourceTree = "<group>"; };
+		0A12974B1C7FF42A00A9D6D4 /* ofxFilterbank.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxFilterbank.h; sourceTree = "<group>"; };
 		0A1D5D381C6F5EDF003CE2C5 /* AudioIn.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AudioIn.cpp; sourceTree = "<group>"; };
 		0A1D5D391C6F5EDF003CE2C5 /* AudioIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioIn.h; sourceTree = "<group>"; };
 		0A49EF0D1C18A3BF00346EB5 /* ofxBasePatch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxBasePatch.cpp; sourceTree = "<group>"; };
@@ -715,6 +724,26 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0A1297321C7FF42A00A9D6D4 /* ofxFilterbank_nimp */ = {
+			isa = PBXGroup;
+			children = (
+				0A1297471C7FF42A00A9D6D4 /* src */,
+			);
+			name = ofxFilterbank_nimp;
+			path = ../../../addons/ofxFilterbank_nimp;
+			sourceTree = "<group>";
+		};
+		0A1297471C7FF42A00A9D6D4 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				0A1297481C7FF42A00A9D6D4 /* fb_funcs.c */,
+				0A1297491C7FF42A00A9D6D4 /* fb_funcs.h */,
+				0A12974A1C7FF42A00A9D6D4 /* ofxFilterbank.cpp */,
+				0A12974B1C7FF42A00A9D6D4 /* ofxFilterbank.h */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
 		0A49EEFA1C18A3BF00346EB5 /* ofxComposer_nimp */ = {
 			isa = PBXGroup;
 			children = (
@@ -1454,25 +1483,26 @@
 		BB4B014C10F69532006C3DED /* addons */ = {
 			isa = PBXGroup;
 			children = (
-				0AE1F53E1C4C1B8500A3B168 /* ofxMultiGLFWWindow_nimp */,
-				0A49EEFA1C18A3BF00346EB5 /* ofxComposer_nimp */,
-				0A51B7D51C0FE42B000AC121 /* ofxUI_nimp */,
-				0A75F5AB1C583AA800481F86 /* ofxGui_nimp */,
-				0A51B8951C0FE57A000AC121 /* ofxMSAInteractiveObject_nimp */,
-				0A51B9EE1C1103F7000AC121 /* ofxPulseSensor */,
-				0A51B7B21C0FE241000AC121 /* ofxMultiTouchPad */,
 				D34EC3E21A65BA9900F0EFAE /* ofxAVFVideoPlayer */,
-				0A5A8E2A1C72CEB60067822B /* ofxHapPlayer */,
-				D34E961C1A3FA2850089BFE4 /* ofxOsc */,
-				6BFCC2561A3C82D9009D68F0 /* ofxMidi */,
-				0AFFF7341C2F0E3E0034AE53 /* ofxPostProcessing_nimp */,
-				D3A227481A39DD42005DD5AF /* ofxImageSequencePlayer */,
-				6B36EC981A31DBEA0019915B /* ofxXmlSettings */,
-				D3A226A11A310D7C005DD5AF /* ofxPSBlend */,
-				6B0E614B1A2FDEBD006AE261 /* ofxJpegGlitch */,
-				6B0E60EF1A2FD939006AE261 /* ofxPostGlitch */,
-				6B9E01021A2E5B3100813D7C /* ofxSyphon */,
+				0A49EEFA1C18A3BF00346EB5 /* ofxComposer_nimp */,
 				6025FAF6414C2CA589764D26 /* ofxCv */,
+				0A1297321C7FF42A00A9D6D4 /* ofxFilterbank_nimp */,
+				0A75F5AB1C583AA800481F86 /* ofxGui_nimp */,
+				0A5A8E2A1C72CEB60067822B /* ofxHapPlayer */,
+				D3A227481A39DD42005DD5AF /* ofxImageSequencePlayer */,
+				6B0E614B1A2FDEBD006AE261 /* ofxJpegGlitch */,
+				6BFCC2561A3C82D9009D68F0 /* ofxMidi */,
+				0A51B8951C0FE57A000AC121 /* ofxMSAInteractiveObject_nimp */,
+				0AE1F53E1C4C1B8500A3B168 /* ofxMultiGLFWWindow_nimp */,
+				0A51B7B21C0FE241000AC121 /* ofxMultiTouchPad */,
+				D34E961C1A3FA2850089BFE4 /* ofxOsc */,
+				6B0E60EF1A2FD939006AE261 /* ofxPostGlitch */,
+				0AFFF7341C2F0E3E0034AE53 /* ofxPostProcessing_nimp */,
+				D3A226A11A310D7C005DD5AF /* ofxPSBlend */,
+				0A51B9EE1C1103F7000AC121 /* ofxPulseSensor */,
+				6B9E01021A2E5B3100813D7C /* ofxSyphon */,
+				0A51B7D51C0FE42B000AC121 /* ofxUI_nimp */,
+				6B36EC981A31DBEA0019915B /* ofxXmlSettings */,
 			);
 			name = addons;
 			sourceTree = "<group>";
@@ -1547,6 +1577,8 @@
 			isa = PBXGroup;
 			children = (
 				D3008A451A44911800DACD2E /* ImageTypes */,
+				0A12972F1C7FCEDD00A9D6D4 /* AudioAnalizer.cpp */,
+				0A1297301C7FCEDD00A9D6D4 /* AudioAnalizer.h */,
 				0A1D5D381C6F5EDF003CE2C5 /* AudioIn.cpp */,
 				0A1D5D391C6F5EDF003CE2C5 /* AudioIn.h */,
 				D309EB7C1A2E94AD008B3D94 /* InputSource.cpp */,
@@ -2011,6 +2043,7 @@
 				6BFCC2D91A3C82D9009D68F0 /* RtMidi.cpp in Sources */,
 				D34E964C1A3FA2850089BFE4 /* OscOutboundPacketStream.cpp in Sources */,
 				0A51B85A1C0FE42B000AC121 /* ofxUITabBar.cpp in Sources */,
+				0A1297511C7FF42A00A9D6D4 /* ofxFilterbank.cpp in Sources */,
 				0AFFF7851C2F0E3F0034AE53 /* EdgePass.cpp in Sources */,
 				D309EB8C1A2E9B27008B3D94 /* InputCamera.cpp in Sources */,
 				0A51B8431C0FE42B000AC121 /* ofxUIImage.cpp in Sources */,
@@ -2075,6 +2108,7 @@
 				0A51B8391C0FE42B000AC121 /* ofxUIBaseDraws.cpp in Sources */,
 				6B1CBBFC1A3F9A450084F9EE /* AudioInputGenerator.cpp in Sources */,
 				6AABAB39E82AF5CFEA23A205 /* ContourFinder.cpp in Sources */,
+				0A1297311C7FCEDD00A9D6D4 /* AudioAnalizer.cpp in Sources */,
 				6BFCC2FA1A3DCED6009D68F0 /* ParamInputGenerator.cpp in Sources */,
 				0AFFF78B1C2F0E3F0034AE53 /* LimbDarkeningPass.cpp in Sources */,
 				45CC483A999BF1065A6B926C /* Distance.cpp in Sources */,
@@ -2101,6 +2135,7 @@
 				6BFCC2DC1A3C82D9009D68F0 /* ofxRtMidiOut.cpp in Sources */,
 				0AFFF78F1C2F0E3F0034AE53 /* PostProcessing.cpp in Sources */,
 				C602002DE761F9B52DB4400A /* ObjectFinder.cpp in Sources */,
+				0A1297501C7FF42A00A9D6D4 /* fb_funcs.c in Sources */,
 				7CDAD32BE4FA46701E3552C7 /* RunningBackground.cpp in Sources */,
 				6BFCC2E61A3C82D9009D68F0 /* ofxMidiOut.cpp in Sources */,
 				6B9E01351A2E5B3100813D7C /* ofxSyphonServer.mm in Sources */,

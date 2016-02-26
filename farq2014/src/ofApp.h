@@ -18,6 +18,7 @@
 
 #include "MidiInputGenerator.h"
 
+#include "AudioAnalizer.h"
 #include "AudioIn.h"
 #include "InputCamera.h"
 #include "VideoPlayerMac.h"
@@ -181,5 +182,5 @@ public:
     bool editRightAudioInActive;
     AudioIn* leftAudioPatch;
     AudioIn* rightAudioPatch;
-
+    AudioAnalizer* audioAnalizer;
 };
