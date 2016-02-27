@@ -26,6 +26,7 @@ public:
     AudioInputGenerator(string name_, int nodeID_);
     void processInput();
     //bool setupFromXML();
+    void setChannel(int c) { channel = c; };
     
     bool addNewAudioMap(int band_, ImageOutput* node_, vector<string> params_);
     void clearAudioMap();
@@ -44,6 +45,8 @@ private:
     
     float freq[NUM_WINDOWS][BUFFER_SIZE/2];
     float freq_phase[NUM_WINDOWS][BUFFER_SIZE/2];
+    
+    int channel;
     
 
 };

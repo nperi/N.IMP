@@ -50,6 +50,7 @@
 #include "ofxMultiGLFWWindow.h"
 #include "ConsoleLog.h"
 #include "EventHandler.h"
+//#include "AudioInEvent.h"
 
 //enum InputType {VIDEO, CAM, IMAGE, PARTICLE};
 //enum VisualLayerType {IKEDA, GLITCH_1, GLITCH_2,IMAGE_PROCESSOR};
@@ -81,6 +82,7 @@ public:
     void createNode(textInputEvent &args);
     void initNode(ofxPatch* node);
     void closePatch(int &_nID);
+//    void editAudioInChannel(AudioInEvent &e_);
     void editLeftAudioIn(bool &edit_);
     void editRightAudioIn(bool &edit_);
     void editAudioIn();

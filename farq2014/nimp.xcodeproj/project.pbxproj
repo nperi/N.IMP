@@ -258,6 +258,7 @@
 		0A1297491C7FF42A00A9D6D4 /* fb_funcs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fb_funcs.h; sourceTree = "<group>"; };
 		0A12974A1C7FF42A00A9D6D4 /* ofxFilterbank.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxFilterbank.cpp; sourceTree = "<group>"; };
 		0A12974B1C7FF42A00A9D6D4 /* ofxFilterbank.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxFilterbank.h; sourceTree = "<group>"; };
+		0A1297591C82012200A9D6D4 /* AudioInEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioInEvent.h; sourceTree = "<group>"; };
 		0A1D5D381C6F5EDF003CE2C5 /* AudioIn.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AudioIn.cpp; sourceTree = "<group>"; };
 		0A1D5D391C6F5EDF003CE2C5 /* AudioIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioIn.h; sourceTree = "<group>"; };
 		0A49EF0D1C18A3BF00346EB5 /* ofxBasePatch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxBasePatch.cpp; sourceTree = "<group>"; };
@@ -742,6 +743,18 @@
 				0A12974B1C7FF42A00A9D6D4 /* ofxFilterbank.h */,
 			);
 			path = src;
+			sourceTree = "<group>";
+		};
+		0A1297581C8200E500A9D6D4 /* Audio */ = {
+			isa = PBXGroup;
+			children = (
+				0A12972F1C7FCEDD00A9D6D4 /* AudioAnalizer.cpp */,
+				0A1297301C7FCEDD00A9D6D4 /* AudioAnalizer.h */,
+				0A1D5D381C6F5EDF003CE2C5 /* AudioIn.cpp */,
+				0A1D5D391C6F5EDF003CE2C5 /* AudioIn.h */,
+				0A1297591C82012200A9D6D4 /* AudioInEvent.h */,
+			);
+			name = Audio;
 			sourceTree = "<group>";
 		};
 		0A49EEFA1C18A3BF00346EB5 /* ofxComposer_nimp */ = {
@@ -1576,11 +1589,8 @@
 		D309EB7B1A2E94AD008B3D94 /* Inputs */ = {
 			isa = PBXGroup;
 			children = (
+				0A1297581C8200E500A9D6D4 /* Audio */,
 				D3008A451A44911800DACD2E /* ImageTypes */,
-				0A12972F1C7FCEDD00A9D6D4 /* AudioAnalizer.cpp */,
-				0A1297301C7FCEDD00A9D6D4 /* AudioAnalizer.h */,
-				0A1D5D381C6F5EDF003CE2C5 /* AudioIn.cpp */,
-				0A1D5D391C6F5EDF003CE2C5 /* AudioIn.h */,
 				D309EB7C1A2E94AD008B3D94 /* InputSource.cpp */,
 				D309EB7D1A2E94AD008B3D94 /* InputSource.h */,
 				D309EB8A1A2E9B27008B3D94 /* InputCamera.cpp */,

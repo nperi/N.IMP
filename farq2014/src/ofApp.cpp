@@ -235,11 +235,11 @@ void ofApp::setupAudio(){
     left = new float[BUFFER_SIZE];
     right = new float[BUFFER_SIZE];
     
-    if (rightAudioPatch != NULL) {
-        rightAudioPatch->getWaveForm()->setBuffer(right);
-    }
     if (leftAudioPatch != NULL) {
         leftAudioPatch->getWaveForm()->setBuffer(left);
+    }
+    if (rightAudioPatch != NULL) {
+        rightAudioPatch->getWaveForm()->setBuffer(right);
     }
     
     // setting nodes attributes selected for audio in
@@ -249,7 +249,7 @@ void ofApp::setupAudio(){
     std::map<int, ImageOutput*>::iterator node_;
     for (int i = 0; i < audioListeners.size(); i++){
         am = audioListeners[i]->getAudioMap();
-        left_ = (nodes.find(audioListeners[i]->getNodeID())->second->getTypeName() == "Audio In - Left");
+        left_ = ((AudioIn*)nodes.find(audioListeners[i]->getNodeID())->second)->getAudioInType() == LEFT;
         for (int j = 0; j < am->size(); j++){
             node_ = nodes.find(am->at(j)->nodeId);
             if (node_ != nodes.end()) {
@@ -917,9 +917,9 @@ void ofApp::setCurrentViewer(int currentViewer_){
 //------------------------------------------------------------------
 void ofApp::createNodeInput(float _x, float _y){
     
-    textInput *node = new textInput("", "", 200, 20, _x, _y);
+    textInput *node = new textInput("", "", 210, 20, _x, _y);
     vector<string> nodes;
-    ofxUIDropDownList *dlist = new ofxUIDropDownList("", nodes, 200, _x, _y);
+    ofxUIDropDownList *dlist = new ofxUIDropDownList("", nodes, 210, _x, _y);
     
     gui->addWidget(dlist);
     gui->addWidget(node);
@@ -942,29 +942,33 @@ void ofApp::createNode(textInputEvent &args){
     position = position*cam.getGlobalTransformMatrix();
     bool exist = false;
     
-    if (args.type == "audio in - left") {
+    if (args.type == "audio in - left channel") {
         if (leftAudioPatch) {
             nodeViewers[currentViewer]->deactivateAllPatches();
             leftAudioPatch->bActive = true;
             exist = true;
         }
         else {
-            newPatch = new AudioIn(gui, left, "Audio In - Left", "New Audio In - Left");
+            newPatch = new AudioIn(gui, left, "Audio In - Left Channel", "New Audio In - Left Channel");
+            ((AudioIn*)newPatch)->setChannel(0);
             inputs.push_back((AudioIn*)newPatch);
             ofAddListener( ((AudioIn*)newPatch)->editAudioIn , this, &ofApp::editLeftAudioIn);
+//            ofAddListener( ((AudioIn*)newPatch)->editAudioInChannel , this, &ofApp::editAudioInChannel);
             leftAudioPatch = (AudioIn*)newPatch;
         }
     }
-    else if (args.type == "audio in - right") {
+    else if (args.type == "audio in - right channel") {
         if (rightAudioPatch) {
             nodeViewers[currentViewer]->deactivateAllPatches();
             rightAudioPatch->bActive = true;
             exist = true;
         }
         else {
-            newPatch = new AudioIn(gui, right, "Audio In - Right", "New Audio In - Right");
+            newPatch = new AudioIn(gui, right, "Audio In - Right Channel", "New Audio In - Right Channel");
+            ((AudioIn*)newPatch)->setChannel(1);
             inputs.push_back((AudioIn*)newPatch);
             ofAddListener( ((AudioIn*)newPatch)->editAudioIn , this, &ofApp::editRightAudioIn);
+//            ofAddListener( ((AudioIn*)newPatch)->editAudioInChannel , this, &ofApp::editAudioInChannel);
             rightAudioPatch = (AudioIn*)newPatch;
         }
     }
@@ -1026,7 +1030,8 @@ void ofApp::createNode(textInputEvent &args){
         if (newPatch->getIsAudio()){
             
             AudioInputGenerator* aI = new AudioInputGenerator(newPatch->getName(), newPatch->getId());
-            aI->loadSettings(XML);
+//            aI->loadSettings(XML);
+            aI->setChannel(((AudioIn*)newPatch)->getChannel());
             
             inputGenerators.push_back(aI);
             audioListeners.push_back(aI);
@@ -1114,6 +1119,21 @@ void ofApp::closePatch(int &_nID) {
 }
 
 //------------------------------------------------------------------
+//void ofApp::editAudioInChannel(AudioInEvent &e_){
+//
+//    for (int i = 0; i < audioListeners.size(); ++i) {
+//        if (audioListeners[i]->getNodeID() == e_.nodeId) {
+//            vector<DTAudioMap*>* am = audioListeners[i]->getAudioMap();
+//            for (int j = 0; j < am->size(); j++){
+//                am->at(j)->band = e_.channel;
+//            }
+//            
+//            break;
+//        }
+//    }
+//}
+
+//------------------------------------------------------------------
 void ofApp::editLeftAudioIn(bool &edit_){
 
     editAudioIn();
@@ -1168,9 +1188,9 @@ void ofApp::editAudioIn(){
                         node_ = nodes.find(it->first);
                         if (node_ != nodes.end()) {
                             if (editRightAudioInActive)
-                                ((AudioInputGenerator*)p)->addNewAudioMap(0, node_->second, it->second);
+                                ((AudioInputGenerator*)p)->addNewAudioMap(((AudioIn*)audioInNode_->second)->getChannel(), node_->second, it->second);
                             if(editLeftAudioInActive)
-                                ((AudioInputGenerator*)p)->addNewAudioMap(1, node_->second, it->second);
+                                ((AudioInputGenerator*)p)->addNewAudioMap(((AudioIn*)audioInNode_->second)->getChannel(), node_->second, it->second);
                         }
                     }
                 }
@@ -1654,7 +1674,7 @@ bool ofApp::loadNodes(ofxXmlSettings &XML){
                 };
                 case RIGHT_AUDIO_IN:
                 {
-                    AudioIn* aI = new AudioIn(gui, right, "Audio In - Right", inputName, inputId);
+                    AudioIn* aI = new AudioIn(gui, right, "Audio In - Right Channel", inputName, inputId);
                     aI->loadSettings(XML, i);
                     
                     inputs.push_back(aI);
@@ -1662,12 +1682,13 @@ bool ofApp::loadNodes(ofxXmlSettings &XML){
                     
                     rightAudioPatch = aI;
                     ofAddListener(aI->editAudioIn , this, &ofApp::editRightAudioIn);
+//                    ofAddListener(aI->editAudioInChannel , this, &ofApp::editAudioInChannel);
                     
                     break;
                 };
                 case LEFT_AUDIO_IN:
                 {
-                    AudioIn* aI = new AudioIn(gui, left, "Audio In - Left", inputName, inputId);
+                    AudioIn* aI = new AudioIn(gui, left, "Audio In - Left Channel", inputName, inputId);
                     aI->loadSettings(XML, i);
                     
                     inputs.push_back(aI);
@@ -1675,6 +1696,7 @@ bool ofApp::loadNodes(ofxXmlSettings &XML){
                     
                     leftAudioPatch = aI;
                     ofAddListener(aI->editAudioIn , this, &ofApp::editLeftAudioIn);
+//                    ofAddListener(aI->editAudioInChannel , this, &ofApp::editAudioInChannel);
                     
                     break;
                 };

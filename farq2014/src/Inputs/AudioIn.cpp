@@ -17,7 +17,9 @@ AudioIn::AudioIn(ofxUISuperCanvas* &gui_, float* &inputBuffer_, string type_, st
     
     waveform = new ofxUIWaveform(0, 0, 200, 100, inputBuffer_, BUFFER_SIZE, -1.5, 1.5, "FFT");
     
-    if (type_ == "Audio In - Left") {
+//    gui.add(selectChannel.set("Channel",0,0,1));
+    
+    if (type_ == "Audio In - Left Channel") {
         audioInType = LEFT;
         gui.add(editFFTInputs.set("Edit Left FFT Inputs", false));
     }
@@ -26,6 +28,7 @@ AudioIn::AudioIn(ofxUISuperCanvas* &gui_, float* &inputBuffer_, string type_, st
         gui.add(editFFTInputs.set("Edit Right FFT Inputs", false));
     }
     
+//    selectChannel.addListener(this, &AudioIn::editChannel);
     editFFTInputs.addListener(this, &AudioIn::editInputs);
     
     gui.setWidthElements(INSPECTOR_WIDTH);
@@ -53,9 +56,10 @@ void AudioIn::update() {
 //------------------------------------------------------------------
 void AudioIn::customDraw(){
     
-    ofxPatch::customDraw();
-    
     if ( bEditMode || bVisible ) {
+        
+        ofxPatch::customDraw();
+        
         waveform->drawBack();
         waveform->drawFill();
     }
@@ -72,8 +76,28 @@ void AudioIn::_mouseDragged(ofMouseEventArgs &e){
 
 //------------------------------------------------------------------
 void AudioIn::editInputs(bool& g){
-
+    
     ofNotifyEvent(editAudioIn, g);
+}
+
+//------------------------------------------------------------------
+//void AudioIn::editChannel(int& c){
+//    
+//    AudioInEvent e;
+//    e.nodeId = nId;
+//    e.channel = c;
+//    ofNotifyEvent(editAudioInChannel, e);
+//}
+
+//------------------------------------------------------------------
+void AudioIn::setChannel(int c){
+    
+    selectChannel = c;
+   
+//    AudioInEvent e;
+//    e.nodeId = nId;
+//    e.channel = c;
+//    ofNotifyEvent(editAudioInChannel, e);
 }
 
 //------------------------------------------------------------------
@@ -103,7 +127,8 @@ bool AudioIn::loadSettings(ofxXmlSettings &XML, int nTag_, int nodesCount_) {
     
     bool loaded = false;
     
-    nId = XML.getAttribute("NODE", "id", -1, nTag_) + nodesCount_;
+    nId             = XML.getAttribute("NODE", "id", -1, nTag_) + nodesCount_;
+    selectChannel   = XML.getAttribute("NODE", "channel", 1, nTag_);
     
     XML.pushTag("NODE", nTag_);
     
@@ -141,6 +166,7 @@ bool AudioIn::saveSettings(ofxXmlSettings &XML) {
         if ( XML.getAttribute("NODE", "id", -1, i) == nId){
             
             XML.setAttribute("NODE", "name", name, i);
+            XML.addAttribute("NODE", "channel", selectChannel, i);
             XML.pushTag("NODE", i);
             
             ofxPatch::saveSettings(XML, false, i);
@@ -162,6 +188,7 @@ bool AudioIn::saveSettings(ofxXmlSettings &XML) {
             
             XML.addAttribute("NODE", "id", nId, lastPlace);
             XML.addAttribute("NODE", "name", name, lastPlace);
+            XML.addAttribute("NODE", "channel", selectChannel, lastPlace);
             audioInType == LEFT ? XML.addAttribute("NODE", "type", "LEFT_AUDIO_IN", lastPlace) : XML.addAttribute("NODE", "type", "RIGHT_AUDIO_IN", lastPlace);
             
             if (XML.pushTag("NODE", lastPlace)){

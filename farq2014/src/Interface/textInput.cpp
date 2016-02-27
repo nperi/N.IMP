@@ -15,8 +15,8 @@ textInput::textInput(string _name, string _textstring, float w, float h, float x
 {
     init(_name, _textstring, w, h, x, y, _size);
 
-    nodes.push_back("audio in - left");
-    nodes.push_back("audio in - right");
+    nodes.push_back("audio in - left channel");
+    nodes.push_back("audio in - right channel");
     nodes.push_back("camera");
     nodes.push_back("glitch 1");
     nodes.push_back("glitch 2");

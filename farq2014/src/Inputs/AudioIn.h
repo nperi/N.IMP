@@ -14,6 +14,7 @@
 #include "ofxUIWaveform.h"
 #include "ofxUISuperCanvas.h"
 #include "enumerations.h"
+//#include "AudioInEvent.h"
 
 class AudioIn : public InputSource{
     
@@ -32,14 +33,18 @@ public:
     float           getMidiMin(string param_){};
     float           getMidiMax(string param_){};
     AudioInType     getAudioInType(){ return audioInType; };
+    int             getChannel(){ return selectChannel; };
     
     void setWaveFormPosition();
+    void setChannel(int c);
     void resetSize(int _width, int _height);
     
     void updateParameter(Param* inputParam){};
     
-    ofParameter<bool>   editFFTInputs;
-    ofEvent<bool>       editAudioIn;
+    ofParameter<bool>     editFFTInputs;
+    ofParameter<int>      selectChannel;
+    ofEvent<bool>         editAudioIn;
+//    ofEvent<AudioInEvent> editAudioInChannel;
     
     
     bool loadSettings(ofxXmlSettings &XML, int nTag_, int nodesCount_ = 0);
@@ -49,11 +54,12 @@ public:
 private:
     
     void update();
+    void editInputs(bool& g);
+//    void editChannel(int& c);
     
     ofxUIWaveform* waveform;
     float* inputBuffer;
-    
-    void editInputs(bool& g);
+    int channel;
     AudioInType audioInType;
     
 };
