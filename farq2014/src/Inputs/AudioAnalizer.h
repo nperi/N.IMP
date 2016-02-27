@@ -19,7 +19,7 @@ class AudioAnalizer : public InputSource{
     
 public:
     
-    AudioAnalizer(string name_= "AudioAnalizer", int id_ = -1);
+    AudioAnalizer(string name_= "Audio Analizer", int id_ = -1);
     
     void setup();
     void customDraw();
@@ -34,8 +34,8 @@ public:
     
     void analyze(float * iBuffer);
     
-    bool loadSettings(ofxXmlSettings &XML, int nTag_, int nodesCount_ = 0){};
-    bool saveSettings(ofxXmlSettings &XML){};
+    bool loadSettings(ofxXmlSettings &XML, int nTag_, int nodesCount_ = 0);
+    bool saveSettings(ofxXmlSettings &XML);
     bool saveSettingsToSnippet(ofxXmlSettings &XML, map<int,int> newIdsMap){};
     
 private:

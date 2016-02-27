@@ -46,10 +46,13 @@ void ofApp::setup() {
     editRightAudioInActive = false;
     rightAudioPatch        = NULL;
     leftAudioPatch         = NULL;
+    audioAnalizer          = NULL;
     
+    console = ConsoleLog::getInstance();
     ofSetLogLevel(OF_LOG_ERROR);
     
     //populating string dictionaries for simple comparison used in LoadFromXML
+    inputTypes.insert(std::pair<string,InputType>("AUDIO_ANALIZER",AUDIO_ANALIZER));
     inputTypes.insert(std::pair<string,InputType>("VIDEO",VIDEO));
     inputTypes.insert(std::pair<string,InputType>("CAM",CAM));
     inputTypes.insert(std::pair<string,InputType>("IMAGE",IMAGE));
@@ -211,7 +214,6 @@ void ofApp::setup() {
     //*** CONSOLE LOGGER ***//
     //
     glfw->setWindow(windows->at(CONSOLE_WINDOW));
-    console = ConsoleLog::getInstance();
     console->setupScrollBar(&pad);
     glfw->iconify(!showConsole);
     
@@ -220,10 +222,6 @@ void ofApp::setup() {
 
 //------------------------------------------------------------------
 void ofApp::setupAudio(){
-    
-    audioAnalizer = new AudioAnalizer();
-    initNode(audioAnalizer);
-    nodeViewers[currentViewer]->addPatch(audioAnalizer, ofPoint(50,50));
     
     bufferCounter	= 0;
    
@@ -617,6 +615,7 @@ void ofApp::mousePressed(int x, int y, int button){
             } else if( i != CONSOLE_WINDOW){
                 nodeViewers[currentViewer]->setCameraForWindow(i, cam);
                 nodeViewers[currentViewer]->setParent(*(encapsulatedWindowsCameras.at(i-2)));
+                cout << endl << "setting camera in other window" << endl;
             }
                 
             break;
@@ -1464,6 +1463,13 @@ bool ofApp::loadFromXML(){
             nodeViewers[i]->setLinkType(nodeLinkType);
         }
         
+        if (audioAnalizer == NULL) {
+            audioAnalizer = new AudioAnalizer();
+            audioAnalizer->setDrawAudioAnalizer(false);
+            ((ofxUIMultiImageToggle*)right_menu->getWidget("Analizer"))->setValue(false);
+        }
+        initNode(audioAnalizer);
+        nodeViewers[currentViewer]->addPatch(audioAnalizer, ofPoint(audioAnalizer->getLowestXCoord(),audioAnalizer->getHighestYCoord()));
     }
     
     return result;
@@ -1491,6 +1497,7 @@ bool ofApp::saveToXML() {
         // Save Inputs
         //
         XML.pushTag("INPUTS");
+        audioAnalizer->saveSettings(XML);
         for (int i = 0; i < inputs.size(); i++) {
             inputs[i]->saveSettings(XML);
         }
@@ -1584,6 +1591,17 @@ bool ofApp::loadNodes(ofxXmlSettings &XML){
             string inputType = XML.getAttribute("NODE","type","CAM",i);
             
             switch(inputTypes[inputType]){
+                case AUDIO_ANALIZER:
+                {
+                    audioAnalizer = new AudioAnalizer(inputName, inputId);
+                    
+                    if (!audioAnalizer->loadSettings(XML, i)) {
+                        result = false;
+                        console->pushMessage("No Audio Analizer!");
+                    }
+                    
+                    break;
+                };
                 case VIDEO:
                 {
                     VideoPlayerMac* vP = new VideoPlayerMac(inputName, inputId);
