@@ -127,9 +127,9 @@ void ofApp::setup() {
     spacer = new ofxUISpacer(RIGHT_MENU_WIDTH + MENU_ITEM_SIZE*12 + MENU_ITEM_PADDING*17, 20, 1,MENU_ITEM_SIZE);
     menu->addWidget(spacer);
     spacer->setColorFill(ofxUIColor(120, 120, 120, 200));
-    new menuItem(menu, "MultiImageButton", "Encapsulate", "assets/console.png", false, RIGHT_MENU_WIDTH + MENU_ITEM_SIZE*12 + MENU_ITEM_PADDING*18, 20);
-    new menuItem(menu, "MultiImageButton", "Uncapsulate", "assets/clear_console.png", false, RIGHT_MENU_WIDTH + MENU_ITEM_SIZE*13 + MENU_ITEM_PADDING*19, 20);
-    new menuItem(menu, "MultiImageButton", "Open encapsulated", "assets/clear_console.png", false, RIGHT_MENU_WIDTH + MENU_ITEM_SIZE*14 + MENU_ITEM_PADDING*20, 20);
+    new menuItem(menu, "MultiImageButton", "Encapsulate", "assets/encapsulate.png", false, RIGHT_MENU_WIDTH + MENU_ITEM_SIZE*12 + MENU_ITEM_PADDING*18, 20);
+    new menuItem(menu, "MultiImageButton", "Uncapsulate", "assets/uncapsulate.png", false, RIGHT_MENU_WIDTH + MENU_ITEM_SIZE*13 + MENU_ITEM_PADDING*19, 20);
+    new menuItem(menu, "MultiImageButton", "Open encapsulated", "assets/open_encapsulated.png", false, RIGHT_MENU_WIDTH + MENU_ITEM_SIZE*14 + MENU_ITEM_PADDING*20, 20);
     
     spacer = new ofxUISpacer(RIGHT_MENU_WIDTH + MENU_ITEM_SIZE*15 + MENU_ITEM_PADDING*21, 20, 1,MENU_ITEM_SIZE);
     menu->addWidget(spacer);
@@ -359,6 +359,8 @@ void ofApp::update() {
         if(glfwWindowShouldClose(windows->at(CONSOLE_WINDOW))){
             glfw->hideWindow(windows->at(CONSOLE_WINDOW));
             glfwSetWindowShouldClose(windows->at(CONSOLE_WINDOW), 0);
+            ((ofxUIImageToggle*)menu->getWidget("Console on/off"))->setValue(false);
+            showConsole = !showConsole;
         }
         
         // destroy encapsulated windows
