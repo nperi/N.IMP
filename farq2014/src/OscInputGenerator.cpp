@@ -16,6 +16,11 @@ OscInputGenerator::OscInputGenerator(string name_):ParamInputGenerator(name_,tru
 }
 
 //------------------------------------------------------------------
+void OscInputGenerator::removeNodeFromParams(int nodeID_) {
+    
+}
+
+//------------------------------------------------------------------
 /*bool OscInputGenerator::setupFromXML() {
     bool result = true;
     

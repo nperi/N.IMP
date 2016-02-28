@@ -25,6 +25,7 @@ class OscInputGenerator : public ParamInputGenerator{
     //bool setupFromXML();
     
     std::map<string,DTOscMap* >* oscMap;
+    void removeNodeFromParams(int nodeID_);
     
     bool loadSettings(ofxXmlSettings &XML);
     bool saveSettings(ofxXmlSettings &XML);

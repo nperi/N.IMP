@@ -28,7 +28,9 @@ public:
     Param* getNextInputMessage();
     void storeMessage(Param* p);
     void deleteAllMessages();
+    virtual void removeNodeFromParams(int nodeID_)=0;
     paramInputType getParamInputType() { return type; };
+    
     virtual void keyPressed (int key);
     
     virtual bool saveSettings(ofxXmlSettings &XML)=0;

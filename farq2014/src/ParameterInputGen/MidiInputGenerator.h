@@ -33,6 +33,7 @@ public:
 //    vector<std::map<int,vector<DTMidiMap*>* >*>* midiMaps;
 //    int activeMidiMap;
     map<int,vector<DTMidiMap*> > midiControlMaps;
+    void removeNodeFromParams(int nodeID_);
     
     bool loadSettings(ofxXmlSettings &XML, map<int, ImageOutput*> nodes_);
     bool saveSettings(ofxXmlSettings &XML);

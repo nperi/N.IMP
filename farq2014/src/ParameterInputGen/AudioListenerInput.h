@@ -31,6 +31,7 @@ public:
     
     int getNodeID(){ return nodeID; };
     vector<DTAudioMap*>* getAudioMap(){ return audioMap; };
+    virtual void removeNodeFromParams(int nodeID_){};
 
 protected:
     

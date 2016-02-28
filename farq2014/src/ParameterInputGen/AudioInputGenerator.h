@@ -30,6 +30,7 @@ public:
     
     bool addNewAudioMap(int band_, ImageOutput* node_, vector<string> params_);
     void clearAudioMap();
+    void removeNodeFromParams(int nodeID_);
     
     bool loadSettings(ofxXmlSettings &XML);
     bool saveSettings(ofxXmlSettings &XML);

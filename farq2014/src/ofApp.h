@@ -98,6 +98,7 @@ public:
     
     //xmlfile
     ofxXmlSettings XML;
+    string xmlFileName;
     
     //collections
     vector<InputSource*> inputs;

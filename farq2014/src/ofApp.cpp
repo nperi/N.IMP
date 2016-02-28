@@ -1083,6 +1083,11 @@ void ofApp::closePatch(int &_nID) {
                 i++;
             }
         }
+        else {
+            for(int i = 0; i < inputGenerators.size(); i++) {
+                inputGenerators[i]->removeNodeFromParams(_nID);
+            }
+        }
         
         bool found = false;
         i = 0;
@@ -1106,9 +1111,9 @@ void ofApp::closePatch(int &_nID) {
             }
         }
         else if (n->getNodeType() == MIXER) {
-            while (i < inputs.size() && !found) {
-                if (inputs[i]->getId() == _nID) {
-                    inputs.erase(inputs.begin() + i);
+            while (i < mixtables.size() && !found) {
+                if (mixtables[i]->getId() == _nID) {
+                    mixtables.erase(mixtables.begin() + i);
                     found = true;
                 }
                 i++;
@@ -1491,6 +1496,7 @@ bool ofApp::loadFromXML(){
             ((ofxUIMultiImageToggle*)right_menu->getWidget("Analizer"))->setValue(false);
         }
         initNode(audioAnalizer);
+        ((ofxUIMultiImageToggle*)right_menu->getWidget("Analizer"))->setValue(audioAnalizer->getDrawAudioAnalizer());
         nodeViewers[currentViewer]->addPatch(audioAnalizer, ofPoint(audioAnalizer->getLowestXCoord(),audioAnalizer->getHighestYCoord()));
     }
     
@@ -1503,21 +1509,35 @@ bool ofApp::loadFromXML(){
 bool ofApp::saveToXML() {
     
     ofxXmlSettings XML;
+    bool file = true;
     
-    // Open the settings file
+    // Open/create clean xml settings file
     //
-    if (XML.loadFile("appSettings.xml")){
+    file = XML.loadFile("appSettings.xml");
+    if (file) {
+        XML.clear();
+    } else {
+        file = XML.saveFile("appSettings.xml");
+        XML.loadFile("appSettings.xml");
+    }
+    
+    if (file){
         
+        XML.clear();
+        
+        XML.addTag("MAIN_SETTINGS");
         XML.pushTag("MAIN_SETTINGS");
         
         XML.setValue("link_type", nodeViewers[currentViewer]->getLinkType() );
         XML.setValue("total_nodes", nodeViewers[currentViewer]->getNodesCount() );
         XML.setValue("show_console", showConsole );
         
+        XML.addTag("SETTINGS");
         XML.pushTag("SETTINGS");
         
         // Save Inputs
         //
+        XML.addTag("INPUTS");
         XML.pushTag("INPUTS");
         audioAnalizer->saveSettings(XML);
         for (int i = 0; i < inputs.size(); i++) {
@@ -1528,6 +1548,7 @@ bool ofApp::saveToXML() {
         
         // Save Visual Layers
         //
+        XML.addTag("VISUAL_LAYERS");
         XML.pushTag("VISUAL_LAYERS");
         for (int vl = 0; vl < visualLayers.size(); vl++) {
             visualLayers[vl]->saveSettings(XML);
@@ -1537,6 +1558,7 @@ bool ofApp::saveToXML() {
         
         // Save Mixers
         //
+        XML.addTag("MIXERS");
         XML.pushTag("MIXERS");
         for (int m = 0; m < mixtables.size(); m++) {
             mixtables[m]->saveSettings(XML);
@@ -1545,15 +1567,13 @@ bool ofApp::saveToXML() {
         
         
         // Save Encapsulated Nodes
-        if(encapsulatedIds.size() == 0){
-            XML.clearTagContents("ENCAPSULATED_NODES");
-        }else{
-            XML.pushTag("ENCAPSULATED_NODES");
-            for(int e = 0; e < encapsulatedIds.size(); e++){
-                nodeViewers[currentViewer]->saveEncapsulatedSettings(XML, encapsulatedIds[e]);
-            }
-            XML.popTag();
+        //
+        XML.addTag("ENCAPSULATED_NODES");
+        XML.pushTag("ENCAPSULATED_NODES");
+        for(int e = 0; e < encapsulatedIds.size(); e++){
+            nodeViewers[currentViewer]->saveEncapsulatedSettings(XML, encapsulatedIds[e]);
         }
+        XML.popTag();
         
         
         XML.popTag(); // tag SETTINGS
@@ -1561,6 +1581,7 @@ bool ofApp::saveToXML() {
         
         // Save Node Views
         //
+        XML.addTag("NODE_VIEWS");
         XML.pushTag("NODE_VIEWS");
         for (int nv = 0; nv < nodeViewers.size(); nv++) {
             nodeViewers[nv]->saveSettings(XML);
@@ -1570,6 +1591,7 @@ bool ofApp::saveToXML() {
         
         // Save Param Input Generators
         //
+        XML.addTag("PARAM_INPUT_GENERATORS");
         XML.pushTag("PARAM_INPUT_GENERATORS");
         for (int ig = 0; ig < inputGenerators.size(); ig++) {
             inputGenerators[ig]->saveSettings(XML);
@@ -1579,20 +1601,29 @@ bool ofApp::saveToXML() {
         
         // Save Syphon Servers
         //
+        XML.addTag("SYPHON_SERVERS");
         XML.pushTag("SYPHON_SERVERS");
         for (int ss = 0; ss < syphonServers.size(); ss++) {
             syphonServers[ss]->saveSettings(XML);
         }
         XML.popTag(); // tag SYPHON_SERVERS
         
+        
         XML.popTag(); // tag MAIN_SETTINGS
         
         if (XML.saveFile()) {
             ofLog(OF_LOG_NOTICE, "Settings saved succesfully");
+            console->pushSuccess("Settings saved succesfully");
         }
-        else ofLog(OF_LOG_ERROR, "Couldn't save settings. An error occurred");
+        else {
+            ofLog(OF_LOG_ERROR, "Couldn't save settings. An error occurred");
+            console->pushError("Couldn't save settings. An error occurred");
+        }
     }
-    else ofLog(OF_LOG_ERROR, "Couldn't load the .xml file. The file appSettings.xml was not found");
+    else {
+        ofLog(OF_LOG_ERROR, "Couldn't load the .xml file. The file appSettings.xml was not found");
+        console->pushError("Couldn't load the .xml file. The file appSettings.xml was not found");
+    }
 }
 
 //------------------------------------------------------------------

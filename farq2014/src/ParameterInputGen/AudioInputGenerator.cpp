@@ -97,6 +97,16 @@ bool AudioInputGenerator::addNewAudioMap(int band_, ImageOutput* node_, vector<s
 }
 
 //------------------------------------------------------------------
+void AudioInputGenerator::removeNodeFromParams(int nodeID_) {
+    
+    for (int i = 0; i < audioMap->size(); i++) {
+        if (audioMap->at(i)->nodeId == nodeID_) {
+            audioMap->erase(audioMap->begin() + i);
+        }
+    }
+}
+
+//------------------------------------------------------------------
 void AudioInputGenerator::clearAudioMap() {
     audioMap->clear();
 }

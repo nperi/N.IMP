@@ -218,7 +218,6 @@ bool NodeViewer::saveSettings(ofxXmlSettings &XML) {
                 }
             }
             
-            XML.popTag();
             break;
         }
         else if (i >= totalNodes-1) {
@@ -235,5 +234,7 @@ bool NodeViewer::saveSettings(ofxXmlSettings &XML) {
                 XML.addAttribute("NODE", "name", elements[e]->getImageOutput()->getName(), lastPlace);
             }
         }
+        
+        XML.popTag();
     }
 }

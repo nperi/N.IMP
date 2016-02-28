@@ -136,7 +136,8 @@ bool AudioAnalizer::saveSettings(ofxXmlSettings &XML) {
             
             // Position of the texture coorners
             //
-            if (XML.pushTag("texture")){
+            saved = XML.pushTag("texture");
+            if (saved) {
                 for(int i = 0; i < 4; i++){
                     XML.setValue("point:x",textureCorners[i].x, i);
                     XML.setValue("point:y",textureCorners[i].y, i);
@@ -164,17 +165,19 @@ bool AudioAnalizer::saveSettings(ofxXmlSettings &XML) {
             XML.addAttribute("NODE", "type", "AUDIO_ANALIZER", lastPlace);
             XML.setAttribute("NODE", "threshold", threshold, lastPlace);
             
-            if (XML.pushTag("NODE", lastPlace)){
+            saved = XML.pushTag("NODE", lastPlace);
+            if (saved){
             
                 XML.addTag("visible");
                 XML.setValue("visible", bVisible);
-                XML.addTag("threshold");
-                XML.setValue("threshold", threshold);
+                XML.addTag("active");
+                XML.setValue("active", drawAudioAnalizer);
                 
                 // Texture Corners
                 //
                 XML.addTag("texture");
-                if (XML.pushTag("texture")){
+                saved = XML.pushTag("texture");
+                if (saved){
                     for(int i = 0; i < 4; i++){
                         
                         XML.addTag("point");
@@ -190,7 +193,7 @@ bool AudioAnalizer::saveSettings(ofxXmlSettings &XML) {
         }
     }
     
-    return XML.saveFile();
+    return saved;
     
 }
 
