@@ -209,6 +209,11 @@ void ofApp::setup() {
         for(int i=0; i<inputGenerators.size(); i++){
             inputGenerators[i]->start();
         }
+        
+        //*** SYPHON INPUT SERVER ***//
+        //
+        SyphonClientHandler::getInstance();
+        
     }
     
     //*** CONSOLE LOGGER ***//
@@ -1019,6 +1024,10 @@ void ofApp::createNode(textInputEvent &args){
         newPatch = new VideoPlayerMac();
         ((VideoPlayerMac*)newPatch)->loadVideo(args.path);
         inputs.push_back((VideoPlayerMac*)newPatch);
+    }
+    else if (args.type == "syphon server"){
+        newPatch = SyphonClientHandler::getInstance()->createSyphonPatch();
+        inputs.push_back((InputSyphon*)newPatch);
     }
     
     if (newPatch && !exist) {

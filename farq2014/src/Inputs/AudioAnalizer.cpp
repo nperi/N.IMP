@@ -7,6 +7,7 @@
 //
 
 #include "AudioAnalizer.h"
+#include "EventHandler.h"
 
 AudioAnalizer::AudioAnalizer(string name_, int id_) : InputSource(name_, "Audio Analizer", id_){
     
@@ -51,12 +52,14 @@ void AudioAnalizer::customDraw(){
 
     if(drawAudioAnalizer && (bEditMode || bVisible)) {
         ofxPatch::customDraw();
-        ofPushStyle();
-        ofPushMatrix();
-        ofTranslate(textureCorners[0]);
-        filterBank.draw(textureCorners[1].x - textureCorners[0].x,textureCorners[2].y - textureCorners[0].y);
-        ofPopMatrix();
-        ofPopStyle();
+        if (EventHandler::getInstance()->getWindowIdDraw() == windowId) {
+            ofPushStyle();
+            ofPushMatrix();
+            ofTranslate(textureCorners[0]);
+            filterBank.draw(textureCorners[1].x - textureCorners[0].x,textureCorners[2].y - textureCorners[0].y);
+            ofPopMatrix();
+            ofPopStyle();
+        }
     }
 }
 
