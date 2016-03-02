@@ -7,6 +7,7 @@
 //
 
 #include "AudioIn.h"
+#include "EventHandler.h"
 
 AudioIn::AudioIn(ofxUISuperCanvas* &gui_, float* &inputBuffer_, string type_, string name_, int id_) : InputSource(name_, type_, id_){
     
@@ -57,13 +58,12 @@ void AudioIn::update() {
 void AudioIn::customDraw(){
     
     if ( bEditMode || bVisible ) {
-        
         ofxPatch::customDraw();
-        
-        waveform->drawBack();
-        waveform->drawFill();
+        if (EventHandler::getInstance()->getWindowIdDraw() == windowId) {
+            waveform->drawBack();
+            waveform->drawFill();
+        }
     }
-    
 }
 
 //------------------------------------------------------------------

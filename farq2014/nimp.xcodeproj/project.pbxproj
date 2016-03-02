@@ -7,10 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0A1297311C7FCEDD00A9D6D4 /* AudioAnalizer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A12972F1C7FCEDD00A9D6D4 /* AudioAnalizer.cpp */; settings = {ASSET_TAGS = (); }; };
-		0A1297501C7FF42A00A9D6D4 /* fb_funcs.c in Sources */ = {isa = PBXBuildFile; fileRef = 0A1297481C7FF42A00A9D6D4 /* fb_funcs.c */; settings = {ASSET_TAGS = (); }; };
-		0A1297511C7FF42A00A9D6D4 /* ofxFilterbank.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A12974A1C7FF42A00A9D6D4 /* ofxFilterbank.cpp */; settings = {ASSET_TAGS = (); }; };
-		0A1D5D3A1C6F5EDF003CE2C5 /* AudioIn.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A1D5D381C6F5EDF003CE2C5 /* AudioIn.cpp */; settings = {ASSET_TAGS = (); }; };
+		0A1297311C7FCEDD00A9D6D4 /* AudioAnalizer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A12972F1C7FCEDD00A9D6D4 /* AudioAnalizer.cpp */; };
+		0A1297501C7FF42A00A9D6D4 /* fb_funcs.c in Sources */ = {isa = PBXBuildFile; fileRef = 0A1297481C7FF42A00A9D6D4 /* fb_funcs.c */; };
+		0A1297511C7FF42A00A9D6D4 /* ofxFilterbank.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A12974A1C7FF42A00A9D6D4 /* ofxFilterbank.cpp */; };
+		0A1D5D3A1C6F5EDF003CE2C5 /* AudioIn.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A1D5D381C6F5EDF003CE2C5 /* AudioIn.cpp */; };
 		0A49EF451C18A3BF00346EB5 /* ofxBasePatch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A49EF0D1C18A3BF00346EB5 /* ofxBasePatch.cpp */; };
 		0A49EF461C18A3BF00346EB5 /* ofxComposer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A49EF0F1C18A3BF00346EB5 /* ofxComposer.cpp */; };
 		0A49EF471C18A3BF00346EB5 /* ofxPatch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A49EF111C18A3BF00346EB5 /* ofxPatch.cpp */; };
@@ -69,8 +69,8 @@
 		0A51BA831C11058E000AC121 /* scrollBar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A51BA7A1C11058E000AC121 /* scrollBar.cpp */; };
 		0A51BA841C11058E000AC121 /* textInput.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A51BA7C1C11058E000AC121 /* textInput.cpp */; };
 		0A51BA851C110902000AC121 /* ofxUIEventArgs.h in Sources */ = {isa = PBXBuildFile; fileRef = 0A51B7ED1C0FE42B000AC121 /* ofxUIEventArgs.h */; };
-		0A5A8E4C1C72CEB70067822B /* HapSupport.c in Sources */ = {isa = PBXBuildFile; fileRef = 0A5A8E421C72CEB60067822B /* HapSupport.c */; settings = {ASSET_TAGS = (); }; };
-		0A5A8E4E1C72CEB70067822B /* ofxHapPlayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A5A8E471C72CEB60067822B /* ofxHapPlayer.cpp */; settings = {ASSET_TAGS = (); }; };
+		0A5A8E4C1C72CEB70067822B /* HapSupport.c in Sources */ = {isa = PBXBuildFile; fileRef = 0A5A8E421C72CEB60067822B /* HapSupport.c */; };
+		0A5A8E4E1C72CEB70067822B /* ofxHapPlayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A5A8E471C72CEB60067822B /* ofxHapPlayer.cpp */; };
 		0A75F5C01C583AA800481F86 /* ofxBaseGui.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A75F5AE1C583AA800481F86 /* ofxBaseGui.cpp */; };
 		0A75F5C11C583AA800481F86 /* ofxButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A75F5B01C583AA800481F86 /* ofxButton.cpp */; };
 		0A75F5C21C583AA800481F86 /* ofxGuiGroup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A75F5B31C583AA800481F86 /* ofxGuiGroup.cpp */; };
@@ -114,6 +114,8 @@
 		4990BDDF1C3CE0DA002710AF /* ConsoleLog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4990BDDB1C3CE0DA002710AF /* ConsoleLog.cpp */; };
 		4990BDE01C3CE0DA002710AF /* ConsoleScrollBar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4990BDDD1C3CE0DA002710AF /* ConsoleScrollBar.cpp */; };
 		4990BDE61C3CE143002710AF /* EventHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4990BDE41C3CE143002710AF /* EventHandler.cpp */; };
+		499753601C8547E4007A2626 /* SyphonClientHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4997535E1C8547E4007A2626 /* SyphonClientHandler.cpp */; };
+		49F3C5BF1C82963900EFD15D /* InputSyphon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 49F3C5BB1C82963900EFD15D /* InputSyphon.cpp */; };
 		5CC34D433F5806179935B89D /* Flow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03A75A648BC4CF1D9DEDD0CE /* Flow.cpp */; };
 		6AABAB39E82AF5CFEA23A205 /* ContourFinder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5FBB4A8427353AED09174BE5 /* ContourFinder.cpp */; };
 		6B0E60EB1A2FCA84006AE261 /* GlitchLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6B0E60E91A2FCA84006AE261 /* GlitchLayer.cpp */; };
@@ -482,6 +484,10 @@
 		4990BDDE1C3CE0DA002710AF /* ConsoleScrollBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ConsoleScrollBar.h; path = Console/ConsoleScrollBar.h; sourceTree = "<group>"; };
 		4990BDE41C3CE143002710AF /* EventHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EventHandler.cpp; sourceTree = "<group>"; };
 		4990BDE51C3CE143002710AF /* EventHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventHandler.h; sourceTree = "<group>"; };
+		4997535E1C8547E4007A2626 /* SyphonClientHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SyphonClientHandler.cpp; sourceTree = "<group>"; };
+		4997535F1C8547E4007A2626 /* SyphonClientHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SyphonClientHandler.h; sourceTree = "<group>"; };
+		49F3C5BB1C82963900EFD15D /* InputSyphon.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = InputSyphon.cpp; sourceTree = "<group>"; };
+		49F3C5BC1C82963900EFD15D /* InputSyphon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InputSyphon.h; sourceTree = "<group>"; };
 		58140E0F92D37844E9C8883D /* Calibration.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = Calibration.h; path = ../../../addons/ofxCv/libs/ofxCv/include/ofxCv/Calibration.h; sourceTree = SOURCE_ROOT; };
 		5CBF6AED6A17AC0C17F63CC4 /* RunningBackground.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = RunningBackground.cpp; path = ../../../addons/ofxCv/libs/ofxCv/src/RunningBackground.cpp; sourceTree = SOURCE_ROOT; };
 		5FBB4A8427353AED09174BE5 /* ContourFinder.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = ContourFinder.cpp; path = ../../../addons/ofxCv/libs/ofxCv/src/ContourFinder.cpp; sourceTree = SOURCE_ROOT; };
@@ -1595,12 +1601,16 @@
 				D309EB7D1A2E94AD008B3D94 /* InputSource.h */,
 				D309EB8A1A2E9B27008B3D94 /* InputCamera.cpp */,
 				D309EB8B1A2E9B27008B3D94 /* InputCamera.h */,
+				49F3C5BB1C82963900EFD15D /* InputSyphon.cpp */,
+				49F3C5BC1C82963900EFD15D /* InputSyphon.h */,
 				D318E8491A2F8C46000A2046 /* VideoPlayerMac.cpp */,
 				D318E84A1A2F8C46000A2046 /* VideoPlayerMac.h */,
 				D3A2270B1A37243F005DD5AF /* ParticleGenerator.cpp */,
 				D3A2270C1A37243F005DD5AF /* ParticleGenerator.h */,
 				0AE1F57D1C4DAC2100A3B168 /* ImageInputList.cpp */,
 				D3A227531A3B57A9005DD5AF /* ImageInputList.h */,
+				4997535E1C8547E4007A2626 /* SyphonClientHandler.cpp */,
+				4997535F1C8547E4007A2626 /* SyphonClientHandler.h */,
 				D34EC3F31A65CB5200F0EFAE /* VideoPool.cpp */,
 				D34EC3F41A65CB5200F0EFAE /* VideoPool.h */,
 			);
@@ -2005,6 +2015,7 @@
 				0A51BA1E1C1103F7000AC121 /* AnalogIn.cpp in Sources */,
 				0A51B85B1C0FE42B000AC121 /* ofxUITextArea.cpp in Sources */,
 				0AFFF7931C2F0E3F0034AE53 /* SSAOPass.cpp in Sources */,
+				49F3C5BF1C82963900EFD15D /* InputSyphon.cpp in Sources */,
 				6B36ECAC1A34EA0B0019915B /* ofxJpegGlitch.cpp in Sources */,
 				D34E96501A3FA2850089BFE4 /* ofxOscBundle.cpp in Sources */,
 				6B36ECA91A3219280019915B /* ofxXmlSettings.cpp in Sources */,
@@ -2094,6 +2105,7 @@
 				0A51B8621C0FE42B000AC121 /* ofxUIWidgetWithLabel.cpp in Sources */,
 				D34E96511A3FA2850089BFE4 /* ofxOscMessage.cpp in Sources */,
 				0A49EF491C18A3BF00346EB5 /* ofxTitleBar.cpp in Sources */,
+				499753601C8547E4007A2626 /* SyphonClientHandler.cpp in Sources */,
 				4990BDE61C3CE143002710AF /* EventHandler.cpp in Sources */,
 				D318E84B1A2F8C46000A2046 /* VideoPlayerMac.cpp in Sources */,
 				D34E964D1A3FA2850089BFE4 /* OscPrintReceivedElements.cpp in Sources */,

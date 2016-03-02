@@ -169,11 +169,9 @@ void ofApp::setup() {
     gui->setDraggable(false);
     
     
-    //*** SYPHON SERVERS SETUP ***//
+    //*** SYPHON INPUT SERVER ***//
     //
-    for(int i=0; i<syphonServers.size();i++){
-        syphonServers[i]->setup();
-    }
+    SyphonClientHandler::getInstance();
     
     
     //*** NODE VIEWR SETUP (COMPOSER) ***//
@@ -1001,6 +999,10 @@ void ofApp::createNode(textInputEvent &args){
         ((VideoPlayerMac*)newPatch)->loadVideo(args.path);
         inputs.push_back((VideoPlayerMac*)newPatch);
     }
+    else if (args.type == "syphon server"){
+        newPatch = SyphonClientHandler::getInstance()->createSyphonPatch();
+        inputs.push_back((InputSyphon*)newPatch);
+    }
     else {
         for(vector<string>::iterator it = midiIn.getPortList().begin(); it != midiIn.getPortList().end(); it++ ){
             if (args.type == it->data()) {
@@ -1553,6 +1555,12 @@ bool ofApp::loadFromXML(){
         //
         for(int i=0; i<inputGenerators.size(); i++){
             inputGenerators[i]->start();
+        }
+        
+        //*** starting syphon servers  ***//
+        //
+        for(int i=0; i<syphonServers.size();i++){
+            syphonServers[i]->setup();
         }
     }
     

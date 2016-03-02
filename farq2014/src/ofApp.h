@@ -52,6 +52,8 @@
 #include "ConsoleLog.h"
 #include "EventHandler.h"
 //#include "AudioInEvent.h"
+#include "InputSyphon.h"
+#include "SyphonClientHandler.h"
 
 //enum InputType {VIDEO, CAM, IMAGE, PARTICLE};
 //enum VisualLayerType {IKEDA, GLITCH_1, GLITCH_2,IMAGE_PROCESSOR};
@@ -190,4 +192,5 @@ public:
     AudioIn* leftAudioPatch;
     AudioIn* rightAudioPatch;
     AudioAnalizer* audioAnalizer;
+    
 };
