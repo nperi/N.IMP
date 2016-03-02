@@ -17,6 +17,13 @@ AudioInputGenerator::AudioInputGenerator(string name_, int nodeID_):AudioListene
     bufferCounter = 0;
 }
 
+AudioInputGenerator::~AudioInputGenerator(){
+    
+    delete audioMap;
+    audioMap->clear();
+    audioMap = NULL;
+}
+
 //------------------------------------------------------------------
 void AudioInputGenerator::processInput(){
     

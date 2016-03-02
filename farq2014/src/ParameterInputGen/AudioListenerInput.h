@@ -24,6 +24,7 @@ class AudioListenerInput: public ParamInputGenerator {
 public:
     
     AudioListenerInput(string name_, int nodeID_);
+    ~AudioListenerInput();
     void processInput();
     //bool setupFromXML();
     bool fillNewData(float* left_, float* right_, int bufferLen_);

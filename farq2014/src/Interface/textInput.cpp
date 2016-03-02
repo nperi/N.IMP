@@ -23,11 +23,14 @@ textInput::textInput(string _name, string _textstring, float w, float h, float x
     nodes.push_back("ikeda");
     nodes.push_back("image");
     nodes.push_back("image processor");
+    nodes.push_back("midi device");
     nodes.push_back("mix mask");
     nodes.push_back("mix simple blend");
     nodes.push_back("multi channel switch");
     nodes.push_back("particle generator");
     nodes.push_back("video player");
+    
+    midiList = NULL;
 }
 
 //------------------------------------------------------------------
@@ -68,6 +71,11 @@ bool textInput::mouseDragged(ofMouseEventArgs &e) {
         if ((this->draggable) and (this->hit)) {
             this->dropdownList->getRect()->setX(e.x - hitPoint.x);
             this->dropdownList->getRect()->setY(e.y - hitPoint.y);
+            
+            if (midiList) {
+                this->midiList->getRect()->setX(e.x - hitPoint.x);
+                this->midiList->getRect()->setY(e.y - hitPoint.y);
+            }
         }
     }
     return this->hit;
@@ -78,11 +86,25 @@ bool textInput::mouseReleased(ofMouseEventArgs &e) {
     
     if (hit) {
         
-        if (isFocused())
-            this->dropdownList->setVisible(true);
+        if (isFocused()) {
+            
+            if (getTextString() != "midi device") {
+                this->dropdownList->setVisible(true);
+            }
+            else if (midiList != NULL){
+                this->midiList->setVisible(true);
+            }
+        }
         else {
             dropdownList->clearSelected();
-            this->dropdownList->setVisible(false);
+            if (getTextString() != "midi device") {
+                this->dropdownList->setVisible(false);
+            }
+            else if (midiList != NULL) {
+                
+                this->midiList->setVisible(false);
+                midiList->clearSelected();
+            }
         }
     }
     return ofxUITextInput::mouseReleased(e);
@@ -101,7 +123,25 @@ void textInput::guiEvent(ofxUIEventArgs &e){
         
         ofFileDialogResult openFileResult;
         
-        if (e.type == "video player") {
+        if (e.type == "midi device") {
+            
+            if(midiList == NULL) {
+                midiList = new ofxUIDropDownList("", midiIn->getPortList(), 210, this->getRect()->x, this->getRect()->y);
+                this->getCanvasParent()->addWidget(midiList);
+                midiList->open();
+                midiList->setAutoClose(true);
+                this->addEmbeddedWidget(midiList);
+                
+                ofAddListener(((ofxUISuperCanvas*) midiList->getCanvasParent())->newGUIEvent,this,&textInput::guiMidiEvent);
+            }
+            else {
+                midiList->clearToggles();
+                midiList->addToggles(midiIn->getPortList());
+            }
+            midiList->setVisible(true);
+            
+        }
+        else if (e.type == "video player") {
         
             openFileResult = ofSystemLoadDialog("Select one video (.mov, .mpg, .mp4 or .m4v)");
             
@@ -124,6 +164,7 @@ void textInput::guiEvent(ofxUIEventArgs &e){
                     else return;
                 }
                 file.close();
+                ofNotifyEvent(createNode, e , this);
             }
             else {
                 dropdownList->clearSelected();
@@ -155,80 +196,31 @@ void textInput::guiEvent(ofxUIEventArgs &e){
                     else return;
                 }
                 file.close();
+                ofNotifyEvent(createNode, e , this);
             }
             else {
                 dropdownList->clearSelected();
                 return;
             }
         }
+        else {
+            ofNotifyEvent(createNode, e , this);
+        }
+    }
+}
 
-        
-        
-        
-//        if (e.type == "camera") {
-//            
-//            e.type = "ofVideoGrabber";
-//        }
-
-//        else if (e.type == "shader") {
-//            
-//            e.type = "ofShader";
-//            
-//            openFileResult = ofSystemLoadDialog("Select a shader (.fs or .frag)");
-//            
-//            if (openFileResult.bSuccess){
-//                
-//                ofFile file (openFileResult.getPath());
-//                
-//                if (file.exists()){
-//                    
-//                    string fileExtension = ofToUpper(file.getExtension());
-//                    
-//                    //We only want videos
-//                    if (fileExtension == "FRAG" ||
-//                        fileExtension == "FS"   ) {
-//                        e.path = openFileResult.getPath();
-//                    }
-//                    else return;
-//                }
-//                file.close();
-//            }
-//            else {
-//                dropdownList->clearSelected();
-//                return;
-//            }
-//        }
-//        else if (e.type == "texture") {
-//            
-//            e.type = "ofTexture";
-//            
-//            openFileResult = ofSystemLoadDialog("Select a texture (.lut or .cube)");
-//            
-//            if (openFileResult.bSuccess){
-//                
-//                ofFile file (openFileResult.getPath());
-//                
-//                if (file.exists()){
-//                    
-//                    string fileExtension = ofToUpper(file.getExtension());
-//                    
-//                    //We only want videos
-//                    if (fileExtension == "LUT"  ||
-//                        fileExtension == "CUBE" ) {
-//                        e.path = openFileResult.getPath();
-//                    }
-//                    else return;
-//                }
-//                file.close();
-//            }
-//            else {
-//                dropdownList->clearSelected();
-//                return;
-//            }
-//        }
+//------------------------------------------------------------------
+void textInput::guiMidiEvent(ofxUIEventArgs &e){
     
+    if(e.widget == this->midiList && this->midiList->getSelected().size()) {
+        this->setTextString(this->midiList->getSelected()[0]->getName());
+        
+        textInputEvent e;
+        e.point.set(this->getRect()->getX(), this->getRect()->getY());
+        e.widget = this;
+        e.type = this->midiList->getSelected()[0]->getName();
+
         ofNotifyEvent(createNode, e , this);
-    
     }
 }
 
@@ -249,6 +241,8 @@ void textInput::setDropdownList(ofxUIDropDownList* dl) {
     this->dropdownList = dl;
     
     ofAddListener(((ofxUISuperCanvas*) dl->getCanvasParent())->newGUIEvent,this,&textInput::guiEvent);
+    
+    
 }
 
 //------------------------------------------------------------------

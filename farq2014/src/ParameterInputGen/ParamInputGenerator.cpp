@@ -17,7 +17,7 @@ ParamInputGenerator::ParamInputGenerator(string name_, bool isThreaded_){
 }
 
 ParamInputGenerator::~ParamInputGenerator(){
-    
+    stop();
 }
 
 void ParamInputGenerator::setup(){

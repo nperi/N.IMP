@@ -24,6 +24,7 @@ class AudioInputGenerator: public AudioListenerInput {
 public:
     
     AudioInputGenerator(string name_, int nodeID_);
+    ~AudioInputGenerator();
     void processInput();
     //bool setupFromXML();
     void setChannel(int c) { channel = c; };

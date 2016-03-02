@@ -14,6 +14,11 @@ NodeViewer::NodeViewer(string name_) : ofxComposer() {
 }
 
 //------------------------------------------------------------------
+NodeViewer::~NodeViewer() {
+
+}
+
+//------------------------------------------------------------------
 void NodeViewer::setup() {
 	
 }
@@ -179,6 +184,16 @@ void NodeViewer::setupGuiPositions(){
     for (int i=0; i<elements.size(); ++i) {
         elements[i]->setupGuiPositions();
     }
+}
+
+//------------------------------------------------------------------
+void NodeViewer::deleteEverything() {
+
+    for (int i=0; i<elements.size(); ++i) {
+        delete elements[i];
+        elements[i] = NULL;
+    }
+    elements.clear();
 }
 
 //------------------------------------------------------------------

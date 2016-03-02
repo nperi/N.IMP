@@ -17,6 +17,7 @@
 #include "OscInputGenerator.h"
 
 #include "MidiInputGenerator.h"
+#include "ofxMidiIn.h"
 
 #include "AudioAnalizer.h"
 #include "AudioIn.h"
@@ -76,6 +77,7 @@ public:
     void dragEvent(ofDragInfo dragInfo);
     void menuEvent(ofxUIEventArgs &e);
     void windowResized(int w, int h);
+    void audioIn(float * input, int bufferSize, int nChannels);
     
     //other functions
     void createNodeInput(float _x = ofGetMouseX(), float _y = ofGetMouseY());
@@ -89,7 +91,8 @@ public:
     bool loadFromXML();
     bool saveToXML();
     bool loadNodes(ofxXmlSettings &XML);
-    void audioIn(float * input, int bufferSize, int nChannels);
+    void deleteEverything();
+    
     
     //change current viewer
     void nextViewer();
@@ -179,6 +182,7 @@ public:
     
     // MIDI learn
     bool midiLearnActive;
+    ofxMidiIn midiIn;
     
     // Audio In
     bool editLeftAudioInActive;

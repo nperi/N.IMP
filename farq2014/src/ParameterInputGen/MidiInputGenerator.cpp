@@ -16,10 +16,28 @@ MidiInputGenerator::MidiInputGenerator(string name_, string midiDeviceName_):Par
 }
 
 //------------------------------------------------------------------
+MidiInputGenerator::~MidiInputGenerator() {
+    
+    midiIn->closePort();
+    midiIn->removeListener(this);
+}
+
+//------------------------------------------------------------------
 void MidiInputGenerator::processInput(){
     
-    
 }
+
+//------------------------------------------------------------------
+void MidiInputGenerator::setMidiIn(ofxMidiIn* midiIn_) {
+    
+    midiIn = midiIn_;
+    
+    midiIn->openPort(midiDeviceName);
+    midiIn->ignoreTypes(false, false, false);
+    // add this class as a listener
+    midiIn->addListener(this);
+}
+
 //------------------------------------------------------------------
 void MidiInputGenerator::newMidiMessage(ofxMidiMessage& msg){
     
@@ -138,11 +156,6 @@ bool MidiInputGenerator::loadSettings(ofxXmlSettings &XML, map<int, ImageOutput*
         
         XML.popTag();
     }
-    
-    midiIn.openPort(midiDeviceName);
-    midiIn.ignoreTypes(false, false, false);
-    // add this class as a listener
-    midiIn.addListener(this);
     
     return result;
 }

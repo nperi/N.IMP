@@ -39,7 +39,8 @@ void ofApp::setup() {
     //*** MAIN SETUP ***//
     //
     ofSetFrameRate(30);
-    loadingOK              = false;
+    xmlFileName            = "Untitle.xml";
+    loadingOK              = true;
     isFullScreen           = false;
     midiLearnActive        = false;
     editLeftAudioInActive  = false;
@@ -47,9 +48,7 @@ void ofApp::setup() {
     rightAudioPatch        = NULL;
     leftAudioPatch         = NULL;
     audioAnalizer          = NULL;
-    
-    console = ConsoleLog::getInstance();
-    ofSetLogLevel(OF_LOG_ERROR);
+    currentViewer          = 0;
     
     //populating string dictionaries for simple comparison used in LoadFromXML
     inputTypes.insert(std::pair<string,InputType>("AUDIO_ANALIZER",AUDIO_ANALIZER));
@@ -71,11 +70,6 @@ void ofApp::setup() {
     inputGenTypes.insert(std::pair<string,paramInputType>("OSC", OSC));
     
     
-    //*** TRACKPAD SETUP ***//
-    //
-    pad = ofxMultiTouchPad();
-    
-    
     //*** CAMERA SETUP ***//
     //
     cam.setDistance(600);
@@ -84,6 +78,22 @@ void ofApp::setup() {
     cam.setVFlip(true);
     scale = 1.f;
     
+    
+    //*** TRACKPAD SETUP ***//
+    //
+    pad = ofxMultiTouchPad();
+    
+    
+    //*** CONSOLE LOGGER ***//
+    //
+    console = ConsoleLog::getInstance();
+    glfw->setWindow(windows->at(CONSOLE_WINDOW));
+    console->setupScrollBar(&pad);
+    ofSetLogLevel(OF_LOG_ERROR);
+    glfw->iconify(!showConsole);
+    glfw->setWindow(windows->at(MAIN_WINDOW));
+    
+
     //*** TOP MENU ***//
     //
     menu = new ofxUISuperCanvas("menu", 0, MENU_TOP_PADDING, ofGetWidth(), MENU_HEIGHT);
@@ -147,7 +157,7 @@ void ofApp::setup() {
     
     new menuItem(right_menu, "MultiImageButton", "Zoom In", "assets/zoom_in.png", false, 3, right_menu->getRect()->getHeight()-30);
     new menuItem(right_menu, "MultiImageButton", "Zoom Out", "assets/zoom_out.png", false, 3, right_menu->getRect()->getHeight()-60);
-    new menuItem(right_menu, "MultiImageToggle", "Analizer", "assets/analizer.png", true, 3, right_menu->getRect()->getHeight()-100);
+    new menuItem(right_menu, "MultiImageToggle", "Analizer", "assets/analizer.png", false, 3, right_menu->getRect()->getHeight()-100);
     
     ofAddListener(right_menu->newGUIEvent,this,&ofApp::menuEvent);
     
@@ -157,67 +167,34 @@ void ofApp::setup() {
     gui = new ofxUISuperCanvas("", RIGHT_MENU_WIDTH, MENU_HEIGHT + MENU_TOP_PADDING, ofGetWidth() - RIGHT_MENU_WIDTH, ofGetHeight() - (MENU_HEIGHT +MENU_TOP_PADDING));
     gui->setColorBack(ofxUIColor(255,255,255,0));
     gui->setDraggable(false);
-
     
-    //*** LOADING NODES FROM XML ***//
+    
+    //*** SYPHON SERVERS SETUP ***//
     //
-    ofDrawBitmapString("LOADING XML ...", 50, 50);
-    loadingOK = loadFromXML();
-    
-    if(loadingOK){
-        
-        ConsoleLog::getInstance()->pushMessage("All nodes loaded correctly.");
-        
-        //TODO: change mixtable assignment.
-        //  ofAddListener(mixtables[0]->textureEvent, this, &ofApp::updateSyphon);
-        
-        //*** invoking input generators setup functions  ***//
-        //
-        for(int i=0; i<inputGenerators.size(); i++){
-            inputGenerators[i]->setup();
-        }
-        
-        //*** invoking nodes setup functions and setting main canvas and camera  ***//
-        //
-        for (int i=0; i<nodesVector.size(); ++i) {
-            initNode(nodesVector[i]);
-        }
-        
-        //*** SYPHON SERVERS SETUP ***//
-        //
-        for(int i=0; i<syphonServers.size();i++){
-            syphonServers[i]->setup();
-        }
-        
-        //*** NODE VIEWR SETUP (COMPOSER) ***//
-        //
-        setCurrentViewer(0);
-        nodeViewers[currentViewer]->setParent(cam);
-        gui->setMainComposer(nodeViewers[currentViewer]);
-        
-        //*** SCROLL BAR SETUP ***//
-        //
-        this->scrollBars = new scrollBar(nodeViewers[currentViewer], &this->pad, &cam, SCROLL_BAR_EVENT_PRIORITY);
-        scrollBars->setup();
-        
-        //*** AUDIO SETUP ***//
-        //
-        setupAudio();
-        
-        //*** starting input generators theads (the not threadeds will not start)  ***//
-        //
-        for(int i=0; i<inputGenerators.size(); i++){
-            inputGenerators[i]->start();
-        }
+    for(int i=0; i<syphonServers.size();i++){
+        syphonServers[i]->setup();
     }
     
-    //*** CONSOLE LOGGER ***//
-    //
-    glfw->setWindow(windows->at(CONSOLE_WINDOW));
-    console->setupScrollBar(&pad);
-    glfw->iconify(!showConsole);
     
-    glfw->setWindow(windows->at(MAIN_WINDOW));
+    //*** NODE VIEWR SETUP (COMPOSER) ***//
+    //
+    NodeViewer* nV = new NodeViewer(xmlFileName);
+    nV->setNodesCount(1);
+    nV->setParent(cam);
+    gui->setMainComposer(nV);
+    setCurrentViewer(0);
+    nodeViewers.push_back(nV);
+    
+    
+    //*** SCROLL BAR SETUP ***//
+    //
+    this->scrollBars = new scrollBar(nodeViewers[currentViewer], &this->pad, &cam, SCROLL_BAR_EVENT_PRIORITY);
+    scrollBars->setup();
+    
+    
+    //*** AUDIO SETUP ***//
+    //
+    setupAudio();
   }
 
 //------------------------------------------------------------------
@@ -225,15 +202,18 @@ void ofApp::setupAudio(){
     
     bufferCounter	= 0;
    
-    // 0 output channels,
-    // 2 input channels
-    // 44100 samples per second
-    // BUFFER_SIZE samples per buffer
-    // 4 num buffers (latency)
-    
-    ofSoundStreamSetup(0, 2, this, 44100, BUFFER_SIZE, 4);
     left = new float[BUFFER_SIZE];
     right = new float[BUFFER_SIZE];
+    
+    // creating audio analizer
+    //
+    if (audioAnalizer == NULL) {
+        audioAnalizer = new AudioAnalizer();
+        audioAnalizer->setDrawAudioAnalizer(false);
+        ((ofxUIMultiImageToggle*)right_menu->getWidget("Analizer"))->setValue(false);
+        initNode(audioAnalizer);
+        nodeViewers[currentViewer]->addPatch(audioAnalizer, ofPoint((ofGetWidth()/2)-100, (ofGetHeight()/2)-50));
+    }
     
     if (leftAudioPatch != NULL) {
         leftAudioPatch->getWaveForm()->setBuffer(left);
@@ -258,6 +238,13 @@ void ofApp::setupAudio(){
         }
     }
     
+    // 0 output channels,
+    // 2 input channels
+    // 44100 samples per second
+    // BUFFER_SIZE samples per buffer
+    // 4 num buffers (latency)
+    
+    ofSoundStreamSetup(0, 2, this, 44100, BUFFER_SIZE, 4);
     //soundStream.setup(this, 0, 2, 44100, bufferSize, 4);
 }
 /* ================================================ */
@@ -402,20 +389,7 @@ void ofApp::draw() {
                 nodeViewers[currentViewer]->draw();
                 cam.end();
                 
-//                string info = "";
-//                info += "  (";
-//                info += ofToString(currentViewer+1);
-//                info += "/";
-//                info += ofToString(nodeViewers.size());
-//                info += ")";
-//                info += "    switch layers <- ->";
-//                
-//                ofDrawBitmapString(info, 20, ofGetHeight()-20);
-//                string info2 = nodeViewers[currentViewer]->getName();
-//                ofDrawBitmapString(ofToString(info2,0), ofGetWidth() - 300, ofGetHeight()-20);
-                
                 ofDrawBitmapString(ofToString(ofGetFrameRate(),0), ofGetWidth() - 50, ofGetHeight()-35);
-                
                 
                 //update menu's width and height
                 menu->setWidth(ofGetWidth());
@@ -483,7 +457,7 @@ void ofApp::audioIn(float * input, int bufferSize, int nChannels){
     }
     bufferCounter++;
     
-    audioAnalizer->analyze(input);
+    if (audioAnalizer != NULL) audioAnalizer->analyze(input);
 }
 /* ================================================ */
 /* ================================================ */
@@ -716,7 +690,13 @@ void ofApp::windowResized(int w, int h){
 void ofApp::menuEvent(ofxUIEventArgs &e) {
     
     string name = e.getName();
-    if (name == "Straight Links") {
+    
+    if (name == "Open Patcher") {
+        if(((ofxUIMultiImageButton*)e.widget)->getValue() == 1){
+            loadFromXML();
+        }
+    }
+    else if (name == "Straight Links") {
         ((ofxUIImageToggle*)menu->getWidget("Straight Links"))->setValue(true);
         ((ofxUIImageToggle*)menu->getWidget("Segmented Links"))->setValue(false);
         ((ofxUIImageToggle*)menu->getWidget("Curved Links"))->setValue(false);
@@ -921,6 +901,7 @@ void ofApp::createNodeInput(float _x, float _y){
     
     textInput *node = new textInput("", "", 210, 20, _x, _y);
     vector<string> nodes;
+    node->setMidiIn(&midiIn);
     ofxUIDropDownList *dlist = new ofxUIDropDownList("", nodes, 210, _x, _y);
     
     gui->addWidget(dlist);
@@ -1019,6 +1000,27 @@ void ofApp::createNode(textInputEvent &args){
         newPatch = new VideoPlayerMac();
         ((VideoPlayerMac*)newPatch)->loadVideo(args.path);
         inputs.push_back((VideoPlayerMac*)newPatch);
+    }
+    else {
+        for(vector<string>::iterator it = midiIn.getPortList().begin(); it != midiIn.getPortList().end(); it++ ){
+            if (args.type == it->data()) {
+                int j = 0;
+                while (j < inputGenerators.size()) {
+                    if (inputGenerators[j]->getParamInputType() == MIDI
+                        && ((MidiInputGenerator*)inputGenerators[j])->getMidiDeviceName() == args.type) {
+                        
+                        j = inputGenerators.size()+1;
+                    }
+                }
+                if (j <= inputGenerators.size()) {
+                    MidiInputGenerator* mI = new MidiInputGenerator("midi", args.type);
+                    inputGenerators.push_back(mI);
+                    mI->setMidiIn(&midiIn);
+                    mI->setup();
+                    mI->start();
+                }
+            }
+        }
     }
     
     if (newPatch && !exist) {
@@ -1210,12 +1212,36 @@ void ofApp::editAudioIn(){
 //------------------------------------------------------------------
 bool ofApp::loadFromXML(){
     
-    bool result = true;
+    bool loadingOK = true;
     string message = "";
     nodeLinkType nodeLinkType;
     int nodesCount;
     
-    if( XML.loadFile("appSettings.xml") ){
+    ofDrawBitmapString("LOADING XML ...", 50, 50);
+    
+    ofFileDialogResult openFileResult;
+    openFileResult = ofSystemLoadDialog("Select a NIMP settings file (.xml)");
+    
+    if (openFileResult.bSuccess){
+        
+        ofFile file (openFileResult.getPath());
+        
+        if (file.exists()){
+            string fileExtension = ofToUpper(file.getExtension());
+            
+            if(fileExtension == "XML"){
+                xmlFileName = openFileResult.getPath();
+            }
+            else {
+               loadingOK = false;
+            }
+        }
+        file.close();
+    }
+    
+    if( XML.loadFile(xmlFileName) ){
+        
+        deleteEverything();
         
         int numMainSettingsTag = XML.getNumTags("MAIN_SETTINGS");
         
@@ -1253,16 +1279,16 @@ bool ofApp::loadFromXML(){
                 
                 XML.pushTag("SETTINGS");
 
-                result = this->loadNodes(XML);
+                loadingOK = this->loadNodes(XML);
                 
                 XML.popTag();
             }
             else {
-                result = false;
+                loadingOK = false;
                 message = "missing SETTINGS tag!";
             }
             
-            if(result){
+            if(loadingOK){
                 //PROCESSING NODE_VIEWS
                 
                 int numNodeViews = XML.getNumTags("NODE_VIEWS");
@@ -1276,8 +1302,8 @@ bool ofApp::loadFromXML(){
                     for(int i = 0; i < numNodeView; i++){
                         string nodeViewName = XML.getAttribute("NODE_VIEW","name","default",i);
                         
-                        NodeViewer* nV = new NodeViewer(nodeViewName);
-                        nV->setNodesCount(nodesCount);
+                        nodeViewers[currentViewer]->setName(nodeViewName);
+                        nodeViewers[currentViewer]->setNodesCount(nodesCount);
                         
                         XML.pushTag("NODE_VIEW",i);
                         int numNODETag = XML.getNumTags("NODE");
@@ -1301,16 +1327,14 @@ bool ofApp::loadFromXML(){
                                 ImageOutput* iO = it->second;
                                 NodeElement* nE = new NodeElement(iO, x, y, guiX, guiY, guiWidth, imageScale);
                                 
-                                nV->addElement(nE);
+                                nodeViewers[currentViewer]->addElement(nE);
                             }
                             else{
-                                result = false;
+                                loadingOK = false;
                                 message = "node not found!";
                             }
                             
                         }
-                        
-                        nodeViewers.push_back(nV);
                         
                         //NODE_VIEW
                         XML.popTag();
@@ -1322,13 +1346,13 @@ bool ofApp::loadFromXML(){
                     
                 }
                 else{
-                    result = false;
+                    loadingOK = false;
                     message = "missing NODE_VIEWS tag!";
                 }
                 
                 // PROCESSING PARAM INPUT GENERATORS
                 
-                if (result){
+                if (loadingOK){
                     
                     int numParamInputs = XML.getNumTags("PARAM_INPUT_GENERATORS");
                     
@@ -1350,6 +1374,7 @@ bool ofApp::loadFromXML(){
                                 {
                                     MidiInputGenerator* mI = new MidiInputGenerator(inputName, midiDeviceName);
                                     mI->loadSettings(XML, nodes);
+                                    mI->setMidiIn(&midiIn);
                                     
                                     inputGenerators.push_back(mI);
                                     
@@ -1379,7 +1404,7 @@ bool ofApp::loadFromXML(){
                                 }
                                 default:
                                 {
-                                    result = false;
+                                    loadingOK = false;
                                     message = "unknown mixer type!";
                                     break;
                                 };
@@ -1394,14 +1419,14 @@ bool ofApp::loadFromXML(){
 
                     }
                     else{
-                        result = false;
+                        loadingOK = false;
                         message = "missing PARAM_INPUT_GENERATORS tag!";
                     }
                     
                 }
                 
                 //PROCESSING SYPHON SERVERS
-                if (result){
+                if (loadingOK){
                     int numServers = XML.getNumTags("SYPHON_SERVERS");
                     
                     
@@ -1427,7 +1452,7 @@ bool ofApp::loadFromXML(){
                                 
                             }
                             else{
-                                result = false;
+                                loadingOK = false;
                                 message = "node not found!";
                                 break;
                             }
@@ -1439,14 +1464,14 @@ bool ofApp::loadFromXML(){
                         
                     }
                     else{
-                        result = false;
+                        loadingOK = false;
                         message = "missing SYPHON_SERVERS tag!";
                     }
                 }
             }
         }
         else{
-            result = false;
+            loadingOK = false;
             message = "missing MAIN_SETTINGS tag!";
         }
         
@@ -1454,11 +1479,11 @@ bool ofApp::loadFromXML(){
         
         //file not loaded
         message = "file not loaded!";
-        result = false;
+        loadingOK = false;
         
     }
     
-    if(!result){
+    if(!loadingOK){
         ofLogNotice() << message;
     }
     else{
@@ -1479,10 +1504,15 @@ bool ofApp::loadFromXML(){
             error = nodesVector[i]->findAndAssignInputs(nodes);
             if(error){
                 message = "node not found";
-                result = false;
+                loadingOK = false;
                 break;
             }
         }
+        
+        //init node view
+        setCurrentViewer(0);
+        nodeViewers[currentViewer]->setParent(cam);
+        gui->setMainComposer(nodeViewers[currentViewer]);
         
         //create connections in nodeView
         for (int i=0; i<nodeViewers.size(); ++i) {
@@ -1500,7 +1530,33 @@ bool ofApp::loadFromXML(){
         nodeViewers[currentViewer]->addPatch(audioAnalizer, ofPoint(audioAnalizer->getLowestXCoord(),audioAnalizer->getHighestYCoord()));
     }
     
-    return result;
+    if(loadingOK){
+        
+        ConsoleLog::getInstance()->pushMessage("All nodes loaded correctly.");
+        
+        //TODO: change mixtable assignment.
+        //  ofAddListener(mixtables[0]->textureEvent, this, &ofApp::updateSyphon);
+        
+        //*** invoking input generators setup functions  ***//
+        //
+        for(int i=0; i<inputGenerators.size(); i++){
+            inputGenerators[i]->setup();
+        }
+        
+        //*** invoking nodes setup functions and setting main canvas and camera  ***//
+        //
+        for (int i=0; i<nodesVector.size(); ++i) {
+            initNode(nodesVector[i]);
+        }
+        
+        //*** starting input generators theads (the not threadeds will not start)  ***//
+        //
+        for(int i=0; i<inputGenerators.size(); i++){
+            inputGenerators[i]->start();
+        }
+    }
+    
+    return loadingOK;
     
 }
 
@@ -1970,6 +2026,35 @@ bool ofApp::loadNodes(ofxXmlSettings &XML){
     }
     
     return result;
+}
+
+//------------------------------------------------------------------
+void ofApp::deleteEverything() {
+    
+    for (int i = 0; i < inputGenerators.size(); i++){
+        delete inputGenerators[i];
+        inputGenerators[i] = NULL;
+    }
+    inputGenerators.clear();
+    audioListeners.clear();
+    
+    for (int i = 0; i < nodeViewers.size(); i++){
+        nodeViewers[i]->deleteEverything();
+    }
+    nodes.clear();
+    nodesVector.clear();
+    inputs.clear();
+    visualLayers.clear();
+    mixtables.clear();
+    
+    encapsulatedIds.clear();
+    
+    syphonServers.clear();
+    
+    audioAnalizer   = NULL;
+    leftAudioPatch  = NULL;
+    rightAudioPatch = NULL;
+    
 }
 
 /* ================================================ */

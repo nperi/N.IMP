@@ -16,6 +16,10 @@ AudioListenerInput::AudioListenerInput(string name_, int nodeID_):ParamInputGene
     nodeID = nodeID_;
 }
 
+AudioListenerInput::~AudioListenerInput() {
+    
+}
+
 void AudioListenerInput::processInput(){
     
 }

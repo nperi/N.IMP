@@ -20,7 +20,9 @@ class MidiInputGenerator: public ParamInputGenerator, public ofxMidiListener  {
 public:
     
     MidiInputGenerator(string name_, string midiDeviceName);
+    ~MidiInputGenerator();
     void processInput();
+    void setMidiIn(ofxMidiIn* midiIn_);
 //    bool setupFromXML();
     void newMidiMessage(ofxMidiMessage& eventArgs);
 //    void keyPressed (int key);
@@ -28,6 +30,7 @@ public:
 //    void prevMidiMap();
     bool addNewMidiMap(int control_, ImageOutput* node_, vector<string> params_);
     void setMidiLearnActive(bool active_) { midiLearnActive = active_; };
+    string getMidiDeviceName(){ return midiDeviceName; };
     
     //for storing midi control ids and map them to Node id and parameter.
 //    vector<std::map<int,vector<DTMidiMap*>* >*>* midiMaps;
@@ -41,7 +44,7 @@ public:
 private:
     
     string midiDeviceName;
-    ofxMidiIn midiIn;
+    ofxMidiIn* midiIn;
     ofxMidiMessage midiMessage;
     bool midiLearnActive;
     

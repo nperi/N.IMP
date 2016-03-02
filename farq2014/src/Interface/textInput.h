@@ -14,6 +14,7 @@
 #include "ofxUIDropDownList.h"
 #include "ofxUIEventArgs.h"
 #include "textInputEvent.h"
+#include "ofxMidiIn.h"
 
 class textInput : public ofxUITextInput
 {
@@ -27,7 +28,9 @@ public:
     bool mouseDragged(ofMouseEventArgs &e);
     bool mouseReleased(ofMouseEventArgs &e);
     void guiEvent(ofxUIEventArgs &e);
+    void guiMidiEvent(ofxUIEventArgs &e);
     
+    void setMidiIn(ofxMidiIn* midiIn_){ midiIn = midiIn_; };
     void setDropdownList(ofxUIDropDownList* dl);
     ofxUIDropDownList* getDropdownList();
     
@@ -36,7 +39,9 @@ public:
 private:
     
     ofxUIDropDownList *dropdownList;
+    ofxUIDropDownList *midiList;
     vector<string> nodes;
+    ofxMidiIn* midiIn;
 
 };
 

@@ -20,6 +20,7 @@ class NodeViewer : public ofxComposer {
 public:
 	
 	NodeViewer(string name_="default");
+    ~NodeViewer();
 	
 	void setup();
     void update();
@@ -28,6 +29,7 @@ public:
     void addElement(NodeElement* elem_);
     void addElement(NodeElement* elem_, ofPoint position_);
     
+    void setName(string name_){ name = name_; };
     void setupGuiPositions();
     void setMidiLearnActive(bool active_);
     void setEditLeftAudioInActive(bool active_);
@@ -36,6 +38,7 @@ public:
     void createConnections(vector<NodeElement*> _elements);
     void createConnections();
     void closePatch(int _nID);
+    void deleteEverything();
     
     string getName();
     map<int, vector <string> > getAttributesSelectedForMidiLearn();

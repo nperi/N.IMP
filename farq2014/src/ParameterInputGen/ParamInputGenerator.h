@@ -23,7 +23,7 @@ public:
     void setup();
     void start();
     void stop();
-    virtual void processInput()=0;
+    virtual void processInput(){};
     //virtual bool setupFromXML()=0;
     Param* getNextInputMessage();
     void storeMessage(Param* p);
