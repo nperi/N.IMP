@@ -194,6 +194,7 @@ void NodeViewer::deleteEverything() {
         elements[i] = NULL;
     }
     elements.clear();
+    patches.clear();
 }
 
 //------------------------------------------------------------------

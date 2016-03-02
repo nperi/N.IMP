@@ -104,6 +104,7 @@ public:
     //xmlfile
     ofxXmlSettings XML;
     string xmlFileName;
+    string xmlFilePath;
     
     //collections
     vector<InputSource*> inputs;

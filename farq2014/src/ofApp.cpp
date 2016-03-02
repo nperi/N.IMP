@@ -38,8 +38,10 @@ void ofApp::setup() {
     
     //*** MAIN SETUP ***//
     //
+
     ofSetFrameRate(30);
     xmlFileName            = "Untitle.xml";
+    xmlFilePath            = "";
     loadingOK              = true;
     isFullScreen           = false;
     midiLearnActive        = false;
@@ -1232,7 +1234,8 @@ bool ofApp::loadFromXML(){
             string fileExtension = ofToUpper(file.getExtension());
             
             if(fileExtension == "XML"){
-                xmlFileName = openFileResult.getPath();
+                xmlFileName = openFileResult.getName();
+                xmlFilePath = openFileResult.getPath();;
             }
             else {
                loadingOK = false;
@@ -1241,7 +1244,7 @@ bool ofApp::loadFromXML(){
         file.close();
     }
     
-    if( XML.loadFile(xmlFileName) ){
+    if( XML.loadFile(xmlFilePath) ){
         
         deleteEverything();
         
@@ -1577,12 +1580,22 @@ bool ofApp::saveToXML() {
     
     // Open/create clean xml settings file
     //
-    file = XML.loadFile("appSettings.xml");
+    if (xmlFileName == "Untitle.xml") {
+        
+        ofFileDialogResult saveFileResult = ofSystemSaveDialog(xmlFileName, "Save your project");
+        if (saveFileResult.bSuccess){
+            xmlFileName = saveFileResult.getName();
+            nodeViewers[currentViewer]->setName(xmlFileName);
+            xmlFilePath = saveFileResult.getPath();
+        }
+    }
+    
+    file = XML.loadFile(xmlFilePath);
     if (file) {
         XML.clear();
     } else {
-        file = XML.saveFile("appSettings.xml");
-        XML.loadFile("appSettings.xml");
+        file = XML.saveFile(xmlFilePath);
+        XML.loadFile(xmlFilePath);
     }
     
     if (file){
