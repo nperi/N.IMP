@@ -691,7 +691,22 @@ void ofApp::menuEvent(ofxUIEventArgs &e) {
     
     string name = e.getName();
     
-    if (name == "Open Patcher") {
+    if (name == "New Patcher") {
+        if(((ofxUIMultiImageButton*)e.widget)->getValue() == 1){
+            if (nodeViewers[currentViewer]->getPatches().size() > 1) {
+                saveToXML();
+            }
+            xmlFileName = "Untitle.xml";
+            xmlFilePath = "";
+            deleteEverything();
+            audioAnalizer = new AudioAnalizer();
+            audioAnalizer->setDrawAudioAnalizer(false);
+            ((ofxUIMultiImageToggle*)right_menu->getWidget("Analizer"))->setValue(false);
+            initNode(audioAnalizer);
+            nodeViewers[currentViewer]->addPatch(audioAnalizer, ofPoint((ofGetWidth()/2)-100, (ofGetHeight()/2)-50));
+        }
+    }
+    else if (name == "Open Patcher") {
         if(((ofxUIMultiImageButton*)e.widget)->getValue() == 1){
             loadFromXML();
         }
@@ -1587,6 +1602,9 @@ bool ofApp::saveToXML() {
             xmlFileName = saveFileResult.getName();
             nodeViewers[currentViewer]->setName(xmlFileName);
             xmlFilePath = saveFileResult.getPath();
+        }
+        else {
+            return;
         }
     }
     
