@@ -21,7 +21,7 @@ public:
     scrollBar();
 //    scrollBar(ofxComposer* composer, ofxMultiTouchPad* pad, int eventPriority = OF_EVENT_ORDER_AFTER_APP, int windowId = MAIN_WINDOW);
     scrollBar(ofxComposer* composer, ofxMultiTouchPad* pad, ofEasyCam* cam, int eventPriority = OF_EVENT_ORDER_AFTER_APP, int windowId = MAIN_WINDOW);
-    //    ~scrollBar();
+    ~scrollBar();
     
     
     //*** LOOPS ***//
@@ -108,6 +108,7 @@ private:
     
     
     int windowId;
+    int eventPriority;
 };
 
 

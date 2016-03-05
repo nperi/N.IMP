@@ -182,8 +182,8 @@ void ofApp::setup() {
     nV->setNodesCount(1);
     nV->setParent(cam);
     gui->setMainComposer(nV);
-    setCurrentViewer(0);
     nodeViewers.push_back(nV);
+    setCurrentViewer(0);
     
     
     //*** SCROLL BAR SETUP ***//

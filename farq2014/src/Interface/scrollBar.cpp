@@ -62,7 +62,19 @@ scrollBar::scrollBar(class ofxComposer* _composer, ofxMultiTouchPad* _pad, ofEas
     applyInertia = false;
     drag = 0.9f;
     minScrollDifference = 0.1e-5f;
+    
+    this->eventPriority = eventPriority;
 }
+
+scrollBar::~scrollBar(){
+    ofRemoveListener(ofEvents().mouseMoved, this, &scrollBar::mouseMoved, eventPriority);
+    ofRemoveListener(ofEvents().mousePressed, this, &scrollBar::mousePressed, eventPriority);
+    ofRemoveListener(ofEvents().mouseReleased, this, &scrollBar::mouseReleased, eventPriority);
+    ofRemoveListener(ofEvents().keyPressed, this, &scrollBar::keyPressed, eventPriority);
+    ofRemoveListener(ofEvents().windowResized, this, &scrollBar::windowResized, eventPriority);
+    ofRemoveListener(ofEvents().mouseDragged, this, &scrollBar::mouseDragged, eventPriority);
+}
+
 
 //------------------------------------------------------------------
 void scrollBar::setup(){
