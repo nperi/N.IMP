@@ -52,6 +52,8 @@ private:
     int startY;
     ConsoleScrollBar* scrollBar;
     
+    int maxConsoleMessages;
+    void push(Message m);
 };
 
 

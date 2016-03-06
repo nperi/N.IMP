@@ -17,6 +17,8 @@ ConsoleLog::ConsoleLog() {
     font.loadFont("Fonts/verdana.ttf", 14);
     font.setLineHeight(18.0f);
     font.setLetterSpacing(1.037);
+    
+    maxConsoleMessages = 50;
 }
 
 ConsoleLog::~ConsoleLog(){
@@ -37,21 +39,28 @@ void ConsoleLog::setupScrollBar(ofxMultiTouchPad* pad){
 
 void ConsoleLog::pushMessage(string message){
     Message m = Message(DEFAULT, message);
-    messages.push_back(m);
+    push(m);
 }
 
 void ConsoleLog::pushError(string error){
     Message m = Message(ERROR, error);
-    messages.push_back(m);
+    push(m);
 }
 
 void ConsoleLog::pushSuccess(string success){
     Message m = Message(SUCCESS, success);
-    messages.push_back(m);
+    push(m);
 }
 
 void ConsoleLog::pushWarning(string warning){
     Message m = Message(WARNING, warning);
+    push(m);
+}
+
+void ConsoleLog::push(Message m){
+    if(messages.size() == maxConsoleMessages){
+        messages.erase(messages.begin());
+    }
     messages.push_back(m);
 }
 

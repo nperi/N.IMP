@@ -529,12 +529,12 @@ void ofApp::keyPressed  (int key){
             }
             break;
             
-            case 'j': case 'J' :
+        case 'j': case 'J' :
                 if ((newNodeInput == NULL) || (!newNodeInput->isClicked())) {
                     loadSnippet();
                 }
             break;
-            case 'k': case 'K' :
+        case 'k': case 'K' :
                 if ((newNodeInput == NULL) || (!newNodeInput->isClicked())) {
                     saveSnippet();
                 }
@@ -549,6 +549,7 @@ void ofApp::keyPressed  (int key){
     for (int i = 0; i<inputGenerators.size();i++){
         inputGenerators[i]->keyPressed(key);
     }
+    
 }
 
 //------------------------------------------------------------------
