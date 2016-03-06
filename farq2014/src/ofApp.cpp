@@ -592,7 +592,6 @@ void ofApp::mousePressed(int x, int y, int button){
             } else if( i != CONSOLE_WINDOW){
                 nodeViewers[currentViewer]->setCameraForWindow(i, cam);
                 nodeViewers[currentViewer]->setParent(*(encapsulatedWindowsCameras.at(i-2)));
-                cout << endl << "setting camera in other window" << endl;
             }
                 
             break;
