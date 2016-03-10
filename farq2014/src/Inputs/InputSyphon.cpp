@@ -15,7 +15,7 @@ InputSyphon::InputSyphon(ofxSyphonServerDirectory* serverDir, string name, int i
     gui.add(nextServer.setup(">> next server"));
     gui.setWidthElements(INSPECTOR_WIDTH);
     
-    serverDownImg.loadImage("assets/server_down.png");
+    serverDownImg.loadImage("assets/syphon_server_down.png");
     
 }
 
