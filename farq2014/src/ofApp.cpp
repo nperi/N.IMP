@@ -47,6 +47,7 @@ void ofApp::setup() {
     midiLearnActive        = false;
     editLeftAudioInActive  = false;
     editRightAudioInActive = false;
+    editOSCActive          = false;
     rightAudioPatch        = NULL;
     leftAudioPatch         = NULL;
     audioAnalizer          = NULL;
@@ -60,6 +61,7 @@ void ofApp::setup() {
     inputTypes.insert(std::pair<string,InputType>("PARTICLE",PARTICLE));
     inputTypes.insert(std::pair<string,InputType>("LEFT_AUDIO_IN",LEFT_AUDIO_IN));
     inputTypes.insert(std::pair<string,InputType>("RIGHT_AUDIO_IN",RIGHT_AUDIO_IN));
+    inputTypes.insert(std::pair<string,InputType>("OSC_RECEIVER",OSC_RECEIVER));
     visualLayerTypes.insert(std::pair<string,VisualLayerType>("IKEDA", IKEDA));
     visualLayerTypes.insert(std::pair<string,VisualLayerType>("GLITCH_1", GLITCH_1));
     visualLayerTypes.insert(std::pair<string,VisualLayerType>("GLITCH_2", GLITCH_2));
@@ -290,7 +292,7 @@ void ofApp::update() {
                 if(param != NULL){
                     
                     if (p->getParamInputType() == MIDI && midiLearnActive) {
-                        map<int, vector<string> > attributesSelected = nodeViewers[currentViewer]->getAttributesSelectedForMidiLearn();
+                        map<int, vector<string> > attributesSelected = nodeViewers[currentViewer]->getAttributesClicked();
                         std::map<int, ImageOutput*>::iterator node_;
                         
                         for(map<int, vector<string> >::iterator it = attributesSelected.begin(); it != attributesSelected.end(); it++ ){
@@ -970,6 +972,12 @@ void ofApp::createNode(textInputEvent &args){
             rightAudioPatch = (AudioIn*)newPatch;
         }
     }
+    else if (args.type == "osc receiver") {
+        newPatch = new OSCReceiver();
+        inputs.push_back((OSCReceiver*)newPatch);
+        ofAddListener( ((OSCReceiver*)newPatch)->editOSCPort , this, &ofApp::editOSCPort);
+        ofAddListener( ((OSCReceiver*)newPatch)->editOSCInputs , this, &ofApp::editOSCInputs);
+    }
     else if (args.type == "camera") {
         newPatch = new InputCamera();
         inputs.push_back((InputCamera*)newPatch);
@@ -1060,6 +1068,13 @@ void ofApp::createNode(textInputEvent &args){
             audioListeners.push_back(aI);
             aI->setup();
             aI->start();
+        }
+        else if (newPatch->getIsOSCReceiver()) {
+            OscInputGenerator* oscI = new OscInputGenerator(newPatch->getName(), newPatch->getId());
+            oscI->setPort(66666);
+            inputGenerators.push_back(oscI);
+            oscI->setup();
+            oscI->start();
         }
     }
     if (args.widget != NULL) {
@@ -1209,7 +1224,7 @@ void ofApp::editAudioIn(){
                 
                     ((AudioInputGenerator*)p)->clearAudioMap();
                     
-                    map<int, vector<string> > attributesSelected = nodeViewers[currentViewer]->getAttributesSelectedForAudioIn();
+                    map<int, vector<string> > attributesSelected = nodeViewers[currentViewer]->getAttributesClicked();
                     std::map<int, ImageOutput*>::iterator node_;
                     
                     for(map<int, vector<string> >::iterator it = attributesSelected.begin(); it != attributesSelected.end(); it++ ){
@@ -1227,6 +1242,50 @@ void ofApp::editAudioIn(){
     }
 };
 
+//------------------------------------------------------------------
+void ofApp::editOSCPort(OSCEvent &e_) {
+    
+    for (int i = 0; i < inputGenerators.size(); ++i) {
+        ParamInputGenerator* p = inputGenerators[i];
+        if (p->getParamInputType() == OSC && ((OscInputGenerator*)p)->getNodeID() == e_.nodeId) {
+            ((OscInputGenerator*)p)->setPort(e_.port);
+        }
+    }
+}
+
+//------------------------------------------------------------------
+void ofApp::editOSCInputs(bool &e_) {
+    
+    editOSCActive = !editOSCActive;
+    
+    if (!editOSCActive){
+        
+        for (int i = 0; i < inputGenerators.size(); ++i) {
+            ParamInputGenerator* p = inputGenerators[i];
+            if (p->getParamInputType() == OSC) {
+                
+                std::map<int, ImageOutput*>::iterator oscNode_;
+                oscNode_ = nodes.find(((OscInputGenerator*)p)->getNodeID());
+                
+                if (oscNode_ != nodes.end()) {
+                    
+                    ((OscInputGenerator*)p)->clearOSCMap();
+                    
+                    map<int, vector<string> > attributesSelected = nodeViewers[currentViewer]->getAttributesClicked();
+                    std::map<int, ImageOutput*>::iterator node_;
+                    
+                    for(map<int, vector<string> >::iterator it = attributesSelected.begin(); it != attributesSelected.end(); it++ ){
+                        node_ = nodes.find(it->first);
+                        if (node_ != nodes.end()) {
+                            ((OscInputGenerator*)p)->addNewOSCMap(((OSCReceiver*)oscNode_->second)->getAddress(), node_->second, it->second);
+                        }
+                    }
+                }
+            }
+        }
+    }
+    nodeViewers[currentViewer]->setEditOSCActive(editOSCActive);
+}
 
 //------------------------------------------------------------------
 bool ofApp::loadFromXML(){
@@ -1415,7 +1474,7 @@ bool ofApp::loadFromXML(){
                                 }
                                 case OSC:
                                 {
-                                    OscInputGenerator* oI = new OscInputGenerator(inputName);
+                                    OscInputGenerator* oI = new OscInputGenerator(inputName, nodeID);
                                     oI->loadSettings(XML);
                                     
                                     inputGenerators.push_back(oI);
@@ -1826,6 +1885,19 @@ bool ofApp::loadNodes(ofxXmlSettings &XML){
                     ofAddListener(aI->editAudioIn , this, &ofApp::editLeftAudioIn);
 //                    ofAddListener(aI->editAudioInChannel , this, &ofApp::editAudioInChannel);
                     
+                    break;
+                };
+                case OSC_RECEIVER:
+                {
+                    OSCReceiver* oI = new OSCReceiver(inputName, inputId);
+                    oI->loadSettings(XML, i);
+                    
+                    inputs.push_back(oI);
+                    nodes.insert(std::pair<int,ImageOutput*>(inputId,oI));
+                    
+                    ofAddListener(oI->editOSCPort , this, &ofApp::editOSCPort);
+                    ofAddListener(oI->editOSCInputs , this, &ofApp::editOSCInputs);
+
                     break;
                 };
                 default:

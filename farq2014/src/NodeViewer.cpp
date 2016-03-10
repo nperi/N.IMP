@@ -70,6 +70,16 @@ void NodeViewer::setEditRightAudioInActive(bool active_){
 }
 
 //------------------------------------------------------------------
+void NodeViewer::setEditOSCActive(bool active_){
+    
+    for (int i=0; i<elements.size(); ++i) {
+        elements[i]->getImageOutput()->setEditOSCActive(active_);
+    }
+    
+    this->editOSCActive = active_;
+}
+
+//------------------------------------------------------------------
 void NodeViewer::addElement(NodeElement* elem_){
     addElement(elem_, ofPoint(ofGetMouseX(), ofGetMouseY()));
 }
@@ -152,26 +162,40 @@ string NodeViewer::getName(){
 }
 
 //------------------------------------------------------------------
-map<int, vector <string> > NodeViewer::getAttributesSelectedForMidiLearn() {
-    
-    map<int, vector <string> > result;
-    vector<string> partialResult;
-    for (int i = 0; i < elements.size(); ++i) {
-        partialResult = elements[i]->getImageOutput()->getAttributesForMidiLearn();
-        if (partialResult.size() > 0) {
-            result[elements[i]->getImageOutput()->getId()] = partialResult;
-        }
-    }
-    return result;
-}
+//map<int, vector <string> > NodeViewer::getAttributesSelectedForMidiLearn() {
+//    
+//    map<int, vector <string> > result;
+//    vector<string> partialResult;
+//    for (int i = 0; i < elements.size(); ++i) {
+//        partialResult = elements[i]->getImageOutput()->getAttributesClicked();
+//        if (partialResult.size() > 0) {
+//            result[elements[i]->getImageOutput()->getId()] = partialResult;
+//        }
+//    }
+//    return result;
+//}
+//
+////------------------------------------------------------------------
+//map<int, vector <string> > NodeViewer::getAttributesSelectedForAudioIn() {
+//    
+//    map<int, vector <string> > result;
+//    vector<string> partialResult;
+//    for (int i = 0; i < elements.size(); ++i) {
+//        partialResult = elements[i]->getImageOutput()->getAttributesClicked();
+//        if (partialResult.size() > 0) {
+//            result[elements[i]->getImageOutput()->getId()] = partialResult;
+//        }
+//    }
+//    return result;
+//}
 
 //------------------------------------------------------------------
-map<int, vector <string> > NodeViewer::getAttributesSelectedForAudioIn() {
+map<int, vector <string> > NodeViewer::getAttributesClicked() {
     
     map<int, vector <string> > result;
     vector<string> partialResult;
     for (int i = 0; i < elements.size(); ++i) {
-        partialResult = elements[i]->getImageOutput()->getAttributesForAudioIn();
+        partialResult = elements[i]->getImageOutput()->getAttributesClicked();
         if (partialResult.size() > 0) {
             result[elements[i]->getImageOutput()->getId()] = partialResult;
         }

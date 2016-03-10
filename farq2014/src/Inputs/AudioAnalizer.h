@@ -26,11 +26,11 @@ public:
     
     void _mouseDragged(ofMouseEventArgs &e);
     
-    ofImage*        getImage(){};
-    ofTexture*      getTexture(){};
-    float           getMidiMin(string param_){};
-    float           getMidiMax(string param_){};
-    void updateParameter(Param* inputParam){};
+    ofImage*    getImage(){};
+    ofTexture*  getTexture(){};
+    float       getMidiMin(string param_){};
+    float       getMidiMax(string param_){};
+    void        updateParameter(Param* inputParam){};
     
     void analyze(float * iBuffer);
     

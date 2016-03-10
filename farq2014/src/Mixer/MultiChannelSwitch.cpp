@@ -147,7 +147,7 @@ void MultiChannelSwitch::cLabel(bool& b){
 //------------------------------------------------------------------
 ofImage* MultiChannelSwitch::getImage(){
     if (drawNoInputs)
-        return &noInputs;
+        return &noInputsImg;
     else {
         return input[selChannel]->getImage();
     }
@@ -156,7 +156,7 @@ ofImage* MultiChannelSwitch::getImage(){
 //------------------------------------------------------------------
 ofTexture* MultiChannelSwitch::getTexture(){
     if (drawNoInputs)
-        return &noInputs.getTextureReference();
+        return &noInputsImg.getTextureReference();
     else
         return &input[selChannel]->getTextureReference();
 }

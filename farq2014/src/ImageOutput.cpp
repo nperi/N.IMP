@@ -153,15 +153,21 @@ void ImageOutput::setEnable(bool isEnabled_){
 }
 
 //------------------------------------------------------------------
-vector<string> ImageOutput::getAttributesForMidiLearn() {
-    
-    return panel.getAttributesForMidiLearn();
-}
+//vector<string> ImageOutput::getAttributesForMidiLearn() {
+//    
+//    return panel.getAttributesForMidiLearn();
+//}
+//
+////------------------------------------------------------------------
+//vector<string> ImageOutput::getAttributesForAudioIn() {
+//
+//    return panel.getAttributesForAudioIn();
+//}
 
 //------------------------------------------------------------------
-vector<string> ImageOutput::getAttributesForAudioIn() {
+vector<string> ImageOutput::getAttributesClicked() {
     
-    return panel.getAttributesForMidiLearn();
+    return panel.getAttributesClicked();
 }
 
 //------------------------------------------------------------------

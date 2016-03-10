@@ -34,6 +34,7 @@ public:
     void setMidiLearnActive(bool active_);
     void setEditLeftAudioInActive(bool active_);
     void setEditRightAudioInActive(bool active_);
+    void setEditOSCActive(bool active_);
     
     void createConnections(vector<NodeElement*> _elements);
     void createConnections();
@@ -41,8 +42,9 @@ public:
     void deleteEverything();
     
     string getName();
-    map<int, vector <string> > getAttributesSelectedForMidiLearn();
-    map<int, vector <string> > getAttributesSelectedForAudioIn();
+//    map<int, vector <string> > getAttributesSelectedForMidiLearn();
+//    map<int, vector <string> > getAttributesSelectedForAudioIn();
+    map<int, vector <string> > getAttributesClicked();
 	
     bool saveSettings(ofxXmlSettings &XML);
     

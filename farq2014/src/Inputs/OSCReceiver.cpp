@@ -1,87 +1,111 @@
-/*
- *  InputCamera.cpp
- *  ofApp
- *
- *  Created by Brian Eschrich on 02/12/14
- *  Copyright 2014 __MyCompanyName__. All rights reserved.
- *
- */
+//
+//  OSCReceiver.c
+//  nimp
+//
+//  Created by Mili Garicoits on 3/8/16.
+//
+//
 
-#include "InputCamera.h"
+#include "OSCReceiver.h"
 
-
-InputCamera::InputCamera(string name, int id_) : InputSource(name, "Camera", id_){
+OSCReceiver::OSCReceiver(string name_, int id_) : InputSource(name_, "OSC Receiver", id_){
     
-    drawNoInputs = true;
-    videoGrabber = new ofVideoGrabber();
-    videoGrabber->setUseTexture(false);
-    bool loaded = videoGrabber->initGrabber(width, height);
+    isOSC = true;
+    oscReceiverImg.loadImage("assets/osc_receiver.png");
     
-    if (loaded){
-        width   = videoGrabber->getWidth();
-        height  = videoGrabber->getHeight();
-        drawNoInputs = false;
-        
-        img.allocate(width, height, OF_IMAGE_COLOR_ALPHA);
-        img.setUseTexture(true);
-    }
+    address = "/";
+    port = 66666;
+    oscPortNumber = "66666";
+    gui.add(oscPort.setup("Port", oscPortNumber, 100, 20));
+    gui.add(oscAddress.setup("Address", address, 100, 20));
+    gui.add(editOSC.set("Edit OSC Inputs", false));
+    
+    oscPort.addListener(this, &OSCReceiver::editPort);
+    oscAddress.addListener(this, &OSCReceiver::editAddress);
+    editOSC.addListener(this, &OSCReceiver::editInputs);
     
     gui.setWidthElements(INSPECTOR_WIDTH);
+    
+    title->removeButton('r');
+    title->removeButton('m');
 }
 
 //------------------------------------------------------------------
-void InputCamera::setup() {
+void OSCReceiver::setup() {
+
+}
+
+//------------------------------------------------------------------
+void OSCReceiver::update() {
     
 }
 
 //------------------------------------------------------------------
-void InputCamera::update() {
+void OSCReceiver::customDraw(){
     
-    if (videoGrabber->isInitialized()) {
-        videoGrabber->update();
-        if(videoGrabber->isFrameNew()) {
-            img.setFromPixels(videoGrabber->getPixels(), width, height, OF_IMAGE_COLOR);
-        }
-    }
+    ofxPatch::customDraw();
 }
 
 //------------------------------------------------------------------
-ofImage* InputCamera::getImage(){
-    
-    if (!videoGrabber->isInitialized()) {
-        return &noInputsImg;
-    }
-    else {
-        return &img;
-    }
+ofImage* OSCReceiver::getImage(){
+    return &oscReceiverImg;
 }
 
 //------------------------------------------------------------------
-ofTexture* InputCamera::getTexture(){
-    
-    if (!videoGrabber->isInitialized()) {
-        return &noInputsImg.getTextureReference();
-    }
-    else {
-        return &img.getTextureReference();
-    }
+ofTexture* OSCReceiver::getTexture(){
+    return &oscReceiverImg.getTextureReference();
 }
 
 //------------------------------------------------------------------
-bool InputCamera::loadSettings(ofxXmlSettings &XML, int nTag_, int nodesCount_) {
+void OSCReceiver::editPort(string& p){
+    
+    port = ofToInt(p);
+    
+    OSCEvent e;
+    e.nodeId = nId;
+    e.port = port;
+    e.address = address;
+    ofNotifyEvent(editOSCPort, e);
+}
+
+//------------------------------------------------------------------
+void OSCReceiver::editAddress(string& a){
+    
+    address = a;
+    
+    OSCEvent e;
+    e.nodeId = nId;
+    e.port = port;
+    e.address = address;
+    ofNotifyEvent(editOSCPort, e);
+}
+
+//------------------------------------------------------------------
+void OSCReceiver::editInputs(bool& e){
+    
+    ofNotifyEvent(editOSCInputs, e);
+}
+
+//------------------------------------------------------------------
+void OSCReceiver::setPort(int port_){
+    
+    port = port_;
+}
+
+//------------------------------------------------------------------
+bool OSCReceiver::loadSettings(ofxXmlSettings &XML, int nTag_, int nodesCount_) {
     
     bool loaded = false;
-        
-    //not used yet
-    string cameraId = XML.getAttribute("NODE", "id","default", nTag_);
-    nId             = XML.getAttribute("NODE", "id", -1, nTag_) + nodesCount_;
+    
+    nId     = XML.getAttribute("NODE", "id", -1, nTag_) + nodesCount_;
+    port    = XML.getAttribute("NODE", "port", 66666, nTag_);
     
     XML.pushTag("NODE", nTag_);
     
     type            = XML.getValue("type","none");
     bVisible        = XML.getValue("visible", true);
     filePath        = XML.getValue("path", "none" );
-
+    
     ofxPatch::loadSettings(XML, nTag_, nodesCount_);
     
     XML.popTag();
@@ -90,10 +114,10 @@ bool InputCamera::loadSettings(ofxXmlSettings &XML, int nTag_, int nodesCount_) 
 }
 
 //------------------------------------------------------------------
-bool InputCamera::saveSettings(ofxXmlSettings &XML) {
+bool OSCReceiver::saveSettings(ofxXmlSettings &XML) {
     
     bool saved = false;
-        
+    
     // Search for the patch ID to update information
     // If the patch ID doesn't exists.. then I need to add it to the .xml
     //
@@ -112,6 +136,7 @@ bool InputCamera::saveSettings(ofxXmlSettings &XML) {
         if ( XML.getAttribute("NODE", "id", -1, i) == nId){
             
             XML.setAttribute("NODE", "name", name, i);
+            XML.addAttribute("NODE", "port", port, i);
             XML.pushTag("NODE", i);
             
             ofxPatch::saveSettings(XML, false, i);
@@ -133,7 +158,7 @@ bool InputCamera::saveSettings(ofxXmlSettings &XML) {
             
             XML.addAttribute("NODE", "id", nId, lastPlace);
             XML.addAttribute("NODE", "name", name, lastPlace);
-            XML.addAttribute("NODE", "type", "CAM", lastPlace);
+            XML.addAttribute("NODE", "port", port, lastPlace);
             
             if (XML.pushTag("NODE", lastPlace)){
                 
@@ -143,27 +168,7 @@ bool InputCamera::saveSettings(ofxXmlSettings &XML) {
             }
         }
     }
-
-    return saved;
-    
-}
-
-//------------------------------------------------------------------
-bool InputCamera::saveSettingsToSnippet(ofxXmlSettings &XML, map<int,int> newIdsMap) {
-    
-    bool saved = false;
-    int lastPlace = XML.addTag("NODE");
-    
-    XML.addAttribute("NODE", "id", newIdsMap[nId], lastPlace);
-    XML.addAttribute("NODE", "name", name, lastPlace);
-    XML.addAttribute("NODE", "type", "CAM", lastPlace);
-    
-    if (XML.pushTag("NODE", lastPlace)){
-        
-        saved = ofxPatch::saveSettingsToSnippet(XML, lastPlace, newIdsMap);
-        
-        XML.popTag();
-    }
     
     return saved;
+    
 }

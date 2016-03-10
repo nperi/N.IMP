@@ -75,7 +75,8 @@ enum InputType
     IMAGE,
     PARTICLE,
     RIGHT_AUDIO_IN,
-    LEFT_AUDIO_IN
+    LEFT_AUDIO_IN,
+    OSC_RECEIVER
 };
 
 enum VisualLayerType

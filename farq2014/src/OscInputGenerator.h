@@ -14,18 +14,22 @@
 #include "ParamInputGenerator.h"
 #include "ofxOsc.h"
 #include "DTOscMap.h"
+#include "ImageOutput.h"
 
 class OscInputGenerator : public ParamInputGenerator{
 	
   public:
 	
-	OscInputGenerator(string name_);
+	OscInputGenerator(string name_, int nodeID_);
 	
     void processInput();
-    //bool setupFromXML();
+    int  getNodeID(){ return nodeID; };
+    void setPort(int p);
     
     std::map<string,DTOscMap* >* oscMap;
     void removeNodeFromParams(int nodeID_);
+    bool addNewOSCMap(string address_, ImageOutput* node_, vector<string> params_);
+    void clearOSCMap();
     
     bool loadSettings(ofxXmlSettings &XML);
     bool saveSettings(ofxXmlSettings &XML);
@@ -33,6 +37,7 @@ class OscInputGenerator : public ParamInputGenerator{
 private:
     int port;
     ofxOscReceiver receiver;
+    int nodeID;
 	
 };
 

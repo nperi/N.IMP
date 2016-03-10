@@ -48,7 +48,7 @@ ofImage* InputSyphon::getImage(){
     }
     
     if (drawNoInputs)
-        return &noInputs;
+        return &noInputsImg;
     else {
         fbo.readToPixels(buff);
         img.setFromPixels(buff);
@@ -64,7 +64,7 @@ ofTexture* InputSyphon::getTexture(){
     }
     
     if (drawNoInputs){
-        return &noInputs.getTextureReference();
+        return &noInputsImg.getTextureReference();
     } else {
         return &fbo.getTextureReference();
     }

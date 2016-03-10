@@ -382,7 +382,7 @@ float ImageProcessor::getMidiMax(string param_){
 //------------------------------------------------------------------
 ofImage* ImageProcessor::getImage(){
     if (drawNoInputs)
-        return &noInputs;
+        return &noInputsImg;
     else {
         fbo.readToPixels(buff);
         img.setFromPixels(buff);
@@ -393,7 +393,7 @@ ofImage* ImageProcessor::getImage(){
 //------------------------------------------------------------------
 ofTexture* ImageProcessor::getTexture(){
     if (drawNoInputs)
-        return &noInputs.getTextureReference();
+        return &noInputsImg.getTextureReference();
     else
         return &fbo.getTextureReference();
 }

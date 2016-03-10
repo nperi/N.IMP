@@ -21,6 +21,7 @@
 
 #include "AudioAnalizer.h"
 #include "AudioIn.h"
+#include "OSCReceiver.h"
 #include "InputCamera.h"
 #include "VideoPlayerMac.h"
 #include "ImageInput.h"
@@ -51,14 +52,8 @@
 #include "ofxMultiGLFWWindow.h"
 #include "ConsoleLog.h"
 #include "EventHandler.h"
-//#include "AudioInEvent.h"
 #include "InputSyphon.h"
 #include "SyphonClientHandler.h"
-
-//enum InputType {VIDEO, CAM, IMAGE, PARTICLE};
-//enum VisualLayerType {IKEDA, GLITCH_1, GLITCH_2,IMAGE_PROCESSOR};
-//enum MixerType {SIMPLE_BLEND, MASK, MULTI_CHANNEL};
-//enum InputGeneratorsType {MIDI, FFT, OSC};
 
 class ofApp : public ofBaseApp {
 public:
@@ -90,6 +85,8 @@ public:
     void editLeftAudioIn(bool &edit_);
     void editRightAudioIn(bool &edit_);
     void editAudioIn();
+    void editOSCPort(OSCEvent &e_);
+    void editOSCInputs(bool &e_);
     bool loadFromXML();
     bool saveToXML();
     bool loadNodes(ofxXmlSettings &XML);
@@ -194,4 +191,6 @@ public:
     AudioIn* rightAudioPatch;
     AudioAnalizer* audioAnalizer;
     
+    // OSC
+    bool editOSCActive;
 };

@@ -238,7 +238,7 @@ float GlitchLayer::getMidiMax(string param_){
 //------------------------------------------------------------------
 ofImage* GlitchLayer::getImage(){
     if (drawNoInputs)
-        return &noInputs;
+        return &noInputsImg;
     else
         return &img;
 }
@@ -246,7 +246,7 @@ ofImage* GlitchLayer::getImage(){
 //------------------------------------------------------------------
 ofTexture* GlitchLayer::getTexture(){
     if (drawNoInputs)
-        return &noInputs.getTextureReference();
+        return &noInputsImg.getTextureReference();
     else
         return &img.getTextureReference();
 }

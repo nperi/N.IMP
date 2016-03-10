@@ -68,13 +68,15 @@ class ImageOutput : public ofxPatch {
     virtual bool saveSettingsToSnippet(ofxXmlSettings &XML, map<int,int> newIdsMap)=0;
     
     //midi learn methods
-    vector<string> getAttributesForMidiLearn();
+//    vector<string> getAttributesForMidiLearn();
     virtual float getMidiMin(string param_)=0;
     virtual float getMidiMax(string param_)=0;
     
     //audio in methods
-    vector<string> getAttributesForAudioIn();
+//    vector<string> getAttributesForAudioIn();
     bool setAttributesForAudioIn(string name_, bool left);
+
+    vector<string> getAttributesClicked();
     
 protected:
 

@@ -85,7 +85,7 @@ void AudioInputGenerator::processInput(){
 //------------------------------------------------------------------
 bool AudioInputGenerator::addNewAudioMap(int band_, ImageOutput* node_, vector<string> params_) {
     
-    vector<DTAudioMap*>* vMap = new vector<DTAudioMap*>();
+//    vector<DTAudioMap*>* vMap = new vector<DTAudioMap*>();
     
     for (int i = 0; i < params_.size(); i++) {
         
