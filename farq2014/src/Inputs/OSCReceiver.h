@@ -57,6 +57,7 @@ private:
     ofParameterGroup portGroup;
 
     int port;
+    ofImage oscReceiverImg;
     
 };
 
