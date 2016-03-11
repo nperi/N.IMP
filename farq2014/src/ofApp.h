@@ -91,6 +91,7 @@ public:
     bool saveToXML();
     bool loadNodes(ofxXmlSettings &XML);
     void deleteEverything();
+    void setSelectedForAudioIn();
     
     
     //change current viewer

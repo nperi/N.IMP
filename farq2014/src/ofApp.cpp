@@ -224,6 +224,21 @@ void ofApp::setupAudio(){
         rightAudioPatch->getWaveForm()->setBuffer(right);
     }
     
+    setSelectedForAudioIn();
+    
+    // 0 output channels,
+    // 2 input channels
+    // 44100 samples per second
+    // BUFFER_SIZE samples per buffer
+    // 4 num buffers (latency)
+    
+    ofSoundStreamSetup(0, 2, this, 44100, BUFFER_SIZE, 4);
+    //soundStream.setup(this, 0, 2, 44100, bufferSize, 4);
+}
+
+//------------------------------------------------------------------
+void ofApp::setSelectedForAudioIn(){
+    
     // setting nodes attributes selected for audio in
     //
     vector<DTAudioMap*>* am;
@@ -239,16 +254,8 @@ void ofApp::setupAudio(){
             }
         }
     }
-    
-    // 0 output channels,
-    // 2 input channels
-    // 44100 samples per second
-    // BUFFER_SIZE samples per buffer
-    // 4 num buffers (latency)
-    
-    ofSoundStreamSetup(0, 2, this, 44100, BUFFER_SIZE, 4);
-    //soundStream.setup(this, 0, 2, 44100, bufferSize, 4);
 }
+
 /* ================================================ */
 /* ================================================ */
 
@@ -1645,10 +1652,11 @@ bool ofApp::loadFromXML(){
         for(int i=0; i<syphonServers.size();i++){
             syphonServers[i]->setup();
         }
+        
+        setSelectedForAudioIn();
     }
     
     return loadingOK;
-    
 }
 
 
