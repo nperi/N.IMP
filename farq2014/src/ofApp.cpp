@@ -1274,10 +1274,16 @@ void ofApp::editOSCInputs(bool &e_) {
                     map<int, vector<string> > attributesSelected = nodeViewers[currentViewer]->getAttributesClicked();
                     std::map<int, ImageOutput*>::iterator node_;
                     
+                    ((OSCReceiver*)oscNode_->second)->clearParameters();
+                    
                     for(map<int, vector<string> >::iterator it = attributesSelected.begin(); it != attributesSelected.end(); it++ ){
                         node_ = nodes.find(it->first);
                         if (node_ != nodes.end()) {
                             ((OscInputGenerator*)p)->addNewOSCMap(((OSCReceiver*)oscNode_->second)->getAddress(), node_->second, it->second);
+                            
+                            for(int j = 0; j < it->second.size(); j++) {
+                                ((OSCReceiver*)oscNode_->second)->addParameter(it->second[j]);
+                            }
                         }
                     }
                 }

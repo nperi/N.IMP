@@ -31,6 +31,8 @@ public:
     string      getAddress(){ return address; };
     
     void        setPort(int p);
+    void        addParameter(string p);
+    void        clearParameters();
     
     void        updateParameter(Param* inputParam){};
     
@@ -55,6 +57,8 @@ private:
     ofParameter<string> address;
     ofParameter<bool> editOSC;
     ofParameterGroup portGroup;
+    ofParameterGroup paramsGroup;
+    vector<string> paramsLabels;
 
     int port;
     ofImage oscReceiverImg;

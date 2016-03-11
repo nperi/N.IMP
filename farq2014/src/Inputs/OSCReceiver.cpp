@@ -20,6 +20,9 @@ OSCReceiver::OSCReceiver(string name_, int id_) : InputSource(name_, "OSC Receiv
     gui.add(oscAddress.setup("Address", address, 100, 20));
     gui.add(editOSC.set("Edit OSC Inputs", false));
     
+    paramsGroup.setName("Params");
+    gui.add(paramsGroup);
+    
     oscPort.addListener(this, &OSCReceiver::editPort);
     oscAddress.addListener(this, &OSCReceiver::editAddress);
     editOSC.addListener(this, &OSCReceiver::editInputs);
@@ -93,12 +96,33 @@ void OSCReceiver::setPort(int port_){
 }
 
 //------------------------------------------------------------------
+void OSCReceiver::addParameter(string param_){
+    
+    gui.remove("Params");
+    
+    ofParameter<string> param = param_;
+    paramsGroup.add(param);
+    paramsLabels.push_back(param_);
+    
+    gui.add(paramsGroup);
+    gui.setWidthElements(INSPECTOR_WIDTH);
+}
+
+//------------------------------------------------------------------
+void OSCReceiver::clearParameters() {
+    
+    paramsGroup.clear();
+    paramsLabels.clear();
+}
+
+//------------------------------------------------------------------
 bool OSCReceiver::loadSettings(ofxXmlSettings &XML, int nTag_, int nodesCount_) {
     
     bool loaded = false;
     
     nId     = XML.getAttribute("NODE", "id", -1, nTag_) + nodesCount_;
     port    = XML.getAttribute("NODE", "port", 66666, nTag_);
+    address = XML.getAttribute("NODE", "address", "/", nTag_);
     
     XML.pushTag("NODE", nTag_);
     
@@ -106,6 +130,16 @@ bool OSCReceiver::loadSettings(ofxXmlSettings &XML, int nTag_, int nodesCount_) 
     bVisible        = XML.getValue("visible", true);
     filePath        = XML.getValue("path", "none" );
     
+    int numParamTag = XML.getNumTags("PARAM");
+    if (numParamTag > 0){
+        for (int v = 0; v < numParamTag; v++){
+            string name_ = XML.getAttribute("PARAM","name","",v);
+            if (name_ != "") {
+                addParameter(name_);
+            }
+        }
+    }
+
     ofxPatch::loadSettings(XML, nTag_, nodesCount_);
     
     XML.popTag();
@@ -137,7 +171,18 @@ bool OSCReceiver::saveSettings(ofxXmlSettings &XML) {
             
             XML.setAttribute("NODE", "name", name, i);
             XML.addAttribute("NODE", "port", port, i);
+            XML.addAttribute("NODE", "address", address, i);
             XML.pushTag("NODE", i);
+            
+            int numParamTag = XML.getNumTags("PARAM");
+            for (int v = 0; v < numParamTag; v++){
+                XML.removeTag("PARAM");
+            }
+            
+            for (int v = 0; v < paramsLabels.size(); v++){
+                XML.addTag("PARAM");
+                XML.addAttribute("PARAM", "name", paramsLabels[v], v);
+            }
             
             ofxPatch::saveSettings(XML, false, i);
             
@@ -158,9 +203,16 @@ bool OSCReceiver::saveSettings(ofxXmlSettings &XML) {
             
             XML.addAttribute("NODE", "id", nId, lastPlace);
             XML.addAttribute("NODE", "name", name, lastPlace);
+            XML.addAttribute("NODE", "type", "OSC_RECEIVER", lastPlace);
             XML.addAttribute("NODE", "port", port, lastPlace);
+            XML.addAttribute("NODE", "address", address, lastPlace);
             
             if (XML.pushTag("NODE", lastPlace)){
+                
+                for (int v = 0; v < paramsLabels.size(); v++){
+                    XML.addTag("PARAM");
+                    XML.addAttribute("PARAM", "name", paramsLabels[v], v);
+                }
                 
                 ofxPatch::saveSettings(XML, true, lastPlace);
                 
