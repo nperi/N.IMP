@@ -45,11 +45,12 @@ void ofApp::setup() {
     loadingOK              = true;
     isFullScreen           = false;
     midiLearnActive        = false;
-    editLeftAudioInActive  = false;
-    editRightAudioInActive = false;
+//    editLeftAudioInActive  = false;
+//    editRightAudioInActive = false;
+    editAudioInActive      = false;
     editOSCActive          = false;
-    rightAudioPatch        = NULL;
-    leftAudioPatch         = NULL;
+//    rightAudioPatch        = NULL;
+//    leftAudioPatch         = NULL;
     audioAnalizer          = NULL;
     currentViewer          = 0;
     
@@ -123,7 +124,7 @@ void ofApp::setup() {
     spacer = new ofxUISpacer(RIGHT_MENU_WIDTH + MENU_ITEM_SIZE*6 + MENU_ITEM_PADDING*8, 20, 1,MENU_ITEM_SIZE);
     menu->addWidget(spacer);
     spacer->setColorFill(ofxUIColor(120, 120, 120, 200));
-    new menuItem(menu, "MultiImageToggle", "Straight Links", "assets/line.png", false, RIGHT_MENU_WIDTH + MENU_ITEM_SIZE*6 + MENU_ITEM_PADDING*9, 20);
+    new menuItem(menu, "MultiImageToggle", "Straight Links", "assets/line.png", true, RIGHT_MENU_WIDTH + MENU_ITEM_SIZE*6 + MENU_ITEM_PADDING*9, 20);
     new menuItem(menu, "MultiImageToggle", "Curved Links", "assets/curve_line.png", false, RIGHT_MENU_WIDTH + MENU_ITEM_SIZE*7 + MENU_ITEM_PADDING*10, 20);
     new menuItem(menu, "MultiImageToggle", "Segmented Links", "assets/path_line.png", false, RIGHT_MENU_WIDTH + MENU_ITEM_SIZE*8 + MENU_ITEM_PADDING*11, 20);
     
@@ -183,6 +184,7 @@ void ofApp::setup() {
     NodeViewer* nV = new NodeViewer(xmlFileName);
     nV->setNodesCount(1);
     nV->setParent(cam);
+    nV->setLinkType(STRAIGHT_LINKS);
     gui->setMainComposer(nV);
     nodeViewers.push_back(nV);
     setCurrentViewer(0);
@@ -217,13 +219,6 @@ void ofApp::setupAudio(){
         nodeViewers[currentViewer]->addPatch(audioAnalizer, ofPoint((ofGetWidth()/2)-100, (ofGetHeight()/2)-50));
     }
     
-    if (leftAudioPatch != NULL) {
-        leftAudioPatch->getWaveForm()->setBuffer(left);
-    }
-    if (rightAudioPatch != NULL) {
-        rightAudioPatch->getWaveForm()->setBuffer(right);
-    }
-    
     setSelectedForAudioIn();
     
     // 0 output channels,
@@ -241,18 +236,44 @@ void ofApp::setSelectedForAudioIn(){
     
     // setting nodes attributes selected for audio in
     //
+    AudioIn* audioInNode;
     vector<DTAudioMap*>* am;
-    bool left_ = false;
+    bool isLeftChannel = false;
     std::map<int, ImageOutput*>::iterator node_;
+    
     for (int i = 0; i < audioListeners.size(); i++){
+        
         am = audioListeners[i]->getAudioMap();
-        left_ = ((AudioIn*)nodes.find(audioListeners[i]->getNodeID())->second)->getAudioInType() == LEFT;
+        audioInNode = (AudioIn*)nodes.find(audioListeners[i]->getNodeID())->second;
+        isLeftChannel = audioInNode->getAudioInType() == LEFT;
+        
         for (int j = 0; j < am->size(); j++){
             node_ = nodes.find(am->at(j)->nodeId);
             if (node_ != nodes.end()) {
-                node_->second->setAttributesForAudioIn(am->at(j)->paramId, left_);
+                node_->second->setAttributesForAudioIn(am->at(j)->paramId, isLeftChannel);
             }
         }
+        
+        if (isLeftChannel) {
+            audioInNode->getWaveForm()->setBuffer(left);
+        }
+        else {
+            audioInNode->getWaveForm()->setBuffer(right);
+        }
+    }
+}
+
+//------------------------------------------------------------------
+void ofApp::setSelectedForOSC(){
+    
+    // setting nodes attributes selected for OSC
+    //
+    OSCReceiver* oscNode;
+    vector<DTOscMap*>* om;
+    std::map<int, ImageOutput*>::iterator node_;
+    
+    for (int i = 0; i < inputGenerators.size(); i++){
+
     }
 }
 
@@ -950,34 +971,36 @@ void ofApp::createNode(textInputEvent &args){
     bool exist = false;
     
     if (args.type == "audio in - left channel") {
-        if (leftAudioPatch) {
-            nodeViewers[currentViewer]->deactivateAllPatches();
-            leftAudioPatch->bActive = true;
-            exist = true;
-        }
-        else {
-            newPatch = new AudioIn(gui, left, "Audio In - Left Channel", "New Audio In - Left Channel");
-            ((AudioIn*)newPatch)->setChannel(0);
-            inputs.push_back((AudioIn*)newPatch);
-            ofAddListener( ((AudioIn*)newPatch)->editAudioIn , this, &ofApp::editLeftAudioIn);
-//            ofAddListener( ((AudioIn*)newPatch)->editAudioInChannel , this, &ofApp::editAudioInChannel);
-            leftAudioPatch = (AudioIn*)newPatch;
-        }
+//        if (leftAudioPatch) {
+//            nodeViewers[currentViewer]->deactivateAllPatches();
+//            leftAudioPatch->bActive = true;
+//            exist = true;
+//        }
+//        else {
+        newPatch = new AudioIn(gui, left, "Audio In - Left Channel", "New Audio In - Left Channel");
+        ((AudioIn*)newPatch)->setChannel(0);
+        inputs.push_back((AudioIn*)newPatch);
+        ofAddListener( ((AudioIn*)newPatch)->editAudioIn , this, &ofApp::editAudioIn);
+        ofAddListener( ((AudioIn*)newPatch)->editAudioInBand , this, &ofApp::editAudioInBand);
+//        ofAddListener( ((AudioIn*)newPatch)->editAudioInChannel , this, &ofApp::editAudioInChannel);
+//        leftAudioPatch = (AudioIn*)newPatch;
+//      }
     }
     else if (args.type == "audio in - right channel") {
-        if (rightAudioPatch) {
-            nodeViewers[currentViewer]->deactivateAllPatches();
-            rightAudioPatch->bActive = true;
-            exist = true;
-        }
-        else {
-            newPatch = new AudioIn(gui, right, "Audio In - Right Channel", "New Audio In - Right Channel");
-            ((AudioIn*)newPatch)->setChannel(1);
-            inputs.push_back((AudioIn*)newPatch);
-            ofAddListener( ((AudioIn*)newPatch)->editAudioIn , this, &ofApp::editRightAudioIn);
-//            ofAddListener( ((AudioIn*)newPatch)->editAudioInChannel , this, &ofApp::editAudioInChannel);
-            rightAudioPatch = (AudioIn*)newPatch;
-        }
+//        if (rightAudioPatch) {
+//            nodeViewers[currentViewer]->deactivateAllPatches();
+//            rightAudioPatch->bActive = true;
+//            exist = true;
+//        }
+//        else {
+        newPatch = new AudioIn(gui, right, "Audio In - Right Channel", "New Audio In - Right Channel");
+        ((AudioIn*)newPatch)->setChannel(1);
+        inputs.push_back((AudioIn*)newPatch);
+        ofAddListener( ((AudioIn*)newPatch)->editAudioIn , this, &ofApp::editAudioIn);
+        ofAddListener( ((AudioIn*)newPatch)->editAudioInBand , this, &ofApp::editAudioInBand);
+//        ofAddListener( ((AudioIn*)newPatch)->editAudioInChannel , this, &ofApp::editAudioInChannel);
+//        rightAudioPatch = (AudioIn*)newPatch;
+//      }
     }
     else if (args.type == "osc receiver") {
         newPatch = new OSCReceiver();
@@ -1070,6 +1093,7 @@ void ofApp::createNode(textInputEvent &args){
             AudioInputGenerator* aI = new AudioInputGenerator(newPatch->getName(), newPatch->getId());
 //            aI->loadSettings(XML);
             aI->setChannel(((AudioIn*)newPatch)->getChannel());
+            aI->setBand(((AudioIn*)newPatch)->getBand());
             
             inputGenerators.push_back(aI);
             audioListeners.push_back(aI);
@@ -1114,7 +1138,7 @@ void ofApp::closePatch(int &_nID) {
             while (i < inputGenerators.size()) {
                 if (inputGenerators[i]->getParamInputType() == FFT && ((AudioListenerInput*)inputGenerators[i])->getNodeID() == _nID) {
                     inputGenerators.erase(inputGenerators.begin() + i);
-                    leftAudioPatch == n ? leftAudioPatch = NULL : rightAudioPatch = NULL;
+//                    leftAudioPatch == n ? leftAudioPatch = NULL : rightAudioPatch = NULL;
                 }
                 i++;
             }
@@ -1184,23 +1208,35 @@ void ofApp::closePatch(int &_nID) {
 //}
 
 //------------------------------------------------------------------
-void ofApp::editLeftAudioIn(bool &edit_){
+void ofApp::editAudioInBand(AudioInEvent &e_){
 
-    editAudioIn();
-    editLeftAudioInActive = !editLeftAudioInActive;
-    nodeViewers[currentViewer]->setEditLeftAudioInActive(editLeftAudioInActive);
+    for (int i = 0; i < audioListeners.size(); ++i) {
+        if (audioListeners[i]->getNodeID() == e_.nodeId) {
+            ((AudioInputGenerator*)audioListeners[i])->setBand(e_.band);
+            break;
+        }
+    }
 }
 
-//------------------------------------------------------------------
-void ofApp::editRightAudioIn(bool &edit_){
-    
-    editAudioIn();
-    editRightAudioInActive = !editRightAudioInActive;
-    nodeViewers[currentViewer]->setEditRightAudioInActive(editRightAudioInActive);
-}
+////------------------------------------------------------------------
+//void ofApp::editLeftAudioIn(bool &edit_){
+//
+//    editAudioIn();
+////    editLeftAudioInActive = !editLeftAudioInActive;
+////    nodeViewers[currentViewer]->setEditLeftAudioInActive(editLeftAudioInActive);
+//    editAudioInActive = edit_.active ? edit_.band : 0;
+//}
+//
+////------------------------------------------------------------------
+//void ofApp::editRightAudioIn(bool &edit_){
+//    
+//    editAudioIn();
+////    editRightAudioInActive = !editRightAudioInActive;
+////    nodeViewers[currentViewer]->setEditRightAudioInActive(editRightAudioInActive);
+//}
 
 //------------------------------------------------------------------
-void ofApp::editAudioIn(){
+void ofApp::editAudioIn(AudioInEvent &edit_){
     
     if (midiLearnActive) {
         ((ofxUIMultiImageToggle*)menu->getWidget("Midi Learn"))->setValue(false);
@@ -1216,18 +1252,16 @@ void ofApp::editAudioIn(){
         }
     }
     
-    if (editLeftAudioInActive || editRightAudioInActive){
+    if (editAudioInActive){
         
         for (int i=0; i<inputGenerators.size(); ++i) {
             ParamInputGenerator* p = inputGenerators[i];
-            if (p->getParamInputType() == FFT) {
+            if ((p->getParamInputType() == FFT) && (((AudioInputGenerator*)p)->getNodeID() == edit_.nodeId)) {
                 
                 std::map<int, ImageOutput*>::iterator audioInNode_;
-                audioInNode_ = nodes.find(((AudioInputGenerator*)p)->getNodeID());
+                audioInNode_ = nodes.find(edit_.nodeId);
                 
-                if (audioInNode_ != nodes.end() &&
-                    ((((AudioIn*)audioInNode_->second)->getAudioInType() == LEFT && editLeftAudioInActive) ||
-                    (((AudioIn*)audioInNode_->second)->getAudioInType() == RIGHT && editRightAudioInActive))) {
+                if (audioInNode_ != nodes.end()) {
                 
                     ((AudioInputGenerator*)p)->clearAudioMap();
                     
@@ -1237,16 +1271,18 @@ void ofApp::editAudioIn(){
                     for(map<int, vector<string> >::iterator it = attributesSelected.begin(); it != attributesSelected.end(); it++ ){
                         node_ = nodes.find(it->first);
                         if (node_ != nodes.end()) {
-                            if (editRightAudioInActive)
-                                ((AudioInputGenerator*)p)->addNewAudioMap(((AudioIn*)audioInNode_->second)->getChannel(), node_->second, it->second);
-                            if(editLeftAudioInActive)
-                                ((AudioInputGenerator*)p)->addNewAudioMap(((AudioIn*)audioInNode_->second)->getChannel(), node_->second, it->second);
+                            ((AudioInputGenerator*)p)->addNewAudioMap(((AudioIn*)audioInNode_->second)->getBand(), ((AudioIn*)audioInNode_->second)->getChannel(), node_->second, it->second);
                         }
                     }
                 }
             }
         }
     }
+    
+    editAudioInActive = edit_.active;
+    edit_.channel == 0
+        ? nodeViewers[currentViewer]->setEditLeftAudioInActive(edit_.active, edit_.nodeId)
+        : nodeViewers[currentViewer]->setEditRightAudioInActive(edit_.active, edit_.nodeId);
 };
 
 //------------------------------------------------------------------
@@ -1261,18 +1297,16 @@ void ofApp::editOSCPort(OSCEvent &e_) {
 }
 
 //------------------------------------------------------------------
-void ofApp::editOSCInputs(bool &e_) {
+void ofApp::editOSCInputs(OSCEvent &edit_) {
     
-    editOSCActive = !editOSCActive;
-    
-    if (!editOSCActive){
+    if (editOSCActive){
         
         for (int i = 0; i < inputGenerators.size(); ++i) {
             ParamInputGenerator* p = inputGenerators[i];
-            if (p->getParamInputType() == OSC) {
+            if ((p->getParamInputType() == OSC) &&  (((OscInputGenerator*)p)->getNodeID() == edit_.nodeId)) {
                 
                 std::map<int, ImageOutput*>::iterator oscNode_;
-                oscNode_ = nodes.find(((OscInputGenerator*)p)->getNodeID());
+                oscNode_ = nodes.find(edit_.nodeId);
                 
                 if (oscNode_ != nodes.end()) {
                     
@@ -1297,7 +1331,9 @@ void ofApp::editOSCInputs(bool &e_) {
             }
         }
     }
-    nodeViewers[currentViewer]->setEditOSCActive(editOSCActive);
+    
+    editOSCActive = !editOSCActive;
+    nodeViewers[currentViewer]->setEditOSCActive(editOSCActive, edit_.nodeId);
 }
 
 //------------------------------------------------------------------
@@ -1881,8 +1917,9 @@ bool ofApp::loadNodes(ofxXmlSettings &XML){
                     inputs.push_back(aI);
                     nodes.insert(std::pair<int,ImageOutput*>(inputId,aI));
                     
-                    rightAudioPatch = aI;
-                    ofAddListener(aI->editAudioIn , this, &ofApp::editRightAudioIn);
+//                    rightAudioPatch = aI;
+                    ofAddListener(aI->editAudioIn , this, &ofApp::editAudioIn);
+                    ofAddListener(aI->editAudioInBand , this, &ofApp::editAudioInBand);
 //                    ofAddListener(aI->editAudioInChannel , this, &ofApp::editAudioInChannel);
                     
                     break;
@@ -1895,8 +1932,9 @@ bool ofApp::loadNodes(ofxXmlSettings &XML){
                     inputs.push_back(aI);
                     nodes.insert(std::pair<int,ImageOutput*>(inputId,aI));
                     
-                    leftAudioPatch = aI;
-                    ofAddListener(aI->editAudioIn , this, &ofApp::editLeftAudioIn);
+//                    leftAudioPatch = aI;
+                    ofAddListener(aI->editAudioIn , this, &ofApp::editAudioIn);
+                    ofAddListener(aI->editAudioInBand , this, &ofApp::editAudioInBand);
 //                    ofAddListener(aI->editAudioInChannel , this, &ofApp::editAudioInChannel);
                     
                     break;
@@ -2177,8 +2215,8 @@ void ofApp::deleteEverything() {
     syphonServers.clear();
     
     audioAnalizer   = NULL;
-    leftAudioPatch  = NULL;
-    rightAudioPatch = NULL;
+//    leftAudioPatch  = NULL;
+//    rightAudioPatch = NULL;
     
 }
 

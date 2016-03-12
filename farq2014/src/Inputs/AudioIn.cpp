@@ -15,10 +15,12 @@ AudioIn::AudioIn(ofxUISuperCanvas* &gui_, float* &inputBuffer_, string type_, st
     isAudio     = true;
     width       = 500;
     height      = 250;
+    selectBand  = 1;
     
     waveform = new ofxUIWaveform(0, 0, 200, 100, inputBuffer_, BUFFER_SIZE, -1.5, 1.5, "FFT");
     
 //    gui.add(selectChannel.set("Channel",0,0,1));
+    gui.add(selectBand.set("Band",1,1,16));
     
     if (type_ == "Audio In - Left Channel") {
         audioInType = LEFT;
@@ -30,6 +32,7 @@ AudioIn::AudioIn(ofxUISuperCanvas* &gui_, float* &inputBuffer_, string type_, st
     }
     
 //    selectChannel.addListener(this, &AudioIn::editChannel);
+    selectBand.addListener(this, &AudioIn::editBand);
     editFFTInputs.addListener(this, &AudioIn::editInputs);
     
     gui.setWidthElements(INSPECTOR_WIDTH);
@@ -75,9 +78,15 @@ void AudioIn::_mouseDragged(ofMouseEventArgs &e){
 }
 
 //------------------------------------------------------------------
-void AudioIn::editInputs(bool& g){
+void AudioIn::editInputs(bool& b){
     
-    ofNotifyEvent(editAudioIn, g);
+    AudioInEvent ev;
+    ev.nodeId = nId;
+    ev.band = selectBand;
+    ev.channel = selectChannel;
+    ev.active = b;
+    
+    ofNotifyEvent(editAudioIn, ev);
 }
 
 //------------------------------------------------------------------
@@ -90,6 +99,16 @@ void AudioIn::editInputs(bool& g){
 //}
 
 //------------------------------------------------------------------
+void AudioIn::editBand(int& band_){
+
+    AudioInEvent e;
+    e.nodeId = nId;
+    e.band = band_;
+    e.channel = selectChannel;
+    ofNotifyEvent(editAudioInBand, e);
+}
+
+//------------------------------------------------------------------
 void AudioIn::setChannel(int c){
     
     selectChannel = c;
@@ -98,6 +117,12 @@ void AudioIn::setChannel(int c){
 //    e.nodeId = nId;
 //    e.channel = c;
 //    ofNotifyEvent(editAudioInChannel, e);
+}
+
+//------------------------------------------------------------------
+void AudioIn::setBand(int band_){
+    
+    selectBand = band_;
 }
 
 //------------------------------------------------------------------
@@ -129,6 +154,7 @@ bool AudioIn::loadSettings(ofxXmlSettings &XML, int nTag_, int nodesCount_) {
     
     nId             = XML.getAttribute("NODE", "id", -1, nTag_) + nodesCount_;
     selectChannel   = XML.getAttribute("NODE", "channel", 1, nTag_);
+    selectBand      = XML.getAttribute("NODE", "band", 1, nTag_);
     
     XML.pushTag("NODE", nTag_);
     
@@ -167,6 +193,7 @@ bool AudioIn::saveSettings(ofxXmlSettings &XML) {
             
             XML.setAttribute("NODE", "name", name, i);
             XML.addAttribute("NODE", "channel", selectChannel, i);
+            XML.addAttribute("NODE", "band", selectBand, i);
             XML.pushTag("NODE", i);
             
             ofxPatch::saveSettings(XML, false, i);
@@ -189,6 +216,7 @@ bool AudioIn::saveSettings(ofxXmlSettings &XML) {
             XML.addAttribute("NODE", "id", nId, lastPlace);
             XML.addAttribute("NODE", "name", name, lastPlace);
             XML.addAttribute("NODE", "channel", selectChannel, lastPlace);
+            XML.addAttribute("NODE", "band", selectBand, lastPlace);
             audioInType == LEFT ? XML.addAttribute("NODE", "type", "LEFT_AUDIO_IN", lastPlace) : XML.addAttribute("NODE", "type", "RIGHT_AUDIO_IN", lastPlace);
             
             if (XML.pushTag("NODE", lastPlace)){

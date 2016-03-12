@@ -64,11 +64,11 @@ void OSCReceiver::editPort(string& p){
     
     port = ofToInt(p);
     
-    OSCEvent e;
-    e.nodeId = nId;
-    e.port = port;
-    e.address = address;
-    ofNotifyEvent(editOSCPort, e);
+    OSCEvent ev;
+    ev.nodeId = nId;
+    ev.port = port;
+    ev.address = address;
+    ofNotifyEvent(editOSCPort, ev);
 }
 
 //------------------------------------------------------------------
@@ -76,17 +76,21 @@ void OSCReceiver::editAddress(string& a){
     
     address = a;
     
-    OSCEvent e;
-    e.nodeId = nId;
-    e.port = port;
-    e.address = address;
-    ofNotifyEvent(editOSCPort, e);
+    OSCEvent ev;
+    ev.nodeId = nId;
+    ev.port = port;
+    ev.address = address;
+    ofNotifyEvent(editOSCPort, ev);
 }
 
 //------------------------------------------------------------------
-void OSCReceiver::editInputs(bool& e){
+void OSCReceiver::editInputs(bool& b){
     
-    ofNotifyEvent(editOSCInputs, e);
+    OSCEvent ev;
+    ev.nodeId = nId;
+    ev.port = port;
+    ev.address = address;
+    ofNotifyEvent(editOSCInputs, ev);
 }
 
 //------------------------------------------------------------------

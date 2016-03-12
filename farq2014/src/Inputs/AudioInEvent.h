@@ -13,7 +13,9 @@ class AudioInEvent : ofEventArgs {
     
 public:
     int nodeId;
+    int band;
     int channel;
+    bool active;
 };
 
 #endif /* AudioInEvent_h */

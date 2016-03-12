@@ -175,7 +175,20 @@ bool ImageOutput::setAttributesForAudioIn(string name_, bool left) {
     
     ofxBaseGui* control = gui.getControl(name_);
     if (control) {
-        left ? control->setSelectedForLeftAudio(true) : control->setSelectedForRightAudio(true);
+        left ? control->setSelectedForLeftAudio(true, nId) : control->setSelectedForRightAudio(true, nId);
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+
+//------------------------------------------------------------------
+bool ImageOutput::setAttributesForOSC(string name_) {
+    
+    ofxBaseGui* control = gui.getControl(name_);
+    if (control) {
+        control->setSelectedForOSC(true, nId);
         return true;
     }
     else {

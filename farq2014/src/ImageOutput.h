@@ -75,6 +75,7 @@ class ImageOutput : public ofxPatch {
     //audio in methods
 //    vector<string> getAttributesForAudioIn();
     bool setAttributesForAudioIn(string name_, bool left);
+    bool setAttributesForOSC(string name);
 
     vector<string> getAttributesClicked();
     

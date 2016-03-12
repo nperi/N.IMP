@@ -32,9 +32,9 @@ public:
     void setName(string name_){ name = name_; };
     void setupGuiPositions();
     void setMidiLearnActive(bool active_);
-    void setEditLeftAudioInActive(bool active_);
-    void setEditRightAudioInActive(bool active_);
-    void setEditOSCActive(bool active_);
+    void setEditLeftAudioInActive(bool active_, int node_);
+    void setEditRightAudioInActive(bool active_, int node_);
+    void setEditOSCActive(bool active_, int node_);
     
     void createConnections(vector<NodeElement*> _elements);
     void createConnections();

@@ -50,30 +50,30 @@ void NodeViewer::setMidiLearnActive(bool active_){
 }
 
 //------------------------------------------------------------------
-void NodeViewer::setEditLeftAudioInActive(bool active_){
+void NodeViewer::setEditLeftAudioInActive(bool active_, int node_){
     
     for (int i=0; i<elements.size(); ++i) {
-        elements[i]->getImageOutput()->setEditLeftAudioInActive(active_);
+        elements[i]->getImageOutput()->setEditLeftAudioInActive(active_, node_);
     }
     
     this->editAudioInActive = active_;
 }
 
 //------------------------------------------------------------------
-void NodeViewer::setEditRightAudioInActive(bool active_){
+void NodeViewer::setEditRightAudioInActive(bool active_, int node_){
     
     for (int i=0; i<elements.size(); ++i) {
-        elements[i]->getImageOutput()->setEditRightAudioInActive(active_);
+        elements[i]->getImageOutput()->setEditRightAudioInActive(active_, node_);
     }
     
     this->editAudioInActive = active_;
 }
 
 //------------------------------------------------------------------
-void NodeViewer::setEditOSCActive(bool active_){
+void NodeViewer::setEditOSCActive(bool active_, int node_){
     
     for (int i=0; i<elements.size(); ++i) {
-        elements[i]->getImageOutput()->setEditOSCActive(active_);
+        elements[i]->getImageOutput()->setEditOSCActive(active_, node_);
     }
     
     this->editOSCActive = active_;

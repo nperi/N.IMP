@@ -28,8 +28,9 @@ public:
     void processInput();
     //bool setupFromXML();
     void setChannel(int c) { channel = c; };
+    void setBand(int b) { band = b; };
     
-    bool addNewAudioMap(int band_, ImageOutput* node_, vector<string> params_);
+    bool addNewAudioMap(int band_, int channel_, ImageOutput* node_, vector<string> params_);
     void clearAudioMap();
     void removeNodeFromParams(int nodeID_);
     
@@ -49,6 +50,7 @@ private:
     float freq_phase[NUM_WINDOWS][BUFFER_SIZE/2];
     
     int channel;
+    int band;
     
 
 };

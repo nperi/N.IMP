@@ -23,7 +23,7 @@ AudioAnalizer::AudioAnalizer(string name_, int id_) : InputSource(name_, "Audio 
     title->removeButton('r');
     title->removeButton('m');
     
-    filterBank.setup(BUFFER_SIZE, 0, 255, 2, 1.0, 44100, 1.0);
+    filterBank.setup(BUFFER_SIZE, 1, 128, 2, 1.0, 44100, 1.0);
     filterBank.setColor(ofColor::orange);
     
     resetSize();

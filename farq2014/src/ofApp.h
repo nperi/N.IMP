@@ -21,7 +21,9 @@
 
 #include "AudioAnalizer.h"
 #include "AudioIn.h"
+#include "AudioInEvent.h"
 #include "OSCReceiver.h"
+#include "OSCEvent.h"
 #include "InputCamera.h"
 #include "VideoPlayerMac.h"
 #include "ImageInput.h"
@@ -82,16 +84,18 @@ public:
     void initNode(ofxPatch* node);
     void closePatch(int &_nID);
 //    void editAudioInChannel(AudioInEvent &e_);
-    void editLeftAudioIn(bool &edit_);
-    void editRightAudioIn(bool &edit_);
-    void editAudioIn();
+    void editAudioInBand(AudioInEvent &e_);
+//    void editLeftAudioIn(bool &edit_);
+//    void editRightAudioIn(bool &edit_);
+    void editAudioIn(AudioInEvent &e_);
     void editOSCPort(OSCEvent &e_);
-    void editOSCInputs(bool &e_);
+    void editOSCInputs(OSCEvent &e_);
     bool loadFromXML();
     bool saveToXML();
     bool loadNodes(ofxXmlSettings &XML);
     void deleteEverything();
     void setSelectedForAudioIn();
+    void setSelectedForOSC();
     
     
     //change current viewer
@@ -186,10 +190,11 @@ public:
     ofxMidiIn midiIn;
     
     // Audio In
-    bool editLeftAudioInActive;
-    bool editRightAudioInActive;
-    AudioIn* leftAudioPatch;
-    AudioIn* rightAudioPatch;
+//    bool editLeftAudioInActive;
+//    bool editRightAudioInActive;
+//    AudioIn* leftAudioPatch;
+//    AudioIn* rightAudioPatch;
+    bool editAudioInActive;
     AudioAnalizer* audioAnalizer;
     
     // OSC

@@ -38,7 +38,7 @@ public:
     
     ofEvent<OSCEvent> editOSCPort;
     ofEvent<OSCEvent> editOSCAddress;
-    ofEvent<bool>     editOSCInputs;
+    ofEvent<OSCEvent> editOSCInputs;
     
     bool loadSettings(ofxXmlSettings &XML, int nTag_, int nodesCount_ = 0);
     bool saveSettings(ofxXmlSettings &XML);

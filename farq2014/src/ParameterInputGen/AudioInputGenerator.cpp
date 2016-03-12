@@ -60,15 +60,19 @@ void AudioInputGenerator::processInput(){
                     
 //                    int band = audioMap->at(i)->band;
                     
-                    if(magnitude[channel]>50.0f){
+                    if(magnitude[band]>50.0f){
                         // we limit the max output to 50 ... this is arbitrary
-                        magnitude[channel] = 50.0f;
+                        magnitude[band] = 50.0f;
+                    }
+                    else if(magnitude[band]<00.01f){
+                        // we limit the min output to 0
+                        magnitude[band] = 0.0f;
                     }
                     
                     p->imageInputId = audioMap->at(i)->nodeId;
                     p->name         = audioMap->at(i)->paramId;
-                    p->intVal       = ofMap(magnitude[channel], audioMap->at(i)->inputMinValue, audioMap->at(i)->inputMaxValue, audioMap->at(i)->paramMinValue, audioMap->at(i)->paramMaxValue);
-                    p->floatVal     = ofMap(magnitude[channel], audioMap->at(i)->inputMinValue, audioMap->at(i)->inputMaxValue, audioMap->at(i)->paramMinValue, audioMap->at(i)->paramMaxValue);
+                    p->intVal       = ofMap(magnitude[band], audioMap->at(i)->inputMinValue, audioMap->at(i)->inputMaxValue, audioMap->at(i)->paramMinValue, audioMap->at(i)->paramMaxValue);
+                    p->floatVal     = ofMap(magnitude[band], audioMap->at(i)->inputMinValue, audioMap->at(i)->inputMaxValue, audioMap->at(i)->paramMinValue, audioMap->at(i)->paramMaxValue);
                     
                     storeMessage(p);
                 }
@@ -83,7 +87,7 @@ void AudioInputGenerator::processInput(){
 }
 
 //------------------------------------------------------------------
-bool AudioInputGenerator::addNewAudioMap(int band_, ImageOutput* node_, vector<string> params_) {
+bool AudioInputGenerator::addNewAudioMap(int band_, int channel_, ImageOutput* node_, vector<string> params_) {
     
 //    vector<DTAudioMap*>* vMap = new vector<DTAudioMap*>();
     
@@ -91,7 +95,8 @@ bool AudioInputGenerator::addNewAudioMap(int band_, ImageOutput* node_, vector<s
         
         DTAudioMap* dtM = new DTAudioMap();
         
-        dtM->band           = band_;
+//        dtM->band           = band_;
+//        dtM->channel        = channel_;
         dtM->nodeId         = node_->getId();
         dtM->paramId        = params_[i];
         dtM->inputMinValue  = 0;
@@ -124,6 +129,7 @@ bool AudioInputGenerator::loadSettings(ofxXmlSettings &XML) {
     bool result = true;
     
     channel = XML.getAttribute("FFT_SETTINGS","channel",0,0);
+    band = XML.getAttribute("FFT_SETTINGS","band",0,0);
     XML.pushTag("FFT_SETTINGS");
 
     int numAudioMapTag = XML.getNumTags("AUDIO_MAP");
@@ -133,7 +139,8 @@ bool AudioInputGenerator::loadSettings(ofxXmlSettings &XML) {
         DTAudioMap* dtM = new DTAudioMap();
         
 //        dtM->band           = ofToInt(XML.getAttribute("AUDIO_MAP","band","1",i));
-        dtM->band           = channel;
+        dtM->band           = band;
+//        dtM->channel        = channel;
         dtM->nodeId         = XML.getAttribute("AUDIO_MAP","nodeId",0,i);
         dtM->paramId        = XML.getAttribute("AUDIO_MAP","param","",i);
         dtM->inputMinValue  = ofToInt(XML.getAttribute("AUDIO_MAP","inputMinValue","0",i));
@@ -172,6 +179,8 @@ bool AudioInputGenerator::saveSettings(ofxXmlSettings &XML) {
         if ( XML.getAttribute("INPUT_GEN", "nodeId", -1, i) == nodeID){
             
             XML.pushTag("INPUT_GEN", i);
+            
+            XML.setAttribute("FFT_SETTINGS", "band", band, i);
             XML.pushTag("FFT_SETTINGS");
             
             int numAudioMapTag = XML.getNumTags("AUDIO_MAP");
@@ -215,6 +224,7 @@ bool AudioInputGenerator::saveSettings(ofxXmlSettings &XML) {
             XML.pushTag("INPUT_GEN", lastPlace);
             lastPlace = XML.addTag("FFT_SETTINGS");
             XML.addAttribute("FFT_SETTINGS", "channel", channel, lastPlace);
+            XML.addAttribute("FFT_SETTINGS", "band", band, lastPlace);
             XML.pushTag("FFT_SETTINGS", lastPlace);
             
             for(int i = 0; i < audioMap->size(); i++){
