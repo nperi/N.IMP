@@ -18,7 +18,7 @@ ConsoleLog::ConsoleLog() {
     font.setLineHeight(18.0f);
     font.setLetterSpacing(1.037);
     
-    maxConsoleMessages = 50;
+    maxConsoleMessages = 300;
 }
 
 ConsoleLog::~ConsoleLog(){

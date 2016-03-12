@@ -65,6 +65,11 @@ private:
     float touchpad_scroll_x;
     float touchpad_scroll_y;
 
+    bool applyInertia, updating;
+    ofPoint prev0, prev1, post0, post1;
+    ofVec2f prevDiff;
+    float drag;
+    float minScrollDifference;
 };
 
 

@@ -95,10 +95,6 @@ private:
     ofxComposer* composer;
     ofCamera*    cam;
     
-//    ofVec4f getUntransformedCoords(int x, int y);
-    
-//    bool enableScroll;
-    
     bool zooming, updating;
     bool isZooming();
     
@@ -109,6 +105,9 @@ private:
     
     int windowId;
     int eventPriority;
+    
+    bool showMaxZoomReachedMessage;
+    bool enableScrollAndZoom;
 };
 
 

@@ -25,6 +25,8 @@ ConsoleScrollBar::ConsoleScrollBar(ofxMultiTouchPad* _pad, int eventPriority){
     ofAddListener(ofEvents().windowResized, this, &ConsoleScrollBar::windowResized, eventPriority);
     
     ofAddListener(ofEvents().mouseDragged, this, &ConsoleScrollBar::mouseDragged, eventPriority);
+    
+    
 }
 
 
@@ -50,6 +52,12 @@ void ConsoleScrollBar::setup(){
     // The size of the panel. All the screen except margins
     panelWidth = ofGetWidth();
     panelHeight = ofGetHeight();
+    
+    applyInertia = false;
+    updating = false;
+    drag = 0.9f;
+    minScrollDifference = 0.1e-5f;
+    
 }
 
 /* ================================================ */
@@ -58,7 +66,6 @@ void ConsoleScrollBar::setup(){
 
 void ConsoleScrollBar::update(){
     ofVec3f diffVec = ofVec3f(0,0,0);
-//    if(EventHandler::getInstance()->isConsoleEvent()){
     if(EventHandler::getInstance()->getWindowEvent() == CONSOLE_WINDOW){
         //** touchpad scroll **//
         std::vector<MTouch> mTouches = pad->getTouches();
@@ -67,11 +74,17 @@ void ConsoleScrollBar::update(){
                 touchpad_scroll = true;
                 touchpad_scroll_x = ((mTouches[0].x + mTouches[1].x))*100 / 2;
                 touchpad_scroll_y = ((mTouches[0].y + mTouches[1].y))*100 / 2;
+                prev0 = ofPoint(mTouches[0].x, mTouches[0].y);
+                prev1 = ofPoint(mTouches[1].x, mTouches[1].y);
             }
             else {
+                if(!updating){
+                    post0 = ofPoint(mTouches[0].x, mTouches[0].y);
+                    post1 = ofPoint(mTouches[1].x, mTouches[1].y);
+                }
                 
+                updating = true;
                 if (isScrollBarVisible) {
-                    
                     float new_y = ((mTouches[0].y + mTouches[1].y)*100) / 2;
                     float diff_y = (touchpad_scroll_y - new_y)*1.1;
                     
@@ -82,14 +95,33 @@ void ConsoleScrollBar::update(){
                     touchpad_scroll_y = new_y;
                     float dy = new_y - touchpad_scroll_y;
                     gripRectangle.y -= diffVec.y;
-                    
+                    prevDiff.y = diffVec.y;
                 }
             }
         }
         else {
             touchpad_scroll = false;
+            updating = false;
+            if(mTouches.size() == 0) {
+                applyInertia = true;
+            }else{
+                applyInertia = false;
+                prevDiff.x = 0;
+                prevDiff.y = 0;
+            }
         }
         //** **//
+    }
+    
+    
+    if(applyInertia){
+        prevDiff.y *= drag;
+        diffVec.y = prevDiff.y;
+        gripRectangle.y -= diffVec.y;
+        
+        if(ABS(prevDiff.y) <= minScrollDifference){
+            applyInertia = false;
+        }
     }
     updateScrollBar(diffVec);
 }
@@ -97,6 +129,7 @@ void ConsoleScrollBar::update(){
 void ConsoleScrollBar::draw(){
     // Add a translation to bring the panel to the good position
     ofPushMatrix();
+    ofPushStyle();
     // Draw the scroll bar, is needed
     if (isScrollBarVisible) {
         ofSetColor(40);
@@ -108,6 +141,7 @@ void ConsoleScrollBar::draw(){
         }
         ofRect(gripRectangle);
     }
+    ofPopStyle();
     ofPopMatrix();
 }
 
@@ -120,7 +154,6 @@ void ConsoleScrollBar::draw(){
 /* ================================================ */
 
 void ConsoleScrollBar::mouseDragged(ofMouseEventArgs &e){
-//    if(EventHandler::getInstance()->isConsoleEvent()){
     if(EventHandler::getInstance()->getWindowEvent() == CONSOLE_WINDOW){
         ofVec3f mouse = ofVec3f(e.x, e.y,0);
         ofVec3f mouseLast = ofVec3f(ofGetPreviousMouseX(),ofGetPreviousMouseY(),0);
