@@ -29,6 +29,8 @@
 #define CONSOLE_LOG_EVENT_PRORITY 204
 
 #define SCALE_SENSITIVITY 0.001f
+#define MAX_SCALE 1.5f
+#define MIN_SCALE .5f
 #define ZOOM_SENSITIVITY .001f
 #define ZOOM_DIFF .5f
 #define ZOOM_UNIT 1.f
