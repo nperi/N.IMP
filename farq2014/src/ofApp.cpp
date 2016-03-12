@@ -10,7 +10,7 @@ using namespace ofxCv;
 
 void ofApp::setup() {
     
-//    ofHideCursor();
+    ofSetEscapeQuitsApp(false);
     
     //*** WINDOWS SETUP ***//
     //
@@ -271,13 +271,25 @@ void ofApp::update() {
         //if pressing zoom in/out buttons
         if (menu_zoom_in) {
             scale = cam.getScale().x;
-            scale -= 10*SCALE_SENSITIVITY;
-            cam.setScale(scale);
+            float scaleAux = scale - 10*SCALE_SENSITIVITY;
+            if(scaleAux > MIN_SCALE){
+                scale -= 10*SCALE_SENSITIVITY;
+                cam.setScale(scale);
+            } else {
+                ConsoleLog::getInstance()->pushWarning("Max zoom in/out reached");
+                menu_zoom_in = false;
+            }
         }
         else if (menu_zoom_out) {
             scale = cam.getScale().x;
-            scale += 10*SCALE_SENSITIVITY;
-            cam.setScale(scale);
+            float scaleAux = scale + 10*SCALE_SENSITIVITY;
+            if(scaleAux < MAX_SCALE){
+                scale += 10*SCALE_SENSITIVITY;
+                cam.setScale(scale);
+            } else {
+                ConsoleLog::getInstance()->pushWarning("Max zoom in/out reached");
+                menu_zoom_out = false;
+            }
         }
     
         //resetting processed flags
