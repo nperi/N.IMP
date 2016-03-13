@@ -269,11 +269,26 @@ void ofApp::setSelectedForOSC(){
     // setting nodes attributes selected for OSC
     //
     OSCReceiver* oscNode;
-    vector<DTOscMap*>* om;
+    std::map<string, DTOscMap*>* om;
     std::map<int, ImageOutput*>::iterator node_;
     
     for (int i = 0; i < inputGenerators.size(); i++){
 
+        if (inputGenerators[i]->getParamInputType() == OSC) {
+            
+            om = ((OscInputGenerator*)inputGenerators[i])->oscMap;
+            oscNode = (OSCReceiver*)nodes.find(((OscInputGenerator*)inputGenerators[i])->getNodeID())->second;
+            
+            for (std::map<string,DTOscMap* >::iterator it = om->begin(); it != om->end(); it++) {
+                for (int j = 0; j < it->second->nodeId.size(); j++) {
+                    
+                    node_ = nodes.find(it->second->nodeId[j]);
+                    if (node_ != nodes.end()) {
+                        node_->second->setAttributesForOSC(it->second->paramId[j], oscNode->getId());
+                    }
+                }
+            }
+        }
     }
 }
 
@@ -1702,6 +1717,7 @@ bool ofApp::loadFromXML(){
         }
         
         setSelectedForAudioIn();
+        setSelectedForOSC();
     }
     
     return loadingOK;
