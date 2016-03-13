@@ -171,27 +171,25 @@ vector<string> ImageOutput::getAttributesClicked() {
 }
 
 //------------------------------------------------------------------
-bool ImageOutput::setAttributesForAudioIn(string name_, bool left) {
+bool ImageOutput::setAttributesForAudioIn(string name_, bool left, int nodeID_) {
     
     ofxBaseGui* control = gui.getControl(name_);
     if (control) {
-        left ? control->setSelectedForLeftAudio(true, nId) : control->setSelectedForRightAudio(true, nId);
-        return true;
+        left ? control->setSelectedForLeftAudio(true, nodeID_, name_) : control->setSelectedForRightAudio(true, nodeID_, name_);
     }
     else {
-        return false;
+        left ? panel.setSelectedForLeftAudio(true, nodeID_, name_) : panel.setSelectedForRightAudio(true, nodeID_, name_);
     }
 }
 
 //------------------------------------------------------------------
-bool ImageOutput::setAttributesForOSC(string name_) {
+bool ImageOutput::setAttributesForOSC(string name_, int nodeID_) {
     
     ofxBaseGui* control = gui.getControl(name_);
     if (control) {
-        control->setSelectedForOSC(true, nId);
-        return true;
+        control->setSelectedForOSC(true, nodeID_, name_);
     }
     else {
-        return false;
+        panel.setSelectedForOSC(true, nodeID_, name_);
     }
 }

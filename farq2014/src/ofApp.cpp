@@ -250,7 +250,7 @@ void ofApp::setSelectedForAudioIn(){
         for (int j = 0; j < am->size(); j++){
             node_ = nodes.find(am->at(j)->nodeId);
             if (node_ != nodes.end()) {
-                node_->second->setAttributesForAudioIn(am->at(j)->paramId, isLeftChannel);
+                node_->second->setAttributesForAudioIn(am->at(j)->paramId, isLeftChannel, audioListeners[i]->getNodeID());
             }
         }
         
