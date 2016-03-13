@@ -103,20 +103,33 @@ void OscInputGenerator::setPort(int port_) {
 
 //------------------------------------------------------------------
 bool OscInputGenerator::addNewOSCMap(string address_, ImageOutput* node_, vector<string> params_) {
-
-    DTOscMap* dtM = new DTOscMap();
-    dtM->path = address_;
     
-    for (int i = 0; i < params_.size(); i++) {
-        
-        dtM->paramId.push_back(params_[i]);
-        dtM->nodeId.push_back(node_->getId());
-        dtM->inputMinValue.push_back(0);
-        dtM->inputMaxValue.push_back(127);
-        dtM->paramMinValue.push_back(node_->getMidiMin(params_[i]));
-        dtM->paramMaxValue.push_back(node_->getMidiMax(params_[i]));
+    std::map<string,DTOscMap* >::iterator it = oscMap->find(address_);
+    
+    if (it != oscMap->end()) {
+        for (int i = 0; i < params_.size(); i++) {
+            it->second->paramId.push_back(params_[i]);
+            it->second->nodeId.push_back(node_->getId());
+            it->second->inputMinValue.push_back(0);
+            it->second->inputMaxValue.push_back(127);
+            it->second->paramMinValue.push_back(node_->getMidiMin(params_[i]));
+            it->second->paramMaxValue.push_back(node_->getMidiMax(params_[i]));
+        }
     }
-    oscMap->insert(std::pair<string,DTOscMap* >(address_,dtM));
+    else {
+        DTOscMap* dtM = new DTOscMap();
+        dtM->path = address_;
+        
+        for (int i = 0; i < params_.size(); i++) {
+            dtM->paramId.push_back(params_[i]);
+            dtM->nodeId.push_back(node_->getId());
+            dtM->inputMinValue.push_back(0);
+            dtM->inputMaxValue.push_back(127);
+            dtM->paramMinValue.push_back(node_->getMidiMin(params_[i]));
+            dtM->paramMaxValue.push_back(node_->getMidiMax(params_[i]));
+        }
+        oscMap->insert(std::pair<string,DTOscMap* >(address_,dtM));
+    }
 }
 
 //------------------------------------------------------------------
@@ -163,7 +176,8 @@ bool OscInputGenerator::loadSettings(ofxXmlSettings &XML) {
         XML.pushTag("ADDRESS");
         int getNumOSCMapTag = XML.getNumTags("OSC_MAP");
         DTOscMap* dtM = new DTOscMap();
-        for(int i = 0;i<getNumOSCMapTag ; i++){
+        
+        for(int i = 0; i < getNumOSCMapTag; i++){
             
             int     nodeId = XML.getAttribute("OSC_MAP","nodeId",0,i);
             string  param = XML.getAttribute("OSC_MAP","param","",i);
@@ -266,22 +280,20 @@ bool OscInputGenerator::saveSettings(ofxXmlSettings &XML) {
             XML.pushTag("OSC_SETTINGS", lastPlace);
             
             for (std::map<string,DTOscMap* >::iterator it = oscMap->begin(); it != oscMap->end(); it++) {
+                lastPlace = XML.addTag("ADDRESS");
+                XML.setAttribute("ADDRESS","path", it->first, lastPlace);
+                XML.pushTag("ADDRESS", lastPlace);
                 for (int j = 0; j < it->second->nodeId.size(); j++) {
                     
-                    lastPlace = XML.addTag("ADDRESS");
-                    XML.setAttribute("ADDRESS","path", it->first, lastPlace);
-                    XML.pushTag("ADDRESS", lastPlace);
-                    
                     XML.addTag("OSC_MAP");
-                    XML.setAttribute("OSC_MAP","nodeId", it->second->nodeId[j], j);
-                    XML.setAttribute("OSC_MAP","param", it->second->paramId[j], j);
-                    XML.setAttribute("OSC_MAP","inputMinValue", it->second->inputMinValue[j], j);
-                    XML.setAttribute("OSC_MAP","inputMaxValue", it->second->inputMaxValue[j], j);
-                    XML.setAttribute("OSC_MAP","paramMinValue", it->second->paramMinValue[j], j);
-                    XML.setAttribute("OSC_MAP","paramMaxValue", it->second->paramMaxValue[j], j);
-                    
-                    XML.popTag(); // ADDRESS
+                    XML.addAttribute("OSC_MAP","nodeId", it->second->nodeId[j], j);
+                    XML.addAttribute("OSC_MAP","param", it->second->paramId[j], j);
+                    XML.addAttribute("OSC_MAP","inputMinValue", it->second->inputMinValue[j], j);
+                    XML.addAttribute("OSC_MAP","inputMaxValue", it->second->inputMaxValue[j], j);
+                    XML.addAttribute("OSC_MAP","paramMinValue", it->second->paramMinValue[j], j);
+                    XML.addAttribute("OSC_MAP","paramMaxValue", it->second->paramMaxValue[j], j);
                 }
+                XML.popTag(); // ADDRESS
             }
             
             XML.popTag(); // FFT_SETTINGS

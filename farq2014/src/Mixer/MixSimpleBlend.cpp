@@ -19,7 +19,7 @@ MixSimpleBlend::MixSimpleBlend(string name_, int id_):MixTable(name_, "Mix Simpl
     
     isEnabled = false;
     selector1 = 0;
-    selector1 = 0;
+    selector2 = 0;
     
     blendMode.addListener(this, &MixSimpleBlend::blendModeChanged);
     
