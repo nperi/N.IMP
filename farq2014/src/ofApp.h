@@ -171,6 +171,7 @@ public:
     //create new node
     vector<ofxUIWidget*> widgetsToDelete;
     textInput* newNodeInput;
+    bool holdingCommand;
     
     // multi window
     ofxMultiGLFWWindow *glfw;

@@ -1,4 +1,4 @@
- #include "ofApp.h"
+#include "ofApp.h"
 
 using namespace cv;
 using namespace ofxCv;
@@ -53,6 +53,7 @@ void ofApp::setup() {
 //    leftAudioPatch         = NULL;
     audioAnalizer          = NULL;
     currentViewer          = 0;
+    holdingCommand         = false;
     
     //populating string dictionaries for simple comparison used in LoadFromXML
     inputTypes.insert(std::pair<string,InputType>("AUDIO_ANALIZER",AUDIO_ANALIZER));
@@ -534,6 +535,9 @@ void ofApp::keyPressed  (int key){
         case OF_KEY_RIGHT:
             nextViewer();
             break;
+        case OF_KEY_LEFT_COMMAND: case OF_KEY_RIGHT_COMMAND:
+            holdingCommand = true;
+            break;
         case '1':
             setCurrentViewer(0);
             break;
@@ -564,9 +568,11 @@ void ofApp::keyPressed  (int key){
         case '0':
             setCurrentViewer(9);
             break;
-        case 'f':
-            isFullScreen = !isFullScreen;
-            ofSetFullscreen(isFullScreen);
+        case 'f': case 'F':
+            if (holdingCommand && ((newNodeInput == NULL) || (!newNodeInput->isClicked()))) {
+                isFullScreen = !isFullScreen;
+                ofSetFullscreen(isFullScreen);
+            }
             break;
         case OF_KEY_DEL :
             if (((ofxUITextInput*) newNodeInput)->isClicked()) {
@@ -618,6 +624,8 @@ void ofApp::keyReleased(int key){
                 newNodeInput->setFocus(true);
         break;
     }
+    
+    holdingCommand = false;
 }
 
 //------------------------------------------------------------------

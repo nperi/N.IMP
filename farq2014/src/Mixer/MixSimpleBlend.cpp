@@ -13,7 +13,7 @@ MixSimpleBlend::MixSimpleBlend(string name_, int id_):MixTable(name_, "Mix Simpl
     
     maxInputs = 16;
 
-    gui.add(blendMode.set("normal", 0, 0, 24));
+    gui.add(blendMode.set("BlendNormal", 0, 0, 24));
     gui.add(opacity.set("opacity", 0, 0, 255));
     gui.setWidthElements(INSPECTOR_WIDTH);
     
