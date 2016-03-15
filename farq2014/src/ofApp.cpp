@@ -528,7 +528,6 @@ void ofApp::audioIn(float * input, int bufferSize, int nChannels){
 void ofApp::keyPressed  (int key){
     bool notAvailable = false;
     switch(key){
-            //switch Node Views
         case OF_KEY_LEFT:
             previousViewer();
             break;
@@ -574,8 +573,8 @@ void ofApp::keyPressed  (int key){
                 ofSetFullscreen(isFullScreen);
             }
             break;
-        case OF_KEY_DEL :
-            if (((ofxUITextInput*) newNodeInput)->isClicked()) {
+        case OF_KEY_DEL: case OF_KEY_ESC:
+            if ((newNodeInput != NULL) && ((ofxUITextInput*) newNodeInput)->isClicked()) {
                 gui->removeWidget(newNodeInput);
                 newNodeInput = NULL;
             }
