@@ -1179,20 +1179,24 @@ void ofApp::closePatch(int &_nID) {
         ImageOutput* n = nodes.find(_nID)->second;
         int i = 0;
         
-        if (n->getIsAudio()) {
+        if (n->getIsAudio() || n->getIsOSCReceiver()) {
             while (i < inputGenerators.size()) {
-                if (inputGenerators[i]->getParamInputType() == FFT && ((AudioListenerInput*)inputGenerators[i])->getNodeID() == _nID) {
+                if ((inputGenerators[i]->getParamInputType() == FFT && ((AudioListenerInput*)inputGenerators[i])->getNodeID() == _nID)
+                    || (inputGenerators[i]->getParamInputType() == OSC && ((OscInputGenerator*)inputGenerators[i])->getNodeID() == _nID)) {
+                    
                     inputGenerators.erase(inputGenerators.begin() + i);
 //                    leftAudioPatch == n ? leftAudioPatch = NULL : rightAudioPatch = NULL;
                 }
                 i++;
             }
-            i = 0;
-            while (i < audioListeners.size() && audioListeners[i]->getParamInputType() != MIDI) {
-                if (audioListeners[i]->getParamInputType() == FFT && ((AudioListenerInput*)audioListeners[i])->getNodeID() == _nID) {
-                    audioListeners.erase(audioListeners.begin() + i);
+            if (n->getIsAudio()) {
+                i = 0;
+                while (i < audioListeners.size()) {
+                    if (audioListeners[i]->getParamInputType() == FFT && ((AudioListenerInput*)audioListeners[i])->getNodeID() == _nID) {
+                        audioListeners.erase(audioListeners.begin() + i);
+                    }
+                    i++;
                 }
-                i++;
             }
         }
         else {
@@ -1205,6 +1209,19 @@ void ofApp::closePatch(int &_nID) {
         i = 0;
         
         if (n->getNodeType() == INPUT) {
+            
+            if (editAudioInActive) {
+                editAudioInActive = !editAudioInActive;
+                
+                ((AudioIn*)n)->getChannel() == 0
+                ? nodeViewers[currentViewer]->setEditLeftAudioInActive(false, -1)
+                : nodeViewers[currentViewer]->setEditRightAudioInActive(false, -1);
+            }
+            else if (editOSCActive){
+                editOSCActive = !editOSCActive;
+                nodeViewers[currentViewer]->setEditOSCActive(false, -1);
+            }
+            
             while (i < inputs.size() && !found) {
                 if (inputs[i]->getId() == _nID) {
                     inputs.erase(inputs.begin() + i);

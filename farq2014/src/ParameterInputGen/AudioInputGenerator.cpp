@@ -95,7 +95,7 @@ bool AudioInputGenerator::addNewAudioMap(int band_, int channel_, ImageOutput* n
         
         DTAudioMap* dtM = new DTAudioMap();
         
-//        dtM->band           = band_;
+        dtM->band           = band_;
 //        dtM->channel        = channel_;
         dtM->nodeId         = node_->getId();
         dtM->paramId        = params_[i];
@@ -114,6 +114,7 @@ void AudioInputGenerator::removeNodeFromParams(int nodeID_) {
     for (int i = 0; i < audioMap->size(); i++) {
         if (audioMap->at(i)->nodeId == nodeID_) {
             audioMap->erase(audioMap->begin() + i);
+            i--;
         }
     }
 }

@@ -35,6 +35,7 @@ public:
     AudioInType     getAudioInType(){ return audioInType; };
     int             getChannel(){ return selectChannel; };
     int             getBand(){ return selectBand; };
+    bool            getEditInputsActive() { return editFFTInputs; };
     
     void setWaveFormPosition();
     void setChannel(int c);

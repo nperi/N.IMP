@@ -144,6 +144,7 @@ void OscInputGenerator::removeNodeFromParams(int nodeID_) {
                 it->second->inputMaxValue.erase(it->second->inputMaxValue.begin() + j);
                 it->second->paramMinValue.erase(it->second->paramMinValue.begin() + j);
                 it->second->paramMaxValue.erase(it->second->paramMaxValue.begin() + j);
+                j--;
             }
         }
     }

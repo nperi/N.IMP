@@ -24,8 +24,8 @@ public:
     int     band;
     float   inputMinValue;
     float   inputMaxValue;
-    int     paramMinValue;
-    int     paramMaxValue;
+    float   paramMinValue;
+    float   paramMaxValue;
     
 };
 #endif /* defined(__ofApp__DTAudioMap__) */
