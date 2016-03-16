@@ -23,6 +23,8 @@ ImageOutput::ImageOutput(string name_, string typeName_, int id_, int maxInputs_
     gui.add(patchName.setup("Name", name, 100, 20));
     panel.setDraggable(false);
     gui.setWidthElements(INSPECTOR_WIDTH);
+    
+    title->setTitle( name );
 };
 
 //------------------------------------------------------------------

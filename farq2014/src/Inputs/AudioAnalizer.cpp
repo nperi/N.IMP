@@ -12,6 +12,7 @@
 AudioAnalizer::AudioAnalizer(string name_, int id_) : InputSource(name_, "Audio Analizer", id_){
     
     isAudio             = true;
+    isAudioAnalizer     = true;
     drawAudioAnalizer   = true;
     width               = 1250;
     height              = 625;
