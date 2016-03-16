@@ -200,7 +200,7 @@ void ofApp::setup() {
     //*** AUDIO SETUP ***//
     //
     setupAudio();
-  }
+}
 
 //------------------------------------------------------------------
 void ofApp::setupAudio(){
@@ -580,14 +580,19 @@ void ofApp::keyPressed  (int key){
             }
             break;
         case 'n': case 'N' :
-            if (newNodeInput == NULL)
-                this->createNodeInput();
-            else if (!newNodeInput->isClicked()){
-                newNodeInput->getRect()->setX(ofGetMouseX());
-                newNodeInput->getRect()->setY(ofGetMouseY());
-                
-                newNodeInput->getDropdownList()->getRect()->setX(ofGetMouseX());
-                newNodeInput->getDropdownList()->getRect()->setY(ofGetMouseY());
+            if (nodeViewers[currentViewer]->getEdit()) {
+                if (newNodeInput == NULL)
+                    this->createNodeInput();
+                else if (!newNodeInput->isClicked()){
+                    newNodeInput->getRect()->setX(ofGetMouseX());
+                    newNodeInput->getRect()->setY(ofGetMouseY());
+                    
+                    newNodeInput->getDropdownList()->getRect()->setX(ofGetMouseX());
+                    newNodeInput->getDropdownList()->getRect()->setY(ofGetMouseY());
+                }
+            }
+            else {
+                console->pushWarning("Unable to create nodes while Edit Mode is off");
             }
             break;
             
@@ -794,18 +799,24 @@ void ofApp::menuEvent(ofxUIEventArgs &e) {
         nodeViewers[currentViewer]->setLinkType(PATH_LINKS);
     }
     else if (name == "Create Node") {
-        
-        if (newNodeInput == NULL) {
-            this->createNodeInput((ofGetWidth()/2)-75, ofGetHeight()/2);
-        }
-        else if (!newNodeInput->isClicked()){
-            newNodeInput->getRect()->setX((ofGetWidth()/2)-75);
-            newNodeInput->getRect()->setY(ofGetHeight()/2);
-            
-            newNodeInput->getDropdownList()->getRect()->setX((ofGetWidth()/2)-75);
-            newNodeInput->getDropdownList()->getRect()->setY(ofGetHeight()/2);
-            
-            newNodeInput->setFocus(true);
+        if(((ofxUIMultiImageButton*)e.widget)->getValue() == 1){
+            if (nodeViewers[currentViewer]->getEdit()) {
+                if (newNodeInput == NULL) {
+                    this->createNodeInput((ofGetWidth()/2)-75, ofGetHeight()/2);
+                }
+                else if (!newNodeInput->isClicked()){
+                    newNodeInput->getRect()->setX((ofGetWidth()/2)-75);
+                    newNodeInput->getRect()->setY(ofGetHeight()/2);
+                    
+                    newNodeInput->getDropdownList()->getRect()->setX((ofGetWidth()/2)-75);
+                    newNodeInput->getDropdownList()->getRect()->setY(ofGetHeight()/2);
+                    
+                    newNodeInput->setFocus(true);
+                }
+            }
+            else {
+                console->pushWarning("Unable to create nodes while Edit Mode is off");
+            }
         }
     }
     else if (name == "Edit Mode on/off") {
