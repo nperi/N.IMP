@@ -1161,6 +1161,7 @@ void ofApp::createNode(textInputEvent &args){
 
 //------------------------------------------------------------------
 void ofApp::initNode(ofxPatch* node) {
+    node->title->setParent(cam);
     node->setParent(cam);
     node->setup();
     node->setLinkType(nodeViewers[currentViewer]->getLinkType());
