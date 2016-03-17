@@ -21,6 +21,7 @@ ImageOutput::ImageOutput(string name_, string typeName_, int id_, int maxInputs_
     panel.setup();
     panel.add(gui.setup(typeName));
     gui.add(patchName.setup("Name", name, 100, 20));
+    patchName.addListener(this, &ImageOutput::editName);
     panel.setDraggable(false);
     gui.setWidthElements(INSPECTOR_WIDTH);
     
@@ -30,6 +31,13 @@ ImageOutput::ImageOutput(string name_, string typeName_, int id_, int maxInputs_
 //------------------------------------------------------------------
 string ImageOutput::getName(){
     return name;
+}
+
+//------------------------------------------------------------------
+void ImageOutput::editName(string& name_) {
+    
+    name = name_;
+    title->setTitle( name_ );
 }
 
 //------------------------------------------------------------------
