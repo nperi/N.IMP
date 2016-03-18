@@ -47,6 +47,7 @@ public:
     ofParameter<bool>     editFFTInputs;
     ofParameter<int>      selectChannel;
     ofParameter<int>      selectBand;
+    ofParameter<float>      saturation;
     ofEvent<AudioInEvent> editAudioIn;
 //    ofEvent<AudioInEvent> editAudioInChannel;
     ofEvent<AudioInEvent> editAudioInBand;
@@ -62,6 +63,7 @@ private:
     void editInputs(bool& g);
 //    void editChannel(int& c);
     void editBand(int& band_);
+    void editSaturation(float& s);
     
     ofxUIWaveform* waveform;
     float* inputBuffer;

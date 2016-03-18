@@ -42,9 +42,11 @@ private:
     
     void update();
     void editTreshold(float& t);
+    void editSaturation(int& s);
 
     ofxFilterbank filterBank;
     ofParameter<float> threshold;
+    ofParameter<int> saturation;
     
 };
 #endif /* AudioAnalizer_h */

@@ -17,13 +17,17 @@ AudioAnalizer::AudioAnalizer(string name_, int id_) : InputSource(name_, "Audio 
     width               = 1250;
     height              = 625;
     
-    gui.add(threshold.set("Threshold",0.01,0.001,0.20));
+    gui.add(saturation.set("Sound Saturation",20,10,50));
+    gui.add(threshold.set("Threshold",0.02,0.0001,0.4));
     threshold.addListener(this, &AudioAnalizer::editTreshold);
+    saturation.addListener(this, &AudioAnalizer::editSaturation);
     gui.setWidthElements(INSPECTOR_WIDTH);
     
     title->removeButton('r');
     title->removeButton('m');
     
+    filterBank.setSoundLevelSaturation(saturation);
+    filterBank.setThreshold(threshold);
     filterBank.setup(BUFFER_SIZE, 1, 128, 2, 1.0, 44100, 1.0);
     filterBank.setColor(ofColor::orange);
     
@@ -75,6 +79,13 @@ void AudioAnalizer::_mouseDragged(ofMouseEventArgs &e){
 void AudioAnalizer::editTreshold(float& t) {
     
     filterBank.setThreshold(t);
+}
+
+//------------------------------------------------------------------
+void AudioAnalizer::editSaturation(int& s) {
+    
+    filterBank.setSoundLevelSaturation(s);
+    filterBank.setThreshold(threshold);
 }
 
 //------------------------------------------------------------------
