@@ -15,6 +15,8 @@ AudioInputGenerator::AudioInputGenerator(string name_, int nodeID_):AudioListene
     hasNewData = false;
     isDataProcessed = false;
     bufferCounter = 0;
+    saturation = 10;
+    enable = true;
 }
 
 AudioInputGenerator::~AudioInputGenerator(){
@@ -28,7 +30,7 @@ AudioInputGenerator::~AudioInputGenerator(){
 void AudioInputGenerator::processInput(){
     
     if(lock()){
-        if(hasNewData){
+        if(hasNewData && enable){
             //if I have new data, I begin processing
             if(!isDataProcessed){
                 
@@ -60,19 +62,22 @@ void AudioInputGenerator::processInput(){
                     
 //                    int band = audioMap->at(i)->band;
                     
-                    if(magnitude[band]>50.0f){
+                    if(magnitude[band] > saturation){
                         // we limit the max output to 50 ... this is arbitrary
-                        magnitude[band] = 50.0f;
+                        magnitude[band] = saturation;
                     }
-                    else if(magnitude[band]<00.01f){
+                    else if(magnitude[band] < 00.01){
                         // we limit the min output to 0
-                        magnitude[band] = 0.0f;
+                        magnitude[band] = 0;
                     }
                     
+                    p->inputMax     = saturation;
+                    p->inputMin     = 0;
                     p->imageInputId = audioMap->at(i)->nodeId;
                     p->name         = audioMap->at(i)->paramId;
-                    p->intVal       = ofMap(magnitude[band], audioMap->at(i)->inputMinValue, audioMap->at(i)->inputMaxValue, audioMap->at(i)->paramMinValue, audioMap->at(i)->paramMaxValue);
-                    p->floatVal     = ofMap(magnitude[band], audioMap->at(i)->inputMinValue, audioMap->at(i)->inputMaxValue, audioMap->at(i)->paramMinValue, audioMap->at(i)->paramMaxValue);
+                    p->value        = magnitude[band];
+                    p->intVal       = ofMap(magnitude[band], 0, saturation, audioMap->at(i)->paramMinValue, audioMap->at(i)->paramMaxValue);
+                    p->floatVal     = ofMap(magnitude[band], 0, saturation, audioMap->at(i)->paramMinValue, audioMap->at(i)->paramMaxValue);
                     
                     storeMessage(p);
                 }
@@ -100,7 +105,7 @@ bool AudioInputGenerator::addNewAudioMap(int band_, int channel_, ImageOutput* n
         dtM->nodeId         = node_->getId();
         dtM->paramId        = params_[i];
         dtM->inputMinValue  = 0;
-        dtM->inputMaxValue  = 50;
+        dtM->inputMaxValue  = saturation;
         dtM->paramMinValue  = node_->getMidiMin(dtM->paramId);
         dtM->paramMaxValue  = node_->getMidiMax(dtM->paramId);
         
@@ -129,8 +134,9 @@ bool AudioInputGenerator::loadSettings(ofxXmlSettings &XML) {
     
     bool result = true;
     
+    enable  = XML.getAttribute("FFT_SETTINGS","enabled",true,0);
     channel = XML.getAttribute("FFT_SETTINGS","channel",0,0);
-    band = XML.getAttribute("FFT_SETTINGS","band",0,0);
+    band    = XML.getAttribute("FFT_SETTINGS","band",0,0);
     XML.pushTag("FFT_SETTINGS");
 
     int numAudioMapTag = XML.getNumTags("AUDIO_MAP");
@@ -181,6 +187,7 @@ bool AudioInputGenerator::saveSettings(ofxXmlSettings &XML) {
             
             XML.pushTag("INPUT_GEN", i);
             
+            XML.setAttribute("FFT_SETTINGS", "enabled", enable, i);
             XML.setAttribute("FFT_SETTINGS", "band", band, i);
             XML.pushTag("FFT_SETTINGS");
             
@@ -224,6 +231,7 @@ bool AudioInputGenerator::saveSettings(ofxXmlSettings &XML) {
             
             XML.pushTag("INPUT_GEN", lastPlace);
             lastPlace = XML.addTag("FFT_SETTINGS");
+            XML.addAttribute("FFT_SETTINGS", "enabled", enable, lastPlace);
             XML.addAttribute("FFT_SETTINGS", "channel", channel, lastPlace);
             XML.addAttribute("FFT_SETTINGS", "band", band, lastPlace);
             XML.pushTag("FFT_SETTINGS", lastPlace);

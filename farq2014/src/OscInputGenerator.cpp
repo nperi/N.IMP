@@ -83,8 +83,11 @@ void OscInputGenerator::processInput() {
                 for (int j=0; j<m.getNumArgs(); ++j) {
                     
                     Param* p        = new Param();
+                    p->inputMax     = it->second->inputMaxValue[j];
+                    p->inputMin     = it->second->inputMinValue[j];
                     p->imageInputId = it->second->nodeId[j];
                     p->name         = it->second->paramId[j];
+                    p->value        = m.getArgAsFloat(j);
                     p->floatVal     = ofMap(m.getArgAsFloat(j), it->second->inputMinValue[j], it->second->inputMaxValue[j], it->second->paramMinValue[j], it->second->paramMaxValue[j]);
                     storeMessage(p);
                 }

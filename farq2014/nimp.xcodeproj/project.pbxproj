@@ -82,7 +82,7 @@
 		0A75F5C71C583AA800481F86 /* ofxToggle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A75F5BD1C583AA800481F86 /* ofxToggle.cpp */; };
 		0A75F5D01C58465800481F86 /* ofxTextInput.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A75F5CE1C58465800481F86 /* ofxTextInput.cpp */; };
 		0AE1F5761C4C1B8600A3B168 /* ofxMultiGLFWWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0AE1F56D1C4C1B8600A3B168 /* ofxMultiGLFWWindow.cpp */; };
-		0AE1F57E1C4DAC2100A3B168 /* ImageInputList.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0AE1F57D1C4DAC2100A3B168 /* ImageInputList.cpp */; };
+		0AE1F57E1C4DAC2100A3B168 /* ImageAndVideoInputList.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0AE1F57D1C4DAC2100A3B168 /* ImageAndVideoInputList.cpp */; };
 		0AFFF77F1C2F0E3F0034AE53 /* BleachBypassPass.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0AFFF74A1C2F0E3F0034AE53 /* BleachBypassPass.cpp */; };
 		0AFFF7801C2F0E3F0034AE53 /* BloomPass.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0AFFF74C1C2F0E3F0034AE53 /* BloomPass.cpp */; };
 		0AFFF7811C2F0E3F0034AE53 /* ContrastPass.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0AFFF74E1C2F0E3F0034AE53 /* ContrastPass.cpp */; };
@@ -427,7 +427,7 @@
 		0A792F991C9103C7000E0D3B /* OSCEvent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OSCEvent.h; sourceTree = "<group>"; };
 		0AE1F56D1C4C1B8600A3B168 /* ofxMultiGLFWWindow.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = ofxMultiGLFWWindow.cpp; sourceTree = "<group>"; };
 		0AE1F56E1C4C1B8600A3B168 /* ofxMultiGLFWWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxMultiGLFWWindow.h; sourceTree = "<group>"; };
-		0AE1F57D1C4DAC2100A3B168 /* ImageInputList.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ImageInputList.cpp; sourceTree = "<group>"; };
+		0AE1F57D1C4DAC2100A3B168 /* ImageAndVideoInputList.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ImageAndVideoInputList.cpp; sourceTree = "<group>"; };
 		0AFFF74A1C2F0E3F0034AE53 /* BleachBypassPass.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BleachBypassPass.cpp; sourceTree = "<group>"; };
 		0AFFF74B1C2F0E3F0034AE53 /* BleachBypassPass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BleachBypassPass.h; sourceTree = "<group>"; };
 		0AFFF74C1C2F0E3F0034AE53 /* BloomPass.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BloomPass.cpp; sourceTree = "<group>"; };
@@ -673,7 +673,7 @@
 		D3A227271A38711E005DD5AF /* MultiChannelSwitch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MultiChannelSwitch.h; sourceTree = "<group>"; };
 		D3A2274C1A39DD42005DD5AF /* ofxImageSequencePlayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxImageSequencePlayer.cpp; sourceTree = "<group>"; };
 		D3A2274D1A39DD42005DD5AF /* ofxImageSequencePlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxImageSequencePlayer.h; sourceTree = "<group>"; };
-		D3A227531A3B57A9005DD5AF /* ImageInputList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageInputList.h; sourceTree = "<group>"; };
+		D3A227531A3B57A9005DD5AF /* ImageAndVideoInputList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageAndVideoInputList.h; sourceTree = "<group>"; };
 		D58DCB2C0AEFDE6171E29540 /* Syphon.framework */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = wrapper.framework; name = Syphon.framework; path = ../../../addons/ofxSyphon/libs/Syphon/lib/osx/Syphon.framework; sourceTree = "<group>"; };
 		DB0CD4C938C079DCD67222FE /* imatrix.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = imatrix.h; path = ../../../addons/ofxCv/libs/CLD/include/CLD/imatrix.h; sourceTree = SOURCE_ROOT; };
 		E4328143138ABC890047C5CB /* openFrameworksLib.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = openFrameworksLib.xcodeproj; path = ../../../libs/openFrameworksCompiled/project/osx/openFrameworksLib.xcodeproj; sourceTree = SOURCE_ROOT; };
@@ -1622,8 +1622,8 @@
 				D318E84A1A2F8C46000A2046 /* VideoPlayerMac.h */,
 				D3A2270B1A37243F005DD5AF /* ParticleGenerator.cpp */,
 				D3A2270C1A37243F005DD5AF /* ParticleGenerator.h */,
-				0AE1F57D1C4DAC2100A3B168 /* ImageInputList.cpp */,
-				D3A227531A3B57A9005DD5AF /* ImageInputList.h */,
+				0AE1F57D1C4DAC2100A3B168 /* ImageAndVideoInputList.cpp */,
+				D3A227531A3B57A9005DD5AF /* ImageAndVideoInputList.h */,
 				4997535E1C8547E4007A2626 /* SyphonClientHandler.cpp */,
 				4997535F1C8547E4007A2626 /* SyphonClientHandler.h */,
 				D34EC3F31A65CB5200F0EFAE /* VideoPool.cpp */,
@@ -2180,7 +2180,7 @@
 				10B69DE456AED1288FC9316B /* Tracker.cpp in Sources */,
 				0AFFF7881C2F0E3F0034AE53 /* GodRaysPass.cpp in Sources */,
 				D34E964A1A3FA2850089BFE4 /* NetworkingUtilsWin.cpp in Sources */,
-				0AE1F57E1C4DAC2100A3B168 /* ImageInputList.cpp in Sources */,
+				0AE1F57E1C4DAC2100A3B168 /* ImageAndVideoInputList.cpp in Sources */,
 				A6668C5B1272D7FCD5B5A16F /* Utilities.cpp in Sources */,
 				6B9E01361A2E5B3100813D7C /* ofxSyphonServerDirectory.mm in Sources */,
 				6B0E614A1A2FDE57006AE261 /* GlitchLayerAlt.cpp in Sources */,

@@ -12,10 +12,12 @@
 class AudioInEvent : ofEventArgs {
     
 public:
-    int nodeId;
-    int band;
-    int channel;
-    bool active;
+    int   nodeId;
+    int   band;
+    int   channel;
+    bool  active;
+    bool  enable;
+    float saturation;
 };
 
 #endif /* AudioInEvent_h */

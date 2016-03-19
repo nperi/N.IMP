@@ -23,7 +23,10 @@ class Param {
     int     intVal;
     string  stringVal;
     float   floatVal;
+    float   value;
     int     midiControl;
+    int     inputMin;
+    int     inputMax;
 };
 
 #endif

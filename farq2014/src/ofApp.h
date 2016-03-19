@@ -27,7 +27,7 @@
 #include "InputCamera.h"
 #include "VideoPlayerMac.h"
 #include "ImageInput.h"
-#include "ImageInputList.h"
+#include "ImageAndVideoInputList.h"
 #include "ParticleGenerator.h"
 #include "IkedaLayer.h"
 #include "GlitchLayer.h"
@@ -88,6 +88,9 @@ public:
 //    void editLeftAudioIn(bool &edit_);
 //    void editRightAudioIn(bool &edit_);
     void editAudioIn(AudioInEvent &e_);
+    void editAudioInSaturation(AudioInEvent &e_);
+    void editAudioInEnabled(AudioInEvent &e_);
+    void listenToAudioInEvent(AudioIn* audio, bool listen);
     void editOSCPort(OSCEvent &e_);
     void editOSCInputs(OSCEvent &e_);
     bool loadFromXML();

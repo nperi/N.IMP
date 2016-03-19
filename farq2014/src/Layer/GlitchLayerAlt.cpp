@@ -76,11 +76,14 @@ void GlitchLayerAlt::updateParameter(Param* inputParam){
     
     if(inputParam->name.compare("Enabled")==0){
         this->isEnabled = inputParam->intVal;
-    }else if(inputParam->name.compare("DQ")==0){
+    }
+    else if(inputParam->name.compare("DQ")==0){
         this->dq = inputParam->intVal;
-    }else if(inputParam->name.compare("QN")==0){
+    }
+    else if(inputParam->name.compare("QN")==0){
         this->qn = inputParam->intVal;
-    }else if(inputParam->name.compare("DHT")==0){
+    }
+    else if(inputParam->name.compare("DHT")==0){
         this->dht = inputParam->intVal;
     }
 }

@@ -173,7 +173,8 @@ void MixSimpleBlend::inputRemoved(int id_){
 void MixSimpleBlend::updateParameter(Param* inputParam){
     if(inputParam->name.compare("opacity")==0){
         opacity.set(inputParam->intVal);
-    }else if(inputParam->name.compare(0, 5, "Blend")==0){
+    }
+    else if(inputParam->name.compare(0, 5, "Blend")==0){
         this->blendMode = inputParam->intVal;
     }
 }

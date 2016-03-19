@@ -1,5 +1,5 @@
 /*
- *  ImageInputList.h
+ *  ImageAndVideoInputList.h
  *  ofApp
  *
  *  Created by Brian Eschrich on 12/12/14
@@ -7,8 +7,8 @@
  *
  */
 
-#ifndef _ImageInputList
-#define _ImageInputList
+#ifndef _ImageAndVideoInputList
+#define _ImageAndVideoInputList
 
 #include "ofMain.h"
 #include "InputSource.h"
@@ -22,11 +22,11 @@
 
 
 
-class ImageInputList : public InputSource{
+class ImageAndVideoInputList : public InputSource{
 	
   public:
 	
-    ImageInputList(string name = "New Image Input", int id_ = -1);
+    ImageAndVideoInputList(string name = "New Image & Video List", int id_ = -1);
     
     void setup();
     void loadImage(string name_,string path_);

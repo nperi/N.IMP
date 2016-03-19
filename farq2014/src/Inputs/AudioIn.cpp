@@ -16,12 +16,13 @@ AudioIn::AudioIn(ofxUISuperCanvas* &gui_, float* &inputBuffer_, string type_, st
     width       = 500;
     height      = 250;
     selectBand  = 1;
+    isEnabled   = true;
     
-    waveform = new ofxUIWaveform(0, 0, 200, 100, inputBuffer_, BUFFER_SIZE, -1.5, 1.5, "FFT");
+    waveform = new ofxUIWaveform(0, 0, 200, 100, inputBuffer_, BUFFER_SIZE, -2, 2, "FFT");
     
-    gui.add(saturation.set("Sound Saturation",1.5,1,20));
+    gui.add(isEnabled.setup("Enabled",isEnabled, 100,20));
+    gui.add(saturation.set("Sound Saturation",10,1,100));
     saturation.addListener(this, &AudioIn::editSaturation);
-//    gui.add(selectChannel.set("Channel",0,0,1));
     gui.add(selectBand.set("Band",1,1,16));
     
     if (type_ == "Audio In - Left Channel") {
@@ -33,7 +34,7 @@ AudioIn::AudioIn(ofxUISuperCanvas* &gui_, float* &inputBuffer_, string type_, st
         gui.add(editFFTInputs.set("Edit Right FFT Inputs", false));
     }
     
-//    selectChannel.addListener(this, &AudioIn::editChannel);
+    isEnabled.addListener(this, &AudioIn::editEnabled);
     selectBand.addListener(this, &AudioIn::editBand);
     editFFTInputs.addListener(this, &AudioIn::editInputs);
     
@@ -92,13 +93,13 @@ void AudioIn::editInputs(bool& b){
 }
 
 //------------------------------------------------------------------
-//void AudioIn::editChannel(int& c){
-//    
-//    AudioInEvent e;
-//    e.nodeId = nId;
-//    e.channel = c;
-//    ofNotifyEvent(editAudioInChannel, e);
-//}
+void AudioIn::editEnabled(bool& e){
+    
+    AudioInEvent ev;
+    ev.nodeId = nId;
+    ev.enable = e;
+    ofNotifyEvent(editAudioInEnabled, ev);
+}
 
 //------------------------------------------------------------------
 void AudioIn::editBand(int& band_){
@@ -114,11 +115,6 @@ void AudioIn::editBand(int& band_){
 void AudioIn::setChannel(int c){
     
     selectChannel = c;
-   
-//    AudioInEvent e;
-//    e.nodeId = nId;
-//    e.channel = c;
-//    ofNotifyEvent(editAudioInChannel, e);
 }
 
 //------------------------------------------------------------------
@@ -130,8 +126,14 @@ void AudioIn::setBand(int band_){
 //------------------------------------------------------------------
 void AudioIn::editSaturation(float& s) {
     
-    waveform->setMax(s);
-    waveform->setMin(-s);
+    waveform->setMax(s/5);
+    waveform->setMin(-s/5);
+    
+    AudioInEvent ev;
+    ev.nodeId = nId;
+    ev.saturation = s;
+    
+    ofNotifyEvent(editAudioInSaturation, ev);
 }
 
 //------------------------------------------------------------------
@@ -162,6 +164,7 @@ bool AudioIn::loadSettings(ofxXmlSettings &XML, int nTag_, int nodesCount_) {
     bool loaded = false;
     
     nId             = XML.getAttribute("NODE", "id", -1, nTag_) + nodesCount_;
+    isEnabled       = XML.getAttribute("NODE", "enabled", true, nTag_);
     selectChannel   = XML.getAttribute("NODE", "channel", 1, nTag_);
     selectBand      = XML.getAttribute("NODE", "band", 1, nTag_);
     
@@ -201,6 +204,7 @@ bool AudioIn::saveSettings(ofxXmlSettings &XML) {
         if ( XML.getAttribute("NODE", "id", -1, i) == nId){
             
             XML.setAttribute("NODE", "name", name, i);
+            XML.setAttribute("NODE", "enabled", isEnabled, i);
             XML.addAttribute("NODE", "channel", selectChannel, i);
             XML.addAttribute("NODE", "band", selectBand, i);
             XML.pushTag("NODE", i);
@@ -224,6 +228,7 @@ bool AudioIn::saveSettings(ofxXmlSettings &XML) {
             
             XML.addAttribute("NODE", "id", nId, lastPlace);
             XML.addAttribute("NODE", "name", name, lastPlace);
+            XML.addAttribute("NODE", "enabled", isEnabled, lastPlace);
             XML.addAttribute("NODE", "channel", selectChannel, lastPlace);
             XML.addAttribute("NODE", "band", selectBand, lastPlace);
             audioInType == LEFT ? XML.addAttribute("NODE", "type", "LEFT_AUDIO_IN", lastPlace) : XML.addAttribute("NODE", "type", "RIGHT_AUDIO_IN", lastPlace);

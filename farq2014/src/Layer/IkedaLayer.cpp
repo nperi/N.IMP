@@ -112,21 +112,29 @@ void IkedaLayer::updateParameter(Param* inputParam){
     
     if(inputParam->name.compare("Enabled")==0){
         this->isEnabled = inputParam->intVal;
-    }else if(inputParam->name.compare("Canny")==0){
+    }
+    else if(inputParam->name.compare("Canny")==0){
         this->isCanny = inputParam->intVal;
-    }else if(inputParam->name.compare("Threshold")==0){
+    }
+    else if(inputParam->name.compare("Threshold")==0){
         this->isThreshold = inputParam->intVal;
-    }else if(inputParam->name.compare("Columns")==0){
+    }
+    else if(inputParam->name.compare("Columns")==0){
         this->isColumns = inputParam->intVal;
-    }else if(inputParam->name.compare("Invert")==0){
+    }
+    else if(inputParam->name.compare("Invert")==0){
         this->isInvert = inputParam->intVal;
-    }else if(inputParam->name.compare("CannyX")==0){
+    }
+    else if(inputParam->name.compare("CannyX")==0){
         this->pCannyX = inputParam->intVal;
-    }else if(inputParam->name.compare("CannyY")==0){
+    }
+    else if(inputParam->name.compare("CannyY")==0){
         this->pCannyY = inputParam->intVal;
-    }else if(inputParam->name.compare("n Columns")==0){
+    }
+    else if(inputParam->name.compare("n Columns")==0){
         this->pNColumns = inputParam->intVal;
-    }else if(inputParam->name.compare("Amount")==0){
+    }
+    else if(inputParam->name.compare("Amount")==0){
         this->pThreshold = inputParam->intVal;
     }
 }

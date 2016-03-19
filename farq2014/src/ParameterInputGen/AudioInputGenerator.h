@@ -29,6 +29,8 @@ public:
     //bool setupFromXML();
     void setChannel(int c) { channel = c; };
     void setBand(int b) { band = b; };
+    void setSaturation(float s) { saturation = s; };
+    void setEnable(bool e) { enable = e; };
     
     bool addNewAudioMap(int band_, int channel_, ImageOutput* node_, vector<string> params_);
     void clearAudioMap();
@@ -51,7 +53,8 @@ private:
     
     int channel;
     int band;
-    
+    float saturation;
+    bool enable;
 
 };
 

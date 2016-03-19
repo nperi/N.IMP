@@ -57,9 +57,9 @@ void ofApp::setup() {
     
     //populating string dictionaries for simple comparison used in LoadFromXML
     inputTypes.insert(std::pair<string,InputType>("AUDIO_ANALIZER",AUDIO_ANALIZER));
-    inputTypes.insert(std::pair<string,InputType>("VIDEO",VIDEO));
+//    inputTypes.insert(std::pair<string,InputType>("VIDEO",VIDEO));
     inputTypes.insert(std::pair<string,InputType>("CAM",CAM));
-    inputTypes.insert(std::pair<string,InputType>("IMAGE",IMAGE));
+    inputTypes.insert(std::pair<string,InputType>("IMAGE_AND_VIDEO_LIST",IMAGE_AND_VIDEO_LIST));
     inputTypes.insert(std::pair<string,InputType>("PARTICLE",PARTICLE));
     inputTypes.insert(std::pair<string,InputType>("LEFT_AUDIO_IN",LEFT_AUDIO_IN));
     inputTypes.insert(std::pair<string,InputType>("RIGHT_AUDIO_IN",RIGHT_AUDIO_IN));
@@ -702,9 +702,13 @@ void ofApp::dragEvent(ofDragInfo dragInfo){
                 (ext == "jpeg")|| (ext == "JPEG")||
                 (ext == "png") || (ext == "PNG") ||
                 (ext == "gif") || (ext == "GIF") ||
-                (ext == "bmp") || (ext == "BMP") ){
+                (ext == "bmp") || (ext == "BMP") ||
+                (ext == "mov") || (ext == "MOV") ||
+                (ext == "mpg") || (ext == "MPG") ||
+                (ext == "mp4") || (ext == "MP4") ||
+                (ext == "m4v") || (ext == "M4V") ){
                 
-                ev->type = "image";
+                ev->type = "image or video";
             }
             else if ((ext == "mov") || (ext == "MOV") ||
                      (ext == "mpg") || (ext == "MPG") ||
@@ -719,8 +723,8 @@ void ofApp::dragEvent(ofDragInfo dragInfo){
             }
             
             for (int j = 0; j < inputs.size(); j ++) {
-                if (inputs[j]->getTypeName() == "Image" && inputs[j]->isOver(dragInfo.position)){
-                    ((ImageInputList*)inputs[j])->loadImage(file.getFileName(), dragInfo.files[i]);
+                if (inputs[j]->getTypeName() == "Image & Video List" && inputs[j]->isOver(dragInfo.position)){
+                    ((ImageAndVideoInputList*)inputs[j])->loadImage(file.getFileName(), dragInfo.files[i]);
                     console->pushSuccess("File " + file.getFileName()
                                          + " was succesfully added as a new sequence to the node "
                                          + inputs[j]->getName() + ".");
@@ -1016,36 +1020,16 @@ void ofApp::createNode(textInputEvent &args){
     bool exist = false;
     
     if (args.type == "audio in - left channel") {
-//        if (leftAudioPatch) {
-//            nodeViewers[currentViewer]->deactivateAllPatches();
-//            leftAudioPatch->bActive = true;
-//            exist = true;
-//        }
-//        else {
         newPatch = new AudioIn(gui, left, "Audio In - Left Channel", "New Audio In - Left Channel");
         ((AudioIn*)newPatch)->setChannel(0);
         inputs.push_back((AudioIn*)newPatch);
-        ofAddListener( ((AudioIn*)newPatch)->editAudioIn , this, &ofApp::editAudioIn);
-        ofAddListener( ((AudioIn*)newPatch)->editAudioInBand , this, &ofApp::editAudioInBand);
-//        ofAddListener( ((AudioIn*)newPatch)->editAudioInChannel , this, &ofApp::editAudioInChannel);
-//        leftAudioPatch = (AudioIn*)newPatch;
-//      }
+        listenToAudioInEvent((AudioIn*)newPatch, true);
     }
     else if (args.type == "audio in - right channel") {
-//        if (rightAudioPatch) {
-//            nodeViewers[currentViewer]->deactivateAllPatches();
-//            rightAudioPatch->bActive = true;
-//            exist = true;
-//        }
-//        else {
         newPatch = new AudioIn(gui, right, "Audio In - Right Channel", "New Audio In - Right Channel");
         ((AudioIn*)newPatch)->setChannel(1);
         inputs.push_back((AudioIn*)newPatch);
-        ofAddListener( ((AudioIn*)newPatch)->editAudioIn , this, &ofApp::editAudioIn);
-        ofAddListener( ((AudioIn*)newPatch)->editAudioInBand , this, &ofApp::editAudioInBand);
-//        ofAddListener( ((AudioIn*)newPatch)->editAudioInChannel , this, &ofApp::editAudioInChannel);
-//        rightAudioPatch = (AudioIn*)newPatch;
-//      }
+        listenToAudioInEvent((AudioIn*)newPatch, true);
     }
     else if (args.type == "osc receiver") {
         newPatch = new OSCReceiver();
@@ -1069,10 +1053,10 @@ void ofApp::createNode(textInputEvent &args){
         newPatch = new IkedaLayer();
         visualLayers.push_back((IkedaLayer*)newPatch);
     }
-    else if (args.type == "image") {
-        newPatch = new ImageInputList();
-        ((ImageInputList*)newPatch)->loadImage(args.name, args.path);
-        inputs.push_back((ImageInputList*)newPatch);
+    else if (args.type == "image or video") {
+        newPatch = new ImageAndVideoInputList();
+        ((ImageAndVideoInputList*)newPatch)->loadImage(args.name, args.path);
+        inputs.push_back((ImageAndVideoInputList*)newPatch);
     }
     else if (args.type == "image processor") {
         newPatch = new ImageProcessor();
@@ -1094,11 +1078,11 @@ void ofApp::createNode(textInputEvent &args){
         newPatch = new ParticleGenerator();
         inputs.push_back((ParticleGenerator*)newPatch);
     }
-    else if (args.type == "video player") {
-        newPatch = new VideoPlayerMac();
-        ((VideoPlayerMac*)newPatch)->loadVideo(args.path);
-        inputs.push_back((VideoPlayerMac*)newPatch);
-    }
+//    else if (args.type == "video player") {
+//        newPatch = new VideoPlayerMac();
+//        ((VideoPlayerMac*)newPatch)->loadVideo(args.path);
+//        inputs.push_back((VideoPlayerMac*)newPatch);
+//    }
     else if (args.type == "syphon server"){
         newPatch = SyphonClientHandler::getInstance()->createSyphonPatch();
         inputs.push_back((InputSyphon*)newPatch);
@@ -1186,7 +1170,6 @@ void ofApp::closePatch(int &_nID) {
                     || (inputGenerators[i]->getParamInputType() == OSC && ((OscInputGenerator*)inputGenerators[i])->getNodeID() == _nID)) {
                     
                     inputGenerators.erase(inputGenerators.begin() + i);
-//                    leftAudioPatch == n ? leftAudioPatch = NULL : rightAudioPatch = NULL;
                 }
                 i++;
             }
@@ -1198,6 +1181,7 @@ void ofApp::closePatch(int &_nID) {
                     }
                     i++;
                 }
+                listenToAudioInEvent((AudioIn*)n, false);
             }
         }
         else {
@@ -1256,21 +1240,6 @@ void ofApp::closePatch(int &_nID) {
 }
 
 //------------------------------------------------------------------
-//void ofApp::editAudioInChannel(AudioInEvent &e_){
-//
-//    for (int i = 0; i < audioListeners.size(); ++i) {
-//        if (audioListeners[i]->getNodeID() == e_.nodeId) {
-//            vector<DTAudioMap*>* am = audioListeners[i]->getAudioMap();
-//            for (int j = 0; j < am->size(); j++){
-//                am->at(j)->band = e_.channel;
-//            }
-//            
-//            break;
-//        }
-//    }
-//}
-
-//------------------------------------------------------------------
 void ofApp::editAudioInBand(AudioInEvent &e_){
 
     for (int i = 0; i < audioListeners.size(); ++i) {
@@ -1280,23 +1249,6 @@ void ofApp::editAudioInBand(AudioInEvent &e_){
         }
     }
 }
-
-////------------------------------------------------------------------
-//void ofApp::editLeftAudioIn(bool &edit_){
-//
-//    editAudioIn();
-////    editLeftAudioInActive = !editLeftAudioInActive;
-////    nodeViewers[currentViewer]->setEditLeftAudioInActive(editLeftAudioInActive);
-//    editAudioInActive = edit_.active ? edit_.band : 0;
-//}
-//
-////------------------------------------------------------------------
-//void ofApp::editRightAudioIn(bool &edit_){
-//    
-//    editAudioIn();
-////    editRightAudioInActive = !editRightAudioInActive;
-////    nodeViewers[currentViewer]->setEditRightAudioInActive(editRightAudioInActive);
-//}
 
 //------------------------------------------------------------------
 void ofApp::editAudioIn(AudioInEvent &edit_){
@@ -1347,6 +1299,45 @@ void ofApp::editAudioIn(AudioInEvent &edit_){
         ? nodeViewers[currentViewer]->setEditLeftAudioInActive(edit_.active, edit_.nodeId)
         : nodeViewers[currentViewer]->setEditRightAudioInActive(edit_.active, edit_.nodeId);
 };
+
+//------------------------------------------------------------------
+void ofApp::editAudioInSaturation(AudioInEvent &edit_){
+    
+    for (int i = 0; i < audioListeners.size(); ++i) {
+        if (audioListeners[i]->getNodeID() == edit_.nodeId) {
+            ((AudioInputGenerator*)audioListeners[i])->setSaturation(edit_.saturation);
+            break;
+        }
+    }
+}
+
+//------------------------------------------------------------------
+void ofApp::editAudioInEnabled(AudioInEvent &edit_){
+    
+    for (int i = 0; i < audioListeners.size(); ++i) {
+        if (audioListeners[i]->getNodeID() == edit_.nodeId) {
+            ((AudioInputGenerator*)audioListeners[i])->setEnable(edit_.enable);
+            break;
+        }
+    }
+}
+
+//------------------------------------------------------------------
+void ofApp::listenToAudioInEvent(AudioIn* audio, bool listen) {
+    
+    if (listen){
+        ofAddListener(audio->editAudioIn , this, &ofApp::editAudioIn);
+        ofAddListener(audio->editAudioInBand , this, &ofApp::editAudioInBand);
+        ofAddListener(audio->editAudioInSaturation , this, &ofApp::editAudioInSaturation);
+        ofAddListener(audio->editAudioInEnabled , this, &ofApp::editAudioInEnabled);
+    }
+    else {
+        ofRemoveListener(audio->editAudioIn , this, &ofApp::editAudioIn);
+        ofRemoveListener(audio->editAudioInBand , this, &ofApp::editAudioInBand);
+        ofRemoveListener(audio->editAudioInSaturation , this, &ofApp::editAudioInSaturation);
+        ofRemoveListener(audio->editAudioInEnabled , this, &ofApp::editAudioInEnabled);
+    }
+}
 
 //------------------------------------------------------------------
 void ofApp::editOSCPort(OSCEvent &e_) {
@@ -1923,21 +1914,21 @@ bool ofApp::loadNodes(ofxXmlSettings &XML){
                     
                     break;
                 };
-                case VIDEO:
-                {
-                    VideoPlayerMac* vP = new VideoPlayerMac(inputName, inputId);
-                    
-                    if (vP->loadSettings(XML, i)) {
-                        inputs.push_back(vP);
-                        nodes.insert(std::pair<int,ImageOutput*>(inputId,vP));
-                    }
-                    else {
-                        result = false;
-                        console->pushMessage("no videos to be loaded!");
-                    }
-                    
-                    break;
-                };
+//                case VIDEO:
+//                {
+//                    VideoPlayerMac* vP = new VideoPlayerMac(inputName, inputId);
+//                    
+//                    if (vP->loadSettings(XML, i)) {
+//                        inputs.push_back(vP);
+//                        nodes.insert(std::pair<int,ImageOutput*>(inputId,vP));
+//                    }
+//                    else {
+//                        result = false;
+//                        console->pushMessage("no videos to be loaded!");
+//                    }
+//                    
+//                    break;
+//                };
                 case CAM:
                 {
                     InputCamera* iC = new InputCamera(inputName, inputId);
@@ -1948,9 +1939,9 @@ bool ofApp::loadNodes(ofxXmlSettings &XML){
                     
                     break;
                 };
-                case IMAGE:
+                case IMAGE_AND_VIDEO_LIST:
                 {
-                    ImageInputList* iI = new ImageInputList(inputName, inputId);
+                    ImageAndVideoInputList* iI = new ImageAndVideoInputList(inputName, inputId);
                     
                     if (iI->loadSettings(XML, i)) {
                         inputs.push_back(iI);
@@ -1958,7 +1949,7 @@ bool ofApp::loadNodes(ofxXmlSettings &XML){
                     }
                     else {
                         result = false;
-                        console->pushMessage("no images to be loaded!");
+                        console->pushMessage("no images or videos to be loaded!");
                     }
                     
                     break;
@@ -1981,10 +1972,7 @@ bool ofApp::loadNodes(ofxXmlSettings &XML){
                     inputs.push_back(aI);
                     nodes.insert(std::pair<int,ImageOutput*>(inputId,aI));
                     
-//                    rightAudioPatch = aI;
-                    ofAddListener(aI->editAudioIn , this, &ofApp::editAudioIn);
-                    ofAddListener(aI->editAudioInBand , this, &ofApp::editAudioInBand);
-//                    ofAddListener(aI->editAudioInChannel , this, &ofApp::editAudioInChannel);
+                    listenToAudioInEvent(aI, true);
                     
                     break;
                 };
@@ -1995,11 +1983,6 @@ bool ofApp::loadNodes(ofxXmlSettings &XML){
                     
                     inputs.push_back(aI);
                     nodes.insert(std::pair<int,ImageOutput*>(inputId,aI));
-                    
-//                    leftAudioPatch = aI;
-                    ofAddListener(aI->editAudioIn , this, &ofApp::editAudioIn);
-                    ofAddListener(aI->editAudioInBand , this, &ofApp::editAudioInBand);
-//                    ofAddListener(aI->editAudioInChannel , this, &ofApp::editAudioInChannel);
                     
                     break;
                 };
@@ -2351,9 +2334,9 @@ bool ofApp::loadSnippet() {
                 aux_nodes.insert(std::pair<int,ImageOutput*>(nodeId,iC));
                 aux_nodesVector.push_back(iC);
             }
-            else if (nodeType == "IMAGE") {
+            else if (nodeType == "IMAGE_AND_VIDEO_LIST") {
                 
-                ImageInputList* iI = new ImageInputList(nodeName, nodeId);
+                ImageAndVideoInputList* iI = new ImageAndVideoInputList(nodeName, nodeId);
                 
                 if (iI->loadSettings(XML, i, nodesCount)) {
                     inputs.push_back(iI);
@@ -2362,7 +2345,7 @@ bool ofApp::loadSnippet() {
                 }
                 else {
                     result = false;
-                    console->pushMessage("no images to be loaded!");
+                    console->pushMessage("no images or videos to be loaded!");
                 }
             }
             else if (nodeType == "PARTICLE") {

@@ -172,61 +172,89 @@ void ImageProcessor::updateParameter(Param* inputParam){
     
     if(inputParam->name.compare("Activate Bloom")==0){
         isBloom = inputParam->intVal;
-    }else if(inputParam->name.compare("Activate Contrast")==0){
+    }
+    else if(inputParam->name.compare("Activate Contrast")==0){
         isContrast = inputParam->intVal;
-    }else if(inputParam->name.compare("Contrast")==0){
+    }
+    else if(inputParam->name.compare("Contrast")==0){
         coContrast = inputParam->floatVal;
-    }else if(inputParam->name.compare("Brightness")==0){
+    }
+    else if(inputParam->name.compare("Brightness")==0){
         coBrightness = inputParam->floatVal;
-    }else if(inputParam->name.compare("Multiple")==0){
+    }
+    else if(inputParam->name.compare("Multiple")==0){
         coMultiple = inputParam->floatVal;
-    }else if(inputParam->name.compare("Activate Kaleidoscope")==0){
+    }
+    else if(inputParam->name.compare("Activate Kaleidoscope")==0){
         isKaleidoscope = inputParam->intVal;
-    }else if(inputParam->name.compare("Segments")==0){
+    }
+    else if(inputParam->name.compare("Segments")==0){
         kaSegments = inputParam->floatVal;
-    }else if(inputParam->name.compare("Activate Noise")==0){
+    }
+    else if(inputParam->name.compare("Activate Noise")==0){
         isNoise = inputParam->intVal;
-    }else if(inputParam->name.compare("Frequency")==0){
+    }
+    else if(inputParam->name.compare("Frequency")==0){
         noFreq = inputParam->floatVal;
-    }else if(inputParam->name.compare("Amplitude")==0){
+    }
+    else if(inputParam->name.compare("Amplitude")==0){
         noAmp = inputParam->floatVal;
-    }else if(inputParam->name.compare("Speed")==0){
+    }
+    else if(inputParam->name.compare("Speed")==0){
         noSpeed = inputParam->floatVal;
-    }else if(inputParam->name.compare("Activate Edge")==0){
+    }
+    else if(inputParam->name.compare("Activate Edge")==0){
         isEdge = inputParam->intVal;
-    }else if(inputParam->name.compare("Hue")==0){
+    }
+    else if(inputParam->name.compare("Hue")==0){
         edHue = inputParam->floatVal;
-    }else if(inputParam->name.compare("Saturation")==0){
+    }
+    else if(inputParam->name.compare("Saturation")==0){
         edSat = inputParam->intVal;
-    }else if(inputParam->name.compare("Activate Bleach")==0){
+    }
+    else if(inputParam->name.compare("Activate Bleach")==0){
         isBleach = inputParam->intVal;
-    }else if(inputParam->name.compare("Opacity")==0){
+    }
+    else if(inputParam->name.compare("Opacity")==0){
         blOpacity = inputParam->floatVal;
-    }else if(inputParam->name.compare("Activate RGB Shift")==0){
+    }
+    else if(inputParam->name.compare("Activate RGB Shift")==0){
         isRGBShift = inputParam->intVal;
-    }else if(inputParam->name.compare("Angle")==0){
+    }
+    else if(inputParam->name.compare("Angle")==0){
         rgAngle = inputParam->floatVal;
-    }else if(inputParam->name.compare("Amount")==0){
+    }
+    else if(inputParam->name.compare("Amount")==0){
         rgAmount = inputParam->floatVal;
-    }else if(inputParam->name.compare("Activate Zoom Blur")==0){
+    }
+    else if(inputParam->name.compare("Activate Zoom Blur")==0){
         isZoomBlur = inputParam->intVal;
-    }else if(inputParam->name.compare("Center X")==0){
+    }
+    else if(inputParam->name.compare("Center X")==0){
         zbCenterX = inputParam->floatVal;
-    }else if(inputParam->name.compare("Center Y")==0){
+    }
+    else if(inputParam->name.compare("Center Y")==0){
         zbCenterY = inputParam->floatVal;
-    }else if(inputParam->name.compare("Exposure")==0){
+    }
+    else if(inputParam->name.compare("Exposure")==0){
         zbExposure = inputParam->floatVal;
-    }else if(inputParam->name.compare("Density")==0){
+    }
+    else if(inputParam->name.compare("Density")==0){
         zbDensity = inputParam->floatVal;
-    }else if(inputParam->name.compare("Weight")==0){
+    }
+    else if(inputParam->name.compare("Weight")==0){
         zbWeight = inputParam->floatVal;
-    }else if(inputParam->name.compare("Clamp")==0){
+    }
+    else if(inputParam->name.compare("Clamp")==0){
         zbClamp = inputParam->floatVal;
-    }else if(inputParam->name.compare("Activate Pixelate")==0){
+    }
+    else if(inputParam->name.compare("Activate Pixelate")==0){
         isPixelate = inputParam->intVal;
-    }else if(inputParam->name.compare("Unity scale")==0){
+    }
+    else if(inputParam->name.compare("Unity scale")==0){
         piIsUnityScale = inputParam->intVal;
-    }else if(inputParam->name.compare("x")==0){
+    }
+    else if(inputParam->name.compare("x")==0){
         ofVec2f b = piRes;
         b.x = inputParam->intVal;
         piRes = b;
@@ -235,7 +263,8 @@ void ImageProcessor::updateParameter(Param* inputParam){
         }else{
             (static_pointer_cast<PixelatePass>(post[9]))->setResolution(ofVec2f((int)b.x, (int)(b.y*height/width)));
         }
-    }else if(inputParam->name.compare("y")==0){
+    }
+    else if(inputParam->name.compare("y")==0){
         ofVec2f b = piRes;
         b.y = inputParam->intVal;
         piRes = b;

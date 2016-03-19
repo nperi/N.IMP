@@ -1,5 +1,5 @@
 /*
- *  ImageInputList.cpp
+ *  ImageAndVideoInputList.cpp
  *  ofApp
  *
  *  Created by Brian Eschrich on 12/12/14
@@ -7,10 +7,10 @@
  *
  */
 
-#include "ImageInputList.h"
+#include "ImageAndVideoInputList.h"
 
 
-ImageInputList::ImageInputList(string name, int id_) : InputSource(name, "Image", id_){
+ImageAndVideoInputList::ImageAndVideoInputList(string name, int id_) : InputSource(name, "Image & Video List", id_){
     
     currentSequence = 0;
     lastSequence = currentSequence;
@@ -20,7 +20,7 @@ ImageInputList::ImageInputList(string name, int id_) : InputSource(name, "Image"
 }
 
 //------------------------------------------------------------------
-void ImageInputList::setup(){
+void ImageAndVideoInputList::setup(){
     
     if (inputs[currentSequence]) {
         
@@ -40,55 +40,73 @@ void ImageInputList::setup(){
 }
 
 //------------------------------------------------------------------
-void ImageInputList::update(){
+void ImageAndVideoInputList::update(){
     
     inputs[currentSequence]->update(img);
     playPos2 = inputs[currentSequence]->getPosition();
 }
 
 //------------------------------------------------------------------
-void ImageInputList::updateParameter(Param* inputParam){
+void ImageAndVideoInputList::updateParameter(Param* inputParam){
     
-    if(inputParam->name.compare("bpm")==0){
+    if(inputParam->name.compare("BPM")==0){
         this->bpm = inputParam->floatVal;
-    }else if(inputParam->name.compare("bpmMultiplier")==0 || inputParam->name.compare("loop length in beats")==0){
-        isMatchBpmToSequenceLength
-        ? this->bpmMultiplier = ofMap(inputParam->intVal, 0, 255, 0, 16)
-        : this->bpmMultiplier = ofMap(inputParam->intVal, 0, 255, 0, 120);
-    }else if(inputParam->name.compare("playPosition")==0){
+    }
+//    else if(inputParam->name.compare("BPM Multiplier")==0 || inputParam->name.compare("Loop length in beats")==0){
+//        isMatchBpmToSequenceLength
+//        ? this->bpmMultiplier = ofMap(inputParam->value, inputParam->inputMin, inputParam->inputMax, 0, 16)
+//        : this->bpmMultiplier = ofMap(inputParam->value, inputParam->inputMin, inputParam->inputMax, 0, 120);
+//    }
+    else if(inputParam->name.compare("BPM Multiplier")==0){
+        this->bpmMultiplier = inputParam->intVal;
+    }
+    else if(inputParam->name.compare("Loop length in beats")==0){
+        this->bpmMultiplier = inputParam->intVal;
+    }
+    else if(inputParam->name.compare("Play Position")==0){
         this->playPosition = inputParam->floatVal;
-    }else if(inputParam->name.compare("current Sequence")==0){
-        this->currentSequence = ofMap(inputParam->intVal, 0, getMidiMax("current Sequence"), 0, inputs.size()-1);
-        isEnabledOn = true;
-    }else if(inputParam->name.compare("Play")==0){
+    }
+    else if(inputParam->name.compare("POS")==0){
+        this->playPos2 = inputParam->floatVal;
+    }
+    else if(inputParam->name.compare("Current Sequence")==0){
+//        this->currentSequence = ofMap(inputParam->value, inputParam->inputMin, inputParam->inputMax, 0, getMidiMax("Current Sequence"));
+        this->currentSequence = inputParam->intVal % inputs.size();
+    }
+    else if(inputParam->name.compare("Play")==0){
         this->isPlaying = inputParam->intVal;
-    }else if(inputParam->name.compare("LoopPalindrom")==0){
+    }
+    else if(inputParam->name.compare("Loop Palindrom")==0){
         this->isPalindromLoop = inputParam->intVal;
-    }else if(inputParam->name.compare("match BPM to Sequence Length")==0){
+    }
+    else if(inputParam->name.compare("BPM = Seq. Length")==0){
         this->isMatchBpmToSequenceLength = inputParam->intVal;
-    }else if(inputParam->name.compare("Enabled")==0){
+    }
+    else if(inputParam->name.compare("Enabled")==0){
         this->isEnabledOn = inputParam->intVal;
     }
 }
 
 //------------------------------------------------------------------
-float ImageInputList::getMidiMin(string param_){
+float ImageAndVideoInputList::getMidiMin(string param_){
     
-    if(param_.compare("bpm")==0){
+    if(param_.compare("BPM")==0){
         return 10;
-    }else if(param_.compare("bpmMultiplier")==0 || param_.compare("loop length in beats")==0){
+    }else if(param_.compare("BPM Multiplier")==0 || param_.compare("Loop length in beats")==0){
         return 0;
-    }else if(param_.compare("loop length in beats")==0){
+    }else if(param_.compare("Loop length in beats")==0){
+        return 1;
+    }else if(param_.compare("Play Position")==0){
         return 0;
-    }else if(param_.compare("playPosition")==0){
+    }else if(param_.compare("Pos")==0){
         return 0;
-    }else if(param_.compare("current Sequence")==0){
+    }else if(param_.compare("Current Sequence")==0){
         return 0;
     }else if(param_.compare("Play")==0){
         return 0;
-    }else if(param_.compare("LoopPalindrom")==0){
+    }else if(param_.compare("Loop Palindrom")==0){
         return 0;
-    }else if(param_.compare("match BPM to Sequence Length")==0){
+    }else if(param_.compare("BPM = Seq. Length")==0){
         return 0;
     }else if(param_.compare("Enabled")==0){
         return 0;
@@ -96,21 +114,25 @@ float ImageInputList::getMidiMin(string param_){
 }
 
 //------------------------------------------------------------------
-float ImageInputList::getMidiMax(string param_){
+float ImageAndVideoInputList::getMidiMax(string param_){
     
-    if(param_.compare("bpm")==0){
+    if(param_.compare("BPM")==0){
         return 200;
-    }else if(param_.compare("bpmMultiplier")==0 || param_.compare("loop length in beats")==0){
-        return 255;
-    }else if(param_.compare("playPosition")==0){
+    }else if(param_.compare("BPM Multiplier")==0){
+        return 120;
+    }else if(param_.compare("Loop length in beats")==0){
+        return 16;
+    }else if(param_.compare("Play Position")==0){
         return 1.0;
-    }else if(param_.compare("current Sequence")==0){
+    }else if(param_.compare("Pos")==0){
+        return 1.0;
+    }else if(param_.compare("Current Sequence")==0){
         return inputs.size()-1;
     }else if(param_.compare("Play")==0){
         return 1;
-    }else if(param_.compare("LoopPalindrom")==0){
+    }else if(param_.compare("Loop Palindrom")==0){
         return 1;
-    }else if(param_.compare("match BPM to Sequence Length")==0){
+    }else if(param_.compare("BPM = Seq. Length")==0){
         return 1;
     }else if(param_.compare("Enabled")==0){
         return 1;
@@ -118,17 +140,17 @@ float ImageInputList::getMidiMax(string param_){
 }
 
 //------------------------------------------------------------------
-ofImage* ImageInputList::getImage(){
+ofImage* ImageAndVideoInputList::getImage(){
     return &img;
 }
 
 //------------------------------------------------------------------
-ofTexture* ImageInputList::getTexture(){
+ofTexture* ImageAndVideoInputList::getTexture(){
     return &img.getTextureReference();
 }
 
 //------------------------------------------------------------------
-void ImageInputList::loadImage(string name_, string path_){
+void ImageAndVideoInputList::loadImage(string name_, string path_){
     
     if (ofIsStringInString(path_, ".mov") || ofIsStringInString(path_, ".mp4") ||
         ofIsStringInString(path_, ".mpg") || ofIsStringInString(path_, ".mpg") ) {
@@ -154,36 +176,36 @@ void ImageInputList::loadImage(string name_, string path_){
         height = inputs[0]->getHeight();
         
         //create gui
-        isPalindromLoop.addListener(this, &ImageInputList::loopTypeChanged);
-        bpm.addListener(this, &ImageInputList::bpmChanged);
-        setOriginalPlaySpeed.addListener(this,&ImageInputList::setOriginalPlaySpeedChanged);
-        bpmMultiplier.addListener(this, &ImageInputList::bpmMultiplierChanged);
-        nextFrame.addListener(this, &ImageInputList::nextFrameChanged);
-        previousFrame.addListener(this, &ImageInputList::previousFrameChanged);
-        isMatchBpmToSequenceLength.addListener(this, &ImageInputList::isMatchBpmToSequenceLengthChanged);
-        playPosition.addListener(this, &ImageInputList::playPositionChanged);
-        isPlaying.addListener(this, &ImageInputList::isPlayingChanged);
-        isEnabledOn.addListener(this, &ImageInputList::setEnableChanged);
+        isPalindromLoop.addListener(this, &ImageAndVideoInputList::loopTypeChanged);
+        bpm.addListener(this, &ImageAndVideoInputList::bpmChanged);
+        setOriginalPlaySpeed.addListener(this,&ImageAndVideoInputList::setOriginalPlaySpeedChanged);
+        bpmMultiplier.addListener(this, &ImageAndVideoInputList::bpmMultiplierChanged);
+        nextFrame.addListener(this, &ImageAndVideoInputList::nextFrameChanged);
+        previousFrame.addListener(this, &ImageAndVideoInputList::previousFrameChanged);
+        isMatchBpmToSequenceLength.addListener(this, &ImageAndVideoInputList::isMatchBpmToSequenceLengthChanged);
+        playPosition.addListener(this, &ImageAndVideoInputList::playPositionChanged);
+        isPlaying.addListener(this, &ImageAndVideoInputList::isPlayingChanged);
+        isEnabledOn.addListener(this, &ImageAndVideoInputList::setEnableChanged);
         
-        nextSequence.addListener(this, &ImageInputList::nextSequenceChanged);
-        prevSequence.addListener(this, &ImageInputList::prevSequenceChanged);
-        currentSequence.addListener(this, &ImageInputList::sequenceChanged);
-        deleteCurrentSequence.addListener(this, &ImageInputList::deleteSequence);
+        nextSequence.addListener(this, &ImageAndVideoInputList::nextSequenceChanged);
+        prevSequence.addListener(this, &ImageAndVideoInputList::prevSequenceChanged);
+        currentSequence.addListener(this, &ImageAndVideoInputList::sequenceChanged);
+        deleteCurrentSequence.addListener(this, &ImageAndVideoInputList::deleteSequence);
         
         gui.add(isEnabledOn.set("Enabled",false));
         gui.add(nextSequence.setup(">> next"));
         gui.add(prevSequence.setup("<< prev"));
-        gui.add(currentSequence.set("current Sequence", 0, 0, 0));
-        gui.add(deleteCurrentSequence.setup("Delete Current Sequence"));
+        gui.add(currentSequence.set("Current Sequence", 0, 0, 0));
+        gui.add(deleteCurrentSequence.setup("Delete Current Seq."));
         
         seqSettings.setName("Sequence Settings");
         seqSettings.add(isPlaying.set("Play",true));
-        seqSettings.add(isPalindromLoop.set("LoopPalindrom",true));
-        seqSettings.add(isMatchBpmToSequenceLength.set("match BPM to Sequence Length",false));
-        seqSettings.add(bpm.set("bpm", 100, 10, 200));
-        seqSettings.add(bpmMultiplier.set("bpmMultiplier", 4, 1, 120));
-        seqSettings.add(playPosition.set("playPosition",0.0,0.0,1.0));
-        seqSettings.add(playPos2.set("pos",0.0,0.0,1.0));
+        seqSettings.add(isPalindromLoop.set("Loop Palindrom",true));
+        seqSettings.add(isMatchBpmToSequenceLength.set("BPM = Seq. Length",false));
+        seqSettings.add(bpm.set("BPM", 100, 10, 200));
+        seqSettings.add(bpmMultiplier.set("BPM Multiplier", 4, 1, 120));
+        seqSettings.add(playPosition.set("Play Position",0.0,0.0,1.0));
+        seqSettings.add(playPos2.set("Pos",0.0,0.0,1.0));
         gui.add(seqSettings);
         
         gui.setWidthElements(INSPECTOR_WIDTH);
@@ -205,7 +227,7 @@ void ImageInputList::loadImage(string name_, string path_){
 }
 
 //------------------------------------------------------------------
-void ImageInputList::loopTypeChanged(bool &b){
+void ImageAndVideoInputList::loopTypeChanged(bool &b){
     if (b) {
         inputs[currentSequence]->setLoopState(OF_LOOP_PALINDROME);
     }else{
@@ -214,65 +236,65 @@ void ImageInputList::loopTypeChanged(bool &b){
 }
 
 //------------------------------------------------------------------
-void ImageInputList::isPlayingBackwardsChanged(bool &b){
+void ImageAndVideoInputList::isPlayingBackwardsChanged(bool &b){
     inputs[currentSequence]->isPlayingBackwards = b;
     inputs[currentSequence]->calculateFPS();
 }
 
 //------------------------------------------------------------------
-void ImageInputList::bpmChanged(float &b){
+void ImageAndVideoInputList::bpmChanged(float &b){
     inputs[currentSequence]->bpm = b;
     inputs[currentSequence]->calculateFPS();
 }
 
 //------------------------------------------------------------------
-void ImageInputList::bpmMultiplierChanged(int &b){//bpm to fps
+void ImageAndVideoInputList::bpmMultiplierChanged(int &b){//bpm to fps
     inputs[currentSequence]->bpmMultiplier = b;
     inputs[currentSequence]->calculateFPS();
 }
 
 //------------------------------------------------------------------
-void ImageInputList::isMatchBpmToSequenceLengthChanged(bool &b){
+void ImageAndVideoInputList::isMatchBpmToSequenceLengthChanged(bool &b){
     if (b) {
-        bpmMultiplier.set("loop length in beats", bpmMultiplier, 1, 16 );
+        bpmMultiplier.set("Loop length in beats", bpmMultiplier, 1, 16 );
     }
     else{
-        bpmMultiplier.set("bpmMultiplier", bpmMultiplier, 1, 120);
+        bpmMultiplier.set("BPM Multiplier", bpmMultiplier, 1, 120);
     }
     inputs[currentSequence]->isMatchBpmToSequenceLength = b;
     inputs[currentSequence]->calculateFPS();
 }
 
 //------------------------------------------------------------------
-void ImageInputList::previousFrameChanged(){
+void ImageAndVideoInputList::previousFrameChanged(){
     /*player.previousFrame();
     tex = *player.getTexture();*/
 }
 
 //------------------------------------------------------------------
-void ImageInputList::nextFrameChanged(){
+void ImageAndVideoInputList::nextFrameChanged(){
     /*player.nextFrame();
     tex = *player.getTexture();*/
 }
 
 //------------------------------------------------------------------
-void ImageInputList::isPlayingChanged(bool &b){
+void ImageAndVideoInputList::isPlayingChanged(bool &b){
     inputs[currentSequence]->isPlaying = b;
 }
 
 //------------------------------------------------------------------
-void ImageInputList::setEnableChanged(bool &b){
+void ImageAndVideoInputList::setEnableChanged(bool &b){
     this->setEnable(b);
 }
 
 //------------------------------------------------------------------
-void ImageInputList::playPositionChanged(float &pos){
+void ImageAndVideoInputList::playPositionChanged(float &pos){
     isPlaying = false;
     inputs[currentSequence]->setPosition(pos,img);
 }
 
 //------------------------------------------------------------------
-void ImageInputList::nextSequenceChanged(){
+void ImageAndVideoInputList::nextSequenceChanged(){
     if (isEnabled) {
         currentSequence = (currentSequence+1)%inputs.size();
         getNodeViewerIBelong()->updateConnectionsSize(this);
@@ -284,7 +306,7 @@ void ImageInputList::nextSequenceChanged(){
 }
 
 //------------------------------------------------------------------
-void ImageInputList::prevSequenceChanged(){
+void ImageAndVideoInputList::prevSequenceChanged(){
     if (isEnabled) {
         currentSequence = (currentSequence -1 <0) ? currentSequence = inputs.size()-1 : currentSequence-1;
         getNodeViewerIBelong()->updateConnectionsSize(this);
@@ -296,8 +318,8 @@ void ImageInputList::prevSequenceChanged(){
 }
 
 //------------------------------------------------------------------
-void ImageInputList::sequenceChanged(int &s){
-    if (isEnabled) {
+void ImageAndVideoInputList::sequenceChanged(int &s){
+    if (isEnabled && lastSequence != s) {
         inputs[lastSequence]->isPlaying = false;
         lastSequence = currentSequence;
         
@@ -322,7 +344,7 @@ void ImageInputList::sequenceChanged(int &s){
 }
 
 //------------------------------------------------------------------
-void ImageInputList::deleteSequence() {
+void ImageAndVideoInputList::deleteSequence() {
     if (isEnabled && inputs.size() > 1) {
         inputs.erase(inputs.begin() + currentSequence);
         if (currentSequence == inputs.size()) {
@@ -338,14 +360,14 @@ void ImageInputList::deleteSequence() {
 }
 
 //------------------------------------------------------------------
-void ImageInputList::setOriginalPlaySpeedChanged(bool &b){
+void ImageAndVideoInputList::setOriginalPlaySpeedChanged(bool &b){
     if (b) {
       
     }
 }
 
 //------------------------------------------------------------------
-void ImageInputList::setEnable(bool isEnabled_){
+void ImageAndVideoInputList::setEnable(bool isEnabled_){
     
     isEnabled = isEnabled_;
     
@@ -381,7 +403,7 @@ void ImageInputList::setEnable(bool isEnabled_){
 }
 
 //------------------------------------------------------------------
-bool ImageInputList::loadSettings(ofxXmlSettings &XML, int nTag_, int nodesCount_) {
+bool ImageAndVideoInputList::loadSettings(ofxXmlSettings &XML, int nTag_, int nodesCount_) {
     
     bool loaded = true;
     
@@ -429,7 +451,7 @@ bool ImageInputList::loadSettings(ofxXmlSettings &XML, int nTag_, int nodesCount
 }
 
 //------------------------------------------------------------------
-bool ImageInputList::saveSettings(ofxXmlSettings &XML) {
+bool ImageAndVideoInputList::saveSettings(ofxXmlSettings &XML) {
     
     bool saved = false;
     
@@ -494,7 +516,7 @@ bool ImageInputList::saveSettings(ofxXmlSettings &XML) {
             
             XML.addAttribute("NODE", "id", nId, lastPlace);
             XML.addAttribute("NODE", "name", name, lastPlace);
-            XML.addAttribute("NODE", "type", "IMAGE", lastPlace);
+            XML.addAttribute("NODE", "type", "IMAGE_AND_VIDEO_LIST", lastPlace);
             XML.addAttribute("NODE", "path", path, lastPlace);
             
             XML.addAttribute("NODE", "bpm", bpm, lastPlace);
@@ -527,7 +549,7 @@ bool ImageInputList::saveSettings(ofxXmlSettings &XML) {
 }
 
 //------------------------------------------------------------------
-bool ImageInputList::saveSettingsToSnippet(ofxXmlSettings &XML, map<int,int> newIdsMap) {
+bool ImageAndVideoInputList::saveSettingsToSnippet(ofxXmlSettings &XML, map<int,int> newIdsMap) {
     
     
     bool saved = false;
@@ -535,7 +557,7 @@ bool ImageInputList::saveSettingsToSnippet(ofxXmlSettings &XML, map<int,int> new
     
     XML.addAttribute("NODE", "id", newIdsMap[nId], lastPlace);
     XML.addAttribute("NODE", "name", name, lastPlace);
-    XML.addAttribute("NODE", "type", "IMAGE", lastPlace);
+    XML.addAttribute("NODE", "type", "IMAGE_AND_VIDEO_LIST", lastPlace);
     XML.addAttribute("NODE", "path", path, lastPlace);
     
     XML.addAttribute("NODE", "bpm", bpm, lastPlace);

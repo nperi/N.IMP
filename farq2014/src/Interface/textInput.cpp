@@ -21,7 +21,7 @@ textInput::textInput(string _name, string _textstring, float w, float h, float x
     nodes.push_back("glitch 1");
     nodes.push_back("glitch 2");
     nodes.push_back("ikeda");
-    nodes.push_back("image");
+    nodes.push_back("image or video");
     nodes.push_back("image processor");
     nodes.push_back("midi device");
     nodes.push_back("mix mask");
@@ -30,7 +30,7 @@ textInput::textInput(string _name, string _textstring, float w, float h, float x
     nodes.push_back("osc receiver");
     nodes.push_back("particle generator");
     nodes.push_back("syphon server");
-    nodes.push_back("video player");
+//    nodes.push_back("video player");
     
     midiList = NULL;
 }
@@ -143,40 +143,39 @@ void textInput::guiEvent(ofxUIEventArgs &e){
             midiList->setVisible(true);
             
         }
-        else if (e.type == "video player") {
-        
-            openFileResult = ofSystemLoadDialog("Select one video (.mov, .mpg, .mp4 or .m4v)");
-            
-            if (openFileResult.bSuccess){
+//        else if (e.type == "video player") {
+//        
+//            openFileResult = ofSystemLoadDialog("Select one video (.mov, .mpg, .mp4 or .m4v)");
+//            
+//            if (openFileResult.bSuccess){
+//
+//                ofFile file (openFileResult.getPath());
+//
+//                if (file.exists()){
+//
+//                    string fileExtension = ofToUpper(file.getExtension());
+//
+//                    //We only want videos
+//                    if (fileExtension == "MOV" ||
+//                        fileExtension == "MPG" ||
+//                        fileExtension == "MP4" ||
+//                        fileExtension == "M4V" ) {
+//                        e.path = openFileResult.getPath();
+//                        e.name = file.getFileName();
+//                    }
+//                    else return;
+//                }
+//                file.close();
+//                ofNotifyEvent(createNode, e , this);
+//            }
+//            else {
+//                dropdownList->clearSelected();
+//                return;
+//            }
+//        }
+        else if ((e.type == "image or video")){
 
-                ofFile file (openFileResult.getPath());
-
-                if (file.exists()){
-
-                    string fileExtension = ofToUpper(file.getExtension());
-
-                    //We only want videos
-                    if (fileExtension == "MOV" ||
-                        fileExtension == "MPG" ||
-                        fileExtension == "MP4" ||
-                        fileExtension == "M4V" ) {
-                        e.path = openFileResult.getPath();
-                        e.name = file.getFileName();
-                    }
-                    else return;
-                }
-                file.close();
-                ofNotifyEvent(createNode, e , this);
-            }
-            else {
-                dropdownList->clearSelected();
-                return;
-            }
-        }
-        
-        else if ((e.type == "image")){
-
-            openFileResult = ofSystemLoadDialog("Select an image (.jpg, .jpeg, .png, .bmp or .gif)");
+            openFileResult = ofSystemLoadDialog("Select an image (.jpg, .jpeg, .png, .bmp or .gif) or video (.mov, .mpg, .mp4 or .m4v)");
 
             if (openFileResult.bSuccess){
 
@@ -191,7 +190,11 @@ void textInput::guiEvent(ofxUIEventArgs &e){
                         fileExtension == "PNG"  ||
                         fileExtension == "JPEG" ||
                         fileExtension == "GIF"  ||
-                        fileExtension == "BMP"  ) {
+                        fileExtension == "BMP"  ||
+                        fileExtension == "MOV"  ||
+                        fileExtension == "MPG"  ||
+                        fileExtension == "MP4"  ||
+                        fileExtension == "M4V" ) {
                         e.path = openFileResult.getPath();
                         e.name = file.getFileName();
                     }

@@ -114,39 +114,56 @@ void GlitchLayer::updateParameter(Param* inputParam){
  
     if(inputParam->name.compare("Enabled")==0){
         this->isEnabled = inputParam->intVal;
-    }else if(inputParam->name.compare("CONVERGENCE")==0){
+    }
+    else if(inputParam->name.compare("CONVERGENCE")==0){
         this->do_CONVERGENCE = inputParam->intVal;
-    }else if(inputParam->name.compare("GLOW")==0){
+    }
+    else if(inputParam->name.compare("GLOW")==0){
         this->do_GLOW = inputParam->intVal;
-    }else if(inputParam->name.compare("SHAKER")==0){
+    }
+    else if(inputParam->name.compare("SHAKER")==0){
         this->do_SHAKER = inputParam->intVal;
-    }else if(inputParam->name.compare("CUTSLIDER")==0){
+    }
+    else if(inputParam->name.compare("CUTSLIDER")==0){
         this->do_CUTSLIDER = inputParam->intVal;
-    }else if(inputParam->name.compare("TWIST")==0){
+    }
+    else if(inputParam->name.compare("TWIST")==0){
         this->do_TWIST = inputParam->intVal;
-    }else if(inputParam->name.compare("OUTLINE")==0){
+    }
+    else if(inputParam->name.compare("OUTLINE")==0){
         this->do_OUTLINE = inputParam->intVal;
-    }else if(inputParam->name.compare("NOISE")==0){
+    }
+    else if(inputParam->name.compare("NOISE")==0){
         this->do_NOISE = inputParam->intVal;
-    }else if(inputParam->name.compare("SLITSCAN")==0){
+    }
+    else if(inputParam->name.compare("SLITSCAN")==0){
         this->do_SLITSCAN = inputParam->intVal;
-    }else if(inputParam->name.compare("SWELL")==0){
+    }
+    else if(inputParam->name.compare("SWELL")==0){
         this->do_SWELL = inputParam->intVal;
-    }else if(inputParam->name.compare("INVERT")==0){
+    }
+    else if(inputParam->name.compare("INVERT")==0){
         this->do_INVERT = inputParam->intVal;
-    }else if(inputParam->name.compare("HIGHCONTRAST")==0){
+    }
+    else if(inputParam->name.compare("HIGHCONTRAST")==0){
         this->do_CR_HIGHCONTRAST = inputParam->intVal;
-    }else if(inputParam->name.compare("BLUERAISE")==0){
+    }
+    else if(inputParam->name.compare("BLUERAISE")==0){
         this->do_CR_BLUERAISE = inputParam->intVal;
-    }else if(inputParam->name.compare("REDRAISE")==0){
+    }
+    else if(inputParam->name.compare("REDRAISE")==0){
         this->do_CR_REDRAISE = inputParam->intVal;
-    }else if(inputParam->name.compare("GREENRAISE")==0){
+    }
+    else if(inputParam->name.compare("GREENRAISE")==0){
         this->do_CR_GREENRAISE = inputParam->intVal;
-    }else if(inputParam->name.compare("BLUEINVERT")==0){
+    }
+    else if(inputParam->name.compare("BLUEINVERT")==0){
         this->do_CR_BLUEINVERT = inputParam->intVal;
-    }else if(inputParam->name.compare("REDINVERT")==0){
+    }
+    else if(inputParam->name.compare("REDINVERT")==0){
         this->do_CR_REDINVERT = inputParam->intVal;
-    }else if(inputParam->name.compare("GREENINVERT")==0){
+    }
+    else if(inputParam->name.compare("GREENINVERT")==0){
         this->do_CR_GREENINVERT = inputParam->intVal;
     }
 }

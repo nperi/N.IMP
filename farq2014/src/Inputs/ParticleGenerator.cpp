@@ -101,29 +101,40 @@ void ParticleGenerator::updateParameter(Param* inputParam){
         f.pos.set(ofVec2f(inputParam->floatVal,0));
         addForce(f);
 //        cout <<"x: " << f.pos->x;
-    }else if (inputParam->name.compare("forceY") == 0 && force.size() > 0){
+    }
+    else if (inputParam->name.compare("forceY") == 0 && force.size() > 0){
         ofVec2f v = force[force.size()-1].pos;
         v.y = inputParam->floatVal;
 //        cout <<" y: " << v.y <<endl;
-    }else if(inputParam->name.compare("Clear BG")==0){
+    }
+    else if(inputParam->name.compare("Clear BG")==0){
         isClearBg = inputParam->intVal;
-    }else if(inputParam->name.compare("Particles Alpha")==0){
+    }
+    else if(inputParam->name.compare("Particles Alpha")==0){
         alphaParticles = inputParam->intVal;
-    }else if(inputParam->name.compare("autogen particle")==0){
+    }
+    else if(inputParam->name.compare("autogen particle")==0){
         autoGenParticle = inputParam->intVal;
-    }else if(inputParam->name.compare("autogen amount")==0){
+    }
+    else if(inputParam->name.compare("autogen amount")==0){
         autoGenAmount = inputParam->intVal;
-    }else if(inputParam->name.compare("fade out")==0){
-        fadeOut = inputParam->intVal;
-    }else if(inputParam->name.compare("Same Size")==0){
+    }
+    else if(inputParam->name.compare("fade out")==0){
+        fadeOut = inputParam->floatVal;
+    }
+    else if(inputParam->name.compare("Same Size")==0){
         unityScale = inputParam->intVal;
-    }else if(inputParam->name.compare("min Size")==0){
+    }
+    else if(inputParam->name.compare("min Size")==0){
         minRadius = inputParam->intVal;
-    }else if(inputParam->name.compare("max Size")==0){
+    }
+    else if(inputParam->name.compare("max Size")==0){
         maxRadius = inputParam->intVal;
-    }else if(inputParam->name.compare("min Lifetime")==0){
+    }
+    else if(inputParam->name.compare("min Lifetime")==0){
         minLifetime = inputParam->intVal;
-    }else if(inputParam->name.compare("max Lifetime")==0){
+    }
+    else if(inputParam->name.compare("max Lifetime")==0){
         maxLifetime = inputParam->intVal;
     }
 }
