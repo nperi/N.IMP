@@ -149,13 +149,17 @@ void scrollBar::update(){
                         float scaleAux = scale - diffDist*SCALE_SENSITIVITY;
                         if(scaleAux < MAX_SCALE && scaleAux > MIN_SCALE){
                             scale -= diffDist*SCALE_SENSITIVITY;
-                            //                        float ratioX = mousePositionX/windowWidth;
-                            //                        float ratioY = mousePositionY/windowHeight;
-                            //                        float camX = cam->getPosition().x;
-                            //                        float camY = cam->getPosition().y;
-                            //                        float camZ = cam->getPosition().z;
-                            //                        cam->setPosition(camZ + ratioX*drag, camY + ratioY*drag, camZ);
-                            cam->setScale(scale);
+//                            float ratioX = mousePositionX/windowWidth;
+//                            float ratioY = mousePositionY/windowHeight;
+//                            float camX = cam->getPosition().x;
+//                            float camY = cam->getPosition().y;
+//                            float camZ = cam->getPosition().z;
+//                            cout << "ratioX: " << ratioX << endl;
+//                            cout << "ratioY: " << ratioY << endl;
+//                            cout << "camX: " << camX << endl;
+//                            cout << "scale: " << scale << endl;
+                                cam->setScale(scale);
+//                                cam->setPosition(camX + ratioX*ZOOM_OFFSET, camY + ratioY*ZOOM_OFFSET, camZ);
                         } else {
                             showMaxZoomReachedMessage = true;
                         }
@@ -340,6 +344,15 @@ void scrollBar::mousePressed(ofMouseEventArgs &e){
     if(EventHandler::getInstance()->getWindowEvent() == windowId){
         mousePositionX = e.x;
         mousePositionY = e.y;
+        
+        float ratioX = mousePositionX/windowWidth;
+        float ratioY = mousePositionY/windowHeight;
+        float camX = cam->getPosition().x;
+        float camY = cam->getPosition().y;
+        float camZ = cam->getPosition().z;
+//        cout << "ratioX: " << ratioX << endl;
+//        cout << "ratioY: " << ratioY << endl;
+//        cout << "camX: " << camX << endl;
         
         bool hitScrollBar = false;
         bool hitHScrollBar = false;
