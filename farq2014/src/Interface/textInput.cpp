@@ -127,8 +127,13 @@ void textInput::guiEvent(ofxUIEventArgs &e){
         
         if (e.type == "midi device") {
             
+            vector<string>& midiPortList = midiIn->getPortList();
+            if (midiPortList.size() == 0) {
+                midiPortList.push_back("No devices available");
+            }
+            
             if(midiList == NULL) {
-                midiList = new ofxUIDropDownList("", midiIn->getPortList(), 210, this->getRect()->x, this->getRect()->y);
+                midiList = new ofxUIDropDownList("", midiPortList, 210, this->getRect()->x, this->getRect()->y);
                 this->getCanvasParent()->addWidget(midiList);
                 midiList->open();
                 midiList->setAutoClose(true);
@@ -138,7 +143,7 @@ void textInput::guiEvent(ofxUIEventArgs &e){
             }
             else {
                 midiList->clearToggles();
-                midiList->addToggles(midiIn->getPortList());
+                midiList->addToggles(midiPortList);
             }
             midiList->setVisible(true);
             
@@ -218,14 +223,21 @@ void textInput::guiEvent(ofxUIEventArgs &e){
 void textInput::guiMidiEvent(ofxUIEventArgs &e){
     
     if(e.widget == this->midiList && this->midiList->getSelected().size()) {
-        this->setTextString(this->midiList->getSelected()[0]->getName());
         
-        textInputEvent e;
-        e.point.set(this->getRect()->getX(), this->getRect()->getY());
-        e.widget = this;
-        e.type = this->midiList->getSelected()[0]->getName();
+        if (this->midiList->getSelected()[0]->getName() == "No devices available") {
+            midiList->clearSelected();
+            return;
+        }
+        else {
+            this->setTextString(this->midiList->getSelected()[0]->getName());
+            
+            textInputEvent e;
+            e.point.set(this->getRect()->getX(), this->getRect()->getY());
+            e.widget = this;
+            e.type = this->midiList->getSelected()[0]->getName();
 
-        ofNotifyEvent(createNode, e , this);
+            ofNotifyEvent(createNode, e , this);
+        }
     }
 }
 
