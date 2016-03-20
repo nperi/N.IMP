@@ -723,7 +723,7 @@ void ofApp::dragEvent(ofDragInfo dragInfo){
             }
             
             for (int j = 0; j < inputs.size(); j ++) {
-                if (inputs[j]->getTypeName() == "Image & Video List" && inputs[j]->isOver(dragInfo.position)){
+                if (inputs[j]->getTypeName() == "Image & Video List" && inputs[j]->isOver(dragInfo.position*cam.getGlobalTransformMatrix())){
                     ((ImageAndVideoInputList*)inputs[j])->loadImage(file.getFileName(), dragInfo.files[i]);
                     console->pushSuccess("File " + file.getFileName()
                                          + " was succesfully added as a new sequence to the node "

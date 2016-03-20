@@ -48,6 +48,7 @@ class ImageAndVideoInputList : public InputSource{
     
     ofParameter<int> currentSequence;
     ofxButton deleteCurrentSequence;
+    ofxButton addVideoOrImage;
     
     ofParameterGroup seqSettings;
     ofParameter<float> bpm;
@@ -85,6 +86,7 @@ private:
     void isPlayingChanged(bool &b);
     void setEnableChanged(bool &b);
     void deleteSequence();
+    void addNewInput();
     
     int lastSequence;
     bool hasMovie;

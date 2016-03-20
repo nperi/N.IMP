@@ -191,12 +191,14 @@ void ImageAndVideoInputList::loadImage(string name_, string path_){
         prevSequence.addListener(this, &ImageAndVideoInputList::prevSequenceChanged);
         currentSequence.addListener(this, &ImageAndVideoInputList::sequenceChanged);
         deleteCurrentSequence.addListener(this, &ImageAndVideoInputList::deleteSequence);
+        addVideoOrImage.addListener(this, &ImageAndVideoInputList::addNewInput);
         
         gui.add(isEnabledOn.set("Enabled",false));
         gui.add(nextSequence.setup(">> next"));
         gui.add(prevSequence.setup("<< prev"));
         gui.add(currentSequence.set("Current Sequence", 0, 0, 0));
         gui.add(deleteCurrentSequence.setup("Delete Current Seq."));
+        gui.add(addVideoOrImage.setup("Add Image or Video"));
         
         seqSettings.setName("Sequence Settings");
         seqSettings.add(isPlaying.set("Play",true));
@@ -354,9 +356,46 @@ void ImageAndVideoInputList::deleteSequence() {
             currentSequence = currentSequence;
         }
         currentSequence.setMax(inputs.size()-1);
-
     }
+}
+
+//------------------------------------------------------------------
+void ImageAndVideoInputList::addNewInput() {
     
+    bActive = false;
+    
+    ofFileDialogResult openFileResult = ofSystemLoadDialog("Select an image (.jpg, .jpeg, .png, .bmp or .gif) or video (.mov, .mpg, .mp4 or .m4v)");
+    
+    if (openFileResult.bSuccess){
+        
+        ofFile file (openFileResult.getPath());
+        
+        if (file.exists()){
+            
+            string fileExtension = ofToUpper(file.getExtension());
+            
+            //We only want images
+            if (fileExtension == "JPG"  ||
+                fileExtension == "PNG"  ||
+                fileExtension == "JPEG" ||
+                fileExtension == "GIF"  ||
+                fileExtension == "BMP"  ||
+                fileExtension == "MOV"  ||
+                fileExtension == "MPG"  ||
+                fileExtension == "MP4"  ||
+                fileExtension == "M4V" ) {
+                
+                loadImage(file.getFileName(), openFileResult.getPath());
+            }
+        }
+        file.close();
+        bActive = true;
+        return;
+    }
+    else {
+        bActive = true;
+        return;
+    }
 }
 
 //------------------------------------------------------------------
