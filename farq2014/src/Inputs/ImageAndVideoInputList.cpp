@@ -20,6 +20,14 @@ ImageAndVideoInputList::ImageAndVideoInputList(string name, int id_) : InputSour
 }
 
 //------------------------------------------------------------------
+ImageAndVideoInputList::~ImageAndVideoInputList(){
+    
+    if (videoPlayer != NULL) {
+        VideoPool::getInstance()->releasePlayer(videoPlayer);
+    }
+}
+
+//------------------------------------------------------------------
 void ImageAndVideoInputList::setup(){
     
     if (inputs[currentSequence]) {
@@ -155,25 +163,25 @@ void ImageAndVideoInputList::loadImage(string name_, string path_){
     if (ofIsStringInString(path_, ".mov") || ofIsStringInString(path_, ".mp4") ||
         ofIsStringInString(path_, ".mpg") || ofIsStringInString(path_, ".mpg") ) {
         
-        if (inputs.size() == 0 || videoPlayer == NULL)
+        if (inputs.size() == 0 || videoPlayer == NULL) {
             videoPlayer = VideoPool::getInstance()->getPlayer();
+            videoPlayer->stop();
+        }
         inputs.push_back(new ImageTypeMovie(name_,path_,videoPlayer));
         hasMovie = true;
     }
     //load image sequence
-    else if (!ofIsStringInString(path_, ".")) {
-        inputs.push_back(new ImageTypePictureSequence(name_,path_));
-    }
+//    else if (!ofIsStringInString(path_, ".")) {
+//        inputs.push_back(new ImageTypePictureSequence(name_,path_));
+//    }
     //load single image
     else{
         inputs.push_back(new ImageTypePicture(name_,path_));
     }
+    
     currentSequence.setMax(inputs.size()-1);
     
     if (inputs.size() == 1) {
-        
-        width = inputs[0]->getWidth();
-        height = inputs[0]->getHeight();
         
         //create gui
         isPalindromLoop.addListener(this, &ImageAndVideoInputList::loopTypeChanged);
@@ -215,16 +223,17 @@ void ImageAndVideoInputList::loadImage(string name_, string path_){
         //gui.add(nextFrame.setup("nextFrame"));
         //gui.add(previousFrame.setup("previousFrame"));
         isPlayingBackwards = false;
+
         //start first scene
-        inputs[0]->isPlaying = isPlaying;
+        inputs[currentSequence]->isPlaying = isPlaying;
         ofLoopType l = (isPalindromLoop) ? OF_LOOP_PALINDROME : OF_LOOP_NORMAL;
-        inputs[0]->bpm = bpm;
-        inputs[0]->bpmMultiplier = bpmMultiplier;
-        inputs[0]->isMatchBpmToSequenceLength = isMatchBpmToSequenceLength;
-        inputs[0]->isPlayingBackwards = isPlayingBackwards;
-        inputs[0]->setLoopState(l);
-        inputs[0]->calculateFPS();
-        inputs[0]->activate(img);
+        inputs[currentSequence]->bpm = bpm;
+        inputs[currentSequence]->bpmMultiplier = bpmMultiplier;
+        inputs[currentSequence]->isMatchBpmToSequenceLength = isMatchBpmToSequenceLength;
+        inputs[currentSequence]->isPlayingBackwards = isPlayingBackwards;
+        inputs[currentSequence]->setLoopState(l);
+        inputs[currentSequence]->calculateFPS();
+        inputs[currentSequence]->activate(img);
     }
 }
 
@@ -281,7 +290,7 @@ void ImageAndVideoInputList::nextFrameChanged(){
 
 //------------------------------------------------------------------
 void ImageAndVideoInputList::isPlayingChanged(bool &b){
-    inputs[currentSequence]->isPlaying = b;
+    inputs[currentSequence]->isPlaying = b && isEnabledOn;
 }
 
 //------------------------------------------------------------------
@@ -418,14 +427,14 @@ void ImageAndVideoInputList::setEnable(bool isEnabled_){
         }
         else if (isEnabled_ && nEnabled == 0)
         {
-            videoPlayer = VideoPool::getInstance()->getPlayer();
+//            videoPlayer = VideoPool::getInstance()->getPlayer();
             
-            for (int i=0; i<inputs.size(); ++i) {
-                if (inputs[i]->getType() == T_MOVIE) {
-                    ImageTypeMovie* t = (ImageTypeMovie*)inputs[i];
-                    t->setPlayer(videoPlayer);
-                }
-            }
+//            for (int i=0; i<inputs.size(); ++i) {
+//                if (inputs[i]->getType() == T_MOVIE) {
+//                    ImageTypeMovie* t = (ImageTypeMovie*)inputs[i];
+//                    t->setPlayer(videoPlayer);
+//                }
+//            }
             
             inputs[currentSequence]->activate(img);
             inputs[currentSequence]->isPlaying = isPlaying;
@@ -434,7 +443,10 @@ void ImageAndVideoInputList::setEnable(bool isEnabled_){
             //nothing
         }
         else{
-            VideoPool::getInstance()->releasePlayer(videoPlayer);
+            if (videoPlayer != NULL) {
+                videoPlayer->stop();
+            }
+//            VideoPool::getInstance()->releasePlayer(videoPlayer);
         }
     }
     InputSource::setEnable(isEnabled_);
@@ -453,7 +465,6 @@ bool ImageAndVideoInputList::loadSettings(ofxXmlSettings &XML, int nTag_, int no
     isPlaying       = ofToBool(XML.getAttribute("NODE", "isPlaying","true", nTag_));
     isPalindromLoop = ofToBool(XML.getAttribute("NODE", "palindrom","true", nTag_));
     isMatchBpmToSequenceLength = ofToBool(XML.getAttribute("NODE", "matchBPMtoSequence","false", nTag_));
-    
     
     if ((path == "none") || (path == "")) {
         XML.pushTag("NODE",nTag_);
@@ -475,6 +486,9 @@ bool ImageAndVideoInputList::loadSettings(ofxXmlSettings &XML, int nTag_, int no
     }
     
     currentSequence = ofToInt(XML.getAttribute("NODE", "currentSequence", "0", nTag_));
+    
+    width = inputs[currentSequence]->getWidth();
+    height = inputs[currentSequence]->getHeight();
     
     XML.pushTag("NODE", nTag_);
     

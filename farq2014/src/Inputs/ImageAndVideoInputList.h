@@ -27,6 +27,7 @@ class ImageAndVideoInputList : public InputSource{
   public:
 	
     ImageAndVideoInputList(string name = "New Image & Video List", int id_ = -1);
+    ~ImageAndVideoInputList();
     
     void setup();
     void loadImage(string name_,string path_);

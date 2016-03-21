@@ -19,19 +19,22 @@ ImageTypeMovie::ImageTypeMovie(string name_ ,string path_, ofQTKitPlayer* player
     path = path_;
     name = name_;
     ext  = OTHER;
+    isPlaying = false;
     
-    if (!isPlaying && videoPlayer != NULL)
-        videoPlayer->stop();
+    if (videoPlayer != NULL) videoPlayer->stop();
+    
     isPlaying.addListener(this, &ImageTypeMovie::cIsPlaying);
-    
 }
 
 
 //------------------------------------------------------------------
 void ImageTypeMovie::activate(ofImage& _img){
     if (videoPlayer!=NULL) {
+        videoPlayer->stop();
+        videoPlayer->closeMovie();
         videoPlayer->loadMovie(path);
-        videoPlayer->play();
+        
+        if (isPlaying) videoPlayer->play();
 
         _img.setFromPixels(videoPlayer->getPixels(), videoPlayer->getWidth(), videoPlayer->getHeight(), OF_IMAGE_COLOR_ALPHA);
     }
