@@ -443,9 +443,9 @@ void ofApp::draw() {
             // draw nodes
             if(loadingOK){
                 
-                cam.begin();
+//                cam.begin();
                 nodeViewers[currentViewer]->draw();
-                cam.end();
+//                cam.end();
                 
                 ofDrawBitmapString(ofToString(ofGetFrameRate(),0), ofGetWidth() - 50, ofGetHeight()-35);
                 
@@ -454,7 +454,7 @@ void ofApp::draw() {
                 right_menu->setHeight(ofGetHeight() - (MENU_HEIGHT + MENU_TOP_PADDING));
                 
                 //draw inspectors
-                nodeViewers[currentViewer]->drawInspectorGUIs();
+//                nodeViewers[currentViewer]->drawInspectorGUIs();
                 
                 //draw scrollbars
                 scrollBars->draw();

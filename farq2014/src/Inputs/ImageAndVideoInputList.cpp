@@ -336,13 +336,12 @@ void ImageAndVideoInputList::sequenceChanged(int &s){
         inputs[0]->setLoopState(l);
         inputs[0]->calculateFPS();
         
-        width  = getBox().width/SCALE_RATIO;
+//        width  = getBox().width/SCALE_RATIO;
+        width  = (textureCorners[1].x - textureCorners[0].x)/SCALE_RATIO;
         height = (width*inputs[currentSequence]->getHeight())/inputs[currentSequence]->getWidth();
         
         resetSize();
     }
-    
-    //change gui appeareance
 }
 
 //------------------------------------------------------------------
