@@ -144,12 +144,6 @@ void AudioIn::setWaveFormPosition() {
     ofVec3f cam_pos = ((ofCamera*)this->getParent())->getPosition();
     ofxUIRectangle* r = waveform->getRect();
     
-//    r->setX((textureCorners[0].x);
-//    r->setY((textureCorners[0].y);
-//    
-//    r->setWidth(textureCorners[1].x - textureCorners[0].x);
-//    r->setHeight(textureCorners[2].y - textureCorners[0].y);
-    
     r->setX((textureCorners[0].x - cam_pos.x)/scale.x);
     r->setY((textureCorners[0].y - cam_pos.y)/scale.y);
 

@@ -64,8 +64,6 @@ void AudioAnalizer::customDraw(){
             ofVec3f scale = ((ofCamera*)this->getParent())->getScale();
             ofVec3f cam_pos = ((ofCamera*)this->getParent())->getPosition();
             
-//            ofTranslate(textureCorners[0]);
-//            filterBank.draw(textureCorners[1].x - textureCorners[0].x, textureCorners[2].y - textureCorners[0].y);
             ofTranslate((textureCorners[0].x - cam_pos.x)/scale.x, (textureCorners[0].y  - cam_pos.y)/scale.y, scale.z);
             filterBank.draw((textureCorners[1].x - textureCorners[0].x)/scale.x,(textureCorners[2].y - textureCorners[0].y)/scale.y);
             
