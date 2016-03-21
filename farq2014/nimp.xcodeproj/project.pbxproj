@@ -428,6 +428,7 @@
 		0AE1F56D1C4C1B8600A3B168 /* ofxMultiGLFWWindow.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = ofxMultiGLFWWindow.cpp; sourceTree = "<group>"; };
 		0AE1F56E1C4C1B8600A3B168 /* ofxMultiGLFWWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxMultiGLFWWindow.h; sourceTree = "<group>"; };
 		0AE1F57D1C4DAC2100A3B168 /* ImageAndVideoInputList.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ImageAndVideoInputList.cpp; sourceTree = "<group>"; };
+		0AE2C4D01C9F9819004CEF3C /* ofxPatchDeleteEvent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxPatchDeleteEvent.h; sourceTree = "<group>"; };
 		0AFFF74A1C2F0E3F0034AE53 /* BleachBypassPass.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BleachBypassPass.cpp; sourceTree = "<group>"; };
 		0AFFF74B1C2F0E3F0034AE53 /* BleachBypassPass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BleachBypassPass.h; sourceTree = "<group>"; };
 		0AFFF74C1C2F0E3F0034AE53 /* BloomPass.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BloomPass.cpp; sourceTree = "<group>"; };
@@ -790,6 +791,7 @@
 				0A49EF151C18A3BF00346EB5 /* ofxShaderObj.h */,
 				0A49EF161C18A3BF00346EB5 /* ofxTitleBar.cpp */,
 				0A49EF171C18A3BF00346EB5 /* ofxTitleBar.h */,
+				0AE2C4D01C9F9819004CEF3C /* ofxPatchDeleteEvent.h */,
 			);
 			path = src;
 			sourceTree = "<group>";
