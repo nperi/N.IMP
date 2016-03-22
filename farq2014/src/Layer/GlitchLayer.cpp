@@ -75,6 +75,7 @@ void GlitchLayer::update(){
         }
         else {
             fbo.begin();
+            ofSetColor(255);
             input[0]->getTextureReference().draw(0,0,width,height);
             fbo.end();
         }
