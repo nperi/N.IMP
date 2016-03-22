@@ -11,6 +11,8 @@
 
 ImageProcessor::ImageProcessor(string name_, int id_):VisualLayer(name_, "Image Processor", id_) {
     
+    gui.add(isEnabled.setup("Enabled", isEnabled, 100, 20));
+    
     pixelate.setName("pixelate");
     pixelate.add(isPixelate.set("Activate Pixelate", false));
     pixelate.add(piIsUnityScale.set("Unity scale", true));
@@ -148,22 +150,31 @@ void ImageProcessor::setup() {
 void ImageProcessor::update() {
     
     if(input.size()) {
-        
-        fbo.begin();
-        glPushAttrib(GL_ALL_ATTRIB_BITS);
-        glEnable(GL_BLEND);
-        glBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA,GL_ONE,GL_ONE_MINUS_SRC_ALPHA);
-        ofSetColor(255);
-        ofClear(255,255,255,0);
-        
-        post.begin();
-        ofClear(255,255,255,0);
-        input[0]->getTextureReference().draw(0, 0, width, height);
-        post.end();
+        ofPushStyle();
+        if (isEnabled) {
+            fbo.begin();
+            glPushAttrib(GL_ALL_ATTRIB_BITS);
+            glEnable(GL_BLEND);
+            glBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA,GL_ONE,GL_ONE_MINUS_SRC_ALPHA);
+            ofSetColor(255);
+            ofClear(255,255,255,0);
+            
+            post.begin();
+            ofClear(255,255,255,0);
+            input[0]->getTextureReference().draw(0, 0, width, height);
+            post.end();
 
-        glDisable(GL_BLEND);
-        glPopAttrib();
-        fbo.end();
+            glDisable(GL_BLEND);
+            glPopAttrib();
+            fbo.end();
+        }
+        else {
+            fbo.begin();
+            ofSetColor(255);
+            input[0]->getTextureReference().draw(0, 0, width, height);
+            fbo.end();
+        }
+        ofPopStyle();
     }
 }
 

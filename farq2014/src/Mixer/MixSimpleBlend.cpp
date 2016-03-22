@@ -13,6 +13,8 @@ MixSimpleBlend::MixSimpleBlend(string name_, int id_):MixTable(name_, "Mix Simpl
     
     maxInputs = 16;
 
+    gui.add(isEnabled.setup("Enabled", isEnabled, 100, 20));
+    
     gui.add(blendMode.set("BlendNormal", 0, 0, 24));
     gui.add(opacity.set("opacity", 0, 0, 255));
     gui.setWidthElements(INSPECTOR_WIDTH);
@@ -50,41 +52,50 @@ void MixSimpleBlend::setup() {
 void MixSimpleBlend::update(){
     
     if(input.size()) {
-
-        fbo.begin();
-        ofClear(255,255,255, 0);
-        glPushAttrib(GL_ALL_ATTRIB_BITS);
-        glEnable(GL_BLEND);
-        glBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA,GL_ONE,GL_ONE_MINUS_SRC_ALPHA);
-        if (blendMode == 0) {
-            
-            if (opacity < 255) {
-                ofSetColor(255, 255, 255);
-                input[selector1]->getTextureReference().draw(0, 0, width, height);
+        ofPushStyle();
+        if (isEnabled) {
+            fbo.begin();
+            ofClear(255,255,255, 0);
+            glPushAttrib(GL_ALL_ATTRIB_BITS);
+            glEnable(GL_BLEND);
+            glBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA,GL_ONE,GL_ONE_MINUS_SRC_ALPHA);
+            if (blendMode == 0) {
+                
+                if (opacity < 255) {
+                    ofSetColor(255, 255, 255);
+                    input[selector1]->getTextureReference().draw(0, 0, width, height);
+                }
+                if (opacity > 0) {
+                    ofSetColor(255, 255, 255,opacity);
+                    input[selector2]->getTextureReference().draw(0, 0, width, height);
+                }
             }
-            if (opacity > 0) {
+            else{
+                ofPushMatrix();
+                ofScale(1, -1);
+                ofPushMatrix();
+                ofTranslate(0, -height);
+                
+                psBlend.begin();
                 ofSetColor(255, 255, 255,opacity);
                 input[selector2]->getTextureReference().draw(0, 0, width, height);
+                psBlend.end();
+                psBlend.draw(input[selector1]->getTextureReference(), blendMode);
+                
+                ofPopMatrix();
+                ofPopMatrix();
             }
+            glDisable(GL_BLEND);
+            glPopAttrib();
+            fbo.end();
         }
-        else{
-            ofPushMatrix();
-            ofScale(1, -1);
-            ofPushMatrix();
-            ofTranslate(0, -height);
-            
-            psBlend.begin();
-            ofSetColor(255, 255, 255,opacity);
-            input[selector2]->getTextureReference().draw(0, 0, width, height);
-            psBlend.end();
-            psBlend.draw(input[selector1]->getTextureReference(), blendMode);
-            
-            ofPopMatrix();
-            ofPopMatrix();
+        else {
+            fbo.begin();
+            ofSetColor(255);
+            input[selector1]->getTextureReference().draw(0, 0, width, height);
+            fbo.end();
         }
-        glDisable(GL_BLEND);
-        glPopAttrib();
-        fbo.end();
+        ofPopStyle();
     }
 }
 

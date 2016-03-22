@@ -46,7 +46,7 @@
 
 #define INSPECTOR_WIDTH 200
 
-#define SCALE_RATIO 0.4
+#define SCALE_RATIO 0.3
 
 #define MAIN_WINDOW 1
 #define CONSOLE_WINDOW 0

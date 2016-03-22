@@ -40,7 +40,7 @@ void ImageAndVideoInputList::setup(){
         : img.allocate(width, height, OF_IMAGE_COLOR);
 
         img.setUseTexture(true);
-        isEnabledOn = true;
+        isEnabled = true;
     }
     else {
         drawNoInputs = true;
@@ -91,7 +91,7 @@ void ImageAndVideoInputList::updateParameter(Param* inputParam){
         this->isMatchBpmToSequenceLength = inputParam->intVal;
     }
     else if(inputParam->name.compare("Enabled")==0){
-        this->isEnabledOn = inputParam->intVal;
+        this->isEnabled = inputParam->intVal;
     }
 }
 
@@ -193,7 +193,7 @@ void ImageAndVideoInputList::loadImage(string name_, string path_){
         isMatchBpmToSequenceLength.addListener(this, &ImageAndVideoInputList::isMatchBpmToSequenceLengthChanged);
         playPosition.addListener(this, &ImageAndVideoInputList::playPositionChanged);
         isPlaying.addListener(this, &ImageAndVideoInputList::isPlayingChanged);
-        isEnabledOn.addListener(this, &ImageAndVideoInputList::setEnableChanged);
+        isEnabled.addListener(this, &ImageAndVideoInputList::setEnableChanged);
         
         nextSequence.addListener(this, &ImageAndVideoInputList::nextSequenceChanged);
         prevSequence.addListener(this, &ImageAndVideoInputList::prevSequenceChanged);
@@ -201,7 +201,7 @@ void ImageAndVideoInputList::loadImage(string name_, string path_){
         deleteCurrentSequence.addListener(this, &ImageAndVideoInputList::deleteSequence);
         addVideoOrImage.addListener(this, &ImageAndVideoInputList::addNewInput);
         
-        gui.add(isEnabledOn.set("Enabled",false));
+        gui.add(isEnabled.setup("Enabled", isEnabled, 100, 20));
         gui.add(nextSequence.setup(">> next"));
         gui.add(prevSequence.setup("<< prev"));
         gui.add(currentSequence.set("Current Sequence", 0, 0, 0));
@@ -290,7 +290,7 @@ void ImageAndVideoInputList::nextFrameChanged(){
 
 //------------------------------------------------------------------
 void ImageAndVideoInputList::isPlayingChanged(bool &b){
-    inputs[currentSequence]->isPlaying = b && isEnabledOn;
+    inputs[currentSequence]->isPlaying = b && isEnabled;
 }
 
 //------------------------------------------------------------------
@@ -439,9 +439,9 @@ void ImageAndVideoInputList::setEnable(bool isEnabled_){
             inputs[currentSequence]->activate(img);
             inputs[currentSequence]->isPlaying = isPlaying;
         }
-        else if (!isEnabled_ && nEnabled>1){
-            //nothing
-        }
+//        else if (!isEnabled_ && nEnabled>1){
+//            //nothing
+//        }
         else{
             if (videoPlayer != NULL) {
                 videoPlayer->stop();

@@ -11,6 +11,7 @@
 
 MultiChannelSwitch::MultiChannelSwitch(string name_, int id_):MixTable(name_, "Multi Channel Switch", id_){
     maxInputs = 16;
+    selChannel = 0;
     
     gui.add(drawInputGui.set("Show Input Gui", false));
     drawInputGui.addListener(this, &MultiChannelSwitch::cGui);
@@ -142,6 +143,7 @@ void MultiChannelSwitch::cDisableChannels(bool& c){
             input[i]->setEnable(!c);
         }
     }
+    input[selChannel]->setEnable(true);
 }
 
 //------------------------------------------------------------------

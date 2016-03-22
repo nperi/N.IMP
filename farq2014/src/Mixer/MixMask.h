@@ -26,6 +26,8 @@ public:
     ofImage*    getImage();
     ofTexture*  getTexture();
     
+    void setEnable(bool isEnabled_);
+    
     bool loadSettings(ofxXmlSettings &XML, int nTag, int nodesCount = 0);
     bool saveSettings(ofxXmlSettings &XML);
     bool saveSettingsToSnippet(ofxXmlSettings &XML, map<int,int> newIdsMap);

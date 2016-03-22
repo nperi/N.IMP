@@ -10,6 +10,9 @@
 #include "MixMask.h"
 
 MixMask::MixMask(string name_, int id_):MixTable(name_, "Mix Mask", id_){
+    
+    gui.add(isEnabled.setup("Enabled", isEnabled, 100, 20));
+    
     gui.add(spin.setup("spin", 90, 0, 360));
     gui.setWidthElements(INSPECTOR_WIDTH);
     
@@ -42,23 +45,32 @@ void MixMask::setup() {
 void MixMask::update(){
     
     if(input.size()) {
-        
-        fbo.begin();
-        ofClear(255,255,255, 0);
-        input[0]->getTextureReference().draw(0, 0, width, height);
-        ofEnableAlphaBlending();
-        ofPushMatrix();
-        ofTranslate(width/2, height/2);
-        ofPushMatrix();
-        ofRotate(spin);
-        ofPushMatrix();
-        ofTranslate(-width/2, -height/2);
-        drawShader();
-        ofPopMatrix();
-        ofPopMatrix();
-        ofPopMatrix();
-        ofDisableBlendMode();
-        fbo.end();
+        ofPushStyle();
+        if (isEnabled) {
+            fbo.begin();
+            ofClear(255,255,255, 0);
+            input[0]->getTextureReference().draw(0, 0, width, height);
+            ofEnableAlphaBlending();
+            ofPushMatrix();
+            ofTranslate(width/2, height/2);
+            ofPushMatrix();
+            ofRotate(spin);
+            ofPushMatrix();
+            ofTranslate(-width/2, -height/2);
+            drawShader();
+            ofPopMatrix();
+            ofPopMatrix();
+            ofPopMatrix();
+            ofDisableBlendMode();
+            fbo.end();
+        }
+        else {
+            fbo.begin();
+            ofSetColor(255);
+            input[0]->getTextureReference().draw(0, 0, width, height);
+            fbo.end();
+        }
+        ofPopStyle();
     }
 }
 
@@ -147,6 +159,14 @@ void MixMask::inputAdded(ImageOutput* in_){
 //------------------------------------------------------------------
 void MixMask::inputRemoved(int id_){
     
+}
+
+//------------------------------------------------------------------
+void MixMask::setEnable(bool isEnabled_){
+    isEnabled = isEnabled_;
+    
+    if (input.size() > 0) input[0]->setEnable(isEnabled);
+    if (input.size() > 1) input[1]->setEnable(isEnabled);
 }
 
 //------------------------------------------------------------------
