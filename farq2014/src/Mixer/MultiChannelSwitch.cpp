@@ -14,10 +14,14 @@ MultiChannelSwitch::MultiChannelSwitch(string name_, int id_):MixTable(name_, "M
     
     gui.add(drawInputGui.set("Show Input Gui", false));
     drawInputGui.addListener(this, &MultiChannelSwitch::cGui);
-
-    selChannel.set("channel", 0, 0, 0);
+    
+    gui.add(disableOtherChannels.set("Disable other channels", false));
+    disableOtherChannels.addListener(this, &MultiChannelSwitch::cDisableChannels);
+    
+    labelGroup.setName("Channels");
+//    labelGroup.add(selChannel.set("channel", 0, 0, 0));
     selChannel.addListener(this, &MultiChannelSwitch::cselChannel);
-    labelGroup.setName("channels");
+    gui.add(labelGroup);
     
     drawNoInputs = true;
     
@@ -30,16 +34,20 @@ void MultiChannelSwitch::inputAdded(ImageOutput* in_){
     c->nodeId = in_->getId();
     c->label = in_->getName();
     if (input.size()>1) {
-        selChannel.setMax(selChannel.getMax()+1);
         c->selected.set(in_->getName(),false);
     } else {
         c->selected.set(in_->getName(),true);
         in_->setDrawInspector(drawInputGui);
     }
     
-    gui.add(c->selected);
-    c->selected.addListener(this, &MultiChannelSwitch::cLabel);
+    selChannel.setMax(input.size()-1);
     channels.push_back(c);
+    
+    labelGroup.add(c->selected);
+    c->selected.addListener(this, &MultiChannelSwitch::cLabel);
+    
+    gui.remove("Channels");
+    gui.add(labelGroup);
     gui.setWidthElements(INSPECTOR_WIDTH);
     
     //hack
@@ -49,17 +57,27 @@ void MultiChannelSwitch::inputAdded(ImageOutput* in_){
 //------------------------------------------------------------------
 void MultiChannelSwitch::inputRemoved(int id_){
     
-    selChannel.setMax(selChannel.getMax()+1);
     if (selChannel == input.size() && input.size() != 0){
         selChannel -= 1;
         channels[selChannel]->selected = true;
     }
     for (int i = 0; i < channels.size(); i++) {
         if(channels[i]->nodeId == id_){
-            gui.remove(channels[i]->label);
+            labelGroup.remove(channels[i]->label);
             channels.erase(channels.begin() + i);
         }
     }
+    
+    if (input.size() == 0) {
+        selChannel.setMax(0);
+        drawNoInputs = true;
+    } else {
+        selChannel.setMax(input.size());
+        channels[selChannel]->selected = true;
+    }
+    
+    gui.remove("Channels");
+    gui.add(labelGroup);
     gui.setWidthElements(INSPECTOR_WIDTH);
 }
 
@@ -117,6 +135,16 @@ void MultiChannelSwitch::cGui(bool& g){
 }
 
 //------------------------------------------------------------------
+void MultiChannelSwitch::cDisableChannels(bool& c){
+    
+    for (int i = 0; i < input.size(); i++) {
+        if (i != selChannel) {
+            input[i]->setEnable(!c);
+        }
+    }
+}
+
+//------------------------------------------------------------------
 void MultiChannelSwitch::cLabel(bool& b){
     if (ofGetElapsedTimeMillis()-lastClicked > 200) {
         //hacked radio button
@@ -130,10 +158,12 @@ void MultiChannelSwitch::cLabel(bool& b){
         }
         else {
             drawNoInputs = true;
+            resetSizeToNoInputs();
         }
         for (int i = 0; i < channels.size(); ++i) {
             if (channels[i]->selected == true) {
-                input[selChannel]->setEnable(false);
+                if (disableOtherChannels)
+                    input[selChannel]->setEnable(false);
                 if(drawInputGui)
                     input[selChannel]->setDrawInspector(false);
                 selChannel = i;

@@ -38,8 +38,9 @@ public:
     
     void setEnable(bool isEnabled_);
     
-    ofParameter<int> selChannel;
+    ofParameter<int>  selChannel;
     ofParameter<bool> drawInputGui;
+    ofParameter<bool> disableOtherChannels;
     
     void resetSizeBasedOnInput(ofxPatch* input_);
     
@@ -58,6 +59,7 @@ private:
     
     void cselChannel(int& s);
     void cGui(bool& g);
+    void cDisableChannels(bool& c);
     void cLabel(bool& b);
     
     ofParameterGroup labelGroup;
