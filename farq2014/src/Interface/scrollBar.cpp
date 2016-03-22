@@ -14,28 +14,6 @@
 scrollBar::scrollBar(){
 }
 
-//------------------------------------------------------------------
-//scrollBar::scrollBar(class ofxComposer* _composer, ofxMultiTouchPad* _pad, int eventPriority, int windowId){
-//    this->composer  = _composer;
-//    this->pad       = _pad;
-//    this->cam       = (ofCamera*)composer->getParent();
-//    
-//    //  Event listeners
-//    //
-//    ofAddListener(ofEvents().mouseMoved, this, &scrollBar::mouseMoved, eventPriority);
-//    ofAddListener(ofEvents().mousePressed, this, &scrollBar::mousePressed, eventPriority);
-//    ofAddListener(ofEvents().mouseReleased, this, &scrollBar::mouseReleased, eventPriority);
-//    ofAddListener(ofEvents().keyPressed, this, &scrollBar::keyPressed, eventPriority);
-//    ofAddListener(ofEvents().windowResized, this, &scrollBar::windowResized, eventPriority);
-//    
-//    ofAddListener(ofEvents().mouseDragged, this, &scrollBar::mouseDragged, eventPriority);
-//    
-////    enableScroll = true;
-//    scale = 1.f;
-//    updating = false;
-//    this->windowId = windowId;
-//}
-
 scrollBar::scrollBar(class ofxComposer* _composer, ofxMultiTouchPad* _pad, ofEasyCam* cam, int eventPriority, int windowId){
     this->composer  = _composer;
     this->pad       = _pad;
@@ -67,6 +45,7 @@ scrollBar::scrollBar(class ofxComposer* _composer, ofxMultiTouchPad* _pad, ofEas
     
     showMaxZoomReachedMessage = false;
     enableScrollAndZoom = true;
+    scrolling = false;
 }
 
 scrollBar::~scrollBar(){
@@ -142,7 +121,7 @@ void scrollBar::update(){
                     
                     updating = true;
                     
-                    if(zooming){
+                    if(zooming && !scrolling){
                         scale = cam->getScale().x;
                         newDist = ofDist(mTouches[0].x, mTouches[0].y, mTouches[1].x, mTouches[1].y);
                         diffDist = (newDist - prevDist)*120;
@@ -154,12 +133,17 @@ void scrollBar::update(){
 //                            float camX = cam->getPosition().x;
 //                            float camY = cam->getPosition().y;
 //                            float camZ = cam->getPosition().z;
-//                            cout << "ratioX: " << ratioX << endl;
-//                            cout << "ratioY: " << ratioY << endl;
-//                            cout << "camX: " << camX << endl;
-//                            cout << "scale: " << scale << endl;
-                                cam->setScale(scale);
+//                            ofVec3f camPos = cam->getPosition();
+                            
+//                            ofVec2f clicPoint = ofVec2f(ofGetMouseX(), ofGetMouseY()) - camPos - ofVec3f(ofGetWidth()/2, ofGetHeight()/2);
+//                            clicPoint /= scale;
+//
+//                            float clicScale = scale;
+//                            ofVec3f clicTranslation = camPos;
 //                                cam->setPosition(camX + ratioX*ZOOM_OFFSET, camY + ratioY*ZOOM_OFFSET, camZ);
+//                            camPos = clicTranslation - clicPoint*(scale - clicScale);
+                            cam->setScale(scale);
+//                            cam->setPosition(camPos);
                         } else {
                             showMaxZoomReachedMessage = true;
                         }
@@ -336,6 +320,7 @@ void scrollBar::mouseReleased(ofMouseEventArgs &e){
         composer->setDraggingHGrip(false);
         
         enableScrollAndZoom = true;
+        scrolling = false;
     }
 }
 
@@ -345,17 +330,6 @@ void scrollBar::mousePressed(ofMouseEventArgs &e){
         mousePositionX = e.x;
         mousePositionY = e.y;
         
-        float ratioX = mousePositionX/windowWidth;
-        float ratioY = mousePositionY/windowHeight;
-        float camX = cam->getPosition().x;
-        float camY = cam->getPosition().y;
-        float camZ = cam->getPosition().z;
-//        cout << "ratioX: " << ratioX << endl;
-//        cout << "ratioY: " << ratioY << endl;
-//        cout << "camX: " << camX << endl;
-        
-        bool hitScrollBar = false;
-        bool hitHScrollBar = false;
         // Check if the click occur on the grip
         if (isScrollBarVisible) {
             ofRectangle r = gripRectangle;
@@ -363,7 +337,7 @@ void scrollBar::mousePressed(ofMouseEventArgs &e){
                 composer->deactivateAllPatches();
                 composer->setDraggingGrip(true);
                 mousePreviousY = e.y;
-                hitScrollBar = true;
+                scrolling = true;
             }
         }
         
@@ -373,11 +347,11 @@ void scrollBar::mousePressed(ofMouseEventArgs &e){
                 composer->deactivateAllPatches();
                 composer->setDraggingHGrip(true);
                 mousePreviousX = e.x;
-                hitHScrollBar = true;
+                scrolling = true;
             }
         }
         
-        enableScrollAndZoom = hitScrollBar || hitHScrollBar;
+        enableScrollAndZoom = scrolling;
     }
 }
 
@@ -477,13 +451,13 @@ void scrollBar::updateScrollBar(ofVec2f diffVec){
     }
     
     
-    // Muestro la scrollBar
+    // Show scroll bar
     isScrollBarVisible = true;
-    // La altura del scroll bar = a la altura de la pantalla
+    // Set its height as tall as screen
     scrollBarRectangle.height = panelHeight;
     
-    // estos ratios son la proporcion de lo que hay que dibujar que esta por encima y por debajo de lo que se muestra
-    // al ser ratio, van de 0 a 1, y calculo dependiendo el caso
+    // These ratios are the proportion of what's underneath and above of what's displaying
+    // The ratios values go from 0 to 1
     float gripSizeRatioLow = 1.f;
     float gripSizeRatioHigh = 1.f;
     if ( unTransformedLowest + SCROLL_TOLERANCE < 0 ){
@@ -493,14 +467,14 @@ void scrollBar::updateScrollBar(ofVec2f diffVec){
         gripSizeRatioLow = (float)panelHeight / ( (float)unTransformedHighest );
     }
 
-    // La altura del grip es el panel por los ratios fuera de la pantalla
+    // Height of the grip bar is the panel height multiplied by both ratios
     gripRectangle.height = panelHeight * gripSizeRatioLow * gripSizeRatioHigh;
     
-    // La 'y' del grip esta en la scrollbar por la relacion de lo que queda por arriba de la pantalla
+    // The 'y' coordinate is in the beginning + what is left above
     gripRectangle.y = BEGIN_Y + (1-gripSizeRatioHigh)*scrollBarRectangle.height;
     
-    // Si las alturas del grip y del scroll son iguales, es porque tengo todo a la vista
-    // hago que la resta sea menor a 2 para dejar un margen, si no, queda a veces la barra cuando no es necesario
+    // If both heights are equal is because everything is displaying and set visibility to false
+    // leave a small margin of 2 since they are not exactly equal
     if( (scrollBarRectangle.height - gripRectangle.height) < 2 ){
         isScrollBarVisible = false;
     }
@@ -528,10 +502,11 @@ void scrollBar::updateHScrollBar(ofVec2f diffVec){
     panelWidth = windowWidth - margin - BEGIN_X;
     panelHeight = windowHeight - margin;
     
-    // La altura del scroll bar = a la altura de la pantalla
+    // Set its width as wide as screen
     hScrollBarRectangle.width = panelWidth;
     
-    hGripRectangle.y = hScrollBarRectangle.y; // Also adjust the grip x coordinate
+    // Also adjust the grip x coordinate
+    hGripRectangle.y = hScrollBarRectangle.y;
     int unTransformedLeft = (composer->getPatchesLeftMostCoord(windowId) - cam->getPosition().x)/cam->getScale().x - margin - BEGIN_X;
     int unTransformedRight = (composer->getPatchesRightMostCoord(windowId) - cam->getPosition().x)/cam->getScale().x - margin;
     int inspectorHighestX = composer->getPatchesHighestXInspectorCoord(windowId);
@@ -540,11 +515,11 @@ void scrollBar::updateHScrollBar(ofVec2f diffVec){
         unTransformedRight = inspectorHighestX;
     }
     
-    // Muestro la scrollBar
+    // Show scroll bar
     isHScrollBarVisible = true;
     
-    // estos ratios son la proporcion de lo que hay que dibujar que esta por encima y por debajo de lo que se muestra
-    // al ser ratio, van de 0 a 1, y calculo dependiendo el caso
+    // These ratios are the proportion of what's left and right of what's displaying
+    // The ratios values go from 0 to 1
     float gripSizeRatioLeft = 1.f;
     float gripSizeRatioRight = 1.f;
     if ( (unTransformedLeft + SCROLL_TOLERANCE < 0)  && (unTransformedRight - SCROLL_TOLERANCE > panelWidth) ) {
@@ -556,14 +531,14 @@ void scrollBar::updateHScrollBar(ofVec2f diffVec){
         gripSizeRatioLeft = (float)panelWidth / ( (float)unTransformedRight );
     }
     
-    // La altura del grip es el panel por los ratios fuera de la pantalla
+    // Width of the grip bar is the panel width multiplied by both ratios
     hGripRectangle.width = panelWidth * gripSizeRatioLeft * gripSizeRatioRight;
     
-    // La 'x' del grip esta en la scrollbar por la relacion de lo que queda por la izquierda de la pantalla
+    // The 'x' coordinate is in the beginning + what is left and not shown
     hGripRectangle.x = BEGIN_X + (1-gripSizeRatioRight)*hScrollBarRectangle.width;
     
-    // Si las alturas del grip y del scroll son iguales, es porque tengo todo a la vista
-    // hago que la resta sea menor a 2 para dejar un margen, si no, queda a veces la barra cuando no es necesario
+    // If both widths are equal is because everything is displaying and set visibility to false
+    // leave a small margin of 2 since they are not exactly equal
     if( (hScrollBarRectangle.width - hGripRectangle.width) < 2 ){
         isHScrollBarVisible = false;
     }

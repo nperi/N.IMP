@@ -53,7 +53,7 @@ private:
     
     float windowWidth;
     float windowHeight;
-    bool applyInertia;
+    bool  applyInertia;
     float drag;
     float minScrollDifference;
     ofVec2f prevDiff;
@@ -108,6 +108,7 @@ private:
     
     bool showMaxZoomReachedMessage;
     bool enableScrollAndZoom;
+    bool scrolling;
 };
 
 
