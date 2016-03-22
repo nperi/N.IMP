@@ -1,29 +1,51 @@
 <MAIN_SETTINGS>
-    <link_type>2</link_type>
-    <total_nodes>13</total_nodes>
+    <link_type>1</link_type>
+    <total_nodes>16</total_nodes>
     <show_console>0</show_console>
     <SETTINGS>
         <INPUTS>
-            <NODE id="1" name="New Camera" type="CAM">
+            <NODE id="2" name="Audio Analizer" type="AUDIO_ANALIZER" threshold="0.020000">
+                <visible>1</visible>
+                <active>1</active>
+                <texture>
+                    <point>
+                        <x>1404.000000000</x>
+                        <y>814.000000000</y>
+                    </point>
+                    <point>
+                        <x>1604.000000000</x>
+                        <y>814.000000000</y>
+                    </point>
+                    <point>
+                        <x>1604.000000000</x>
+                        <y>914.000000000</y>
+                    </point>
+                    <point>
+                        <x>1404.000000000</x>
+                        <y>914.000000000</y>
+                    </point>
+                </texture>
+            </NODE>
+            <NODE id="3" name="New Camera" type="CAM">
                 <type>none</type>
                 <path>none</path>
                 <visible>1</visible>
                 <texture>
                     <point>
-                        <x>75.806312561</x>
-                        <y>23.090583801</y>
+                        <x>60.000000000</x>
+                        <y>70.199996948</y>
                     </point>
                     <point>
-                        <x>218.758956909</x>
-                        <y>23.090461731</y>
+                        <x>316.000000000</x>
+                        <y>70.199996948</y>
                     </point>
                     <point>
-                        <x>218.759048462</x>
-                        <y>130.304977417</y>
+                        <x>316.000000000</x>
+                        <y>262.200012207</y>
                     </point>
                     <point>
-                        <x>75.806404114</x>
-                        <y>130.304977417</y>
+                        <x>60.000000000</x>
+                        <y>262.200012207</y>
                     </point>
                 </texture>
                 <mask>
@@ -48,132 +70,32 @@
                     <active>1</active>
                     <dot>
                         <to>5</to>
-                        <tex>0</tex>
                     </dot>
-                </out>
-            </NODE>
-            <NODE id="2" name="New Video Player" type="VIDEO" path="">
-                <VIDEO path="./duck.mp4" />
-                <type>none</type>
-                <path>none</path>
-                <visible>1</visible>
-                <texture>
-                    <point>
-                        <x>58.839210510</x>
-                        <y>159.865142822</y>
-                    </point>
-                    <point>
-                        <x>263.639221191</x>
-                        <y>159.865142822</y>
-                    </point>
-                    <point>
-                        <x>263.639221191</x>
-                        <y>275.065124512</y>
-                    </point>
-                    <point>
-                        <x>58.839210510</x>
-                        <y>275.065124512</y>
-                    </point>
-                </texture>
-                <mask>
-                    <point>
-                        <x>0.000000000</x>
-                        <y>0.000000000</y>
-                    </point>
-                    <point>
-                        <x>1.000000000</x>
-                        <y>0.000000000</y>
-                    </point>
-                    <point>
-                        <x>1.000000000</x>
-                        <y>1.000000000</y>
-                    </point>
-                    <point>
-                        <x>0.000000000</x>
-                        <y>1.000000000</y>
-                    </point>
-                </mask>
-                <out>
-                    <active>1</active>
                     <dot>
                         <to>6</to>
-                        <tex>0</tex>
-                        <vertices>
-                            <vertex x="294.000000" y="217.000000"></vertex>
-                            <vertex x="294.000000" y="243.000000"></vertex>
-                        </vertices>
                     </dot>
                 </out>
             </NODE>
-            <NODE id="3" name="New Image Input" type="IMAGE" path="" bpm="100.000000" multiplier_divider="4" isPlaying="0" palindrom="1" matchBPMtoSequence="0" currentSequence="0">
+            <NODE id="8" name="New Image &amp; Video List" type="IMAGE_AND_VIDEO_LIST" path="" bpm="100.000000" multiplier_divider="4" isPlaying="0" palindrom="1" matchBPMtoSequence="0" currentSequence="1">
                 <type>none</type>
                 <path>none</path>
                 <visible>1</visible>
                 <texture>
                     <point>
-                        <x>65.825988770</x>
-                        <y>302.747131348</y>
+                        <x>59.440910339</x>
+                        <y>293.228729248</y>
                     </point>
                     <point>
-                        <x>234.440368652</x>
-                        <y>302.747131348</y>
+                        <x>264.240844727</x>
+                        <y>293.228729248</y>
                     </point>
                     <point>
-                        <x>234.440368652</x>
-                        <y>471.361511230</y>
+                        <x>264.240844727</x>
+                        <y>566.295288086</y>
                     </point>
                     <point>
-                        <x>65.825988770</x>
-                        <y>471.361511230</y>
-                    </point>
-                </texture>
-                <mask>
-                    <point>
-                        <x>0.000000000</x>
-                        <y>0.000000000</y>
-                    </point>
-                    <point>
-                        <x>1.000000000</x>
-                        <y>0.000000000</y>
-                    </point>
-                    <point>
-                        <x>1.000000000</x>
-                        <y>1.000000000</y>
-                    </point>
-                    <point>
-                        <x>0.000000000</x>
-                        <y>1.000000000</y>
-                    </point>
-                </mask>
-                <out>
-                    <active>1</active>
-                </out>
-                <ASSET name="picture.jpg" path="/Users/miligaricoits/Development/of_v0.8.4_osx_release/apps/N.IMP fork/farq2014/bin/data/picture.jpg"></ASSET>
-                <ASSET name="guacamayo.png" path="/Users/miligaricoits/Development/of_v0.8.4_osx_release/apps/N.IMP fork/farq2014/bin/data/guacamayo.png"></ASSET>
-                <ASSET name="pancakes.jpg" path="/Users/miligaricoits/Development/of_v0.8.4_osx_release/apps/N.IMP fork/farq2014/bin/data/pancakes.jpg"></ASSET>
-                <ASSET name="mar2.mov" path="/Users/miligaricoits/Development/of_v0.8.4_osx_release/apps/N.IMP fork/farq2014/bin/data/mar2.mov"></ASSET>
-                <ASSET name="duck.mp4" path="/Users/miligaricoits/Development/of_v0.8.4_osx_release/apps/N.IMP fork/farq2014/bin/data/duck.mp4"></ASSET>
-            </NODE>
-            <NODE id="4" name="New Particle Generator" type="PARTICLE">
-                <type>none</type>
-                <path>none</path>
-                <visible>1</visible>
-                <texture>
-                    <point>
-                        <x>57.186927795</x>
-                        <y>503.126281738</y>
-                    </point>
-                    <point>
-                        <x>214.587326050</x>
-                        <y>503.126037598</y>
-                    </point>
-                    <point>
-                        <x>214.587326050</x>
-                        <y>621.176330566</y>
-                    </point>
-                    <point>
-                        <x>57.187232971</x>
-                        <y>621.176269531</y>
+                        <x>59.440910339</x>
+                        <y>566.295288086</y>
                     </point>
                 </texture>
                 <mask>
@@ -197,30 +119,38 @@
                 <out>
                     <active>1</active>
                     <dot>
-                        <to>8</to>
+                        <to>7</to>
                     </dot>
                 </out>
+                <ASSET name="duck.mp4" path="/Users/miligaricoits/Development/of_v0.8.4_osx_release/apps/N.IMP fork/farq2014/bin/data/duck.mp4"></ASSET>
+                <ASSET name="IMG-20140703-WA0009.jpg" path="/Users/miligaricoits/Pictures/IMG-20140703-WA0009.jpg"></ASSET>
+                <ASSET name="‪+598 99 424 530‬ 20150119_201700.jpg" path="/Users/miligaricoits/Pictures/‪+598 99 424 530‬ 20150119_201700.jpg"></ASSET>
+                <ASSET name="IMG-20140703-WA00092.jpg" path="/Users/miligaricoits/Pictures/IMG-20140703-WA00092.jpg"></ASSET>
+                <ASSET name="IMG-20140713-WA0002.jpg" path="/Users/miligaricoits/Pictures/IMG-20140713-WA0002.jpg"></ASSET>
+                <ASSET name="firma.png" path="/Users/miligaricoits/Pictures/firma.png"></ASSET>
+                <ASSET name="me and pancakes.jpg" path="/Users/miligaricoits/Pictures/me and pancakes.jpg"></ASSET>
+                <ASSET name="IMG-20140621-WA0007.jpg" path="/Users/miligaricoits/Pictures/IMG-20140621-WA0007.jpg"></ASSET>
             </NODE>
-            <NODE id="12" name="New Audio In - Right" type="RIGHT_AUDIO_IN">
+            <NODE id="13" name="New Particle Generator" type="PARTICLE">
                 <type>none</type>
                 <path>none</path>
                 <visible>1</visible>
                 <texture>
                     <point>
-                        <x>898.000000000</x>
-                        <y>75.199996948</y>
+                        <x>60.999511719</x>
+                        <y>594.199829102</y>
                     </point>
                     <point>
-                        <x>1098.000000000</x>
-                        <y>75.199996948</y>
+                        <x>316.999511719</x>
+                        <y>594.199829102</y>
                     </point>
                     <point>
-                        <x>1098.000000000</x>
-                        <y>175.199996948</y>
+                        <x>316.999511719</x>
+                        <y>786.199829102</y>
                     </point>
                     <point>
-                        <x>898.000000000</x>
-                        <y>175.199996948</y>
+                        <x>60.999511719</x>
+                        <y>786.199829102</y>
                     </point>
                 </texture>
                 <mask>
@@ -243,28 +173,31 @@
                 </mask>
                 <out>
                     <active>1</active>
+                    <dot>
+                        <to>9</to>
+                    </dot>
                 </out>
             </NODE>
-            <NODE id="13" name="New Audio In - Left" type="LEFT_AUDIO_IN">
+            <NODE id="16" name="New Audio In - Right Channel" enabled="1" channel="1" band="1" type="RIGHT_AUDIO_IN">
                 <type>none</type>
                 <path>none</path>
                 <visible>1</visible>
                 <texture>
                     <point>
-                        <x>888.000000000</x>
-                        <y>456.200012207</y>
+                        <x>1326.272827148</x>
+                        <y>148.396606445</y>
                     </point>
                     <point>
-                        <x>1088.000000000</x>
-                        <y>456.200012207</y>
+                        <x>1526.272827148</x>
+                        <y>148.396606445</y>
                     </point>
                     <point>
-                        <x>1088.000000000</x>
-                        <y>556.200012207</y>
+                        <x>1526.272827148</x>
+                        <y>248.396606445</y>
                     </point>
                     <point>
-                        <x>888.000000000</x>
-                        <y>556.200012207</y>
+                        <x>1326.272827148</x>
+                        <y>248.396606445</y>
                     </point>
                 </texture>
                 <mask>
@@ -291,26 +224,26 @@
             </NODE>
         </INPUTS>
         <VISUAL_LAYERS>
-            <NODE id="5" name="New Ikeda Layer" type="IKEDA" inputSource="1" isCanny="0" isThreshold="0" isColumns="0" isInvert="0" pNColumns="1" pCannyX="46.000000" pCannyY="46.000000" pThreshold="255">
+            <NODE id="5" name="New Glitch Layer" type="GLITCH_1" inputSource="3" do_CONVERGENCE="0" do_GLOW="1" do_SHAKER="1" do_CUTSLIDER="1" do_TWIST="1" do_OUTLINE="1" do_NOISE="1" do_SLITSCAN="1" do_SWELL="1" do_INVERT="1" do_CR_HIGHCONTRAST="1" do_CR_BLUERAISE="1" do_CR_REDRAISE="1" do_CR_GREENRAISE="1" do_CR_BLUEINVERT="1" do_CR_REDINVERT="1" do_CR_GREENINVERT="1">
                 <type>none</type>
                 <path>none</path>
                 <visible>1</visible>
                 <texture>
                     <point>
-                        <x>343.839202881</x>
-                        <y>22.865146637</y>
+                        <x>384.000000000</x>
+                        <y>66.199996948</y>
                     </point>
                     <point>
-                        <x>486.791839600</x>
-                        <y>22.865146637</y>
+                        <x>640.000000000</x>
+                        <y>66.199996948</y>
                     </point>
                     <point>
-                        <x>486.791839600</x>
-                        <y>130.079544067</y>
+                        <x>640.000000000</x>
+                        <y>258.200012207</y>
                     </point>
                     <point>
-                        <x>343.839202881</x>
-                        <y>130.079544067</y>
+                        <x>384.000000000</x>
+                        <y>258.200012207</y>
                     </point>
                 </texture>
                 <mask>
@@ -334,132 +267,30 @@
                 <out>
                     <active>1</active>
                     <dot>
-                        <to>7</to>
-                        <tex>0</tex>
-                    </dot>
-                    <dot>
-                        <to>9</to>
-                    </dot>
-                    <dot>
-                        <to>11</to>
+                        <to>12</to>
                     </dot>
                 </out>
             </NODE>
-            <NODE id="6" name="New Glitch Layer" type="GLITCH_1" inputSource="2" do_CONVERGENCE="0" do_GLOW="0" do_SHAKER="0" do_CUTSLIDER="0" do_TWIST="0" do_OUTLINE="0" do_NOISE="0" do_SLITSCAN="0" do_SWELL="0" do_INVERT="1" do_CR_HIGHCONTRAST="0" do_CR_BLUERAISE="0" do_CR_REDRAISE="0" do_CR_GREENRAISE="0" do_CR_BLUEINVERT="0" do_CR_REDINVERT="0" do_CR_GREENINVERT="0">
+            <NODE id="6" name="New Glitch Layer Alt" type="GLITCH_2" inputSource="3" dq="20" qn="40" dht="80">
                 <type>none</type>
                 <path>none</path>
                 <visible>1</visible>
                 <texture>
                     <point>
-                        <x>342.062622070</x>
-                        <y>185.033645630</y>
+                        <x>385.000000000</x>
+                        <y>312.200012207</y>
                     </point>
                     <point>
-                        <x>546.862670898</x>
-                        <y>185.033645630</y>
+                        <x>641.000000000</x>
+                        <y>312.200012207</y>
                     </point>
                     <point>
-                        <x>546.862670898</x>
-                        <y>300.233642578</y>
+                        <x>641.000000000</x>
+                        <y>504.200012207</y>
                     </point>
                     <point>
-                        <x>342.062622070</x>
-                        <y>300.233642578</y>
-                    </point>
-                </texture>
-                <mask>
-                    <point>
-                        <x>0.000000000</x>
-                        <y>0.000000000</y>
-                    </point>
-                    <point>
-                        <x>1.000000000</x>
-                        <y>0.000000000</y>
-                    </point>
-                    <point>
-                        <x>1.000000000</x>
-                        <y>1.000000000</y>
-                    </point>
-                    <point>
-                        <x>0.000000000</x>
-                        <y>1.000000000</y>
-                    </point>
-                </mask>
-                <out>
-                    <active>1</active>
-                    <dot>
-                        <to>9</to>
-                        <tex>0</tex>
-                    </dot>
-                </out>
-            </NODE>
-            <NODE id="7" name="New Glitch Layer Alt" type="GLITCH_2" inputSource="5" dq="102" qn="98" dht="173">
-                <type>none</type>
-                <path>none</path>
-                <visible>1</visible>
-                <texture>
-                    <point>
-                        <x>650.839233398</x>
-                        <y>470.865112305</y>
-                    </point>
-                    <point>
-                        <x>793.791870117</x>
-                        <y>470.865112305</y>
-                    </point>
-                    <point>
-                        <x>793.791870117</x>
-                        <y>578.079528809</y>
-                    </point>
-                    <point>
-                        <x>650.839233398</x>
-                        <y>578.079528809</y>
-                    </point>
-                </texture>
-                <mask>
-                    <point>
-                        <x>0.000000000</x>
-                        <y>0.000000000</y>
-                    </point>
-                    <point>
-                        <x>1.000000000</x>
-                        <y>0.000000000</y>
-                    </point>
-                    <point>
-                        <x>1.000000000</x>
-                        <y>1.000000000</y>
-                    </point>
-                    <point>
-                        <x>0.000000000</x>
-                        <y>1.000000000</y>
-                    </point>
-                </mask>
-                <out>
-                    <active>1</active>
-                    <dot>
-                        <to>11</to>
-                    </dot>
-                </out>
-            </NODE>
-            <NODE id="8" name="New Image Processor" type="IMAGE_PROCESSOR" isBloom="0" isContrast="0" coContrast="0.682497" coBrightness="10.228257" coMultiple="2.854200" isKaleidoscope="1" kaSegments="8.715662" isNoise="0" noFreq="3.208401" noAmp="0.000000" noSpeed="0.452756" isEdge="0" edHue="0.586146" edSat="-35.262932" isBleach="0" blOpacity="1.000000" isRGBShift="0" rgAngle="2.523169" rgAmount="0.072441" isGod="0" isZoomBlur="0" zbCenterX="0.500000" zbCenterY="0.500000" zbExposure="0.480000" zbDensity="0.250000" zbWeight="0.250000" zbClamp="1.000000" inputSource="4">
-                <type>none</type>
-                <path>none</path>
-                <visible>1</visible>
-                <texture>
-                    <point>
-                        <x>383.839202881</x>
-                        <y>356.865142822</y>
-                    </point>
-                    <point>
-                        <x>541.239624023</x>
-                        <y>356.865142822</y>
-                    </point>
-                    <point>
-                        <x>541.239624023</x>
-                        <y>474.915191650</y>
-                    </point>
-                    <point>
-                        <x>383.839202881</x>
-                        <y>474.915191650</y>
+                        <x>385.000000000</x>
+                        <y>504.200012207</y>
                     </point>
                 </texture>
                 <mask>
@@ -484,38 +315,135 @@
                     <active>1</active>
                     <dot>
                         <to>10</to>
-                        <tex>0</tex>
-                        <vertices>
-                            <vertex x="597.000000" y="415.000000"></vertex>
-                            <vertex x="597.000000" y="359.000000"></vertex>
-                        </vertices>
+                    </dot>
+                    <dot>
+                        <to>11</to>
+                    </dot>
+                    <dot>
+                        <to>12</to>
+                    </dot>
+                </out>
+            </NODE>
+            <NODE id="7" name="New Ikeda Layer" type="IKEDA" inputSource="8" isCanny="1" isThreshold="1" isColumns="1" isInvert="1" pNColumns="8" pCannyX="12.000000" pCannyY="12.000000" pThreshold="12">
+                <type>none</type>
+                <path>none</path>
+                <visible>1</visible>
+                <texture>
+                    <point>
+                        <x>412.984497070</x>
+                        <y>560.739074707</y>
+                    </point>
+                    <point>
+                        <x>617.784423828</x>
+                        <y>560.739074707</y>
+                    </point>
+                    <point>
+                        <x>617.784423828</x>
+                        <y>833.805664062</y>
+                    </point>
+                    <point>
+                        <x>412.984497070</x>
+                        <y>833.805664062</y>
+                    </point>
+                </texture>
+                <mask>
+                    <point>
+                        <x>0.000000000</x>
+                        <y>0.000000000</y>
+                    </point>
+                    <point>
+                        <x>1.000000000</x>
+                        <y>0.000000000</y>
+                    </point>
+                    <point>
+                        <x>1.000000000</x>
+                        <y>1.000000000</y>
+                    </point>
+                    <point>
+                        <x>0.000000000</x>
+                        <y>1.000000000</y>
+                    </point>
+                </mask>
+                <out>
+                    <active>1</active>
+                    <dot>
+                        <to>12</to>
+                    </dot>
+                </out>
+            </NODE>
+            <NODE id="9" name="New Image Processor" type="IMAGE_PROCESSOR" inputSource="13" isBloom="0" isContrast="0" coContrast="1.000000" coBrightness="1.000000" coMultiple="1.000000" isKaleidoscope="0" kaSegments="2.000000" isNoise="0" noFreq="4.000000" noAmp="0.100000" noSpeed="0.100000" isEdge="0" edHue="0.500000" edSat="0.000000" isBleach="0" blOpacity="1.000000" isRGBShift="0" rgAngle="0.000000" rgAmount="0.005000" isGod="0" isZoomBlur="0" zbCenterX="0.500000" zbCenterY="0.500000" zbExposure="0.480000" zbDensity="0.250000" zbWeight="0.250000" zbClamp="1.000000">
+                <type>none</type>
+                <path>none</path>
+                <visible>1</visible>
+                <texture>
+                    <point>
+                        <x>402.999694824</x>
+                        <y>949.199707031</y>
+                    </point>
+                    <point>
+                        <x>658.999694824</x>
+                        <y>949.199707031</y>
+                    </point>
+                    <point>
+                        <x>658.999694824</x>
+                        <y>1141.199707031</y>
+                    </point>
+                    <point>
+                        <x>402.999694824</x>
+                        <y>1141.199707031</y>
+                    </point>
+                </texture>
+                <mask>
+                    <point>
+                        <x>0.000000000</x>
+                        <y>0.000000000</y>
+                    </point>
+                    <point>
+                        <x>1.000000000</x>
+                        <y>0.000000000</y>
+                    </point>
+                    <point>
+                        <x>1.000000000</x>
+                        <y>1.000000000</y>
+                    </point>
+                    <point>
+                        <x>0.000000000</x>
+                        <y>1.000000000</y>
+                    </point>
+                </mask>
+                <out>
+                    <active>1</active>
+                    <dot>
+                        <to>11</to>
+                    </dot>
+                    <dot>
+                        <to>12</to>
                     </dot>
                 </out>
             </NODE>
         </VISUAL_LAYERS>
         <MIXERS>
-            <NODE id="9" name="New Mix Simple Blend" type="SIMPLE_BLEND" blendmode="13" opacity="0.000000" selector1="1" selector2="1">
-                <INPUT_SOURCE nodeId="6" />
-                <INPUT_SOURCE nodeId="5" />
+            <NODE id="10" name="New Mix Mask" type="MASK" spin="90.000000000">
+                <INPUT_SOURCE nodeId="6"></INPUT_SOURCE>
                 <type>none</type>
                 <path>none</path>
                 <visible>1</visible>
                 <texture>
                     <point>
-                        <x>643.839233398</x>
-                        <y>75.865150452</y>
+                        <x>847.999755859</x>
+                        <y>134.699890137</y>
                     </point>
                     <point>
-                        <x>786.791870117</x>
-                        <y>75.865150452</y>
+                        <x>1103.999755859</x>
+                        <y>134.699890137</y>
                     </point>
                     <point>
-                        <x>786.791870117</x>
-                        <y>183.079559326</y>
+                        <x>1103.999755859</x>
+                        <y>326.699890137</y>
                     </point>
                     <point>
-                        <x>643.839233398</x>
-                        <y>183.079559326</y>
+                        <x>847.999755859</x>
+                        <y>326.699890137</y>
                     </point>
                 </texture>
                 <mask>
@@ -540,27 +468,28 @@
                     <active>1</active>
                 </out>
             </NODE>
-            <NODE id="10" name="Particle Mix Mask" type="MASK" spin="0.000000">
-                <INPUT_SOURCE nodeId="8" />
+            <NODE id="11" name="New Mix Simple Blend" type="SIMPLE_BLEND" selector1="0" selector2="1" blendmode="0" opacity="1.000000">
+                <INPUT_SOURCE nodeId="6"></INPUT_SOURCE>
+                <INPUT_SOURCE nodeId="9"></INPUT_SOURCE>
                 <type>none</type>
                 <path>none</path>
                 <visible>1</visible>
                 <texture>
                     <point>
-                        <x>643.839233398</x>
-                        <y>299.865142822</y>
+                        <x>869.033386230</x>
+                        <y>436.976379395</y>
                     </point>
                     <point>
-                        <x>801.239624023</x>
-                        <y>299.865142822</y>
+                        <x>1125.033447266</x>
+                        <y>436.976379395</y>
                     </point>
                     <point>
-                        <x>801.239624023</x>
-                        <y>417.915191650</y>
+                        <x>1125.033447266</x>
+                        <y>628.976379395</y>
                     </point>
                     <point>
-                        <x>643.839233398</x>
-                        <y>417.915191650</y>
+                        <x>869.033386230</x>
+                        <y>628.976379395</y>
                     </point>
                 </texture>
                 <mask>
@@ -585,28 +514,30 @@
                     <active>1</active>
                 </out>
             </NODE>
-            <NODE id="11" name="Channel Switch" type="MULTI_CHANNEL" selChannel="0">
-                <INPUT_SOURCE nodeId="5" />
-                <INPUT_SOURCE nodeId="7" />
+            <NODE id="12" name="New MultiChannel Switch" type="MULTI_CHANNEL" selChannel="0">
+                <INPUT_SOURCE nodeId="7"></INPUT_SOURCE>
+                <INPUT_SOURCE nodeId="9"></INPUT_SOURCE>
+                <INPUT_SOURCE nodeId="6"></INPUT_SOURCE>
+                <INPUT_SOURCE nodeId="5"></INPUT_SOURCE>
                 <type>none</type>
                 <path>none</path>
                 <visible>1</visible>
                 <texture>
                     <point>
-                        <x>924.639038086</x>
-                        <y>289.705108643</y>
+                        <x>851.499633789</x>
+                        <y>735.699829102</y>
                     </point>
                     <point>
-                        <x>1067.591674805</x>
-                        <y>289.705108643</y>
+                        <x>1056.299560547</x>
+                        <y>735.699829102</y>
                     </point>
                     <point>
-                        <x>1067.591674805</x>
-                        <y>396.919494629</y>
+                        <x>1056.299560547</x>
+                        <y>1008.766418457</y>
                     </point>
                     <point>
-                        <x>924.639038086</x>
-                        <y>396.919494629</y>
+                        <x>851.499633789</x>
+                        <y>1008.766418457</y>
                     </point>
                 </texture>
                 <mask>
@@ -635,51 +566,27 @@
         <ENCAPSULATED_NODES></ENCAPSULATED_NODES>
     </SETTINGS>
     <NODE_VIEWS>
-        <!-- Final Mix Node View -->
-        <NODE_VIEW name="FinalMix">
-            <NODE id="1" name="New Camera" />
-            <NODE id="2" name="New Video Player" />
-            <NODE id="3" name="New Image Input" />
-            <NODE id="4" name="New Particle Generator" />
-            <NODE id="5" name="New Ikeda Layer" />
-            <NODE id="6" name="New Glitch Layer" />
-            <NODE id="7" name="New Glitch Layer Alt" />
-            <NODE id="8" name="New Image Processor" />
-            <NODE id="9" name="New Mix Simple Blend" />
-            <NODE id="10" name="Particle Mix Mask" />
-            <NODE id="11" name="Channel Switch" />
-            <NODE id="12" name="New Audio In - Right" />
-            <NODE id="13" name="New Audio In - Left" />
+        <NODE_VIEW name="appSettings.xml">
+            <NODE id="3" name="New Camera"></NODE>
+            <NODE id="5" name="New Glitch Layer"></NODE>
+            <NODE id="6" name="New Glitch Layer Alt"></NODE>
+            <NODE id="7" name="New Ikeda Layer"></NODE>
+            <NODE id="8" name="New Image &amp; Video List"></NODE>
+            <NODE id="9" name="New Image Processor"></NODE>
+            <NODE id="10" name="New Mix Mask"></NODE>
+            <NODE id="11" name="New Mix Simple Blend"></NODE>
+            <NODE id="12" name="New MultiChannel Switch"></NODE>
+            <NODE id="13" name="New Particle Generator"></NODE>
+            <NODE id="16" name="New Audio In - Right Channel"></NODE>
         </NODE_VIEW>
     </NODE_VIEWS>
     <PARAM_INPUT_GENERATORS>
-        <INPUT_GEN name="MIDI1" type="MIDI" midiDeviceName="USB Trigger Finger">
-            <MIDI_SETTINGS>
-                <MIDI_MAP midiId="1" nodeId="5" param="n Columns"></MIDI_MAP>
-                <MIDI_MAP midiId="1" nodeId="8" param="Amplitude"></MIDI_MAP>
-                <MIDI_MAP midiId="2" nodeId="5" param="CannyX"></MIDI_MAP>
-                <MIDI_MAP midiId="2" nodeId="5" param="CannyY"></MIDI_MAP>
-                <MIDI_MAP midiId="2" nodeId="8" param="Speed"></MIDI_MAP>
-                <MIDI_MAP midiId="7" nodeId="9" param="opacity"></MIDI_MAP>
-                <MIDI_MAP midiId="10" nodeId="10" param="spin"></MIDI_MAP>
-                <MIDI_MAP midiId="12" nodeId="8" param="angle"></MIDI_MAP>
-                <MIDI_MAP midiId="13" nodeId="3" param="current Sequence"></MIDI_MAP>
-                <MIDI_MAP midiId="17" nodeId="3" param="bpm"></MIDI_MAP>
-                <MIDI_MAP midiId="18" nodeId="3" param="bpmMultiplier"></MIDI_MAP>
-                <MIDI_MAP midiId="19" nodeId="3" param="playPosition"></MIDI_MAP>
-                <MIDI_MAP midiId="91" nodeId="5" param="amount"></MIDI_MAP>
-            </MIDI_SETTINGS>
-        </INPUT_GEN>
-        <INPUT_GEN nodeId="12" type="FFT">
-            <FFT_SETTINGS>
-                <AUDIO_MAP band="1" nodeId="9" param="opacity" inputMinValue="0.000000" inputMaxValue="50.000000" paramMinValue="0" paramMaxValue="255"></AUDIO_MAP>
-            </FFT_SETTINGS>
-        </INPUT_GEN>
-        <INPUT_GEN nodeId="13" type="FFT">
-            <FFT_SETTINGS>
-                <AUDIO_MAP band="2" nodeId="10" param="spin" inputMinValue="0.000000" inputMaxValue="50.000000" paramMinValue="0" paramMaxValue="360"></AUDIO_MAP>
+        <INPUT_GEN nodeId="16" type="FFT">
+            <FFT_SETTINGS enabled="1" channel="1" band="1">
+                <AUDIO_MAP nodeId="11" param="BlendAdd" inputMinValue="0.000000000" inputMaxValue="50.000000000" paramMinValue="0.000000000" paramMaxValue="24.000000000"></AUDIO_MAP>
+                <AUDIO_MAP nodeId="11" param="opacity" inputMinValue="0.000000000" inputMaxValue="50.000000000" paramMinValue="0.000000000" paramMaxValue="255.000000000"></AUDIO_MAP>
             </FFT_SETTINGS>
         </INPUT_GEN>
     </PARAM_INPUT_GENERATORS>
-    <SYPHON_SERVERS />
+    <SYPHON_SERVERS></SYPHON_SERVERS>
 </MAIN_SETTINGS>
