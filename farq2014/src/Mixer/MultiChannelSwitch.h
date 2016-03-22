@@ -62,7 +62,7 @@ private:
     void cDisableChannels(bool& c);
     void cLabel(bool& b);
     
-    ofParameterGroup labelGroup;
+//    ofParameterGroup labelGroup;
     vector<Channel*> channels;
     
     //hack to kill double callback

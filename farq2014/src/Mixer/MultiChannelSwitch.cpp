@@ -19,10 +19,11 @@ MultiChannelSwitch::MultiChannelSwitch(string name_, int id_):MixTable(name_, "M
     gui.add(disableOtherChannels.set("Disable other channels", false));
     disableOtherChannels.addListener(this, &MultiChannelSwitch::cDisableChannels);
     
-    labelGroup.setName("Channels");
+//    labelGroup.setName("Channels");
 //    labelGroup.add(selChannel.set("channel", 0, 0, 0));
+//    gui.add(labelGroup);
+    
     selChannel.addListener(this, &MultiChannelSwitch::cselChannel);
-    gui.add(labelGroup);
     
     drawNoInputs = true;
     
@@ -44,11 +45,11 @@ void MultiChannelSwitch::inputAdded(ImageOutput* in_){
     selChannel.setMax(input.size()-1);
     channels.push_back(c);
     
-    labelGroup.add(c->selected);
+    gui.add(c->selected);
     c->selected.addListener(this, &MultiChannelSwitch::cLabel);
     
-    gui.remove("Channels");
-    gui.add(labelGroup);
+//    gui.remove("Channels");
+//    gui.add(labelGroup);
     gui.setWidthElements(INSPECTOR_WIDTH);
     
     //hack
@@ -64,7 +65,7 @@ void MultiChannelSwitch::inputRemoved(int id_){
     }
     for (int i = 0; i < channels.size(); i++) {
         if(channels[i]->nodeId == id_){
-            labelGroup.remove(channels[i]->label);
+            gui.remove(channels[i]->label);
             channels.erase(channels.begin() + i);
         }
     }
@@ -77,8 +78,8 @@ void MultiChannelSwitch::inputRemoved(int id_){
         channels[selChannel]->selected = true;
     }
     
-    gui.remove("Channels");
-    gui.add(labelGroup);
+//    gui.remove("Channels");
+//    gui.add(labelGroup);
     gui.setWidthElements(INSPECTOR_WIDTH);
 }
 
