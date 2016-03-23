@@ -8,7 +8,7 @@ class SyphonClientHandler{
 	
 public:
     static SyphonClientHandler* getInstance();
-    InputSyphon* createSyphonPatch();
+    InputSyphon* createSyphonPatch(string name = "Syphon Client", int patchId = -1);
     
 private:
     SyphonClientHandler();

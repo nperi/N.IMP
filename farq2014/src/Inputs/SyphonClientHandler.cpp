@@ -27,8 +27,8 @@ SyphonClientHandler* SyphonClientHandler::getInstance(){
 
 //------------------------------------------------------------------
 
-InputSyphon* SyphonClientHandler::createSyphonPatch(){
-    InputSyphon* newClient = new InputSyphon(&dir);
+InputSyphon* SyphonClientHandler::createSyphonPatch(string name, int patchId){
+    InputSyphon* newClient = new InputSyphon(&dir, name, patchId);
     return newClient;
 }
 

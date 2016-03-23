@@ -81,7 +81,8 @@ enum InputType
     PARTICLE,
     RIGHT_AUDIO_IN,
     LEFT_AUDIO_IN,
-    OSC_RECEIVER
+    OSC_RECEIVER,
+    SYPHON_CLIENT
 };
 
 enum VisualLayerType

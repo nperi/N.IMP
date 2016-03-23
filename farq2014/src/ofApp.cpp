@@ -64,6 +64,7 @@ void ofApp::setup() {
     inputTypes.insert(std::pair<string,InputType>("LEFT_AUDIO_IN",LEFT_AUDIO_IN));
     inputTypes.insert(std::pair<string,InputType>("RIGHT_AUDIO_IN",RIGHT_AUDIO_IN));
     inputTypes.insert(std::pair<string,InputType>("OSC_RECEIVER",OSC_RECEIVER));
+    inputTypes.insert(std::pair<string,InputType>("SYPHON_CLIENT",SYPHON_CLIENT));
     visualLayerTypes.insert(std::pair<string,VisualLayerType>("IKEDA", IKEDA));
     visualLayerTypes.insert(std::pair<string,VisualLayerType>("GLITCH_1", GLITCH_1));
     visualLayerTypes.insert(std::pair<string,VisualLayerType>("GLITCH_2", GLITCH_2));
@@ -2004,6 +2005,15 @@ bool ofApp::loadNodes(ofxXmlSettings &XML){
 
                     break;
                 };
+                case SYPHON_CLIENT:
+                {
+                    InputSyphon* iS = SyphonClientHandler::getInstance()->createSyphonPatch(inputName, inputId);
+                    iS->setup();
+                    iS->loadSettings(XML, i);
+                    inputs.push_back(iS);
+                    nodes.insert(std::pair<int,ImageOutput*>(inputId,iS));
+                    break;
+                };
                 default:
                 {
                     result = false;
@@ -2424,6 +2434,13 @@ bool ofApp::loadSnippet() {
                 mixtables.push_back(mMM);
                 aux_nodes.insert(std::pair<int, ImageOutput*>(nodeId, mMM));
                 aux_nodesVector.push_back(mMM);
+            }
+            else if (nodeType == "SYPHON_CLIENT") {
+                InputSyphon* iS = SyphonClientHandler::getInstance()->createSyphonPatch(nodeName, nodeId);
+                iS->setup();
+                iS->loadSettings(XML, i, nodesCount);
+                inputs.push_back(iS);
+                nodes.insert(std::pair<int,ImageOutput*>(nodeId,iS));
             }
             else {
                 result = false;

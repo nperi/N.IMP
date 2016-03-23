@@ -8,7 +8,7 @@
 class InputSyphon : public InputSource{
 	
 public:
-    InputSyphon(ofxSyphonServerDirectory* serverDir, string name = "Syphon Client", int id_ = -1);
+    InputSyphon(ofxSyphonServerDirectory* serverDir, string name, int id_);
 	
 	void setup();
     void update();
