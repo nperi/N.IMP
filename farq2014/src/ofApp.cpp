@@ -767,6 +767,7 @@ void ofApp::menuEvent(ofxUIEventArgs &e) {
             xmlFileName = "Untitle.xml";
             xmlFilePath = "";
             deleteEverything();
+            
             audioAnalizer = new AudioAnalizer();
             audioAnalizer->setDrawAudioAnalizer(false);
             ((ofxUIMultiImageToggle*)right_menu->getWidget("Analizer"))->setValue(false);
@@ -1663,6 +1664,14 @@ bool ofApp::loadFromXML(){
     
     if(!loadingOK){
         ofLogNotice() << message;
+        console->pushError("XML couldn't be loaded: " + message);
+        deleteEverything();
+        
+        glfw->showWindow(windows->at(CONSOLE_WINDOW));
+        glfw->setWindow(windows->at(CONSOLE_WINDOW));
+        ((ofxUIImageToggle*)menu->getWidget("Console on/off"))->setValue(true);
+        showConsole = true;
+        return;
     }
     else{
         //populating the nodes vector for fast iteration in the main loop.
