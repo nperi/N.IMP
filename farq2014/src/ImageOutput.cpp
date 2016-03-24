@@ -25,6 +25,10 @@ ImageOutput::ImageOutput(string name_, string typeName_, int id_, int maxInputs_
     panel.setDraggable(false);
     gui.setWidthElements(INSPECTOR_WIDTH);
     
+    if (typeName_ != "OSC Receiver") {
+        ofAddListener(gui.addOrRemoveOSCInputGui , this, &ImageOutput::addOrRemoveOSCInput);
+    }
+    
     title->setTitle( name );
 };
 
@@ -133,6 +137,13 @@ vector<string> ImageOutput::getInputNames(){
         vout.push_back(input[i]->getName());
     }
     return vout;
+}
+
+//------------------------------------------------------------------
+void ImageOutput::addOrRemoveOSCInput(ofxOSCGuiEvent &e_) {
+    e_.nodeId = nId;
+    
+    ofNotifyEvent(editOSCInputs, e_);
 }
 
 //------------------------------------------------------------------

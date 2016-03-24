@@ -28,6 +28,26 @@ IkedaLayer::IkedaLayer(string name_, int id_, bool isCanny_,bool isThreshold_, b
     
     gui.setWidthElements(INSPECTOR_WIDTH);
     
+    ofxBaseGui* baseGui;
+    baseGui = gui.find("Canny");
+    if (baseGui) ofAddListener(baseGui->addOrRemoveOSCInputBaseGui, &gui, &ofxGuiGroup::addOrRemoveOSCInput);
+    baseGui = gui.find("Enabled");
+    if (baseGui) ofAddListener(baseGui->addOrRemoveOSCInputBaseGui, &gui, &ofxGuiGroup::addOrRemoveOSCInput);
+    baseGui = gui.find("CannyX");
+    if (baseGui) ofAddListener(baseGui->addOrRemoveOSCInputBaseGui, &gui, &ofxGuiGroup::addOrRemoveOSCInput);
+    baseGui = gui.find("CannyY");
+    if (baseGui) ofAddListener(baseGui->addOrRemoveOSCInputBaseGui, &gui, &ofxGuiGroup::addOrRemoveOSCInput);
+    baseGui = gui.find("Columns");
+    if (baseGui) ofAddListener(baseGui->addOrRemoveOSCInputBaseGui, &gui, &ofxGuiGroup::addOrRemoveOSCInput);
+    baseGui = gui.find("n Columns");
+    if (baseGui) ofAddListener(baseGui->addOrRemoveOSCInputBaseGui, &gui, &ofxGuiGroup::addOrRemoveOSCInput);
+    baseGui = gui.find("Threshold");
+    if (baseGui) ofAddListener(baseGui->addOrRemoveOSCInputBaseGui, &gui, &ofxGuiGroup::addOrRemoveOSCInput);
+    baseGui = gui.find("Amount");
+    if (baseGui) ofAddListener(baseGui->addOrRemoveOSCInputBaseGui, &gui, &ofxGuiGroup::addOrRemoveOSCInput);
+    baseGui = gui.find("Invert");
+    if (baseGui) ofAddListener(baseGui->addOrRemoveOSCInputBaseGui, &gui, &ofxGuiGroup::addOrRemoveOSCInput);
+    
     drawNoInputs = true;
 }
 

@@ -16,6 +16,7 @@
 #include "ofxPatch.h"
 #include "enumerations.h"
 #include "ofxComposer.h"
+#include "ofxOSCGuiEvent.h"
 
 /* abstract class that covers all image output classes
  * includes an image and some events
@@ -76,7 +77,11 @@ class ImageOutput : public ofxPatch {
 //    vector<string> getAttributesForAudioIn();
     bool setAttributesForAudioIn(string name_, bool left, int nodeID_);
     bool setAttributesForOSC(string name, int nodeID_);
-
+    
+    //osc methods & events
+    void addOrRemoveOSCInput(ofxOSCGuiEvent &e_);
+    ofEvent<ofxOSCGuiEvent> editOSCInputs;
+    
     vector<string> getAttributesClicked();
     
 protected:

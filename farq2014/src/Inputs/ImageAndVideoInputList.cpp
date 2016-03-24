@@ -220,6 +220,26 @@ void ImageAndVideoInputList::loadImage(string name_, string path_){
         
         gui.setWidthElements(INSPECTOR_WIDTH);
         
+        ofxBaseGui* baseGui;
+        baseGui = gui.find("Enabled");
+        if (baseGui) ofAddListener(baseGui->addOrRemoveOSCInputBaseGui, &gui, &ofxGuiGroup::addOrRemoveOSCInput);
+        baseGui = gui.find("Current Sequence");
+        if (baseGui) ofAddListener(baseGui->addOrRemoveOSCInputBaseGui, &gui, &ofxGuiGroup::addOrRemoveOSCInput);
+        baseGui = gui.find("Play");
+        if (baseGui) ofAddListener(baseGui->addOrRemoveOSCInputBaseGui, &gui, &ofxGuiGroup::addOrRemoveOSCInput);
+        baseGui = gui.find("Loop Palindrom");
+        if (baseGui) ofAddListener(baseGui->addOrRemoveOSCInputBaseGui, &gui, &ofxGuiGroup::addOrRemoveOSCInput);
+        baseGui = gui.find("BPM = Seq. Length");
+        if (baseGui) ofAddListener(baseGui->addOrRemoveOSCInputBaseGui, &gui, &ofxGuiGroup::addOrRemoveOSCInput);
+        baseGui = gui.find("BPM");
+        if (baseGui) ofAddListener(baseGui->addOrRemoveOSCInputBaseGui, &gui, &ofxGuiGroup::addOrRemoveOSCInput);
+        baseGui = gui.find("BPM Multiplier");
+        if (baseGui) ofAddListener(baseGui->addOrRemoveOSCInputBaseGui, &gui, &ofxGuiGroup::addOrRemoveOSCInput);
+        baseGui = gui.find("Play Position");
+        if (baseGui) ofAddListener(baseGui->addOrRemoveOSCInputBaseGui, &gui, &ofxGuiGroup::addOrRemoveOSCInput);
+        baseGui = gui.find("Pos");
+        if (baseGui) ofAddListener(baseGui->addOrRemoveOSCInputBaseGui, &gui, &ofxGuiGroup::addOrRemoveOSCInput);
+        
         //gui.add(nextFrame.setup("nextFrame"));
         //gui.add(previousFrame.setup("previousFrame"));
         isPlayingBackwards = false;

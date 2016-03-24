@@ -266,6 +266,7 @@
 		0A1D5D391C6F5EDF003CE2C5 /* AudioIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioIn.h; sourceTree = "<group>"; };
 		0A1E94571C8FAE2A00F98C59 /* OSCReceiver.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OSCReceiver.cpp; sourceTree = "<group>"; };
 		0A1E94581C8FAE2A00F98C59 /* OSCReceiver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCReceiver.h; sourceTree = "<group>"; };
+		0A3404001CA223A80044D295 /* ofxOSCGuiEvent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxOSCGuiEvent.h; sourceTree = "<group>"; };
 		0A49EF0D1C18A3BF00346EB5 /* ofxBasePatch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxBasePatch.cpp; sourceTree = "<group>"; };
 		0A49EF0E1C18A3BF00346EB5 /* ofxBasePatch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxBasePatch.h; sourceTree = "<group>"; };
 		0A49EF0F1C18A3BF00346EB5 /* ofxComposer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxComposer.cpp; sourceTree = "<group>"; };
@@ -1091,6 +1092,7 @@
 				0A75F5BE1C583AA800481F86 /* ofxToggle.h */,
 				0A75F5CE1C58465800481F86 /* ofxTextInput.cpp */,
 				0A75F5CF1C58465800481F86 /* ofxTextInput.h */,
+				0A3404001CA223A80044D295 /* ofxOSCGuiEvent.h */,
 			);
 			path = src;
 			sourceTree = "<group>";
@@ -1898,8 +1900,8 @@
 				E4B69E1F0A3A1BDC003C02F2 /* ofApp.h */,
 				D309EB741A2E6E04008B3D94 /* Param.cpp */,
 				D309EB751A2E6E04008B3D94 /* Param.h */,
-				D309EB961A2F3073008B3D94 /* ImageOutput.h */,
 				D3A2271D1A3756B1005DD5AF /* ImageOutput.cpp */,
+				D309EB961A2F3073008B3D94 /* ImageOutput.h */,
 				D3A226B31A311C29005DD5AF /* NodeElement.cpp */,
 				D3A226B41A311C29005DD5AF /* NodeElement.h */,
 				D3A226B61A311C3E005DD5AF /* NodeViewer.cpp */,

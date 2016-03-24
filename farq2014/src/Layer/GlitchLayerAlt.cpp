@@ -20,9 +20,17 @@ GlitchLayerAlt::GlitchLayerAlt(string name_, int id_):VisualLayer(name_, "Glitch
     
     gui.setWidthElements(INSPECTOR_WIDTH);
     
+    ofxBaseGui* baseGui;
+    baseGui = gui.find("Enabled");
+    if (baseGui) ofAddListener(baseGui->addOrRemoveOSCInputBaseGui, &gui, &ofxGuiGroup::addOrRemoveOSCInput);
+    baseGui = gui.find("DQ");
+    if (baseGui) ofAddListener(baseGui->addOrRemoveOSCInputBaseGui, &gui, &ofxGuiGroup::addOrRemoveOSCInput);
+    baseGui = gui.find("QN");
+    if (baseGui) ofAddListener(baseGui->addOrRemoveOSCInputBaseGui, &gui, &ofxGuiGroup::addOrRemoveOSCInput);
+    baseGui = gui.find("DHT");
+    if (baseGui) ofAddListener(baseGui->addOrRemoveOSCInputBaseGui, &gui, &ofxGuiGroup::addOrRemoveOSCInput);
+
     drawNoInputs = true;
-    
-    
 }
 
 //------------------------------------------------------------------

@@ -290,6 +290,8 @@ void ofApp::setSelectedForOSC(){
                     }
                 }
             }
+            
+            listenToOSCEvents(oscNode, true);
         }
     }
 }
@@ -1020,19 +1022,15 @@ void ofApp::createNode(textInputEvent &args){
         newPatch = new AudioIn(gui, left, "Audio In - Left Channel", "New Audio In - Left Channel");
         ((AudioIn*)newPatch)->setChannel(0);
         inputs.push_back((AudioIn*)newPatch);
-        listenToAudioInEvent((AudioIn*)newPatch, true);
     }
     else if (args.type == "audio in - right channel") {
         newPatch = new AudioIn(gui, right, "Audio In - Right Channel", "New Audio In - Right Channel");
         ((AudioIn*)newPatch)->setChannel(1);
         inputs.push_back((AudioIn*)newPatch);
-        listenToAudioInEvent((AudioIn*)newPatch, true);
     }
     else if (args.type == "osc receiver") {
         newPatch = new OSCReceiver();
         inputs.push_back((OSCReceiver*)newPatch);
-        ofAddListener( ((OSCReceiver*)newPatch)->editOSCPort , this, &ofApp::editOSCPort);
-        ofAddListener( ((OSCReceiver*)newPatch)->editOSCInputs , this, &ofApp::editOSCInputs);
     }
     else if (args.type == "camera") {
         newPatch = new InputCamera();
@@ -1125,6 +1123,8 @@ void ofApp::createNode(textInputEvent &args){
             audioListeners.push_back(aI);
             aI->setup();
             aI->start();
+            
+            listenToAudioInEvents((AudioIn*)newPatch, true);
         }
         else if (newPatch->getIsOSCReceiver()) {
             OscInputGenerator* oscI = new OscInputGenerator(newPatch->getName(), newPatch->getId());
@@ -1132,6 +1132,8 @@ void ofApp::createNode(textInputEvent &args){
             inputGenerators.push_back(oscI);
             oscI->setup();
             oscI->start();
+            
+            listenToOSCEvents((OSCReceiver*)newPatch, true);
         }
     }
     if (args.widget != NULL) {
@@ -1148,6 +1150,19 @@ void ofApp::initNode(ofxPatch* node) {
     node->setup();
     node->setLinkType(nodeViewers[currentViewer]->getLinkType());
     ofAddListener( node->title->close , this, &ofApp::closePatch);
+    
+    std::map<int, ImageOutput*>::iterator oscNode_;
+    
+    for (int i = 0; i < inputGenerators.size(); ++i) {
+        ParamInputGenerator* p = inputGenerators[i];
+        if ((p->getParamInputType() == OSC)) {
+            oscNode_ = nodes.find(((OscInputGenerator*)p)->getNodeID());
+            
+            if (oscNode_ != nodes.end()) {
+                ofAddListener(((ImageOutput*)node)->editOSCInputs , this, &ofApp::editOSCInputs);
+            }
+        }
+    }
 }
 
 //------------------------------------------------------------------
@@ -1179,7 +1194,7 @@ void ofApp::closePatch(int &_nID) {
                     }
                     i++;
                 }
-                listenToAudioInEvent((AudioIn*)n, false);
+                listenToAudioInEvents((AudioIn*)n, false);
             }
         }
         else {
@@ -1321,7 +1336,30 @@ void ofApp::editAudioInEnabled(AudioInEvent &edit_){
 }
 
 //------------------------------------------------------------------
-void ofApp::listenToAudioInEvent(AudioIn* audio, bool listen) {
+void ofApp::listenToOSCEvents(OSCReceiver *osc, bool listen) {
+    
+    if (listen){
+        ofAddListener(osc->editOSCPort , this, &ofApp::editOSCPort);
+        ofAddListener(osc->editOSCInputsActive , this, &ofApp::editOSCInputsActive);
+        
+        for(std::map<int, ImageOutput*>::iterator it = nodes.begin(); it != nodes.end(); it++ ){
+            if (it->second != osc)
+                ofAddListener(it->second->editOSCInputs , this, &ofApp::editOSCInputs);
+        }
+    }
+    else {
+        ofRemoveListener(osc->editOSCPort , this, &ofApp::editOSCPort);
+        ofRemoveListener(osc->editOSCInputsActive , this, &ofApp::editOSCInputsActive);
+        
+        for(std::map<int, ImageOutput*>::iterator it = nodes.begin(); it != nodes.end(); it++ ){
+            if (it->second != osc)
+                ofRemoveListener(it->second->editOSCInputs , this, &ofApp::editOSCInputs);
+        }
+    }
+}
+
+//------------------------------------------------------------------
+void ofApp::listenToAudioInEvents(AudioIn* audio, bool listen) {
     
     if (listen){
         ofAddListener(audio->editAudioIn , this, &ofApp::editAudioIn);
@@ -1344,49 +1382,87 @@ void ofApp::editOSCPort(OSCEvent &e_) {
         ParamInputGenerator* p = inputGenerators[i];
         if (p->getParamInputType() == OSC && ((OscInputGenerator*)p)->getNodeID() == e_.nodeId) {
             ((OscInputGenerator*)p)->setPort(e_.port);
+            ((OscInputGenerator*)p)->setAddress(e_.address);
         }
     }
 }
 
 //------------------------------------------------------------------
-void ofApp::editOSCInputs(OSCEvent &edit_) {
-    
+void ofApp::editOSCInputsActive(OSCEvent &edit_) {
+
+    editOSCActive = !editOSCActive;
+    nodeViewers[currentViewer]->setEditOSCActive(editOSCActive, edit_.nodeId);
+}
+
+//------------------------------------------------------------------
+void ofApp::editOSCInputs(ofxOSCGuiEvent &edit_) {
+
     if (editOSCActive){
-        
         for (int i = 0; i < inputGenerators.size(); ++i) {
             ParamInputGenerator* p = inputGenerators[i];
-            if ((p->getParamInputType() == OSC) &&  (((OscInputGenerator*)p)->getNodeID() == edit_.nodeId)) {
-                
+            if ((p->getParamInputType() == OSC) &&  (((OscInputGenerator*)p)->getNodeID() == edit_.oscNodeId)) {
                 std::map<int, ImageOutput*>::iterator oscNode_;
-                oscNode_ = nodes.find(edit_.nodeId);
-                
+                oscNode_ = nodes.find(edit_.oscNodeId);
+
                 if (oscNode_ != nodes.end()) {
                     
-                    ((OscInputGenerator*)p)->clearOSCMap();
-                    
-                    map<int, vector<string> > attributesSelected = nodeViewers[currentViewer]->getAttributesClicked();
-                    std::map<int, ImageOutput*>::iterator node_;
-                    
-                    ((OSCReceiver*)oscNode_->second)->clearParameters();
-                    
-                    for(map<int, vector<string> >::iterator it = attributesSelected.begin(); it != attributesSelected.end(); it++ ){
-                        node_ = nodes.find(it->first);
-                        if (node_ != nodes.end()) {
-                            ((OscInputGenerator*)p)->addNewOSCMap(((OSCReceiver*)oscNode_->second)->getAddress(), node_->second, it->second);
-                            
-                            for(int j = 0; j < it->second.size(); j++) {
-                                ((OSCReceiver*)oscNode_->second)->addParameter(it->second[j]);
-                            }
+                    std::map<int, ImageOutput*>::iterator node_ = nodes.find(edit_.nodeId);
+
+                    if (node_ != nodes.end()) {
+                        if (edit_.add) {
+                            ((OscInputGenerator*)p)->addNewOSCMap(((OSCReceiver*)oscNode_->second)->getAddress(), node_->second, edit_.paramName);
+                            ((OSCReceiver*)oscNode_->second)->addParameter(edit_.paramName);
+                        }
+                        else {
+                            ((OscInputGenerator*)p)->removeOSCMap(((OSCReceiver*)oscNode_->second)->getAddress(), node_->second, edit_.paramName);
+                            ((OSCReceiver*)oscNode_->second)->removeParameter(edit_.paramName);
                         }
                     }
                 }
             }
         }
     }
-    
-    editOSCActive = !editOSCActive;
-    nodeViewers[currentViewer]->setEditOSCActive(editOSCActive, edit_.nodeId);
 }
+
+//------------------------------------------------------------------
+//void ofApp::editOSCInputs(OSCEvent &edit_) {
+//    
+//    if (editOSCActive){
+//        
+//        for (int i = 0; i < inputGenerators.size(); ++i) {
+//            ParamInputGenerator* p = inputGenerators[i];
+//            if ((p->getParamInputType() == OSC) &&  (((OscInputGenerator*)p)->getNodeID() == edit_.nodeId)) {
+//                
+//                std::map<int, ImageOutput*>::iterator oscNode_;
+//                oscNode_ = nodes.find(edit_.nodeId);
+//                
+//                if (oscNode_ != nodes.end()) {
+//                    
+//                    ((OscInputGenerator*)p)->clearOSCMap();
+//                    
+//                    map<int, vector<string> > attributesSelected = nodeViewers[currentViewer]->getAttributesClicked();
+//                    std::map<int, ImageOutput*>::iterator node_;
+//                    
+//                    ((OSCReceiver*)oscNode_->second)->clearParameters();
+//                    
+//                    for(map<int, vector<string> >::iterator it = attributesSelected.begin(); it != attributesSelected.end(); it++ ){
+//                        node_ = nodes.find(it->first);
+//                        if (node_ != nodes.end()) {
+//                            ((OscInputGenerator*)p)->addNewOSCMap(((OSCReceiver*)oscNode_->second)->getAddress(), node_->second, it->second);
+//                            
+//                            for(int j = 0; j < it->second.size(); j++) {
+//                                ((OSCReceiver*)oscNode_->second)->addParameter(it->second[j]);
+//                            }
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//    }
+//    
+//    editOSCActive = !editOSCActive;
+//    nodeViewers[currentViewer]->setEditOSCActive(editOSCActive, edit_.nodeId);
+//}
 
 //------------------------------------------------------------------
 bool ofApp::loadFromXML(){
@@ -1511,7 +1587,7 @@ bool ofApp::loadFromXML(){
                             }
                             else{
                                 loadingOK = false;
-                                message = "node not found!";
+                                message = "node \"" + nodeName + "\" not found!";
                             }
                             
                         }
@@ -1978,7 +2054,7 @@ bool ofApp::loadNodes(ofxXmlSettings &XML){
                     inputs.push_back(aI);
                     nodes.insert(std::pair<int,ImageOutput*>(inputId,aI));
                     
-                    listenToAudioInEvent(aI, true);
+                    listenToAudioInEvents(aI, true);
                     
                     break;
                 };
@@ -1999,9 +2075,6 @@ bool ofApp::loadNodes(ofxXmlSettings &XML){
                     
                     inputs.push_back(oI);
                     nodes.insert(std::pair<int,ImageOutput*>(inputId,oI));
-                    
-                    ofAddListener(oI->editOSCPort , this, &ofApp::editOSCPort);
-                    ofAddListener(oI->editOSCInputs , this, &ofApp::editOSCInputs);
 
                     break;
                 };
@@ -2262,6 +2335,11 @@ void ofApp::deleteEverything() {
     }
     inputGenerators.clear();
     audioListeners.clear();
+    
+    for (int i = 0; i < nodes.size(); i++){
+        if (nodes[i] != NULL) ofRemoveListener( nodes[i]->title->close , this, &ofApp::closePatch);
+    }
+    ofRemoveListener( audioAnalizer->title->close , this, &ofApp::closePatch);
     
     for (int i = 0; i < nodeViewers.size(); i++){
         nodeViewers[i]->deleteEverything();

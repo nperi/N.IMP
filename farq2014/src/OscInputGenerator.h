@@ -25,10 +25,13 @@ class OscInputGenerator : public ParamInputGenerator{
     void processInput();
     int  getNodeID(){ return nodeID; };
     void setPort(int p);
+    void setAddress(string a);
     
     std::map<string,DTOscMap* >* oscMap;
     void removeNodeFromParams(int nodeID_);
     bool addNewOSCMap(string address_, ImageOutput* node_, vector<string> params_);
+    bool addNewOSCMap(string address_, ImageOutput* node_, string param_);
+    void removeOSCMap(string address_, ImageOutput* node_, string param_);
     void clearOSCMap();
     
     bool loadSettings(ofxXmlSettings &XML);

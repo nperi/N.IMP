@@ -90,7 +90,7 @@ void OSCReceiver::editInputs(bool& b){
     ev.nodeId = nId;
     ev.port = port;
     ev.address = address;
-    ofNotifyEvent(editOSCInputs, ev);
+    ofNotifyEvent(editOSCInputsActive, ev);
 }
 
 //------------------------------------------------------------------
@@ -107,6 +107,28 @@ void OSCReceiver::addParameter(string param_){
     ofParameter<string> param = param_;
     paramsGroup.add(param);
     paramsLabels.push_back(param_);
+    
+    gui.add(paramsGroup);
+    gui.setWidthElements(INSPECTOR_WIDTH);
+}
+
+//------------------------------------------------------------------
+void OSCReceiver::removeParameter(string param_){
+    
+    gui.remove("Params");
+    
+    for (int i = 0; i < paramsLabels.size(); i++) {
+        if (paramsLabels[i] == param_) {
+            paramsLabels.erase(paramsLabels.begin() + i);
+        }
+    }
+    
+    paramsGroup.clear();
+    
+    for (int i = 0; i < paramsLabels.size(); i++) {
+        ofParameter<string> p = paramsLabels[i];
+        paramsGroup.add(p);
+    }
     
     gui.add(paramsGroup);
     gui.setWidthElements(INSPECTOR_WIDTH);

@@ -105,6 +105,11 @@ void OscInputGenerator::setPort(int port_) {
 }
 
 //------------------------------------------------------------------
+void OscInputGenerator::setAddress(string address_) {
+    
+}
+
+//------------------------------------------------------------------
 bool OscInputGenerator::addNewOSCMap(string address_, ImageOutput* node_, vector<string> params_) {
     
     std::map<string,DTOscMap* >::iterator it = oscMap->find(address_);
@@ -132,6 +137,59 @@ bool OscInputGenerator::addNewOSCMap(string address_, ImageOutput* node_, vector
             dtM->paramMaxValue.push_back(node_->getMidiMax(params_[i]));
         }
         oscMap->insert(std::pair<string,DTOscMap* >(address_,dtM));
+    }
+}
+
+//------------------------------------------------------------------
+bool OscInputGenerator::addNewOSCMap(string address_, ImageOutput* node_, string param_) {
+    
+    std::map<string,DTOscMap* >::iterator it = oscMap->find(address_);
+    
+    if (it != oscMap->end()) {
+        it->second->paramId.push_back(param_);
+        it->second->nodeId.push_back(node_->getId());
+        it->second->inputMinValue.push_back(0);
+        it->second->inputMaxValue.push_back(127);
+        it->second->paramMinValue.push_back(node_->getMidiMin(param_));
+        it->second->paramMaxValue.push_back(node_->getMidiMax(param_));
+    }
+    else {
+        DTOscMap* dtM = new DTOscMap();
+        dtM->path = address_;
+        
+        dtM->paramId.push_back(param_);
+        dtM->nodeId.push_back(node_->getId());
+        dtM->inputMinValue.push_back(0);
+        dtM->inputMaxValue.push_back(127);
+        dtM->paramMinValue.push_back(node_->getMidiMin(param_));
+        dtM->paramMaxValue.push_back(node_->getMidiMax(param_));
+        
+        oscMap->insert(std::pair<string,DTOscMap* >(address_,dtM));
+    }
+}
+
+//------------------------------------------------------------------
+void OscInputGenerator::removeOSCMap(string address_, ImageOutput* node_, string param_) {
+    
+    std::map<string,DTOscMap* >::iterator it = oscMap->find(address_);
+    
+    if (it != oscMap->end()) {
+        
+        int j = 0;
+        while (j < it->second->paramId.size()) {
+            if (it->second->paramId[j] == param_ && it->second->nodeId[j] == node_->getId()) {
+                it->second->paramId.erase(it->second->paramId.begin() + j);
+                it->second->nodeId.erase(it->second->nodeId.begin() + j);
+                it->second->inputMinValue.erase(it->second->inputMinValue.begin() + j);
+                it->second->inputMaxValue.erase(it->second->inputMaxValue.begin() + j);
+                it->second->paramMinValue.erase(it->second->paramMinValue.begin() + j);
+                it->second->paramMaxValue.erase(it->second->paramMaxValue.begin() + j);
+                
+                j = it->second->paramId.size();
+            }
+            
+            j++;
+        }
     }
 }
 

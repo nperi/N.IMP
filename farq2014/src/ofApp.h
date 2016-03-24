@@ -15,6 +15,7 @@
 #include "AudioListenerInput.h"
 #include "AudioInputGenerator.h"
 #include "OscInputGenerator.h"
+#include "ofxOSCGuiEvent.h"
 
 #include "MidiInputGenerator.h"
 #include "ofxMidiIn.h"
@@ -90,9 +91,11 @@ public:
     void editAudioIn(AudioInEvent &e_);
     void editAudioInSaturation(AudioInEvent &e_);
     void editAudioInEnabled(AudioInEvent &e_);
-    void listenToAudioInEvent(AudioIn* audio, bool listen);
+    void listenToAudioInEvents(AudioIn* audio, bool listen);
+    void listenToOSCEvents(OSCReceiver* osc, bool listen);
     void editOSCPort(OSCEvent &e_);
-    void editOSCInputs(OSCEvent &e_);
+    void editOSCInputs(ofxOSCGuiEvent &e_);
+    void editOSCInputsActive(OSCEvent &e_);
     bool loadFromXML();
     bool saveToXML();
     bool loadNodes(ofxXmlSettings &XML);

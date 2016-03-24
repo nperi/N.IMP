@@ -16,6 +16,12 @@ MixMask::MixMask(string name_, int id_):MixTable(name_, "Mix Mask", id_){
     gui.add(spin.setup("spin", 90, 0, 360));
     gui.setWidthElements(INSPECTOR_WIDTH);
     
+    ofxBaseGui* baseGui;
+    baseGui = gui.find("Enabled");
+    if (baseGui) ofAddListener(baseGui->addOrRemoveOSCInputBaseGui, &gui, &ofxGuiGroup::addOrRemoveOSCInput);
+    baseGui = gui.find("spin");
+    if (baseGui) ofAddListener(baseGui->addOrRemoveOSCInputBaseGui, &gui, &ofxGuiGroup::addOrRemoveOSCInput);
+    
     maxInputs = 2;
     maskShader.load("Shaders/composite");
     maskShader.begin();

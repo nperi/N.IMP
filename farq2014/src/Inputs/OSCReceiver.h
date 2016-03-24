@@ -33,13 +33,14 @@ public:
     
     void        setPort(int p);
     void        addParameter(string p);
+    void        removeParameter(string p);
     void        clearParameters();
     
     void        updateParameter(Param* inputParam){};
     
     ofEvent<OSCEvent> editOSCPort;
     ofEvent<OSCEvent> editOSCAddress;
-    ofEvent<OSCEvent> editOSCInputs;
+    ofEvent<OSCEvent> editOSCInputsActive;
     
     bool loadSettings(ofxXmlSettings &XML, int nTag_, int nodesCount_ = 0);
     bool saveSettings(ofxXmlSettings &XML);
