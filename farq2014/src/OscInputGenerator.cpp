@@ -11,9 +11,21 @@
 
 
 OscInputGenerator::OscInputGenerator(string name_, int nodeID_):ParamInputGenerator(name_, true){
-    oscMap = new std::map<string,DTOscMap* >();
-    type = OSC;
-    nodeID = nodeID_;
+    oscMap  = new std::map<string,DTOscMap* >();
+    type    = OSC;
+    nodeID  = nodeID_;
+    port    = 6666;
+    receiver.setup(port);
+}
+
+//------------------------------------------------------------------
+OscInputGenerator::~OscInputGenerator(){
+    
+//    receiver.~ofxOscReceiver();
+    
+    oscMap->clear();
+    delete oscMap;
+    oscMap = NULL;
 }
 
 //------------------------------------------------------------------
@@ -89,6 +101,7 @@ void OscInputGenerator::processInput() {
                     p->name         = it->second->paramId[j];
                     p->value        = m.getArgAsFloat(j);
                     p->floatVal     = ofMap(m.getArgAsFloat(j), it->second->inputMinValue[j], it->second->inputMaxValue[j], it->second->paramMinValue[j], it->second->paramMaxValue[j]);
+                    p->intVal       = p->floatVal;
                     storeMessage(p);
                 }
             }
@@ -101,12 +114,21 @@ void OscInputGenerator::processInput() {
 void OscInputGenerator::setPort(int port_) {
     
     port = port_;
-    receiver.setup(port);
+    if (port > 999)
+        receiver.setup(port);
 }
 
 //------------------------------------------------------------------
-void OscInputGenerator::setAddress(string address_) {
+void OscInputGenerator::setAddress(string oldAddress_, string address_) {
+ 
+    std::map<string,DTOscMap* >::iterator it;
     
+    it = oscMap->find(oldAddress_);
+    if (it != oscMap->end()) {
+//        it->second->path = address_;
+        oscMap->insert(std::pair<string,DTOscMap* >(address_,it->second));
+        oscMap->erase(it);
+    }
 }
 
 //------------------------------------------------------------------
@@ -126,7 +148,7 @@ bool OscInputGenerator::addNewOSCMap(string address_, ImageOutput* node_, vector
     }
     else {
         DTOscMap* dtM = new DTOscMap();
-        dtM->path = address_;
+//        dtM->path = address_;
         
         for (int i = 0; i < params_.size(); i++) {
             dtM->paramId.push_back(params_[i]);
@@ -155,7 +177,7 @@ bool OscInputGenerator::addNewOSCMap(string address_, ImageOutput* node_, string
     }
     else {
         DTOscMap* dtM = new DTOscMap();
-        dtM->path = address_;
+//        dtM->path = address_;
         
         dtM->paramId.push_back(param_);
         dtM->nodeId.push_back(node_->getId());
@@ -177,7 +199,9 @@ void OscInputGenerator::removeOSCMap(string address_, ImageOutput* node_, string
         
         int j = 0;
         while (j < it->second->paramId.size()) {
-            if (it->second->paramId[j] == param_ && it->second->nodeId[j] == node_->getId()) {
+            if (it->second->nodeId[j] == node_->getId() && (it->second->paramId[j] == param_ ||
+               (it->second->paramId[j].compare(0, 5, "Blend")==0 && param_.compare(0, 5, "Blend")==0))) {
+                
                 it->second->paramId.erase(it->second->paramId.begin() + j);
                 it->second->nodeId.erase(it->second->nodeId.begin() + j);
                 it->second->inputMinValue.erase(it->second->inputMinValue.begin() + j);
@@ -224,7 +248,7 @@ bool OscInputGenerator::loadSettings(ofxXmlSettings &XML) {
     
     //get osc input device
     //
-    port = ofToInt(XML.getAttribute("OSC_SETTINGS","port","66666"));
+    port = ofToInt(XML.getAttribute("OSC_SETTINGS","port","6666"));
     receiver.setup(port);
     
     //get osc mapping data
@@ -248,7 +272,7 @@ bool OscInputGenerator::loadSettings(ofxXmlSettings &XML) {
             float   paramMinValue = ofToFloat(XML.getAttribute("OSC_MAP","paramMinValue","0",i));
             float   paramMaxValue = ofToFloat(XML.getAttribute("OSC_MAP","paramMaxValue","127",i));
             
-            dtM->path = address;
+//            dtM->path = address;
             dtM->paramId.push_back(param);
             dtM->nodeId.push_back(nodeId);
             dtM->inputMinValue.push_back(inputMinValue);

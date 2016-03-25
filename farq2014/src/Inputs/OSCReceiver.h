@@ -14,6 +14,11 @@
 
 #include <stdio.h>
 
+struct OSCParam{
+    string paramName;
+    int    nodeId;
+};
+
 class OSCReceiver : public InputSource{
     
 public:
@@ -32,9 +37,10 @@ public:
     bool        getEditInputsActive() { return editOSC; };
     
     void        setPort(int p);
-    void        addParameter(string p);
-    void        removeParameter(string p);
+    void        addParameter(int nodeId_, string paramName_);
+    void        removeParameter(int nodeId_, string paramName_);
     void        clearParameters();
+    void        removeNodeParams(int nodeId_);
     
     void        updateParameter(Param* inputParam){};
     
@@ -60,9 +66,10 @@ private:
     ofParameter<bool> editOSC;
     ofParameterGroup portGroup;
     ofParameterGroup paramsGroup;
-    vector<string> paramsLabels;
+    vector<OSCParam> paramsLabels;
 
     int port;
+    string oldAddress;
     ofImage oscReceiverImg;
     
 };

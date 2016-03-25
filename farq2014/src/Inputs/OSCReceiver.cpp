@@ -14,8 +14,9 @@ OSCReceiver::OSCReceiver(string name_, int id_) : InputSource(name_, "OSC Receiv
     oscReceiverImg.loadImage("assets/osc_receiver.png");
     
     address = "/";
-    port = 66666;
-    oscPortNumber = "66666";
+    oldAddress = "/";
+    port = 6666;
+    oscPortNumber = "6666";
     gui.add(oscPort.setup("Port", oscPortNumber, 100, 20));
     gui.add(oscAddress.setup("Address", address, 100, 20));
     gui.add(editOSC.set("Edit OSC Inputs", false));
@@ -74,13 +75,14 @@ void OSCReceiver::editPort(string& p){
 //------------------------------------------------------------------
 void OSCReceiver::editAddress(string& a){
     
-    address = a;
-    
     OSCEvent ev;
     ev.nodeId = nId;
     ev.port = port;
     ev.address = address;
+    ev.oldAddress = oldAddress;
     ofNotifyEvent(editOSCPort, ev);
+    
+    oldAddress = a;
 }
 
 //------------------------------------------------------------------
@@ -100,25 +102,30 @@ void OSCReceiver::setPort(int port_){
 }
 
 //------------------------------------------------------------------
-void OSCReceiver::addParameter(string param_){
+void OSCReceiver::addParameter(int nodeId_, string paramName_){
     
     gui.remove("Params");
     
-    ofParameter<string> param = param_;
+    ofParameter<string> param = paramName_;
     paramsGroup.add(param);
-    paramsLabels.push_back(param_);
+    
+    OSCParam newParam;
+    newParam.nodeId = nodeId_;
+    newParam.paramName = paramName_;
+    paramsLabels.push_back(newParam);
     
     gui.add(paramsGroup);
     gui.setWidthElements(INSPECTOR_WIDTH);
 }
 
 //------------------------------------------------------------------
-void OSCReceiver::removeParameter(string param_){
+void OSCReceiver::removeParameter(int nodeId_, string paramName_){
     
     gui.remove("Params");
     
     for (int i = 0; i < paramsLabels.size(); i++) {
-        if (paramsLabels[i] == param_) {
+        if (paramsLabels[i].nodeId == nodeId_ && (paramsLabels[i].paramName == paramName_ ||
+            (paramsLabels[i].paramName.compare(0, 5, "Blend")==0 && paramName_.compare(0, 5, "Blend")==0))) {
             paramsLabels.erase(paramsLabels.begin() + i);
         }
     }
@@ -126,7 +133,7 @@ void OSCReceiver::removeParameter(string param_){
     paramsGroup.clear();
     
     for (int i = 0; i < paramsLabels.size(); i++) {
-        ofParameter<string> p = paramsLabels[i];
+        ofParameter<string> p = paramsLabels[i].paramName;
         paramsGroup.add(p);
     }
     
@@ -142,13 +149,39 @@ void OSCReceiver::clearParameters() {
 }
 
 //------------------------------------------------------------------
+void OSCReceiver::removeNodeParams(int nodeId_){
+    
+    gui.remove("Params");
+    
+    for (int i = 0; i < paramsLabels.size(); i++) {
+        if (paramsLabels[i].nodeId == nodeId_) {
+            paramsLabels.erase(paramsLabels.begin() + i);
+            i--;
+        }
+    }
+    
+    paramsGroup.clear();
+    
+    for (int i = 0; i < paramsLabels.size(); i++) {
+        ofParameter<string> p = paramsLabels[i].paramName;
+        paramsGroup.add(p);
+    }
+    
+    gui.add(paramsGroup);
+    gui.setWidthElements(INSPECTOR_WIDTH);
+}
+
+//------------------------------------------------------------------
 bool OSCReceiver::loadSettings(ofxXmlSettings &XML, int nTag_, int nodesCount_) {
     
     bool loaded = false;
     
     nId     = XML.getAttribute("NODE", "id", -1, nTag_) + nodesCount_;
-    port    = XML.getAttribute("NODE", "port", 66666, nTag_);
+    port    = XML.getAttribute("NODE", "port", 6666, nTag_);
     address = XML.getAttribute("NODE", "address", "/", nTag_);
+    oscAddress.setup("Address", address, 100, 20);
+    oldAddress = address;
+    
     
     XML.pushTag("NODE", nTag_);
     
@@ -160,8 +193,9 @@ bool OSCReceiver::loadSettings(ofxXmlSettings &XML, int nTag_, int nodesCount_) 
     if (numParamTag > 0){
         for (int v = 0; v < numParamTag; v++){
             string name_ = XML.getAttribute("PARAM","name","",v);
-            if (name_ != "") {
-                addParameter(name_);
+            int nodeID_ = XML.getAttribute("PARAM","nodeID",-1,v);
+            if (name_ != "" && nodeID_ != -1) {
+                addParameter(nodeID_, name_);
             }
         }
     }
@@ -207,7 +241,8 @@ bool OSCReceiver::saveSettings(ofxXmlSettings &XML) {
             
             for (int v = 0; v < paramsLabels.size(); v++){
                 XML.addTag("PARAM");
-                XML.addAttribute("PARAM", "name", paramsLabels[v], v);
+                XML.addAttribute("PARAM", "name", paramsLabels[v].paramName, v);
+                XML.addAttribute("PARAM", "nodeID", paramsLabels[v].nodeId, v);
             }
             
             ofxPatch::saveSettings(XML, false, i);
@@ -237,7 +272,8 @@ bool OSCReceiver::saveSettings(ofxXmlSettings &XML) {
                 
                 for (int v = 0; v < paramsLabels.size(); v++){
                     XML.addTag("PARAM");
-                    XML.addAttribute("PARAM", "name", paramsLabels[v], v);
+                    XML.addAttribute("PARAM", "name", paramsLabels[v].paramName, v);
+                    XML.addAttribute("PARAM", "nodeID", paramsLabels[v].nodeId, v);
                 }
                 
                 ofxPatch::saveSettings(XML, true, lastPlace);

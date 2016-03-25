@@ -21,8 +21,8 @@ AudioInputGenerator::AudioInputGenerator(string name_, int nodeID_):AudioListene
 
 AudioInputGenerator::~AudioInputGenerator(){
     
-    delete audioMap;
     audioMap->clear();
+    delete audioMap;
     audioMap = NULL;
 }
 

@@ -15,6 +15,7 @@ public:
     int nodeId;
     int port;
     string address;
+    string oldAddress;
 };
 
 #endif /* OSCEvent_h */

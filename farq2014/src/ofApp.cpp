@@ -1128,7 +1128,6 @@ void ofApp::createNode(textInputEvent &args){
         }
         else if (newPatch->getIsOSCReceiver()) {
             OscInputGenerator* oscI = new OscInputGenerator(newPatch->getName(), newPatch->getId());
-            oscI->setPort(66666);
             inputGenerators.push_back(oscI);
             oscI->setup();
             oscI->start();
@@ -1174,44 +1173,65 @@ void ofApp::closePatch(int &_nID) {
         ((ofxUIMultiImageToggle*)right_menu->getWidget("Analizer"))->setValue(false);
     }
     else {
-        ImageOutput* n = nodes.find(_nID)->second;
+        ImageOutput* nodeToDelete = nodes.find(_nID)->second;
         int i = 0;
         
-        if (n->getIsAudio() || n->getIsOSCReceiver()) {
+        // If is Audio or OSC
+        // delete it from input generators
+        //
+        if (nodeToDelete->getIsAudio() || nodeToDelete->getIsOSCReceiver()) {
             while (i < inputGenerators.size()) {
                 if ((inputGenerators[i]->getParamInputType() == FFT && ((AudioListenerInput*)inputGenerators[i])->getNodeID() == _nID)
                     || (inputGenerators[i]->getParamInputType() == OSC && ((OscInputGenerator*)inputGenerators[i])->getNodeID() == _nID)) {
                     
+                    delete inputGenerators[i];
                     inputGenerators.erase(inputGenerators.begin() + i);
                 }
                 i++;
             }
-            if (n->getIsAudio()) {
+            if (nodeToDelete->getIsAudio()) {
                 i = 0;
                 while (i < audioListeners.size()) {
                     if (audioListeners[i]->getParamInputType() == FFT && ((AudioListenerInput*)audioListeners[i])->getNodeID() == _nID) {
+                        delete audioListeners[i];
                         audioListeners.erase(audioListeners.begin() + i);
                     }
                     i++;
                 }
-                listenToAudioInEvents((AudioIn*)n, false);
+                listenToAudioInEvents((AudioIn*)nodeToDelete, false);
             }
         }
+        // else if not
+        // delete params from input generators
+        //
         else {
+            std::map<int, ImageOutput*>::iterator oscNode_;
+            
             for(int i = 0; i < inputGenerators.size(); i++) {
                 inputGenerators[i]->removeNodeFromParams(_nID);
+                
+                if(inputGenerators[i]->getParamInputType() == OSC) {
+                    oscNode_ = nodes.find(((OscInputGenerator*)inputGenerators[i])->getNodeID());
+                    
+                    if (oscNode_ != nodes.end()) {
+                        ((OSCReceiver*)oscNode_->second)->removeNodeParams(_nID);
+                        ofRemoveListener(nodeToDelete->editOSCInputs , this, &ofApp::editOSCInputs);
+                    }
+                }
             }
         }
         
+        // delete de Patch
+        //
         bool found = false;
         i = 0;
         
-        if (n->getNodeType() == INPUT) {
+        if (nodeToDelete->getNodeType() == INPUT) {
             
             if (editAudioInActive) {
                 editAudioInActive = !editAudioInActive;
                 
-                ((AudioIn*)n)->getChannel() == 0
+                ((AudioIn*)nodeToDelete)->getChannel() == 0
                 ? nodeViewers[currentViewer]->setEditLeftAudioInActive(false, -1)
                 : nodeViewers[currentViewer]->setEditRightAudioInActive(false, -1);
             }
@@ -1228,7 +1248,7 @@ void ofApp::closePatch(int &_nID) {
                 i++;
             }
         }
-        else if (n->getNodeType() == VISUAL_LAYER) {
+        else if (nodeToDelete->getNodeType() == VISUAL_LAYER) {
             while (i < visualLayers.size() && !found) {
                 if (visualLayers[i]->getId() == _nID) {
                     visualLayers.erase(visualLayers.begin() + i);
@@ -1237,7 +1257,7 @@ void ofApp::closePatch(int &_nID) {
                 i++;
             }
         }
-        else if (n->getNodeType() == MIXER) {
+        else if (nodeToDelete->getNodeType() == MIXER) {
             while (i < mixtables.size() && !found) {
                 if (mixtables[i]->getId() == _nID) {
                     mixtables.erase(mixtables.begin() + i);
@@ -1382,7 +1402,7 @@ void ofApp::editOSCPort(OSCEvent &e_) {
         ParamInputGenerator* p = inputGenerators[i];
         if (p->getParamInputType() == OSC && ((OscInputGenerator*)p)->getNodeID() == e_.nodeId) {
             ((OscInputGenerator*)p)->setPort(e_.port);
-            ((OscInputGenerator*)p)->setAddress(e_.address);
+            ((OscInputGenerator*)p)->setAddress(e_.oldAddress, e_.address);
         }
     }
 }
@@ -1395,27 +1415,27 @@ void ofApp::editOSCInputsActive(OSCEvent &edit_) {
 }
 
 //------------------------------------------------------------------
-void ofApp::editOSCInputs(ofxOSCGuiEvent &edit_) {
+void ofApp::editOSCInputs(ofxOSCGuiEvent &event_) {
 
     if (editOSCActive){
         for (int i = 0; i < inputGenerators.size(); ++i) {
             ParamInputGenerator* p = inputGenerators[i];
-            if ((p->getParamInputType() == OSC) &&  (((OscInputGenerator*)p)->getNodeID() == edit_.oscNodeId)) {
+            if ((p->getParamInputType() == OSC) &&  (((OscInputGenerator*)p)->getNodeID() == event_.oscNodeId)) {
                 std::map<int, ImageOutput*>::iterator oscNode_;
-                oscNode_ = nodes.find(edit_.oscNodeId);
+                oscNode_ = nodes.find(event_.oscNodeId);
 
                 if (oscNode_ != nodes.end()) {
                     
-                    std::map<int, ImageOutput*>::iterator node_ = nodes.find(edit_.nodeId);
+                    std::map<int, ImageOutput*>::iterator nodeToAdd_ = nodes.find(event_.nodeId);
 
-                    if (node_ != nodes.end()) {
-                        if (edit_.add) {
-                            ((OscInputGenerator*)p)->addNewOSCMap(((OSCReceiver*)oscNode_->second)->getAddress(), node_->second, edit_.paramName);
-                            ((OSCReceiver*)oscNode_->second)->addParameter(edit_.paramName);
+                    if (nodeToAdd_ != nodes.end()) {
+                        if (event_.add) {
+                            ((OscInputGenerator*)p)->addNewOSCMap(((OSCReceiver*)oscNode_->second)->getAddress(), nodeToAdd_->second, event_.paramName);
+                            ((OSCReceiver*)oscNode_->second)->addParameter(nodeToAdd_->second->getId(), event_.paramName);
                         }
                         else {
-                            ((OscInputGenerator*)p)->removeOSCMap(((OSCReceiver*)oscNode_->second)->getAddress(), node_->second, edit_.paramName);
-                            ((OSCReceiver*)oscNode_->second)->removeParameter(edit_.paramName);
+                            ((OscInputGenerator*)p)->removeOSCMap(((OSCReceiver*)oscNode_->second)->getAddress(), nodeToAdd_->second, event_.paramName);
+                            ((OSCReceiver*)oscNode_->second)->removeParameter(nodeToAdd_->second->getId(), event_.paramName);
                         }
                     }
                 }

@@ -15,17 +15,19 @@
 #include "ofxOsc.h"
 #include "DTOscMap.h"
 #include "ImageOutput.h"
+#include <stdlib.h>
 
 class OscInputGenerator : public ParamInputGenerator{
 	
   public:
 	
 	OscInputGenerator(string name_, int nodeID_);
+    ~OscInputGenerator();
 	
     void processInput();
     int  getNodeID(){ return nodeID; };
-    void setPort(int p);
-    void setAddress(string a);
+    void setPort(int port_);
+    void setAddress(string oldAddress_, string address_);
     
     std::map<string,DTOscMap* >* oscMap;
     void removeNodeFromParams(int nodeID_);
