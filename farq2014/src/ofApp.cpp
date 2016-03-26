@@ -184,7 +184,7 @@ void ofApp::setup() {
     //*** NODE VIEWR SETUP (COMPOSER) ***//
     //
     NodeViewer* nV = new NodeViewer(xmlFileName);
-    nV->setNodesCount(1);
+    nV->setNodesCount(0);
     nV->setParent(cam);
     nV->setLinkType(STRAIGHT_LINKS);
     gui->setMainComposer(nV);
@@ -2378,6 +2378,7 @@ void ofApp::deleteEverything() {
 //    leftAudioPatch  = NULL;
 //    rightAudioPatch = NULL;
     
+    nodeViewers[currentViewer]->setNodesCount(0);
 }
 
 /* ================================================ */
