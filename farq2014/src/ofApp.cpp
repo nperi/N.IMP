@@ -1180,6 +1180,17 @@ void ofApp::closePatch(int &_nID) {
         // delete it from input generators
         //
         if (nodeToDelete->getIsAudio() || nodeToDelete->getIsOSCReceiver()) {
+            if (nodeToDelete->getIsAudio()) {
+                i = 0;
+                while (i < audioListeners.size()) {
+                    if (audioListeners[i]->getParamInputType() == FFT && ((AudioListenerInput*)audioListeners[i])->getNodeID() == _nID) {
+                        audioListeners.erase(audioListeners.begin() + i);
+                    }
+                    i++;
+                }
+                listenToAudioInEvents((AudioIn*)nodeToDelete, false);
+            }
+            
             while (i < inputGenerators.size()) {
                 if ((inputGenerators[i]->getParamInputType() == FFT && ((AudioListenerInput*)inputGenerators[i])->getNodeID() == _nID)
                     || (inputGenerators[i]->getParamInputType() == OSC && ((OscInputGenerator*)inputGenerators[i])->getNodeID() == _nID)) {
@@ -1188,17 +1199,6 @@ void ofApp::closePatch(int &_nID) {
                     inputGenerators.erase(inputGenerators.begin() + i);
                 }
                 i++;
-            }
-            if (nodeToDelete->getIsAudio()) {
-                i = 0;
-                while (i < audioListeners.size()) {
-                    if (audioListeners[i]->getParamInputType() == FFT && ((AudioListenerInput*)audioListeners[i])->getNodeID() == _nID) {
-                        delete audioListeners[i];
-                        audioListeners.erase(audioListeners.begin() + i);
-                    }
-                    i++;
-                }
-                listenToAudioInEvents((AudioIn*)nodeToDelete, false);
             }
         }
         // else if not
