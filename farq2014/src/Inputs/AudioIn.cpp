@@ -21,7 +21,7 @@ AudioIn::AudioIn(ofxUISuperCanvas* &gui_, float* &inputBuffer_, string type_, st
     waveform = new ofxUIWaveform(0, 0, 200, 100, inputBuffer_, BUFFER_SIZE, -2, 2, "FFT");
     
     gui.add(isEnabled.setup("Enabled",isEnabled, 100,20));
-    gui.add(saturation.set("Sound Saturation",10,1,100));
+    gui.add(saturation.set("Sound Saturation",10,0,100));
     saturation.addListener(this, &AudioIn::editSaturation);
     gui.add(selectBand.set("Band",1,1,16));
     
@@ -127,8 +127,14 @@ void AudioIn::setBand(int band_){
 //------------------------------------------------------------------
 void AudioIn::editSaturation(float& s) {
     
-    waveform->setMax(s/5);
-    waveform->setMin(-s/5);
+    if (s == 0) {
+        waveform->setMax(0);
+        waveform->setMin(-0);
+    }
+    else {
+        waveform->setMax(100/(s*2));
+        waveform->setMin(-100/(s*2));
+    }
     
     AudioInEvent ev;
     ev.nodeId = nId;
