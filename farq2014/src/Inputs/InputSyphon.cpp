@@ -14,10 +14,15 @@ InputSyphon::InputSyphon(ofxSyphonServerDirectory* serverDir, string name, int i
     ofClear(255,255,255, 0);
     fbo.end();
     
-    // inspector setpu
-    nextServer.addListener(this, &InputSyphon::changeServer);
+    serverName = "No server selected";
+    
+    // inspector setup
+    gui.add(serverSelectedName.set("", serverName));
     gui.add(nextServer.setup(">> next server"));
+    gui.add(prevServer.setup("<< previous server"));
     gui.setWidthElements(INSPECTOR_WIDTH);
+    nextServer.addListener(this, &InputSyphon::changeToNextServer);
+    prevServer.addListener(this, &InputSyphon::changeToPrevServer);
     
     serverDownImg.loadImage("assets/syphon_server_down.png");
     
@@ -39,6 +44,11 @@ void InputSyphon::update() {
                 fbo.end();
             }
         } else {
+            if (!drawNoInputs) {
+                resetSizeToNoInputs();
+                serverName = "No server selected";
+                serverSelectedName.set("", serverName);
+            }
             drawNoInputs = true;
         }
     }
@@ -75,7 +85,7 @@ ofTexture* InputSyphon::getTexture(){
 }
 
 //------------------------------------------------------------------
-void InputSyphon::changeServer() {
+void InputSyphon::changeToNextServer() {
     serverDown = false;
     if(dir->size() > 0){
         drawNoInputs = false;
@@ -93,16 +103,58 @@ void InputSyphon::changeServer() {
         if(appName == ""){
             appName = "null";
         }
-    } else {
+        
+        serverSelectedName.set("", serverName);
+        
+        width  = (textureCorners[1].x - textureCorners[0].x)/SCALE_RATIO;
+        height = (width*client.getHeight())/client.getWidth();
+        
+        resetSize();
+    }
+    else {
         drawNoInputs = true;
+        resetSizeToNoInputs();
     }
 }
 
+//------------------------------------------------------------------
+void InputSyphon::changeToPrevServer() {
+    serverDown = false;
+    if(dir->size() > 0){
+        drawNoInputs = false;
+        dirIdx--;
+        if(dirIdx < 0)
+            dirIdx = dir->size() - 1;
+        
+        client.set(dir->getDescription(dirIdx));
+        this->serverName = client.getServerName();
+        this->appName = client.getApplicationName();
+        
+        if(serverName == ""){
+            serverName = "null";
+        }
+        if(appName == ""){
+            appName = "null";
+        }
+        
+        serverSelectedName.set("", serverName);
+        
+        width  = (textureCorners[1].x - textureCorners[0].x)/SCALE_RATIO;
+        height = (width*client.getHeight())/client.getWidth();
+        
+        resetSize();
+    }
+    else {
+        drawNoInputs = true;
+        resetSizeToNoInputs();
+    }
+}
 
 //------------------------------------------------------------------
 void InputSyphon::serverRetired(string serverName, string appName) {
     if(this->serverName == serverName && this->appName == appName){
         serverDown = true;
+        resetSizeToNoInputs();
     }
 }
 
@@ -127,6 +179,8 @@ bool InputSyphon::loadSettings(ofxXmlSettings &XML, int nTag_, int nodesCount_) 
         }
         i++;
     }
+    
+    serverSelectedName.set("", serverName);
     
     serverDown = !serverFound;
     drawNoInputs = false;

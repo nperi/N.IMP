@@ -16,7 +16,8 @@ public:
     ofImage*    getImage();
     ofTexture*  getTexture();
 
-    void changeServer();
+    void changeToNextServer();
+    void changeToPrevServer();
     
     bool loadSettings(ofxXmlSettings &XML, int nTag_, int nodesCount_ = 0);
     bool saveSettings(ofxXmlSettings &XML);
@@ -29,6 +30,7 @@ private:
     int     dirIdx;
     string  serverName;
     string  appName;
+    ofParameter<string> serverSelectedName;
     
     ofxSyphonServerDirectory* dir;
     ofxSyphonClient client;
@@ -43,6 +45,7 @@ private:
     float getMidiMax(string param_);
     
     ofxButton nextServer;
+    ofxButton prevServer;
 	
 };
 

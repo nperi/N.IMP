@@ -1125,6 +1125,17 @@
 			path = src;
 			sourceTree = "<group>";
 		};
+		0AE835FB1CA87900001B2536 /* Syphon */ = {
+			isa = PBXGroup;
+			children = (
+				49F3C5BB1C82963900EFD15D /* InputSyphon.cpp */,
+				49F3C5BC1C82963900EFD15D /* InputSyphon.h */,
+				4997535E1C8547E4007A2626 /* SyphonClientHandler.cpp */,
+				4997535F1C8547E4007A2626 /* SyphonClientHandler.h */,
+			);
+			name = Syphon;
+			sourceTree = "<group>";
+		};
 		0AFFF7341C2F0E3E0034AE53 /* ofxPostProcessing_nimp */ = {
 			isa = PBXGroup;
 			children = (
@@ -1613,6 +1624,7 @@
 		D309EB7B1A2E94AD008B3D94 /* Inputs */ = {
 			isa = PBXGroup;
 			children = (
+				0AE835FB1CA87900001B2536 /* Syphon */,
 				0A792F981C9103A1000E0D3B /* OSC */,
 				0A1297581C8200E500A9D6D4 /* Audio */,
 				D3008A451A44911800DACD2E /* ImageTypes */,
@@ -1620,16 +1632,12 @@
 				D309EB7D1A2E94AD008B3D94 /* InputSource.h */,
 				D309EB8A1A2E9B27008B3D94 /* InputCamera.cpp */,
 				D309EB8B1A2E9B27008B3D94 /* InputCamera.h */,
-				49F3C5BB1C82963900EFD15D /* InputSyphon.cpp */,
-				49F3C5BC1C82963900EFD15D /* InputSyphon.h */,
 				D318E8491A2F8C46000A2046 /* VideoPlayerMac.cpp */,
 				D318E84A1A2F8C46000A2046 /* VideoPlayerMac.h */,
 				D3A2270B1A37243F005DD5AF /* ParticleGenerator.cpp */,
 				D3A2270C1A37243F005DD5AF /* ParticleGenerator.h */,
 				0AE1F57D1C4DAC2100A3B168 /* ImageAndVideoInputList.cpp */,
 				D3A227531A3B57A9005DD5AF /* ImageAndVideoInputList.h */,
-				4997535E1C8547E4007A2626 /* SyphonClientHandler.cpp */,
-				4997535F1C8547E4007A2626 /* SyphonClientHandler.h */,
 				D34EC3F31A65CB5200F0EFAE /* VideoPool.cpp */,
 				D34EC3F41A65CB5200F0EFAE /* VideoPool.h */,
 			);
