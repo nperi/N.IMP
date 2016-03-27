@@ -398,8 +398,12 @@ void ofApp::update() {
         scrollBars->update();
         nodeViewers[currentViewer]->update();
         
+//        for(int i=0; i<syphonServers.size();i++){
+//            syphonServers[i]->publishTexture();
+//        }
         for(int i=0; i<syphonServers.size();i++){
-            syphonServers[i]->publishTexture();
+            // ver si no los agrego a los node viewers
+            syphonServers[i]->update();
         }
         
         
@@ -1091,6 +1095,10 @@ void ofApp::createNode(textInputEvent &args){
         newPatch = SyphonClientHandler::getInstance()->createSyphonPatch();
         inputs.push_back((InputSyphon*)newPatch);
     }
+    else if (args.type == "syphon output"){
+        newPatch = new CustomSyphonServer();
+        syphonServers.push_back((CustomSyphonServer*)newPatch);
+    }
     else {
         for(vector<string>::iterator it = midiIn.getPortList().begin(); it != midiIn.getPortList().end(); it++ ){
             if (args.type == it->data()) {
@@ -1709,50 +1717,6 @@ bool ofApp::loadFromXML(){
                     }
                     
                 }
-                
-                //PROCESSING SYPHON SERVERS
-                if (loadingOK){
-                    int numServers = XML.getNumTags("SYPHON_SERVERS");
-                    
-                    
-                    if(numServers==1){
-                        XML.pushTag("SYPHON_SERVERS");
-                        
-                        int numSyphonServer = XML.getNumTags("SERVER");
-                        
-                        for(int j=0; j<numSyphonServer; j++){
-                            int inputId         = XML.getAttribute("SERVER","inputId",0,j);
-                            string inputName    = XML.getAttribute("SERVER","inputName","mainMix",j);
-                            string exportName   = XML.getAttribute("SERVER","exportName","syphon1",j);
-                            
-                            std::map<int,ImageOutput*>::iterator it;
-                            
-                            it=nodes.find(inputId);
-                            
-                            if(it!=nodes.end()){
-                                ImageOutput* iO = it->second;
-                                CustomSyphonServer* cSS = new CustomSyphonServer(exportName,iO);
-                                
-                                syphonServers.push_back(cSS);
-                                
-                            }
-                            else{
-                                loadingOK = false;
-                                message = "node not found!";
-                                break;
-                            }
-                            
-                        }
-                        
-                        //Popping SYPHON_SERVERS tags
-                        XML.popTag();
-                        
-                    }
-                    else{
-                        loadingOK = false;
-                        message = "missing SYPHON_SERVERS tag!";
-                    }
-                }
             }
         }
         else{
@@ -1789,6 +1753,9 @@ bool ofApp::loadFromXML(){
         }
         for(int i=0; i<mixtables.size();i++){
             nodesVector.push_back(mixtables[i]);
+        }
+        for(int i=0; i<syphonServers.size();i++){
+            nodesVector.push_back(syphonServers[i]);
         }
         
         //setting inputs to every node
@@ -1852,6 +1819,7 @@ bool ofApp::loadFromXML(){
         //
         for(int i=0; i<syphonServers.size();i++){
             syphonServers[i]->setup();
+            initNode(syphonServers[i]);
         }
         
         setSelectedForAudioIn();
@@ -1946,6 +1914,15 @@ bool ofApp::saveToXML() {
         XML.popTag();
         
         
+        // Save Syphon Servers
+        XML.addTag("SYPHON_SERVERS");
+        XML.pushTag("SYPHON_SERVERS");
+        for (int ss = 0; ss < syphonServers.size(); ss++) {
+            syphonServers[ss]->saveSettings(XML);
+        }
+        XML.popTag(); // tag SYPHON_SERVERS
+        
+        
         XML.popTag(); // tag SETTINGS
         
         
@@ -1967,17 +1944,6 @@ bool ofApp::saveToXML() {
             inputGenerators[ig]->saveSettings(XML);
         }
         XML.popTag(); // tag PARAM_INPUT_GENERATORS
-        
-        
-        // Save Syphon Servers
-        //
-        XML.addTag("SYPHON_SERVERS");
-        XML.pushTag("SYPHON_SERVERS");
-        for (int ss = 0; ss < syphonServers.size(); ss++) {
-            syphonServers[ss]->saveSettings(XML);
-        }
-        XML.popTag(); // tag SYPHON_SERVERS
-        
         
         XML.popTag(); // tag MAIN_SETTINGS
         
@@ -2350,6 +2316,43 @@ bool ofApp::loadNodes(ofxXmlSettings &XML){
             ConsoleLog::getInstance()->pushError("Encapsulated tag missing");
         }
         
+    }
+    
+    // PROCESSING SYPHON SERVERS
+    if(result){
+        int numServers = XML.getNumTags("SYPHON_SERVERS");
+        if(numServers==1){
+            XML.pushTag("SYPHON_SERVERS");
+            
+            int numSyphonServer = XML.getNumTags("NODE");
+            
+            for(int j=0; j<numSyphonServer; j++){
+                int nodeId          = XML.getAttribute("NODE","id",-1,j);
+                int inputId         = XML.getAttribute("NODE","inputId",-1,j);
+                string name         = XML.getAttribute("NODE","name","SyphonName",j);
+                string exportName   = XML.getAttribute("NODE","exportName","syphon1",j);
+                
+                std::map<int,ImageOutput*>::iterator it;
+                
+                it=nodes.find(inputId);
+                
+                if(it!=nodes.end()){
+                    ImageOutput* iO = it->second;
+                    CustomSyphonServer* cSS = new CustomSyphonServer(exportName,iO, name, nodeId);
+                    cSS->addInputIdentifier(inputId);
+                    cSS->loadSettings(XML, j);
+                    syphonServers.push_back(cSS);
+                    nodes.insert(std::pair<int, ImageOutput*>(nodeId, cSS));
+                }
+                else{
+                    result = false;
+                    ConsoleLog::getInstance()->pushError("Syphon server input not found");
+                    break;
+                }
+            }
+            //Popping SYPHON_SERVERS tags
+            XML.popTag();
+        }
     }
     
     return result;

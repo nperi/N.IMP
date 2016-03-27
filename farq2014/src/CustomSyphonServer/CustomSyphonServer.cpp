@@ -7,17 +7,29 @@
 //
 
 #include "CustomSyphonServer.h"
+#include "ConsoleLog.h"
 
 
-CustomSyphonServer::CustomSyphonServer(string exportName_, ImageOutput* feeder_){
+CustomSyphonServer::CustomSyphonServer(string exportName_, ImageOutput* feeder_, string name_, int id_): ImageOutput(name_, "SYPHON_SERVER", id_){
     exportName = exportName_;
     feeder = feeder_;
+    
+    addInputDot();
+
+    maxInputs = 1;
+    isSyphonServer = true;
+    drawNoInputs = (feeder_ == NULL);
+    exportNameParam = "asda";
+    gui.add(exportNameText.setup("Export Name", exportNameParam, 100, 20));
+}
+
+CustomSyphonServer::~CustomSyphonServer(){
 }
 
 //------------------------------------------------------------------
-void CustomSyphonServer::publishTexture(){
-   server.publishTexture(&feeder->getTextureReference());
-}
+//void CustomSyphonServer::publishTexture(){
+//   server->publishTexture(&feeder->getTextureReference());
+//}
 
 //------------------------------------------------------------------
 void CustomSyphonServer::setup(){
@@ -25,45 +37,91 @@ void CustomSyphonServer::setup(){
 }
 
 //------------------------------------------------------------------
-bool CustomSyphonServer::saveSettings(ofxXmlSettings &XML) {
-    
-    bool saved = false;
-    
-    // Search for the syphon server with exportName like mine to update information
-    // If it doesn't exists.. then I need to add it to the .xml
-    //
-    
-    // Get the total number of syphon servers ...
-    //
-    int totalServers = XML.getNumTags("SERVER");
-    
-    // ... and search for the right export name for loading
-    //
-    for (int i = 0; i <= totalServers; i++){
-        
-        // Once it found the right one ...
-        //
-        if ( XML.getAttribute("SERVER", "exportName", "", i) == exportName){
-            
-            XML.setAttribute("SERVER", "inputId", feeder->getId(), i);
-            break;
-        }
-        
-        // If it was the last syphon server in the XML and it wasn't me..
-        // I need to add myself in the .xml file
-        //
-        else if (i >= totalServers-1) {
-            
-            // Insert a new INPUT_GEN tag at the end
-            // and fill it with the proper structure
-            //
-            int lastPlace = XML.addTag("SERVER");
-            
-            XML.addAttribute("SERVER", "inputId", feeder->getId(), lastPlace);
-            XML.addAttribute("SERVER", "exportName", exportName, lastPlace);
-        }
+void CustomSyphonServer::update(){
+    if(!drawNoInputs){
+        server.publishTexture(&feeder->getTextureReference());
     }
     
+}
+
+//------------------------------------------------------------------
+string CustomSyphonServer::getExportName(){
+    return exportName;
+}
+
+//------------------------------------------------------------------
+void CustomSyphonServer::setExportName(string newExportName){
+    exportName = newExportName;
+}
+
+//------------------------------------------------------------------
+ofImage* CustomSyphonServer::getImage(){
+    
+//    if (drawNoInputs)
+//        return &noInputsImg;
+//    else {
+//        fbo.readToPixels(buff);
+//        img.setFromPixels(buff);
+//        return &img;
+//    }
+}
+
+//------------------------------------------------------------------
+ofTexture* CustomSyphonServer::getTexture(){
+    if (drawNoInputs){
+        return &noInputsImg.getTextureReference();
+    } else {
+        return &feeder->getTextureReference();
+    }
+}
+
+
+//------------------------------------------------------------------
+void CustomSyphonServer::inputAdded(ImageOutput* in_){
+    drawNoInputs = false;
+    feeder = in_;
+    gui.setWidthElements(INSPECTOR_WIDTH);
+}
+
+//------------------------------------------------------------------
+void CustomSyphonServer::inputRemoved(int id_){
+    drawNoInputs = true;
+    feeder = NULL;
+    gui.setWidthElements(INSPECTOR_WIDTH);
+}
+
+//------------------------------------------------------------------
+bool CustomSyphonServer::saveSettings(ofxXmlSettings &XML) {
+    bool saved = false;
+    if(feeder!= NULL){
+        int lastPlace = XML.addTag("NODE");
+        
+        XML.addAttribute("NODE", "id", nId, lastPlace);
+        XML.addAttribute("NODE", "exportName", exportName, lastPlace);
+        XML.addAttribute("NODE", "inputId", feeder->getId(), lastPlace);
+        XML.addAttribute("NODE", "name", name, lastPlace);
+        
+        XML.pushTag("NODE", lastPlace);
+        ofxPatch::saveSettings(XML, true, lastPlace);
+        XML.popTag();
+        saved = true;
+    } else {
+        ConsoleLog::getInstance()->pushError("Error trying to save a syphon server with no inputs");
+    }
     return saved;
+}
+
+//------------------------------------------------------------------
+bool CustomSyphonServer::loadSettings(ofxXmlSettings &XML, int nTag_, int nodesCount_) {
+    bool loaded = false;
+    nId = XML.getAttribute("NODE", "id", -1, nTag_) + nodesCount_;
+    
+    XML.pushTag("NODE", nTag_);
+    
+    ofxPatch::loadSettings(XML, nTag_, nodesCount_);
+    
+    XML.popTag();
+    
+    return loaded;
     
 }
