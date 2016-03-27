@@ -42,6 +42,9 @@ private:
     ofxUIDropDownList *midiList;
     vector<string> nodes;
     ofxMidiIn* midiIn;
+    int toggleSelected;
+    
+    void setVisibleToggles();
 
 };
 

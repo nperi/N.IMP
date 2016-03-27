@@ -1000,9 +1000,18 @@ void ofApp::createNodeInput(float _x, float _y){
     gui->addWidget(dlist);
     gui->addWidget(node);
     
-    node->setColorBack(ofxUIColor (80,80,80,200));
+    node->setAutoUnfocus(false);
+    node->setAutoClear(false);
+    node->setColorBack(ofxUIColor (80,80,80,250));
+//    node->getLabelWidget()->setColorFillHighlight(ofxUIColor (80,80,80,200));
     node->setColorOutlineHighlight(ofxUIColor(150,150,250));
     node->setDropdownList(dlist);
+    dlist->setColorBack(ofxUIColor (80,80,80,0));
+    dlist->setColorFill(ofxUIColor (80,80,80,0));
+    dlist->setColorFillHighlight(ofxUIColor (80,80,80,0));
+    dlist->getLabelWidget()->setColorBack(ofxUIColor (80,80,80,0));
+    dlist->getLabelWidget()->setColorFill(ofxUIColor (80,80,80,0));
+    dlist->getLabelWidget()->setColorFillHighlight(ofxUIColor (80,80,80,0));
     
     ofAddListener( node->createNode , this, &ofApp::createNode);
     

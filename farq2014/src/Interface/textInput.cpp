@@ -33,6 +33,8 @@ textInput::textInput(string _name, string _textstring, float w, float h, float x
 //    nodes.push_back("video player");
     
     midiList = NULL;
+    toggleSelected = 0;
+    
 }
 
 //------------------------------------------------------------------
@@ -51,16 +53,117 @@ void textInput::keyPressed(int key) {
     ofxUITextInput::keyPressed(key);
     if(clicked)
     {
-        string input = ofToLower(this->getTextString());
-        for(auto n : this->dropdownList->getToggles()) {
-            if (n->getName().find(input) != -1)
-                n->setVisible(true);
-            else n->setVisible(false);
+        if ((this->midiList == NULL || !this->midiList->isVisible()) && not this->dropdownList->isOpen()) {
+            this->dropdownList->open();
+            dropdownList->clearSelected();
+        }
+
+        if (key == OF_KEY_UP) {
+            
+            // midi list
+            if (this->midiList != NULL && this->midiList->isVisible()) {
+                toggleSelected <= 0
+                ? toggleSelected = this->midiList->getToggles().size() - 1
+                : toggleSelected--;
+                
+                this->midiList->activateToggle(this->midiList->getToggles()[toggleSelected]->getName());
+                this->setTextString(this->midiList->getToggles()[toggleSelected]->getName());
+            }
+            
+            // nodes list
+            else {
+                if (this->dropdownList->getVisibleToggles().size() == 0) {
+                    setVisibleToggles();
+                }
+                
+                if (this->dropdownList->getVisibleToggles().size() > 0) {
+                    toggleSelected--;
+                    
+                    if(toggleSelected < 0) {
+                        toggleSelected = this->dropdownList->getToggles().size() - 1;
+                    }
+                    while (!this->dropdownList->getToggles()[toggleSelected]->isVisible()) {
+                        toggleSelected <= 0
+                        ? toggleSelected = this->dropdownList->getToggles().size() - 1
+                        : toggleSelected--;
+                    }
+                    
+                    this->dropdownList->activateToggle(this->dropdownList->getToggles()[toggleSelected]->getName());
+                    this->setTextString(this->dropdownList->getToggles()[toggleSelected]->getName());
+                }
+            }
+        }
+        else if (key == OF_KEY_DOWN){
+            
+            // midi list
+            if (this->midiList != NULL && this->midiList->isVisible()) {
+                toggleSelected = (toggleSelected+1) % this->midiList->getToggles().size();
+                
+                this->midiList->activateToggle(this->midiList->getToggles()[toggleSelected]->getName());
+                this->setTextString(this->midiList->getToggles()[toggleSelected]->getName());
+            }
+            
+            // nodes list
+            else {
+                if (this->dropdownList->getVisibleToggles().size() == 0) {
+                    setVisibleToggles();
+                }
+                
+                if (this->dropdownList->getVisibleToggles().size() > 0) {
+                    toggleSelected = (toggleSelected+1) % this->dropdownList->getToggles().size();
+                    
+                    while (!this->dropdownList->getToggles()[toggleSelected]->isVisible()) {
+                        toggleSelected = (toggleSelected+1) % this->dropdownList->getToggles().size();
+                    }
+                    
+                    this->dropdownList->activateToggle(this->dropdownList->getToggles()[toggleSelected]->getName());
+                    this->setTextString(this->dropdownList->getToggles()[toggleSelected]->getName());
+                }
+            }
+        }
+        else if (key == OF_KEY_RETURN){
+            
+            // midi list
+            if (this->midiList != NULL && this->midiList->isVisible()) {
+                
+                this->midiList->activateToggle(this->midiList->getToggles()[toggleSelected]->getName());
+                
+                ofxUIEventArgs event_;
+                event_.widget = this->midiList;
+                this->guiMidiEvent(event_);
+            }
+            
+            // nodes list
+            else {
+                this->dropdownList->activateToggle(this->dropdownList->getToggles()[toggleSelected]->getName());
+                
+                ofxUIEventArgs event_;
+                event_.widget = this->dropdownList;
+                this->guiEvent(event_);
+                
+                if (this->dropdownList->getToggles()[toggleSelected]->getName() == "midi device") {
+                    this->dropdownList->setVisible(false);
+                    this->midiList->setVisible(true);
+                }
+            }
+            
+            return;
+        }
+        else if (key == OF_KEY_BACKSPACE) {
+            
+            // midi list
+            if ((this->midiList != NULL && this->midiList->isVisible() && this->getTextString() == "No devices availabl") ||
+                (this->getTextString() == "midi devic")){
+                this->midiList->clearSelected();
+                this->dropdownList->setVisible(true);
+                this->midiList->setVisible(false);
+            }
+        }
+        else {
+            setVisibleToggles();
         }
         
-        dropdownList->clearSelected();
-        
-        if (not this->dropdownList->isOpen()) this->dropdownList->open();
+        this->setFocus(true);
     }
 }
 
@@ -113,9 +216,9 @@ bool textInput::mouseReleased(ofMouseEventArgs &e) {
 }
 
 //------------------------------------------------------------------
-void textInput::guiEvent(ofxUIEventArgs &e){
+void textInput::guiEvent(ofxUIEventArgs &event_){
     
-    if(e.widget == this->dropdownList && this->dropdownList->getSelected().size()) {
+    if(event_.widget == this->dropdownList && this->dropdownList->getSelected().size()) {
         this->setTextString(this->dropdownList->getSelected()[0]->getName());
         
         textInputEvent e;
@@ -146,6 +249,12 @@ void textInput::guiEvent(ofxUIEventArgs &e){
                 midiList->addToggles(midiPortList);
             }
             midiList->setVisible(true);
+            for(auto n : midiList->getToggles()) {
+                n->setColorBack(ofxUIColor (70,70,70,250));
+                n->setColorOutline(ofxUIColor (50,50,50,250));
+                n->setColorFillHighlight(ofxUIColor (30,30,30,250));
+                n->setDrawOutline(true);
+            }
             
         }
 //        else if (e.type == "video player") {
@@ -254,9 +363,17 @@ void textInput::setDropdownList(ofxUIDropDownList* dl) {
     dl->addToggles(nodes);
     dl->setToggleVisibility(false);
     
+    for(auto n : dl->getToggles()) {
+        n->setColorBack(ofxUIColor (70,70,70,250));
+        n->setColorOutline(ofxUIColor (50,50,50,250));
+        n->setColorFillHighlight(ofxUIColor (30,30,30,250));
+        n->setDrawOutline(true);
+    }
+
+
     this->addEmbeddedWidget(dl);
     this->dropdownList = dl;
-    
+
     ofAddListener(((ofxUISuperCanvas*) dl->getCanvasParent())->newGUIEvent,this,&textInput::guiEvent);
     
     
@@ -267,3 +384,14 @@ ofxUIDropDownList* textInput::getDropdownList() {
     return this->dropdownList;
 }
 
+//------------------------------------------------------------------
+void textInput::setVisibleToggles() {
+    
+    string input = ofToLower(this->getTextString());
+    for(auto n : this->dropdownList->getToggles()) {
+        if (n->getName().find(input) != -1) {
+            n->setVisible(true);
+        }
+        else n->setVisible(false);
+    }
+}
