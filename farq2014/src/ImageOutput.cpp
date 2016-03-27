@@ -140,6 +140,19 @@ vector<string> ImageOutput::getInputNames(){
 }
 
 //------------------------------------------------------------------
+bool ImageOutput::aceptsMoreInputs() {
+    
+    if (input.size() < maxInputs) {
+        return true;
+    }
+    else {
+        ConsoleLog::getInstance()->pushError("No more inputs available for this node. Remove any existing connnection and try again.");
+        return false;
+    }
+}
+
+
+//------------------------------------------------------------------
 void ImageOutput::addOrRemoveOSCInput(ofxOSCGuiEvent &e_) {
     e_.nodeId = nId;
     

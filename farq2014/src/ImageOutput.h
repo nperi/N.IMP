@@ -57,6 +57,7 @@ class ImageOutput : public ofxPatch {
     void addInputIdentifier(int inputId_);
     bool findAndAssignInputs(map<int,ImageOutput*> &nodeCollection);
     void removeInput(int inputId_);
+    bool aceptsMoreInputs();
     
     void resetProcessedFlag();
     

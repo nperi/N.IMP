@@ -85,7 +85,7 @@ void ConsoleLog::printMessages(){
         } else if(messages.at(i).messageType == SUCCESS){
             ofSetColor(0, 255, 0);
         }
-        font.drawString(messages.at(i).message, 10.f, y);
+        font.drawString("- " + messages.at(i).message, 10.f, y);
         y += font.getLineHeight();
     }
     ofPopStyle();

@@ -14,8 +14,8 @@ AudioAnalizer::AudioAnalizer(string name_, int id_) : InputSource(name_, "Audio 
     isAudio             = true;
     isAudioAnalizer     = true;
     drawAudioAnalizer   = true;
-    width               = 1250;
-    height              = 625;
+    width               = 1700;
+    height              = 850;
     
     gui.add(saturation.set("Sound Saturation",20,10,50));
     gui.add(threshold.set("Threshold",0.02,0.0001,0.4));
