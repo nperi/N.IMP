@@ -188,6 +188,8 @@ void ofApp::setup() {
     nV->setParent(cam);
     nV->setLinkType(STRAIGHT_LINKS);
     gui->setMainComposer(nV);
+    right_menu->setMainComposer(nV);
+    menu->setMainComposer(nV);
     nodeViewers.push_back(nV);
     setCurrentViewer(0);
     
