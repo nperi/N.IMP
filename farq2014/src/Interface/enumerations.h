@@ -30,7 +30,7 @@
 #define CONSOLE_LOG_EVENT_PRORITY 206
 
 #define SCALE_SENSITIVITY 0.001f
-#define MAX_SCALE 2.f
+#define MAX_SCALE 2.3f
 #define SCALE_STEP .05f
 #define MIN_SCALE .5f
 #define ZOOM_SENSITIVITY .001f
