@@ -55,8 +55,9 @@ void textInput::keyPressed(int key) {
     {
         if ((this->midiList == NULL || !this->midiList->isVisible()) && not this->dropdownList->isOpen()) {
             this->dropdownList->open();
-            dropdownList->clearSelected();
         }
+        
+        dropdownList->clearSelected();
 
         if (key == OF_KEY_UP) {
             
