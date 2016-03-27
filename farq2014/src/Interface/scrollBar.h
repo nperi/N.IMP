@@ -107,8 +107,7 @@ private:
     int eventPriority;
     
     bool showMaxZoomReachedMessage;
-    bool enableScrollAndZoom;
-    bool scrolling;
+    bool enableTrackpad;
 };
 
 

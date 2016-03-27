@@ -44,8 +44,7 @@ scrollBar::scrollBar(class ofxComposer* _composer, ofxMultiTouchPad* _pad, ofEas
     this->eventPriority = eventPriority;
     
     showMaxZoomReachedMessage = false;
-    enableScrollAndZoom = true;
-    scrolling = false;
+    enableTrackpad = true;
 }
 
 scrollBar::~scrollBar(){
@@ -97,7 +96,7 @@ void scrollBar::setup(){
 void scrollBar::update(){
     ofVec2f diffVec = ofVec2f(0,0);
     
-    if(enableScrollAndZoom){
+    if(enableTrackpad){
         if(EventHandler::getInstance()->getWindowEvent() == windowId){
             //** touchpad scroll **//
             std::vector<MTouch> mTouches = pad->getTouches();
@@ -121,7 +120,7 @@ void scrollBar::update(){
                     
                     updating = true;
                     
-                    if(zooming && !scrolling){
+                    if(zooming){
                         scale = cam->getScale().x;
                         newDist = ofDist(mTouches[0].x, mTouches[0].y, mTouches[1].x, mTouches[1].y);
                         diffDist = (newDist - prevDist)*120;
@@ -319,8 +318,7 @@ void scrollBar::mouseReleased(ofMouseEventArgs &e){
         composer->setDraggingGrip(false);
         composer->setDraggingHGrip(false);
         
-        enableScrollAndZoom = true;
-        scrolling = false;
+        enableTrackpad = true;
     }
 }
 
@@ -337,7 +335,6 @@ void scrollBar::mousePressed(ofMouseEventArgs &e){
                 composer->deactivateAllPatches();
                 composer->setDraggingGrip(true);
                 mousePreviousY = e.y;
-                scrolling = true;
             }
         }
         
@@ -347,11 +344,10 @@ void scrollBar::mousePressed(ofMouseEventArgs &e){
                 composer->deactivateAllPatches();
                 composer->setDraggingHGrip(true);
                 mousePreviousX = e.x;
-                scrolling = true;
             }
         }
         
-        enableScrollAndZoom = scrolling;
+        enableTrackpad = false;
     }
 }
 
