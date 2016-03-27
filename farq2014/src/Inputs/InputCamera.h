@@ -34,11 +34,21 @@ class InputCamera : public InputSource{
     bool loadSettings(ofxXmlSettings &XML, int nTag_, int nodesCount_ = 0);
     bool saveSettings(ofxXmlSettings &XML);
     bool saveSettingsToSnippet(ofxXmlSettings &XML, map<int,int> newIdsMap);
+    
+    void changeToNextCamera();
+    void changeToPrevCamera();
 
 private:
     
     void update();
+    
+    ofParameter<string> cameraSelectedName;
+    string cameraName;
 	
+    ofxButton nextCamera;
+    ofxButton prevCamera;
+    
+    int cameraIndex;
 };
 
 #endif

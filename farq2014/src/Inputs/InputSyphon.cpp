@@ -182,7 +182,11 @@ bool InputSyphon::loadSettings(ofxXmlSettings &XML, int nTag_, int nodesCount_) 
     
     serverSelectedName.set("", serverName);
     
-    serverDown = !serverFound;
+    if (!serverFound) {
+        serverDown = true;
+        ConsoleLog::getInstance()->pushMessage("Server " + serverName + " is down.");
+    }
+    
     drawNoInputs = false;
     
     ofxPatch::loadSettings(XML, nTag_, nodesCount_);
@@ -192,7 +196,7 @@ bool InputSyphon::loadSettings(ofxXmlSettings &XML, int nTag_, int nodesCount_) 
     return loaded;
 }
 
-////------------------------------------------------------------------
+//------------------------------------------------------------------
 bool InputSyphon::saveSettings(ofxXmlSettings &XML) {
     bool saved = false;
     
@@ -251,8 +255,8 @@ bool InputSyphon::saveSettings(ofxXmlSettings &XML) {
     return saved;
     
 }
-//
-////------------------------------------------------------------------
+
+//------------------------------------------------------------------
 bool InputSyphon::saveSettingsToSnippet(ofxXmlSettings &XML, map<int,int> newIdsMap) {
 
     bool saved = false;
@@ -273,15 +277,11 @@ bool InputSyphon::saveSettingsToSnippet(ofxXmlSettings &XML, map<int,int> newIds
     return saved;
 }
 
+//------------------------------------------------------------------
+void InputSyphon::updateParameter(Param* inputParam){ }
 
+//------------------------------------------------------------------
+float InputSyphon::getMidiMin(string param_){ }
 
-void InputSyphon::updateParameter(Param* inputParam){
-    
-}
-
-float InputSyphon::getMidiMin(string param_){
-    
-}
-float InputSyphon::getMidiMax(string param_){
-    
-}
+//------------------------------------------------------------------
+float InputSyphon::getMidiMax(string param_){ }
