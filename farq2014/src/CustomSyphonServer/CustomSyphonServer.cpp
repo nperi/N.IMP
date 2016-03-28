@@ -10,8 +10,8 @@
 #include "ConsoleLog.h"
 
 
-CustomSyphonServer::CustomSyphonServer(string exportName_, ImageOutput* feeder_, string name_, int id_): ImageOutput(name_, "SYPHON_SERVER", id_){
-    exportName = exportName_;
+CustomSyphonServer::CustomSyphonServer(string name_, ImageOutput* feeder_, int id_): ImageOutput(name_, "SYPHON_SERVER", id_){
+//    name = exportName_;
     feeder = feeder_;
     
     addInputDot();
@@ -19,8 +19,6 @@ CustomSyphonServer::CustomSyphonServer(string exportName_, ImageOutput* feeder_,
     maxInputs = 1;
     isSyphonServer = true;
     drawNoInputs = (feeder_ == NULL);
-    exportNameParam = "asda";
-    gui.add(exportNameText.setup("Export Name", exportNameParam, 100, 20));
 }
 
 CustomSyphonServer::~CustomSyphonServer(){
@@ -33,7 +31,7 @@ CustomSyphonServer::~CustomSyphonServer(){
 
 //------------------------------------------------------------------
 void CustomSyphonServer::setup(){
-    server.setName(exportName);
+    server.setName(name);
 }
 
 //------------------------------------------------------------------
@@ -45,14 +43,14 @@ void CustomSyphonServer::update(){
 }
 
 //------------------------------------------------------------------
-string CustomSyphonServer::getExportName(){
-    return exportName;
-}
-
-//------------------------------------------------------------------
-void CustomSyphonServer::setExportName(string newExportName){
-    exportName = newExportName;
-}
+//string CustomSyphonServer::getExportName(){
+//    return name;
+//}
+//
+////------------------------------------------------------------------
+//void CustomSyphonServer::setExportName(string newExportName){
+//    name = newExportName;
+//}
 
 //------------------------------------------------------------------
 ofImage* CustomSyphonServer::getImage(){
@@ -97,7 +95,6 @@ bool CustomSyphonServer::saveSettings(ofxXmlSettings &XML) {
         int lastPlace = XML.addTag("NODE");
         
         XML.addAttribute("NODE", "id", nId, lastPlace);
-        XML.addAttribute("NODE", "exportName", exportName, lastPlace);
         XML.addAttribute("NODE", "inputId", feeder->getId(), lastPlace);
         XML.addAttribute("NODE", "name", name, lastPlace);
         

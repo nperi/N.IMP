@@ -18,16 +18,13 @@ class CustomSyphonServer : public ImageOutput {
     
 public:
     
-    CustomSyphonServer(string exportName_ = "new export name", ImageOutput* feeder_ = NULL, string name_ = "Syphon Server", int id_ = -1);
+    CustomSyphonServer(string name_ = "Syphon Server", ImageOutput* feeder_ = NULL, int id_ = -1);
     ~CustomSyphonServer();
     void update();
     void setup();
     bool saveSettings(ofxXmlSettings &XML);
     bool loadSettings(ofxXmlSettings &XML, int nTag_, int nodesCount_ = 0);
     bool saveSettingsToSnippet(ofxXmlSettings &XML, map<int,int> newIdsMap) {};
-
-    string getExportName();
-    void   setExportName(string newExportName);
     
     ofImage*    getImage();
     ofTexture*  getTexture();
@@ -42,10 +39,6 @@ private:
     
     void inputAdded(ImageOutput* in_);
     void inputRemoved(int id_);
-    
-    string exportName;
-    ofxTextInput exportNameText;
-    ofParameter<string> exportNameParam;
 };
 
 

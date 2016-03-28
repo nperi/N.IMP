@@ -399,16 +399,7 @@ void ofApp::update() {
         
         scrollBars->update();
         nodeViewers[currentViewer]->update();
-        
-//        for(int i=0; i<syphonServers.size();i++){
-//            syphonServers[i]->publishTexture();
-//        }
-        for(int i=0; i<syphonServers.size();i++){
-            // ver si no los agrego a los node viewers
-            syphonServers[i]->update();
-        }
-        
-        
+
         // hide/show console
         if(glfwWindowShouldClose(windows->at(CONSOLE_WINDOW))){
             glfw->hideWindow(windows->at(CONSOLE_WINDOW));
@@ -1240,7 +1231,7 @@ void ofApp::closePatch(int &_nID) {
             }
         }
         
-        // delete de Patch
+        // delete the Patch
         //
         bool found = false;
         i = 0;
@@ -1285,6 +1276,17 @@ void ofApp::closePatch(int &_nID) {
                 i++;
             }
         }
+        else if (nodeToDelete->getIsSyphonServer()) {
+            while (i < syphonServers.size() && !found) {
+                if (syphonServers[i]->getId() == _nID) {
+                    syphonServers.erase(syphonServers.begin() + i);
+                    found = true;
+                }
+                i++;
+            }
+        }
+
+        ofRemoveListener(nodeToDelete->title->close , this, &ofApp::closePatch);
         
         nodes.erase(_nID);
         nodeViewers[currentViewer]->closePatch(_nID);
@@ -2332,7 +2334,6 @@ bool ofApp::loadNodes(ofxXmlSettings &XML){
                 int nodeId          = XML.getAttribute("NODE","id",-1,j);
                 int inputId         = XML.getAttribute("NODE","inputId",-1,j);
                 string name         = XML.getAttribute("NODE","name","SyphonName",j);
-                string exportName   = XML.getAttribute("NODE","exportName","syphon1",j);
                 
                 std::map<int,ImageOutput*>::iterator it;
                 
@@ -2340,7 +2341,7 @@ bool ofApp::loadNodes(ofxXmlSettings &XML){
                 
                 if(it!=nodes.end()){
                     ImageOutput* iO = it->second;
-                    CustomSyphonServer* cSS = new CustomSyphonServer(exportName,iO, name, nodeId);
+                    CustomSyphonServer* cSS = new CustomSyphonServer(name, iO, nodeId);
                     cSS->addInputIdentifier(inputId);
                     cSS->loadSettings(XML, j);
                     syphonServers.push_back(cSS);
