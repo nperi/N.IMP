@@ -43,16 +43,6 @@ void CustomSyphonServer::update(){
 }
 
 //------------------------------------------------------------------
-//string CustomSyphonServer::getExportName(){
-//    return name;
-//}
-//
-////------------------------------------------------------------------
-//void CustomSyphonServer::setExportName(string newExportName){
-//    name = newExportName;
-//}
-
-//------------------------------------------------------------------
 ofImage* CustomSyphonServer::getImage(){
     
 //    if (drawNoInputs)
