@@ -1,5 +1,6 @@
 #include "InputSyphon.h"
 #include "ConsoleLog.h"
+#include "SyphonClientHandler.h"
 
 InputSyphon::InputSyphon(ofxSyphonServerDirectory* serverDir, string name, int id_) : InputSource(name, "Syphon", id_){
     dirIdx = 0;
@@ -26,6 +27,10 @@ InputSyphon::InputSyphon(ofxSyphonServerDirectory* serverDir, string name, int i
     
     serverDownImg.loadImage("assets/syphon_server_down.png");
     
+}
+
+InputSyphon::~InputSyphon(){
+    SyphonClientHandler::getInstance()->removeClient(this);
 }
 
 //------------------------------------------------------------------

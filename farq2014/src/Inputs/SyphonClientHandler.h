@@ -10,6 +10,8 @@ public:
     static SyphonClientHandler* getInstance();
     InputSyphon* createSyphonPatch(string name = "Syphon Client", int patchId = -1);
     
+    void removeClient(InputSyphon* client);
+    
 private:
     SyphonClientHandler();
     SyphonClientHandler(SyphonClientHandler const&){};             // copy constructor is private
@@ -20,6 +22,7 @@ private:
     static SyphonClientHandler* instance;
     
     ofxSyphonServerDirectory dir;
+    vector<InputSyphon*> clients;
     
     void serverAnnounced(ofxSyphonServerDirectoryEventArgs &arg);
     void serverRetired(ofxSyphonServerDirectoryEventArgs &arg);

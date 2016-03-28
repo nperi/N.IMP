@@ -9,6 +9,7 @@ class InputSyphon : public InputSource{
 	
 public:
     InputSyphon(ofxSyphonServerDirectory* serverDir, string name, int id_);
+    ~InputSyphon();
 	
 	void setup();
     void update();
@@ -18,6 +19,8 @@ public:
 
     void changeToNextServer();
     void changeToPrevServer();
+//    void changeServer();
+    void serverRetired(string serverName, string appName);
     
     bool loadSettings(ofxXmlSettings &XML, int nTag_, int nodesCount_ = 0);
     bool saveSettings(ofxXmlSettings &XML);
@@ -36,9 +39,7 @@ private:
     ofxSyphonClient client;
     
     bool serverDown;
-    
 //    void serverAnnounced(ofxSyphonServerDirectoryEventArgs &arg);
-    void serverRetired(string serverName, string appName);
 
     void updateParameter(Param* inputParam);
     float getMidiMin(string param_);
