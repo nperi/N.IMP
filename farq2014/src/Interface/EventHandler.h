@@ -17,12 +17,8 @@ class EventHandler {
 public:
     
     static EventHandler* getInstance();
-//    bool isMainEvent();
-//    bool isConsoleEvent();
     int  getWindowIdDraw();
     int  getWindowEvent();
-//    void setMainEvent();
-//    void setConsoleEvent();
     void setWindowIdDraw(int winId);
     void setWindowEvent(int winId);
     
@@ -33,9 +29,7 @@ private:
     
     ~EventHandler();
     static EventHandler* instance;
-    
-//    bool consoleEvent;
-//    bool mainEvent;
+
     int  windowIdDraw;
     int  windowEvent;
     

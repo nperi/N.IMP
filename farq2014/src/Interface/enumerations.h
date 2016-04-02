@@ -31,7 +31,7 @@
 
 #define SCALE_SENSITIVITY 0.001f
 #define MAX_SCALE 2.3f
-#define SCALE_STEP .05f
+#define SCALE_STEP .01f
 #define MIN_SCALE .5f
 #define ZOOM_SENSITIVITY .001f
 #define ZOOM_OFFSET 7.f
