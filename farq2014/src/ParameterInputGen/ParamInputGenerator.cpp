@@ -35,11 +35,9 @@ void ParamInputGenerator::start(){
 
 void ParamInputGenerator::stop(){
     waitForThread(true);
-//    lock();
     if(isThreaded){
         stopThread();
     }
-//    unlock();
 }
 
 Param* ParamInputGenerator::getNextInputMessage(){

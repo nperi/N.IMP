@@ -98,10 +98,11 @@ private:
     bool zooming, updating;
     bool isZooming();
     
-    float scale;
+    float scale, clicScale;
     float prevDist, newDist, diffDist;
     ofPoint prev0, prev1, post0, post1;
-    
+    ofVec3f clicTranslation;
+    ofVec2f clicPoint;
     
     int windowId;
     int eventPriority;

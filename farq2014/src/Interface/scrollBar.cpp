@@ -40,6 +40,7 @@ scrollBar::scrollBar(class ofxComposer* _composer, ofxMultiTouchPad* _pad, ofEas
     applyInertia = false;
     drag = 0.9f;
     minScrollDifference = 0.1e-5f;
+    clicScale = 1.f;
     
     this->eventPriority = eventPriority;
     
@@ -121,28 +122,19 @@ void scrollBar::update(){
                     updating = true;
                     
                     if(zooming){
-                        scale = cam->getScale().x;
                         newDist = ofDist(mTouches[0].x, mTouches[0].y, mTouches[1].x, mTouches[1].y);
                         diffDist = (newDist - prevDist)*120;
                         float scaleAux = scale - diffDist*SCALE_SENSITIVITY;
                         if(scaleAux < MAX_SCALE && scaleAux > MIN_SCALE){
-                            scale -= diffDist*SCALE_SENSITIVITY;
-//                            float ratioX = mousePositionX/windowWidth;
-//                            float ratioY = mousePositionY/windowHeight;
-//                            float camX = cam->getPosition().x;
-//                            float camY = cam->getPosition().y;
-//                            float camZ = cam->getPosition().z;
-//                            ofVec3f camPos = cam->getPosition();
+                            scale = cam->getScale().x;
+                            clicPoint = ofVec2f(ofGetMouseX(), ofGetMouseY());
+                            clicPoint /= scale;
+                            clicScale = scale;
+                            clicTranslation = cam->getPosition();
                             
-//                            ofVec2f clicPoint = ofVec2f(ofGetMouseX(), ofGetMouseY()) - camPos - ofVec3f(ofGetWidth()/2, ofGetHeight()/2);
-//                            clicPoint /= scale;
-//
-//                            float clicScale = scale;
-//                            ofVec3f clicTranslation = camPos;
-//                                cam->setPosition(camX + ratioX*ZOOM_OFFSET, camY + ratioY*ZOOM_OFFSET, camZ);
-//                            camPos = clicTranslation - clicPoint*(scale - clicScale);
+                            scale -= diffDist*SCALE_SENSITIVITY;
                             cam->setScale(scale);
-//                            cam->setPosition(camPos);
+                            cam->setPosition(clicTranslation - clicPoint*(scale - clicScale));
                         } else {
                             showMaxZoomReachedMessage = true;
                         }
@@ -207,8 +199,14 @@ void scrollBar::update(){
                 scale = cam->getScale().x;
                 float scaleAux = scale - diffDist*SCALE_SENSITIVITY;
                 if(scaleAux < MAX_SCALE && scaleAux > MIN_SCALE){
+                    clicPoint = ofVec2f(ofGetMouseX(), ofGetMouseY());
+                    clicPoint /= scale;
+                    clicScale = scale;
+                    clicTranslation = cam->getPosition();
+                    
                     scale -= diffDist*SCALE_SENSITIVITY;
                     cam->setScale(scale);
+                    cam->setPosition(clicTranslation - clicPoint*(scale - clicScale));
                 }
                 
                 if(ABS(diffDist) <= minScrollDifference){
@@ -417,6 +415,9 @@ void scrollBar::windowResized(ofResizeEventArgs &e){
 /* ================================================ */
 
 void scrollBar::updateScrollBar(ofVec2f diffVec){
+    if(cam->getScale().x > 1){
+        diffVec.y *= cam->getScale().x;
+    }
     if(diffVec.y != 0){
         if(!(gripRectangle.y < BEGIN_Y) && !(gripRectangle.getBottom() > scrollBarRectangle.getBottom())){
             //composer->movePatches(diffVec);
@@ -479,6 +480,9 @@ void scrollBar::updateScrollBar(ofVec2f diffVec){
 
 //------------------------------------------------------------------
 void scrollBar::updateHScrollBar(ofVec2f diffVec){
+    if(cam->getScale().x > 1){
+        diffVec.x *= cam->getScale().x;
+    }
     if(diffVec.x != 0){
         if(!(hGripRectangle.x < BEGIN_X) && !(hGripRectangle.getRight() > hScrollBarRectangle.getRight())){
             cam->setPosition(cam->getPosition().x - diffVec.x, cam->getPosition().y, cam->getPosition().z);

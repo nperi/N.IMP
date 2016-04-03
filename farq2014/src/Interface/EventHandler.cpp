@@ -12,8 +12,6 @@
 EventHandler* EventHandler::instance = NULL;
 
 EventHandler::EventHandler() {
-//    consoleEvent = false;
-//    mainEvent = true;
     windowIdDraw = MAIN_WINDOW;
 }
 
@@ -30,30 +28,9 @@ EventHandler* EventHandler::getInstance(){
 }
 
 //------------------------------------------------------------------
-//bool EventHandler::isMainEvent(){
-//    return (instance->mainEvent == true);
-//}
-//
-////------------------------------------------------------------------
-//bool EventHandler::isConsoleEvent(){
-//    return (instance->consoleEvent == true);
-//}
-
-//------------------------------------------------------------------
 int EventHandler::getWindowIdDraw(){
     return instance->windowIdDraw;
 }
-
-//void EventHandler::setMainEvent(){
-//    instance->mainEvent = true;
-//    instance->consoleEvent = false;
-//}
-//
-////------------------------------------------------------------------
-//void EventHandler::setConsoleEvent(){
-//    instance->consoleEvent = true;
-//    instance->mainEvent = false;
-//}
 
 void EventHandler::setWindowIdDraw(int winId){
     instance->windowIdDraw = winId;
