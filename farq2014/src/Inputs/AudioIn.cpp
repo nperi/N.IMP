@@ -11,12 +11,13 @@
 
 AudioIn::AudioIn(ofxUISuperCanvas* &gui_, float* &inputBuffer_, string type_, string name_, int id_) : InputSource(name_, type_, id_){
     
-    inputBuffer = inputBuffer_;
-    isAudio     = true;
-    width       = 500;
-    height      = 250;
-    selectBand  = 1;
-    isEnabled   = true;
+    inputBuffer  = inputBuffer_;
+    isAudio      = true;
+    width        = 500;
+    height       = 250;
+    selectBand   = 1;
+    isEnabled    = true;
+    disabledEdit = false;
     
     waveform = new ofxUIWaveform(0, 0, 200, 100, inputBuffer_, BUFFER_SIZE, -2, 2, "FFT");
     
@@ -84,13 +85,18 @@ void AudioIn::_mouseDragged(ofMouseEventArgs &e){
 //------------------------------------------------------------------
 void AudioIn::editInputs(bool& b){
     
-    AudioInEvent ev;
-    ev.nodeId = nId;
-    ev.band = selectBand;
-    ev.channel = selectChannel;
-    ev.active = b;
-    
-    ofNotifyEvent(editAudioIn, ev);
+    if (!disabledEdit) {
+        AudioInEvent ev;
+        ev.nodeId = nId;
+        ev.band = selectBand;
+        ev.channel = selectChannel;
+        ev.active = b;
+        
+        ofNotifyEvent(editAudioIn, ev);
+    }
+    else {
+        editFFTInputs = false;
+    }
 }
 
 //------------------------------------------------------------------

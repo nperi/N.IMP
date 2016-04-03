@@ -939,15 +939,21 @@ void ofApp::menuEvent(ofxUIEventArgs &e) {
         }
     }
     else if (name == "Midi Learn") {
-        midiLearnActive = !midiLearnActive;
-        nodeViewers[currentViewer]->setMidiLearnActive(midiLearnActive);
         
-        int i = 0;
-        while (i < inputGenerators.size() && inputGenerators[i]->getParamInputType() != MIDI) {
-            i++;
+        if (!editAudioInActive && !editOSCActive) {
+            midiLearnActive = !midiLearnActive;
+            nodeViewers[currentViewer]->setMidiLearnActive(midiLearnActive);
+            
+            int i = 0;
+            while (i < inputGenerators.size() && inputGenerators[i]->getParamInputType() != MIDI) {
+                i++;
+            }
+            if (i < inputGenerators.size()) {
+                ((MidiInputGenerator*)inputGenerators[i])->setMidiLearnActive(midiLearnActive);
+            }
         }
-        if (i < inputGenerators.size()) {
-            ((MidiInputGenerator*)inputGenerators[i])->setMidiLearnActive(midiLearnActive);
+        else {
+            ((ofxUIMultiImageToggle*)menu->getWidget("Midi Learn"))->setValue(false);
         }
     }
 }

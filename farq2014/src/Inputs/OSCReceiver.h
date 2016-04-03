@@ -41,6 +41,7 @@ public:
     void        removeParameter(int nodeId_, string paramName_);
     void        clearParameters();
     void        removeNodeParams(int nodeId_);
+    void        disableEdit(bool disabled_) { disabledEdit = disabled_; };
     
     void        updateParameter(Param* inputParam){};
     
@@ -71,6 +72,7 @@ private:
     int port;
     string oldAddress;
     ofImage oscReceiverImg;
+    bool disabledEdit;
     
 };
 

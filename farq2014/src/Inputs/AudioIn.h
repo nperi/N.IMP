@@ -37,12 +37,14 @@ public:
     int             getBand(){ return selectBand; };
     bool            getEditInputsActive() { return editFFTInputs; };
     
-    void setWaveFormPosition();
-    void setChannel(int c);
-    void setBand(int band_);
-    void resetSize(int _width, int _height);
+    void            setWaveFormPosition();
+    void            setChannel(int c);
+    void            setBand(int band_);
+    void            resetSize(int _width, int _height);
+    void            disableEdit(bool disabled_) { disabledEdit = disabled_; };
     
-    void updateParameter(Param* inputParam){};
+    void            updateParameter(Param* inputParam){};
+    
     
     ofParameter<bool>     editFFTInputs;
     ofParameter<int>      selectChannel;
@@ -69,6 +71,7 @@ private:
     ofxUIWaveform* waveform;
     float* inputBuffer;
     AudioInType audioInType;
+    bool disabledEdit;
     
 };
 

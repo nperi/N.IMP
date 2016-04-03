@@ -11,6 +11,7 @@
 OSCReceiver::OSCReceiver(string name_, int id_) : InputSource(name_, "OSC Receiver", id_){
     
     isOSC = true;
+    disabledEdit = false;
     oscReceiverImg.loadImage("assets/osc_receiver.png");
     
     address = "/";
@@ -88,11 +89,16 @@ void OSCReceiver::editAddress(string& a){
 //------------------------------------------------------------------
 void OSCReceiver::editInputs(bool& b){
     
-    OSCEvent ev;
-    ev.nodeId = nId;
-    ev.port = port;
-    ev.address = address;
-    ofNotifyEvent(editOSCInputsActive, ev);
+    if (!disabledEdit) {
+        OSCEvent ev;
+        ev.nodeId = nId;
+        ev.port = port;
+        ev.address = address;
+        ofNotifyEvent(editOSCInputsActive, ev);
+    }
+    else {
+        editOSC = false;
+    }
 }
 
 //------------------------------------------------------------------

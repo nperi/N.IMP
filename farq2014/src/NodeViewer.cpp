@@ -44,6 +44,11 @@ void NodeViewer::setMidiLearnActive(bool active_){
     
     for (int i=0; i<elements.size(); ++i) {
         elements[i]->getImageOutput()->setMidiLearnActive(active_);
+        
+        if (elements[i]->getImageOutput()->getTypeName() == "OSC Receiver")
+            ((OSCReceiver*)elements[i]->getImageOutput())->disableEdit(active_);
+        else  if (elements[i]->getImageOutput()->getTypeName() == "Audio In - Left Channel" || elements[i]->getImageOutput()->getTypeName() == "Audio In - Right Channel")
+            ((AudioIn*)elements[i]->getImageOutput())->disableEdit(active_);
     }
     
     this->midiLearnActive = active_;
@@ -54,6 +59,13 @@ void NodeViewer::setEditLeftAudioInActive(bool active_, int node_){
     
     for (int i=0; i<elements.size(); ++i) {
         elements[i]->getImageOutput()->setEditLeftAudioInActive(active_, node_);
+        
+        if (node_ != elements[i]->getImageOutput()->getId()) {
+            if (elements[i]->getImageOutput()->getTypeName() == "OSC Receiver")
+                ((OSCReceiver*)elements[i]->getImageOutput())->disableEdit(active_);
+            else  if (elements[i]->getImageOutput()->getTypeName() == "Audio In - Left Channel" || elements[i]->getImageOutput()->getTypeName() == "Audio In - Right Channel")
+                ((AudioIn*)elements[i]->getImageOutput())->disableEdit(active_);
+        }
     }
     
     this->editAudioInActive = active_;
@@ -64,6 +76,13 @@ void NodeViewer::setEditRightAudioInActive(bool active_, int node_){
     
     for (int i=0; i<elements.size(); ++i) {
         elements[i]->getImageOutput()->setEditRightAudioInActive(active_, node_);
+        
+        if (node_ != elements[i]->getImageOutput()->getId()) {
+            if (elements[i]->getImageOutput()->getTypeName() == "OSC Receiver")
+                ((OSCReceiver*)elements[i]->getImageOutput())->disableEdit(active_);
+            else  if (elements[i]->getImageOutput()->getTypeName() == "Audio In - Left Channel" || elements[i]->getImageOutput()->getTypeName() == "Audio In - Right Channel")
+                ((AudioIn*)elements[i]->getImageOutput())->disableEdit(active_);
+        }
     }
     
     this->editAudioInActive = active_;
@@ -74,6 +93,13 @@ void NodeViewer::setEditOSCActive(bool active_, int node_){
     
     for (int i=0; i<elements.size(); ++i) {
         elements[i]->getImageOutput()->setEditOSCActive(active_, node_);
+        
+        if (node_ != elements[i]->getImageOutput()->getId()) {
+            if (elements[i]->getImageOutput()->getTypeName() == "OSC Receiver")
+                ((OSCReceiver*)elements[i]->getImageOutput())->disableEdit(active_);
+            else  if (elements[i]->getImageOutput()->getTypeName() == "Audio In - Left Channel" || elements[i]->getImageOutput()->getTypeName() == "Audio In - Right Channel")
+                ((AudioIn*)elements[i]->getImageOutput())->disableEdit(active_);
+        }
     }
     
     this->editOSCActive = active_;

@@ -13,6 +13,8 @@
 #include "ofMain.h"
 #include "NodeElement.h"
 #include "ofxComposer.h"
+#include "OSCReceiver.h"
+#include "AudioIn.h"
 
 
 class NodeViewer : public ofxComposer {
