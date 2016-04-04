@@ -29,7 +29,7 @@ textInput::textInput(string _name, string _textstring, float w, float h, float x
     nodes.push_back("multi channel switch");
     nodes.push_back("osc receiver");
     nodes.push_back("particle generator");
-    nodes.push_back("syphon server");
+    nodes.push_back("syphon client");
     nodes.push_back("syphon output");
 //    nodes.push_back("video player");
     

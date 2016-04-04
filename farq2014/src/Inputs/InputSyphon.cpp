@@ -2,7 +2,7 @@
 #include "ConsoleLog.h"
 #include "SyphonClientHandler.h"
 
-InputSyphon::InputSyphon(ofxSyphonServerDirectory* serverDir, string name, int id_) : InputSource(name, "Syphon", id_){
+InputSyphon::InputSyphon(ofxSyphonServerDirectory* serverDir, string name, int id_) : InputSource(name, "Syphon Client", id_){
     dirIdx = 0;
     dir = serverDir;
     client.setup();

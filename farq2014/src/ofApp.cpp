@@ -1090,7 +1090,7 @@ void ofApp::createNode(textInputEvent &args){
 //        ((VideoPlayerMac*)newPatch)->loadVideo(args.path);
 //        inputs.push_back((VideoPlayerMac*)newPatch);
 //    }
-    else if (args.type == "syphon server"){
+    else if (args.type == "syphon client"){
         newPatch = SyphonClientHandler::getInstance()->createSyphonPatch();
         inputs.push_back((InputSyphon*)newPatch);
     }

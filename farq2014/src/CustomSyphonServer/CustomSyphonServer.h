@@ -18,7 +18,7 @@ class CustomSyphonServer : public ImageOutput {
     
 public:
     
-    CustomSyphonServer(string name_ = "Syphon Server", ImageOutput* feeder_ = NULL, int id_ = -1);
+    CustomSyphonServer(string name_ = "Syphon Output", ImageOutput* feeder_ = NULL, int id_ = -1);
     ~CustomSyphonServer();
     void update();
     void setup();
@@ -28,6 +28,8 @@ public:
     
     ofImage*    getImage();
     ofTexture*  getTexture();
+    
+    void aspectRatioChanged(int &index_);
     
     void updateParameter(Param* inputParam) {};
     float getMidiMin(string param_) {};
@@ -39,6 +41,17 @@ private:
     
     void inputAdded(ImageOutput* in_);
     void inputRemoved(int id_);
+    
+    string outputResolution_w, outputResolution_h;
+    int padding_x, padding_y, previous_index;
+    float drawing_width, drawing_height;
+    ofParameter<string> outputResolutionLabel_w, outputResolutionLabel_h;
+    ofParameterGroup outputResolution;
+    ofxTextInput resolution_h;
+    ofxTextInput resolution_w;
+    
+    ofParameter<int> aspectRatio;
+    vector<string> aspectRatioLabels;
 };
 
 
