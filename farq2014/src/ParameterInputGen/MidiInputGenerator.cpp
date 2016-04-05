@@ -166,7 +166,7 @@ bool MidiInputGenerator::loadSettings(ofxXmlSettings &XML, map<int, ImageOutput*
 //------------------------------------------------------------------
 bool MidiInputGenerator::saveSettings(ofxXmlSettings &XML) {
     
-    bool saved = false;
+    bool saved = true;
     int count = 0;
     
     // Search for the input generator name to update information
@@ -186,28 +186,31 @@ bool MidiInputGenerator::saveSettings(ofxXmlSettings &XML) {
         if ( XML.getAttribute("INPUT_GEN", "midiDeviceName", "", i) == midiDeviceName){
             
             XML.setAttribute("INPUT_GEN", "name", generatorName, i);
-            XML.pushTag("INPUT_GEN", i);
-            XML.removeTag("MIDI_SETTINGS");
-            
-            int lastPlace = XML.addTag("MIDI_SETTINGS");
-            XML.pushTag("MIDI_SETTINGS", lastPlace);
-            
-            count = 0;
-            
-            for(map<int, vector<DTMidiMap*> >::iterator it = midiControlMaps.begin(); it != midiControlMaps.end(); it++ ){
-                for (int j = 0; j < it->second.size(); j++){
-                    XML.addTag("MIDI_MAP");
-                    XML.addAttribute("MIDI_MAP", "midiId", it->first, count);
-                    XML.addAttribute("MIDI_MAP", "nodeId", it->second[j]->nodeId, count);
-                    XML.addAttribute("MIDI_MAP", "param", it->second[j]->paramId, count);
+            saved = XML.pushTag("INPUT_GEN", i);
+            if (saved) {
+                XML.removeTag("MIDI_SETTINGS");
+                
+                int lastPlace = XML.addTag("MIDI_SETTINGS");
+                saved = XML.pushTag("MIDI_SETTINGS", lastPlace);
+                if (saved) {
+                    count = 0;
                     
-                    count++;
+                    for(map<int, vector<DTMidiMap*> >::iterator it = midiControlMaps.begin(); it != midiControlMaps.end(); it++ ){
+                        for (int j = 0; j < it->second.size(); j++){
+                            XML.addTag("MIDI_MAP");
+                            XML.addAttribute("MIDI_MAP", "midiId", it->first, count);
+                            XML.addAttribute("MIDI_MAP", "nodeId", it->second[j]->nodeId, count);
+                            XML.addAttribute("MIDI_MAP", "param", it->second[j]->paramId, count);
+                            
+                            count++;
+                        }
+                    }
+                    
+                    XML.popTag(); // MIDI_SETTINGS
                 }
+                XML.popTag(); // INPUT_GEN
+                break;
             }
-            
-            XML.popTag(); // MIDI_SETTINGS
-            XML.popTag(); // INPUT_GEN
-            break;
         }
         
         // If it was the last input generator in the XML and it wasn't me..
@@ -224,26 +227,29 @@ bool MidiInputGenerator::saveSettings(ofxXmlSettings &XML) {
             XML.addAttribute("INPUT_GEN", "type", "MIDI", lastPlace);
             XML.addAttribute("INPUT_GEN", "midiDeviceName", midiDeviceName, lastPlace);
             
-            XML.pushTag("INPUT_GEN", lastPlace);
+            saved = XML.pushTag("INPUT_GEN", lastPlace);
             
-            lastPlace = XML.addTag("MIDI_SETTINGS");
-            XML.pushTag("MIDI_SETTINGS", lastPlace);
-            
-            count = 0;
-            
-            for(map<int, vector<DTMidiMap*> >::iterator it = midiControlMaps.begin(); it != midiControlMaps.end(); it++ ){
-                for (int j = 0; j < it->second.size(); j++){
-                    XML.addTag("MIDI_MAP");
-                    XML.addAttribute("MIDI_MAP", "midiId", it->first, count);
-                    XML.addAttribute("MIDI_MAP", "nodeId", it->second[j]->nodeId, count);
-                    XML.addAttribute("MIDI_MAP", "param", it->second[j]->paramId, count);
+            if (saved) {
+                lastPlace = XML.addTag("MIDI_SETTINGS");
+                saved = XML.pushTag("MIDI_SETTINGS", lastPlace);
+                
+                if (saved) {
+                    count = 0;
                     
-                    count++;
+                    for(map<int, vector<DTMidiMap*> >::iterator it = midiControlMaps.begin(); it != midiControlMaps.end() && saved; it++ ){
+                        for (int j = 0; j < it->second.size(); j++){
+                            XML.addTag("MIDI_MAP");
+                            XML.addAttribute("MIDI_MAP", "midiId", it->first, count);
+                            XML.addAttribute("MIDI_MAP", "nodeId", it->second[j]->nodeId, count);
+                            XML.addAttribute("MIDI_MAP", "param", it->second[j]->paramId, count);
+                            
+                            count++;
+                        }
+                    }
+                    XML.popTag(); // MIDI_SETTINGS
                 }
+                XML.popTag(); // INPUT_GEN
             }
-            
-            XML.popTag(); // MIDI_SETTINGS
-            XML.popTag(); // INPUT_GEN
         }
     }
     

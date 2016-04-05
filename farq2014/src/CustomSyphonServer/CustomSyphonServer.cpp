@@ -186,7 +186,8 @@ void CustomSyphonServer::inputRemoved(int id_){
 
 //------------------------------------------------------------------
 bool CustomSyphonServer::saveSettings(ofxXmlSettings &XML) {
-    bool saved = false;
+    bool saved = true;
+    
     if(feeder!= NULL){
         int lastPlace = XML.addTag("NODE");
         
@@ -196,7 +197,7 @@ bool CustomSyphonServer::saveSettings(ofxXmlSettings &XML) {
         XML.addAttribute("NODE", "aspectRatio", aspectRatio, lastPlace);
         
         XML.pushTag("NODE", lastPlace);
-        ofxPatch::saveSettings(XML, true, lastPlace);
+        saved = ofxPatch::saveSettings(XML, true, lastPlace);
         XML.popTag();
         saved = true;
     } else {

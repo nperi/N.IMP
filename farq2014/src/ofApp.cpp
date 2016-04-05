@@ -1845,6 +1845,9 @@ bool ofApp::saveToXML() {
     
     ofxXmlSettings XML;
     bool file = true;
+    bool backupFile = true;
+    bool success = true;
+    string backupFilePath;
     
     // Open/create clean xml settings file
     //
@@ -1861,7 +1864,19 @@ bool ofApp::saveToXML() {
         }
     }
     
+    ofFile backup;
+    if (backup.doesFileExist(xmlFilePath)) {
+        backupFile = backup.open(xmlFilePath);
+        if (backupFile) {
+            backup.copyTo("~" + xmlFileName, true);
+            backupFilePath = backup.getEnclosingDirectory() + "~" + xmlFileName;
+            backup.close();
+            backup.open(backupFilePath);
+        }
+    }
+    
     file = XML.loadFile(xmlFilePath);
+    
     if (file) {
         XML.clear();
     } else {
@@ -1888,8 +1903,8 @@ bool ofApp::saveToXML() {
         XML.addTag("INPUTS");
         XML.pushTag("INPUTS");
         audioAnalizer->saveSettings(XML);
-        for (int i = 0; i < inputs.size(); i++) {
-            inputs[i]->saveSettings(XML);
+        for (int i = 0; i < inputs.size() && success; i++) {
+            success = inputs[i]->saveSettings(XML);
         }
         XML.popTag();
         
@@ -1898,8 +1913,8 @@ bool ofApp::saveToXML() {
         //
         XML.addTag("VISUAL_LAYERS");
         XML.pushTag("VISUAL_LAYERS");
-        for (int vl = 0; vl < visualLayers.size(); vl++) {
-            visualLayers[vl]->saveSettings(XML);
+        for (int vl = 0; vl < visualLayers.size() && success; vl++) {
+            success = visualLayers[vl]->saveSettings(XML);
         }
         XML.popTag();
         
@@ -1908,8 +1923,8 @@ bool ofApp::saveToXML() {
         //
         XML.addTag("MIXERS");
         XML.pushTag("MIXERS");
-        for (int m = 0; m < mixtables.size(); m++) {
-            mixtables[m]->saveSettings(XML);
+        for (int m = 0; m < mixtables.size() && success; m++) {
+            success = mixtables[m]->saveSettings(XML);
         }
         XML.popTag();
         
@@ -1918,8 +1933,8 @@ bool ofApp::saveToXML() {
         //
         XML.addTag("ENCAPSULATED_NODES");
         XML.pushTag("ENCAPSULATED_NODES");
-        for(int e = 0; e < encapsulatedIds.size(); e++){
-            nodeViewers[currentViewer]->saveEncapsulatedSettings(XML, encapsulatedIds[e]);
+        for(int e = 0; e < encapsulatedIds.size() && success; e++){
+            success = nodeViewers[currentViewer]->saveEncapsulatedSettings(XML, encapsulatedIds[e]);
         }
         XML.popTag();
         
@@ -1927,8 +1942,8 @@ bool ofApp::saveToXML() {
         // Save Syphon Servers
         XML.addTag("SYPHON_SERVERS");
         XML.pushTag("SYPHON_SERVERS");
-        for (int ss = 0; ss < syphonServers.size(); ss++) {
-            syphonServers[ss]->saveSettings(XML);
+        for (int ss = 0; ss < syphonServers.size() && success; ss++) {
+            success = syphonServers[ss]->saveSettings(XML);
         }
         XML.popTag(); // tag SYPHON_SERVERS
         
@@ -1940,8 +1955,8 @@ bool ofApp::saveToXML() {
         //
         XML.addTag("NODE_VIEWS");
         XML.pushTag("NODE_VIEWS");
-        for (int nv = 0; nv < nodeViewers.size(); nv++) {
-            nodeViewers[nv]->saveSettings(XML);
+        for (int nv = 0; nv < nodeViewers.size() && success; nv++) {
+            success = nodeViewers[nv]->saveSettings(XML);
         }
         XML.popTag(); // tag NODE_VIEWS
         
@@ -1950,25 +1965,45 @@ bool ofApp::saveToXML() {
         //
         XML.addTag("PARAM_INPUT_GENERATORS");
         XML.pushTag("PARAM_INPUT_GENERATORS");
-        for (int ig = 0; ig < inputGenerators.size(); ig++) {
-            inputGenerators[ig]->saveSettings(XML);
+        for (int ig = 0; ig < inputGenerators.size() && success; ig++) {
+            success = inputGenerators[ig]->saveSettings(XML);
         }
         XML.popTag(); // tag PARAM_INPUT_GENERATORS
         
         XML.popTag(); // tag MAIN_SETTINGS
         
-        if (XML.saveFile()) {
+        if (success && XML.saveFile()) {
             ofLog(OF_LOG_NOTICE, "Settings saved succesfully");
             console->pushSuccess("Settings saved succesfully");
         }
         else {
+            if (backupFile) {
+                backup.copyTo(xmlFileName, true, true);
+            }
+            else {
+                XML.clear();
+                XML.saveFile();
+            }
             ofLog(OF_LOG_ERROR, "Couldn't save settings. An error occurred");
             console->pushError("Couldn't save settings. An error occurred");
         }
     }
     else {
+        
+        if (backupFile) {
+            backup.copyTo(xmlFileName, true, true);
+        }
+        else {
+            XML.clear();
+            XML.saveFile();
+        }
         ofLog(OF_LOG_ERROR, "Couldn't load the .xml file. The file appSettings.xml was not found");
         console->pushError("Couldn't load the .xml file. The file appSettings.xml was not found");
+    }
+    
+    if (backupFile) {
+        backup.remove();
+        backup.close();
     }
 }
 

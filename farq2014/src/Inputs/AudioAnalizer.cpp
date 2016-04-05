@@ -127,7 +127,7 @@ bool AudioAnalizer::loadSettings(ofxXmlSettings &XML, int nTag_, int nodesCount_
 //------------------------------------------------------------------
 bool AudioAnalizer::saveSettings(ofxXmlSettings &XML) {
     
-    bool saved = false;
+    bool saved = true;
     
     // Search for the patch ID to update information
     // If the patch ID doesn't exists.. then I need to add it to the .xml

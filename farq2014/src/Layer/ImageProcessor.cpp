@@ -664,6 +664,7 @@ void ImageProcessor::cpiRes(ofVec2f &b){
 bool ImageProcessor::loadSettings(ofxXmlSettings &XML, int nTag_, int nodesCount_) {
     
     nId             = XML.getAttribute("NODE", "id", -1, nTag_) + nodesCount_;
+    isEnabled       = XML.getAttribute("NODE", "enabled", true, nTag_);
     
     isBloom         = ofToBool(XML.getAttribute("NODE","isBloom","false",nTag_));
     
@@ -716,7 +717,7 @@ bool ImageProcessor::loadSettings(ofxXmlSettings &XML, int nTag_, int nodesCount
 //------------------------------------------------------------------
 bool ImageProcessor::saveSettings(ofxXmlSettings &XML) {
     
-    bool saved = false;
+    bool saved = true;;
     
     // Search for the patch ID to update information
     // If the patch ID doesn't exists.. then I need to add it to the .xml
@@ -778,7 +779,7 @@ bool ImageProcessor::saveSettings(ofxXmlSettings &XML) {
             
             XML.pushTag("NODE", i);
             
-            ofxPatch::saveSettings(XML, false, i);
+            saved = ofxPatch::saveSettings(XML, false, i);
             
             XML.popTag();
             break;
@@ -797,6 +798,7 @@ bool ImageProcessor::saveSettings(ofxXmlSettings &XML) {
             XML.addAttribute("NODE", "id", nId, lastPlace);
             XML.addAttribute("NODE", "name", name, lastPlace);
             XML.addAttribute("NODE", "type", "IMAGE_PROCESSOR", lastPlace);
+            XML.addAttribute("NODE", "enabled", isEnabled, lastPlace);
             if (input.size()) XML.addAttribute("NODE", "inputSource", input[0]->getId(), lastPlace);
             
             XML.addAttribute("NODE","isBloom", isBloom, lastPlace);
@@ -835,9 +837,9 @@ bool ImageProcessor::saveSettings(ofxXmlSettings &XML) {
             XML.addAttribute("NODE","zbWeight", zbWeight, lastPlace);
             XML.addAttribute("NODE","zbClamp", zbClamp, lastPlace);
             
-            if (XML.pushTag("NODE", lastPlace)){
-                
-                ofxPatch::saveSettings(XML, true, lastPlace);
+            saved = XML.pushTag("NODE", lastPlace);
+            if (saved){
+                saved = ofxPatch::saveSettings(XML, true, lastPlace);
                 XML.popTag();
             }
         }

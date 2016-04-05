@@ -253,7 +253,7 @@ bool MultiChannelSwitch::loadSettings(ofxXmlSettings &XML, int nTag_, int nodesC
 //------------------------------------------------------------------
 bool MultiChannelSwitch::saveSettings(ofxXmlSettings &XML) {
     
-    bool saved = false;
+    bool saved = true;
     
     // Search for the patch ID to update information
     // If the patch ID doesn't exists.. then I need to add it to the .xml
@@ -287,7 +287,7 @@ bool MultiChannelSwitch::saveSettings(ofxXmlSettings &XML) {
                 XML.setAttribute("INPUT_SOURCE", "nodeId", input[iS]->getId(), iS);
             }
             
-            ofxPatch::saveSettings(XML, false, i);
+            saved = ofxPatch::saveSettings(XML, false, i);
             XML.popTag();
             break;
         }
@@ -308,16 +308,14 @@ bool MultiChannelSwitch::saveSettings(ofxXmlSettings &XML) {
             XML.addAttribute("NODE", "selChannel", selChannel, lastPlace);
             //XML.addAttribute("NODE", "drawInputGui", drawInputGui, lastPlace);
             
-            if (XML.pushTag("NODE", lastPlace)){
-                
+            saved = XML.pushTag("NODE", lastPlace);
+            if (saved){
                 for (int iS = 0; iS < input.size(); iS++){
-                    
                     XML.addTag("INPUT_SOURCE");
                     XML.addAttribute("INPUT_SOURCE", "nodeId", input[iS]->getId(), iS);
                 }
-                
-                ofxPatch::saveSettings(XML, true, lastPlace);
-                XML.popTag();
+                saved = ofxPatch::saveSettings(XML, true, lastPlace);
+                XML.popTag(); // NODE
             }
         }
     }

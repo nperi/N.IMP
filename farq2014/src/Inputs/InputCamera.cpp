@@ -237,11 +237,10 @@ bool InputCamera::saveSettings(ofxXmlSettings &XML) {
             XML.addAttribute("NODE", "type", "CAM", lastPlace);
             XML.addAttribute("NODE", "cameraName", cameraName, lastPlace);
             
-            if (XML.pushTag("NODE", lastPlace)){
-                
+            saved = XML.pushTag("NODE", lastPlace);
+            if (saved){
                 saved = ofxPatch::saveSettings(XML, true, lastPlace);
-                
-                XML.popTag();
+                XML.popTag(); // NODE
             }
         }
     }

@@ -203,7 +203,7 @@ bool InputSyphon::loadSettings(ofxXmlSettings &XML, int nTag_, int nodesCount_) 
 
 //------------------------------------------------------------------
 bool InputSyphon::saveSettings(ofxXmlSettings &XML) {
-    bool saved = false;
+    bool saved = true;
     
     // Search for the patch ID to update information
     // If the patch ID doesn't exists.. then I need to add it to the .xml
@@ -227,7 +227,7 @@ bool InputSyphon::saveSettings(ofxXmlSettings &XML) {
             XML.setAttribute("NODE", "appName", appName, i);
             XML.pushTag("NODE", i);
             
-            ofxPatch::saveSettings(XML, false, i);
+            saved = ofxPatch::saveSettings(XML, false, i);
             
             XML.popTag();
             
@@ -250,8 +250,9 @@ bool InputSyphon::saveSettings(ofxXmlSettings &XML) {
             XML.addAttribute("NODE", "serverName", serverName, lastPlace);
             XML.addAttribute("NODE", "appName", appName, lastPlace);
             
-            if (XML.pushTag("NODE", lastPlace)){
-                ofxPatch::saveSettings(XML, true, lastPlace);
+            saved = XML.pushTag("NODE", lastPlace);
+            if (saved){
+                saved = ofxPatch::saveSettings(XML, true, lastPlace);
                 XML.popTag();
             }
         }

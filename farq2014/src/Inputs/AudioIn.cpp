@@ -199,7 +199,7 @@ bool AudioIn::loadSettings(ofxXmlSettings &XML, int nTag_, int nodesCount_) {
 //------------------------------------------------------------------
 bool AudioIn::saveSettings(ofxXmlSettings &XML) {
     
-    bool saved = false;
+    bool saved = true;
     
     // Search for the patch ID to update information
     // If the patch ID doesn't exists.. then I need to add it to the .xml
@@ -224,7 +224,7 @@ bool AudioIn::saveSettings(ofxXmlSettings &XML) {
             XML.addAttribute("NODE", "band", selectBand, i);
             XML.pushTag("NODE", i);
             
-            ofxPatch::saveSettings(XML, false, i);
+            saved = ofxPatch::saveSettings(XML, false, i);
             
             XML.popTag();
             
@@ -248,11 +248,11 @@ bool AudioIn::saveSettings(ofxXmlSettings &XML) {
             XML.addAttribute("NODE", "band", selectBand, lastPlace);
             audioInType == LEFT ? XML.addAttribute("NODE", "type", "LEFT_AUDIO_IN", lastPlace) : XML.addAttribute("NODE", "type", "RIGHT_AUDIO_IN", lastPlace);
             
-            if (XML.pushTag("NODE", lastPlace)){
+            saved = XML.pushTag("NODE", lastPlace);
+            if (saved){
+                saved = ofxPatch::saveSettings(XML, true, lastPlace);
                 
-                ofxPatch::saveSettings(XML, true, lastPlace);
-                
-                XML.popTag();
+                XML.popTag(); // NODE
             }
         }
     }

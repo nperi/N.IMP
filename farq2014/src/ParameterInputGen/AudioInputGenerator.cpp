@@ -170,7 +170,7 @@ bool AudioInputGenerator::loadSettings(ofxXmlSettings &XML) {
 //------------------------------------------------------------------
 bool AudioInputGenerator::saveSettings(ofxXmlSettings &XML) {
     
-    bool saved = false;
+    bool saved = true;
     
     // Search for the input generator name to update information
     // If it doesn't exists.. then I need to add it to the .xml
@@ -232,28 +232,31 @@ bool AudioInputGenerator::saveSettings(ofxXmlSettings &XML) {
             XML.addAttribute("INPUT_GEN", "nodeId", nodeID, lastPlace);
             XML.addAttribute("INPUT_GEN", "type", "FFT", lastPlace);
             
-            XML.pushTag("INPUT_GEN", lastPlace);
-            lastPlace = XML.addTag("FFT_SETTINGS");
-            XML.addAttribute("FFT_SETTINGS", "enabled", enable, lastPlace);
-            XML.addAttribute("FFT_SETTINGS", "channel", channel, lastPlace);
-            XML.addAttribute("FFT_SETTINGS", "band", band, lastPlace);
-            XML.pushTag("FFT_SETTINGS", lastPlace);
-            
-            for(int i = 0; i < audioMap->size(); i++){
-                
-                XML.addTag("AUDIO_MAP");
-//                XML.addAttribute("AUDIO_MAP","band", audioMap->at(i)->band,i);
-                XML.addAttribute("AUDIO_MAP","nodeId", audioMap->at(i)->nodeId,i);
-                XML.addAttribute("AUDIO_MAP","param", audioMap->at(i)->paramId,i);
-                XML.addAttribute("AUDIO_MAP","inputMinValue", audioMap->at(i)->inputMinValue,i);
-                XML.addAttribute("AUDIO_MAP","inputMaxValue", audioMap->at(i)->inputMaxValue,i);
-                XML.addAttribute("AUDIO_MAP","paramMinValue", audioMap->at(i)->paramMinValue,i);
-                XML.addAttribute("AUDIO_MAP","paramMaxValue", audioMap->at(i)->paramMaxValue,i);
-                
+            saved = XML.pushTag("INPUT_GEN", lastPlace);
+            if (saved) {
+                lastPlace = XML.addTag("FFT_SETTINGS");
+                XML.addAttribute("FFT_SETTINGS", "enabled", enable, lastPlace);
+                XML.addAttribute("FFT_SETTINGS", "channel", channel, lastPlace);
+                XML.addAttribute("FFT_SETTINGS", "band", band, lastPlace);
+                saved = XML.pushTag("FFT_SETTINGS", lastPlace);
+                if (saved) {
+                    for(int i = 0; i < audioMap->size(); i++){
+                        
+                        XML.addTag("AUDIO_MAP");
+//                        XML.addAttribute("AUDIO_MAP","band", audioMap->at(i)->band,i);
+                        XML.addAttribute("AUDIO_MAP","nodeId", audioMap->at(i)->nodeId,i);
+                        XML.addAttribute("AUDIO_MAP","param", audioMap->at(i)->paramId,i);
+                        XML.addAttribute("AUDIO_MAP","inputMinValue", audioMap->at(i)->inputMinValue,i);
+                        XML.addAttribute("AUDIO_MAP","inputMaxValue", audioMap->at(i)->inputMaxValue,i);
+                        XML.addAttribute("AUDIO_MAP","paramMinValue", audioMap->at(i)->paramMinValue,i);
+                        XML.addAttribute("AUDIO_MAP","paramMaxValue", audioMap->at(i)->paramMaxValue,i);
+                        
+                    }
+                    
+                    XML.popTag(); // FFT_SETTINGS
+                }
+                XML.popTag(); // INPUT_GEN
             }
-            
-            XML.popTag(); // FFT_SETTINGS
-            XML.popTag(); // INPUT_GEN
         }
     }
     

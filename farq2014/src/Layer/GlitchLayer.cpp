@@ -330,6 +330,7 @@ bool GlitchLayer::loadSettings(ofxXmlSettings &XML, int nTag_, int nodesCount_) 
     do_CR_GREENINVERT   = ofToBool(XML.getAttribute("NODE","do_CR_GREENINVERT","false",nTag_));
     
     nId                 = XML.getAttribute("NODE", "id", -1, nTag_) + nodesCount_;
+    isEnabled           = XML.getAttribute("NODE", "enabled", true, nTag_);
     
     XML.pushTag("NODE", nTag_);
     
@@ -346,7 +347,7 @@ bool GlitchLayer::loadSettings(ofxXmlSettings &XML, int nTag_, int nodesCount_) 
 //------------------------------------------------------------------
 bool GlitchLayer::saveSettings(ofxXmlSettings &XML) {
     
-    bool saved = false;
+    bool saved = true;
     
     // Search for the patch ID to update information
     // If the patch ID doesn't exists.. then I need to add it to the .xml
@@ -391,7 +392,7 @@ bool GlitchLayer::saveSettings(ofxXmlSettings &XML) {
             
             XML.pushTag("NODE", i);
             
-            ofxPatch::saveSettings(XML, false, i);
+            saved = ofxPatch::saveSettings(XML, false, i);
             
             XML.popTag();
             break;
@@ -410,6 +411,7 @@ bool GlitchLayer::saveSettings(ofxXmlSettings &XML) {
             XML.addAttribute("NODE", "id", nId, lastPlace);
             XML.addAttribute("NODE", "name", name, lastPlace);
             XML.addAttribute("NODE", "type", "GLITCH_1", lastPlace);
+            XML.addAttribute("NODE", "enabled", isEnabled, lastPlace);
             if (input.size()) XML.setAttribute("NODE", "inputSource", input[0]->getId(), lastPlace);
             
             XML.addAttribute("NODE","do_CONVERGENCE", do_CONVERGENCE, lastPlace);
@@ -431,10 +433,10 @@ bool GlitchLayer::saveSettings(ofxXmlSettings &XML) {
             XML.addAttribute("NODE","do_CR_REDINVERT", do_CR_REDINVERT, lastPlace);
             XML.addAttribute("NODE","do_CR_GREENINVERT", do_CR_GREENINVERT, lastPlace);
             
-            if (XML.pushTag("NODE", lastPlace)){
-                
-                ofxPatch::saveSettings(XML, true, lastPlace);
-                XML.popTag();
+            saved = XML.pushTag("NODE", lastPlace);
+            if (saved){
+                saved = ofxPatch::saveSettings(XML, true, lastPlace);
+                XML.popTag(); // NODE
             }
         }
     }

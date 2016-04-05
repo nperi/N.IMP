@@ -216,7 +216,7 @@ bool OSCReceiver::loadSettings(ofxXmlSettings &XML, int nTag_, int nodesCount_) 
 //------------------------------------------------------------------
 bool OSCReceiver::saveSettings(ofxXmlSettings &XML) {
     
-    bool saved = false;
+    bool saved = true;
     
     // Search for the patch ID to update information
     // If the patch ID doesn't exists.. then I need to add it to the .xml
@@ -251,7 +251,7 @@ bool OSCReceiver::saveSettings(ofxXmlSettings &XML) {
                 XML.addAttribute("PARAM", "nodeID", paramsLabels[v].nodeId, v);
             }
             
-            ofxPatch::saveSettings(XML, false, i);
+            saved = ofxPatch::saveSettings(XML, false, i);
             
             XML.popTag();
             
@@ -274,7 +274,8 @@ bool OSCReceiver::saveSettings(ofxXmlSettings &XML) {
             XML.addAttribute("NODE", "port", port, lastPlace);
             XML.addAttribute("NODE", "address", address, lastPlace);
             
-            if (XML.pushTag("NODE", lastPlace)){
+            saved = XML.pushTag("NODE", lastPlace);
+            if (saved){
                 
                 for (int v = 0; v < paramsLabels.size(); v++){
                     XML.addTag("PARAM");
@@ -282,9 +283,9 @@ bool OSCReceiver::saveSettings(ofxXmlSettings &XML) {
                     XML.addAttribute("PARAM", "nodeID", paramsLabels[v].nodeId, v);
                 }
                 
-                ofxPatch::saveSettings(XML, true, lastPlace);
+                saved = ofxPatch::saveSettings(XML, true, lastPlace);
                 
-                XML.popTag();
+                XML.popTag(); // NODE
             }
         }
     }

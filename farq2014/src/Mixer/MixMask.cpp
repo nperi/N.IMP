@@ -178,8 +178,9 @@ void MixMask::setEnable(bool isEnabled_){
 //------------------------------------------------------------------
 bool MixMask::loadSettings(ofxXmlSettings &XML, int nTag_, int nodesCount_) {
     
-    nId     = XML.getAttribute("NODE", "id", -1, nTag_) + nodesCount_;
-    spin    = XML.getAttribute("NODE", "spin", 90, nTag_);
+    nId       = XML.getAttribute("NODE", "id", -1, nTag_) + nodesCount_;
+    spin      = XML.getAttribute("NODE", "spin", 90, nTag_);
+    isEnabled = XML.getAttribute("NODE", "enabled", true, nTag_);
     
     XML.pushTag("NODE", nTag_);
     
@@ -204,7 +205,7 @@ bool MixMask::loadSettings(ofxXmlSettings &XML, int nTag_, int nodesCount_) {
 //------------------------------------------------------------------
 bool MixMask::saveSettings(ofxXmlSettings &XML) {
     
-    bool saved = false;
+    bool saved = true;
     
     // Search for the patch ID to update information
     // If the patch ID doesn't exists.. then I need to add it to the .xml
@@ -237,7 +238,7 @@ bool MixMask::saveSettings(ofxXmlSettings &XML) {
                 XML.setAttribute("INPUT_SOURCE", "nodeId", input[iS]->getId(), iS);
             }
             
-            ofxPatch::saveSettings(XML, false, i);
+            saved = ofxPatch::saveSettings(XML, false, i);
             XML.popTag();
             break;
         }
@@ -255,19 +256,18 @@ bool MixMask::saveSettings(ofxXmlSettings &XML) {
             XML.addAttribute("NODE", "id", nId, lastPlace);
             XML.addAttribute("NODE", "name", name, lastPlace);
             XML.addAttribute("NODE", "type", "MASK", lastPlace);
+            XML.addAttribute("NODE", "enabled", isEnabled, lastPlace);
             
             XML.addAttribute("NODE", "spin", spin, lastPlace);
             
-            if (XML.pushTag("NODE", lastPlace)){
-                
+            saved = XML.pushTag("NODE", lastPlace);
+            if (saved){
                 for (int iS = 0; iS < input.size(); iS++){
-                    
                     XML.addTag("INPUT_SOURCE");
                     XML.addAttribute("INPUT_SOURCE", "nodeId", input[iS]->getId(), iS);
                 }
-                
-                ofxPatch::saveSettings(XML, true, lastPlace);
-                XML.popTag();
+                saved = ofxPatch::saveSettings(XML, true, lastPlace);
+                XML.popTag(); // NODE
             }
         }
     }
