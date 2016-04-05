@@ -37,6 +37,7 @@ class InputCamera : public InputSource{
     
     void changeToNextCamera();
     void changeToPrevCamera();
+    void initCamera();
 
 private:
     
