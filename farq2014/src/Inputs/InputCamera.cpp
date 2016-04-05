@@ -78,7 +78,13 @@ ofTexture* InputCamera::getTexture(){
 //------------------------------------------------------------------
 void InputCamera::changeToNextCamera() {
 
-    if(videoGrabber->listDevices().size() == 1) return;
+    if(videoGrabber->listDevices().size() == 1) {
+        if (drawNoInputs){
+            cameraIndex = 0;
+            initCamera();
+        }
+        else return;
+    };
     
     if(videoGrabber->listDevices().size() > 0){
         
@@ -87,12 +93,7 @@ void InputCamera::changeToNextCamera() {
         if(cameraIndex > videoGrabber->listDevices().size() - 1)
             cameraIndex = 0;
         
-        cameraName = videoGrabber->listDevices()[cameraIndex].deviceName;
-        cameraSelectedName.set("", cameraName);
-        
-        videoGrabber->close();
-        videoGrabber->setDeviceID(cameraIndex);
-        videoGrabber->initGrabber(width, height);
+        initCamera();
     }
     else {
         drawNoInputs = true;
@@ -106,7 +107,13 @@ void InputCamera::changeToNextCamera() {
 //------------------------------------------------------------------
 void InputCamera::changeToPrevCamera() {
 
-    if(videoGrabber->listDevices().size() == 1) return;
+    if(videoGrabber->listDevices().size() == 1) {
+        if (drawNoInputs){
+            cameraIndex = 0;
+            initCamera();
+        }
+        else return;
+    };
     
     if(videoGrabber->listDevices().size() > 0){
         
@@ -115,17 +122,7 @@ void InputCamera::changeToPrevCamera() {
         if(cameraIndex < 0)
             cameraIndex = videoGrabber->listDevices().size() - 1;
         
-        cameraName = videoGrabber->listDevices()[cameraIndex].deviceName;
-        cameraSelectedName.set("", cameraName);
-        
-        videoGrabber->close();
-        videoGrabber->setDeviceID(cameraIndex);
-        videoGrabber->initGrabber(width, height);
-        
-//        width  = (textureCorners[1].x - textureCorners[0].x)/SCALE_RATIO;
-//        height = (width*videoGrabber->getHeight())/videoGrabber->getWidth();
-//        
-//        resetSize();
+        initCamera();
     }
     else {
         drawNoInputs = true;
@@ -134,6 +131,17 @@ void InputCamera::changeToPrevCamera() {
         cameraName = "No Cameras Available";
         cameraSelectedName.set("", cameraName);
     }
+}
+
+//------------------------------------------------------------------
+void InputCamera::initCamera() {
+    
+    cameraName = videoGrabber->listDevices()[cameraIndex].deviceName;
+    cameraSelectedName.set("", cameraName);
+    
+    videoGrabber->close();
+    videoGrabber->setDeviceID(cameraIndex);
+    videoGrabber->initGrabber(width, height);
 }
 
 //------------------------------------------------------------------
@@ -184,7 +192,7 @@ bool InputCamera::loadSettings(ofxXmlSettings &XML, int nTag_, int nodesCount_) 
 //------------------------------------------------------------------
 bool InputCamera::saveSettings(ofxXmlSettings &XML) {
     
-    bool saved = false;
+    bool saved = true;
         
     // Search for the patch ID to update information
     // If the patch ID doesn't exists.. then I need to add it to the .xml
@@ -207,7 +215,7 @@ bool InputCamera::saveSettings(ofxXmlSettings &XML) {
             XML.setAttribute("NODE", "cameraName", cameraName, i);
             XML.pushTag("NODE", i);
             
-            ofxPatch::saveSettings(XML, false, i);
+            saved = ofxPatch::saveSettings(XML, false, i);
             
             XML.popTag();
             
@@ -231,7 +239,7 @@ bool InputCamera::saveSettings(ofxXmlSettings &XML) {
             
             if (XML.pushTag("NODE", lastPlace)){
                 
-                ofxPatch::saveSettings(XML, true, lastPlace);
+                saved = ofxPatch::saveSettings(XML, true, lastPlace);
                 
                 XML.popTag();
             }
