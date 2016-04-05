@@ -42,13 +42,8 @@ private:
     void inputAdded(ImageOutput* in_);
     void inputRemoved(int id_);
     
-    string outputResolution_w, outputResolution_h;
     int padding_x, padding_y, previous_index;
     float drawing_width, drawing_height;
-    ofParameter<string> outputResolutionLabel_w, outputResolutionLabel_h;
-    ofParameterGroup outputResolution;
-    ofxTextInput resolution_h;
-    ofxTextInput resolution_w;
     
     ofParameter<int> aspectRatio;
     vector<string> aspectRatioLabels;

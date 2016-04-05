@@ -27,14 +27,6 @@ CustomSyphonServer::CustomSyphonServer(string name_, ImageOutput* feeder_, int i
         drawing_height = feeder->getHeight();
     }
     
-//    outputResolution_w = "1080";
-//    outputResolution_h = "720";
-    
-//    gui.add(outputResolutionLabel_w.set("Width:"));
-//    gui.add(resolution_w.setup("Width", outputResolution_w, 100, 20));
-//    gui.add(outputResolutionLabel_h.set("Height:"));
-//    gui.add(resolution_h.setup("Height", outputResolution_h, 100, 20));
-    
     aspectRatioLabels.push_back("1:1");
     aspectRatioLabels.push_back("5:4");
     aspectRatioLabels.push_back("4:3");
@@ -139,8 +131,8 @@ void CustomSyphonServer::aspectRatioChanged(int& index_){
         
         if (feeder != NULL) {
             
-            drawing_width = feeder->getTexture()->getWidth();
-            drawing_height = feeder->getTexture()->getHeight();
+            drawing_width = feeder->getBox().getWidth();
+            drawing_height = feeder->getBox().getHeight();
             
             // adapting height and width
             //
@@ -169,40 +161,7 @@ void CustomSyphonServer::aspectRatioChanged(int& index_){
             else {
                 padding_y = 0;
             }
-
-//            if (feeder->getWidth() > width) {
-//                padding_x = abs(feeder->getWidth() - width)/2;
-//            }
-//            else {
-//                padding_x = 0;
-//            }
-//            
-//            if (feeder->getHeight() > height) {
-//                padding_y = abs(feeder->getHeight() - height)/2;
-//            }
-//            else {
-//                padding_y = 0;
-//            }
-//            
-//            if (padding_y != 0 || padding_x != 0) {
-//                drawing_width = feeder->getTexture()->getWidth();
-//                drawing_height = feeder->getTexture()->getHeight();
-//            }
-//            else {
-//                
-//                if (feeder->getHeight() < height) {
-//                    drawing_height = height;
-//                    drawing_width = (height*feeder->getWidth())/feeder->getHeight();
-//                }
-//                if (drawing_width < width) {
-//                    drawing_width = width;
-//                    drawing_height = (width*feeder->getHeight())/feeder->getWidth();
-//                }
-//            }
         }
-        
-
-//        height = (width*feeder->getHeight())/feeder->getWidth();
     }
 }
 
@@ -212,13 +171,9 @@ void CustomSyphonServer::inputAdded(ImageOutput* in_){
     drawNoInputs = false;
     feeder = in_;
     
-//    height = feeder->getHeight();
-    
     int index = aspectRatio;
     previous_index = -1;
     aspectRatioChanged(index);
-    
-//    gui.setWidthElements(INSPECTOR_WIDTH);
 }
 
 //------------------------------------------------------------------
@@ -227,8 +182,6 @@ void CustomSyphonServer::inputRemoved(int id_){
     feeder = NULL;
     
     resetSizeToNoInputs();
-    
-//    gui.setWidthElements(INSPECTOR_WIDTH);
 }
 
 //------------------------------------------------------------------
@@ -240,6 +193,7 @@ bool CustomSyphonServer::saveSettings(ofxXmlSettings &XML) {
         XML.addAttribute("NODE", "id", nId, lastPlace);
         XML.addAttribute("NODE", "inputId", feeder->getId(), lastPlace);
         XML.addAttribute("NODE", "name", name, lastPlace);
+        XML.addAttribute("NODE", "aspectRatio", aspectRatio, lastPlace);
         
         XML.pushTag("NODE", lastPlace);
         ofxPatch::saveSettings(XML, true, lastPlace);
@@ -255,6 +209,8 @@ bool CustomSyphonServer::saveSettings(ofxXmlSettings &XML) {
 bool CustomSyphonServer::loadSettings(ofxXmlSettings &XML, int nTag_, int nodesCount_) {
     bool loaded = false;
     nId = XML.getAttribute("NODE", "id", -1, nTag_) + nodesCount_;
+    aspectRatio = XML.getAttribute("NODE", "aspectRatio", 0, nTag_);
+    previous_index = -1;
     
     XML.pushTag("NODE", nTag_);
     
