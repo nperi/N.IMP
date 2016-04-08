@@ -36,8 +36,9 @@ class OscInputGenerator : public ParamInputGenerator{
     void removeOSCMap(string address_, ImageOutput* node_, string param_);
     void clearOSCMap();
     
-    bool loadSettings(ofxXmlSettings &XML);
+    bool loadSettings(ofxXmlSettings &XML, int nodesCount_ = 0);
     bool saveSettings(ofxXmlSettings &XML);
+    bool saveSettingsToSnippet(ofxXmlSettings &XML, map<int,int> newIdsMap);
     
 private:
     int port;

@@ -254,79 +254,35 @@ bool MultiChannelSwitch::loadSettings(ofxXmlSettings &XML, int nTag_, int nodesC
 bool MultiChannelSwitch::saveSettings(ofxXmlSettings &XML) {
     
     bool saved = true;
-    
-    // Search for the patch ID to update information
-    // If the patch ID doesn't exists.. then I need to add it to the .xml
+            
+    // Insert a new NODE tag at the end
+    // and fill it with the proper structure
     //
+    int lastPlace = XML.addTag("NODE");
+    XML.addAttribute("NODE", "id", nId, lastPlace);
+    XML.addAttribute("NODE", "name", name, lastPlace);
+    XML.addAttribute("NODE", "type", "MULTI_CHANNEL", lastPlace);
     
-    // Get the total number of nodes of the same type ...
-    //
-    int totalNodes = XML.getNumTags("NODE");
+    XML.addAttribute("NODE", "selChannel", selChannel, lastPlace);
+    //XML.addAttribute("NODE", "drawInputGui", drawInputGui, lastPlace);
     
-    // ... and search for the right id for loading
-    //
-    for (int i = 0; i <= totalNodes; i++){
-        
-        // Once it found the right surface that match the id ...
-        //
-        if ( XML.getAttribute("NODE", "id", -1, i) == nId){
-            
-            XML.setAttribute("NODE", "name", name, i);
-            XML.setAttribute("NODE", "selChannel", selChannel, i);
-            //XML.setAttribute("NODE", "drawInputGui", drawInputGui, i);
-            
-            XML.pushTag("NODE", i);
-            
-            int numInputSource = XML.getNumTags("INPUT_SOURCE");
-            
-            for (int iS = 0; iS < input.size(); iS++){
-                
-                if (iS >= numInputSource) {
-                    XML.addTag("INPUT_SOURCE");
-                }
-                XML.setAttribute("INPUT_SOURCE", "nodeId", input[iS]->getId(), iS);
-            }
-            
-            saved = ofxPatch::saveSettings(XML, false, i);
-            XML.popTag();
-            break;
+    saved = XML.pushTag("NODE", lastPlace);
+    if (saved){
+        for (int iS = 0; iS < input.size(); iS++){
+            XML.addTag("INPUT_SOURCE");
+            XML.addAttribute("INPUT_SOURCE", "nodeId", input[iS]->getId(), iS);
         }
-        
-        // If it was the last node in the XML and it wasn't me..
-        // I need to add myself in the .xml file
-        //
-        else if (i >= totalNodes-1) {
-            
-            // Insert a new NODE tag at the end
-            // and fill it with the proper structure
-            //
-            int lastPlace = XML.addTag("NODE");
-            XML.addAttribute("NODE", "id", nId, lastPlace);
-            XML.addAttribute("NODE", "name", name, lastPlace);
-            XML.addAttribute("NODE", "type", "MULTI_CHANNEL", lastPlace);
-            
-            XML.addAttribute("NODE", "selChannel", selChannel, lastPlace);
-            //XML.addAttribute("NODE", "drawInputGui", drawInputGui, lastPlace);
-            
-            saved = XML.pushTag("NODE", lastPlace);
-            if (saved){
-                for (int iS = 0; iS < input.size(); iS++){
-                    XML.addTag("INPUT_SOURCE");
-                    XML.addAttribute("INPUT_SOURCE", "nodeId", input[iS]->getId(), iS);
-                }
-                saved = ofxPatch::saveSettings(XML, true, lastPlace);
-                XML.popTag(); // NODE
-            }
-        }
+        saved = ofxPatch::saveSettings(XML, true, lastPlace);
+        XML.popTag(); // NODE
     }
-    
+
     return saved;
 }
 
 //------------------------------------------------------------------
 bool MultiChannelSwitch::saveSettingsToSnippet(ofxXmlSettings &XML, map<int,int> newIdsMap) {
     
-    bool saved = false;
+    bool saved = true;
     int lastPlace = XML.addTag("NODE");
     
     XML.addAttribute("NODE", "id", newIdsMap[nId], lastPlace);
@@ -335,8 +291,8 @@ bool MultiChannelSwitch::saveSettingsToSnippet(ofxXmlSettings &XML, map<int,int>
     
     XML.addAttribute("NODE", "selChannel", selChannel, lastPlace);
     
-    if (XML.pushTag("NODE", lastPlace)){
-        
+    saved = XML.pushTag("NODE", lastPlace);
+    if (saved){
         int count = 0;
         for (int iS = 0; iS < input.size(); iS++){
             

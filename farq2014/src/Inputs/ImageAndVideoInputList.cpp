@@ -527,90 +527,35 @@ bool ImageAndVideoInputList::saveSettings(ofxXmlSettings &XML) {
     
     bool saved = true;
     
-    // Search for the patch ID to update information
-    // If the patch ID doesn't exists.. then I need to add it to the .xml
+    // Insert a new NODE tag at the end
+    // and fill it with the proper structure
     //
+    int lastPlace = XML.addTag("NODE");
     
-    // Get the total number of nodes of the same type ...
-    //
-    int totalNodes = XML.getNumTags("NODE");
+    XML.addAttribute("NODE", "id", nId, lastPlace);
+    XML.addAttribute("NODE", "name", name, lastPlace);
+    XML.addAttribute("NODE", "type", "IMAGE_AND_VIDEO_LIST", lastPlace);
+    XML.addAttribute("NODE", "path", path, lastPlace);
     
-    // ... and search for the right id for loading
-    //
-    for (int i = 0; i <= totalNodes; i++){
+    XML.addAttribute("NODE", "bpm", bpm, lastPlace);
+    XML.addAttribute("NODE", "multiplier_divider", bpmMultiplier, lastPlace);
+    XML.addAttribute("NODE", "isPlaying", isPlaying, lastPlace);
+    XML.addAttribute("NODE", "palindrom", isPalindromLoop, lastPlace);
+    XML.addAttribute("NODE", "matchBPMtoSequence", isMatchBpmToSequenceLength, lastPlace);
+    XML.addAttribute("NODE", "currentSequence", currentSequence, lastPlace);
+    
+    saved = XML.pushTag("NODE", lastPlace);
+    if (saved){
         
-        // Once it found the right surface that match the id ...
-        //
-        if ( XML.getAttribute("NODE", "id", -1, i) == nId){
-            
-            XML.setAttribute("NODE", "name", name, i);
-            XML.setAttribute("NODE", "path", path, i);
-            
-            XML.setAttribute("NODE", "bpm", bpm, i);
-            XML.setAttribute("NODE", "multiplier_divider", bpmMultiplier, i);
-            XML.setAttribute("NODE", "isPlaying", isPlaying, i);
-            XML.setAttribute("NODE", "palindrom", isPalindromLoop, i);
-            XML.setAttribute("NODE", "matchBPMtoSequence", isMatchBpmToSequenceLength, i);
-            XML.addAttribute("NODE", "currentSequence", currentSequence, i);
-            
-            XML.pushTag("NODE", i);
-            
-            if ((path == "none") || (path == "")) {
-                
-                int numAssetTag = XML.getNumTags("ASSET");
-                for (int v = 0; v < numAssetTag; v++){
-                    XML.removeTag("ASSET");
-                }
-                
-                for (int v = 0; v < inputs.size(); v++){
-                    XML.addTag("ASSET");
-                    XML.addAttribute("ASSET", "name", inputs[v]->getName(), v);
-                    XML.addAttribute("ASSET", "path", inputs[v]->getPath(), v);
-                }
-            }
-            
-            saved = ofxPatch::saveSettings(XML, false, i);
-            
-            XML.popTag();
-            
-            break;
-        }
-        
-        // If it was the last node in the XML and it wasn't me..
-        // I need to add myself in the .xml file
-        //
-        else if (i >= totalNodes-1) {
-            
-            // Insert a new NODE tag at the end
-            // and fill it with the proper structure
-            //
-            int lastPlace = XML.addTag("NODE");
-            
-            XML.addAttribute("NODE", "id", nId, lastPlace);
-            XML.addAttribute("NODE", "name", name, lastPlace);
-            XML.addAttribute("NODE", "type", "IMAGE_AND_VIDEO_LIST", lastPlace);
-            XML.addAttribute("NODE", "path", path, lastPlace);
-            
-            XML.addAttribute("NODE", "bpm", bpm, lastPlace);
-            XML.addAttribute("NODE", "multiplier_divider", bpmMultiplier, lastPlace);
-            XML.addAttribute("NODE", "isPlaying", isPlaying, lastPlace);
-            XML.addAttribute("NODE", "palindrom", isPalindromLoop, lastPlace);
-            XML.addAttribute("NODE", "matchBPMtoSequence", isMatchBpmToSequenceLength, lastPlace);
-            XML.addAttribute("NODE", "currentSequence", currentSequence, lastPlace);
-            
-            saved = XML.pushTag("NODE", lastPlace);
-            if (saved){
-                if ((path == "none") || (path == "")) {
-                    for (int v = 0; v < inputs.size(); v++){
-                        XML.addTag("ASSET");
-                        XML.addAttribute("ASSET", "name", inputs[v]->getName(), v);
-                        XML.addAttribute("ASSET", "path", inputs[v]->getPath(), v);
-                    }
-                }
-                saved = ofxPatch::saveSettings(XML, true, lastPlace);
-                XML.popTag(); // NODE
+        if ((path == "none") || (path == "")) {
+            for (int v = 0; v < inputs.size(); v++){
+                XML.addTag("ASSET");
+                XML.addAttribute("ASSET", "name", inputs[v]->getName(), v);
+                XML.addAttribute("ASSET", "path", inputs[v]->getPath(), v);
             }
         }
+        saved = ofxPatch::saveSettings(XML, true, lastPlace);
+        XML.popTag(); // NODE
     }
     
     return saved;
@@ -621,7 +566,7 @@ bool ImageAndVideoInputList::saveSettings(ofxXmlSettings &XML) {
 bool ImageAndVideoInputList::saveSettingsToSnippet(ofxXmlSettings &XML, map<int,int> newIdsMap) {
     
     
-    bool saved = false;
+    bool saved = true;
     int lastPlace = XML.addTag("NODE");
     
     XML.addAttribute("NODE", "id", newIdsMap[nId], lastPlace);
@@ -636,12 +581,11 @@ bool ImageAndVideoInputList::saveSettingsToSnippet(ofxXmlSettings &XML, map<int,
     XML.addAttribute("NODE", "matchBPMtoSequence", isMatchBpmToSequenceLength, lastPlace);
     XML.addAttribute("NODE", "currentSequence", currentSequence, lastPlace);
     
-    if (XML.pushTag("NODE", lastPlace)){
+    saved = XML.pushTag("NODE", lastPlace);
+    if (saved){
         
         if ((path == "none") || (path == "")) {
-            
             for (int v = 0; v < inputs.size(); v++){
-                
                 XML.addTag("ASSET");
                 XML.addAttribute("ASSET", "name", inputs[v]->getName(), v);
                 XML.addAttribute("ASSET", "path", inputs[v]->getPath(), v);
@@ -649,8 +593,7 @@ bool ImageAndVideoInputList::saveSettingsToSnippet(ofxXmlSettings &XML, map<int,
         }
         
         saved = ofxPatch::saveSettingsToSnippet(XML, lastPlace, newIdsMap);
-        
-        XML.popTag();
+        XML.popTag(); // NODE
     }
     
     return saved;

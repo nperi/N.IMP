@@ -38,7 +38,7 @@ public:
     map<int,vector<DTMidiMap*> > midiControlMaps;
     void removeNodeFromParams(int nodeID_);
     
-    bool loadSettings(ofxXmlSettings &XML, map<int, ImageOutput*> nodes_);
+    bool loadSettings(ofxXmlSettings &XML, map<int, ImageOutput*> nodes_, int nodesCount_ = 0);
     bool saveSettings(ofxXmlSettings &XML);
     
 private:

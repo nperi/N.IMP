@@ -165,7 +165,6 @@
 		D309EB8C1A2E9B27008B3D94 /* InputCamera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D309EB8A1A2E9B27008B3D94 /* InputCamera.cpp */; };
 		D309EB941A2F2FDF008B3D94 /* IkedaLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D309EB921A2F2FDF008B3D94 /* IkedaLayer.cpp */; };
 		D309EB9A1A2F37A6008B3D94 /* MixSimpleBlend.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D309EB981A2F37A6008B3D94 /* MixSimpleBlend.cpp */; };
-		D318E84B1A2F8C46000A2046 /* VideoPlayerMac.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D318E8491A2F8C46000A2046 /* VideoPlayerMac.cpp */; };
 		D34E961B1A3FA0770089BFE4 /* OscInputGenerator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D34E96191A3FA0770089BFE4 /* OscInputGenerator.cpp */; };
 		D34E96471A3FA2850089BFE4 /* IpEndpointName.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D34E96211A3FA2850089BFE4 /* IpEndpointName.cpp */; };
 		D34E96481A3FA2850089BFE4 /* NetworkingUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D34E96261A3FA2850089BFE4 /* NetworkingUtils.cpp */; };
@@ -602,8 +601,6 @@
 		D309EB961A2F3073008B3D94 /* ImageOutput.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageOutput.h; sourceTree = "<group>"; };
 		D309EB981A2F37A6008B3D94 /* MixSimpleBlend.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MixSimpleBlend.cpp; sourceTree = "<group>"; };
 		D309EB991A2F37A6008B3D94 /* MixSimpleBlend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MixSimpleBlend.h; sourceTree = "<group>"; };
-		D318E8491A2F8C46000A2046 /* VideoPlayerMac.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VideoPlayerMac.cpp; sourceTree = "<group>"; };
-		D318E84A1A2F8C46000A2046 /* VideoPlayerMac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoPlayerMac.h; sourceTree = "<group>"; };
 		D347FB65D19015303863922A /* Wrappers.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = Wrappers.cpp; path = ../../../addons/ofxCv/libs/ofxCv/src/Wrappers.cpp; sourceTree = SOURCE_ROOT; };
 		D34E96191A3FA0770089BFE4 /* OscInputGenerator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OscInputGenerator.cpp; sourceTree = "<group>"; };
 		D34E961A1A3FA0770089BFE4 /* OscInputGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OscInputGenerator.h; sourceTree = "<group>"; };
@@ -1632,8 +1629,6 @@
 				D309EB7D1A2E94AD008B3D94 /* InputSource.h */,
 				D309EB8A1A2E9B27008B3D94 /* InputCamera.cpp */,
 				D309EB8B1A2E9B27008B3D94 /* InputCamera.h */,
-				D318E8491A2F8C46000A2046 /* VideoPlayerMac.cpp */,
-				D318E84A1A2F8C46000A2046 /* VideoPlayerMac.h */,
 				D3A2270B1A37243F005DD5AF /* ParticleGenerator.cpp */,
 				D3A2270C1A37243F005DD5AF /* ParticleGenerator.h */,
 				0AE1F57D1C4DAC2100A3B168 /* ImageAndVideoInputList.cpp */,
@@ -2135,7 +2130,6 @@
 				0A49EF491C18A3BF00346EB5 /* ofxTitleBar.cpp in Sources */,
 				499753601C8547E4007A2626 /* SyphonClientHandler.cpp in Sources */,
 				4990BDE61C3CE143002710AF /* EventHandler.cpp in Sources */,
-				D318E84B1A2F8C46000A2046 /* VideoPlayerMac.cpp in Sources */,
 				D34E964D1A3FA2850089BFE4 /* OscPrintReceivedElements.cpp in Sources */,
 				0A51B8491C0FE42B000AC121 /* ofxUILabelButton.cpp in Sources */,
 				D34E96541A3FA2850089BFE4 /* ofxOscSender.cpp in Sources */,

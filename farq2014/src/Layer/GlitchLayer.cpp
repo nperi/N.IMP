@@ -348,99 +348,43 @@ bool GlitchLayer::loadSettings(ofxXmlSettings &XML, int nTag_, int nodesCount_) 
 bool GlitchLayer::saveSettings(ofxXmlSettings &XML) {
     
     bool saved = true;
-    
-    // Search for the patch ID to update information
-    // If the patch ID doesn't exists.. then I need to add it to the .xml
+            
+    // Insert a new NODE tag at the end
+    // and fill it with the proper structure
     //
+    int lastPlace = XML.addTag("NODE");
     
-    // Get the total number of nodes of the same type ...
-    //
-    int totalNodes = XML.getNumTags("NODE");
+    XML.addAttribute("NODE", "id", nId, lastPlace);
+    XML.addAttribute("NODE", "name", name, lastPlace);
+    XML.addAttribute("NODE", "type", "GLITCH_1", lastPlace);
+    XML.addAttribute("NODE", "enabled", isEnabled, lastPlace);
+    if (input.size()) XML.setAttribute("NODE", "inputSource", input[0]->getId(), lastPlace);
     
-    // ... and search for the right id for loading
-    //
-    for (int i = 0; i <= totalNodes; i++){
-        
-        // Once it found the right surface that match the id ...
-        //
-        if ( XML.getAttribute("NODE", "id", -1, i) == nId){
-            
-            XML.setAttribute("NODE", "name", name, i);
-            if (input.size())
-                XML.setAttribute("NODE", "inputSource", input[0]->getId(), i);
-            else
-                XML.removeAttribute("NODE", "inputSource", i);
-            
-            XML.setAttribute("NODE","do_CONVERGENCE", do_CONVERGENCE, i);
-            XML.setAttribute("NODE","do_GLOW", do_GLOW, i);
-            XML.setAttribute("NODE","do_SHAKER", do_SHAKER, i);
-            XML.setAttribute("NODE","do_CUTSLIDER", do_CUTSLIDER, i);
-            XML.setAttribute("NODE","do_TWIST", do_TWIST, i);
-            XML.setAttribute("NODE","do_OUTLINE", do_OUTLINE, i);
-            XML.setAttribute("NODE","do_NOISE", do_NOISE, i);
-            XML.setAttribute("NODE","do_SLITSCAN", do_SLITSCAN, i);
-            XML.setAttribute("NODE","do_SWELL", do_SWELL, i);
-            XML.setAttribute("NODE","do_INVERT", do_INVERT, i);
-            
-            XML.setAttribute("NODE","do_CR_HIGHCONTRAST", do_CR_HIGHCONTRAST, i);
-            XML.setAttribute("NODE","do_CR_BLUERAISE", do_CR_BLUERAISE, i);
-            XML.setAttribute("NODE","do_CR_REDRAISE", do_CR_REDRAISE, i);
-            XML.setAttribute("NODE","do_CR_GREENRAISE", do_CR_GREENRAISE, i);
-            XML.setAttribute("NODE","do_CR_BLUEINVERT", do_CR_BLUEINVERT, i);
-            XML.setAttribute("NODE","do_CR_REDINVERT", do_CR_REDINVERT, i);
-            XML.setAttribute("NODE","do_CR_GREENINVERT", do_CR_GREENINVERT, i);
-            
-            XML.pushTag("NODE", i);
-            
-            saved = ofxPatch::saveSettings(XML, false, i);
-            
-            XML.popTag();
-            break;
-        }
-        
-        // If it was the last node in the XML and it wasn't me..
-        // I need to add myself in the .xml file
-        //
-        else if (i >= totalNodes-1) {
-            
-            // Insert a new NODE tag at the end
-            // and fill it with the proper structure
-            //
-            int lastPlace = XML.addTag("NODE");
-            
-            XML.addAttribute("NODE", "id", nId, lastPlace);
-            XML.addAttribute("NODE", "name", name, lastPlace);
-            XML.addAttribute("NODE", "type", "GLITCH_1", lastPlace);
-            XML.addAttribute("NODE", "enabled", isEnabled, lastPlace);
-            if (input.size()) XML.setAttribute("NODE", "inputSource", input[0]->getId(), lastPlace);
-            
-            XML.addAttribute("NODE","do_CONVERGENCE", do_CONVERGENCE, lastPlace);
-            XML.addAttribute("NODE","do_GLOW", do_GLOW, lastPlace);
-            XML.addAttribute("NODE","do_SHAKER", do_SHAKER, lastPlace);
-            XML.addAttribute("NODE","do_CUTSLIDER", do_CUTSLIDER, lastPlace);
-            XML.addAttribute("NODE","do_TWIST", do_TWIST, lastPlace);
-            XML.addAttribute("NODE","do_OUTLINE", do_OUTLINE, lastPlace);
-            XML.addAttribute("NODE","do_NOISE", do_NOISE, lastPlace);
-            XML.addAttribute("NODE","do_SLITSCAN", do_SLITSCAN, lastPlace);
-            XML.addAttribute("NODE","do_SWELL", do_SWELL, lastPlace);
-            XML.addAttribute("NODE","do_INVERT", do_INVERT, lastPlace);
-            
-            XML.addAttribute("NODE","do_CR_HIGHCONTRAST", do_CR_HIGHCONTRAST, lastPlace);
-            XML.addAttribute("NODE","do_CR_BLUERAISE", do_CR_BLUERAISE, lastPlace);
-            XML.addAttribute("NODE","do_CR_REDRAISE", do_CR_REDRAISE, lastPlace);
-            XML.addAttribute("NODE","do_CR_GREENRAISE", do_CR_GREENRAISE, lastPlace);
-            XML.addAttribute("NODE","do_CR_BLUEINVERT", do_CR_BLUEINVERT, lastPlace);
-            XML.addAttribute("NODE","do_CR_REDINVERT", do_CR_REDINVERT, lastPlace);
-            XML.addAttribute("NODE","do_CR_GREENINVERT", do_CR_GREENINVERT, lastPlace);
-            
-            saved = XML.pushTag("NODE", lastPlace);
-            if (saved){
-                saved = ofxPatch::saveSettings(XML, true, lastPlace);
-                XML.popTag(); // NODE
-            }
-        }
+    XML.addAttribute("NODE","do_CONVERGENCE", do_CONVERGENCE, lastPlace);
+    XML.addAttribute("NODE","do_GLOW", do_GLOW, lastPlace);
+    XML.addAttribute("NODE","do_SHAKER", do_SHAKER, lastPlace);
+    XML.addAttribute("NODE","do_CUTSLIDER", do_CUTSLIDER, lastPlace);
+    XML.addAttribute("NODE","do_TWIST", do_TWIST, lastPlace);
+    XML.addAttribute("NODE","do_OUTLINE", do_OUTLINE, lastPlace);
+    XML.addAttribute("NODE","do_NOISE", do_NOISE, lastPlace);
+    XML.addAttribute("NODE","do_SLITSCAN", do_SLITSCAN, lastPlace);
+    XML.addAttribute("NODE","do_SWELL", do_SWELL, lastPlace);
+    XML.addAttribute("NODE","do_INVERT", do_INVERT, lastPlace);
+    
+    XML.addAttribute("NODE","do_CR_HIGHCONTRAST", do_CR_HIGHCONTRAST, lastPlace);
+    XML.addAttribute("NODE","do_CR_BLUERAISE", do_CR_BLUERAISE, lastPlace);
+    XML.addAttribute("NODE","do_CR_REDRAISE", do_CR_REDRAISE, lastPlace);
+    XML.addAttribute("NODE","do_CR_GREENRAISE", do_CR_GREENRAISE, lastPlace);
+    XML.addAttribute("NODE","do_CR_BLUEINVERT", do_CR_BLUEINVERT, lastPlace);
+    XML.addAttribute("NODE","do_CR_REDINVERT", do_CR_REDINVERT, lastPlace);
+    XML.addAttribute("NODE","do_CR_GREENINVERT", do_CR_GREENINVERT, lastPlace);
+    
+    saved = XML.pushTag("NODE", lastPlace);
+    if (saved){
+        saved = ofxPatch::saveSettings(XML, true, lastPlace);
+        XML.popTag(); // NODE
     }
-    
+
     return saved;
     
 }
@@ -448,13 +392,14 @@ bool GlitchLayer::saveSettings(ofxXmlSettings &XML) {
 //------------------------------------------------------------------
 bool GlitchLayer::saveSettingsToSnippet(ofxXmlSettings &XML, map<int,int> newIdsMap) {
     
-    bool saved = false;
+    bool saved = true;
 
     int lastPlace = XML.addTag("NODE");
     
     XML.addAttribute("NODE", "id", newIdsMap[nId], lastPlace);
     XML.addAttribute("NODE", "name", name, lastPlace);
     XML.addAttribute("NODE", "type", "GLITCH_1", lastPlace);
+    XML.addAttribute("NODE", "enabled", isEnabled, lastPlace);
     if (input.size() && newIdsMap[input[0]->getId()])
         XML.setAttribute("NODE", "inputSource", newIdsMap[input[0]->getId()], lastPlace);
     
@@ -477,10 +422,9 @@ bool GlitchLayer::saveSettingsToSnippet(ofxXmlSettings &XML, map<int,int> newIds
     XML.addAttribute("NODE","do_CR_REDINVERT", do_CR_REDINVERT, lastPlace);
     XML.addAttribute("NODE","do_CR_GREENINVERT", do_CR_GREENINVERT, lastPlace);
     
-    if (XML.pushTag("NODE", lastPlace)){
-        
+    saved = XML.pushTag("NODE", lastPlace);
+    if (saved){
         saved = ofxPatch::saveSettingsToSnippet(XML, lastPlace, newIdsMap);
-        
         XML.popTag();
     }
     

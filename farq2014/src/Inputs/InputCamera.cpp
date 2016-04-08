@@ -147,7 +147,7 @@ void InputCamera::initCamera() {
 //------------------------------------------------------------------
 bool InputCamera::loadSettings(ofxXmlSettings &XML, int nTag_, int nodesCount_) {
     
-    bool loaded = false;
+    bool loaded = true;
         
     //not used yet
     string cameraId = XML.getAttribute("NODE", "id","default", nTag_);
@@ -182,7 +182,7 @@ bool InputCamera::loadSettings(ofxXmlSettings &XML, int nTag_, int nodesCount_) 
     bVisible        = XML.getValue("visible", true);
     filePath        = XML.getValue("path", "none" );
 
-    ofxPatch::loadSettings(XML, nTag_, nodesCount_);
+    loaded = ofxPatch::loadSettings(XML, nTag_, nodesCount_);
     
     XML.popTag();
     
@@ -193,58 +193,23 @@ bool InputCamera::loadSettings(ofxXmlSettings &XML, int nTag_, int nodesCount_) 
 bool InputCamera::saveSettings(ofxXmlSettings &XML) {
     
     bool saved = true;
-        
-    // Search for the patch ID to update information
-    // If the patch ID doesn't exists.. then I need to add it to the .xml
+            
+    // Insert a new NODE tag at the end
+    // and fill it with the proper structure
     //
-    
-    // Get the total number of nodes of the same type ...
-    //
-    int totalNodes = XML.getNumTags("NODE");
-    
-    // ... and search for the right id for loading
-    //
-    for (int i = 0; i <= totalNodes; i++){
-        
-        
-        // Once it found the right surface that match the id ...
-        //
-        if ( XML.getAttribute("NODE", "id", -1, i) == nId){
-            
-            XML.setAttribute("NODE", "name", name, i);
-            XML.setAttribute("NODE", "cameraName", cameraName, i);
-            XML.pushTag("NODE", i);
-            
-            saved = ofxPatch::saveSettings(XML, false, i);
-            
-            XML.popTag();
-            
-            break;
-        }
-        
-        // If it was the last node in the XML and it wasn't me..
-        // I need to add myself in the .xml file
-        //
-        else if (i >= totalNodes-1) {
-            
-            // Insert a new NODE tag at the end
-            // and fill it with the proper structure
-            //
-            int lastPlace = XML.addTag("NODE");
-            
-            XML.addAttribute("NODE", "id", nId, lastPlace);
-            XML.addAttribute("NODE", "name", name, lastPlace);
-            XML.addAttribute("NODE", "type", "CAM", lastPlace);
-            XML.addAttribute("NODE", "cameraName", cameraName, lastPlace);
-            
-            saved = XML.pushTag("NODE", lastPlace);
-            if (saved){
-                saved = ofxPatch::saveSettings(XML, true, lastPlace);
-                XML.popTag(); // NODE
-            }
-        }
-    }
+    int lastPlace = XML.addTag("NODE");
 
+    XML.addAttribute("NODE", "id", nId, lastPlace);
+    XML.addAttribute("NODE", "name", name, lastPlace);
+    XML.addAttribute("NODE", "type", "CAM", lastPlace);
+    XML.addAttribute("NODE", "cameraName", cameraName, lastPlace);
+
+    saved = XML.pushTag("NODE", lastPlace);
+    if (saved){
+        saved = ofxPatch::saveSettings(XML, true, lastPlace);
+        XML.popTag(); // NODE
+    }
+    
     return saved;
     
 }
@@ -252,7 +217,7 @@ bool InputCamera::saveSettings(ofxXmlSettings &XML) {
 //------------------------------------------------------------------
 bool InputCamera::saveSettingsToSnippet(ofxXmlSettings &XML, map<int,int> newIdsMap) {
     
-    bool saved = false;
+    bool saved = true;
     int lastPlace = XML.addTag("NODE");
     
     XML.addAttribute("NODE", "id", newIdsMap[nId], lastPlace);
@@ -260,11 +225,10 @@ bool InputCamera::saveSettingsToSnippet(ofxXmlSettings &XML, map<int,int> newIds
     XML.addAttribute("NODE", "type", "CAM", lastPlace);
     XML.addAttribute("NODE", "cameraName", cameraName, lastPlace);
     
-    if (XML.pushTag("NODE", lastPlace)){
-        
+    saved = XML.pushTag("NODE", lastPlace);
+    if (saved){
         saved = ofxPatch::saveSettingsToSnippet(XML, lastPlace, newIdsMap);
-        
-        XML.popTag();
+        XML.popTag();  // NODE
     }
     
     return saved;

@@ -180,7 +180,7 @@ void OSCReceiver::removeNodeParams(int nodeId_){
 //------------------------------------------------------------------
 bool OSCReceiver::loadSettings(ofxXmlSettings &XML, int nTag_, int nodesCount_) {
     
-    bool loaded = false;
+    bool loaded = true;
     
     nId     = XML.getAttribute("NODE", "id", -1, nTag_) + nodesCount_;
     port    = XML.getAttribute("NODE", "port", 6666, nTag_);
@@ -189,26 +189,28 @@ bool OSCReceiver::loadSettings(ofxXmlSettings &XML, int nTag_, int nodesCount_) 
     oldAddress = address;
     
     
-    XML.pushTag("NODE", nTag_);
+    loaded = XML.pushTag("NODE", nTag_);
     
-    type            = XML.getValue("type","none");
-    bVisible        = XML.getValue("visible", true);
-    filePath        = XML.getValue("path", "none" );
-    
-    int numParamTag = XML.getNumTags("PARAM");
-    if (numParamTag > 0){
-        for (int v = 0; v < numParamTag; v++){
-            string name_ = XML.getAttribute("PARAM","name","",v);
-            int nodeID_ = XML.getAttribute("PARAM","nodeID",-1,v);
-            if (name_ != "" && nodeID_ != -1) {
-                addParameter(nodeID_, name_);
+    if (loaded) {
+        type            = XML.getValue("type","none");
+        bVisible        = XML.getValue("visible", true);
+        filePath        = XML.getValue("path", "none" );
+        
+        int numParamTag = XML.getNumTags("PARAM");
+        if (numParamTag > 0){
+            for (int v = 0; v < numParamTag; v++){
+                string name_ = XML.getAttribute("PARAM","name","",v);
+                int nodeID_ = XML.getAttribute("PARAM","nodeID",-1,v);
+                if (name_ != "" && nodeID_ != -1) {
+                    addParameter(nodeID_, name_);
+                }
             }
         }
-    }
 
-    ofxPatch::loadSettings(XML, nTag_, nodesCount_);
-    
-    XML.popTag();
+        loaded = ofxPatch::loadSettings(XML, nTag_, nodesCount_);
+        
+        XML.popTag();
+    }
     
     return loaded;
 }
@@ -217,79 +219,67 @@ bool OSCReceiver::loadSettings(ofxXmlSettings &XML, int nTag_, int nodesCount_) 
 bool OSCReceiver::saveSettings(ofxXmlSettings &XML) {
     
     bool saved = true;
-    
-    // Search for the patch ID to update information
-    // If the patch ID doesn't exists.. then I need to add it to the .xml
+            
+    // Insert a new NODE tag at the end
+    // and fill it with the proper structure
     //
+    int lastPlace = XML.addTag("NODE");
     
-    // Get the total number of nodes of the same type ...
-    //
-    int totalNodes = XML.getNumTags("NODE");
+    XML.addAttribute("NODE", "id", nId, lastPlace);
+    XML.addAttribute("NODE", "name", name, lastPlace);
+    XML.addAttribute("NODE", "type", "OSC_RECEIVER", lastPlace);
+    XML.addAttribute("NODE", "port", port, lastPlace);
+    XML.addAttribute("NODE", "address", address, lastPlace);
     
-    // ... and search for the right id for loading
-    //
-    for (int i = 0; i <= totalNodes; i++){
+    saved = XML.pushTag("NODE", lastPlace);
+    if (saved){
         
-        
-        // Once it found the right surface that match the id ...
-        //
-        if ( XML.getAttribute("NODE", "id", -1, i) == nId){
-            
-            XML.setAttribute("NODE", "name", name, i);
-            XML.addAttribute("NODE", "port", port, i);
-            XML.addAttribute("NODE", "address", address, i);
-            XML.pushTag("NODE", i);
-            
-            int numParamTag = XML.getNumTags("PARAM");
-            for (int v = 0; v < numParamTag; v++){
-                XML.removeTag("PARAM");
-            }
-            
-            for (int v = 0; v < paramsLabels.size(); v++){
-                XML.addTag("PARAM");
-                XML.addAttribute("PARAM", "name", paramsLabels[v].paramName, v);
-                XML.addAttribute("PARAM", "nodeID", paramsLabels[v].nodeId, v);
-            }
-            
-            saved = ofxPatch::saveSettings(XML, false, i);
-            
-            XML.popTag();
-            
-            break;
+        for (int v = 0; v < paramsLabels.size(); v++){
+            XML.addTag("PARAM");
+            XML.addAttribute("PARAM", "name", paramsLabels[v].paramName, v);
+            XML.addAttribute("PARAM", "nodeID", paramsLabels[v].nodeId, v);
         }
         
-        // If it was the last node in the XML and it wasn't me..
-        // I need to add myself in the .xml file
-        //
-        else if (i >= totalNodes-1) {
+        saved = ofxPatch::saveSettings(XML, true, lastPlace);
+        
+        XML.popTag(); // NODE
+    }
+
+    return saved;
+}
+
+//------------------------------------------------------------------
+bool OSCReceiver::saveSettingsToSnippet(ofxXmlSettings &XML, map<int,int> newIdsMap) {
+    
+    bool saved = true;
+    
+    if (newIdsMap[nId]) {
+        
+        int lastPlace = XML.addTag("NODE");
+        
+        XML.addAttribute("NODE", "id", newIdsMap[nId], lastPlace);
+        XML.addAttribute("NODE", "name", name, lastPlace);
+        XML.addAttribute("NODE", "type", "OSC_RECEIVER", lastPlace);
+        XML.addAttribute("NODE", "port", port, lastPlace);
+        XML.addAttribute("NODE", "address", address, lastPlace);
+        
+        saved = XML.pushTag("NODE", lastPlace);
+        if (saved){
             
-            // Insert a new NODE tag at the end
-            // and fill it with the proper structure
-            //
-            int lastPlace = XML.addTag("NODE");
-            
-            XML.addAttribute("NODE", "id", nId, lastPlace);
-            XML.addAttribute("NODE", "name", name, lastPlace);
-            XML.addAttribute("NODE", "type", "OSC_RECEIVER", lastPlace);
-            XML.addAttribute("NODE", "port", port, lastPlace);
-            XML.addAttribute("NODE", "address", address, lastPlace);
-            
-            saved = XML.pushTag("NODE", lastPlace);
-            if (saved){
+            for (int v = 0; v < paramsLabels.size(); v++){
                 
-                for (int v = 0; v < paramsLabels.size(); v++){
+                if (newIdsMap[paramsLabels[v].nodeId]) {
                     XML.addTag("PARAM");
                     XML.addAttribute("PARAM", "name", paramsLabels[v].paramName, v);
                     XML.addAttribute("PARAM", "nodeID", paramsLabels[v].nodeId, v);
                 }
-                
-                saved = ofxPatch::saveSettings(XML, true, lastPlace);
-                
-                XML.popTag(); // NODE
             }
+            
+            saved = ofxPatch::saveSettings(XML, true, lastPlace);
+            
+            XML.popTag(); // NODE
         }
     }
     
     return saved;
-    
 }

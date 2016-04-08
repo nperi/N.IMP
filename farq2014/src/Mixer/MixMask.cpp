@@ -206,70 +206,27 @@ bool MixMask::loadSettings(ofxXmlSettings &XML, int nTag_, int nodesCount_) {
 bool MixMask::saveSettings(ofxXmlSettings &XML) {
     
     bool saved = true;
-    
-    // Search for the patch ID to update information
-    // If the patch ID doesn't exists.. then I need to add it to the .xml
+            
+    // Insert a new NODE tag at the end
+    // and fill it with the proper structure
     //
+    int lastPlace = XML.addTag("NODE");
     
-    // Get the total number of nodes of the same type ...
-    //
-    int totalNodes = XML.getNumTags("NODE");
+    XML.addAttribute("NODE", "id", nId, lastPlace);
+    XML.addAttribute("NODE", "name", name, lastPlace);
+    XML.addAttribute("NODE", "type", "MASK", lastPlace);
+    XML.addAttribute("NODE", "enabled", isEnabled, lastPlace);
     
-    // ... and search for the right id for loading
-    //
-    for (int i = 0; i <= totalNodes; i++){
-        
-        // Once it found the right surface that match the id ...
-        //
-        if ( XML.getAttribute("NODE", "id", -1, i) == nId){
-            
-            XML.setAttribute("NODE", "name", name, i);
-            XML.setAttribute("NODE", "spin", spin, i);
-            
-            XML.pushTag("NODE", i);
-            
-            int numInputSource = XML.getNumTags("INPUT_SOURCE");
-            
-            for (int iS = 0; iS < input.size(); iS++){
-                
-                if (iS >= numInputSource) {
-                    XML.addTag("INPUT_SOURCE");
-                }
-                XML.setAttribute("INPUT_SOURCE", "nodeId", input[iS]->getId(), iS);
-            }
-            
-            saved = ofxPatch::saveSettings(XML, false, i);
-            XML.popTag();
-            break;
+    XML.addAttribute("NODE", "spin", spin, lastPlace);
+    
+    saved = XML.pushTag("NODE", lastPlace);
+    if (saved){
+        for (int iS = 0; iS < input.size(); iS++){
+            XML.addTag("INPUT_SOURCE");
+            XML.addAttribute("INPUT_SOURCE", "nodeId", input[iS]->getId(), iS);
         }
-        
-        // If it was the last node in the XML and it wasn't me..
-        // I need to add myself in the .xml file
-        //
-        else if (i >= totalNodes-1) {
-            
-            // Insert a new NODE tag at the end
-            // and fill it with the proper structure
-            //
-            int lastPlace = XML.addTag("NODE");
-            
-            XML.addAttribute("NODE", "id", nId, lastPlace);
-            XML.addAttribute("NODE", "name", name, lastPlace);
-            XML.addAttribute("NODE", "type", "MASK", lastPlace);
-            XML.addAttribute("NODE", "enabled", isEnabled, lastPlace);
-            
-            XML.addAttribute("NODE", "spin", spin, lastPlace);
-            
-            saved = XML.pushTag("NODE", lastPlace);
-            if (saved){
-                for (int iS = 0; iS < input.size(); iS++){
-                    XML.addTag("INPUT_SOURCE");
-                    XML.addAttribute("INPUT_SOURCE", "nodeId", input[iS]->getId(), iS);
-                }
-                saved = ofxPatch::saveSettings(XML, true, lastPlace);
-                XML.popTag(); // NODE
-            }
-        }
+        saved = ofxPatch::saveSettings(XML, true, lastPlace);
+        XML.popTag(); // NODE
     }
     
     return saved;
@@ -278,17 +235,18 @@ bool MixMask::saveSettings(ofxXmlSettings &XML) {
 //------------------------------------------------------------------
 bool MixMask::saveSettingsToSnippet(ofxXmlSettings &XML, map<int,int> newIdsMap) {
     
-    bool saved = false;
+    bool saved = true;
     int lastPlace = XML.addTag("NODE");
     
     XML.addAttribute("NODE", "id", newIdsMap[nId], lastPlace);
     XML.addAttribute("NODE", "name", name, lastPlace);
     XML.addAttribute("NODE", "type", "MASK", lastPlace);
+    XML.addAttribute("NODE", "enabled", isEnabled, lastPlace);
     
     XML.addAttribute("NODE", "spin", spin, lastPlace);
     
-    if (XML.pushTag("NODE", lastPlace)){
-        
+    saved = XML.pushTag("NODE", lastPlace);
+    if (saved){
         int count = 0;
         for (int iS = 0; iS < input.size(); iS++){
             

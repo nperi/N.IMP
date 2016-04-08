@@ -41,9 +41,9 @@ private:
     bool serverDown;
 //    void serverAnnounced(ofxSyphonServerDirectoryEventArgs &arg);
 
-    void updateParameter(Param* inputParam);
-    float getMidiMin(string param_);
-    float getMidiMax(string param_);
+    void updateParameter(Param* inputParam){};
+    float getMidiMin(string param_){};
+    float getMidiMax(string param_){};
     
     ofxButton nextServer;
     ofxButton prevServer;

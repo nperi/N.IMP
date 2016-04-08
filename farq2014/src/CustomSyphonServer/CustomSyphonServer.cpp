@@ -185,6 +185,23 @@ void CustomSyphonServer::inputRemoved(int id_){
 }
 
 //------------------------------------------------------------------
+bool CustomSyphonServer::loadSettings(ofxXmlSettings &XML, int nTag_, int nodesCount_) {
+    bool loaded = false;
+    nId = XML.getAttribute("NODE", "id", -1, nTag_) + nodesCount_;
+    aspectRatio = XML.getAttribute("NODE", "aspectRatio", 0, nTag_);
+    previous_index = -1;
+    
+    XML.pushTag("NODE", nTag_);
+    
+    ofxPatch::loadSettings(XML, nTag_, nodesCount_);
+    
+    XML.popTag();
+    
+    return loaded;
+    
+}
+
+//------------------------------------------------------------------
 bool CustomSyphonServer::saveSettings(ofxXmlSettings &XML) {
     bool saved = true;
     
@@ -207,18 +224,30 @@ bool CustomSyphonServer::saveSettings(ofxXmlSettings &XML) {
 }
 
 //------------------------------------------------------------------
-bool CustomSyphonServer::loadSettings(ofxXmlSettings &XML, int nTag_, int nodesCount_) {
-    bool loaded = false;
-    nId = XML.getAttribute("NODE", "id", -1, nTag_) + nodesCount_;
-    aspectRatio = XML.getAttribute("NODE", "aspectRatio", 0, nTag_);
-    previous_index = -1;
+bool CustomSyphonServer::saveSettingsToSnippet(ofxXmlSettings &XML, map<int,int> newIdsMap) {
     
-    XML.pushTag("NODE", nTag_);
+    bool saved = feeder != NULL;
     
-    ofxPatch::loadSettings(XML, nTag_, nodesCount_);
-    
-    XML.popTag();
-    
-    return loaded;
-    
+    if(saved){
+        
+        int lastPlace = XML.addTag("NODE");
+        
+        XML.addAttribute("NODE", "id", nId, lastPlace);
+        XML.addAttribute("NODE", "name", name, lastPlace);
+        XML.addAttribute("NODE", "type", "SYPHON_OUTPUT", lastPlace);
+        XML.addAttribute("NODE", "aspectRatio", aspectRatio, lastPlace);
+        if (newIdsMap[feeder->getId()]) {
+            XML.addAttribute("NODE", "inputId", feeder->getId(), lastPlace);
+        }
+        
+        XML.pushTag("NODE", lastPlace);
+        saved = ofxPatch::saveSettings(XML, true, lastPlace);
+        if (saved) {
+            XML.popTag();
+        }
+
+    } else {
+        ConsoleLog::getInstance()->pushError("Error trying to save a syphon server with no inputs");
+    }
+    return saved;
 }

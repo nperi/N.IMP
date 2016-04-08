@@ -24,7 +24,7 @@ public:
     void setup();
     bool saveSettings(ofxXmlSettings &XML);
     bool loadSettings(ofxXmlSettings &XML, int nTag_, int nodesCount_ = 0);
-    bool saveSettingsToSnippet(ofxXmlSettings &XML, map<int,int> newIdsMap) {};
+    bool saveSettingsToSnippet(ofxXmlSettings &XML, map<int,int> newIdsMap);
     
     ofImage*    getImage();
     ofTexture*  getTexture();

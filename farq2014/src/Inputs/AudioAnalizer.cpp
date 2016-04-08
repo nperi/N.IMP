@@ -128,91 +128,43 @@ bool AudioAnalizer::loadSettings(ofxXmlSettings &XML, int nTag_, int nodesCount_
 bool AudioAnalizer::saveSettings(ofxXmlSettings &XML) {
     
     bool saved = true;
-    
-    // Search for the patch ID to update information
-    // If the patch ID doesn't exists.. then I need to add it to the .xml
+            
+    // Insert a new NODE tag at the end
+    // and fill it with the proper structure
     //
+    int lastPlace = XML.addTag("NODE");
     
-    // Get the total number of nodes of the same type ...
-    //
-    int totalNodes = XML.getNumTags("NODE");
+    XML.addAttribute("NODE", "id", nId, lastPlace);
+    XML.addAttribute("NODE", "name", name, lastPlace);
+    XML.addAttribute("NODE", "type", "AUDIO_ANALIZER", lastPlace);
+    XML.setAttribute("NODE", "threshold", threshold, lastPlace);
     
-    // ... and search for the right id for loading
-    //
-    for (int i = 0; i <= totalNodes; i++){
+    saved = XML.pushTag("NODE", lastPlace);
+    if (saved){
+    
+        XML.addTag("visible");
+        XML.setValue("visible", bVisible);
+        XML.addTag("active");
+        XML.setValue("active", drawAudioAnalizer);
         
-        // Once it found the right surface that match the id ...
+        // Texture Corners
         //
-        if ( XML.getAttribute("NODE", "id", -1, i) == nId){
-            
-            XML.setAttribute("NODE", "name", name, i);
-            XML.setAttribute("NODE", "threshold", threshold, i);
-            XML.pushTag("NODE", i);
-            
-            // General information
-            //
-            XML.setValue("visible", bVisible );
-            XML.setValue("active", drawAudioAnalizer);
-            
-            // Position of the texture coorners
-            //
-            saved = XML.pushTag("texture");
-            if (saved) {
-                for(int i = 0; i < 4; i++){
-                    XML.setValue("point:x",textureCorners[i].x, i);
-                    XML.setValue("point:y",textureCorners[i].y, i);
-                }
-                XML.popTag(); // pop "texture"
+        XML.addTag("texture");
+        saved = XML.pushTag("texture");
+        if (saved){
+            for(int i = 0; i < 4; i++){
+                
+                XML.addTag("point");
+                
+                XML.setValue("point:x",textureCorners[i].x, i);
+                XML.setValue("point:y",textureCorners[i].y, i);
             }
-            
-            XML.popTag(); // pop "NODE"
-            
-            break;
+            XML.popTag();// Pop "texture"
         }
         
-        // If it was the last node in the XML and it wasn't me..
-        // I need to add myself in the .xml file
-        //
-        else if (i >= totalNodes-1) {
-            
-            // Insert a new NODE tag at the end
-            // and fill it with the proper structure
-            //
-            int lastPlace = XML.addTag("NODE");
-            
-            XML.addAttribute("NODE", "id", nId, lastPlace);
-            XML.addAttribute("NODE", "name", name, lastPlace);
-            XML.addAttribute("NODE", "type", "AUDIO_ANALIZER", lastPlace);
-            XML.setAttribute("NODE", "threshold", threshold, lastPlace);
-            
-            saved = XML.pushTag("NODE", lastPlace);
-            if (saved){
-            
-                XML.addTag("visible");
-                XML.setValue("visible", bVisible);
-                XML.addTag("active");
-                XML.setValue("active", drawAudioAnalizer);
-                
-                // Texture Corners
-                //
-                XML.addTag("texture");
-                saved = XML.pushTag("texture");
-                if (saved){
-                    for(int i = 0; i < 4; i++){
-                        
-                        XML.addTag("point");
-                        
-                        XML.setValue("point:x",textureCorners[i].x, i);
-                        XML.setValue("point:y",textureCorners[i].y, i);
-                    }
-                    XML.popTag();// Pop "texture"
-                }
-                
-                XML.popTag(); // Pop "NODE"
-            }
-        }
+        XML.popTag(); // Pop "NODE"
     }
-    
+
     return saved;
     
 }

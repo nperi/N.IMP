@@ -242,7 +242,7 @@ void OscInputGenerator::clearOSCMap() {
 
 
 //------------------------------------------------------------------
-bool OscInputGenerator::loadSettings(ofxXmlSettings &XML) {
+bool OscInputGenerator::loadSettings(ofxXmlSettings &XML, int nodesCount_) {
     
     bool result = true;
     
@@ -265,7 +265,7 @@ bool OscInputGenerator::loadSettings(ofxXmlSettings &XML) {
         
         for(int i = 0; i < getNumOSCMapTag; i++){
             
-            int     nodeId = XML.getAttribute("OSC_MAP","nodeId",0,i);
+            int     nodeId = XML.getAttribute("OSC_MAP","nodeId",0,i) + nodesCount_;
             string  param = XML.getAttribute("OSC_MAP","param","",i);
             float   inputMinValue = ofToFloat(XML.getAttribute("OSC_MAP","inputMinValue","0",i));
             float   inputMaxValue = ofToFloat(XML.getAttribute("OSC_MAP","inputMaxValue","127",i));
@@ -295,102 +295,88 @@ bool OscInputGenerator::saveSettings(ofxXmlSettings &XML) {
     
     bool saved = true;
     
-    // Search for the input generator name to update information
-    // If it doesn't exists.. then I need to add it to the .xml
+    // Insert a new INPUT_GEN tag at the end
+    // and fill it with the proper structure
     //
+    int lastPlace = XML.addTag("INPUT_GEN");
     
-    // Get the total number of input generators ...
-    //
-    int totalInputGen = XML.getNumTags("INPUT_GEN");
+    XML.addAttribute("INPUT_GEN", "nodeId", nodeID, lastPlace);
+    XML.addAttribute("INPUT_GEN", "type", "OSC", lastPlace);
     
-    // ... and search for the right name for loading
-    //
-    for (int i = 0; i <= totalInputGen; i++){
+    saved = XML.pushTag("INPUT_GEN", lastPlace);
+    if (saved) {
         
-        // Once it found the right one ...
-        //
-        if ( XML.getAttribute("INPUT_GEN", "nodeId", -1, i) == nodeID){
+        lastPlace = XML.addTag("OSC_SETTINGS");
+        XML.addAttribute("OSC_SETTINGS", "port", port, lastPlace);
+        saved = XML.pushTag("OSC_SETTINGS", lastPlace);
+        if (saved) {
             
-            XML.pushTag("INPUT_GEN", i);
-            
-            XML.addAttribute("OSC_SETTINGS", "port", port, i);
-            XML.pushTag("OSC_SETTINGS");
-            
-            int numAddressMapTag = XML.getNumTags("ADDRESS");
-            for (int v = 0; v < numAddressMapTag; v++){
-                XML.removeTag("ADDRESS");
-            }
-            
-            int lastPlace = 0;
             for (std::map<string,DTOscMap* >::iterator it = oscMap->begin(); it != oscMap->end(); it++) {
+                lastPlace = XML.addTag("ADDRESS");
+                XML.setAttribute("ADDRESS","path", it->first, lastPlace);
+                XML.pushTag("ADDRESS", lastPlace);
                 for (int j = 0; j < it->second->nodeId.size(); j++) {
-                
-                    lastPlace = XML.addTag("ADDRESS");
-                    XML.setAttribute("ADDRESS","path", it->first, lastPlace);
-                    XML.pushTag("ADDRESS", lastPlace);
                     
                     XML.addTag("OSC_MAP");
-                    XML.setAttribute("OSC_MAP","nodeId", it->second->nodeId[j], j);
-                    XML.setAttribute("OSC_MAP","param", it->second->paramId[j], j);
-                    XML.setAttribute("OSC_MAP","inputMinValue", it->second->inputMinValue[j], j);
-                    XML.setAttribute("OSC_MAP","inputMaxValue", it->second->inputMaxValue[j], j);
-                    XML.setAttribute("OSC_MAP","paramMinValue", it->second->paramMinValue[j], j);
-                    XML.setAttribute("OSC_MAP","paramMaxValue", it->second->paramMaxValue[j], j);
-                    
-                    XML.popTag(); // ADDRESS
+                    XML.addAttribute("OSC_MAP","nodeId", it->second->nodeId[j], j);
+                    XML.addAttribute("OSC_MAP","param", it->second->paramId[j], j);
+                    XML.addAttribute("OSC_MAP","inputMinValue", it->second->inputMinValue[j], j);
+                    XML.addAttribute("OSC_MAP","inputMaxValue", it->second->inputMaxValue[j], j);
+                    XML.addAttribute("OSC_MAP","paramMinValue", it->second->paramMinValue[j], j);
+                    XML.addAttribute("OSC_MAP","paramMaxValue", it->second->paramMaxValue[j], j);
                 }
+                XML.popTag(); // ADDRESS
             }
             
-            XML.popTag(); // OSC_SETTINGS
-            XML.popTag(); // INPUT_GEN
-            
-            break;
+            XML.popTag(); // FFT_SETTINGS
         }
-        
-        // If it was the last input generator in the XML and it wasn't me..
-        // I need to add myself in the .xml file
-        //
-        else if (i >= totalInputGen-1) {
-            
-            // Insert a new INPUT_GEN tag at the end
-            // and fill it with the proper structure
-            //
-            int lastPlace = XML.addTag("INPUT_GEN");
-            
-            XML.addAttribute("INPUT_GEN", "nodeId", nodeID, lastPlace);
-            XML.addAttribute("INPUT_GEN", "type", "OSC", lastPlace);
-            
-            saved = XML.pushTag("INPUT_GEN", lastPlace);
-            if (saved) {
-                lastPlace = XML.addTag("OSC_SETTINGS");
-                XML.addAttribute("OSC_SETTINGS", "port", port, lastPlace);
-                saved = XML.pushTag("OSC_SETTINGS", lastPlace);
-                if (saved) {
-                    for (std::map<string,DTOscMap* >::iterator it = oscMap->begin(); it != oscMap->end(); it++) {
-                        lastPlace = XML.addTag("ADDRESS");
-                        XML.setAttribute("ADDRESS","path", it->first, lastPlace);
-                        XML.pushTag("ADDRESS", lastPlace);
-                        for (int j = 0; j < it->second->nodeId.size(); j++) {
-                            
-                            XML.addTag("OSC_MAP");
-                            XML.addAttribute("OSC_MAP","nodeId", it->second->nodeId[j], j);
-                            XML.addAttribute("OSC_MAP","param", it->second->paramId[j], j);
-                            XML.addAttribute("OSC_MAP","inputMinValue", it->second->inputMinValue[j], j);
-                            XML.addAttribute("OSC_MAP","inputMaxValue", it->second->inputMaxValue[j], j);
-                            XML.addAttribute("OSC_MAP","paramMinValue", it->second->paramMinValue[j], j);
-                            XML.addAttribute("OSC_MAP","paramMaxValue", it->second->paramMaxValue[j], j);
-                        }
-                        XML.popTag(); // ADDRESS
-                    }
-                    
-                    XML.popTag(); // FFT_SETTINGS
-                }
-                XML.popTag(); // INPUT_GEN
-            }
-        }
+        XML.popTag(); // INPUT_GEN
     }
     
     return saved;
+}
+
+//------------------------------------------------------------------
+bool OscInputGenerator::saveSettingsToSnippet(ofxXmlSettings &XML, map<int,int> newIdsMap) {
     
+    bool saved = true;
+    int lastPlace = XML.addTag("INPUT_GEN");
+    
+    XML.addAttribute("INPUT_GEN", "nodeId", nodeID, lastPlace);
+    XML.addAttribute("INPUT_GEN", "type", "OSC", lastPlace);
+    
+    saved = XML.pushTag("INPUT_GEN", lastPlace);
+    if (saved) {
+        
+        lastPlace = XML.addTag("OSC_SETTINGS");
+        XML.addAttribute("OSC_SETTINGS", "port", port, lastPlace);
+        saved = XML.pushTag("OSC_SETTINGS", lastPlace);
+        if (saved) {
+            
+            for (std::map<string,DTOscMap* >::iterator it = oscMap->begin(); it != oscMap->end(); it++) {
+                lastPlace = XML.addTag("ADDRESS");
+                XML.setAttribute("ADDRESS","path", it->first, lastPlace);
+                XML.pushTag("ADDRESS", lastPlace);
+                for (int j = 0; j < it->second->nodeId.size(); j++) {
+                    
+                    if (newIdsMap[it->second->nodeId[j]]) {
+                        XML.addTag("OSC_MAP");
+                        XML.addAttribute("OSC_MAP","nodeId", it->second->nodeId[j], j);
+                        XML.addAttribute("OSC_MAP","param", it->second->paramId[j], j);
+                        XML.addAttribute("OSC_MAP","inputMinValue", it->second->inputMinValue[j], j);
+                        XML.addAttribute("OSC_MAP","inputMaxValue", it->second->inputMaxValue[j], j);
+                        XML.addAttribute("OSC_MAP","paramMinValue", it->second->paramMinValue[j], j);
+                        XML.addAttribute("OSC_MAP","paramMaxValue", it->second->paramMaxValue[j], j);
+                    }
+                }
+                XML.popTag(); // ADDRESS
+            }
+            
+            XML.popTag(); // FFT_SETTINGS
+        }
+        XML.popTag(); // INPUT_GEN
+    }
+    
+    return saved;
 }
 

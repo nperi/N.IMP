@@ -51,7 +51,7 @@ public:
     
     bool loadSettings(ofxXmlSettings &XML, int nTag_, int nodesCount_ = 0);
     bool saveSettings(ofxXmlSettings &XML);
-    bool saveSettingsToSnippet(ofxXmlSettings &XML, map<int,int> newIdsMap){};
+    bool saveSettingsToSnippet(ofxXmlSettings &XML, map<int,int> newIdsMap);
     
 private:
     

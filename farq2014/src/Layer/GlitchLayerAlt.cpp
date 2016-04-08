@@ -166,67 +166,26 @@ bool GlitchLayerAlt::loadSettings(ofxXmlSettings &XML, int nTag_, int nodesCount
 bool GlitchLayerAlt::saveSettings(ofxXmlSettings &XML) {
     
     bool saved = true;
-    
-    // Search for the patch ID to update information
-    // If the patch ID doesn't exists.. then I need to add it to the .xml
+            
+    // Insert a new NODE tag at the end
+    // and fill it with the proper structure
     //
+    int lastPlace = XML.addTag("NODE");
     
-    // Get the total number of nodes of the same type ...
-    //
-    int totalNodes = XML.getNumTags("NODE");
+    XML.addAttribute("NODE", "id", nId, lastPlace);
+    XML.addAttribute("NODE", "name", name, lastPlace);
+    XML.addAttribute("NODE", "type", "GLITCH_2", lastPlace);
+    XML.addAttribute("NODE", "enabled", isEnabled, lastPlace);
+    if (input.size()) XML.addAttribute("NODE", "inputSource", input[0]->getId(), lastPlace);
     
-    // ... and search for the right id for loading
-    //
-    for (int i = 0; i <= totalNodes; i++){
-        
-        // Once it found the right surface that match the id ...
-        //
-        if ( XML.getAttribute("NODE", "id", -1, i) == nId){
-            
-            XML.setAttribute("NODE", "name", name, i);
-            if (input.size())
-                XML.setAttribute("NODE", "inputSource", input[0]->getId(), i);
-            else
-                XML.removeAttribute("NODE", "inputSource", i);
-
-            XML.setAttribute("NODE","dq", dq, i);
-            XML.setAttribute("NODE","qn", qn, i);
-            XML.setAttribute("NODE","dht", dht, i);
-            
-            XML.pushTag("NODE", i);
-            
-            saved = ofxPatch::saveSettings(XML, false, i);
-            
-            XML.popTag();
-            break;
-        }
-        
-        // If it was the last node in the XML and it wasn't me..
-        // I need to add myself in the .xml file
-        //
-        else if (i >= totalNodes-1) {
-            
-            // Insert a new NODE tag at the end
-            // and fill it with the proper structure
-            //
-            int lastPlace = XML.addTag("NODE");
-            
-            XML.addAttribute("NODE", "id", nId, lastPlace);
-            XML.addAttribute("NODE", "name", name, lastPlace);
-            XML.addAttribute("NODE", "type", "GLITCH_2", lastPlace);
-            XML.addAttribute("NODE", "enabled", isEnabled, lastPlace);
-            if (input.size()) XML.addAttribute("NODE", "inputSource", input[0]->getId(), lastPlace);
-            
-            XML.addAttribute("NODE","dq", dq, lastPlace);
-            XML.addAttribute("NODE","qn", qn, lastPlace);
-            XML.addAttribute("NODE","dht", dht, lastPlace);
-            
-            saved = XML.pushTag("NODE", lastPlace);
-            if (saved){
-                saved = ofxPatch::saveSettings(XML, true, lastPlace);
-                XML.popTag(); // NODE
-            }
-        }
+    XML.addAttribute("NODE","dq", dq, lastPlace);
+    XML.addAttribute("NODE","qn", qn, lastPlace);
+    XML.addAttribute("NODE","dht", dht, lastPlace);
+    
+    saved = XML.pushTag("NODE", lastPlace);
+    if (saved){
+        saved = ofxPatch::saveSettings(XML, true, lastPlace);
+        XML.popTag(); // NODE
     }
     
     return saved;
@@ -236,12 +195,13 @@ bool GlitchLayerAlt::saveSettings(ofxXmlSettings &XML) {
 //------------------------------------------------------------------
 bool GlitchLayerAlt::saveSettingsToSnippet(ofxXmlSettings &XML, map<int,int> newIdsMap) {
     
-    bool saved = false;
+    bool saved = true;
     int lastPlace = XML.addTag("NODE");
     
     XML.addAttribute("NODE", "id", newIdsMap[nId], lastPlace);
     XML.addAttribute("NODE", "name", name, lastPlace);
     XML.addAttribute("NODE", "type", "GLITCH_2", lastPlace);
+    XML.addAttribute("NODE", "enabled", isEnabled, lastPlace);
     if (input.size() && newIdsMap[input[0]->getId()])
         XML.addAttribute("NODE", "inputSource", newIdsMap[input[0]->getId()], lastPlace);
     
@@ -249,10 +209,9 @@ bool GlitchLayerAlt::saveSettingsToSnippet(ofxXmlSettings &XML, map<int,int> new
     XML.addAttribute("NODE","qn", qn, lastPlace);
     XML.addAttribute("NODE","dht", dht, lastPlace);
     
-    if (XML.pushTag("NODE", lastPlace)){
-        
+    saved = XML.pushTag("NODE", lastPlace);
+    if (saved){
         saved = ofxPatch::saveSettingsToSnippet(XML, lastPlace, newIdsMap);
-        
         XML.popTag();
     }
     

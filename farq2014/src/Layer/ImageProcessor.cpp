@@ -718,131 +718,58 @@ bool ImageProcessor::loadSettings(ofxXmlSettings &XML, int nTag_, int nodesCount
 bool ImageProcessor::saveSettings(ofxXmlSettings &XML) {
     
     bool saved = true;;
-    
-    // Search for the patch ID to update information
-    // If the patch ID doesn't exists.. then I need to add it to the .xml
+            
+    // Insert a new NODE tag at the end
+    // and fill it with the proper structure
     //
+    int lastPlace = XML.addTag("NODE");
     
-    // Get the total number of nodes of the same type ...
-    //
-    int totalNodes = XML.getNumTags("NODE");
+    XML.addAttribute("NODE", "id", nId, lastPlace);
+    XML.addAttribute("NODE", "name", name, lastPlace);
+    XML.addAttribute("NODE", "type", "IMAGE_PROCESSOR", lastPlace);
+    XML.addAttribute("NODE", "enabled", isEnabled, lastPlace);
+    if (input.size()) XML.addAttribute("NODE", "inputSource", input[0]->getId(), lastPlace);
     
-    // ... and search for the right id for loading
-    //
-    for (int i = 0; i <= totalNodes; i++){
-        
-        // Once it found the right surface that match the id ...
-        //
-        if ( XML.getAttribute("NODE", "id", -1, i) == nId){
-            
-            XML.setAttribute("NODE", "name", name, i);
-            if (input.size())
-                XML.setAttribute("NODE", "inputSource", input[0]->getId(), i);
-            else
-                XML.removeAttribute("NODE", "inputSource", i);
-            
-            XML.setAttribute("NODE","isBloom", isBloom, i);
-            
-            XML.setAttribute("NODE","isContrast", isContrast, i);
-            XML.setAttribute("NODE","coContrast", coContrast, i);
-            XML.setAttribute("NODE","coBrightness", coBrightness, i);
-            XML.setAttribute("NODE","coMultiple", coMultiple, i);
-            
-            XML.setAttribute("NODE","isKaleidoscope", isKaleidoscope, i);
-            XML.setAttribute("NODE","kaSegments", kaSegments, i);
-            
-            XML.setAttribute("NODE","isNoise", isNoise, i);
-            XML.setAttribute("NODE","noFreq", noFreq, i);
-            XML.setAttribute("NODE","noAmp", noAmp, i);
-            XML.setAttribute("NODE","noSpeed", noSpeed, i);
-            
-            XML.setAttribute("NODE","isEdge", isEdge, i);
-            XML.setAttribute("NODE","edHue", edHue, i);
-            XML.setAttribute("NODE","edSat", edSat, i);
-            
-            XML.setAttribute("NODE","isBleach", isBleach, i);
-            XML.setAttribute("NODE","blOpacity", blOpacity, i);
-            
-            XML.setAttribute("NODE","isRGBShift", isRGBShift, i);
-            XML.setAttribute("NODE","rgAngle", rgAngle, i);
-            XML.setAttribute("NODE","rgAmount", rgAmount, i);
-            
-            XML.setAttribute("NODE","isGod", isGod, i);
-            
-            XML.setAttribute("NODE","isZoomBlur", isZoomBlur, i);
-            XML.setAttribute("NODE","zbCenterX", zbCenterX, i);
-            XML.setAttribute("NODE","zbCenterY", zbCenterY, i);
-            XML.setAttribute("NODE","zbExposure", zbExposure, i);
-            XML.setAttribute("NODE","zbDensity", zbDensity, i);
-            XML.setAttribute("NODE","zbWeight", zbWeight, i);
-            XML.setAttribute("NODE","zbClamp", zbClamp, i);
-            
-            XML.pushTag("NODE", i);
-            
-            saved = ofxPatch::saveSettings(XML, false, i);
-            
-            XML.popTag();
-            break;
-        }
-        
-        // If it was the last node in the XML and it wasn't me..
-        // I need to add myself in the .xml file
-        //
-        else if (i >= totalNodes-1) {
-            
-            // Insert a new NODE tag at the end
-            // and fill it with the proper structure
-            //
-            int lastPlace = XML.addTag("NODE");
-            
-            XML.addAttribute("NODE", "id", nId, lastPlace);
-            XML.addAttribute("NODE", "name", name, lastPlace);
-            XML.addAttribute("NODE", "type", "IMAGE_PROCESSOR", lastPlace);
-            XML.addAttribute("NODE", "enabled", isEnabled, lastPlace);
-            if (input.size()) XML.addAttribute("NODE", "inputSource", input[0]->getId(), lastPlace);
-            
-            XML.addAttribute("NODE","isBloom", isBloom, lastPlace);
-            
-            XML.addAttribute("NODE","isContrast", isContrast, lastPlace);
-            XML.addAttribute("NODE","coContrast", coContrast, lastPlace);
-            XML.addAttribute("NODE","coBrightness", coBrightness, lastPlace);
-            XML.addAttribute("NODE","coMultiple", coMultiple, lastPlace);
-            
-            XML.addAttribute("NODE","isKaleidoscope", isKaleidoscope, lastPlace);
-            XML.addAttribute("NODE","kaSegments", kaSegments, lastPlace);
-            
-            XML.addAttribute("NODE","isNoise", isNoise, lastPlace);
-            XML.addAttribute("NODE","noFreq", noFreq, lastPlace);
-            XML.addAttribute("NODE","noAmp", noAmp, lastPlace);
-            XML.addAttribute("NODE","noSpeed", noSpeed, lastPlace);
-            
-            XML.addAttribute("NODE","isEdge", isEdge, lastPlace);
-            XML.addAttribute("NODE","edHue", edHue, lastPlace);
-            XML.addAttribute("NODE","edSat", edSat, lastPlace);
-            
-            XML.addAttribute("NODE","isBleach", isBleach, lastPlace);
-            XML.addAttribute("NODE","blOpacity", blOpacity, lastPlace);
-            
-            XML.addAttribute("NODE","isRGBShift", isRGBShift, lastPlace);
-            XML.addAttribute("NODE","rgAngle", rgAngle, lastPlace);
-            XML.addAttribute("NODE","rgAmount", rgAmount, lastPlace);
-            
-            XML.addAttribute("NODE","isGod", isGod, lastPlace);
-            
-            XML.addAttribute("NODE","isZoomBlur", isZoomBlur, lastPlace);
-            XML.addAttribute("NODE","zbCenterX", zbCenterX, lastPlace);
-            XML.addAttribute("NODE","zbCenterY", zbCenterY, lastPlace);
-            XML.addAttribute("NODE","zbExposure", zbExposure, lastPlace);
-            XML.addAttribute("NODE","zbDensity", zbDensity, lastPlace);
-            XML.addAttribute("NODE","zbWeight", zbWeight, lastPlace);
-            XML.addAttribute("NODE","zbClamp", zbClamp, lastPlace);
-            
-            saved = XML.pushTag("NODE", lastPlace);
-            if (saved){
-                saved = ofxPatch::saveSettings(XML, true, lastPlace);
-                XML.popTag();
-            }
-        }
+    XML.addAttribute("NODE","isBloom", isBloom, lastPlace);
+    
+    XML.addAttribute("NODE","isContrast", isContrast, lastPlace);
+    XML.addAttribute("NODE","coContrast", coContrast, lastPlace);
+    XML.addAttribute("NODE","coBrightness", coBrightness, lastPlace);
+    XML.addAttribute("NODE","coMultiple", coMultiple, lastPlace);
+    
+    XML.addAttribute("NODE","isKaleidoscope", isKaleidoscope, lastPlace);
+    XML.addAttribute("NODE","kaSegments", kaSegments, lastPlace);
+    
+    XML.addAttribute("NODE","isNoise", isNoise, lastPlace);
+    XML.addAttribute("NODE","noFreq", noFreq, lastPlace);
+    XML.addAttribute("NODE","noAmp", noAmp, lastPlace);
+    XML.addAttribute("NODE","noSpeed", noSpeed, lastPlace);
+    
+    XML.addAttribute("NODE","isEdge", isEdge, lastPlace);
+    XML.addAttribute("NODE","edHue", edHue, lastPlace);
+    XML.addAttribute("NODE","edSat", edSat, lastPlace);
+    
+    XML.addAttribute("NODE","isBleach", isBleach, lastPlace);
+    XML.addAttribute("NODE","blOpacity", blOpacity, lastPlace);
+    
+    XML.addAttribute("NODE","isRGBShift", isRGBShift, lastPlace);
+    XML.addAttribute("NODE","rgAngle", rgAngle, lastPlace);
+    XML.addAttribute("NODE","rgAmount", rgAmount, lastPlace);
+    
+    XML.addAttribute("NODE","isGod", isGod, lastPlace);
+    
+    XML.addAttribute("NODE","isZoomBlur", isZoomBlur, lastPlace);
+    XML.addAttribute("NODE","zbCenterX", zbCenterX, lastPlace);
+    XML.addAttribute("NODE","zbCenterY", zbCenterY, lastPlace);
+    XML.addAttribute("NODE","zbExposure", zbExposure, lastPlace);
+    XML.addAttribute("NODE","zbDensity", zbDensity, lastPlace);
+    XML.addAttribute("NODE","zbWeight", zbWeight, lastPlace);
+    XML.addAttribute("NODE","zbClamp", zbClamp, lastPlace);
+    
+    saved = XML.pushTag("NODE", lastPlace);
+    if (saved){
+        saved = ofxPatch::saveSettings(XML, true, lastPlace);
+        XML.popTag();
     }
     
     return saved;
@@ -852,12 +779,13 @@ bool ImageProcessor::saveSettings(ofxXmlSettings &XML) {
 //------------------------------------------------------------------
 bool ImageProcessor::saveSettingsToSnippet(ofxXmlSettings &XML, map<int,int> newIdsMap) {
     
-    bool saved = false;
+    bool saved = true;
     int lastPlace = XML.addTag("NODE");
     
     XML.addAttribute("NODE", "id", newIdsMap[nId], lastPlace);
     XML.addAttribute("NODE", "name", name, lastPlace);
     XML.addAttribute("NODE", "type", "IMAGE_PROCESSOR", lastPlace);
+    XML.addAttribute("NODE", "enabled", isEnabled, lastPlace);
     if (input.size() && newIdsMap[input[0]->getId()])
         XML.addAttribute("NODE", "inputSource", newIdsMap[input[0]->getId()], lastPlace);
     
@@ -897,10 +825,9 @@ bool ImageProcessor::saveSettingsToSnippet(ofxXmlSettings &XML, map<int,int> new
     XML.addAttribute("NODE","zbWeight", zbWeight, lastPlace);
     XML.addAttribute("NODE","zbClamp", zbClamp, lastPlace);
     
-    if (XML.pushTag("NODE", lastPlace)){
-        
+    saved = XML.pushTag("NODE", lastPlace);
+    if (saved){
         saved = ofxPatch::saveSettingsToSnippet(XML, lastPlace, newIdsMap);
-        
         XML.popTag();
     }
     
