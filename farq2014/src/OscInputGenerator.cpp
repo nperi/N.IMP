@@ -14,14 +14,12 @@ OscInputGenerator::OscInputGenerator(string name_, int nodeID_):ParamInputGenera
     oscMap  = new std::map<string,DTOscMap* >();
     type    = OSC;
     nodeID  = nodeID_;
-    port    = 6666;
-    receiver.setup(port);
+//    port    = 6666;
+//    receiver.setup(port);
 }
 
 //------------------------------------------------------------------
 OscInputGenerator::~OscInputGenerator(){
-    
-//    receiver.~ofxOscReceiver();
     
     oscMap->clear();
     delete oscMap;
@@ -92,7 +90,7 @@ void OscInputGenerator::processInput() {
             it = oscMap->find(m.getAddress());
             
             if(it!=oscMap->end()){
-                for (int j=0; j<m.getNumArgs(); ++j) {
+                for (int j = 0; j < m.getNumArgs(); ++j) {
                     
                     Param* p        = new Param();
                     p->inputMax     = it->second->inputMaxValue[j];

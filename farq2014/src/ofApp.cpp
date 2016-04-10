@@ -1044,6 +1044,7 @@ void ofApp::createNode(textInputEvent &args){
     }
     else if (args.type == "osc receiver") {
         newPatch = new OSCReceiver();
+        ((OSCReceiver*)newPatch)->setPort(6666);
         inputs.push_back((OSCReceiver*)newPatch);
     }
     else if (args.type == "camera") {
