@@ -1550,8 +1550,8 @@ bool ofApp::loadFromXML(){
         deleteEverything();
         
         int numMainSettingsTag = XML.getNumTags("MAIN_SETTINGS");
-        
-        if(numMainSettingsTag==1){
+        if(numMainSettingsTag == 1) {
+            
             XML.pushTag("MAIN_SETTINGS");
             
             int linkType = XML.getValue("link_type", 0);
@@ -1732,13 +1732,13 @@ bool ofApp::loadFromXML(){
         }
         else{
             loadingOK = false;
-            message = "missing MAIN_SETTINGS tag!";
+            message = "File " + xmlFileName + " is not elegible for N.IMP";
         }
         
     }else{
         
         //file not loaded
-        message = "file not loaded!";
+        message = "Error loading File " + xmlFileName + ".";
         loadingOK = false;
         
     }
@@ -2427,7 +2427,9 @@ void ofApp::deleteEverything() {
     for (int i = 0; i < nodes.size(); i++){
         if (nodes[i] != NULL) ofRemoveListener( nodes[i]->title->close , this, &ofApp::closePatch);
     }
-    ofRemoveListener( audioAnalizer->title->close , this, &ofApp::closePatch);
+    
+    if (audioAnalizer != NULL)
+        ofRemoveListener( audioAnalizer->title->close , this, &ofApp::closePatch);
     
     for (int i = 0; i < nodeViewers.size(); i++){
         nodeViewers[i]->deleteEverything();
@@ -2485,358 +2487,367 @@ bool ofApp::loadSnippet() {
         map<int, ImageOutput*> aux_nodes;
         vector<NodeElement*> snnipetNodeElements;
         bool result = true;
-        int  numNodes = XML.getNumTags("NODE");
-    
-        for(int i = 0; i < numNodes; i++){
+        
+        if (XML.getNumTags("SNIPPET") == 1) {
             
-            int    nodeId     = XML.getAttribute("NODE","id",0,i) + nodesCount;
-            string nodeName   = XML.getAttribute("NODE","name","default",i);
-            string nodeType   = XML.getAttribute("NODE","type","CAM",i);
-            int inputSourceId = XML.getAttribute("NODE","inputSource",0,i) + nodesCount;
-            
-//            if (nodeType == "VIDEO") {
-//                
-//                VideoPlayerMac* vP = new VideoPlayerMac(nodeName, nodeId);
-//                
-//                if (vP->loadSettings(XML, i, nodesCount)) {
-//                    inputs.push_back(vP);
-//                    aux_nodes.insert(std::pair<int,ImageOutput*>(nodeId,vP));
-//                    aux_nodesVector.push_back(vP);
-//                }
-//                else {
-//                    result = false;
-//                    console->pushMessage("no videos to be loaded!");
-//                }
-//            }
-            if (nodeType == "CAM") {
-                 
-                InputCamera* iC = new InputCamera(nodeName, nodeId);
-                result = iC->loadSettings(XML, i, nodesCount);
-                if (result) {
-                    inputs.push_back(iC);
-                    aux_nodes.insert(std::pair<int,ImageOutput*>(nodeId,iC));
-                    aux_nodesVector.push_back(iC);
+            XML.pushTag("SNIPPET");
+            int  numNodes = XML.getNumTags("NODE");
+            for(int i = 0; i < numNodes; i++){
+                
+                int    nodeId     = XML.getAttribute("NODE","id",0,i) + nodesCount;
+                string nodeName   = XML.getAttribute("NODE","name","default",i);
+                string nodeType   = XML.getAttribute("NODE","type","CAM",i);
+                int inputSourceId = XML.getAttribute("NODE","inputSource",0,i) + nodesCount;
+                
+    //            if (nodeType == "VIDEO") {
+    //                
+    //                VideoPlayerMac* vP = new VideoPlayerMac(nodeName, nodeId);
+    //                
+    //                if (vP->loadSettings(XML, i, nodesCount)) {
+    //                    inputs.push_back(vP);
+    //                    aux_nodes.insert(std::pair<int,ImageOutput*>(nodeId,vP));
+    //                    aux_nodesVector.push_back(vP);
+    //                }
+    //                else {
+    //                    result = false;
+    //                    console->pushMessage("no videos to be loaded!");
+    //                }
+    //            }
+                if (nodeType == "CAM") {
+                     
+                    InputCamera* iC = new InputCamera(nodeName, nodeId);
+                    result = iC->loadSettings(XML, i, nodesCount);
+                    if (result) {
+                        inputs.push_back(iC);
+                        aux_nodes.insert(std::pair<int,ImageOutput*>(nodeId,iC));
+                        aux_nodesVector.push_back(iC);
+                    }
                 }
-            }
-            else if (nodeType == "IMAGE_AND_VIDEO_LIST") {
+                else if (nodeType == "IMAGE_AND_VIDEO_LIST") {
 
-                ImageAndVideoInputList* iI = new ImageAndVideoInputList(nodeName, nodeId);
-                result = iI->loadSettings(XML, i, nodesCount);
-                if (result) {
-                    inputs.push_back(iI);
-                    aux_nodes.insert(std::pair<int,ImageOutput*>(nodeId,iI));
-                    aux_nodesVector.push_back(iI);
+                    ImageAndVideoInputList* iI = new ImageAndVideoInputList(nodeName, nodeId);
+                    result = iI->loadSettings(XML, i, nodesCount);
+                    if (result) {
+                        inputs.push_back(iI);
+                        aux_nodes.insert(std::pair<int,ImageOutput*>(nodeId,iI));
+                        aux_nodesVector.push_back(iI);
+                    }
+                    else {
+                        result = false;
+                        console->pushMessage("no images or videos to be loaded!");
+                    }
+                }
+                else if (nodeType == "PARTICLE") {
+                    
+                    ParticleGenerator* iI = new ParticleGenerator(nodeName, nodeId);
+                    result = iI->loadSettings(XML, i, nodesCount);
+                    if (result) {
+                        inputs.push_back(iI);
+                        aux_nodes.insert(std::pair<int,ImageOutput*>(nodeId,iI));
+                        aux_nodesVector.push_back(iI);
+                    }
+                }
+                else if (nodeType == "RIGHT_AUDIO_IN") {
+                    
+                    AudioIn* aI = new AudioIn(gui, right, "Audio In - Right Channel", nodeName, nodeId);
+                    result = aI->loadSettings(XML, i, nodesCount);
+                    if (result) {
+                        inputs.push_back(aI);
+                        aux_nodes.insert(std::pair<int,ImageOutput*>(nodeId,aI));
+                        aux_nodesVector.push_back(aI);
+                        
+    //                    listenToAudioInEvents(aI, true);
+                    }
+                }
+                else if (nodeType == "LEFT_AUDIO_IN") {
+                    AudioIn* aI = new AudioIn(gui, left, "Audio In - Left Channel", nodeName, nodeId);
+                    result = aI->loadSettings(XML, i, nodesCount);
+                    if (result) {
+                        inputs.push_back(aI);
+                        aux_nodes.insert(std::pair<int,ImageOutput*>(nodeId,aI));
+                        aux_nodesVector.push_back(aI);
+                        
+    //                    listenToAudioInEvents(aI, true);
+                    }
+                }
+                else if (nodeType == "OSC_RECEIVER") {
+                    OSCReceiver* oI = new OSCReceiver(nodeName, nodeId);
+                    result = oI->loadSettings(XML, i, nodesCount);
+                    if (result) {
+                        inputs.push_back(oI);
+                        aux_nodes.insert(std::pair<int,ImageOutput*>(nodeId,oI));
+                        aux_nodesVector.push_back(oI);
+                        
+    //                    listenToOSCEvents(oI, true);
+                    }
+                    
+                }
+                else if (nodeType == "IKEDA") {
+                    
+                    IkedaLayer* iL = new IkedaLayer(nodeName, nodeId);
+                    if (inputSourceId != nodesCount)
+                        iL->addInputIdentifier(inputSourceId);
+                    result = iL->loadSettings(XML, i, nodesCount);
+                    if (result) {
+                        visualLayers.push_back(iL);
+                        aux_nodes.insert(std::pair<int,ImageOutput*>(nodeId,iL));
+                        aux_nodesVector.push_back(iL);
+                    }
+                }
+                else if (nodeType == "GLITCH_1") {
+                    
+                    GlitchLayer* gL = new GlitchLayer(nodeName, nodeId);
+                    if (inputSourceId != nodesCount)
+                        gL->addInputIdentifier(inputSourceId);
+                    result = gL->loadSettings(XML, i, nodesCount);
+                    if (result) {
+                        visualLayers.push_back(gL);
+                        aux_nodes.insert(std::pair<int,ImageOutput*>(nodeId,gL));
+                        aux_nodesVector.push_back(gL);
+                    }
+                }
+                else if (nodeType == "GLITCH_2") {
+                    
+                    GlitchLayerAlt* gLA = new GlitchLayerAlt(nodeName, nodeId);
+                    if (inputSourceId != nodesCount)
+                        gLA->addInputIdentifier(inputSourceId);
+                    result = gLA->loadSettings(XML, i, nodesCount);
+                    if (result) {
+                        visualLayers.push_back(gLA);
+                        aux_nodes.insert(std::pair<int,ImageOutput*>(nodeId,gLA));
+                        aux_nodesVector.push_back(gLA);
+                    }
+                }
+                else if (nodeType == "IMAGE_PROCESSOR") {
+                    
+                    ImageProcessor* gLA = new ImageProcessor(nodeName, nodeId);
+                    if (inputSourceId != nodesCount)
+                        gLA->addInputIdentifier(inputSourceId);
+                    result = gLA->loadSettings(XML, i, nodesCount);
+                    if (result) {
+                        visualLayers.push_back(gLA);
+                        aux_nodes.insert(std::pair<int,ImageOutput*>(nodeId,gLA));
+                        aux_nodesVector.push_back(gLA);
+                    }
+                }
+                else if (nodeType == "SIMPLE_BLEND") {
+                    
+                    MixSimpleBlend* mSB = new MixSimpleBlend(nodeName, nodeId);
+                    result = mSB->loadSettings(XML, i, nodesCount);
+                    if (result) {
+                        mixtables.push_back(mSB);
+                        aux_nodes.insert(std::pair<int, ImageOutput*>(nodeId, mSB));
+                        aux_nodesVector.push_back(mSB);
+                    }
+                }
+                else if (nodeType == "MASK") {
+                    
+                    MixMask* mMM = new MixMask(nodeName, nodeId);
+                    result = mMM->loadSettings(XML, i, nodesCount);
+                    if (result) {
+                        mixtables.push_back(mMM);
+                        aux_nodes.insert(std::pair<int, ImageOutput*>(nodeId, mMM));
+                        aux_nodesVector.push_back(mMM);
+                    }
+                }
+                else if (nodeType == "MULTI_CHANNEL") {
+                    
+                    MultiChannelSwitch* mMM = new MultiChannelSwitch(nodeName, nodeId);
+                    result = mMM->loadSettings(XML, i, nodesCount);
+                    if (result) {
+                        mixtables.push_back(mMM);
+                        aux_nodes.insert(std::pair<int, ImageOutput*>(nodeId, mMM));
+                        aux_nodesVector.push_back(mMM);
+                    }
+                }
+                else if (nodeType == "SYPHON_CLIENT") {
+                    InputSyphon* iS = SyphonClientHandler::getInstance()->createSyphonPatch(nodeName, nodeId);
+                    iS->setup();
+                    result = iS->loadSettings(XML, i, nodesCount);
+                    if (result) {
+                        inputs.push_back(iS);
+                        aux_nodes.insert(std::pair<int, ImageOutput*>(nodeId, iS));
+                        aux_nodesVector.push_back(iS);
+                    }
+                }
+                else if (nodeType == "SYPHON_OUTPUT") {
+                    CustomSyphonServer* So = new CustomSyphonServer(nodeName, NULL, nodeId);
+                    So->setup();
+                    result = So->loadSettings(XML, i, nodesCount);
+                    if (result) {
+                        syphonServers.push_back(So);
+                        aux_nodes.insert(std::pair<int, ImageOutput*>(nodeId, So));
+                        aux_nodesVector.push_back(So);
+                    }
                 }
                 else {
                     result = false;
-                    console->pushMessage("no images or videos to be loaded!");
+                    console->pushMessage("unknown input type!");
                 }
             }
-            else if (nodeType == "PARTICLE") {
-                
-                ParticleGenerator* iI = new ParticleGenerator(nodeName, nodeId);
-                result = iI->loadSettings(XML, i, nodesCount);
-                if (result) {
-                    inputs.push_back(iI);
-                    aux_nodes.insert(std::pair<int,ImageOutput*>(nodeId,iI));
-                    aux_nodesVector.push_back(iI);
-                }
-            }
-            else if (nodeType == "RIGHT_AUDIO_IN") {
-                
-                AudioIn* aI = new AudioIn(gui, right, "Audio In - Right Channel", nodeName, nodeId);
-                result = aI->loadSettings(XML, i, nodesCount);
-                if (result) {
-                    inputs.push_back(aI);
-                    aux_nodes.insert(std::pair<int,ImageOutput*>(nodeId,aI));
-                    aux_nodesVector.push_back(aI);
-                    
-//                    listenToAudioInEvents(aI, true);
-                }
-            }
-            else if (nodeType == "LEFT_AUDIO_IN") {
-                AudioIn* aI = new AudioIn(gui, left, "Audio In - Left Channel", nodeName, nodeId);
-                result = aI->loadSettings(XML, i, nodesCount);
-                if (result) {
-                    inputs.push_back(aI);
-                    aux_nodes.insert(std::pair<int,ImageOutput*>(nodeId,aI));
-                    aux_nodesVector.push_back(aI);
-                    
-//                    listenToAudioInEvents(aI, true);
-                }
-            }
-            else if (nodeType == "OSC_RECEIVER") {
-                OSCReceiver* oI = new OSCReceiver(nodeName, nodeId);
-                result = oI->loadSettings(XML, i, nodesCount);
-                if (result) {
-                    inputs.push_back(oI);
-                    aux_nodes.insert(std::pair<int,ImageOutput*>(nodeId,oI));
-                    aux_nodesVector.push_back(oI);
-                    
-//                    listenToOSCEvents(oI, true);
-                }
-                
-            }
-            else if (nodeType == "IKEDA") {
-                
-                IkedaLayer* iL = new IkedaLayer(nodeName, nodeId);
-                if (inputSourceId != nodesCount)
-                    iL->addInputIdentifier(inputSourceId);
-                result = iL->loadSettings(XML, i, nodesCount);
-                if (result) {
-                    visualLayers.push_back(iL);
-                    aux_nodes.insert(std::pair<int,ImageOutput*>(nodeId,iL));
-                    aux_nodesVector.push_back(iL);
-                }
-            }
-            else if (nodeType == "GLITCH_1") {
-                
-                GlitchLayer* gL = new GlitchLayer(nodeName, nodeId);
-                if (inputSourceId != nodesCount)
-                    gL->addInputIdentifier(inputSourceId);
-                result = gL->loadSettings(XML, i, nodesCount);
-                if (result) {
-                    visualLayers.push_back(gL);
-                    aux_nodes.insert(std::pair<int,ImageOutput*>(nodeId,gL));
-                    aux_nodesVector.push_back(gL);
-                }
-            }
-            else if (nodeType == "GLITCH_2") {
-                
-                GlitchLayerAlt* gLA = new GlitchLayerAlt(nodeName, nodeId);
-                if (inputSourceId != nodesCount)
-                    gLA->addInputIdentifier(inputSourceId);
-                result = gLA->loadSettings(XML, i, nodesCount);
-                if (result) {
-                    visualLayers.push_back(gLA);
-                    aux_nodes.insert(std::pair<int,ImageOutput*>(nodeId,gLA));
-                    aux_nodesVector.push_back(gLA);
-                }
-            }
-            else if (nodeType == "IMAGE_PROCESSOR") {
-                
-                ImageProcessor* gLA = new ImageProcessor(nodeName, nodeId);
-                if (inputSourceId != nodesCount)
-                    gLA->addInputIdentifier(inputSourceId);
-                result = gLA->loadSettings(XML, i, nodesCount);
-                if (result) {
-                    visualLayers.push_back(gLA);
-                    aux_nodes.insert(std::pair<int,ImageOutput*>(nodeId,gLA));
-                    aux_nodesVector.push_back(gLA);
-                }
-            }
-            else if (nodeType == "SIMPLE_BLEND") {
-                
-                MixSimpleBlend* mSB = new MixSimpleBlend(nodeName, nodeId);
-                result = mSB->loadSettings(XML, i, nodesCount);
-                if (result) {
-                    mixtables.push_back(mSB);
-                    aux_nodes.insert(std::pair<int, ImageOutput*>(nodeId, mSB));
-                    aux_nodesVector.push_back(mSB);
-                }
-            }
-            else if (nodeType == "MASK") {
-                
-                MixMask* mMM = new MixMask(nodeName, nodeId);
-                result = mMM->loadSettings(XML, i, nodesCount);
-                if (result) {
-                    mixtables.push_back(mMM);
-                    aux_nodes.insert(std::pair<int, ImageOutput*>(nodeId, mMM));
-                    aux_nodesVector.push_back(mMM);
-                }
-            }
-            else if (nodeType == "MULTI_CHANNEL") {
-                
-                MultiChannelSwitch* mMM = new MultiChannelSwitch(nodeName, nodeId);
-                result = mMM->loadSettings(XML, i, nodesCount);
-                if (result) {
-                    mixtables.push_back(mMM);
-                    aux_nodes.insert(std::pair<int, ImageOutput*>(nodeId, mMM));
-                    aux_nodesVector.push_back(mMM);
-                }
-            }
-            else if (nodeType == "SYPHON_CLIENT") {
-                InputSyphon* iS = SyphonClientHandler::getInstance()->createSyphonPatch(nodeName, nodeId);
-                iS->setup();
-                result = iS->loadSettings(XML, i, nodesCount);
-                if (result) {
-                    inputs.push_back(iS);
-                    aux_nodes.insert(std::pair<int, ImageOutput*>(nodeId, iS));
-                    aux_nodesVector.push_back(iS);
-                }
-            }
-            else if (nodeType == "SYPHON_OUTPUT") {
-                CustomSyphonServer* So = new CustomSyphonServer(nodeName, NULL, nodeId);
-                So->setup();
-                result = So->loadSettings(XML, i, nodesCount);
-                if (result) {
-                    syphonServers.push_back(So);
-                    aux_nodes.insert(std::pair<int, ImageOutput*>(nodeId, So));
-                    aux_nodesVector.push_back(So);
-                }
-            }
-            else {
-                result = false;
-                console->pushMessage("unknown input type!");
-            }
-        }
-    
-        XML.popTag(); // pop "NODE"
         
-        if (result) {
-            int numENsTag = XML.getNumTags("ENCAPSULATED_NODES");
-            if(numENsTag == 1){
-                
-                XML.pushTag("ENCAPSULATED_NODES");
-                
-                int numENTag = XML.getNumTags("ENCAPSULATED_NODE");
-                
-                for(int i = 0; i < numENTag; i++){
-                    int encapsulatedId     = XML.getAttribute("ENCAPSULATED_NODE","id",-1,i) + nodesCount;
-                    int lastEncapsulatedId = XML.getAttribute("ENCAPSULATED_NODE","lastEncapsulatedId",false,i) + nodesCount;
+//            XML.popTag(); // pop "NODE"
+            
+            if (result) {
+                int numENsTag = XML.getNumTags("ENCAPSULATED_NODES");
+                if(numENsTag == 1){
                     
-                    aux_nodes.at(lastEncapsulatedId)->setEncapsulatedId(encapsulatedId);
-                    aux_nodes.at(lastEncapsulatedId)->setLastEncapsulated(true);
+                    XML.pushTag("ENCAPSULATED_NODES");
                     
-                    result = XML.pushTag("ENCAPSULATED_NODE", i);
+                    int numENTag = XML.getNumTags("ENCAPSULATED_NODE");
+                    
+                    for(int i = 0; i < numENTag; i++){
+                        int encapsulatedId     = XML.getAttribute("ENCAPSULATED_NODE","id",-1,i) + nodesCount;
+                        int lastEncapsulatedId = XML.getAttribute("ENCAPSULATED_NODE","lastEncapsulatedId",false,i) + nodesCount;
+                        
+                        aux_nodes.at(lastEncapsulatedId)->setEncapsulatedId(encapsulatedId);
+                        aux_nodes.at(lastEncapsulatedId)->setLastEncapsulated(true);
+                        
+                        result = XML.pushTag("ENCAPSULATED_NODE", i);
+                        if (result) {
+                            
+                            int numEncapsulatedTag = XML.getNumTags("NODE");
+                            for(int j = 0; j < numEncapsulatedTag; j++){
+                                
+                                int patchId = XML.getValue("NODE", -1, j) + nodesCount;
+                                if(patchId == -1){
+                                    result = false;
+                                    ConsoleLog::getInstance()->pushError("Encapsulated data is wrong");
+                                    break;
+                                }
+                                aux_nodes.at(patchId)->setEncapsulatedId(encapsulatedId);
+                                aux_nodes.at(patchId)->setWindowId(-1);
+                                aux_nodes.at(patchId)->setToEncapsulatedId(lastEncapsulatedId);
+                            }
+                            
+                            encapsulatedIds.push_back(encapsulatedId);
+                            
+                            XML.popTag(); // tag ENCAPSULATED_NODE
+                        }
+                        
+                        if(!result){
+                            console->pushError("Unable to load snippet " + snippetName + ". Some error occurred loading the encapsulated nodules.");
+                            break;
+                        }
+                        
+                    }
+                    //ENCAPSULATED_NODES POP
+                    XML.popTag();
+                    
+                }
+            }
+            
+            if (result) {
+                int numParamInputs = XML.getNumTags("PARAM_INPUT_GENERATORS");
+                if(numParamInputs==1){
+                    
+                    result = XML.pushTag("PARAM_INPUT_GENERATORS");
                     if (result) {
                         
-                        int numEncapsulatedTag = XML.getNumTags("NODE");
-                        for(int j = 0; j < numEncapsulatedTag; j++){
+                        int numInputGen = XML.getNumTags("INPUT_GEN");
+                        
+                        for(int j = 0; j < numInputGen; j++){
                             
-                            int patchId = XML.getValue("NODE", -1, j) + nodesCount;
-                            if(patchId == -1){
-                                result = false;
-                                ConsoleLog::getInstance()->pushError("Encapsulated data is wrong");
-                                break;
+                            string inputName = XML.getAttribute("INPUT_GEN","name","default",j);
+                            string inputType = XML.getAttribute("INPUT_GEN","type","MIDI",j);
+                            string midiDeviceName = XML.getAttribute("INPUT_GEN","midiDeviceName","Oxygen 25",j);
+                            int    nodeID = XML.getAttribute("INPUT_GEN","nodeId",-1,j) + nodesCount;
+                            
+                            result = XML.pushTag("INPUT_GEN",j);
+                            if (result) {
+
+                                switch(inputGenTypes[inputType]){
+                                    case MIDI:
+                                    {
+                                        MidiInputGenerator* mI = new MidiInputGenerator(inputName, midiDeviceName);
+                                        result = mI->loadSettings(XML, aux_nodes, nodesCount);
+                                        if (result) {
+                                            mI->setMidiIn(&midiIn);
+                                            inputGenerators.push_back(mI);
+                                        }
+                                        break;
+                                    }
+                                    case FFT:
+                                    {
+                                        std::map<int,ImageOutput*>::iterator it = aux_nodes.find(nodeID);
+                                        
+                                        if(it!=aux_nodes.end()){
+                                            AudioInputGenerator* aI = new AudioInputGenerator(inputName, nodeID);
+                                            result = aI->loadSettings(XML, nodesCount);
+                                            if (result) {
+                                                inputGenerators.push_back(aI);
+                                                audioListeners.push_back(aI);
+                                            }
+                                        }
+                                        break;
+                                    }
+                                    case OSC:
+                                    {
+                                        OscInputGenerator* oI = new OscInputGenerator(inputName, nodeID);
+                                        result = oI->loadSettings(XML, nodesCount);
+                                        if (result) {
+                                            inputGenerators.push_back(oI);
+                                        }
+                                        break;
+                                    }
+                                    default:
+                                    {
+                                        result = false;
+                                        console->pushError("Input Generator type " + inputType + " not found.");
+                                        break;
+                                    };
+                                        
+                                }
+                                XML.popTag(); //tag INPUT_GEN
                             }
-                            aux_nodes.at(patchId)->setEncapsulatedId(encapsulatedId);
-                            aux_nodes.at(patchId)->setWindowId(-1);
-                            aux_nodes.at(patchId)->setToEncapsulatedId(lastEncapsulatedId);
                         }
                         
-                        encapsulatedIds.push_back(encapsulatedId);
-                        
-                        XML.popTag(); // tag ENCAPSULATED_NODE
+                        XML.popTag(); //tag PARAM_INPUT_GENERATORS
                     }
-                    
-                    if(!result){
-                        console->pushError("Unable to load snippet " + snippetName + ". Some error occurred loading the encapsulated nodules.");
+                }
+            }
+        
+            if (result) {
+                //setting inputs to every node
+                for(int i = 0; i < aux_nodesVector.size(); i++){
+                    if (aux_nodesVector[i]->findAndAssignInputs(aux_nodes)) {
+                        console->pushMessage("node not found");
+                        result = false;
                         break;
                     }
-                    
+                    NodeElement* nE = new NodeElement(aux_nodesVector[i]);
+                    snnipetNodeElements.push_back(nE);
+                    nodeViewers[currentViewer]->addElement(nE);
+                    nodesVector.push_back(aux_nodesVector[i]);
                 }
-                //ENCAPSULATED_NODES POP
-                XML.popTag();
+            }
+            
+            if (result) {
+                //create connections in nodeView
+                nodeViewers[currentViewer]->createConnections(snnipetNodeElements);
+                nodeViewers[currentViewer]->setNodesCount(nodesCount + aux_nodes.size());
+                nodes.insert(aux_nodes.begin(), aux_nodes.end());
                 
-            }
-        }
-        
-        if (result) {
-            int numParamInputs = XML.getNumTags("PARAM_INPUT_GENERATORS");
-            if(numParamInputs==1){
+                for(int i = 0; i < aux_nodesVector.size(); i++){
+                    initNode(aux_nodesVector[i]);
+                }
                 
-                result = XML.pushTag("PARAM_INPUT_GENERATORS");
-                if (result) {
-                    
-                    int numInputGen = XML.getNumTags("INPUT_GEN");
-                    
-                    for(int j = 0; j < numInputGen; j++){
-                        
-                        string inputName = XML.getAttribute("INPUT_GEN","name","default",j);
-                        string inputType = XML.getAttribute("INPUT_GEN","type","MIDI",j);
-                        string midiDeviceName = XML.getAttribute("INPUT_GEN","midiDeviceName","Oxygen 25",j);
-                        int    nodeID = XML.getAttribute("INPUT_GEN","nodeId",-1,j) + nodesCount;
-                        
-                        result = XML.pushTag("INPUT_GEN",j);
-                        if (result) {
-
-                            switch(inputGenTypes[inputType]){
-                                case MIDI:
-                                {
-                                    MidiInputGenerator* mI = new MidiInputGenerator(inputName, midiDeviceName);
-                                    result = mI->loadSettings(XML, aux_nodes, nodesCount);
-                                    if (result) {
-                                        mI->setMidiIn(&midiIn);
-                                        inputGenerators.push_back(mI);
-                                    }
-                                    break;
-                                }
-                                case FFT:
-                                {
-                                    std::map<int,ImageOutput*>::iterator it = aux_nodes.find(nodeID);
-                                    
-                                    if(it!=aux_nodes.end()){
-                                        AudioInputGenerator* aI = new AudioInputGenerator(inputName, nodeID);
-                                        result = aI->loadSettings(XML, nodesCount);
-                                        if (result) {
-                                            inputGenerators.push_back(aI);
-                                            audioListeners.push_back(aI);
-                                        }
-                                    }
-                                    break;
-                                }
-                                case OSC:
-                                {
-                                    OscInputGenerator* oI = new OscInputGenerator(inputName, nodeID);
-                                    result = oI->loadSettings(XML, nodesCount);
-                                    if (result) {
-                                        inputGenerators.push_back(oI);
-                                    }
-                                    break;
-                                }
-                                default:
-                                {
-                                    result = false;
-                                    console->pushError("Input Generator type " + inputType + " not found.");
-                                    break;
-                                };
-                                    
-                            }
-                            XML.popTag(); //tag INPUT_GEN
-                        }
-                    }
-                    
-                    XML.popTag(); //tag PARAM_INPUT_GENERATORS
+                for(int i=0; i<inputGenerators.size(); i++){
+                    inputGenerators[i]->setup();
+                    inputGenerators[i]->start();
                 }
+                
+                setSelectedForAudioIn();
+                setSelectedForOSC();
             }
-        }
-    
-        if (result) {
-            //setting inputs to every node
-            for(int i = 0; i < aux_nodesVector.size(); i++){
-                if (aux_nodesVector[i]->findAndAssignInputs(aux_nodes)) {
-                    console->pushMessage("node not found");
-                    result = false;
-                    break;
-                }
-                NodeElement* nE = new NodeElement(aux_nodesVector[i]);
-                snnipetNodeElements.push_back(nE);
-                nodeViewers[currentViewer]->addElement(nE);
-                nodesVector.push_back(aux_nodesVector[i]);
-            }
-        }
-        
-        if (result) {
-            //create connections in nodeView
-            nodeViewers[currentViewer]->createConnections(snnipetNodeElements);
-            nodeViewers[currentViewer]->setNodesCount(nodesCount + aux_nodes.size());
-            nodes.insert(aux_nodes.begin(), aux_nodes.end());
-            
-            for(int i = 0; i < aux_nodesVector.size(); i++){
-                initNode(aux_nodesVector[i]);
+            else {
+                console->pushError("Error loading snippet " + snippetName);
             }
             
-            for(int i=0; i<inputGenerators.size(); i++){
-                inputGenerators[i]->setup();
-                inputGenerators[i]->start();
-            }
-            
-            setSelectedForAudioIn();
-            setSelectedForOSC();
+            XML.popTag(); // tag SNIPPET
         }
         else {
-            console->pushError("Error loading snippet " + snippetName);
+            console->pushError("File " + snippetName + " is not eligible for Snippet.");
         }
     }
     else {
@@ -2889,77 +2900,82 @@ bool ofApp::saveSnippet() {
         nextNodeId++;
     }
     
-    
-    // Save nodes and syphon servers
-    //
-    for(map<int,ofxPatch*>::iterator it = activePatches.begin(); it != activePatches.end() && saveOk; it++ ){
-        saveOk = ((ImageOutput*)it->second)->saveSettingsToSnippet(XML, newIdsMap);
+    XML.addTag("SNIPPET");
+    saveOk = XML.pushTag("SNIPPET");
+    if (saveOk) {
         
+        // Save nodes and syphon servers
+        //
+        for(map<int,ofxPatch*>::iterator it = activePatches.begin(); it != activePatches.end() && saveOk; it++ ){
+            saveOk = ((ImageOutput*)it->second)->saveSettingsToSnippet(XML, newIdsMap);
+            
+            if (saveOk) {
+                
+                if (it->second->isLastEncapsulated()) {
+                    activeEncapsulatedPatches.push_back(it->second->getEncapsulatedId());
+                }
+                if (((ImageOutput*)it->second)->getTypeName() == "OSC Receiver") {
+                    
+                    for (int i = 0; i < inputGenerators.size(); ++i) {
+                        if (inputGenerators[i]->getParamInputType() == OSC &&
+                            ((OscInputGenerator*)inputGenerators[i])->getNodeID() == ((ImageOutput*)it->second)->getId()) {
+                            
+                            oscInputs.push_back((OscInputGenerator*)audioListeners[i]);
+                            break;
+                        }
+                    }
+                }
+                else if (((ImageOutput*)it->second)->getTypeName() == "Audio In - Left Channel" ||
+                         ((ImageOutput*)it->second)->getTypeName() == "Audio In - Right Channel") {
+                    
+                    for (int i = 0; i < audioListeners.size(); ++i) {
+                        if (audioListeners[i]->getNodeID() == ((ImageOutput*)it->second)->getId()) {
+                            audioInputs.push_back((AudioInputGenerator*)audioListeners[i]);
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        
+        
+        // Save Encapsulated Nodes
+        //
+        XML.addTag("ENCAPSULATED_NODES");
+        saveOk = XML.pushTag("ENCAPSULATED_NODES");
         if (saveOk) {
             
-            if (it->second->isLastEncapsulated()) {
-                activeEncapsulatedPatches.push_back(it->second->getEncapsulatedId());
+            for(int e = 0; e < activeEncapsulatedPatches.size() && saveOk; e++){
+                saveOk = nodeViewers[currentViewer]->saveEncapsulatedSettingsToSnippet(XML, activeEncapsulatedPatches[e], newIdsMap);
             }
-            if (((ImageOutput*)it->second)->getTypeName() == "OSC Receiver") {
-                
-                for (int i = 0; i < inputGenerators.size(); ++i) {
-                    if (inputGenerators[i]->getParamInputType() == OSC &&
-                        ((OscInputGenerator*)inputGenerators[i])->getNodeID() == ((ImageOutput*)it->second)->getId()) {
-                        
-                        oscInputs.push_back((OscInputGenerator*)audioListeners[i]);
-                        break;
-                    }
-                }
+            
+            XML.popTag(); // tag ENCAPSULATED_NODES
+        }
+        
+        
+        // Save Param Input Generators
+        //
+        XML.addTag("PARAM_INPUT_GENERATORS");
+        saveOk = XML.pushTag("PARAM_INPUT_GENERATORS");
+        if (saveOk) {
+            
+            for (int i = 0; i < audioInputs.size() && saveOk; i++) {
+                saveOk = audioInputs[i]->saveSettingsToSnippet(XML, newIdsMap);
             }
-            else if (((ImageOutput*)it->second)->getTypeName() == "Audio In - Left Channel" ||
-                     ((ImageOutput*)it->second)->getTypeName() == "Audio In - Right Channel") {
-                
-                for (int i = 0; i < audioListeners.size(); ++i) {
-                    if (audioListeners[i]->getNodeID() == ((ImageOutput*)it->second)->getId()) {
-                        audioInputs.push_back((AudioInputGenerator*)audioListeners[i]);
-                        break;
-                    }
-                }
+            for (int j = 0; j < oscInputs.size() && saveOk; j++) {
+                saveOk = oscInputs[j]->saveSettingsToSnippet(XML, newIdsMap);
             }
-        }
-    }
-    
-    
-    // Save Encapsulated Nodes
-    //
-    XML.addTag("ENCAPSULATED_NODES");
-    saveOk = XML.pushTag("ENCAPSULATED_NODES");
-    if (saveOk) {
-        
-        for(int e = 0; e < activeEncapsulatedPatches.size() && saveOk; e++){
-            saveOk = nodeViewers[currentViewer]->saveEncapsulatedSettingsToSnippet(XML, activeEncapsulatedPatches[e], newIdsMap);
+            
+            XML.popTag(); // tag PARAM_INPUT_GENERATORS
         }
         
-        XML.popTag(); // tag ENCAPSULATED_NODES
-    }
-    
-    
-    // Save Param Input Generators
-    //
-    XML.addTag("PARAM_INPUT_GENERATORS");
-    saveOk = XML.pushTag("PARAM_INPUT_GENERATORS");
-    if (saveOk) {
+         XML.popTag(); // SNIPPET
         
-        for (int i = 0; i < audioInputs.size() && saveOk; i++) {
-            saveOk = audioInputs[i]->saveSettingsToSnippet(XML, newIdsMap);
+        // If everything OK, save file
+        //
+        if (saveOk) {
+            XML.saveFile(snippetName);
         }
-        for (int j = 0; j < oscInputs.size() && saveOk; j++) {
-            saveOk = oscInputs[j]->saveSettingsToSnippet(XML, newIdsMap);
-        }
-        
-        XML.popTag(); // tag PARAM_INPUT_GENERATORS
-    }
-    
-    
-    // If everything OK, save file
-    //
-    if (saveOk) {
-        XML.saveFile(snippetName);
     }
     
     return saveOk;

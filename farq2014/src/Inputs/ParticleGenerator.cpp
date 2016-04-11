@@ -240,6 +240,8 @@ ofTexture* ParticleGenerator::getTexture(){
 //------------------------------------------------------------------
 bool ParticleGenerator::loadSettings(ofxXmlSettings &XML, int nTag_, int nodesCount_) {
     
+    bool saved = true;
+    
     isClearBg       = ofToBool(XML.getAttribute("NODE", "isClearBg","true", nTag_));
     alphaParticles  = ofToFloat(XML.getAttribute("NODE", "alphaParticles","0.4", nTag_));
     autoGenParticle = ofToBool(XML.getAttribute("NODE", "autoGenParticle","false", nTag_));
@@ -252,16 +254,17 @@ bool ParticleGenerator::loadSettings(ofxXmlSettings &XML, int nTag_, int nodesCo
     
     nId             = XML.getAttribute("NODE", "id", -1, nTag_) + nodesCount_;
     
-    XML.pushTag("NODE", nTag_);
+    saved = XML.pushTag("NODE", nTag_);
+    if (saved) {
+        type            = XML.getValue("type","none");
+        bVisible        = XML.getValue("visible", true);
+        
+        saved = ofxPatch::loadSettings(XML, nTag_, nodesCount_);
+        
+        XML.popTag();
+    }
     
-    type            = XML.getValue("type","none");
-    bVisible        = XML.getValue("visible", true);
-    
-    ofxPatch::loadSettings(XML, nTag_, nodesCount_);
-    
-    XML.popTag();
-    
-    return true;
+    return saved;
 }
 
 //------------------------------------------------------------------
