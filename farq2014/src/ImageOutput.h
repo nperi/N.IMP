@@ -78,6 +78,9 @@ class ImageOutput : public ofxPatch {
 //    vector<string> getAttributesForAudioIn();
     bool setAttributesForAudioIn(string name_, bool left, int nodeID_);
     bool setAttributesForOSC(string name, int nodeID_);
+    bool setAttributesForMIDI(string name_, int control_);
+    bool setMidiControlActive(int control_);
+    bool resetMidiControlActive(int control_);
     
     //osc methods & events
     void addOrRemoveOSCInput(ofxOSCGuiEvent &e_);

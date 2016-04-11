@@ -227,3 +227,28 @@ bool ImageOutput::setAttributesForOSC(string name_, int nodeID_) {
         panel.setSelectedForOSC(true, nodeID_, name_);
     }
 }
+
+//------------------------------------------------------------------
+bool ImageOutput::setAttributesForMIDI(string name_, int control_) {
+    
+    ofxBaseGui* control = gui.getControl(name_);
+    if (control) {
+        control->setSelectedForMIDI(true, control_, name_);
+    }
+    else {
+        panel.setSelectedForMIDI(true, control_, name_);
+    }
+}
+
+
+//------------------------------------------------------------------
+bool ImageOutput::setMidiControlActive(int control_) {
+    
+        panel.setMidiControlActive(control_);
+}
+
+//------------------------------------------------------------------
+bool ImageOutput::resetMidiControlActive(int control_) {
+    
+    panel.resetMidiControlActive(control_);
+}

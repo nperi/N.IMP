@@ -102,6 +102,7 @@ public:
     void deleteEverything();
     void setSelectedForAudioIn();
     void setSelectedForOSC();
+    void setSelectedForMIDI();
     
     
     //change current viewer
@@ -177,7 +178,7 @@ public:
     //create new node
     vector<ofxUIWidget*> widgetsToDelete;
     textInput* newNodeInput;
-    bool holdingCommand;
+    bool holdingCommand, holdingControl, holdingDelete;
     
     // multi window
     ofxMultiGLFWWindow *glfw;

@@ -54,6 +54,8 @@ void ofApp::setup() {
     audioAnalizer          = NULL;
     currentViewer          = 0;
     holdingCommand         = false;
+    holdingControl         = false;
+    holdingDelete          = false;
     
     //populating string dictionaries for simple comparison used in LoadFromXML
     inputTypes.insert(std::pair<string,InputType>("AUDIO_ANALIZER",AUDIO_ANALIZER));
@@ -300,6 +302,33 @@ void ofApp::setSelectedForOSC(){
     }
 }
 
+//------------------------------------------------------------------
+void ofApp::setSelectedForMIDI(){
+    
+    // setting nodes attributes selected for OSC
+    //
+    std::map<int,vector<DTMidiMap*> > midiMaps;
+    std::map<int, ImageOutput*>::iterator node_;
+    
+    for (int i = 0; i < inputGenerators.size(); i++){
+        
+        if (inputGenerators[i]->getParamInputType() == MIDI) {
+            
+            midiMaps = ((MidiInputGenerator*)inputGenerators[i])->midiControlMaps;
+            
+            for (std::map<int,vector<DTMidiMap*> >::iterator it = midiMaps.begin(); it != midiMaps.end(); it++) {
+                for (int j = 0; j < it->second.size(); j++) {
+                    
+                    node_ = nodes.find(it->second[j]->nodeId);
+                    if (node_ != nodes.end()) {
+                        node_->second->setAttributesForMIDI(it->second[j]->paramId, it->second[j]->control);
+                    }
+                }
+            }
+        }
+    }
+}
+
 /* ================================================ */
 /* ================================================ */
 
@@ -355,13 +384,45 @@ void ofApp::update() {
                 if(param != NULL){
                     
                     if (p->getParamInputType() == MIDI && midiLearnActive) {
-                        map<int, vector<string> > attributesSelected = nodeViewers[currentViewer]->getAttributesClicked();
-                        std::map<int, ImageOutput*>::iterator node_;
                         
-                        for(map<int, vector<string> >::iterator it = attributesSelected.begin(); it != attributesSelected.end(); it++ ){
-                            node_ = nodes.find(it->first);
-                            if (node_ != nodes.end()) {
-                                ((MidiInputGenerator*)p)->addNewMidiMap(param->midiControl, node_->second, it->second);
+                        if (holdingControl) {
+                            for (int i=0; i<nodesVector.size(); ++i) {
+                                nodesVector[i]->setMidiControlActive(param->midiControl);
+                            }
+                        }
+                        else {
+                            
+                            map<int, vector<string> > attributesSelected = nodeViewers[currentViewer]->getAttributesClicked();
+                            std::map<int, ImageOutput*>::iterator node_;
+                            
+                            // editing midi control maps
+                            //
+                            if (attributesSelected.size() > 0) {
+                                
+                                // reseting active midi control on GUI params
+                                //
+                                for (int i=0; i<nodesVector.size(); ++i) {
+                                    nodesVector[i]->resetMidiControlActive(param->midiControl);
+                                }
+                                
+                                for(map<int, vector<string> >::iterator it = attributesSelected.begin(); it != attributesSelected.end(); it++ ){
+                                    node_ = nodes.find(it->first);
+                                    if (node_ != nodes.end()) {
+                                        ((MidiInputGenerator*)p)->addNewMidiMap(param->midiControl, node_->second, it->second);
+                                    }
+                                }
+                            }
+                            // removing all midi control maps
+                            //
+                            else if (holdingDelete){
+                                
+                                // removing all midi control active on GUI params
+                                //
+                                for (int i=0; i<nodesVector.size(); ++i) {
+                                    nodesVector[i]->resetMidiControlActive(param->midiControl);
+                                }
+                                
+                                ((MidiInputGenerator*)p)->midiControlMaps[param->midiControl].clear();
                             }
                         }
                     }
@@ -534,6 +595,12 @@ void ofApp::keyPressed  (int key){
         case OF_KEY_LEFT_COMMAND: case OF_KEY_RIGHT_COMMAND:
             holdingCommand = true;
             break;
+        case OF_KEY_LEFT_CONTROL: case OF_KEY_RIGHT_CONTROL:
+            holdingControl = true;
+            break;
+        case OF_KEY_BACKSPACE:
+            holdingDelete = true;
+            break;
         case '1':
             setCurrentViewer(0);
             break;
@@ -624,9 +691,19 @@ void ofApp::keyReleased(int key){
             if (newNodeInput != NULL && !newNodeInput->isClicked())
                 newNodeInput->setFocus(true);
         break;
+            
+        case OF_KEY_LEFT_CONTROL: case OF_KEY_RIGHT_CONTROL:
+            if (midiLearnActive) {
+                for (int i = 0; i < nodesVector.size(); ++i) {
+                    nodesVector[i]->setMidiControlActive(-1);
+                }
+            }
+            holdingControl = false;
+        break;
     }
     
     holdingCommand = false;
+    holdingDelete  = false;
 }
 
 //------------------------------------------------------------------
@@ -1110,6 +1187,9 @@ void ofApp::createNode(textInputEvent &args){
                         && ((MidiInputGenerator*)inputGenerators[j])->getMidiDeviceName() == args.type) {
                         
                         j = inputGenerators.size()+1;
+                    }
+                    else {
+                        j++;
                     }
                 }
                 if (j <= inputGenerators.size()) {
@@ -1835,6 +1915,7 @@ bool ofApp::loadFromXML(){
         
         setSelectedForAudioIn();
         setSelectedForOSC();
+        setSelectedForMIDI();
     }
     
     return loadingOK;

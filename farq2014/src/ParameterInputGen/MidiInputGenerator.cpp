@@ -108,6 +108,8 @@ bool MidiInputGenerator::addNewMidiMap(int control_, ImageOutput* node_, vector<
         dtM->paramMaxValue  = node_->getMidiMax(dtM->paramId);
         
         midiControlMaps[control_].push_back(dtM);
+        
+        node_->setAttributesForMIDI(params_[i], control_);
     }
 }
 
