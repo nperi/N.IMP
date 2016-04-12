@@ -150,7 +150,7 @@ bool InputCamera::loadSettings(ofxXmlSettings &XML, int nTag_, int nodesCount_) 
     bool loaded = true;
         
     //not used yet
-    string cameraId = XML.getAttribute("NODE", "id","default", nTag_);
+//    string cameraId = XML.getAttribute("NODE", "id","default", nTag_);
     nId             = XML.getAttribute("NODE", "id", -1, nTag_) + nodesCount_;
     cameraName      = XML.getAttribute("NODE", "cameraName","No Camera Available", nTag_);
     
