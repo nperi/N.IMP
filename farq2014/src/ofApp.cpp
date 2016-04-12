@@ -22,7 +22,7 @@ void ofApp::setup() {
     //
     glfw->setWindow(windows->at(CONSOLE_WINDOW));
     glfw->initializeWindow();
-    //glfw->setWindowShape(400,300);
+//    glfw->setWindowShape(700,300);
     glfw->setWindowPosition(ofGetWidth()/2 - 200, -ofGetHeight()/2);
     glfw->setWindowTitle("Console");
     
@@ -30,7 +30,7 @@ void ofApp::setup() {
     //
     glfw->setWindow(windows->at(MAIN_WINDOW));  // set window pointer
     glfw->initializeWindow();                   // initialize events (mouse, keyboard, etc) on window (optional)
-    //glfw->setWindowShape(1280,700);
+//    glfw->setWindowShape(1280,700);
     glfw->setWindowTitle("n.imp");
     //ofSetFullscreen(true);                    // order important with fullscreen
     // ******* END WINDOWS SETUP ******//
@@ -1806,7 +1806,6 @@ bool ofApp::loadFromXML(){
                         loadingOK = false;
                         message = "missing PARAM_INPUT_GENERATORS tag!";
                     }
-                    
                 }
             }
         }
@@ -1814,13 +1813,9 @@ bool ofApp::loadFromXML(){
             loadingOK = false;
             message = "File " + xmlFileName + " is not elegible for N.IMP";
         }
-        
-    }else{
-        
-        //file not loaded
-        message = "Error loading File " + xmlFileName + ".";
+    }
+    else {
         loadingOK = false;
-        
     }
     
     if(!loadingOK){
