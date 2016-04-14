@@ -66,7 +66,7 @@ void AudioIn::customDraw(){
     
     if ( bEditMode || bVisible ) {
         ofxPatch::customDraw();
-        if (EventHandler::getInstance()->getWindowIdDraw() == windowId) {
+        if (EventHandler::getInstance()->getEncapsulatedIdDraw() == encapsulatedId) {
             setWaveFormPosition();
             waveform->drawBack();
             waveform->drawFill();

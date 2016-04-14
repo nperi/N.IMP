@@ -13,26 +13,6 @@ void ofApp::setup() {
     ofSetEscapeQuitsApp(false);
     
     //*** WINDOWS SETUP ***//
-    //
-    glfw = (ofxMultiGLFWWindow*)ofGetWindowPtr();
-    // vector of windows, count set in main
-    windows = &glfw->windows;
-    
-    // configure console window
-    //
-    glfw->setWindow(windows->at(CONSOLE_WINDOW));
-    glfw->initializeWindow();
-//    glfw->setWindowShape(700,300);
-    glfw->setWindowPosition(ofGetWidth()/2 - 200, -ofGetHeight()/2);
-    glfw->setWindowTitle("Console");
-    
-    // configure main window
-    //
-    glfw->setWindow(windows->at(MAIN_WINDOW));  // set window pointer
-    glfw->initializeWindow();                   // initialize events (mouse, keyboard, etc) on window (optional)
-//    glfw->setWindowShape(1280,700);
-    glfw->setWindowTitle("n.imp");
-    //ofSetFullscreen(true);                    // order important with fullscreen
     // ******* END WINDOWS SETUP ******//
     
     
@@ -95,12 +75,11 @@ void ofApp::setup() {
     
     //*** CONSOLE LOGGER ***//
     //
+    
+    // TODO: ver de arreglar esto
     console = ConsoleLog::getInstance();
-    glfw->setWindow(windows->at(CONSOLE_WINDOW));
     console->setupScrollBar(&pad);
     ofSetLogLevel(OF_LOG_ERROR);
-    glfw->iconify(!showConsole);
-    glfw->setWindow(windows->at(MAIN_WINDOW));
     
 
     //*** TOP MENU ***//
@@ -462,84 +441,36 @@ void ofApp::update() {
         
         scrollBars->update();
         nodeViewers[currentViewer]->update();
-
-        // hide/show console
-        if(glfwWindowShouldClose(windows->at(CONSOLE_WINDOW))){
-            glfw->hideWindow(windows->at(CONSOLE_WINDOW));
-            glfwSetWindowShouldClose(windows->at(CONSOLE_WINDOW), 0);
-            ((ofxUIImageToggle*)menu->getWidget("Console on/off"))->setValue(false);
-            showConsole = !showConsole;
-        }
-        
-        // destroy encapsulated windows
-        for(int i=2; i < windows->size(); i++){
-            encapsulatedWindowsScrollBars.at(i-2)->update();
-            
-            if(glfwWindowShouldClose(windows->at(i))){
-                nodeViewers[currentViewer]->setParent(cam);
-                nodeViewers[currentViewer]->setCameraForWindow(i, cam);
-                nodeViewers[currentViewer]->restoreWindowsForEncapsulated(i);
-                
-                glfw->destroyWindow(windows->at(i));
-                windows->erase(windows->begin() + i);
-                delete encapsulatedWindowsScrollBars.at(i-2);
-                delete encapsulatedWindowsCameras.at(i-2);
-                encapsulatedWindowsScrollBars.erase(encapsulatedWindowsScrollBars.begin() + i - 2);
-                encapsulatedWindowsCameras.erase(encapsulatedWindowsCameras.begin() + i -2);
-            }
-        }
     }
 }
 
 //------------------------------------------------------------------
 void ofApp::draw() {
-    wIndex = glfw->getWindowIndex();
-    
-    // set in global variable the id of the windows which is being drawn
-    EventHandler::getInstance()->setWindowIdDraw(wIndex);
-    
-    switch (wIndex) { // switch on window index
-        case MAIN_WINDOW:
-            //create bg
-            ofClear(35);
-            
-            // draw nodes
-            if(loadingOK){
-                
-                nodeViewers[currentViewer]->draw();
-                
-                ofDrawBitmapString(ofToString(ofGetFrameRate(),0), ofGetWidth() - 50, ofGetHeight()-35);
-                
-                //update menu's width and height
-                menu->setWidth(ofGetWidth());
-                right_menu->setHeight(ofGetHeight() - (MENU_HEIGHT + MENU_TOP_PADDING));
-                
-                //draw scrollbars
-                scrollBars->draw();
-            }
-            else{
-                ofDrawBitmapString("ERROR LOADING XML", 50, 50);
-            }
-            break;
-        case CONSOLE_WINDOW:
-            ofBackground(0,0,0); // change background color on each window
-            ofSetColor(200, 200, 200);
-            console->printMessages();
-            break;
-        default:
-//            glfw->ofAppBaseWindow::showCursor();
-            ofClear(35);
-            encapsulatedWindowsCameras[wIndex-2]->begin();
-            nodeViewers[currentViewer]->draw();
-            encapsulatedWindowsCameras[wIndex-2]->end();
-            
-            //draw inspectors
-            nodeViewers[currentViewer]->drawInspectorGUIs();
-            
-            encapsulatedWindowsScrollBars.at(wIndex-2)->draw();
+    //create bg
+    ofClear(35);
 
-            break;
+    // draw nodes
+    if(loadingOK){
+        
+        nodeViewers[currentViewer]->draw();
+        
+        ofDrawBitmapString(ofToString(ofGetFrameRate(),0), ofGetWidth() - 50, ofGetHeight()-35);
+        
+        //update menu's width and height
+        menu->setWidth(ofGetWidth());
+        right_menu->setHeight(ofGetHeight() - (MENU_HEIGHT + MENU_TOP_PADDING));
+        
+        //draw scrollbars
+        scrollBars->draw();
     }
+    else{
+        ofDrawBitmapString("ERROR LOADING XML", 50, 50);
+    }
+    
+    // TODO: draw console messages
+//    ofBackground(0,0,0); // change background color on each window
+//    ofSetColor(200, 200, 200);
+//    console->printMessages();
 }
 
 void ofApp::updateSyphon(ofFbo & img){
@@ -674,7 +605,7 @@ void ofApp::keyPressed  (int key){
             notAvailable = true;
             break;
     }
-    if (notAvailable) ofLogNotice() << "key function not available";
+    if (notAvailable) console->pushWarning("key function not available");
     
     // sending keyboard input to all input generators
     for (int i = 0; i<inputGenerators.size();i++){
@@ -708,13 +639,7 @@ void ofApp::keyReleased(int key){
 
 //------------------------------------------------------------------
 void ofApp::mouseDragged(int x, int y, int button){
-    for(int i = 0; i < windows->size(); i++) {
-        if (glfw->getEventWindow() == windows->at(i)) {
-            EventHandler::getInstance()->setWindowEvent(i);
-            break;
-        }
-    }
-    
+    // TODO: EventHandler->getInstance()->setMainEvent(ver si es de consola o no);
 //    if(do_zoom){
 //        ofVec3f mouse = ofVec3f(x, y,0);
 //        ofVec3f mouseLast = ofVec3f(ofGetPreviousMouseX(),ofGetPreviousMouseY(),0);
@@ -726,44 +651,20 @@ void ofApp::mouseDragged(int x, int y, int button){
 
 //------------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button){
-    for(int i = 0; i < windows->size(); i++) {
-        if (glfw->getEventWindow() == windows->at(i)) {
-            EventHandler::getInstance()->setWindowEvent(i);
-            if(i == MAIN_WINDOW){
-                nodeViewers[currentViewer]->setCameraForWindow(MAIN_WINDOW, cam);
-                nodeViewers[currentViewer]->setParent(cam);
-            } else if( i != CONSOLE_WINDOW){
-                nodeViewers[currentViewer]->setCameraForWindow(i, cam);
-                nodeViewers[currentViewer]->setParent(*(encapsulatedWindowsCameras.at(i-2)));
-            }
-                
-            break;
-        }
-    }
-
+    // TODO: EventHandler->getInstance()->setMainEvent(ver si es de consola o no);
 }
 
 //------------------------------------------------------------------
 void ofApp::mouseReleased(int x, int y, int button){
-    for(int i = 0; i < windows->size(); i++) {
-        if (glfw->getEventWindow() == windows->at(i)) {
-            EventHandler::getInstance()->setWindowEvent(i);
-            break;
-        }
-    }
-    
+    // TODO: EventHandler->getInstance()->setMainEvent(ver si es de consola o no);
     menu_zoom_in = false;
     menu_zoom_out = false;
 }
 
 //------------------------------------------------------------------
 void ofApp::dragEvent(ofDragInfo dragInfo){
-    for(int i = 0; i < windows->size(); i++) {
-        if (glfw->getEventWindow() == windows->at(i)) {
-            EventHandler::getInstance()->setWindowEvent(i);
-            break;
-        }
-    }
+    // TODO: EventHandler->getInstance()->setMainEvent(ver si es de consola o no);
+    
     
     if( dragInfo.files.size() > 0 ){
         for(int i = 0; i < dragInfo.files.size(); i++){
@@ -825,12 +726,7 @@ void ofApp::mouseMoved(int x, int y){
 
 //------------------------------------------------------------------
 void ofApp::windowResized(int w, int h){
-    for(int i = 0; i < windows->size(); i++) {
-        if (glfw->getEventWindow() == windows->at(i)) {
-            EventHandler::getInstance()->setWindowEvent(i);
-            break;
-        }
-    }
+
 }
 
 //------------------------------------------------------------------
@@ -946,11 +842,9 @@ void ofApp::menuEvent(ofxUIEventArgs &e) {
         }
     }
     else if (name == "Console on/off"){
+        // TODO: esconder/mostrar consola
         if(showConsole){
-            glfw->hideWindow(windows->at(CONSOLE_WINDOW));
         }else{
-            glfw->showWindow(windows->at(CONSOLE_WINDOW));
-            glfw->setWindow(windows->at(CONSOLE_WINDOW));
         }
         showConsole = !showConsole;
     }
@@ -989,31 +883,16 @@ void ofApp::menuEvent(ofxUIEventArgs &e) {
             if(encapsulatedId < 0){
                 console->pushError("No encapsulated patch is selected");
             } else {
-                glfw->createWindow();
-                glfw->setWindow(windows->at(windows->size()-1));
-                glfw->initializeWindow();
+               
+                // TODO: aca se podria mostrar lo encapsulado y dejar de dibujar la pantalla principal
+//                EventHandler::getInstance()->setEncapsulatedIdDraw(encapsulatedId);
                 
-                nodeViewers[currentViewer]->setWindowsIdForEncapsulated(encapsulatedId, windows->size() - 1);
                 
-                ofSetWindowPosition(ofGetWindowPositionX(), ofGetWindowPositionX());
-                ofSetWindowShape(ofGetWidth(), ofGetHeight());
-                ofSetWindowTitle(nodeViewers[currentViewer]->getLastEncapsulatedName(encapsulatedId));
                 
-                ofEasyCam* newCam = new ofEasyCam();
-                newCam->setDistance(cam.getDistance());
-                newCam->disableMouseInput();
-                newCam->enableOrtho();
-                newCam->setVFlip(true);
-                newCam->setScale(cam.getScale());
-                newCam->setPosition(cam.getPosition().x, cam.getPosition().y, cam.getPosition().z);
-                encapsulatedWindowsCameras.push_back(newCam);
                 
-                nodeViewers[currentViewer]->setParent(*newCam);
-                nodeViewers[currentViewer]->setCameraForWindow(windows->size()-1, *newCam);
-                
-                scrollBar* newScroll = new scrollBar(nodeViewers[currentViewer], &this->pad, newCam, SCROLL_BAR_EVENT_PRIORITY, windows->size()-1);
-                newScroll->setup();
-                encapsulatedWindowsScrollBars.push_back(newScroll);
+//                scrollBar* newScroll = new scrollBar(nodeViewers[currentViewer], &this->pad, newCam, SCROLL_BAR_EVENT_PRIORITY, windows->size()-1);
+//                newScroll->setup();
+//                encapsulatedWindowsScrollBars.push_back(newScroll);
             }
         }
     }
@@ -1832,8 +1711,6 @@ bool ofApp::loadFromXML(){
         console->pushError("XML couldn't be loaded: " + message);
         deleteEverything();
         
-        glfw->showWindow(windows->at(CONSOLE_WINDOW));
-        glfw->setWindow(windows->at(CONSOLE_WINDOW));
         ((ofxUIImageToggle*)menu->getWidget("Console on/off"))->setValue(true);
         showConsole = true;
         return;
@@ -1887,7 +1764,7 @@ bool ofApp::loadFromXML(){
     
     if(loadingOK){
         
-        ConsoleLog::getInstance()->pushMessage("All nodes loaded correctly.");
+        console->pushMessage("All nodes loaded correctly.");
         
         //TODO: change mixtable assignment.
         //  ofAddListener(mixtables[0]->textureEvent, this, &ofApp::updateSyphon);
@@ -2427,7 +2304,7 @@ bool ofApp::loadNodes(ofxXmlSettings &XML){
                         break;
                     }
                     nodes.at(patchId)->setEncapsulatedId(encapsulatedId);
-                    nodes.at(patchId)->setWindowId(-1);
+//                    nodes.at(patchId)->setWindowId(-1);
                     nodes.at(patchId)->setToEncapsulatedId(lastEncapsulatedId);
                 }
                 
@@ -2801,7 +2678,7 @@ bool ofApp::loadSnippet() {
                                     break;
                                 }
                                 aux_nodes.at(patchId)->setEncapsulatedId(encapsulatedId);
-                                aux_nodes.at(patchId)->setWindowId(-1);
+//                                aux_nodes.at(patchId)->setWindowId(-1);
                                 aux_nodes.at(patchId)->setToEncapsulatedId(lastEncapsulatedId);
                             }
                             

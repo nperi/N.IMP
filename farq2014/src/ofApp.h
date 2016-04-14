@@ -52,11 +52,10 @@
 #include "textInput.h"
 #include "enumerations.h"
 
-#include "ofxMultiGLFWWindow.h"
 #include "ConsoleLog.h"
-#include "EventHandler.h"
 #include "InputSyphon.h"
 #include "SyphonClientHandler.h"
+#include "EventHandler.h"
 
 class ofApp : public ofBaseApp {
 public:
@@ -169,8 +168,6 @@ public:
     
     //scrollbar
     scrollBar* scrollBars;
-    vector<scrollBar*> encapsulatedWindowsScrollBars;
-    vector<ofEasyCam*> encapsulatedWindowsCameras;
     
     //zoom
     bool menu_zoom_in, menu_zoom_out;
@@ -179,11 +176,6 @@ public:
     vector<ofxUIWidget*> widgetsToDelete;
     textInput* newNodeInput;
     bool holdingCommand, holdingControl, holdingDelete;
-    
-    // multi window
-    ofxMultiGLFWWindow *glfw;
-    int wIndex;
-    vector<GLFWwindow*> *windows;
     
     // console
     bool showConsole;
