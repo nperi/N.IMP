@@ -37,6 +37,11 @@ InputCamera::InputCamera(string name, int id_) : InputSource(name, "Camera", id_
     gui.setWidthElements(INSPECTOR_WIDTH);
 }
 
+InputCamera::~InputCamera() {
+    nextCamera.removeListener(this, &InputCamera::changeToNextCamera);
+    prevCamera.removeListener(this, &InputCamera::changeToPrevCamera);
+}
+
 //------------------------------------------------------------------
 void InputCamera::setup() {
 
