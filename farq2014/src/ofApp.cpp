@@ -1377,6 +1377,15 @@ void ofApp::closePatch(int &_nID) {
 
         ofRemoveListener(nodeToDelete->title->close , this, &ofApp::closePatch);
         
+        found = false;
+        i = 0;
+        while (i < nodesVector.size()) {
+            if(nodesVector[i]->getId() == _nID) {
+                nodesVector.erase(nodesVector.begin() + i);
+            }
+            i++;
+        }
+        
         nodes.erase(_nID);
         nodeViewers[currentViewer]->closePatch(_nID);
     }
