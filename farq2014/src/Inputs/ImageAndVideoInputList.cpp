@@ -24,7 +24,29 @@ ImageAndVideoInputList::~ImageAndVideoInputList(){
     
     if (videoPlayer != NULL) {
         VideoPool::getInstance()->releasePlayer(videoPlayer);
+        delete videoPlayer;
     }
+    
+    isPalindromLoop.removeListener(this, &ImageAndVideoInputList::loopTypeChanged);
+    bpm.removeListener(this, &ImageAndVideoInputList::bpmChanged);
+    setOriginalPlaySpeed.removeListener(this,&ImageAndVideoInputList::setOriginalPlaySpeedChanged);
+    bpmMultiplier.removeListener(this, &ImageAndVideoInputList::bpmMultiplierChanged);
+    nextFrame.removeListener(this, &ImageAndVideoInputList::nextFrameChanged);
+    previousFrame.removeListener(this, &ImageAndVideoInputList::previousFrameChanged);
+    isMatchBpmToSequenceLength.removeListener(this, &ImageAndVideoInputList::isMatchBpmToSequenceLengthChanged);
+    playPosition.removeListener(this, &ImageAndVideoInputList::playPositionChanged);
+    isPlaying.removeListener(this, &ImageAndVideoInputList::isPlayingChanged);
+    isEnabled.removeListener(this, &ImageAndVideoInputList::setEnableChanged);
+    
+    nextSequence.removeListener(this, &ImageAndVideoInputList::nextSequenceChanged);
+    prevSequence.removeListener(this, &ImageAndVideoInputList::prevSequenceChanged);
+    currentSequence.removeListener(this, &ImageAndVideoInputList::sequenceChanged);
+    deleteCurrentSequence.removeListener(this, &ImageAndVideoInputList::deleteSequence);
+    addVideoOrImage.removeListener(this, &ImageAndVideoInputList::addNewInput);
+    
+    img.clear();
+    img.getTextureReference().clear();
+    
 }
 
 //------------------------------------------------------------------

@@ -57,7 +57,7 @@ void AudioAnalizer::customDraw(){
 
     if(drawAudioAnalizer && (bEditMode || bVisible)) {
         ofxPatch::customDraw();
-        if (EventHandler::getInstance()->getWindowIdDraw() == windowId) {
+        if (EventHandler::getInstance()->getEncapsulatedIdDraw() == encapsulatedId) {
             ofPushStyle();
             ofPushMatrix();
             

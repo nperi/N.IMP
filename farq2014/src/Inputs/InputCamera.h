@@ -20,6 +20,7 @@ class InputCamera : public InputSource{
   public:
 
     InputCamera(string name = "New Camera", int id_ = -1);
+    ~InputCamera();
 	
 	void setup();
     
