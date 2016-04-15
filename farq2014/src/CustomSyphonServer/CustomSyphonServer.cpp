@@ -52,6 +52,7 @@ CustomSyphonServer::~CustomSyphonServer(){}
 
 //------------------------------------------------------------------
 void CustomSyphonServer::setup(){
+    
     server.setName(name);
 }
 
@@ -59,13 +60,16 @@ void CustomSyphonServer::setup(){
 void CustomSyphonServer::update(){
     if(!drawNoInputs){
         ofPushStyle();
-        server.publishTexture(&feeder->getTextureReference());
+        server.publishTexture(&fbo.getTextureReference());
         
         fbo.begin();
         ofSetColor(255);
         feeder->getTextureReference().draw(-padding_x, -padding_y, drawing_width, drawing_height);
         fbo.end();
         ofPopStyle();
+    }
+    else {
+        server.publishTexture(&noInputsImg.getTextureReference());
     }
 }
 
@@ -182,6 +186,15 @@ void CustomSyphonServer::inputRemoved(int id_){
     feeder = NULL;
     
     resetSizeToNoInputs();
+}
+
+//------------------------------------------------------------------
+void CustomSyphonServer::editName(string& name_) {
+    
+    name = name_;
+    title->setTitle( name_ );
+    
+    server.setName(name_);
 }
 
 //------------------------------------------------------------------
