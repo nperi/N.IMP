@@ -11,7 +11,7 @@
 
 #include <stdio.h>
 #include "InputSource.h"
-#include "ofxUIWaveform.h"
+#include "ofxUIMovingGraph.h"
 #include "ofxUISuperCanvas.h"
 #include "enumerations.h"
 #include "AudioInEvent.h"
@@ -20,30 +20,30 @@ class AudioIn : public InputSource{
     
 public:
     
-    AudioIn(ofxUISuperCanvas* &gui_, float* &inputBuffer_, string type_, string name_= "New Audio In", int id_ = -1);
+    AudioIn(ofxUISuperCanvas* &gui_, string type_, string name_= "New Audio In", int id_ = -1);
     
     void setup();
     void customDraw();
     
     void _mouseDragged(ofMouseEventArgs &e);
     
-    ofImage*        getImage(){};
-    ofTexture*      getTexture(){};
-    ofxUIWaveform*  getWaveForm(){ return waveform; };
-    float           getMidiMin(string param_){};
-    float           getMidiMax(string param_){};
-    AudioInType     getAudioInType(){ return audioInType; };
-    int             getChannel(){ return selectChannel; };
-    int             getBand(){ return selectBand; };
-    bool            getEditInputsActive() { return editFFTInputs; };
+    ofImage*            getImage(){};
+    ofTexture*          getTexture(){};
+    ofxUIMovingGraph*  getWaveForm(){ return waveform; };
+    float               getMidiMin(string param_){};
+    float               getMidiMax(string param_){};
+    AudioInType         getAudioInType(){ return audioInType; };
+    int                 getChannel(){ return selectChannel; };
+    int                 getBand(){ return selectBand; };
+    bool                getEditInputsActive() { return editFFTInputs; };
     
-    void            setWaveFormPosition();
-    void            setChannel(int c);
-    void            setBand(int band_);
-    void            resetSize(int _width, int _height);
-    void            disableEdit(bool disabled_) { disabledEdit = disabled_; };
+    void                setWaveFormPosition();
+    void                setChannel(int c);
+    void                setBand(int band_);
+    void                resetSize(int _width, int _height);
+    void                disableEdit(bool disabled_) { disabledEdit = disabled_; };
     
-    void            updateParameter(Param* inputParam){};
+    void                updateParameter(Param* inputParam);
     
     
     ofParameter<bool>     editFFTInputs;
@@ -68,8 +68,8 @@ private:
     void editSaturation(float& s);
     void editEnabled(bool& e);
     
-    ofxUIWaveform* waveform;
-    float* inputBuffer;
+    ofxUIMovingGraph* waveform;
+    vector<float> inputBuffer;
     AudioInType audioInType;
     bool disabledEdit;
     

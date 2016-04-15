@@ -9,9 +9,8 @@
 #include "AudioIn.h"
 #include "EventHandler.h"
 
-AudioIn::AudioIn(ofxUISuperCanvas* &gui_, float* &inputBuffer_, string type_, string name_, int id_) : InputSource(name_, type_, id_){
+AudioIn::AudioIn(ofxUISuperCanvas* &gui_, string type_, string name_, int id_) : InputSource(name_, type_, id_){
     
-    inputBuffer  = inputBuffer_;
     isAudio      = true;
     width        = 500;
     height       = 250;
@@ -19,10 +18,10 @@ AudioIn::AudioIn(ofxUISuperCanvas* &gui_, float* &inputBuffer_, string type_, st
     isEnabled    = true;
     disabledEdit = false;
     
-    waveform = new ofxUIWaveform(0, 0, 200, 100, inputBuffer_, BUFFER_SIZE, -2, 2, "FFT");
+    waveform = new ofxUIMovingGraph(0, 0, 150, 75, inputBuffer, BUFFER_SIZE, -1, 2, "FFT");
     
     gui.add(isEnabled.setup("Enabled",isEnabled, 100,20));
-    gui.add(saturation.set("Sound Saturation",10,0,100));
+    gui.add(saturation.set("Sound Level",10,0,100));
     saturation.addListener(this, &AudioIn::editSaturation);
     gui.add(selectBand.set("Band",1,1,16));
     
@@ -50,7 +49,6 @@ void AudioIn::setup() {
     waveform->ofNode::setParent(*this->getParent());
     waveform->setNoDraw(true);
     waveform->setDraggable(true);
-//    waveform->setColorBack(ofxUIColor(0, 0, 0, 210));
     
     setWaveFormPosition();
 }
@@ -58,7 +56,6 @@ void AudioIn::setup() {
 //------------------------------------------------------------------
 void AudioIn::update() {
     
-
 }
 
 //------------------------------------------------------------------
@@ -71,6 +68,14 @@ void AudioIn::customDraw(){
             waveform->drawBack();
             waveform->drawFill();
         }
+    }
+}
+
+//------------------------------------------------------------------
+void AudioIn::updateParameter(Param* inputParam) {
+    
+    if(inputParam->name.compare("AudioBandWaveForm") == 0){
+        waveform->addPoint(inputParam->floatVal);
     }
 }
 
@@ -138,13 +143,13 @@ void AudioIn::editSaturation(float& s) {
         waveform->setMin(-0);
     }
     else {
-        waveform->setMax(100/(s*2));
-        waveform->setMin(-100/(s*2));
+        waveform->setMax(100/s);
+        waveform->setMin(50/-s);
     }
     
     AudioInEvent ev;
     ev.nodeId = nId;
-    ev.saturation = s;
+    ev.saturation = 100/s;
     
     ofNotifyEvent(editAudioInSaturation, ev);
 }

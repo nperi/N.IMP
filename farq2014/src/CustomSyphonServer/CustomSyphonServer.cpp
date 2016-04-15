@@ -186,7 +186,7 @@ void CustomSyphonServer::inputRemoved(int id_){
 
 //------------------------------------------------------------------
 bool CustomSyphonServer::loadSettings(ofxXmlSettings &XML, int nTag_, int nodesCount_) {
-    bool loaded = false;
+    bool loaded = true;
     nId = XML.getAttribute("NODE", "id", -1, nTag_) + nodesCount_;
     aspectRatio = XML.getAttribute("NODE", "aspectRatio", 0, nTag_);
     previous_index = -1;

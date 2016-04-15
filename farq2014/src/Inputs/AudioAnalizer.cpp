@@ -56,9 +56,9 @@ void AudioAnalizer::analyze(float * iBuffer) {
 void AudioAnalizer::customDraw(){
 
     if(drawAudioAnalizer && (bEditMode || bVisible)) {
+        ofPushStyle();
         ofxPatch::customDraw();
         if (EventHandler::getInstance()->getEncapsulatedIdDraw() == encapsulatedId) {
-            ofPushStyle();
             ofPushMatrix();
             
             ofVec3f scale = ((ofCamera*)this->getParent())->getScale();
@@ -68,8 +68,9 @@ void AudioAnalizer::customDraw(){
             filterBank.draw((textureCorners[1].x - textureCorners[0].x)/scale.x,(textureCorners[2].y - textureCorners[0].y)/scale.y);
             
             ofPopMatrix();
-            ofPopStyle();
+            
         }
+        ofPopStyle();
     }
 }
 

@@ -61,19 +61,31 @@ void AudioInputGenerator::processInput(){
                 //    freq[index][j] = magnitude[j];
                 //}
                 
+                Param* p = new Param();
+                
+                if(magnitude[band] > saturation){
+                    // we limit the max output to 50 ... this is arbitrary
+                    magnitude[band] = saturation;
+                }
+                else if(magnitude[band] < 00.01){
+                    // we limit the min output to 0
+                    magnitude[band] = 0;
+                }
+                
+                p->inputMax     = saturation;
+                p->inputMin     = 0;
+                p->imageInputId = nodeID;
+                p->name         = "AudioBandWaveForm";
+                p->value        = magnitude[band];
+                p->intVal       = magnitude[band];
+                p->floatVal     = magnitude[band];
+                
+                storeMessage(p);
+                
                 for(int i=0; i<audioMap->size(); i++){
                     Param* p = new Param();
                     
 //                    int band = audioMap->at(i)->band;
-                    
-                    if(magnitude[band] > saturation){
-                        // we limit the max output to 50 ... this is arbitrary
-                        magnitude[band] = saturation;
-                    }
-                    else if(magnitude[band] < 00.01){
-                        // we limit the min output to 0
-                        magnitude[band] = 0;
-                    }
                     
                     p->inputMax     = saturation;
                     p->inputMin     = 0;

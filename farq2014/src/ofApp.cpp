@@ -239,13 +239,6 @@ void ofApp::setSelectedForAudioIn(){
             }
         }
         
-        if (isLeftChannel) {
-            audioInNode->getWaveForm()->setBuffer(left);
-        }
-        else {
-            audioInNode->getWaveForm()->setBuffer(right);
-        }
-        
         listenToAudioInEvents(audioInNode, true);
     }
 }
@@ -989,12 +982,12 @@ void ofApp::createNode(textInputEvent &args){
     bool exist = false;
     
     if (args.type == "audio in - left channel") {
-        newPatch = new AudioIn(gui, left, "Audio In - Left Channel", "New Audio In - Left Channel");
+        newPatch = new AudioIn(gui, "Audio In - Left Channel", "New Audio In - Left Channel");
         ((AudioIn*)newPatch)->setChannel(0);
         inputs.push_back((AudioIn*)newPatch);
     }
     else if (args.type == "audio in - right channel") {
-        newPatch = new AudioIn(gui, right, "Audio In - Right Channel", "New Audio In - Right Channel");
+        newPatch = new AudioIn(gui, "Audio In - Right Channel", "New Audio In - Right Channel");
         ((AudioIn*)newPatch)->setChannel(1);
         inputs.push_back((AudioIn*)newPatch);
     }
@@ -2051,25 +2044,21 @@ bool ofApp::loadNodes(ofxXmlSettings &XML){
                 };
                 case RIGHT_AUDIO_IN:
                 {
-                    AudioIn* aI = new AudioIn(gui, right, "Audio In - Right Channel", inputName, inputId);
+                    AudioIn* aI = new AudioIn(gui, "Audio In - Right Channel", inputName, inputId);
                     aI->loadSettings(XML, i);
                     
                     inputs.push_back(aI);
                     nodes.insert(std::pair<int,ImageOutput*>(inputId,aI));
-                    
-//                    listenToAudioInEvents(aI, true);
                     
                     break;
                 };
                 case LEFT_AUDIO_IN:
                 {
-                    AudioIn* aI = new AudioIn(gui, left, "Audio In - Left Channel", inputName, inputId);
+                    AudioIn* aI = new AudioIn(gui, "Audio In - Left Channel", inputName, inputId);
                     aI->loadSettings(XML, i);
                     
                     inputs.push_back(aI);
                     nodes.insert(std::pair<int,ImageOutput*>(inputId,aI));
-                    
-//                    listenToAudioInEvents(aI, true);
                     
                     break;
                 };
@@ -2080,8 +2069,6 @@ bool ofApp::loadNodes(ofxXmlSettings &XML){
                     
                     inputs.push_back(oI);
                     nodes.insert(std::pair<int,ImageOutput*>(inputId,oI));
-                    
-//                    listenToOSCEvents(oI, true);
 
                     break;
                 };
@@ -2340,7 +2327,7 @@ bool ofApp::loadNodes(ofxXmlSettings &XML){
             
             for(int j=0; j<numSyphonServer; j++){
                 int nodeId          = XML.getAttribute("NODE","id",-1,j);
-                int inputSourceId         = XML.getAttribute("NODE","inputSource",-1,j);
+                int inputSourceId   = XML.getAttribute("NODE","inputSource",-1,j);
                 string name         = XML.getAttribute("NODE","name","SyphonName",j);
                 
                 CustomSyphonServer* cSS;
@@ -2511,25 +2498,21 @@ bool ofApp::loadSnippet() {
                 }
                 else if (nodeType == "RIGHT_AUDIO_IN") {
                     
-                    AudioIn* aI = new AudioIn(gui, right, "Audio In - Right Channel", nodeName, nodeId);
+                    AudioIn* aI = new AudioIn(gui, "Audio In - Right Channel", nodeName, nodeId);
                     result = aI->loadSettings(XML, i, nodesCount);
                     if (result) {
                         inputs.push_back(aI);
                         aux_nodes.insert(std::pair<int,ImageOutput*>(nodeId,aI));
                         aux_nodesVector.push_back(aI);
-                        
-    //                    listenToAudioInEvents(aI, true);
                     }
                 }
                 else if (nodeType == "LEFT_AUDIO_IN") {
-                    AudioIn* aI = new AudioIn(gui, left, "Audio In - Left Channel", nodeName, nodeId);
+                    AudioIn* aI = new AudioIn(gui, "Audio In - Left Channel", nodeName, nodeId);
                     result = aI->loadSettings(XML, i, nodesCount);
                     if (result) {
                         inputs.push_back(aI);
                         aux_nodes.insert(std::pair<int,ImageOutput*>(nodeId,aI));
                         aux_nodesVector.push_back(aI);
-                        
-    //                    listenToAudioInEvents(aI, true);
                     }
                 }
                 else if (nodeType == "OSC_RECEIVER") {
@@ -2539,10 +2522,7 @@ bool ofApp::loadSnippet() {
                         inputs.push_back(oI);
                         aux_nodes.insert(std::pair<int,ImageOutput*>(nodeId,oI));
                         aux_nodesVector.push_back(oI);
-                        
-    //                    listenToOSCEvents(oI, true);
                     }
-                    
                 }
                 else if (nodeType == "IKEDA") {
                     
