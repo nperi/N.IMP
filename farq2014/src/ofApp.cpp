@@ -436,6 +436,10 @@ void ofApp::update() {
         
         scrollBars->update();
         nodeViewers[currentViewer]->update();
+        
+        if (showConsole) {
+            console->update();
+        }
     }
 }
 
@@ -448,8 +452,6 @@ void ofApp::draw() {
     if(loadingOK){
         
         nodeViewers[currentViewer]->draw();
-        
-        ofDrawBitmapString(ofToString(ofGetFrameRate(),0), ofGetWidth() - 50, ofGetHeight()-35);
         
         //update menu's width and height
         menu->setWidth(ofGetWidth());
@@ -466,6 +468,12 @@ void ofApp::draw() {
 //    ofBackground(0,0,0); // change background color on each window
 //    ofSetColor(200, 200, 200);
 //    console->printMessages();
+    
+    if (showConsole) {
+        console->draw();
+    }
+    
+    ofDrawBitmapString(ofToString(ofGetFrameRate(),0), ofGetWidth() - 50, ofGetHeight()-35);
 }
 
 void ofApp::updateSyphon(ofFbo & img){

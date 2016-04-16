@@ -12,8 +12,10 @@
 #include "EventHandler.h"
 
 ConsoleScrollBar::ConsoleScrollBar(){
+    
 }
 
+//------------------------------------------------------------------
 ConsoleScrollBar::ConsoleScrollBar(ofxMultiTouchPad* _pad, int eventPriority){
     this->pad = _pad;
     
@@ -25,11 +27,9 @@ ConsoleScrollBar::ConsoleScrollBar(ofxMultiTouchPad* _pad, int eventPriority){
     ofAddListener(ofEvents().windowResized, this, &ConsoleScrollBar::windowResized, eventPriority);
     
     ofAddListener(ofEvents().mouseDragged, this, &ConsoleScrollBar::mouseDragged, eventPriority);
-    
-    
 }
 
-
+//------------------------------------------------------------------
 void ConsoleScrollBar::setup(){
     /*
      The "panel" is a frame. This frame contains the displayed images, and the scroll bar.
@@ -126,6 +126,7 @@ void ConsoleScrollBar::update(){
     updateScrollBar(diffVec);
 }
 
+//------------------------------------------------------------------
 void ConsoleScrollBar::draw(){
     // Add a translation to bring the panel to the good position
     ofPushMatrix();
@@ -173,9 +174,12 @@ void ConsoleScrollBar::mouseDragged(ofMouseEventArgs &e){
     }
 }
 
+//------------------------------------------------------------------
 void ConsoleScrollBar::mouseReleased(ofMouseEventArgs &e){
+    
 }
 
+//------------------------------------------------------------------
 void ConsoleScrollBar::mousePressed(ofMouseEventArgs &e){
 //    if(EventHandler::getInstance()->isConsoleEvent()){
     if(!EventHandler::getInstance()->isMainEvent()){
@@ -189,6 +193,7 @@ void ConsoleScrollBar::mousePressed(ofMouseEventArgs &e){
     }
 }
 
+//------------------------------------------------------------------
 void ConsoleScrollBar::mouseMoved(ofMouseEventArgs &e){
 //    if(EventHandler::getInstance()->isConsoleEvent()){
     if(!EventHandler::getInstance()->isMainEvent()){
@@ -202,6 +207,7 @@ void ConsoleScrollBar::mouseMoved(ofMouseEventArgs &e){
     }
 }
 
+//------------------------------------------------------------------
 void ConsoleScrollBar::windowResized(ofResizeEventArgs &e){
 //    if(EventHandler::getInstance()->isConsoleEvent()){
     if(!EventHandler::getInstance()->isMainEvent()){

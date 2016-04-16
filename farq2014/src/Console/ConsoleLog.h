@@ -27,6 +27,11 @@ class ConsoleLog {
     
 public:
     
+    //loops
+    void update();
+    void draw();
+    
+    //functions
     void pushMessage(string message);
     void pushError(string error);
     void pushSuccess(string success);
@@ -54,6 +59,9 @@ private:
     
     int maxConsoleMessages;
     void push(Message m);
+    
+    ofRectangle container;
+    float screenRatio;
 };
 
 

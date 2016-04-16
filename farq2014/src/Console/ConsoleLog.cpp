@@ -11,6 +11,7 @@
 
 ConsoleLog* ConsoleLog::instance = NULL;
 
+//------------------------------------------------------------------
 ConsoleLog::ConsoleLog() {
     ofTrueTypeFont::setGlobalDpi(72);
     
@@ -19,11 +20,17 @@ ConsoleLog::ConsoleLog() {
     font.setLetterSpacing(1.037);
     
     maxConsoleMessages = 300;
+    
+    container.set(0, 3*ofGetHeight()/4, ofGetWidth(), ofGetHeight()/4);
+    screenRatio = 0.75;
 }
 
+//------------------------------------------------------------------
 ConsoleLog::~ConsoleLog(){
+    
 }
 
+//------------------------------------------------------------------
 ConsoleLog* ConsoleLog::getInstance(){
     if(!instance){
         instance = new ConsoleLog();
@@ -31,32 +38,59 @@ ConsoleLog* ConsoleLog::getInstance(){
     return instance;
 }
 
+//------------------------------------------------------------------
+void ConsoleLog::update(){
+    
+    container.setPosition(0, ofGetHeight()*screenRatio);
+    startY = container.getY() + 2;
+}
+
+//------------------------------------------------------------------
+void ConsoleLog::draw(){
+    
+    ofPushStyle();
+    
+    ofSetColor(150);
+    ofLine(0, container.getY()-1, ofGetWidth(), container.getY()-1);
+    ofSetColor(0);
+    ofRect(container);
+    printMessages();
+    
+    ofPopStyle();
+}
+
+//------------------------------------------------------------------
 void ConsoleLog::setupScrollBar(ofxMultiTouchPad* pad){
-    startY = 0.f;
+    startY = container.getY() + 2;
     this->instance->scrollBar = new ConsoleScrollBar(pad, CONSOLE_LOG_EVENT_PRORITY);
     this->instance->scrollBar->setup();
 }
 
+//------------------------------------------------------------------
 void ConsoleLog::pushMessage(string message){
     Message m = Message(DEFAULT, message);
     push(m);
 }
 
+//------------------------------------------------------------------
 void ConsoleLog::pushError(string error){
     Message m = Message(ERROR, error);
     push(m);
 }
 
+//------------------------------------------------------------------
 void ConsoleLog::pushSuccess(string success){
     Message m = Message(SUCCESS, success);
     push(m);
 }
 
+//------------------------------------------------------------------
 void ConsoleLog::pushWarning(string warning){
     Message m = Message(WARNING, warning);
     push(m);
 }
 
+//------------------------------------------------------------------
 void ConsoleLog::push(Message m){
     if(messages.size() == maxConsoleMessages){
         messages.erase(messages.begin());
@@ -64,12 +98,13 @@ void ConsoleLog::push(Message m){
     messages.push_back(m);
 }
 
-
+//------------------------------------------------------------------
 void ConsoleLog::clearMessages(){
     messages.clear();
-    startY = 0.f;
+    startY = container.getY() + 2;
 }
 
+//------------------------------------------------------------------
 void ConsoleLog::printMessages(){
     instance->scrollBar->update();
     instance->scrollBar->draw();
@@ -91,14 +126,17 @@ void ConsoleLog::printMessages(){
     ofPopStyle();
 }
 
-
+//------------------------------------------------------------------
 int ConsoleLog::getLowestCoord(){
     return (messages.size() + 2)*font.getLineHeight() + startY;
 }
+
+//------------------------------------------------------------------
 int ConsoleLog::getHighestCoord(){
     return startY - (font.getLineHeight()/2);
 }
 
+//------------------------------------------------------------------
 void ConsoleLog::setDiffStartY(int diffY){
     startY += diffY;
 }
