@@ -173,6 +173,7 @@ void textInput::keyPressed(int key) {
                 this->dropdownList->setVisible(true);
                 this->midiList->setVisible(false);
             }
+            else setVisibleToggles();
         }
         else {
             setVisibleToggles();
@@ -427,7 +428,7 @@ void textInput::setVisibleToggles() {
     
     string input = ofToLower(this->getTextString());
     for(auto n : this->dropdownList->getToggles()) {
-        if (n->getName().find(input) != -1) {
+        if (n->getName().find(input) != -1 || n->getName() == "INPUTS" || n->getName() == "LAYERS" || n->getName() == "MIXERS" || n->getName() == "OUTPUTS") {
             n->setVisible(true);
         }
         else n->setVisible(false);
