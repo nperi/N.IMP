@@ -15,21 +15,25 @@ textInput::textInput(string _name, string _textstring, float w, float h, float x
 {
     init(_name, _textstring, w, h, x, y, _size);
 
+    nodes.push_back("INPUTS");
     nodes.push_back("audio in - left channel");
     nodes.push_back("audio in - right channel");
     nodes.push_back("camera");
-    nodes.push_back("glitch 1");
-    nodes.push_back("glitch 2");
-    nodes.push_back("ikeda");
     nodes.push_back("image or video");
-    nodes.push_back("image processor");
     nodes.push_back("midi device");
-    nodes.push_back("mix mask");
-    nodes.push_back("mix simple blend");
-    nodes.push_back("multi channel switch");
     nodes.push_back("osc receiver");
     nodes.push_back("particle generator");
     nodes.push_back("syphon client");
+    nodes.push_back("LAYERS");
+    nodes.push_back("glitch 1");
+    nodes.push_back("glitch 2");
+    nodes.push_back("ikeda");
+    nodes.push_back("image processor");
+    nodes.push_back("MIXERS");
+    nodes.push_back("mix mask");
+    nodes.push_back("mix simple blend");
+    nodes.push_back("multi channel switch");
+    nodes.push_back("OUTPUTS");
     nodes.push_back("syphon output");
 //    nodes.push_back("video player");
     
@@ -80,14 +84,19 @@ void textInput::keyPressed(int key) {
                 
                 if (this->dropdownList->getVisibleToggles().size() > 0) {
                     toggleSelected--;
+                    string toggleSelectedName = this->dropdownList->getToggles()[toggleSelected]->getName();
                     
                     if(toggleSelected < 0) {
                         toggleSelected = this->dropdownList->getToggles().size() - 1;
                     }
-                    while (!this->dropdownList->getToggles()[toggleSelected]->isVisible()) {
+                    while (!this->dropdownList->getToggles()[toggleSelected]->isVisible() ||
+                           toggleSelectedName == "INPUTS" || toggleSelectedName == "LAYERS" || toggleSelectedName == "MIXERS" || toggleSelectedName == "OUTPUTS") {
+                        
                         toggleSelected <= 0
                         ? toggleSelected = this->dropdownList->getToggles().size() - 1
                         : toggleSelected--;
+                        
+                        toggleSelectedName = this->dropdownList->getToggles()[toggleSelected]->getName();
                     }
                     
                     this->dropdownList->activateToggle(this->dropdownList->getToggles()[toggleSelected]->getName());
@@ -113,9 +122,13 @@ void textInput::keyPressed(int key) {
                 
                 if (this->dropdownList->getVisibleToggles().size() > 0) {
                     toggleSelected = (toggleSelected+1) % this->dropdownList->getToggles().size();
+                    string toggleSelectedName = this->dropdownList->getToggles()[toggleSelected]->getName();
                     
-                    while (!this->dropdownList->getToggles()[toggleSelected]->isVisible()) {
+                    while (!this->dropdownList->getToggles()[toggleSelected]->isVisible() ||
+                           toggleSelectedName == "INPUTS" || toggleSelectedName == "LAYERS" || toggleSelectedName == "MIXERS" || toggleSelectedName == "OUTPUTS") {
+                        
                         toggleSelected = (toggleSelected+1) % this->dropdownList->getToggles().size();
+                        toggleSelectedName = this->dropdownList->getToggles()[toggleSelected]->getName();;
                     }
                     
                     this->dropdownList->activateToggle(this->dropdownList->getToggles()[toggleSelected]->getName());
@@ -221,7 +234,15 @@ bool textInput::mouseReleased(ofMouseEventArgs &e) {
 void textInput::guiEvent(ofxUIEventArgs &event_){
     
     if(event_.widget == this->dropdownList && this->dropdownList->getSelected().size()) {
-        this->setTextString(this->dropdownList->getSelected()[0]->getName());
+        
+        string selectedName = this->dropdownList->getSelected()[0]->getName();
+        
+        if (selectedName == "INPUTS" || selectedName == "LAYERS" || selectedName == "MIXERS" || selectedName == "OUTPUTS"){
+            return;
+        }
+        
+        this->dropdownList->setVisible(false);
+        this->setTextString(selectedName);
         
         textInputEvent e;
         e.point.set(this->getRect()->getX(), this->getRect()->getY());
@@ -238,7 +259,7 @@ void textInput::guiEvent(ofxUIEventArgs &event_){
             }
             
             if(midiList == NULL) {
-                midiList = new ofxUIDropDownList("", midiPortList, 210, this->getRect()->x, this->getRect()->y);
+                midiList = new ofxUIDropDownList("", midiPortList, 250, this->getRect()->x, this->getRect()->y);
                 this->getCanvasParent()->addWidget(midiList);
                 midiList->open();
                 midiList->setAutoClose(true);
@@ -360,16 +381,31 @@ void textInput::setDropdownList(ofxUIDropDownList* dl) {
     
     dl->open();
     dl->setVisible(false);
-    dl->setAutoClose(true);
+    dl->setAutoClose(false);
     
     dl->addToggles(nodes);
     dl->setToggleVisibility(false);
     
     for(auto n : dl->getToggles()) {
-        n->setColorBack(ofxUIColor (70,70,70,250));
-        n->setColorOutline(ofxUIColor (50,50,50,250));
-        n->setColorFillHighlight(ofxUIColor (30,30,30,250));
-        n->setDrawOutline(true);
+        
+        if (n->getName() == "INPUTS" || n->getName() == "LAYERS" || n->getName() == "MIXERS" || n->getName() == "OUTPUTS") {
+            n->setColorBack(ofxUIColor (50,50,50,250));
+            n->setColorOutline(ofxUIColor (30,30,30,250));
+            n->setColorOutlineHighlight(ofxUIColor (30,30,30,250));
+            n->setColorFill(ofxUIColor (50,50,50,250));
+            n->setColorFillHighlight(ofxUIColor (50,50,50,250));
+            ((ofxUIWidgetWithLabel*)n->getLabelWidget())->setColorFill(ofxUIColor (200,200,200,250));
+            ((ofxUIWidgetWithLabel*)n->getLabelWidget())->setColorFillHighlight(ofxUIColor (200,200,200,250));
+        }
+        else {
+            n->setColorBack(ofxUIColor (70,70,70,250));
+            n->setColorOutline(ofxUIColor (50,50,50,250));
+            n->setColorOutlineHighlight(ofxUIColor (120,120,120,250));
+            n->setColorFill(ofxUIColor (85,85,85,250));
+            n->setColorFillHighlight(ofxUIColor (30,30,30,250));
+            n->setDrawOutline(true);
+        }
+        n->setLabelAlignment(OFX_UI_TEXT_ALIGN_LEFT);
     }
 
 

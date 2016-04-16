@@ -948,10 +948,10 @@ void ofApp::setCurrentViewer(int currentViewer_){
 //------------------------------------------------------------------
 void ofApp::createNodeInput(float _x, float _y){
     
-    textInput *node = new textInput("", "", 210, 20, _x, _y);
+    textInput *node = new textInput("", "", 250, 20, _x, _y);
     vector<string> nodes;
     node->setMidiIn(&midiIn);
-    ofxUIDropDownList *dlist = new ofxUIDropDownList("", nodes, 210, _x, _y);
+    ofxUIDropDownList *dlist = new ofxUIDropDownList("", nodes, 250, _x, _y);
     
     gui->addWidget(dlist);
     gui->addWidget(node);
