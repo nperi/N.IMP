@@ -127,12 +127,12 @@ void ofApp::setup() {
     spacer->setColorFill(ofxUIColor(120, 120, 120, 200));
     new menuItem(menu, "MultiImageButton", "Encapsulate", "assets/encapsulate.png", false, RIGHT_MENU_WIDTH + MENU_ITEM_SIZE*12 + MENU_ITEM_PADDING*18, 20);
     new menuItem(menu, "MultiImageButton", "Uncapsulate", "assets/uncapsulate.png", false, RIGHT_MENU_WIDTH + MENU_ITEM_SIZE*13 + MENU_ITEM_PADDING*19, 20);
-//    new menuItem(menu, "MultiImageButton", "Open encapsulated", "assets/open_encapsulated.png", false, RIGHT_MENU_WIDTH + MENU_ITEM_SIZE*14 + MENU_ITEM_PADDING*20, 20);
+    new menuItem(menu, "MultiImageButton", "Open encapsulated", "assets/open_encapsulated.png", false, RIGHT_MENU_WIDTH + MENU_ITEM_SIZE*14 + MENU_ITEM_PADDING*20, 20);
     
-    spacer = new ofxUISpacer(RIGHT_MENU_WIDTH + MENU_ITEM_SIZE*14 + MENU_ITEM_PADDING*20, 20, 1,MENU_ITEM_SIZE);
+    spacer = new ofxUISpacer(RIGHT_MENU_WIDTH + MENU_ITEM_SIZE*15 + MENU_ITEM_PADDING*21, 20, 1,MENU_ITEM_SIZE);
     menu->addWidget(spacer);
     spacer->setColorFill(ofxUIColor(120, 120, 120, 200));
-    new menuItem(menu, "MultiImageToggle", "Midi Learn", "assets/midi_learn.png", false, RIGHT_MENU_WIDTH + MENU_ITEM_SIZE*14 + MENU_ITEM_PADDING*21, 20);
+    new menuItem(menu, "MultiImageToggle", "Midi Learn", "assets/midi_learn.png", false, RIGHT_MENU_WIDTH + MENU_ITEM_SIZE*15 + MENU_ITEM_PADDING*22, 20);
     
     ofAddListener(menu->newGUIEvent,this,&ofApp::menuEvent);
     
@@ -883,13 +883,11 @@ void ofApp::menuEvent(ofxUIEventArgs &e) {
             if(encapsulatedId < 0){
                 console->pushError("No encapsulated patch is selected");
             } else {
-               
-                // TODO: aca se podria mostrar lo encapsulado y dejar de dibujar la pantalla principal
-//                EventHandler::getInstance()->setEncapsulatedIdDraw(encapsulatedId);
-                
-                
-                
-                
+                if(EventHandler::getInstance()->getEncapsulatedIdDraw() == MAIN_WINDOW){
+                    EventHandler::getInstance()->setEncapsulatedIdDraw(encapsulatedId);
+                } else {
+                    EventHandler::getInstance()->setEncapsulatedIdDraw(MAIN_WINDOW);
+                }
 //                scrollBar* newScroll = new scrollBar(nodeViewers[currentViewer], &this->pad, newCam, SCROLL_BAR_EVENT_PRIORITY, windows->size()-1);
 //                newScroll->setup();
 //                encapsulatedWindowsScrollBars.push_back(newScroll);

@@ -238,18 +238,19 @@ void ConsoleScrollBar::updateScrollBar(ofVec3f diffVec){
         }
     }
 
-    // La altura del scroll bar = a la altura de la pantalla
+    // ScrollBar height = panelHeight
     scrollBarRectangle.height = panelHeight;
 
-    gripRectangle.x = scrollBarRectangle.x; // Also adjust the grip x coordinate
+    // Also adjust the grip x coordinate
+    gripRectangle.x = scrollBarRectangle.x;
     int highestCoordMessage = ConsoleLog::getInstance()->getLowestCoord();
     int lowestCoordMessage = ConsoleLog::getInstance()->getHighestCoord();
 
-    // Muestro la scrollBar
+    // show scrollBar
     isScrollBarVisible = true;
 
-    // estos ratios son la proporcion de lo que hay que dibujar que esta por encima y por debajo de lo que se muestra
-    // al ser ratio, van de 0 a 1, y calculo dependiendo el caso
+    // these ratios are the proportion of what's above and below of what's displaying
+    // they go from 0 to 1
     float gripSizeRatioLeft = 1.f;
     float gripSizeRatioRight = 1.f;
     if ( (lowestCoordMessage + SCROLL_TOLERANCE < 0)  && (highestCoordMessage - SCROLL_TOLERANCE > panelHeight) ) {
@@ -261,14 +262,13 @@ void ConsoleScrollBar::updateScrollBar(ofVec3f diffVec){
         gripSizeRatioLeft = (float)panelHeight / ( (float)highestCoordMessage );
     }
 
-    // La altura del grip es el panel por los ratios fuera de la pantalla
+    // Grip height = panelHeight * ratios
     gripRectangle.height = panelHeight * gripSizeRatioLeft * gripSizeRatioRight;
 
-    // La 'x' del grip esta en la scrollbar por la relacion de lo que queda por la izquierda de la pantalla
+    // The 'y' position of the grip is calculated through the ratio and the height of the scrollBar
     gripRectangle.y = (1-gripSizeRatioRight)*scrollBarRectangle.height;
 
-    // Si las alturas del grip y del scroll son iguales, es porque tengo todo a la vista
-    // hago que la resta sea menor a 2 para dejar un margen, si no, queda a veces la barra cuando no es necesario
+
     if( (scrollBarRectangle.height - gripRectangle.height) < 2 ){
         isScrollBarVisible = false;
     }
