@@ -601,6 +601,15 @@ void ofApp::keyPressed  (int key){
                     saveSnippet();
                 }
             break;
+        case 'e': case 'E':{
+                int encapsulatedId = nodeViewers[currentViewer]->getSelectedEncapsulated();
+                if(encapsulatedId < 0){
+                    console->pushError("No encapsulated patch is selected");
+                } else {
+                    EventHandler::getInstance()->setEncapsulatedIdDraw(encapsulatedId);
+                }
+            }
+            break;
         default:
             notAvailable = true;
             break;
@@ -630,6 +639,12 @@ void ofApp::keyReleased(int key){
                 }
             }
             holdingControl = false;
+        break;
+            
+        case 'e': case 'E':
+            if(EventHandler::getInstance()->getEncapsulatedIdDraw() != MAIN_WINDOW){
+                EventHandler::getInstance()->setEncapsulatedIdDraw(MAIN_WINDOW);   
+            }
         break;
     }
     
@@ -887,9 +902,6 @@ void ofApp::menuEvent(ofxUIEventArgs &e) {
                     console->pushError("No encapsulated patch is selected");
                 } else {
                     EventHandler::getInstance()->setEncapsulatedIdDraw(encapsulatedId);
-                    //scrollBar* newScroll = new scrollBar(nodeViewers[currentViewer], &this->pad, newCam, SCROLL_BAR_EVENT_PRIORITY, windows->size()-1);
-                    //newScroll->setup();
-                    //encapsulatedWindowsScrollBars.push_back(newScroll);
                 }
             }
         }
