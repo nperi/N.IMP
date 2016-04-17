@@ -450,32 +450,29 @@ void ofApp::draw() {
 
     // draw nodes
     if(loadingOK){
-        
         nodeViewers[currentViewer]->draw();
-        
-        //update menu's width and height
-        menu->setWidth(ofGetWidth());
-        right_menu->setHeight(ofGetHeight() - (MENU_HEIGHT + MENU_TOP_PADDING));
-        
-        //draw scrollbars
-        scrollBars->draw();
     }
     else{
         ofDrawBitmapString("ERROR LOADING XML", 50, 50);
     }
     
-    // TODO: draw console messages
-//    ofBackground(0,0,0); // change background color on each window
-//    ofSetColor(200, 200, 200);
-//    console->printMessages();
+    //update menu's width and height
+    menu->setWidth(ofGetWidth());
+    right_menu->setHeight(ofGetHeight() - (MENU_HEIGHT + MENU_TOP_PADDING));
     
+    //draw console
     if (showConsole) {
         console->draw();
     }
     
+    //draw scrollbars
+    scrollBars->draw();
+    
+    //draw framerate
     ofDrawBitmapString(ofToString(ofGetFrameRate(),0), ofGetWidth() - 50, ofGetHeight()-35);
 }
 
+//------------------------------------------------------------------
 void ofApp::updateSyphon(ofFbo & img){
     if(loadingOK){
         

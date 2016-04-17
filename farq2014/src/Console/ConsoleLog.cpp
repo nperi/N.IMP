@@ -21,7 +21,7 @@ ConsoleLog::ConsoleLog() {
     
     maxConsoleMessages = 300;
     
-    container.set(0, 3*ofGetHeight()/4, ofGetWidth(), ofGetHeight()/4);
+    container.set(RIGHT_MENU_WIDTH, 3*ofGetHeight()/4, ofGetWidth()-RIGHT_MENU_WIDTH, ofGetHeight()/4);
     screenRatio = 0.75;
 }
 
@@ -41,7 +41,7 @@ ConsoleLog* ConsoleLog::getInstance(){
 //------------------------------------------------------------------
 void ConsoleLog::update(){
     
-    container.setPosition(0, ofGetHeight()*screenRatio);
+    container.setPosition(RIGHT_MENU_WIDTH, ofGetHeight()*screenRatio);
     startY = container.getY() + 2;
 }
 
@@ -51,7 +51,7 @@ void ConsoleLog::draw(){
     ofPushStyle();
     
     ofSetColor(150);
-    ofLine(0, container.getY()-1, ofGetWidth(), container.getY()-1);
+    ofLine(RIGHT_MENU_WIDTH, container.getY()-1, ofGetWidth(), container.getY()-1);
     ofSetColor(0);
     ofRect(container);
     printMessages();
@@ -120,7 +120,7 @@ void ConsoleLog::printMessages(){
         } else if(messages.at(i).messageType == SUCCESS){
             ofSetColor(0, 255, 0);
         }
-        font.drawString("- " + messages.at(i).message, 10.f, y);
+        font.drawString("- " + messages.at(i).message, RIGHT_MENU_WIDTH + 10.f, y);
         y += font.getLineHeight();
     }
     ofPopStyle();
