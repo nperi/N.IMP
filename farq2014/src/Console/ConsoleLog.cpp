@@ -155,12 +155,12 @@ void ConsoleLog::printMessages(){
 
 //------------------------------------------------------------------
 int ConsoleLog::getLowestCoord(){
-    return (messages.size() + 2)*font.getLineHeight() + startY;
+    return (messages.size() + 2)*font.getLineHeight() + startY - container.getY();
 }
 
 //------------------------------------------------------------------
 int ConsoleLog::getHighestCoord(){
-    return startY - (font.getLineHeight()/2);
+    return startY - container.getY() - (font.getLineHeight()/2);
 }
 
 //------------------------------------------------------------------

@@ -19,8 +19,8 @@ struct Message{
         message = m;
     }
     
-    ConsoleMessageType     messageType;
-    string                 message;
+    ConsoleMessageType messageType;
+    string             message;
 };
 
 class ConsoleLog {

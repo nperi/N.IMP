@@ -77,8 +77,8 @@ void scrollBar::setup(){
     scrollBarRectangle = ofRectangle(ofGetWidth() - scrollBarWidth, BEGIN_Y, scrollBarWidth, 0);
     gripRectangle = ofRectangle(ofGetWidth() - scrollBarWidth, BEGIN_Y, scrollBarWidth, 0);
     
-    hScrollBarRectangle = ofRectangle(BEGIN_X, ofGetHeight() - scrollBarWidth, 0, scrollBarWidth);
-    hGripRectangle = ofRectangle(BEGIN_X, ofGetHeight() - scrollBarWidth, 0, scrollBarWidth);
+    hScrollBarRectangle = ofRectangle(BEGIN_X, ofGetHeight()*windowRatio - scrollBarWidth, 0, scrollBarWidth);
+    hGripRectangle = ofRectangle(BEGIN_X, ofGetHeight()*windowRatio - scrollBarWidth, 0, scrollBarWidth);
     
     composer->setDraggingGrip(false); // true when the user is moving the grip
     mouseOverGrip = false; // true when the mouse is over the grip
@@ -553,7 +553,8 @@ void scrollBar::changeWindowHeight(float windowRatio_) {
     windowRatio = windowRatio_;
     windowHeight = ofGetHeight()*windowRatio_;
     
-    windowRatio == 1 ? margin = SCROLL_BAR_WIDTH : margin = 2;
+    hScrollBarRectangle = ofRectangle(BEGIN_X, ofGetHeight()*windowRatio - scrollBarWidth, 0, scrollBarWidth);
+    hGripRectangle = ofRectangle(BEGIN_X, ofGetHeight()*windowRatio - scrollBarWidth, 0, scrollBarWidth);
 }
 
 /* ================================================ */

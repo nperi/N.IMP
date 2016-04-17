@@ -72,15 +72,6 @@ void ofApp::setup() {
     //
     pad = ofxMultiTouchPad();
     
-    
-    //*** CONSOLE LOGGER ***//
-    //
-    
-    // TODO: ver de arreglar esto
-    console = ConsoleLog::getInstance();
-    console->setupScrollBar(&pad);
-    ofSetLogLevel(OF_LOG_ERROR);
-    
 
     //*** TOP MENU ***//
     //
@@ -179,6 +170,14 @@ void ofApp::setup() {
     //
     this->scrollBars = new scrollBar(nodeViewers[currentViewer], &this->pad, &cam, SCROLL_BAR_EVENT_PRIORITY);
     scrollBars->setup();
+    
+    
+    //*** CONSOLE SETUP ***//
+    //
+    // TODO: ver de arreglar esto
+    console = ConsoleLog::getInstance();
+    console->setupScrollBar(&pad);
+    ofSetLogLevel(OF_LOG_ERROR);
     
     
     //*** AUDIO SETUP ***//
@@ -667,6 +666,10 @@ void ofApp::mouseDragged(int x, int y, int button){
 //------------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button){
     // TODO: EventHandler->getInstance()->setMainEvent(ver si es de consola o no);
+    
+    if (showConsole && console->getContainer().inside(x,y)) {
+        nodeViewers[currentViewer]->deactivateAllPatches();
+    }
 }
 
 //------------------------------------------------------------------

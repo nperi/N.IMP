@@ -23,10 +23,9 @@ ConsoleScrollBar::ConsoleScrollBar(ofxMultiTouchPad* _pad, int eventPriority){
     //
     ofAddListener(ofEvents().mouseMoved, this, &ConsoleScrollBar::mouseMoved, eventPriority);
     ofAddListener(ofEvents().mousePressed, this, &ConsoleScrollBar::mousePressed, eventPriority);
-    ofAddListener(ofEvents().mouseReleased, this, &ConsoleScrollBar::mouseReleased, eventPriority);
     ofAddListener(ofEvents().windowResized, this, &ConsoleScrollBar::windowResized, eventPriority);
-    
     ofAddListener(ofEvents().mouseDragged, this, &ConsoleScrollBar::mouseDragged, eventPriority);
+    //    ofAddListener(ofEvents().mouseReleased, this, &ConsoleScrollBar::mouseReleased, eventPriority);
 }
 
 //------------------------------------------------------------------
@@ -159,23 +158,23 @@ void ConsoleScrollBar::draw(){
 /* ================================================ */
 
 void ConsoleScrollBar::mouseDragged(ofMouseEventArgs &e){
-    if(!EventHandler::getInstance()->isMainEvent()){
-        ofVec3f mouse = ofVec3f(e.x, e.y,0);
-        ofVec3f mouseLast = ofVec3f(ofGetPreviousMouseX(),ofGetPreviousMouseY(),0);
+
+    ofVec3f mouse = ofVec3f(e.x, e.y,0);
+    ofVec3f mouseLast = ofVec3f(ofGetPreviousMouseX(),ofGetPreviousMouseY(),0);
+    
+    ofVec3f diffVec = ofVec3f(0,0,0);
+    
+    if (isScrollBarVisible) {
+        diffVec.y = mouseLast.y - mouse.y;
         
-        ofVec3f diffVec = ofVec3f(0,0,0);
+        // Move the grip according to the mouse displacement
+        int dy = e.y - mousePreviousY;
+        mousePreviousY = e.y;
+        gripRectangle.y += dy;
         
-        if (isScrollBarVisible) {
-            diffVec.y = mouseLast.y - mouse.y;
-            
-            // Move the grip according to the mouse displacement
-            int dy = e.y - mousePreviousY;
-            mousePreviousY = e.y;
-            gripRectangle.y += dy;
-            
-        }
-        updateScrollBar(diffVec);
     }
+    updateScrollBar(diffVec);
+    
 }
 
 //------------------------------------------------------------------
@@ -185,38 +184,32 @@ void ConsoleScrollBar::mouseReleased(ofMouseEventArgs &e){
 
 //------------------------------------------------------------------
 void ConsoleScrollBar::mousePressed(ofMouseEventArgs &e){
-//    if(EventHandler::getInstance()->isConsoleEvent()){
-    if(!EventHandler::getInstance()->isMainEvent()){
-        // Check if the click occur on the grip
-        if (isScrollBarVisible) {
-            ofRectangle r = gripRectangle;
-            if (r.inside(e.x, e.y)) {
-                mousePreviousY = e.y;
-            }
+
+    // Check if the click occur on the grip
+    if (isScrollBarVisible) {
+        ofRectangle r = gripRectangle;
+        if (r.inside(e.x, e.y)) {
+            mousePreviousY = e.y;
         }
     }
 }
 
 //------------------------------------------------------------------
 void ConsoleScrollBar::mouseMoved(ofMouseEventArgs &e){
-//    if(EventHandler::getInstance()->isConsoleEvent()){
-    if(!EventHandler::getInstance()->isMainEvent()){
-        if (isScrollBarVisible) {
-            ofRectangle r = gripRectangle;
-            mouseOverGrip = r.inside(e.x, e.y);
-        } else {
-            mouseOverGrip = false;
-        }
-        
+
+    if (isScrollBarVisible) {
+        ofRectangle r = gripRectangle;
+        mouseOverGrip = r.inside(e.x, e.y);
+    } else {
+        mouseOverGrip = false;
     }
+
 }
 
 //------------------------------------------------------------------
 void ConsoleScrollBar::windowResized(ofResizeEventArgs &e){
-//    if(EventHandler::getInstance()->isConsoleEvent()){
-    if(!EventHandler::getInstance()->isMainEvent()){
-        this->setup(windowRatio);
-    }
+    
+    this->setup(windowRatio);
 }
 
 /* ================================================ */

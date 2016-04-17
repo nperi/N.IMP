@@ -74,6 +74,7 @@ private:
     ofVec2f prevDiff;
     float drag;
     float minScrollDifference;
+    
 };
 
 
