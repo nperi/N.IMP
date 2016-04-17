@@ -22,7 +22,7 @@ ConsoleLog::ConsoleLog() {
     maxConsoleMessages = 300;
     
     container.set(RIGHT_MENU_WIDTH, 3*ofGetHeight()/4, ofGetWidth()-RIGHT_MENU_WIDTH, ofGetHeight()/4);
-    screenRatio = 0.75;
+    windowRatio = CONSOLE_ASPECT_RATIO;
 }
 
 //------------------------------------------------------------------
@@ -41,7 +41,7 @@ ConsoleLog* ConsoleLog::getInstance(){
 //------------------------------------------------------------------
 void ConsoleLog::update(){
     
-    container.setPosition(RIGHT_MENU_WIDTH, ofGetHeight()*screenRatio);
+    container.setPosition(RIGHT_MENU_WIDTH, ofGetHeight()*windowRatio);
     startY = container.getY() + 2;
 }
 
@@ -63,7 +63,7 @@ void ConsoleLog::draw(){
 void ConsoleLog::setupScrollBar(ofxMultiTouchPad* pad){
     startY = container.getY() + 2;
     this->instance->scrollBar = new ConsoleScrollBar(pad, CONSOLE_LOG_EVENT_PRORITY);
-    this->instance->scrollBar->setup();
+    this->instance->scrollBar->setup(windowRatio);
 }
 
 //------------------------------------------------------------------

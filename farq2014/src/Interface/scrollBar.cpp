@@ -33,6 +33,7 @@ scrollBar::scrollBar(class ofxComposer* _composer, ofxMultiTouchPad* _pad, ofEas
     scale = 1.f;
     updating = false;
     
+    windowRatio = 1;
     windowWidth = ofGetWidth();
     windowHeight = ofGetHeight();
     
@@ -238,6 +239,7 @@ void scrollBar::update(){
 void scrollBar::draw(){
     // Add a translation to bring the panel to the good position
     ofPushMatrix();
+    ofPushStyle();
     // Draw the scroll bar, is needed
     if (isScrollBarVisible) {
         ofSetColor(40);
@@ -260,6 +262,7 @@ void scrollBar::draw(){
         }
         ofRect(hGripRectangle);
     }
+    ofPopStyle();
     ofPopMatrix();
 }
 
@@ -399,7 +402,7 @@ void scrollBar::keyPressed(ofKeyEventArgs &e){
 void scrollBar::windowResized(ofResizeEventArgs &e){
     if(EventHandler::getInstance()->isMainEvent()){
         windowWidth = e.width;
-        windowHeight = e.height;
+        windowHeight = e.height*windowRatio;
         this->setup();
     }
 }
@@ -542,6 +545,15 @@ void scrollBar::updateHScrollBar(ofVec2f diffVec){
     if( (hScrollBarRectangle.width - hGripRectangle.width) < 2 ){
         isHScrollBarVisible = false;
     }
+}
+
+//------------------------------------------------------------------
+void scrollBar::changeWindowHeight(float windowRatio_) {
+    
+    windowRatio = windowRatio_;
+    windowHeight = ofGetHeight()*windowRatio_;
+    
+    windowRatio == 1 ? margin = SCROLL_BAR_WIDTH : margin = 2;
 }
 
 /* ================================================ */

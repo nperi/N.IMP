@@ -612,9 +612,9 @@ void ofApp::keyPressed  (int key){
             break;
         default:
             notAvailable = true;
+//            console->pushWarning("key function not available");
             break;
     }
-    if (notAvailable) console->pushWarning("key function not available");
     
     // sending keyboard input to all input generators
     for (int i = 0; i<inputGenerators.size();i++){
@@ -857,9 +857,10 @@ void ofApp::menuEvent(ofxUIEventArgs &e) {
         }
     }
     else if (name == "Console on/off"){
-        // TODO: esconder/mostrar consola
         if(showConsole){
+            scrollBars->changeWindowHeight(1);
         }else{
+            scrollBars->changeWindowHeight(console->getWindowRatio());
         }
         showConsole = !showConsole;
     }

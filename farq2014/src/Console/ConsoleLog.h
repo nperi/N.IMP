@@ -27,6 +27,8 @@ class ConsoleLog {
     
 public:
     
+    static ConsoleLog* getInstance();
+    
     //loops
     void update();
     void draw();
@@ -38,9 +40,11 @@ public:
     void pushWarning(string warning);
     void clearMessages();
     void printMessages();
-    static ConsoleLog* getInstance();
+    
     int getLowestCoord();
     int getHighestCoord();
+    float getWindowRatio() { return windowRatio; };
+    
     void setDiffStartY(int newY);
     void setupScrollBar(ofxMultiTouchPad* pad);
     
@@ -61,7 +65,7 @@ private:
     void push(Message m);
     
     ofRectangle container;
-    float screenRatio;
+    float windowRatio;
 };
 
 

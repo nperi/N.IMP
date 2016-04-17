@@ -30,28 +30,30 @@ ConsoleScrollBar::ConsoleScrollBar(ofxMultiTouchPad* _pad, int eventPriority){
 }
 
 //------------------------------------------------------------------
-void ConsoleScrollBar::setup(){
+void ConsoleScrollBar::setup(float screenRatio_){
+    
     /*
      The "panel" is a frame. This frame contains the displayed images, and the scroll bar.
      The scroll bar contains a "grip". The user can drag the grip with the mouse.
      */
-    
-    margin = SCROLL_BAR_WIDTH; // Distance between the edge of the screen and the panel frame
-    scrollBarWidth = SCROLL_BAR_WIDTH;
+
+    margin          = SCROLL_BAR_WIDTH; // Distance between the edge of the screen and the panel frame
+    scrollBarWidth  = SCROLL_BAR_WIDTH;
+    windowRatio     = screenRatio_;     // position of the console in the screen
     
     // Now two rectangles, for the scroll bar and his grip placements
     // Coordinates are relative to the panel coordinates, not to the screen coordinates
     // This is a first initialisation, but we don't know many things about these placements at this state
-    scrollBarRectangle = ofRectangle(ofGetWidth() - scrollBarWidth, 0, scrollBarWidth, 0);
-    gripRectangle = ofRectangle(ofGetWidth() - scrollBarWidth, 0, scrollBarWidth, 0);
+    scrollBarRectangle  = ofRectangle(ofGetWidth() - scrollBarWidth, ofGetHeight()*windowRatio, scrollBarWidth, ofGetHeight()*windowRatio);
+    gripRectangle       = ofRectangle(ofGetWidth() - scrollBarWidth, ofGetHeight()*windowRatio, scrollBarWidth, ofGetHeight()*windowRatio);
     
     mouseOverGrip = false; // true when the mouse is over the grip
     
     updateScrollBar(ofVec3f(0,0,0));
     
-    // The size of the panel. All the screen except margins
-    panelWidth = ofGetWidth();
-    panelHeight = ofGetHeight();
+    // The size of the panel. All the console screen except margins
+    panelWidth = ofGetWidth() - scrollBarWidth;
+    panelHeight = ofGetHeight() - ofGetHeight()*windowRatio - scrollBarWidth;
     
     applyInertia = false;
     updating = false;
@@ -65,8 +67,10 @@ void ConsoleScrollBar::setup(){
 /* ================================================ */
 
 void ConsoleScrollBar::update(){
+    
     ofVec3f diffVec = ofVec3f(0,0,0);
     if(!EventHandler::getInstance()->isMainEvent()){
+        
         //** touchpad scroll **//
         std::vector<MTouch> mTouches = pad->getTouches();
         if(mTouches.size() == 2) {
@@ -211,7 +215,7 @@ void ConsoleScrollBar::mouseMoved(ofMouseEventArgs &e){
 void ConsoleScrollBar::windowResized(ofResizeEventArgs &e){
 //    if(EventHandler::getInstance()->isConsoleEvent()){
     if(!EventHandler::getInstance()->isMainEvent()){
-        this->setup();
+        this->setup(windowRatio);
     }
 }
 
@@ -266,7 +270,7 @@ void ConsoleScrollBar::updateScrollBar(ofVec3f diffVec){
     gripRectangle.height = panelHeight * gripSizeRatioLeft * gripSizeRatioRight;
 
     // The 'y' position of the grip is calculated through the ratio and the height of the scrollBar
-    gripRectangle.y = (1-gripSizeRatioRight)*scrollBarRectangle.height;
+    gripRectangle.y = ofGetHeight()*windowRatio + (1-gripSizeRatioRight)*scrollBarRectangle.height;
 
 
     if( (scrollBarRectangle.height - gripRectangle.height) < 2 ){

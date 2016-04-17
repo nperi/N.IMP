@@ -20,11 +20,10 @@ public:
     ConsoleScrollBar();
     ConsoleScrollBar(ofxMultiTouchPad* pad, int eventPriority = OF_EVENT_ORDER_AFTER_APP);
     //    ~scrollBar();
-    
+    void setup(float screenRatio_);
     
     //*** LOOPS ***//
     //
-    void setup();
     void update();
     void draw();
     
@@ -37,12 +36,17 @@ public:
     void    windowResized(ofResizeEventArgs &e);
     void    mouseDragged(ofMouseEventArgs &e);
     
+    //*** FUNCTIONS ***//
+    //
     void updateScrollBar(ofVec3f diffVec);
+    void setWindowRatio(float windowRatio_) { windowRatio = windowRatio_; };
+    
     
 private:
     /* Display parameters for the panel */
     float margin;
     float scrollBarWidth;
+    float windowRatio;
     
     float panelWidth;
     float panelHeight;

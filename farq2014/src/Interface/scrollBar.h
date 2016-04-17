@@ -43,6 +43,10 @@ public:
     void updateScrollBar(ofVec2f diffVec);
     void updateHScrollBar(ofVec2f diffVec);
     
+    //*** FUNCTIONS ***//
+    //
+    void    changeWindowHeight(float windowRatio_);
+    
 private:
     /* Display parameters for the panel */
     float margin;
@@ -53,6 +57,7 @@ private:
     
     float windowWidth;
     float windowHeight;
+    float windowRatio;
     bool  applyInertia;
     float drag;
     float minScrollDifference;
