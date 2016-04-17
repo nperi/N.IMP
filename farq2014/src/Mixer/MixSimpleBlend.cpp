@@ -79,10 +79,10 @@ void MixSimpleBlend::update(){
                 }
             }
             else{
-                ofPushMatrix();
-                ofScale(1, -1);
-                ofPushMatrix();
-                ofTranslate(0, -height);
+//                ofPushMatrix();
+//                ofScale(1, -1);
+//                ofPushMatrix();
+//                ofTranslate(0, -height);
                 
                 psBlend.begin();
                 ofSetColor(255, 255, 255,opacity);
@@ -90,8 +90,8 @@ void MixSimpleBlend::update(){
                 psBlend.end();
                 psBlend.draw(input[selector1]->getTextureReference(), blendMode);
                 
-                ofPopMatrix();
-                ofPopMatrix();
+//                ofPopMatrix();
+//                ofPopMatrix();
             }
             glDisable(GL_BLEND);
             glPopAttrib();

@@ -1,4 +1,3 @@
-#version 150
 uniform sampler2DRect image;
 uniform int imgWidth,imgHeight;
 uniform int trueWidth,trueHeight;
@@ -10,9 +9,7 @@ uniform float timer;
 uniform float mouseX;
 int flgs;
 float pix_w,pix_h;
-
-in vec3 pos;
-out vec4 outputColor;
+varying vec3 pos;
 
 void main (void)
 {
@@ -23,7 +20,7 @@ void main (void)
 						  max(3.0,min(float(trueHeight),pos.y+cos(pos.x/(251.57*rand*rand)*rand+rand*val2+timer*2.4)*val3)-3.));
 
 
-    vec4 col = texture(image,texCoord);
+    vec4 col = texture2DRect(image,texCoord);
 
-    outputColor.rgba = col.rgba;
+    gl_FragColor.rgba = col.rgba;
 }

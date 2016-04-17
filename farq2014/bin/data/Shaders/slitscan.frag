@@ -1,4 +1,3 @@
-#version 150
 uniform sampler2DRect image;
 uniform int imgWidth,imgHeight;
 uniform float rand;
@@ -7,9 +6,7 @@ uniform vec2 blur_vec;
 uniform float val1,val2,val3,val4;
 int flgs;
 float pix_w,pix_h;
-
-in vec3 pos;
-out vec4 outputColor;
+varying vec3 pos;
 
 void main (void)
 {
@@ -20,7 +17,7 @@ void main (void)
 	float slit_h = val3;
 	
     vec2 texCoord = vec2(3.0+floor(pos.x/slit_h)*slit_h ,pos.y);
-    vec4 col = texture(image,texCoord);
+    vec4 col = texture2DRect(image,texCoord);
 	
-    outputColor.rgba = col.rgba;
+    gl_FragColor.rgba = col.rgba;
 }

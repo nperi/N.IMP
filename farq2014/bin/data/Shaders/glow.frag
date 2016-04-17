@@ -1,16 +1,15 @@
-#version 150
 uniform sampler2DRect image;
 uniform float rand;
 uniform int range;
 
-in vec3 pos;
-out vec4 outputColor;
+varying vec3 pos;
+
 
 void main (void)
 {
     float e = 2.718281828459045235360287471352;
     vec2 texCoord = vec2(pos.x , pos.y);
-    vec4 col = texture(image,texCoord);
+    vec4 col = texture2DRect(image,texCoord);
     
     int blur_w = 8;
     float pi = 3.1415926535;
@@ -30,12 +29,12 @@ void main (void)
 //    }
 
     for (int i = 0;i < blur_w*blur_w;i++){
-        gws = gws + texture(image,vec2(pos.x+float(mod(float(i),float(blur_w))),pos.y+float(i/blur_w)))*weight*1.3;
-        gws = gws + texture(image,vec2(pos.x-float(mod(float(i),float(blur_w))),pos.y+float(i/blur_w)))*weight*1.3;
-        gws = gws + texture(image,vec2(pos.x+float(mod(float(i),float(blur_w))),pos.y-float(i/blur_w)))*weight*1.3;
-        gws = gws + texture(image,vec2(pos.x-float(mod(float(i),float(blur_w))),pos.y-float(i/blur_w)))*weight*1.3;
+        gws = gws + texture2DRect(image,vec2(pos.x+float(mod(float(i),float(blur_w))),pos.y+float(i/blur_w)))*weight*1.3;
+        gws = gws + texture2DRect(image,vec2(pos.x-float(mod(float(i),float(blur_w))),pos.y+float(i/blur_w)))*weight*1.3;
+        gws = gws + texture2DRect(image,vec2(pos.x+float(mod(float(i),float(blur_w))),pos.y-float(i/blur_w)))*weight*1.3;
+        gws = gws + texture2DRect(image,vec2(pos.x-float(mod(float(i),float(blur_w))),pos.y-float(i/blur_w)))*weight*1.3;
     }
 
 
-    outputColor.rgba = col+gws;
+    gl_FragColor.rgba = col+gws;
 }

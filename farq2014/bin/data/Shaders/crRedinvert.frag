@@ -1,17 +1,15 @@
-#version 150
-
 uniform sampler2DRect image;
 uniform float rand;
 uniform int range;
 
-in vec3 pos;
-out vec4 outputColor;
+varying vec3 pos;
+
 
 void main (void)
 {
     float e = 2.718281828459045235360287471352;
     vec2 texCoord = vec2(pos.x , pos.y);
-    vec4 col = texture(image,texCoord);
+    vec4 col = texture2DRect(image,texCoord);
     
     vec3 k =   vec3(0.4,0.2,0.2);
     vec3 min = vec3(1.0,0.0,0.0);
@@ -21,5 +19,5 @@ void main (void)
     col.g = (1.0/(1.0+pow(e,(-k.g*((col.g*2.0)-1.0)*20.0)))*(max.g-min.g)+min.g);
     col.b = (1.0/(1.0+pow(e,(-k.b*((col.b*2.0)-1.0)*20.0)))*(max.b-min.b)+min.b);
     
-    outputColor.rgba = col.rgba;
+    gl_FragColor.rgba = col.rgba;
 }
