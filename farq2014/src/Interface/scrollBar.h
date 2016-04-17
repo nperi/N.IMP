@@ -20,7 +20,7 @@ public:
     
     scrollBar();
 //    scrollBar(ofxComposer* composer, ofxMultiTouchPad* pad, int eventPriority = OF_EVENT_ORDER_AFTER_APP, int windowId = MAIN_WINDOW);
-    scrollBar(ofxComposer* composer, ofxMultiTouchPad* pad, ofEasyCam* cam, int eventPriority = OF_EVENT_ORDER_AFTER_APP, int windowId = MAIN_WINDOW);
+    scrollBar(ofxComposer* composer, ofxMultiTouchPad* pad, ofEasyCam* cam, int eventPriority = OF_EVENT_ORDER_AFTER_APP);
     ~scrollBar();
     
     
@@ -103,8 +103,8 @@ private:
     ofPoint prev0, prev1, post0, post1;
     ofVec3f clicTranslation;
     ofVec2f clicPoint;
-    
-    int windowId;
+
+    int encapsulatedIdToDraw;
     int eventPriority;
     
     bool showMaxZoomReachedMessage;

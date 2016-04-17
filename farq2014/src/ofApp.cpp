@@ -879,18 +879,18 @@ void ofApp::menuEvent(ofxUIEventArgs &e) {
     }
     else if (name == "Open encapsulated"){
         if(((ofxUIMultiImageButton*)e.widget)->getValue() == 1){
-            int encapsulatedId = nodeViewers[currentViewer]->getSelectedEncapsulated();
-            if(encapsulatedId < 0){
-                console->pushError("No encapsulated patch is selected");
+            if(EventHandler::getInstance()->getEncapsulatedIdDraw() != MAIN_WINDOW){
+                EventHandler::getInstance()->setEncapsulatedIdDraw(MAIN_WINDOW);
             } else {
-                if(EventHandler::getInstance()->getEncapsulatedIdDraw() == MAIN_WINDOW){
-                    EventHandler::getInstance()->setEncapsulatedIdDraw(encapsulatedId);
+                int encapsulatedId = nodeViewers[currentViewer]->getSelectedEncapsulated();
+                if(encapsulatedId < 0){
+                    console->pushError("No encapsulated patch is selected");
                 } else {
-                    EventHandler::getInstance()->setEncapsulatedIdDraw(MAIN_WINDOW);
+                    EventHandler::getInstance()->setEncapsulatedIdDraw(encapsulatedId);
+                    //scrollBar* newScroll = new scrollBar(nodeViewers[currentViewer], &this->pad, newCam, SCROLL_BAR_EVENT_PRIORITY, windows->size()-1);
+                    //newScroll->setup();
+                    //encapsulatedWindowsScrollBars.push_back(newScroll);
                 }
-//                scrollBar* newScroll = new scrollBar(nodeViewers[currentViewer], &this->pad, newCam, SCROLL_BAR_EVENT_PRIORITY, windows->size()-1);
-//                newScroll->setup();
-//                encapsulatedWindowsScrollBars.push_back(newScroll);
             }
         }
     }

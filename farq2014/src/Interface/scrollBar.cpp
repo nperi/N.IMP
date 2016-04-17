@@ -14,7 +14,7 @@
 scrollBar::scrollBar(){
 }
 
-scrollBar::scrollBar(class ofxComposer* _composer, ofxMultiTouchPad* _pad, ofEasyCam* cam, int eventPriority, int windowId){
+scrollBar::scrollBar(class ofxComposer* _composer, ofxMultiTouchPad* _pad, ofEasyCam* cam, int eventPriority){
     this->composer  = _composer;
     this->pad       = _pad;
     this->cam       = cam;
@@ -32,7 +32,6 @@ scrollBar::scrollBar(class ofxComposer* _composer, ofxMultiTouchPad* _pad, ofEas
     //    enableScroll = true;
     scale = 1.f;
     updating = false;
-    this->windowId = windowId;
     
     windowWidth = ofGetWidth();
     windowHeight = ofGetHeight();
@@ -96,6 +95,7 @@ void scrollBar::setup(){
 
 void scrollBar::update(){
     ofVec2f diffVec = ofVec2f(0,0);
+    encapsulatedIdToDraw = EventHandler::getInstance()->getEncapsulatedIdDraw();
     
     if(enableTrackpad){
         if(EventHandler::getInstance()->isMainEvent()){
@@ -413,6 +413,8 @@ void scrollBar::windowResized(ofResizeEventArgs &e){
 /* ================================================ */
 
 void scrollBar::updateScrollBar(ofVec2f diffVec){
+    
+    
     if(cam->getScale().x > 1){
         diffVec.y *= cam->getScale().x;
     }
@@ -437,9 +439,9 @@ void scrollBar::updateScrollBar(ofVec2f diffVec){
     
     // Also adjust the grip x coordinate
     gripRectangle.x = scrollBarRectangle.x;
-    int unTransformedLowest = (composer->getPatchesLowestCoord(windowId) - cam->getPosition().y)/cam->getScale().y - margin - BEGIN_Y;
-    int unTransformedHighest = (composer->getPatchesHighestCoord(windowId) - cam->getPosition().y)/cam->getScale().y - margin;
-    int inspectorHighestY = composer->getPatchesHighestYInspectorCoord(windowId);
+    int unTransformedLowest = (composer->getPatchesLowestCoord(encapsulatedIdToDraw) - cam->getPosition().y)/cam->getScale().y - margin - BEGIN_Y;
+    int unTransformedHighest = (composer->getPatchesHighestCoord(encapsulatedIdToDraw) - cam->getPosition().y)/cam->getScale().y - margin;
+    int inspectorHighestY = composer->getPatchesHighestYInspectorCoord(encapsulatedIdToDraw);
     
     if(unTransformedHighest < inspectorHighestY && inspectorHighestY > 0){
         unTransformedHighest = inspectorHighestY;
@@ -505,9 +507,9 @@ void scrollBar::updateHScrollBar(ofVec2f diffVec){
     
     // Also adjust the grip x coordinate
     hGripRectangle.y = hScrollBarRectangle.y;
-    int unTransformedLeft = (composer->getPatchesLeftMostCoord(windowId) - cam->getPosition().x)/cam->getScale().x - margin - BEGIN_X;
-    int unTransformedRight = (composer->getPatchesRightMostCoord(windowId) - cam->getPosition().x)/cam->getScale().x - margin;
-    int inspectorHighestX = composer->getPatchesHighestXInspectorCoord(windowId);
+    int unTransformedLeft = (composer->getPatchesLeftMostCoord(encapsulatedIdToDraw) - cam->getPosition().x)/cam->getScale().x - margin - BEGIN_X;
+    int unTransformedRight = (composer->getPatchesRightMostCoord(encapsulatedIdToDraw) - cam->getPosition().x)/cam->getScale().x - margin;
+    int inspectorHighestX = composer->getPatchesHighestXInspectorCoord(encapsulatedIdToDraw);
 
     if(unTransformedRight < inspectorHighestX && inspectorHighestX > 0){
         unTransformedRight = inspectorHighestX;
