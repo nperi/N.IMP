@@ -20,9 +20,15 @@ ConsoleLog::ConsoleLog() {
     font.setLetterSpacing(1.037);
     
     maxConsoleMessages = 300;
+    consoleVisible = false;
     
     container.set(RIGHT_MENU_WIDTH, 3*ofGetHeight()/4, ofGetWidth()-RIGHT_MENU_WIDTH, ofGetHeight()/4);
     windowRatio = CONSOLE_ASPECT_RATIO;
+    
+    ofAddListener(ofEvents().mousePressed, this, &ConsoleLog::mousePressed, CONSOLE_EVENT_PRORITY);
+//    ofAddListener(ofEvents().mouseMoved, this, &ConsoleLog::mouseMoved, CONSOLE_EVENT_PRORITY);
+//    ofAddListener(ofEvents().mouseReleased, this, &ConsoleLog::mouseReleased, CONSOLE_EVENT_PRORITY);
+//    ofAddListener(ofEvents().mouseDragged, this, &ConsoleLog::mouseDragged, CONSOLE_EVENT_PRORITY);
 }
 
 //------------------------------------------------------------------
@@ -36,6 +42,13 @@ ConsoleLog* ConsoleLog::getInstance(){
         instance = new ConsoleLog();
     }
     return instance;
+}
+
+//------------------------------------------------------------------
+void ConsoleLog::setupScrollBar(ofxMultiTouchPad* pad){
+    startY = container.getY() + 2;
+    this->instance->scrollBar = new ConsoleScrollBar(pad, CONSOLE_SCROLL_EVENT_PRORITY);
+    this->instance->scrollBar->setup(windowRatio);
 }
 
 //------------------------------------------------------------------
@@ -60,10 +73,24 @@ void ConsoleLog::draw(){
 }
 
 //------------------------------------------------------------------
-void ConsoleLog::setupScrollBar(ofxMultiTouchPad* pad){
-    startY = container.getY() + 2;
-    this->instance->scrollBar = new ConsoleScrollBar(pad, CONSOLE_LOG_EVENT_PRORITY);
-    this->instance->scrollBar->setup(windowRatio);
+bool ConsoleLog::mouseDragged(ofMouseEventArgs &e){
+
+}
+
+//------------------------------------------------------------------
+bool ConsoleLog::mouseReleased(ofMouseEventArgs &e){
+    
+}
+
+//------------------------------------------------------------------
+bool ConsoleLog::mousePressed(ofMouseEventArgs &e){
+
+    return consoleVisible && container.inside(e.x, e.y);
+}
+
+//------------------------------------------------------------------
+bool ConsoleLog::mouseMoved(ofMouseEventArgs &e){
+
 }
 
 //------------------------------------------------------------------

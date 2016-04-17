@@ -863,6 +863,7 @@ void ofApp::menuEvent(ofxUIEventArgs &e) {
             scrollBars->changeWindowHeight(console->getWindowRatio());
         }
         showConsole = !showConsole;
+        console->setConsoleVisible(showConsole);
     }
     else if (name == "Clear Console"){
         console->clearMessages();

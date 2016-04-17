@@ -29,11 +29,22 @@ public:
     
     static ConsoleLog* getInstance();
     
-    //loops
+    //*** LOOPS ***//
+    //
     void update();
     void draw();
     
-    //functions
+    
+    //*** EVENTS ***//
+    //
+    bool mouseMoved(ofMouseEventArgs &e);
+    bool mousePressed(ofMouseEventArgs &e);
+    bool mouseReleased(ofMouseEventArgs &e);
+    bool mouseDragged(ofMouseEventArgs &e);
+    
+    
+    //*** FUNCTIONS ***//
+    //
     void pushMessage(string message);
     void pushError(string error);
     void pushSuccess(string success);
@@ -44,9 +55,11 @@ public:
     int getLowestCoord();
     int getHighestCoord();
     float getWindowRatio() { return windowRatio; };
+    ofRectangle getContainer() { return container; };
     
     void setDiffStartY(int newY);
     void setupScrollBar(ofxMultiTouchPad* pad);
+    void setConsoleVisible(bool visible) { consoleVisible = visible; };
     
 private:
     ConsoleLog();
@@ -66,6 +79,7 @@ private:
     
     ofRectangle container;
     float windowRatio;
+    bool consoleVisible;
 };
 
 
