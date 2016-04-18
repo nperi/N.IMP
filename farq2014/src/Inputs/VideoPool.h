@@ -18,8 +18,8 @@ class VideoPool{
         static VideoPool* getInstance();
         
         void update();
-        ofQTKitPlayer* getPlayer();
-        void releasePlayer(ofQTKitPlayer* player);
+        ofBaseVideoPlayer* getPlayer(string path, string name);
+        void releasePlayer(ofBaseVideoPlayer* player);
         
 
     protected:
@@ -28,7 +28,7 @@ class VideoPool{
     private:
         static VideoPool* instance;
         void setup();
-        vector<std::pair<bool,ofQTKitPlayer*> > pool;
+        vector<std::pair<bool,ofBaseVideoPlayer*> > pool;
     
 };
 

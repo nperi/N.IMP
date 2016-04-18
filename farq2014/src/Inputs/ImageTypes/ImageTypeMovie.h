@@ -17,7 +17,7 @@ class ImageTypeMovie : public ImageType{
 	
   public:
 	
-	ImageTypeMovie(string name_ ,string path_,ofQTKitPlayer* player);
+	ImageTypeMovie(string name_ ,string path_,ofBaseVideoPlayer* player);
 	
     void activate(ofImage& _img);
     void update(ofImage& _img);
@@ -28,14 +28,14 @@ class ImageTypeMovie : public ImageType{
     void setPosition(float p, ofImage& _img);
     void setLoopState(ofLoopType l);
     
-    void setPlayer(ofQTKitPlayer* player);
+    void setPlayer(ofBaseVideoPlayer* player);
     
     float getHeight();
     float getWidth();
     
 private:
     
-    ofQTKitPlayer* videoPlayer;
+    ofBaseVideoPlayer* videoPlayer;
     string path;
     
     void cIsPlaying(bool &b);

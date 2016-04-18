@@ -91,7 +91,7 @@ private:
     
     int lastSequence;
     bool hasMovie;
-    ofQTKitPlayer* videoPlayer;
+    ofBaseVideoPlayer* videoPlayer;
     
     string path;
 };

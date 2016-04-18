@@ -643,7 +643,7 @@ void ofApp::keyReleased(int key){
             
         case 'e': case 'E':
             if(EventHandler::getInstance()->getEncapsulatedIdDraw() != MAIN_WINDOW){
-                EventHandler::getInstance()->setEncapsulatedIdDraw(MAIN_WINDOW);   
+                EventHandler::getInstance()->setEncapsulatedIdDraw(MAIN_WINDOW);
             }
         break;
     }
