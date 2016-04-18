@@ -54,6 +54,11 @@ void ConsoleLog::setupScrollBar(ofxMultiTouchPad* pad){
 }
 
 //------------------------------------------------------------------
+void ConsoleLog::restartStartY() {
+    startY = container.getY() + 2;
+}
+
+//------------------------------------------------------------------
 void ConsoleLog::update(){
     
     container.setPosition(RIGHT_MENU_WIDTH, ofGetHeight()*windowRatio);

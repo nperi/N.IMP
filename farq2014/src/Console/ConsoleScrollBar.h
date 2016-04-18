@@ -48,7 +48,7 @@ private:
     float scrollBarWidth;
     float windowRatio;
     
-    float panelWidth;
+//    float panelWidth;
     float panelHeight;
     
     

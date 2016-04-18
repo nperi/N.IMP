@@ -61,6 +61,8 @@ public:
     void setupScrollBar(ofxMultiTouchPad* pad);
     void setConsoleVisible(bool visible) { consoleVisible = visible; };
     
+    void restartStartY();
+    
 private:
     ConsoleLog();
     ConsoleLog(ConsoleLog const&){};             // copy constructor is private
