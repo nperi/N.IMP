@@ -9,7 +9,7 @@
 
 #include "ImageTypeMovie.h"
 
-ImageTypeMovie::ImageTypeMovie(string name_ ,string path_, ofQTKitPlayer* player): ImageType(name_,path_){
+ImageTypeMovie::ImageTypeMovie(string name_ ,string path_, ofBaseVideoPlayer* player): ImageType(name_,path_){
     mediaType = T_MOVIE;
     //ofQTKitDecodeMode decodeMode = OF_QTKIT_DECODE_PIXELS_AND_TEXTURE;
     //videoPlayer.setPixelFormat(OF_PIXELS_RGBA);
@@ -31,7 +31,7 @@ ImageTypeMovie::ImageTypeMovie(string name_ ,string path_, ofQTKitPlayer* player
 void ImageTypeMovie::activate(ofImage& _img){
     if (videoPlayer!=NULL) {
         videoPlayer->stop();
-        videoPlayer->closeMovie();
+        videoPlayer->close();
         videoPlayer->loadMovie(path);
         
         if (isPlaying) videoPlayer->play();
@@ -121,7 +121,7 @@ void ImageTypeMovie::cIsPlaying(bool &b){
 
 
 //------------------------------------------------------------------
-void ImageTypeMovie::setPlayer(ofQTKitPlayer *player){
+void ImageTypeMovie::setPlayer(ofBaseVideoPlayer *player){
     videoPlayer = player;
 }
 

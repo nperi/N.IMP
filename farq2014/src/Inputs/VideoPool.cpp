@@ -8,6 +8,7 @@
 
 
 #include "VideoPool.h"
+#include "ofxHapPlayer.h"
 
 
 
@@ -31,8 +32,8 @@ void VideoPool::update() {
     
 }
 
-ofQTKitPlayer* VideoPool::getPlayer() {
-    ofQTKitPlayer* vP = NULL;
+ofBaseVideoPlayer* VideoPool::getPlayer(string path, string name) {
+    ofBaseVideoPlayer* vP = NULL;
     
     bool found = false;
     int index = 0;
@@ -48,19 +49,24 @@ ofQTKitPlayer* VideoPool::getPlayer() {
     
     if(!found){
         if(pool.size()<MAX_PLAYERS){
-            vP = new ofQTKitPlayer();
-            ofQTKitDecodeMode decodeMode = OF_QTKIT_DECODE_PIXELS_AND_TEXTURE;
-            vP->setPixelFormat(OF_PIXELS_RGBA);
-            pool.push_back(std::pair<bool,ofQTKitPlayer*>(false,vP));
+            ofxHapPlayer* a = new ofxHapPlayer();
+            bool b = a->loadMovie(path + name);
+            if(!b){
+                delete a;
+                vP = new ofQTKitPlayer();
+                ofQTKitDecodeMode decodeMode = OF_QTKIT_DECODE_PIXELS_AND_TEXTURE;
+                vP->setPixelFormat(OF_PIXELS_RGBA);
+            }
+            pool.push_back(std::pair<bool,ofBaseVideoPlayer*>(false,vP));
         }
     }
     
     return vP;
     
 }
-void VideoPool::releasePlayer(ofQTKitPlayer* player) {
+void VideoPool::releasePlayer(ofBaseVideoPlayer* player) {
     if (player!=NULL) {
-        player->closeMovie();
+        player->close();
         
         bool found = false;
         int index = 0;

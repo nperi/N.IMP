@@ -24,7 +24,6 @@ ImageAndVideoInputList::~ImageAndVideoInputList(){
     
     if (videoPlayer != NULL) {
         VideoPool::getInstance()->releasePlayer(videoPlayer);
-        delete videoPlayer;
     }
     
     isPalindromLoop.removeListener(this, &ImageAndVideoInputList::loopTypeChanged);
@@ -186,7 +185,7 @@ void ImageAndVideoInputList::loadImage(string name_, string path_){
         ofIsStringInString(path_, ".mpg") || ofIsStringInString(path_, ".mpg") ) {
         
         if (inputs.size() == 0 || videoPlayer == NULL) {
-            videoPlayer = VideoPool::getInstance()->getPlayer();
+            videoPlayer = VideoPool::getInstance()->getPlayer(path_, name_);
             videoPlayer->stop();
         }
         inputs.push_back(new ImageTypeMovie(name_,path_,videoPlayer));
