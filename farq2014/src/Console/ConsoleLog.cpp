@@ -48,7 +48,7 @@ ConsoleLog* ConsoleLog::getInstance(){
 
 //------------------------------------------------------------------
 void ConsoleLog::setupScrollBar(ofxMultiTouchPad* pad){
-    startY = container.getY() + 2;
+    startY = container.getY() + 10;
     this->instance->scrollBar = new ConsoleScrollBar(pad, CONSOLE_SCROLL_EVENT_PRORITY);
     this->instance->scrollBar->setup(windowRatio);
 }
