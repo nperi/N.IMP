@@ -231,7 +231,7 @@ void ImageAndVideoInputList::loadImage(string name_, string path_){
         
         seqSettings.setName("Sequence Settings");
         seqSettings.add(isPlaying.set("Play",true));
-        seqSettings.add(isPalindromLoop.set("Loop Palindrom",true));
+        seqSettings.add(isPalindromLoop.set("Loop Palindrom",false));
         seqSettings.add(isMatchBpmToSequenceLength.set("BPM = Seq. Length",false));
         seqSettings.add(bpm.set("BPM", 100, 10, 200));
         seqSettings.add(bpmMultiplier.set("BPM Multiplier", 4, 1, 120));

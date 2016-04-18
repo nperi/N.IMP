@@ -26,7 +26,6 @@ scrollBar::scrollBar(class ofxComposer* _composer, ofxMultiTouchPad* _pad, ofEas
     ofAddListener(ofEvents().mouseReleased, this, &scrollBar::mouseReleased, eventPriority);
     ofAddListener(ofEvents().keyPressed, this, &scrollBar::keyPressed, eventPriority);
     ofAddListener(ofEvents().windowResized, this, &scrollBar::windowResized, eventPriority);
-    
     ofAddListener(ofEvents().mouseDragged, this, &scrollBar::mouseDragged, eventPriority);
     
     //    enableScroll = true;
@@ -77,8 +76,10 @@ void scrollBar::setup(){
     scrollBarRectangle = ofRectangle(ofGetWidth() - scrollBarWidth, BEGIN_Y, scrollBarWidth, 0);
     gripRectangle = ofRectangle(ofGetWidth() - scrollBarWidth, BEGIN_Y, scrollBarWidth, 0);
     
-    hScrollBarRectangle = ofRectangle(BEGIN_X, ofGetHeight()*windowRatio - scrollBarWidth, 0, scrollBarWidth);
-    hGripRectangle = ofRectangle(BEGIN_X, ofGetHeight()*windowRatio - scrollBarWidth, 0, scrollBarWidth);
+    
+    windowHeight = ofGetHeight()*windowRatio;
+    hScrollBarRectangle = ofRectangle(BEGIN_X, windowHeight - scrollBarWidth, 0, scrollBarWidth);
+    hGripRectangle = ofRectangle(BEGIN_X, windowHeight - scrollBarWidth, 0, scrollBarWidth);
     
     composer->setDraggingGrip(false); // true when the user is moving the grip
     mouseOverGrip = false; // true when the mouse is over the grip
@@ -99,7 +100,7 @@ void scrollBar::update(){
     encapsulatedIdToDraw = EventHandler::getInstance()->getEncapsulatedIdDraw();
     
     if(enableTrackpad){
-        if(EventHandler::getInstance()->isMainEvent()){
+        if(ofGetMouseY() < windowHeight) {
             //** touchpad scroll **//
             std::vector<MTouch> mTouches = pad->getTouches();
             if(mTouches.size() == 2) {

@@ -29,14 +29,13 @@ ConsoleLog::ConsoleLog() {
     ofAddListener(ofEvents().mousePressed, this, &ConsoleLog::mousePressed, CONSOLE_EVENT_PRORITY);
     ofAddListener(ofEvents().mouseDragged, this, &ConsoleLog::mouseDragged, CONSOLE_EVENT_PRORITY);
     ofAddListener(ofEvents().mouseReleased, this, &ConsoleLog::mouseReleased, CONSOLE_EVENT_PRORITY);
-//    ofAddListener(ofEvents().mouseMoved, this, &ConsoleLog::mouseMoved, CONSOLE_EVENT_PRORITY);
-   
-    
 }
 
 //------------------------------------------------------------------
 ConsoleLog::~ConsoleLog(){
-    
+    ofRemoveListener(ofEvents().mousePressed, this, &ConsoleLog::mousePressed, CONSOLE_EVENT_PRORITY);
+    ofRemoveListener(ofEvents().mouseDragged, this, &ConsoleLog::mouseDragged, CONSOLE_EVENT_PRORITY);
+    ofRemoveListener(ofEvents().mouseReleased, this, &ConsoleLog::mouseReleased, CONSOLE_EVENT_PRORITY);
 }
 
 //------------------------------------------------------------------
@@ -58,7 +57,7 @@ void ConsoleLog::setupScrollBar(ofxMultiTouchPad* pad){
 void ConsoleLog::update(){
     
     container.setPosition(RIGHT_MENU_WIDTH, ofGetHeight()*windowRatio);
-    startY = container.getY() + 2;
+//    startY = container.getY() + 2;
 }
 
 //------------------------------------------------------------------
@@ -87,6 +86,8 @@ bool ConsoleLog::mouseDragged(ofMouseEventArgs &e){
         diffVec.y = mouseLast.y - mouse.y;
         container.setHeight(container.getHeight() + diffVec.y);
         windowRatio = 1 - container.getHeight()/ofGetHeight();
+        
+        //TODO: ver si aca hay que actualizar el startY
         
         this->instance->scrollBar->setup(windowRatio);
         ofNotifyEvent(changeConsoleHeight, windowRatio);
@@ -172,7 +173,10 @@ void ConsoleLog::printMessages(){
         } else if(messages.at(i).messageType == SUCCESS){
             ofSetColor(0, 255, 0);
         }
-        font.drawString("- " + messages.at(i).message, RIGHT_MENU_WIDTH + 10.f, y);
+        
+        if (y > container.y + font.getLineHeight()) {
+            font.drawString("- " + messages.at(i).message, RIGHT_MENU_WIDTH + 10.f, y);
+        }
         y += font.getLineHeight();
     }
     ofPopStyle();

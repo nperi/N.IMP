@@ -19,7 +19,7 @@ public:
     
     ConsoleScrollBar();
     ConsoleScrollBar(ofxMultiTouchPad* pad, int eventPriority = OF_EVENT_ORDER_AFTER_APP);
-    //    ~scrollBar();
+    ~ConsoleScrollBar();
     void setup(float screenRatio_);
     
     //*** LOOPS ***//

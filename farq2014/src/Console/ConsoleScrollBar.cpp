@@ -25,7 +25,13 @@ ConsoleScrollBar::ConsoleScrollBar(ofxMultiTouchPad* _pad, int eventPriority){
     ofAddListener(ofEvents().mousePressed, this, &ConsoleScrollBar::mousePressed, eventPriority);
     ofAddListener(ofEvents().windowResized, this, &ConsoleScrollBar::windowResized, eventPriority);
     ofAddListener(ofEvents().mouseDragged, this, &ConsoleScrollBar::mouseDragged, eventPriority);
-    //    ofAddListener(ofEvents().mouseReleased, this, &ConsoleScrollBar::mouseReleased, eventPriority);
+}
+
+ConsoleScrollBar::~ConsoleScrollBar(){
+    ofRemoveListener(ofEvents().mouseMoved, this, &ConsoleScrollBar::mouseMoved);
+    ofRemoveListener(ofEvents().mousePressed, this, &ConsoleScrollBar::mousePressed);
+    ofRemoveListener(ofEvents().windowResized, this, &ConsoleScrollBar::windowResized);
+    ofRemoveListener(ofEvents().mouseDragged, this, &ConsoleScrollBar::mouseDragged);
 }
 
 //------------------------------------------------------------------
@@ -68,8 +74,7 @@ void ConsoleScrollBar::setup(float screenRatio_){
 void ConsoleScrollBar::update(){
     
     ofVec3f diffVec = ofVec3f(0,0,0);
-    if(!EventHandler::getInstance()->isMainEvent()){
-        
+    if(ofGetMouseY() > scrollBarRectangle.y) {
         //** touchpad scroll **//
         std::vector<MTouch> mTouches = pad->getTouches();
         if(mTouches.size() == 2) {
@@ -115,7 +120,7 @@ void ConsoleScrollBar::update(){
         }
         //** **//
     }
-    
+
     
     if(applyInertia){
         prevDiff.y *= drag;
@@ -184,7 +189,6 @@ bool ConsoleScrollBar::mouseReleased(ofMouseEventArgs &e){
 
 //------------------------------------------------------------------
 bool ConsoleScrollBar::mousePressed(ofMouseEventArgs &e){
-
     // Check if the click occur on the grip
     if (isScrollBarVisible) {
         ofRectangle r = gripRectangle;
@@ -198,7 +202,6 @@ bool ConsoleScrollBar::mousePressed(ofMouseEventArgs &e){
 
 //------------------------------------------------------------------
 bool ConsoleScrollBar::mouseMoved(ofMouseEventArgs &e){
-
     if (isScrollBarVisible) {
         ofRectangle r = gripRectangle;
         mouseOverGrip = r.inside(e.x, e.y);
@@ -210,7 +213,6 @@ bool ConsoleScrollBar::mouseMoved(ofMouseEventArgs &e){
 
 //------------------------------------------------------------------
 void ConsoleScrollBar::windowResized(ofResizeEventArgs &e){
-    
     this->setup(windowRatio);
 }
 
@@ -224,13 +226,13 @@ void ConsoleScrollBar::windowResized(ofResizeEventArgs &e){
 
 void ConsoleScrollBar::updateScrollBar(ofVec3f diffVec){
     if(diffVec.y != 0){
-        if(!(gripRectangle.y < 0) && !(gripRectangle.getBottom() > scrollBarRectangle.getBottom())){
+        if(!(gripRectangle.y < scrollBarRectangle.y) && !(gripRectangle.getBottom() > scrollBarRectangle.getBottom())){
             ConsoleLog::getInstance()->setDiffStartY(diffVec.y);
         }
 
         // Check if the grip is still in the scroll bar
-        if (gripRectangle.y < 0) {
-            gripRectangle.y = 0;
+        if (gripRectangle.y < scrollBarRectangle.y) {
+            gripRectangle.y = scrollBarRectangle.y;
         }
         if (gripRectangle.getBottom() > scrollBarRectangle.getBottom()) {
             gripRectangle.y = scrollBarRectangle.getBottom() - gripRectangle.width;
@@ -252,10 +254,10 @@ void ConsoleScrollBar::updateScrollBar(ofVec3f diffVec){
     // they go from 0 to 1
     float gripSizeRatioLeft = 1.f;
     float gripSizeRatioRight = 1.f;
-    if ( (lowestCoordMessage + SCROLL_TOLERANCE < 0)  && (highestCoordMessage - SCROLL_TOLERANCE > panelHeight) ) {
+    if ( (lowestCoordMessage + SCROLL_TOLERANCE < scrollBarRectangle.y)  && (highestCoordMessage - SCROLL_TOLERANCE > panelHeight) ) {
         gripSizeRatioRight = (float)panelHeight / (panelHeight - (float)lowestCoordMessage);
         gripSizeRatioLeft = (float)panelHeight / ( (float)highestCoordMessage );
-    } else if ( lowestCoordMessage + SCROLL_TOLERANCE < 0 ){
+    } else if ( lowestCoordMessage + SCROLL_TOLERANCE < scrollBarRectangle.y ){
         gripSizeRatioRight = (float)panelHeight / (panelHeight - (float)lowestCoordMessage);
     } else if ( highestCoordMessage - SCROLL_TOLERANCE > panelHeight ) {
         gripSizeRatioLeft = (float)panelHeight / ( (float)highestCoordMessage );
@@ -266,7 +268,6 @@ void ConsoleScrollBar::updateScrollBar(ofVec3f diffVec){
 
     // The 'y' position of the grip is calculated through the ratio and the height of the scrollBar
     gripRectangle.y = ofGetHeight()*windowRatio + (1-gripSizeRatioRight)*scrollBarRectangle.height;
-
 
     if( (scrollBarRectangle.height - gripRectangle.height) < 2 ){
         isScrollBarVisible = false;
