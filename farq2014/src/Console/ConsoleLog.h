@@ -61,7 +61,7 @@ public:
     void setupScrollBar(ofxMultiTouchPad* pad);
     void setConsoleVisible(bool visible) { consoleVisible = visible; };
     
-    void restartStartY();
+    void restartStartY(float winRatio);
     
 private:
     ConsoleLog();

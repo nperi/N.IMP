@@ -52,8 +52,6 @@ void ConsoleScrollBar::setup(float screenRatio_){
     scrollBarRectangle  = ofRectangle(ofGetWidth() - scrollBarWidth, ofGetHeight()*windowRatio, scrollBarWidth, ofGetHeight()*windowRatio);
     gripRectangle       = ofRectangle(ofGetWidth() - scrollBarWidth, ofGetHeight()*windowRatio, scrollBarWidth, ofGetHeight()*windowRatio);
     
-    ConsoleLog::getInstance()->restartStartY();
-    
     mouseOverGrip = false; // true when the mouse is over the grip
     
     // The size of the panel. All the console screen except margins
@@ -170,9 +168,9 @@ bool ConsoleScrollBar::mouseDragged(ofMouseEventArgs &e){
     
     ofVec3f diffVec = ofVec3f(0,0,0);
     
-    if (isScrollBarVisible) {
+    if (isScrollBarVisible && gripRectangle.inside(e.x, e.y)) {
         diffVec.y = mouseLast.y - mouse.y;
-        
+
         // Move the grip according to the mouse displacement
         int dy = e.y - mousePreviousY;
         mousePreviousY = e.y;
@@ -214,6 +212,7 @@ bool ConsoleScrollBar::mouseMoved(ofMouseEventArgs &e){
 
 //------------------------------------------------------------------
 void ConsoleScrollBar::windowResized(ofResizeEventArgs &e){
+    ConsoleLog::getInstance()->restartStartY(windowRatio);
     this->setup(windowRatio);
 }
 

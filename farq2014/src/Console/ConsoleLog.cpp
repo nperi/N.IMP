@@ -54,15 +54,15 @@ void ConsoleLog::setupScrollBar(ofxMultiTouchPad* pad){
 }
 
 //------------------------------------------------------------------
-void ConsoleLog::restartStartY() {
+void ConsoleLog::restartStartY(float winRatio) {
+    container.height = ofGetHeight();
+    container.setPosition(RIGHT_MENU_WIDTH, ofGetHeight()*windowRatio);
     startY = container.getY() + 2;
 }
 
 //------------------------------------------------------------------
 void ConsoleLog::update(){
     
-    container.setPosition(RIGHT_MENU_WIDTH, ofGetHeight()*windowRatio);
-//    startY = container.getY() + 2;
 }
 
 //------------------------------------------------------------------
@@ -92,7 +92,9 @@ bool ConsoleLog::mouseDragged(ofMouseEventArgs &e){
         container.setHeight(container.getHeight() + diffVec.y);
         windowRatio = 1 - container.getHeight()/ofGetHeight();
         
-        //TODO: ver si aca hay que actualizar el startY
+        
+        container.setPosition(RIGHT_MENU_WIDTH, ofGetHeight() - container.height);
+        startY -= diffVec.y;
         
         this->instance->scrollBar->setup(windowRatio);
         ofNotifyEvent(changeConsoleHeight, windowRatio);
