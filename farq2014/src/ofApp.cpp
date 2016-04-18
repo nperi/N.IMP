@@ -178,6 +178,7 @@ void ofApp::setup() {
     console = ConsoleLog::getInstance();
     console->setupScrollBar(&pad);
     ofSetLogLevel(OF_LOG_ERROR);
+    ofAddListener(console->changeConsoleHeight, this, &ofApp::consoleHeightChanged);
     
     
     //*** AUDIO SETUP ***//
@@ -1498,6 +1499,12 @@ void ofApp::editOSCInputs(ofxOSCGuiEvent &event_) {
 //}
 
 //------------------------------------------------------------------
+void ofApp::consoleHeightChanged(float &ratio){
+    
+    scrollBars->changeWindowHeight(ratio);
+}
+
+//------------------------------------------------------------------
 bool ofApp::loadFromXML(){
     
     bool loadingOK = true;
@@ -1560,7 +1567,7 @@ bool ofApp::loadFromXML(){
             }
             
             nodesCount  = XML.getValue("total_nodes", -1);
-            showConsole = ofToBool(XML.getValue("show_console", "0"));
+//            showConsole = ofToBool(XML.getValue("show_console", "0"));
             
             int numSettingsTag = XML.getNumTags("SETTINGS");
             

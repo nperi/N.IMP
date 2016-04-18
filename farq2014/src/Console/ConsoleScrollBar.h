@@ -30,11 +30,11 @@ public:
     
     //*** EVENTS ***//
     //
-    void    mouseMoved(ofMouseEventArgs &e);
-    void    mousePressed(ofMouseEventArgs &e);
-    void    mouseReleased(ofMouseEventArgs &e);
+    bool    mouseMoved(ofMouseEventArgs &e);
+    bool    mousePressed(ofMouseEventArgs &e);
+    bool    mouseReleased(ofMouseEventArgs &e);
     void    windowResized(ofResizeEventArgs &e);
-    void    mouseDragged(ofMouseEventArgs &e);
+    bool    mouseDragged(ofMouseEventArgs &e);
     
     //*** FUNCTIONS ***//
     //

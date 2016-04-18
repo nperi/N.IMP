@@ -102,6 +102,7 @@ public:
     void setSelectedForAudioIn();
     void setSelectedForOSC();
     void setSelectedForMIDI();
+    void consoleHeightChanged(float &ratio);
     
     
     //change current viewer

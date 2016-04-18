@@ -41,7 +41,7 @@ public:
     bool mousePressed(ofMouseEventArgs &e);
     bool mouseReleased(ofMouseEventArgs &e);
     bool mouseDragged(ofMouseEventArgs &e);
-    
+    ofEvent<float> changeConsoleHeight;
     
     //*** FUNCTIONS ***//
     //
@@ -80,6 +80,8 @@ private:
     ofRectangle container;
     float windowRatio;
     bool consoleVisible;
+    bool pressingConsole;
+    
 };
 
 

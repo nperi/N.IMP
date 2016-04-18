@@ -157,7 +157,7 @@ void ConsoleScrollBar::draw(){
 /*                     EVENTS                       */
 /* ================================================ */
 
-void ConsoleScrollBar::mouseDragged(ofMouseEventArgs &e){
+bool ConsoleScrollBar::mouseDragged(ofMouseEventArgs &e){
 
     ofVec3f mouse = ofVec3f(e.x, e.y,0);
     ofVec3f mouseLast = ofVec3f(ofGetPreviousMouseX(),ofGetPreviousMouseY(),0);
@@ -174,28 +174,30 @@ void ConsoleScrollBar::mouseDragged(ofMouseEventArgs &e){
         
     }
     updateScrollBar(diffVec);
+    return false;
+}
+
+//------------------------------------------------------------------
+bool ConsoleScrollBar::mouseReleased(ofMouseEventArgs &e){
     
 }
 
 //------------------------------------------------------------------
-void ConsoleScrollBar::mouseReleased(ofMouseEventArgs &e){
-    
-}
-
-//------------------------------------------------------------------
-void ConsoleScrollBar::mousePressed(ofMouseEventArgs &e){
+bool ConsoleScrollBar::mousePressed(ofMouseEventArgs &e){
 
     // Check if the click occur on the grip
     if (isScrollBarVisible) {
         ofRectangle r = gripRectangle;
         if (r.inside(e.x, e.y)) {
             mousePreviousY = e.y;
+            return true;
         }
     }
+    return false;
 }
 
 //------------------------------------------------------------------
-void ConsoleScrollBar::mouseMoved(ofMouseEventArgs &e){
+bool ConsoleScrollBar::mouseMoved(ofMouseEventArgs &e){
 
     if (isScrollBarVisible) {
         ofRectangle r = gripRectangle;
@@ -203,7 +205,7 @@ void ConsoleScrollBar::mouseMoved(ofMouseEventArgs &e){
     } else {
         mouseOverGrip = false;
     }
-
+    return false;
 }
 
 //------------------------------------------------------------------

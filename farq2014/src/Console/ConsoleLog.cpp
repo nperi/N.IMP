@@ -21,14 +21,17 @@ ConsoleLog::ConsoleLog() {
     
     maxConsoleMessages = 300;
     consoleVisible = false;
+    pressingConsole = false;
     
     container.set(RIGHT_MENU_WIDTH, 3*ofGetHeight()/4, ofGetWidth()-RIGHT_MENU_WIDTH, ofGetHeight()/4);
     windowRatio = CONSOLE_ASPECT_RATIO;
     
     ofAddListener(ofEvents().mousePressed, this, &ConsoleLog::mousePressed, CONSOLE_EVENT_PRORITY);
+    ofAddListener(ofEvents().mouseDragged, this, &ConsoleLog::mouseDragged, CONSOLE_EVENT_PRORITY);
+    ofAddListener(ofEvents().mouseReleased, this, &ConsoleLog::mouseReleased, CONSOLE_EVENT_PRORITY);
 //    ofAddListener(ofEvents().mouseMoved, this, &ConsoleLog::mouseMoved, CONSOLE_EVENT_PRORITY);
-//    ofAddListener(ofEvents().mouseReleased, this, &ConsoleLog::mouseReleased, CONSOLE_EVENT_PRORITY);
-//    ofAddListener(ofEvents().mouseDragged, this, &ConsoleLog::mouseDragged, CONSOLE_EVENT_PRORITY);
+   
+    
 }
 
 //------------------------------------------------------------------
@@ -63,10 +66,10 @@ void ConsoleLog::draw(){
     
     ofPushStyle();
     
-    ofSetColor(150);
-    ofLine(RIGHT_MENU_WIDTH, container.getY()-1, ofGetWidth(), container.getY()-1);
     ofSetColor(0);
     ofRect(container);
+    ofSetColor(150);
+    ofLine(RIGHT_MENU_WIDTH, container.getY(), ofGetWidth(), container.getY());
     printMessages();
     
     ofPopStyle();
@@ -75,22 +78,44 @@ void ConsoleLog::draw(){
 //------------------------------------------------------------------
 bool ConsoleLog::mouseDragged(ofMouseEventArgs &e){
 
+    if(pressingConsole) {
+        
+        ofVec3f mouse = ofVec3f(e.x, e.y,0);
+        ofVec3f mouseLast = ofVec3f(ofGetPreviousMouseX(),ofGetPreviousMouseY(),0);
+        ofVec3f diffVec = ofVec3f(0,0,0);
+        
+        diffVec.y = mouseLast.y - mouse.y;
+        container.setHeight(container.getHeight() + diffVec.y);
+        windowRatio = 1 - container.getHeight()/ofGetHeight();
+        
+        this->instance->scrollBar->setup(windowRatio);
+        ofNotifyEvent(changeConsoleHeight, windowRatio);
+        
+        return true;
+    }
+    
+    return false;
 }
 
 //------------------------------------------------------------------
 bool ConsoleLog::mouseReleased(ofMouseEventArgs &e){
     
+    pressingConsole = false;
+    
+    return false;
 }
 
 //------------------------------------------------------------------
 bool ConsoleLog::mousePressed(ofMouseEventArgs &e){
 
-    return consoleVisible && container.inside(e.x, e.y);
+    pressingConsole = consoleVisible && container.inside(e.x, e.y);
+    return pressingConsole;
 }
 
 //------------------------------------------------------------------
 bool ConsoleLog::mouseMoved(ofMouseEventArgs &e){
 
+    return false;
 }
 
 //------------------------------------------------------------------
