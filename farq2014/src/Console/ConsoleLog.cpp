@@ -36,6 +36,7 @@ ConsoleLog::~ConsoleLog(){
     ofRemoveListener(ofEvents().mousePressed, this, &ConsoleLog::mousePressed, CONSOLE_EVENT_PRORITY);
     ofRemoveListener(ofEvents().mouseDragged, this, &ConsoleLog::mouseDragged, CONSOLE_EVENT_PRORITY);
     ofRemoveListener(ofEvents().mouseReleased, this, &ConsoleLog::mouseReleased, CONSOLE_EVENT_PRORITY);
+    delete this->instance->scrollBar;
 }
 
 //------------------------------------------------------------------
@@ -48,7 +49,7 @@ ConsoleLog* ConsoleLog::getInstance(){
 
 //------------------------------------------------------------------
 void ConsoleLog::setupScrollBar(ofxMultiTouchPad* pad){
-    startY = container.getY() + 2;
+    startY = container.getY() + 10;
     this->instance->scrollBar = new ConsoleScrollBar(pad, CONSOLE_SCROLL_EVENT_PRORITY);
     this->instance->scrollBar->setup(windowRatio);
 }
@@ -161,7 +162,7 @@ void ConsoleLog::push(Message m){
 //------------------------------------------------------------------
 void ConsoleLog::clearMessages(){
     messages.clear();
-    startY = container.getY() + 2;
+    startY = container.getY() + 10;
 }
 
 //------------------------------------------------------------------
