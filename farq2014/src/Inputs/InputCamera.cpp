@@ -34,9 +34,32 @@ InputCamera::InputCamera(string name, int id_) : InputSource(name, "Camera", id_
     gui.add(prevCamera.setup("<< previous server"));
     nextCamera.addListener(this, &InputCamera::changeToNextCamera);
     prevCamera.addListener(this, &InputCamera::changeToPrevCamera);
+    
+    resolutionLabels.push_back("240p");
+    resolutionLabels.push_back("360p");
+    resolutionLabels.push_back("480p");
+    resolutionLabels.push_back("576p");
+    resolutionLabels.push_back("720p");
+    resolutionLabels.push_back("768p");
+    resolutionLabels.push_back("1080p");
+    resolutionLabels.push_back("1440p");
+    
+//    cameraResolution.setName("Resolution");
+//    cameraResolution.add(resolution.set(resolutionLabels[2], 2, 0, 7));
+    gui.add(resolutionName.set("", "Resolution: 640x480"));
+    gui.add(higherResolution.setup(">> higher resolution"));
+    gui.add(lowerResolution.setup("<< lower resolution"));
+    higherResolution.addListener(this, &InputCamera::changeToHigherResolution);
+    lowerResolution.addListener(this, &InputCamera::changeToLowerResolution);
+//    resolution.addListener(this, &InputCamera::editResolution);
+//    gui.add(cameraResolution);
+    
+    previous_resolution = 2;
+    
     gui.setWidthElements(INSPECTOR_WIDTH);
 }
 
+//------------------------------------------------------------------
 InputCamera::~InputCamera() {
     nextCamera.removeListener(this, &InputCamera::changeToNextCamera);
     prevCamera.removeListener(this, &InputCamera::changeToPrevCamera);
@@ -147,6 +170,81 @@ void InputCamera::initCamera() {
     videoGrabber->close();
     videoGrabber->setDeviceID(cameraIndex);
     videoGrabber->initGrabber(width, height);
+}
+
+//------------------------------------------------------------------
+void InputCamera::changeToHigherResolution() {
+    
+    if (previous_resolution < resolutionLabels.size()-1) {
+        previous_resolution++;
+        editResolution(previous_resolution);
+    }
+}
+
+//------------------------------------------------------------------
+void InputCamera::changeToLowerResolution() {
+    
+    if (previous_resolution > 0) {
+        previous_resolution--;
+        editResolution(previous_resolution);
+    }
+}
+
+//------------------------------------------------------------------
+void InputCamera::editResolution(int resolution_) {
+    
+//    if (previous_resolution != resolution_) {
+    
+//        previous_resolution = resolution_;
+//        resolution.setName(resolutionLabels[resolution_]);
+    
+        if (resolutionLabels[resolution_] == "240p") {
+            width = 320;
+            height = 240;
+            resolutionName.set("", "Resolution: 320x240");
+        }
+        else if (resolutionLabels[resolution_] == "360p") {
+            width = 480;
+            height = 360;
+            resolutionName.set("", "Resolution: 480x360");
+        }
+        else if (resolutionLabels[resolution_] == "480p") {
+            width = 640;
+            height = 480;
+            resolutionName.set("", "Resolution: 640x480");
+        }
+        else if (resolutionLabels[resolution_] == "576p") {
+            width = 1024;
+            height = 576;
+            resolutionName.set("", "Resolution: 1024x576");
+        }
+        else if (resolutionLabels[resolution_] == "720p") {
+            width = 1280;
+            height = 720;
+            resolutionName.set("", "Resolution: 1280x720");
+        }
+        else if (resolutionLabels[resolution_] == "768p") {
+            width = 1366;
+            height = 768;
+            resolutionName.set("", "Resolution: 1366x768");
+        }
+        else if (resolutionLabels[resolution_] == "1080p") {
+            width = 1920;
+            height = 1080;
+            resolutionName.set("", "Resolution: 1920x1080");
+        }
+        else if (resolutionLabels[resolution_] == "1440p") {
+            width = 2560;
+            height = 1440;
+            resolutionName.set("", "Resolution: 2560x1440");
+        }
+        
+        img.allocate(width, height, OF_IMAGE_COLOR_ALPHA);
+        resetSize(width, height);
+        videoGrabber->close();
+        videoGrabber->setDeviceID(cameraIndex);
+        videoGrabber->initGrabber(width, height);
+//    }
 }
 
 //------------------------------------------------------------------

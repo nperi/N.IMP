@@ -38,6 +38,9 @@ class InputCamera : public InputSource{
     
     void changeToNextCamera();
     void changeToPrevCamera();
+    void changeToHigherResolution();
+    void changeToLowerResolution();
+    void editResolution(int resolution);
     void initCamera();
 
 private:
@@ -51,6 +54,14 @@ private:
     ofxButton prevCamera;
     
     int cameraIndex;
+    
+//    ofParameterGroup cameraResolution;
+    ofParameter<string> resolutionName;
+    ofxButton higherResolution;
+    ofxButton lowerResolution;
+//    ofParameter<int> resolution;
+    int previous_resolution;
+    vector<string> resolutionLabels;
 };
 
 #endif
