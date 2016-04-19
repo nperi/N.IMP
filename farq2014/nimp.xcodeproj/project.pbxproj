@@ -32,6 +32,7 @@
 		0A1B95781CC5AF93003396AD /* ofxSyphonServer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0A1B956B1CC5AF93003396AD /* ofxSyphonServer.mm */; settings = {ASSET_TAGS = (); }; };
 		0A1B95791CC5AF93003396AD /* ofxSyphonServerDirectory.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0A1B956D1CC5AF93003396AD /* ofxSyphonServerDirectory.mm */; settings = {ASSET_TAGS = (); }; };
 		0A1B95DC1CC5B233003396AD /* ofxPostGlitch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A1B95D71CC5B233003396AD /* ofxPostGlitch.cpp */; settings = {ASSET_TAGS = (); }; };
+		0A1B95E61CC5B780003396AD /* MultitouchSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A1B95E51CC5B780003396AD /* MultitouchSupport.framework */; settings = {ASSET_TAGS = (); }; };
 		0A1D5D3A1C6F5EDF003CE2C5 /* AudioIn.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A1D5D381C6F5EDF003CE2C5 /* AudioIn.cpp */; };
 		0A1E94591C8FAE2A00F98C59 /* OSCReceiver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A1E94571C8FAE2A00F98C59 /* OSCReceiver.cpp */; settings = {ASSET_TAGS = (); }; };
 		0A49EF451C18A3BF00346EB5 /* ofxBasePatch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A49EF0D1C18A3BF00346EB5 /* ofxBasePatch.cpp */; };
@@ -39,7 +40,6 @@
 		0A49EF471C18A3BF00346EB5 /* ofxPatch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A49EF111C18A3BF00346EB5 /* ofxPatch.cpp */; };
 		0A49EF481C18A3BF00346EB5 /* ofxShaderObj.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A49EF141C18A3BF00346EB5 /* ofxShaderObj.cpp */; };
 		0A49EF491C18A3BF00346EB5 /* ofxTitleBar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A49EF161C18A3BF00346EB5 /* ofxTitleBar.cpp */; };
-		0A51B7D41C0FE2B0000AC121 /* MultitouchSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A51B7D31C0FE2B0000AC121 /* MultitouchSupport.framework */; };
 		0A51B8371C0FE42B000AC121 /* ofxUI2DGraph.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A51B7D91C0FE42B000AC121 /* ofxUI2DGraph.cpp */; };
 		0A51B8381C0FE42B000AC121 /* ofxUI2DPad.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A51B7DB1C0FE42B000AC121 /* ofxUI2DPad.cpp */; };
 		0A51B8391C0FE42B000AC121 /* ofxUIBaseDraws.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A51B7DD1C0FE42B000AC121 /* ofxUIBaseDraws.cpp */; };
@@ -344,6 +344,7 @@
 		0A1B95D51CC5B233003396AD /* twist.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = twist.vert; sourceTree = "<group>"; };
 		0A1B95D71CC5B233003396AD /* ofxPostGlitch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxPostGlitch.cpp; sourceTree = "<group>"; };
 		0A1B95D81CC5B233003396AD /* ofxPostGlitch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxPostGlitch.h; sourceTree = "<group>"; };
+		0A1B95E51CC5B780003396AD /* MultitouchSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = MultitouchSupport.framework; sourceTree = "<group>"; };
 		0A1D5D381C6F5EDF003CE2C5 /* AudioIn.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AudioIn.cpp; sourceTree = "<group>"; };
 		0A1D5D391C6F5EDF003CE2C5 /* AudioIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioIn.h; sourceTree = "<group>"; };
 		0A1E94571C8FAE2A00F98C59 /* OSCReceiver.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OSCReceiver.cpp; sourceTree = "<group>"; };
@@ -360,7 +361,6 @@
 		0A49EF151C18A3BF00346EB5 /* ofxShaderObj.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxShaderObj.h; sourceTree = "<group>"; };
 		0A49EF161C18A3BF00346EB5 /* ofxTitleBar.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxTitleBar.cpp; sourceTree = "<group>"; };
 		0A49EF171C18A3BF00346EB5 /* ofxTitleBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxTitleBar.h; sourceTree = "<group>"; };
-		0A51B7D31C0FE2B0000AC121 /* MultitouchSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MultitouchSupport.framework; path = ../../../../../../../System/Library/PrivateFrameworks/MultitouchSupport.framework; sourceTree = "<group>"; };
 		0A51B7D81C0FE42B000AC121 /* ofxUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxUI.h; sourceTree = "<group>"; };
 		0A51B7D91C0FE42B000AC121 /* ofxUI2DGraph.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxUI2DGraph.cpp; sourceTree = "<group>"; };
 		0A51B7DA1C0FE42B000AC121 /* ofxUI2DGraph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxUI2DGraph.h; sourceTree = "<group>"; };
@@ -719,7 +719,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0A51B7D41C0FE2B0000AC121 /* MultitouchSupport.framework in Frameworks */,
 				D34EC3F21A65BD1A00F0EFAE /* AVFoundation.framework in Frameworks */,
 				D34EC3F01A65BD0800F0EFAE /* CoreMedia.framework in Frameworks */,
 				D34EC3EE1A65BCF700F0EFAE /* QuartzCore.framework in Frameworks */,
@@ -728,6 +727,7 @@
 				E7E077E815D3B6510020DFD4 /* QTKit.framework in Frameworks */,
 				E4EB6799138ADC1D00A09F29 /* GLUT.framework in Frameworks */,
 				E4328149138ABC9F0047C5CB /* openFrameworksDebug.a in Frameworks */,
+				0A1B95E61CC5B780003396AD /* MultitouchSupport.framework in Frameworks */,
 				E45BE97B0E8CC7DD009D7055 /* AGL.framework in Frameworks */,
 				E45BE97C0E8CC7DD009D7055 /* ApplicationServices.framework in Frameworks */,
 				E45BE97D0E8CC7DD009D7055 /* AudioToolbox.framework in Frameworks */,
@@ -1846,7 +1846,6 @@
 		E4B69B4A0A3A1720003C02F2 = {
 			isa = PBXGroup;
 			children = (
-				0A51B7D31C0FE2B0000AC121 /* MultitouchSupport.framework */,
 				E4B6FCAD0C3E899E008CF71C /* openFrameworks-Info.plist */,
 				E4EB6923138AFD0F00A09F29 /* Project.xcconfig */,
 				E4B69E1C0A3A1BDC003C02F2 /* src */,
@@ -1861,6 +1860,7 @@
 		E4B69E1C0A3A1BDC003C02F2 /* src */ = {
 			isa = PBXGroup;
 			children = (
+				0A1B95E51CC5B780003396AD /* MultitouchSupport.framework */,
 				4990BDD51C385D45002710AF /* Console */,
 				0A51BA711C11058E000AC121 /* Interface */,
 				6B1CBBEC1A3F8AF20084F9EE /* CustomSyphonServer */,
@@ -2334,6 +2334,8 @@
 					../../../addons/ofxSyphon/libs/Syphon/lib/osx,
 					/Users/miligaricoits/Development/of_v0.8.4_osx_release/addons/ofxSyphon/libs/Syphon/lib/osx,
 					"$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks",
+					"$(PROJECT_DIR)/src/etc",
+					"$(PROJECT_DIR)/src",
 				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/../../../libs/glut/lib/osx\"";
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -2486,6 +2488,8 @@
 					../../../addons/ofxSyphon/libs/Syphon/lib/osx,
 					/Users/miligaricoits/Development/of_v0.8.4_osx_release/addons/ofxSyphon/libs/Syphon/lib/osx,
 					"$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks",
+					"$(PROJECT_DIR)/src/etc",
+					"$(PROJECT_DIR)/src",
 				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/../../../libs/glut/lib/osx\"";
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
