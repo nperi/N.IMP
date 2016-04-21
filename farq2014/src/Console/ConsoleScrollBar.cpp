@@ -49,8 +49,8 @@ void ConsoleScrollBar::setup(float screenRatio_){
     // Now two rectangles, for the scroll bar and his grip placements
     // Coordinates are relative to the panel coordinates, not to the screen coordinates
     // This is a first initialisation, but we don't know many things about these placements at this state
-    scrollBarRectangle  = ofRectangle(ofGetWidth() - scrollBarWidth, ofGetHeight()*windowRatio, scrollBarWidth, ofGetHeight()*windowRatio);
-    gripRectangle       = ofRectangle(ofGetWidth() - scrollBarWidth, ofGetHeight()*windowRatio, scrollBarWidth, ofGetHeight()*windowRatio);
+    scrollBarRectangle  = ofRectangle(ofGetWidth() - scrollBarWidth, ofGetHeight()*windowRatio, scrollBarWidth, ofGetHeight()-ofGetHeight()*windowRatio);
+    gripRectangle       = ofRectangle(ofGetWidth() - scrollBarWidth, ofGetHeight()*windowRatio, scrollBarWidth, ofGetHeight()-ofGetHeight()*windowRatio);
     
     mouseOverGrip = false; // true when the mouse is over the grip
     

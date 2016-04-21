@@ -23,7 +23,7 @@ ConsoleLog::ConsoleLog() {
     consoleVisible = false;
     pressingConsole = false;
     
-    container.set(RIGHT_MENU_WIDTH, 3*ofGetHeight()/4, ofGetWidth()-RIGHT_MENU_WIDTH, ofGetHeight()/4);
+    container.set(RIGHT_MENU_WIDTH, 3*ofGetHeight()/4, ofGetWidth()-RIGHT_MENU_WIDTH, ofGetHeight()/4 +1);
     windowRatio = CONSOLE_ASPECT_RATIO;
     
     ofAddListener(ofEvents().mousePressed, this, &ConsoleLog::mousePressed, CONSOLE_EVENT_PRORITY);
@@ -56,9 +56,9 @@ void ConsoleLog::setupScrollBar(ofxMultiTouchPad* pad){
 
 //------------------------------------------------------------------
 void ConsoleLog::restartStartY(float winRatio) {
-    container.height = ofGetHeight();
+    container.height = ofGetHeight() - ofGetHeight()*windowRatio ;
     container.setPosition(RIGHT_MENU_WIDTH, ofGetHeight()*windowRatio);
-    startY = container.getY() + 2;
+    startY = container.getY() + 10;
 }
 
 //------------------------------------------------------------------
