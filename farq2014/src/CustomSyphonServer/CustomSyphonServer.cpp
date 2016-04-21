@@ -218,49 +218,41 @@ bool CustomSyphonServer::loadSettings(ofxXmlSettings &XML, int nTag_, int nodesC
 bool CustomSyphonServer::saveSettings(ofxXmlSettings &XML) {
     bool saved = true;
     
-    if(feeder!= NULL){
-        int lastPlace = XML.addTag("NODE");
-        
-        XML.addAttribute("NODE", "id", nId, lastPlace);
-        XML.addAttribute("NODE", "inputId", feeder->getId(), lastPlace);
-        XML.addAttribute("NODE", "name", name, lastPlace);
-        XML.addAttribute("NODE", "aspectRatio", aspectRatio, lastPlace);
-        
-        XML.pushTag("NODE", lastPlace);
-        saved = ofxPatch::saveSettings(XML, true, lastPlace);
-        XML.popTag();
-        saved = true;
-    } else {
-        ConsoleLog::getInstance()->pushError("Error trying to save a syphon server with no inputs");
-    }
+    int lastPlace = XML.addTag("NODE");
+    
+    XML.addAttribute("NODE", "id", nId, lastPlace);
+    if (feeder != NULL) XML.addAttribute("NODE", "inputId", feeder->getId(), lastPlace);
+    XML.addAttribute("NODE", "name", name, lastPlace);
+    XML.addAttribute("NODE", "aspectRatio", aspectRatio, lastPlace);
+    
+    XML.pushTag("NODE", lastPlace);
+    saved = ofxPatch::saveSettings(XML, true, lastPlace);
+    XML.popTag();
+    saved = true;
+
     return saved;
 }
 
 //------------------------------------------------------------------
 bool CustomSyphonServer::saveSettingsToSnippet(ofxXmlSettings &XML, map<int,int> newIdsMap) {
     
-    bool saved = feeder != NULL;
+    bool saved = true;
+        
+    int lastPlace = XML.addTag("NODE");
     
-    if(saved){
-        
-        int lastPlace = XML.addTag("NODE");
-        
-        XML.addAttribute("NODE", "id", nId, lastPlace);
-        XML.addAttribute("NODE", "name", name, lastPlace);
-        XML.addAttribute("NODE", "type", "SYPHON_OUTPUT", lastPlace);
-        XML.addAttribute("NODE", "aspectRatio", aspectRatio, lastPlace);
-        if (newIdsMap[feeder->getId()]) {
-            XML.addAttribute("NODE", "inputId", feeder->getId(), lastPlace);
-        }
-        
-        XML.pushTag("NODE", lastPlace);
-        saved = ofxPatch::saveSettings(XML, true, lastPlace);
-        if (saved) {
-            XML.popTag();
-        }
-
-    } else {
-        ConsoleLog::getInstance()->pushError("Error trying to save a syphon server with no inputs");
+    XML.addAttribute("NODE", "id", nId, lastPlace);
+    XML.addAttribute("NODE", "name", name, lastPlace);
+    XML.addAttribute("NODE", "type", "SYPHON_OUTPUT", lastPlace);
+    XML.addAttribute("NODE", "aspectRatio", aspectRatio, lastPlace);
+    if (feeder != NULL && newIdsMap[feeder->getId()]) {
+        XML.addAttribute("NODE", "inputId", feeder->getId(), lastPlace);
     }
+    
+    XML.pushTag("NODE", lastPlace);
+    saved = ofxPatch::saveSettings(XML, true, lastPlace);
+    if (saved) {
+        XML.popTag();
+    }
+    
     return saved;
 }
