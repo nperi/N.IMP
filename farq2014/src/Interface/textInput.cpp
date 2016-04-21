@@ -35,7 +35,6 @@ textInput::textInput(string _name, string _textstring, float w, float h, float x
     nodes.push_back("multi channel switch");
     nodes.push_back("OUTPUTS");
     nodes.push_back("syphon output");
-//    nodes.push_back("video player");
     
     midiList = NULL;
     toggleSelected = 0;
@@ -281,36 +280,6 @@ void textInput::guiEvent(ofxUIEventArgs &event_){
             }
             
         }
-//        else if (e.type == "video player") {
-//        
-//            openFileResult = ofSystemLoadDialog("Select one video (.mov, .mpg, .mp4 or .m4v)");
-//            
-//            if (openFileResult.bSuccess){
-//
-//                ofFile file (openFileResult.getPath());
-//
-//                if (file.exists()){
-//
-//                    string fileExtension = ofToUpper(file.getExtension());
-//
-//                    //We only want videos
-//                    if (fileExtension == "MOV" ||
-//                        fileExtension == "MPG" ||
-//                        fileExtension == "MP4" ||
-//                        fileExtension == "M4V" ) {
-//                        e.path = openFileResult.getPath();
-//                        e.name = file.getFileName();
-//                    }
-//                    else return;
-//                }
-//                file.close();
-//                ofNotifyEvent(createNode, e , this);
-//            }
-//            else {
-//                dropdownList->clearSelected();
-//                return;
-//            }
-//        }
         else if ((e.type == "image or video")){
 
             openFileResult = ofSystemLoadDialog("Select an image (.jpg, .jpeg, .png, .bmp or .gif) or video (.mov, .mpg, .mp4 or .m4v)");
