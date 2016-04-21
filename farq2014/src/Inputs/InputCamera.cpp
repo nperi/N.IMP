@@ -35,24 +35,24 @@ InputCamera::InputCamera(string name, int id_) : InputSource(name, "Camera", id_
     nextCamera.addListener(this, &InputCamera::changeToNextCamera);
     prevCamera.addListener(this, &InputCamera::changeToPrevCamera);
     
-    resolutionLabels.push_back("240p");
-    resolutionLabels.push_back("360p");
-    resolutionLabels.push_back("480p");
-    resolutionLabels.push_back("576p");
-    resolutionLabels.push_back("720p");
-    resolutionLabels.push_back("768p");
-    resolutionLabels.push_back("1080p");
-    resolutionLabels.push_back("1440p");
+    resolutionLabels.push_back("320x240");
+    resolutionLabels.push_back("480x360");
+    resolutionLabels.push_back("640x480");
+    resolutionLabels.push_back("960x540");
+    resolutionLabels.push_back("1024x576");
+    resolutionLabels.push_back("1280x720");
+    resolutionLabels.push_back("1366x768");
+    resolutionLabels.push_back("1920x1080");
+    resolutionLabels.push_back("2560x1440");
+
     
-//    cameraResolution.setName("Resolution");
-//    cameraResolution.add(resolution.set(resolutionLabels[2], 2, 0, 7));
     gui.add(resolutionName.set("", "Resolution: 640x480"));
+//    gui.add(hd_vga.set("HD", true));
     gui.add(higherResolution.setup(">> higher resolution"));
     gui.add(lowerResolution.setup("<< lower resolution"));
+//    hd_vga.addListener(this, &InputCamera::changeHDorVGA);
     higherResolution.addListener(this, &InputCamera::changeToHigherResolution);
     lowerResolution.addListener(this, &InputCamera::changeToLowerResolution);
-//    resolution.addListener(this, &InputCamera::editResolution);
-//    gui.add(cameraResolution);
     
     previous_resolution = 2;
     
@@ -177,7 +177,10 @@ void InputCamera::changeToHigherResolution() {
     
     if (previous_resolution < resolutionLabels.size()-1) {
         previous_resolution++;
-        editResolution(previous_resolution);
+        editResolution(resolutionLabels[previous_resolution]);
+        
+        if (resolutionLabels[previous_resolution] == "960x540")
+            getNodeViewerIBelong()->updateConnectionsSize(this);
     }
 }
 
@@ -186,74 +189,82 @@ void InputCamera::changeToLowerResolution() {
     
     if (previous_resolution > 0) {
         previous_resolution--;
-        editResolution(previous_resolution);
+        editResolution(resolutionLabels[previous_resolution]);
+        
+        if (resolutionLabels[previous_resolution] == "640x480")
+            getNodeViewerIBelong()->updateConnectionsSize(this);
     }
 }
 
 //------------------------------------------------------------------
-void InputCamera::editResolution(int resolution_) {
+void InputCamera::editResolution(string resolution_) {
     
-//    if (previous_resolution != resolution_) {
+    resolutionName.set("", "Resolution: " + resolution_);
     
-//        previous_resolution = resolution_;
-//        resolution.setName(resolutionLabels[resolution_]);
+    if (resolution_ == "320x240") {
+        width = 320;
+        height = 240;
+    }
+    else if (resolution_ == "480x360") {
+        width = 480;
+        height = 360;
+    }
+    else if (resolution_ == "640x480") {
+        width = 640;
+        height = 480;
+    }
+    else if (resolution_ == "960x540") {
+        width = 960;
+        height = 540;
+    }
+    else if (resolution_ == "1024x576") {
+        width = 1024;
+        height = 576;
+    }
+    else if (resolution_ == "1280x720") {
+        width = 1280;
+        height = 720;
+    }
+    else if (resolution_ == "1366x768") {
+        width = 1366;
+        height = 768;
+    }
+    else if (resolution_ == "1920x1080") {
+        width = 1920;
+        height = 1080;
+    }
+    else if (resolution_ == "2560x1440") {
+        width = 2560;
+        height = 1440;
+    }
     
-        if (resolutionLabels[resolution_] == "240p") {
-            width = 320;
-            height = 240;
-            resolutionName.set("", "Resolution: 320x240");
-        }
-        else if (resolutionLabels[resolution_] == "360p") {
-            width = 480;
-            height = 360;
-            resolutionName.set("", "Resolution: 480x360");
-        }
-        else if (resolutionLabels[resolution_] == "480p") {
-            width = 640;
-            height = 480;
-            resolutionName.set("", "Resolution: 640x480");
-        }
-        else if (resolutionLabels[resolution_] == "576p") {
-            width = 1024;
-            height = 576;
-            resolutionName.set("", "Resolution: 1024x576");
-        }
-        else if (resolutionLabels[resolution_] == "720p") {
-            width = 1280;
-            height = 720;
-            resolutionName.set("", "Resolution: 1280x720");
-        }
-        else if (resolutionLabels[resolution_] == "768p") {
-            width = 1366;
-            height = 768;
-            resolutionName.set("", "Resolution: 1366x768");
-        }
-        else if (resolutionLabels[resolution_] == "1080p") {
-            width = 1920;
-            height = 1080;
-            resolutionName.set("", "Resolution: 1920x1080");
-        }
-        else if (resolutionLabels[resolution_] == "1440p") {
-            width = 2560;
-            height = 1440;
-            resolutionName.set("", "Resolution: 2560x1440");
-        }
-        
-        img.allocate(width, height, OF_IMAGE_COLOR_ALPHA);
-        resetSize(width, height);
-        videoGrabber->close();
-        videoGrabber->setDeviceID(cameraIndex);
-        videoGrabber->initGrabber(width, height);
-//    }
+    img.allocate(width, height, OF_IMAGE_COLOR_ALPHA);
+    resetSize(width, height);
+    videoGrabber->close();
+    videoGrabber->setDeviceID(cameraIndex);
+    videoGrabber->initGrabber(width, height);
 }
+
+//------------------------------------------------------------------
+//void InputCamera::changeHDorVGA(bool &hd_) {
+//    
+//    if (hd_vga) {
+//        previous_resolution = previous_resolution%resolutionLabelsHD.size();
+//        editResolution(resolutionLabelsHD[previous_resolution]);
+//    }
+//    else {
+//        previous_resolution = previous_resolution%resolutionLabelsVGA.size();
+//        editResolution(resolutionLabelsVGA[previous_resolution]);
+//    }
+//    
+//    getNodeViewerIBelong()->updateConnectionsSize(this);
+//}
 
 //------------------------------------------------------------------
 bool InputCamera::loadSettings(ofxXmlSettings &XML, int nTag_, int nodesCount_) {
     
     bool loaded = true;
-        
-    //not used yet
-//    string cameraId = XML.getAttribute("NODE", "id","default", nTag_);
+    
     nId             = XML.getAttribute("NODE", "id", -1, nTag_) + nodesCount_;
     cameraName      = XML.getAttribute("NODE", "cameraName","No Camera Available", nTag_);
     

@@ -40,7 +40,8 @@ class InputCamera : public InputSource{
     void changeToPrevCamera();
     void changeToHigherResolution();
     void changeToLowerResolution();
-    void editResolution(int resolution);
+//    void changeHDorVGA(bool &hd_);
+    void editResolution(string resolution);
     void initCamera();
 
 private:
@@ -55,11 +56,10 @@ private:
     
     int cameraIndex;
     
-//    ofParameterGroup cameraResolution;
     ofParameter<string> resolutionName;
+//    ofParameter<bool> hd_vga;
     ofxButton higherResolution;
     ofxButton lowerResolution;
-//    ofParameter<int> resolution;
     int previous_resolution;
     vector<string> resolutionLabels;
 };
