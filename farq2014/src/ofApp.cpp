@@ -603,11 +603,7 @@ void ofApp::keyPressed  (int key){
             break;
         case 'e': case 'E':{
                 int encapsulatedId = nodeViewers[currentViewer]->getSelectedEncapsulated();
-                if(encapsulatedId < 0){
-                    console->pushError("No encapsulated patch is selected");
-                } else {
-                    EventHandler::getInstance()->setEncapsulatedIdDraw(encapsulatedId);
-                }
+                EventHandler::getInstance()->setEncapsulatedIdDraw(encapsulatedId);
             }
             break;
         default:
@@ -712,7 +708,7 @@ void ofApp::dragEvent(ofDragInfo dragInfo){
                  ev->type = "video player";
             }
             else {
-                console->pushError("Not valid format to create a node.");
+                console->pushError("Not valid file format to create a node.");
                 return;
             }
             
@@ -884,7 +880,7 @@ void ofApp::menuEvent(ofxUIEventArgs &e) {
         if(((ofxUIMultiImageButton*)e.widget)->getValue() == 1){
             int encapsulatedId = nodeViewers[currentViewer]->getSelectedEncapsulated();
             if(encapsulatedId < 0){
-                console->pushError("No encapsulated patch is selected");
+                console->pushError("No encapsulated node is selected");
             } else {
                 int lastPatchId = nodeViewers[currentViewer]->getLastPatchEncapsulated(encapsulatedId);
                 nodeViewers[currentViewer]->restoreOutputEncapsulated(lastPatchId);
@@ -905,7 +901,7 @@ void ofApp::menuEvent(ofxUIEventArgs &e) {
             } else {
                 int encapsulatedId = nodeViewers[currentViewer]->getSelectedEncapsulated();
                 if(encapsulatedId < 0){
-                    console->pushError("No encapsulated patch is selected");
+                    console->pushError("No encapsulated node is selected");
                 } else {
                     EventHandler::getInstance()->setEncapsulatedIdDraw(encapsulatedId);
                 }
@@ -1508,7 +1504,7 @@ void ofApp::consoleHeightChanged(float &ratio){
 bool ofApp::loadFromXML(){
     
     bool loadingOK = true;
-    string message = "";
+    string errorMsg;
     nodeLinkType nodeLinkType;
     int nodesCount;
     
@@ -1529,7 +1525,8 @@ bool ofApp::loadFromXML(){
                 xmlFilePath = openFileResult.getPath();;
             }
             else {
-               loadingOK = false;
+                loadingOK = false;
+                errorMsg = "File \"" + file.getFileName() + "\" is not valid.";
             }
         }
         file.close();
@@ -1575,13 +1572,14 @@ bool ofApp::loadFromXML(){
                 
                 XML.pushTag("SETTINGS");
 
-                loadingOK = this->loadNodes(XML);
+                errorMsg = this->loadNodes(XML);
+                loadingOK = errorMsg == "";
                 
                 XML.popTag();
             }
             else {
                 loadingOK = false;
-                message = "missing SETTINGS tag!";
+                errorMsg = "SETTINGS tag missing.";
             }
             
             if(loadingOK){
@@ -1627,7 +1625,7 @@ bool ofApp::loadFromXML(){
                             }
                             else{
                                 loadingOK = false;
-                                message = "node \"" + nodeName + "\" not found!";
+                                errorMsg = "node \"" + nodeName + "\" not found.";
                             }
                             
                         }
@@ -1643,7 +1641,7 @@ bool ofApp::loadFromXML(){
                 }
                 else{
                     loadingOK = false;
-                    message = "missing NODE_VIEWS tag!";
+                    errorMsg = "NODE_VIEWS tag missing.";
                 }
                 
                 // PROCESSING PARAM INPUT GENERATORS
@@ -1699,7 +1697,7 @@ bool ofApp::loadFromXML(){
                                 default:
                                 {
                                     loadingOK = false;
-                                    message = "unknown mixer type!";
+                                    errorMsg = "Unknown generator node type '" + inputType + "'.";
                                     break;
                                 };
                                     
@@ -1714,14 +1712,14 @@ bool ofApp::loadFromXML(){
                     }
                     else{
                         loadingOK = false;
-                        message = "missing PARAM_INPUT_GENERATORS tag!";
+                        errorMsg = "PARAM_INPUT_GENERATORS tag missing";
                     }
                 }
             }
         }
         else{
             loadingOK = false;
-            message = "File " + xmlFileName + " is not elegible for N.IMP";
+            errorMsg = "File " + xmlFileName + " is not elegible for N.IMP";
         }
     }
     else {
@@ -1729,8 +1727,8 @@ bool ofApp::loadFromXML(){
     }
     
     if(!loadingOK){
-        ofLogNotice() << message;
-        console->pushError("XML couldn't be loaded: " + message);
+        ofLog(OF_LOG_ERROR, errorMsg);
+        console->pushError("XML couldn't be loaded: " + errorMsg);
         deleteEverything();
         
         ((ofxUIImageToggle*)menu->getWidget("Console on/off"))->setValue(true);
@@ -1757,7 +1755,7 @@ bool ofApp::loadFromXML(){
         for(int i=0; i<nodesVector.size(); i++){
             error = nodesVector[i]->findAndAssignInputs(nodes);
             if(error){
-                message = "node not found";
+                errorMsg = "Error assigning inputs to node '" + nodesVector[i]->getName() + "'.";
                 loadingOK = false;
                 break;
             }
@@ -1819,6 +1817,10 @@ bool ofApp::loadFromXML(){
         setSelectedForAudioIn();
         setSelectedForOSC();
         setSelectedForMIDI();
+    }
+    else {
+        ofLog(OF_LOG_ERROR, errorMsg);
+        console->pushError("XML couldn't be loaded: " + errorMsg);
     }
     
     return loadingOK;
@@ -1958,8 +1960,7 @@ bool ofApp::saveToXML() {
         XML.popTag(); // tag MAIN_SETTINGS
         
         if (success && XML.saveFile()) {
-            ofLog(OF_LOG_NOTICE, "Settings saved succesfully");
-            console->pushSuccess("Settings saved succesfully");
+            console->pushSuccess("Settings saved succesfully.");
         }
         else {
             if (backupFile) {
@@ -1969,8 +1970,7 @@ bool ofApp::saveToXML() {
                 XML.clear();
                 XML.saveFile();
             }
-            ofLog(OF_LOG_ERROR, "Couldn't save settings. An error occurred");
-            console->pushError("Couldn't save settings. An error occurred");
+            console->pushError("Couldn't save settings. An error occurred.");
         }
     }
     else {
@@ -1982,8 +1982,7 @@ bool ofApp::saveToXML() {
             XML.clear();
             XML.saveFile();
         }
-        ofLog(OF_LOG_ERROR, "Couldn't load the .xml file. The file appSettings.xml was not found");
-        console->pushError("Couldn't load the .xml file. The file appSettings.xml was not found");
+        console->pushError("Couldn't load the .xml file. The file " + xmlFileName + " was not found.");
     }
     
     if (backupFile) {
@@ -1993,8 +1992,9 @@ bool ofApp::saveToXML() {
 }
 
 //------------------------------------------------------------------
-bool ofApp::loadNodes(ofxXmlSettings &XML){
+string ofApp::loadNodes(ofxXmlSettings &XML){
     
+    string errorMsg = "";
     bool result = true;
     int  numInputTag = XML.getNumTags("INPUTS");
     
@@ -2016,26 +2016,11 @@ bool ofApp::loadNodes(ofxXmlSettings &XML){
                     
                     if (!audioAnalizer->loadSettings(XML, i)) {
                         result = false;
-                        console->pushMessage("No Audio Analizer!");
+                        errorMsg = "No Audio Analizer found";
                     }
                     
                     break;
                 };
-//                case VIDEO:
-//                {
-//                    VideoPlayerMac* vP = new VideoPlayerMac(inputName, inputId);
-//                    
-//                    if (vP->loadSettings(XML, i)) {
-//                        inputs.push_back(vP);
-//                        nodes.insert(std::pair<int,ImageOutput*>(inputId,vP));
-//                    }
-//                    else {
-//                        result = false;
-//                        console->pushMessage("no videos to be loaded!");
-//                    }
-//                    
-//                    break;
-//                };
                 case CAM:
                 {
                     InputCamera* iC = new InputCamera(inputName, inputId);
@@ -2056,7 +2041,7 @@ bool ofApp::loadNodes(ofxXmlSettings &XML){
                     }
                     else {
                         result = false;
-                        console->pushMessage("no images or videos to be loaded!");
+                        errorMsg = "Error loading node '" + inputName + "'. No images or videos found.";
                     }
                     
                     break;
@@ -2113,7 +2098,7 @@ bool ofApp::loadNodes(ofxXmlSettings &XML){
                 default:
                 {
                     result = false;
-                    console->pushMessage("unknown input type!");
+                    errorMsg = "Unknown node type '" + inputType + "'.";
                     break;
                 };
             }
@@ -2129,7 +2114,7 @@ bool ofApp::loadNodes(ofxXmlSettings &XML){
         
     }
     else{
-        console->pushMessage("inputs tag missing");
+        errorMsg = "INPUTS tag missing.";
         result = false;
     }
     
@@ -2203,7 +2188,7 @@ bool ofApp::loadNodes(ofxXmlSettings &XML){
                     default:
                     {
                         result = false;
-                        console->pushMessage("unknown visual layer type!");
+                        errorMsg = "Unknown node type '" + layerType + "'.";
                         break;
                     };
                 }
@@ -2219,7 +2204,7 @@ bool ofApp::loadNodes(ofxXmlSettings &XML){
             XML.popTag();
         }
         else {
-            console->pushMessage("visual layers tag missing");
+            errorMsg = "VISUAL_LAYERS tag missing.";
             result = false;
         }
     }
@@ -2271,7 +2256,7 @@ bool ofApp::loadNodes(ofxXmlSettings &XML){
                     default:
                     {
                         result = false;
-                        console->pushMessage("unknown mixer type!");
+                        errorMsg = "Unknown node type '" + mixerType + "'.";
                         break;
                     };
                         
@@ -2291,7 +2276,7 @@ bool ofApp::loadNodes(ofxXmlSettings &XML){
         
     }
     else{
-        console->pushMessage("mixers tag missing");
+        errorMsg = "MIXERS tag missing.";
         result = false;
     }
     
@@ -2316,7 +2301,7 @@ bool ofApp::loadNodes(ofxXmlSettings &XML){
                     int patchId = XML.getValue("NODE", -1, j);
                     if(patchId == -1){
                         result = false;
-                        ConsoleLog::getInstance()->pushError("Encapsulated data is wrong");
+                        errorMsg = "Encapsulated data is wrong.";
                         break;
                     }
                     nodes.at(patchId)->setEncapsulatedId(encapsulatedId);
@@ -2341,7 +2326,7 @@ bool ofApp::loadNodes(ofxXmlSettings &XML){
             
         } else {
             result = false;
-            ConsoleLog::getInstance()->pushError("Encapsulated tag missing");
+            errorMsg = "ENCAPSULATED_NODES tag missing.";
         }
         
     }
@@ -2380,16 +2365,20 @@ bool ofApp::loadNodes(ofxXmlSettings &XML){
                     nodes.insert(std::pair<int, ImageOutput*>(nodeId, cSS));
                 }
                 else {
-                    ConsoleLog::getInstance()->pushError("Error loading Syphon Server " + name);
+                    errorMsg = "Error loading Syphon Server '" + name + "'.";
                     break;
                 }
             }
             //Popping SYPHON_SERVERS tags
             XML.popTag();
         }
+        else {
+            result = false;
+            errorMsg = "SYPHON_SERVERS tag missing.";
+        }
     }
     
-    return result;
+    return errorMsg;
 }
 
 //------------------------------------------------------------------
@@ -2477,20 +2466,6 @@ bool ofApp::loadSnippet() {
                 string nodeType   = XML.getAttribute("NODE","type","CAM",i);
                 int inputSourceId = XML.getAttribute("NODE","inputSource",0,i) + nodesCount;
                 
-    //            if (nodeType == "VIDEO") {
-    //                
-    //                VideoPlayerMac* vP = new VideoPlayerMac(nodeName, nodeId);
-    //                
-    //                if (vP->loadSettings(XML, i, nodesCount)) {
-    //                    inputs.push_back(vP);
-    //                    aux_nodes.insert(std::pair<int,ImageOutput*>(nodeId,vP));
-    //                    aux_nodesVector.push_back(vP);
-    //                }
-    //                else {
-    //                    result = false;
-    //                    console->pushMessage("no videos to be loaded!");
-    //                }
-    //            }
                 if (nodeType == "CAM") {
                      
                     InputCamera* iC = new InputCamera(nodeName, nodeId);
@@ -2697,7 +2672,7 @@ bool ofApp::loadSnippet() {
                         }
                         
                         if(!result){
-                            console->pushError("Unable to load snippet " + snippetName + ". Some error occurred loading the encapsulated nodules.");
+                            console->pushError("Unable to load snippet " + snippetName + ". Some error occurred loading the encapsulated nodes.");
                             break;
                         }
                         

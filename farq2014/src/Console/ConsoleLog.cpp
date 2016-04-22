@@ -137,6 +137,7 @@ void ConsoleLog::pushMessage(string message){
 void ConsoleLog::pushError(string error){
     Message m = Message(ERROR, error);
     push(m);
+    ofLog(OF_LOG_ERROR, error);
 }
 
 //------------------------------------------------------------------

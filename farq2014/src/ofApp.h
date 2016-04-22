@@ -97,7 +97,7 @@ public:
     void editOSCInputsActive(OSCEvent &e_);
     bool loadFromXML();
     bool saveToXML();
-    bool loadNodes(ofxXmlSettings &XML);
+    string loadNodes(ofxXmlSettings &XML);
     void deleteEverything();
     void setSelectedForAudioIn();
     void setSelectedForOSC();

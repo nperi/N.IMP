@@ -47,14 +47,14 @@ void SyphonClientHandler::removeClient(InputSyphon* client){
 void SyphonClientHandler::serverAnnounced(ofxSyphonServerDirectoryEventArgs &arg) {
     for( auto& dir : arg.servers ){
         ConsoleLog::getInstance()->pushMessage("New Syphon server published");
-        ConsoleLog::getInstance()->pushMessage("\t Server Name: " + dir.serverName + " App Name: " + dir.appName);
+        ConsoleLog::getInstance()->pushMessage("\t Server Name: " + dir.serverName + ". Application Name: " + dir.appName);
     }
 }
 
 void SyphonClientHandler::serverRetired(ofxSyphonServerDirectoryEventArgs &arg) {
     for( auto& dir : arg.servers ){
         ConsoleLog::getInstance()->pushMessage("Syphon server retired");
-        ConsoleLog::getInstance()->pushMessage("\t Server Name: " + dir.serverName + " App Name: " + dir.appName);
+        ConsoleLog::getInstance()->pushMessage("\t Server Name: " + dir.serverName + ". Application Name: " + dir.appName);
         for(int i=0; i < clients.size(); i++){
             clients[i]->serverRetired(dir.serverName, dir.appName);
         }
