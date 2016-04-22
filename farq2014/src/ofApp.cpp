@@ -2427,6 +2427,7 @@ void ofApp::deleteEverything() {
 bool ofApp::loadSnippet() {
     
     string snippetName = "";
+    string errorMsg = "";
     bool result = true;
     
     ofFileDialogResult openFileResult;
@@ -2487,7 +2488,8 @@ bool ofApp::loadSnippet() {
                     }
                     else {
                         result = false;
-                        console->pushMessage("no images or videos to be loaded!");
+                        errorMsg = "Error loading node '" + nodeName + "'. No images or videos found.";
+                        break;
                     }
                 }
                 else if (nodeType == "PARTICLE") {
@@ -2628,7 +2630,8 @@ bool ofApp::loadSnippet() {
                 }
                 else {
                     result = false;
-                    console->pushMessage("unknown input type!");
+                    errorMsg = "Unknown node type '" + nodeType + "'.";
+                    break;
                 }
             }
         
@@ -2658,7 +2661,7 @@ bool ofApp::loadSnippet() {
                                 int patchId = XML.getValue("NODE", -1, j) + nodesCount;
                                 if(patchId == -1){
                                     result = false;
-                                    ConsoleLog::getInstance()->pushError("Encapsulated data is wrong");
+                                    errorMsg = "Encapsulated data is wrong";
                                     break;
                                 }
                                 aux_nodes.at(patchId)->setEncapsulatedId(encapsulatedId);
@@ -2672,7 +2675,7 @@ bool ofApp::loadSnippet() {
                         }
                         
                         if(!result){
-                            console->pushError("Unable to load snippet " + snippetName + ". Some error occurred loading the encapsulated nodes.");
+                            errorMsg = "Unable to load snippet " + snippetName + ". Some error occurred loading the encapsulated nodes.";
                             break;
                         }
                         
@@ -2739,7 +2742,7 @@ bool ofApp::loadSnippet() {
                                     default:
                                     {
                                         result = false;
-                                        console->pushError("Input Generator type " + inputType + " not found.");
+                                        errorMsg = "Unknown generator node type '" + inputType + "'.";
                                         break;
                                     };
                                         
@@ -2757,7 +2760,7 @@ bool ofApp::loadSnippet() {
                 //setting inputs to every node
                 for(int i = 0; i < aux_nodesVector.size(); i++){
                     if (aux_nodesVector[i]->findAndAssignInputs(aux_nodes)) {
-                        console->pushMessage("node not found");
+                        errorMsg = "Error assigning inputs to node '" + nodesVector[i]->getName() + "'.";
                         result = false;
                         break;
                     }
@@ -2786,18 +2789,16 @@ bool ofApp::loadSnippet() {
                 setSelectedForAudioIn();
                 setSelectedForOSC();
             }
-            else {
-                console->pushError("Error loading snippet " + snippetName);
-            }
             
             XML.popTag(); // tag SNIPPET
         }
         else {
-            console->pushError("File " + snippetName + " is not eligible for Snippet.");
+            errorMsg = "File " + snippetName + " is not eligible for Snippet.";
         }
     }
-    else {
-        console->pushError("Unable to load snippet " + snippetName);
+    
+    if (!result) {
+        console->pushError("Unable to load snippet '" + snippetName + "': " + errorMsg);
     }
     
     return result;
