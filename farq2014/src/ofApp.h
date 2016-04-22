@@ -83,10 +83,7 @@ public:
     void createNode(textInputEvent &args);
     void initNode(ofxPatch* node);
     void closePatch(int &_nID);
-//    void editAudioInChannel(AudioInEvent &e_);
     void editAudioInBand(AudioInEvent &e_);
-//    void editLeftAudioIn(bool &edit_);
-//    void editRightAudioIn(bool &edit_);
     void editAudioIn(AudioInEvent &e_);
     void editAudioInSaturation(AudioInEvent &e_);
     void editAudioInEnabled(AudioInEvent &e_);
@@ -191,10 +188,6 @@ public:
     ofxMidiIn midiIn;
     
     // Audio In
-//    bool editLeftAudioInActive;
-//    bool editRightAudioInActive;
-//    AudioIn* leftAudioPatch;
-//    AudioIn* rightAudioPatch;
     bool editAudioInActive;
     AudioAnalizer* audioAnalizer;
     

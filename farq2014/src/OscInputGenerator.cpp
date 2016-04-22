@@ -14,8 +14,6 @@ OscInputGenerator::OscInputGenerator(string name_, int nodeID_):ParamInputGenera
     oscMap  = new std::map<string,DTOscMap* >();
     type    = OSC;
     nodeID  = nodeID_;
-//    port    = 6666;
-//    receiver.setup(port);
 }
 
 //------------------------------------------------------------------
@@ -25,56 +23,6 @@ OscInputGenerator::~OscInputGenerator(){
     delete oscMap;
     oscMap = NULL;
 }
-
-//------------------------------------------------------------------
-/*bool OscInputGenerator::setupFromXML() {
-    bool result = true;
-    
-    if( XML.loadFile("paramGen_" + generatorName + ".xml") ){
-        
-        //get osc input device
-        
-        string deviceName = XML.getAttribute("OSC_SETTINGS","port","12345");
-        receiver.setup(ofToInt(deviceName));
-        
-        //get osc mapping data
-        
-        XML.pushTag("OSC_SETTINGS");
-        int getNumAddressTag = XML.getNumTags("ADDRESS");
-        for (int j=0; j<getNumAddressTag; ++j) {
-            
-            string address = XML.getAttribute("ADDRESS","path","/",j);
-            XML.pushTag("ADDRESS");
-            int getNumOSCMapTag = XML.getNumTags("OSC_MAP");
-            DTOscMap* dtM = new DTOscMap();
-            for(int i = 0;i<getNumOSCMapTag ; i++){
-                
-                string nodeId = XML.getAttribute("OSC_MAP","nodeName","",i);
-                string param = XML.getAttribute("OSC_MAP","param","",i);
-                float inputMinValue = ofToFloat(XML.getAttribute("OSC_MAP","inputMinValue","0",i));
-                float inputMaxValue = ofToFloat(XML.getAttribute("OSC_MAP","inputMaxValue","127",i));
-                float paramMinValue = ofToFloat(XML.getAttribute("OSC_MAP","paramMinValue","0",i));
-                float paramMaxValue = ofToFloat(XML.getAttribute("OSC_MAP","paramMaxValue","127",i));
-                
-                dtM->path = address;
-                dtM->paramId.push_back(param);
-                dtM->nodeId.push_back(nodeId);
-                dtM->inputMinValue.push_back(inputMinValue);
-                dtM->inputMaxValue.push_back(inputMaxValue);
-                dtM->paramMinValue.push_back(paramMinValue);
-                dtM->paramMaxValue.push_back(paramMaxValue);
-                
-                oscMap->insert(std::pair<string,DTOscMap* >(address,dtM));
-            }
-            XML.popTag();
-        }
-        XML.popTag();
-    }
-    
-    return result;
-
-	
-}*/
 
 //------------------------------------------------------------------
 void OscInputGenerator::processInput() {
@@ -123,7 +71,6 @@ void OscInputGenerator::setAddress(string oldAddress_, string address_) {
     
     it = oscMap->find(oldAddress_);
     if (it != oscMap->end()) {
-//        it->second->path = address_;
         oscMap->insert(std::pair<string,DTOscMap* >(address_,it->second));
         oscMap->erase(it);
     }
@@ -146,7 +93,6 @@ bool OscInputGenerator::addNewOSCMap(string address_, ImageOutput* node_, vector
     }
     else {
         DTOscMap* dtM = new DTOscMap();
-//        dtM->path = address_;
         
         for (int i = 0; i < params_.size(); i++) {
             dtM->paramId.push_back(params_[i]);
@@ -175,7 +121,6 @@ bool OscInputGenerator::addNewOSCMap(string address_, ImageOutput* node_, string
     }
     else {
         DTOscMap* dtM = new DTOscMap();
-//        dtM->path = address_;
         
         dtM->paramId.push_back(param_);
         dtM->nodeId.push_back(node_->getId());
@@ -270,7 +215,6 @@ bool OscInputGenerator::loadSettings(ofxXmlSettings &XML, int nodesCount_) {
             float   paramMinValue = ofToFloat(XML.getAttribute("OSC_MAP","paramMinValue","0",i));
             float   paramMaxValue = ofToFloat(XML.getAttribute("OSC_MAP","paramMaxValue","127",i));
             
-//            dtM->path = address;
             dtM->paramId.push_back(param);
             dtM->nodeId.push_back(nodeId);
             dtM->inputMinValue.push_back(inputMinValue);

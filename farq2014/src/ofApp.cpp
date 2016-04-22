@@ -25,12 +25,8 @@ void ofApp::setup() {
     loadingOK              = true;
     isFullScreen           = false;
     midiLearnActive        = false;
-//    editLeftAudioInActive  = false;
-//    editRightAudioInActive = false;
     editAudioInActive      = false;
     editOSCActive          = false;
-//    rightAudioPatch        = NULL;
-//    leftAudioPatch         = NULL;
     audioAnalizer          = NULL;
     currentViewer          = 0;
     holdingCommand         = false;
@@ -39,7 +35,6 @@ void ofApp::setup() {
     
     //populating string dictionaries for simple comparison used in LoadFromXML
     inputTypes.insert(std::pair<string,InputType>("AUDIO_ANALIZER",AUDIO_ANALIZER));
-//    inputTypes.insert(std::pair<string,InputType>("VIDEO",VIDEO));
     inputTypes.insert(std::pair<string,InputType>("CAM",CAM));
     inputTypes.insert(std::pair<string,InputType>("IMAGE_AND_VIDEO_LIST",IMAGE_AND_VIDEO_LIST));
     inputTypes.insert(std::pair<string,InputType>("PARTICLE",PARTICLE));
@@ -215,7 +210,6 @@ void ofApp::setupAudio(){
     // 4 num buffers (latency)
     
     ofSoundStreamSetup(0, 2, this, 44100, BUFFER_SIZE, 4);
-    //soundStream.setup(this, 0, 2, 44100, bufferSize, 4);
 }
 
 //------------------------------------------------------------------
@@ -338,12 +332,6 @@ void ofApp::update() {
                 menu_zoom_out = false;
             }
         }
-    
-        //resetting processed flags
-//        for (int i=0; i<nodesVector.size(); ++i) {
-//            //nodesVector[i]->resetProcessedFlag();
-//            nodesVector[i]->update();
-//        }
         
         //getting new paraminputs
         for (int i=0; i<inputGenerators.size(); ++i) {
@@ -608,7 +596,6 @@ void ofApp::keyPressed  (int key){
             break;
         default:
             notAvailable = true;
-//            console->pushWarning("key function not available");
             break;
     }
     
@@ -650,19 +637,10 @@ void ofApp::keyReleased(int key){
 
 //------------------------------------------------------------------
 void ofApp::mouseDragged(int x, int y, int button){
-    // TODO: EventHandler->getInstance()->setMainEvent(ver si es de consola o no);
-//    if(do_zoom){
-//        ofVec3f mouse = ofVec3f(x, y,0);
-//        ofVec3f mouseLast = ofVec3f(ofGetPreviousMouseX(),ofGetPreviousMouseY(),0);
-//        float dify = mouse.y - mouseLast.y;
-//        scale += dify*SCALE_SENSITIVITY;
-//        cam.setScale(scale);
-//    }
 }
 
 //------------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button){
-    // TODO: EventHandler->getInstance()->setMainEvent(ver si es de consola o no);
     
     if (showConsole && console->getContainer().inside(x,y)) {
         nodeViewers[currentViewer]->deactivateAllPatches();
@@ -671,15 +649,13 @@ void ofApp::mousePressed(int x, int y, int button){
 
 //------------------------------------------------------------------
 void ofApp::mouseReleased(int x, int y, int button){
-    // TODO: EventHandler->getInstance()->setMainEvent(ver si es de consola o no);
+
     menu_zoom_in = false;
     menu_zoom_out = false;
 }
 
 //------------------------------------------------------------------
 void ofApp::dragEvent(ofDragInfo dragInfo){
-    // TODO: EventHandler->getInstance()->setMainEvent(ver si es de consola o no);
-    
     
     if( dragInfo.files.size() > 0 ){
         for(int i = 0; i < dragInfo.files.size(); i++){
@@ -815,10 +791,6 @@ void ofApp::menuEvent(ofxUIEventArgs &e) {
             nodeViewers[currentViewer]->setEdit(false);
         else nodeViewers[currentViewer]->setEdit(true);
     }
-    /*else if (name == "Inspect"){
-     if (open_flyout) open_flyout = false;
-     else open_flyout = true;
-     }*/
     else if (name == "Zoom In"){
         
         if(((ofxUIMultiImageButton*)e.widget)->getValue() == 1){
@@ -953,10 +925,6 @@ void ofApp::previousViewer(){
 void ofApp::setCurrentViewer(int currentViewer_){
     if (currentViewer_ >= 0 && currentViewer_ < nodeViewers.size()) {
         currentViewer = currentViewer_;
-        
-        //reset the gui positions
-        //
-        //nodeViewers[currentViewer]->setupGuiPositions();
     }else{
         ofLogNotice() << "choosen viewer not available";
     }
@@ -976,7 +944,6 @@ void ofApp::createNodeInput(float _x, float _y){
     node->setAutoUnfocus(false);
     node->setAutoClear(false);
     node->setColorBack(ofxUIColor (80,80,80,250));
-//    node->getLabelWidget()->setColorFillHighlight(ofxUIColor (80,80,80,200));
     node->setColorOutlineHighlight(ofxUIColor(150,150,250));
     node->setDropdownList(dlist);
     dlist->setColorBack(ofxUIColor (80,80,80,0));
@@ -1056,11 +1023,6 @@ void ofApp::createNode(textInputEvent &args){
         newPatch = new ParticleGenerator();
         inputs.push_back((ParticleGenerator*)newPatch);
     }
-//    else if (args.type == "video player") {
-//        newPatch = new VideoPlayerMac();
-//        ((VideoPlayerMac*)newPatch)->loadVideo(args.path);
-//        inputs.push_back((VideoPlayerMac*)newPatch);
-//    }
     else if (args.type == "syphon client"){
         newPatch = SyphonClientHandler::getInstance()->createSyphonPatch();
         inputs.push_back((InputSyphon*)newPatch);
@@ -1105,7 +1067,6 @@ void ofApp::createNode(textInputEvent &args){
         if (newPatch->getIsAudio()){
             
             AudioInputGenerator* aI = new AudioInputGenerator(newPatch->getName(), newPatch->getId());
-//            aI->loadSettings(XML);
             aI->setChannel(((AudioIn*)newPatch)->getChannel());
             aI->setBand(((AudioIn*)newPatch)->getBand());
             
@@ -1455,46 +1416,6 @@ void ofApp::editOSCInputs(ofxOSCGuiEvent &event_) {
 }
 
 //------------------------------------------------------------------
-//void ofApp::editOSCInputs(OSCEvent &edit_) {
-//    
-//    if (editOSCActive){
-//        
-//        for (int i = 0; i < inputGenerators.size(); ++i) {
-//            ParamInputGenerator* p = inputGenerators[i];
-//            if ((p->getParamInputType() == OSC) &&  (((OscInputGenerator*)p)->getNodeID() == edit_.nodeId)) {
-//                
-//                std::map<int, ImageOutput*>::iterator oscNode_;
-//                oscNode_ = nodes.find(edit_.nodeId);
-//                
-//                if (oscNode_ != nodes.end()) {
-//                    
-//                    ((OscInputGenerator*)p)->clearOSCMap();
-//                    
-//                    map<int, vector<string> > attributesSelected = nodeViewers[currentViewer]->getAttributesClicked();
-//                    std::map<int, ImageOutput*>::iterator node_;
-//                    
-//                    ((OSCReceiver*)oscNode_->second)->clearParameters();
-//                    
-//                    for(map<int, vector<string> >::iterator it = attributesSelected.begin(); it != attributesSelected.end(); it++ ){
-//                        node_ = nodes.find(it->first);
-//                        if (node_ != nodes.end()) {
-//                            ((OscInputGenerator*)p)->addNewOSCMap(((OSCReceiver*)oscNode_->second)->getAddress(), node_->second, it->second);
-//                            
-//                            for(int j = 0; j < it->second.size(); j++) {
-//                                ((OSCReceiver*)oscNode_->second)->addParameter(it->second[j]);
-//                            }
-//                        }
-//                    }
-//                }
-//            }
-//        }
-//    }
-//    
-//    editOSCActive = !editOSCActive;
-//    nodeViewers[currentViewer]->setEditOSCActive(editOSCActive, edit_.nodeId);
-//}
-
-//------------------------------------------------------------------
 void ofApp::consoleHeightChanged(float &ratio){
     
     scrollBars->changeWindowHeight(ratio);
@@ -1564,7 +1485,6 @@ bool ofApp::loadFromXML(){
             }
             
             nodesCount  = XML.getValue("total_nodes", -1);
-//            showConsole = ofToBool(XML.getValue("show_console", "0"));
             
             int numSettingsTag = XML.getNumTags("SETTINGS");
             
@@ -1785,9 +1705,6 @@ bool ofApp::loadFromXML(){
     if(loadingOK){
         
         console->pushMessage("All nodes loaded correctly.");
-        
-        //TODO: change mixtable assignment.
-        //  ofAddListener(mixtables[0]->textureEvent, this, &ofApp::updateSyphon);
         
         //*** invoking input generators setup functions  ***//
         //
@@ -2198,7 +2115,6 @@ string ofApp::loadNodes(ofxXmlSettings &XML){
                     //exit the loop
                     break;
                 }
-                
             }
             
             XML.popTag();
@@ -2305,7 +2221,6 @@ string ofApp::loadNodes(ofxXmlSettings &XML){
                         break;
                     }
                     nodes.at(patchId)->setEncapsulatedId(encapsulatedId);
-//                    nodes.at(patchId)->setWindowId(-1);
                     nodes.at(patchId)->setToEncapsulatedId(lastEncapsulatedId);
                 }
                 
@@ -2408,12 +2323,9 @@ void ofApp::deleteEverything() {
     mixtables.clear();
     
     encapsulatedIds.clear();
-    
     syphonServers.clear();
     
     audioAnalizer   = NULL;
-//    leftAudioPatch  = NULL;
-//    rightAudioPatch = NULL;
     
     nodeViewers[currentViewer]->setNodesCount(0);
 }
@@ -2634,8 +2546,6 @@ bool ofApp::loadSnippet() {
                     break;
                 }
             }
-        
-//            XML.popTag(); // pop "NODE"
             
             if (result) {
                 int numENsTag = XML.getNumTags("ENCAPSULATED_NODES");
@@ -2665,7 +2575,6 @@ bool ofApp::loadSnippet() {
                                     break;
                                 }
                                 aux_nodes.at(patchId)->setEncapsulatedId(encapsulatedId);
-//                                aux_nodes.at(patchId)->setWindowId(-1);
                                 aux_nodes.at(patchId)->setToEncapsulatedId(lastEncapsulatedId);
                             }
                             

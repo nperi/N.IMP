@@ -43,12 +43,9 @@ CustomSyphonServer::CustomSyphonServer(string name_, ImageOutput* feeder_, int i
 
 //------------------------------------------------------------------
 
-CustomSyphonServer::~CustomSyphonServer(){}
+CustomSyphonServer::~CustomSyphonServer(){
 
-//------------------------------------------------------------------
-//void CustomSyphonServer::publishTexture(){
-//   server->publishTexture(&feeder->getTextureReference());
-//}
+}
 
 //------------------------------------------------------------------
 void CustomSyphonServer::setup(){
@@ -76,13 +73,6 @@ void CustomSyphonServer::update(){
 //------------------------------------------------------------------
 ofImage* CustomSyphonServer::getImage(){
     
-//    if (drawNoInputs)
-//        return &noInputsImg;
-//    else {
-//        fbo.readToPixels(buff);
-//        img.setFromPixels(buff);
-//        return &img;
-//    }
 }
 
 //------------------------------------------------------------------
