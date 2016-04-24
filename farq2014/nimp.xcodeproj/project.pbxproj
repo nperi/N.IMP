@@ -10,31 +10,31 @@
 		0A1297311C7FCEDD00A9D6D4 /* AudioAnalizer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A12972F1C7FCEDD00A9D6D4 /* AudioAnalizer.cpp */; };
 		0A1297501C7FF42A00A9D6D4 /* fb_funcs.c in Sources */ = {isa = PBXBuildFile; fileRef = 0A1297481C7FF42A00A9D6D4 /* fb_funcs.c */; };
 		0A1297511C7FF42A00A9D6D4 /* ofxFilterbank.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A12974A1C7FF42A00A9D6D4 /* ofxFilterbank.cpp */; };
-		0A1B935F1CC59EBC003396AD /* HapSupport.c in Sources */ = {isa = PBXBuildFile; fileRef = 0A1B93561CC59EBC003396AD /* HapSupport.c */; settings = {ASSET_TAGS = (); }; };
-		0A1B93611CC59EBC003396AD /* ofxHapPlayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A1B935B1CC59EBC003396AD /* ofxHapPlayer.cpp */; settings = {ASSET_TAGS = (); }; };
-		0A1B936B1CC5A103003396AD /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = 0A1B93671CC5A103003396AD /* README.md */; settings = {ASSET_TAGS = (); }; };
-		0A1B936C1CC5A103003396AD /* ofxImageSequencePlayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A1B93691CC5A103003396AD /* ofxImageSequencePlayer.cpp */; settings = {ASSET_TAGS = (); }; };
-		0A1B937C1CC5AB46003396AD /* ofxAVFVideoPlayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0A1B93761CC5AB46003396AD /* ofxAVFVideoPlayer.mm */; settings = {ASSET_TAGS = (); }; };
-		0A1B937D1CC5AB46003396AD /* ofxAVFVideoRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A1B93781CC5AB46003396AD /* ofxAVFVideoRenderer.m */; settings = {ASSET_TAGS = (); }; };
-		0A1B93971CC5AB90003396AD /* ofxJpegGlitch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A1B93911CC5AB90003396AD /* ofxJpegGlitch.cpp */; settings = {ASSET_TAGS = (); }; };
-		0A1B94EB1CC5AE58003396AD /* RtMidi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A1B94AC1CC5AE58003396AD /* RtMidi.cpp */; settings = {ASSET_TAGS = (); }; };
-		0A1B94F31CC5AE58003396AD /* ofxRtMidiIn.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A1B94CC1CC5AE58003396AD /* ofxRtMidiIn.cpp */; settings = {ASSET_TAGS = (); }; };
-		0A1B94F41CC5AE58003396AD /* ofxRtMidiOut.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A1B94CE1CC5AE58003396AD /* ofxRtMidiOut.cpp */; settings = {ASSET_TAGS = (); }; };
-		0A1B94FA1CC5AE58003396AD /* ofxBaseMidi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A1B94DB1CC5AE58003396AD /* ofxBaseMidi.cpp */; settings = {ASSET_TAGS = (); }; };
-		0A1B94FB1CC5AE58003396AD /* ofxMidi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A1B94DD1CC5AE58003396AD /* ofxMidi.cpp */; settings = {ASSET_TAGS = (); }; };
-		0A1B94FC1CC5AE58003396AD /* ofxMidiIn.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A1B94E01CC5AE58003396AD /* ofxMidiIn.cpp */; settings = {ASSET_TAGS = (); }; };
-		0A1B94FD1CC5AE58003396AD /* ofxMidiMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A1B94E21CC5AE58003396AD /* ofxMidiMessage.cpp */; settings = {ASSET_TAGS = (); }; };
-		0A1B94FE1CC5AE58003396AD /* ofxMidiOut.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A1B94E41CC5AE58003396AD /* ofxMidiOut.cpp */; settings = {ASSET_TAGS = (); }; };
-		0A1B95191CC5AEC2003396AD /* ofxMultiTouchPad.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A1B95151CC5AEC2003396AD /* ofxMultiTouchPad.cpp */; settings = {ASSET_TAGS = (); }; };
-		0A1B95741CC5AF93003396AD /* Syphon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A1B95601CC5AF93003396AD /* Syphon.framework */; settings = {ASSET_TAGS = (); }; };
-		0A1B95751CC5AF93003396AD /* SyphonNameboundClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A1B95631CC5AF93003396AD /* SyphonNameboundClient.m */; settings = {ASSET_TAGS = (); }; };
-		0A1B95771CC5AF93003396AD /* ofxSyphonClient.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0A1B95691CC5AF93003396AD /* ofxSyphonClient.mm */; settings = {ASSET_TAGS = (); }; };
-		0A1B95781CC5AF93003396AD /* ofxSyphonServer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0A1B956B1CC5AF93003396AD /* ofxSyphonServer.mm */; settings = {ASSET_TAGS = (); }; };
-		0A1B95791CC5AF93003396AD /* ofxSyphonServerDirectory.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0A1B956D1CC5AF93003396AD /* ofxSyphonServerDirectory.mm */; settings = {ASSET_TAGS = (); }; };
-		0A1B95DC1CC5B233003396AD /* ofxPostGlitch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A1B95D71CC5B233003396AD /* ofxPostGlitch.cpp */; settings = {ASSET_TAGS = (); }; };
-		0A1B95E61CC5B780003396AD /* MultitouchSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A1B95E51CC5B780003396AD /* MultitouchSupport.framework */; settings = {ASSET_TAGS = (); }; };
+		0A1B935F1CC59EBC003396AD /* HapSupport.c in Sources */ = {isa = PBXBuildFile; fileRef = 0A1B93561CC59EBC003396AD /* HapSupport.c */; };
+		0A1B93611CC59EBC003396AD /* ofxHapPlayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A1B935B1CC59EBC003396AD /* ofxHapPlayer.cpp */; };
+		0A1B936B1CC5A103003396AD /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = 0A1B93671CC5A103003396AD /* README.md */; };
+		0A1B936C1CC5A103003396AD /* ofxImageSequencePlayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A1B93691CC5A103003396AD /* ofxImageSequencePlayer.cpp */; };
+		0A1B937C1CC5AB46003396AD /* ofxAVFVideoPlayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0A1B93761CC5AB46003396AD /* ofxAVFVideoPlayer.mm */; };
+		0A1B937D1CC5AB46003396AD /* ofxAVFVideoRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A1B93781CC5AB46003396AD /* ofxAVFVideoRenderer.m */; };
+		0A1B93971CC5AB90003396AD /* ofxJpegGlitch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A1B93911CC5AB90003396AD /* ofxJpegGlitch.cpp */; };
+		0A1B94EB1CC5AE58003396AD /* RtMidi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A1B94AC1CC5AE58003396AD /* RtMidi.cpp */; };
+		0A1B94F31CC5AE58003396AD /* ofxRtMidiIn.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A1B94CC1CC5AE58003396AD /* ofxRtMidiIn.cpp */; };
+		0A1B94F41CC5AE58003396AD /* ofxRtMidiOut.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A1B94CE1CC5AE58003396AD /* ofxRtMidiOut.cpp */; };
+		0A1B94FA1CC5AE58003396AD /* ofxBaseMidi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A1B94DB1CC5AE58003396AD /* ofxBaseMidi.cpp */; };
+		0A1B94FB1CC5AE58003396AD /* ofxMidi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A1B94DD1CC5AE58003396AD /* ofxMidi.cpp */; };
+		0A1B94FC1CC5AE58003396AD /* ofxMidiIn.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A1B94E01CC5AE58003396AD /* ofxMidiIn.cpp */; };
+		0A1B94FD1CC5AE58003396AD /* ofxMidiMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A1B94E21CC5AE58003396AD /* ofxMidiMessage.cpp */; };
+		0A1B94FE1CC5AE58003396AD /* ofxMidiOut.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A1B94E41CC5AE58003396AD /* ofxMidiOut.cpp */; };
+		0A1B95191CC5AEC2003396AD /* ofxMultiTouchPad.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A1B95151CC5AEC2003396AD /* ofxMultiTouchPad.cpp */; };
+		0A1B95741CC5AF93003396AD /* Syphon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A1B95601CC5AF93003396AD /* Syphon.framework */; };
+		0A1B95751CC5AF93003396AD /* SyphonNameboundClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A1B95631CC5AF93003396AD /* SyphonNameboundClient.m */; };
+		0A1B95771CC5AF93003396AD /* ofxSyphonClient.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0A1B95691CC5AF93003396AD /* ofxSyphonClient.mm */; };
+		0A1B95781CC5AF93003396AD /* ofxSyphonServer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0A1B956B1CC5AF93003396AD /* ofxSyphonServer.mm */; };
+		0A1B95791CC5AF93003396AD /* ofxSyphonServerDirectory.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0A1B956D1CC5AF93003396AD /* ofxSyphonServerDirectory.mm */; };
+		0A1B95DC1CC5B233003396AD /* ofxPostGlitch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A1B95D71CC5B233003396AD /* ofxPostGlitch.cpp */; };
+		0A1B95E61CC5B780003396AD /* MultitouchSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A1B95E51CC5B780003396AD /* MultitouchSupport.framework */; };
 		0A1D5D3A1C6F5EDF003CE2C5 /* AudioIn.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A1D5D381C6F5EDF003CE2C5 /* AudioIn.cpp */; };
-		0A1E94591C8FAE2A00F98C59 /* OSCReceiver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A1E94571C8FAE2A00F98C59 /* OSCReceiver.cpp */; settings = {ASSET_TAGS = (); }; };
+		0A1E94591C8FAE2A00F98C59 /* OSCReceiver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A1E94571C8FAE2A00F98C59 /* OSCReceiver.cpp */; };
 		0A49EF451C18A3BF00346EB5 /* ofxBasePatch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A49EF0D1C18A3BF00346EB5 /* ofxBasePatch.cpp */; };
 		0A49EF461C18A3BF00346EB5 /* ofxComposer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A49EF0F1C18A3BF00346EB5 /* ofxComposer.cpp */; };
 		0A49EF471C18A3BF00346EB5 /* ofxPatch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A49EF111C18A3BF00346EB5 /* ofxPatch.cpp */; };
@@ -127,6 +127,8 @@
 		2023EF517ED2D8B397511D4B /* Helpers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B9076967F8C54A04362C04AA /* Helpers.cpp */; };
 		311DF864378748129984EA1D /* Kalman.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 77A1A692522820F935B58762 /* Kalman.cpp */; };
 		45CC483A999BF1065A6B926C /* Distance.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9DBD717072C35D324E101669 /* Distance.cpp */; };
+		491645211CC72CEB00374768 /* Syphon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A1B95601CC5AF93003396AD /* Syphon.framework */; };
+		491645221CC72CEB00374768 /* Syphon.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0A1B95601CC5AF93003396AD /* Syphon.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		496C45631C51A670009F2A14 /* ConsoleMessageType.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 496C45621C51A670009F2A14 /* ConsoleMessageType.cpp */; };
 		4990BDDF1C3CE0DA002710AF /* ConsoleLog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4990BDDB1C3CE0DA002710AF /* ConsoleLog.cpp */; };
 		4990BDE01C3CE0DA002710AF /* ConsoleScrollBar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4990BDDD1C3CE0DA002710AF /* ConsoleScrollBar.cpp */; };
@@ -146,7 +148,6 @@
 		6B36ECA81A3219280019915B /* tinyxmlparser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6B36EC9D1A31DBEA0019915B /* tinyxmlparser.cpp */; };
 		6B36ECA91A3219280019915B /* ofxXmlSettings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6B36EC9F1A31DBEA0019915B /* ofxXmlSettings.cpp */; };
 		6B67DE0B1A40F02300588367 /* fft.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6B67DE091A40F02300588367 /* fft.cpp */; };
-		6B9E008B1A2E56EA00813D7C /* Syphon.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = D58DCB2C0AEFDE6171E29540 /* Syphon.framework */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		6BFCC2F11A3C8384009D68F0 /* CoreMIDI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BFCC2F01A3C8384009D68F0 /* CoreMIDI.framework */; };
 		6BFCC2FA1A3DCED6009D68F0 /* ParamInputGenerator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6BFCC2F81A3DCED6009D68F0 /* ParamInputGenerator.cpp */; };
 		6BFCC2FD1A3E07F8009D68F0 /* MidiInputGenerator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6BFCC2FB1A3E07F8009D68F0 /* MidiInputGenerator.cpp */; };
@@ -243,8 +244,8 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				6B9E008B1A2E56EA00813D7C /* Syphon.framework in CopyFiles */,
 				BBAB23CB13894F3D00AA2426 /* GLUT.framework in CopyFiles */,
+				491645221CC72CEB00374768 /* Syphon.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -739,6 +740,7 @@
 				E45BE9840E8CC7DD009D7055 /* QuickTime.framework in Frameworks */,
 				E4C2424710CC5A17004149E2 /* AppKit.framework in Frameworks */,
 				E4C2424810CC5A17004149E2 /* Cocoa.framework in Frameworks */,
+				491645211CC72CEB00374768 /* Syphon.framework in Frameworks */,
 				E4C2424910CC5A17004149E2 /* IOKit.framework in Frameworks */,
 				E7E077E515D3B63C0020DFD4 /* CoreVideo.framework in Frameworks */,
 			);
@@ -2331,8 +2333,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
-					../../../addons/ofxSyphon/libs/Syphon/lib/osx,
-					/Users/miligaricoits/Development/of_v0.8.4_osx_release/addons/ofxSyphon/libs/Syphon/lib/osx,
+					../../../addons/ofxSyphon_nimp/libs/Syphon/lib/osx,
 					"$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks",
 					"$(PROJECT_DIR)/src/etc",
 					"$(PROJECT_DIR)/src",
@@ -2343,8 +2344,8 @@
 				GCC_MODEL_TUNING = NONE;
 				HEADER_SEARCH_PATHS = (
 					"$(OF_CORE_HEADERS)",
-					../../../addons/ofxGui/libs,
-					../../../addons/ofxGui/src,
+					../../../addons/ofxGui_nimp/libs,
+					../../../addons/ofxGui_nimp/src,
 					../../../addons/ofxCv/libs,
 					../../../addons/ofxCv/libs/CLD,
 					../../../addons/ofxCv/libs/CLD/include,
@@ -2355,37 +2356,37 @@
 					../../../addons/ofxCv/libs/ofxCv/include/ofxCv,
 					../../../addons/ofxCv/libs/ofxCv/src,
 					../../../addons/ofxCv/src,
-					../../../addons/ofxSyphon/libs,
-					../../../addons/ofxSyphon/libs/Syphon,
-					../../../addons/ofxSyphon/libs/Syphon/lib,
-					../../../addons/ofxSyphon/libs/Syphon/lib/osx,
-					../../../addons/ofxSyphon/libs/Syphon/lib/osx/Syphon.framework,
-					../../../addons/ofxSyphon/libs/Syphon/lib/osx/Syphon.framework/Headers,
-					../../../addons/ofxSyphon/libs/Syphon/lib/osx/Syphon.framework/Resources,
-					../../../addons/ofxSyphon/libs/Syphon/lib/osx/Syphon.framework/Resources/English.lproj,
-					../../../addons/ofxSyphon/libs/Syphon/lib/osx/Syphon.framework/Versions,
-					../../../addons/ofxSyphon/libs/Syphon/lib/osx/Syphon.framework/Versions/A,
-					../../../addons/ofxSyphon/libs/Syphon/lib/osx/Syphon.framework/Versions/A/Headers,
-					../../../addons/ofxSyphon/libs/Syphon/lib/osx/Syphon.framework/Versions/A/Resources,
-					../../../addons/ofxSyphon/libs/Syphon/lib/osx/Syphon.framework/Versions/A/Resources/English.lproj,
-					../../../addons/ofxSyphon/libs/Syphon/lib/osx/Syphon.framework/Versions/Current,
-					../../../addons/ofxSyphon/libs/Syphon/lib/osx/Syphon.framework/Versions/Current/Headers,
-					../../../addons/ofxSyphon/libs/Syphon/lib/osx/Syphon.framework/Versions/Current/Resources,
-					../../../addons/ofxSyphon/libs/Syphon/lib/osx/Syphon.framework/Versions/Current/Resources/English.lproj,
-					../../../addons/ofxSyphon/libs/Syphon/src,
-					../../../addons/ofxSyphon/src,
+					../../../addons/ofxSyphon_nimp/libs,
+					../../../addons/ofxSyphon_nimp/libs/Syphon,
+					../../../addons/ofxSyphon_nimp/libs/Syphon/lib,
+					../../../addons/ofxSyphon_nimp/libs/Syphon/lib/osx,
+					../../../addons/ofxSyphon_nimp/libs/Syphon/lib/osx/Syphon.framework,
+					../../../addons/ofxSyphon_nimp/libs/Syphon/lib/osx/Syphon.framework/Headers,
+					../../../addons/ofxSyphon_nimp/libs/Syphon/lib/osx/Syphon.framework/Resources,
+					../../../addons/ofxSyphon_nimp/libs/Syphon/lib/osx/Syphon.framework/Resources/English.lproj,
+					../../../addons/ofxSyphon_nimp/libs/Syphon/lib/osx/Syphon.framework/Versions,
+					../../../addons/ofxSyphon_nimp/libs/Syphon/lib/osx/Syphon.framework/Versions/A,
+					../../../addons/ofxSyphon_nimp/libs/Syphon/lib/osx/Syphon.framework/Versions/A/Headers,
+					../../../addons/ofxSyphon_nimp/libs/Syphon/lib/osx/Syphon.framework/Versions/A/Resources,
+					../../../addons/ofxSyphon_nimp/libs/Syphon/lib/osx/Syphon.framework/Versions/A/Resources/English.lproj,
+					../../../addons/ofxSyphon_nimp/libs/Syphon/lib/osx/Syphon.framework/Versions/Current,
+					../../../addons/ofxSyphon_nimp/libs/Syphon/lib/osx/Syphon.framework/Versions/Current/Headers,
+					../../../addons/ofxSyphon_nimp/libs/Syphon/lib/osx/Syphon.framework/Versions/Current/Resources,
+					../../../addons/ofxSyphon_nimp/libs/Syphon/lib/osx/Syphon.framework/Versions/Current/Resources/English.lproj,
+					../../../addons/ofxSyphon_nimp/libs/Syphon/src,
+					../../../addons/ofxSyphon_nimp/src,
 					../../../addons/ofxOpenCv/libs/opencv/include/,
 					../../../addons/ofxXmlSettings/libs,
 					../../../addons/ofxXmlSettings/src,
-					../../../addons/ofxJpegGlitch/src,
-					../../../addons/ofxJpegGlitch/libs,
-					../../../addons/ofxMidi/libs/portmidi,
-					../../../addons/ofxMidi/libs/pgmidi,
-					../../../addons/ofxMidi/libs,
-					../../../addons/ofxMidi/src/ios,
-					../../../addons/ofxMidi/src/desktop,
-					../../../addons/ofxMidi/src,
-					../../../addons/ofxMidi/libs/rtmidi,
+					../../../addons/ofxJpegGlitch_nimp/src,
+					../../../addons/ofxJpegGlitch_nimp/libs,
+					../../../addons/ofxMidi_nimp/libs/portmidi,
+					../../../addons/ofxMidi_nimp/libs/pgmidi,
+					../../../addons/ofxMidi_nimp/libs,
+					../../../addons/ofxMidi_nimp/src/ios,
+					../../../addons/ofxMidi_nimp/src/desktop,
+					../../../addons/ofxMidi_nimp/src,
+					../../../addons/ofxMidi_nimp/libs/rtmidi,
 					../../../addons/ofxOsc/libs/oscpack/src/ip/posix,
 					../../../addons/ofxOsc/libs/oscpack/src/ip,
 					../../../addons/ofxOsc/libs/oscpack/src,
@@ -2399,6 +2400,7 @@
 				ICON_FILE = "$(ICON_FILE_PATH)$(ICON)";
 				INFOPLIST_FILE = "openFrameworks-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
@@ -2462,8 +2464,6 @@
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_50)",
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_51)",
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_52)",
-					/Users/miligaricoits/Development/of_v0.8.4_osx_release/addons/ofxPulseSensor/libs/wiringPi/lib/linuxarmv6l,
-					/Users/miligaricoits/Development/of_v0.8.4_osx_release/addons/ofxOpenCv/libs/opencv/lib/osx,
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
@@ -2485,8 +2485,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
-					../../../addons/ofxSyphon/libs/Syphon/lib/osx,
-					/Users/miligaricoits/Development/of_v0.8.4_osx_release/addons/ofxSyphon/libs/Syphon/lib/osx,
+					../../../addons/ofxSyphon_nimp/libs/Syphon/lib/osx,
 					"$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks",
 					"$(PROJECT_DIR)/src/etc",
 					"$(PROJECT_DIR)/src",
@@ -2496,8 +2495,8 @@
 				GCC_MODEL_TUNING = NONE;
 				HEADER_SEARCH_PATHS = (
 					"$(OF_CORE_HEADERS)",
-					../../../addons/ofxGui/libs,
-					../../../addons/ofxGui/src,
+					../../../addons/ofxGui_nimp/libs,
+					../../../addons/ofxGui_nimp/src,
 					../../../addons/ofxCv/libs,
 					../../../addons/ofxCv/libs/CLD,
 					../../../addons/ofxCv/libs/CLD/include,
@@ -2508,37 +2507,37 @@
 					../../../addons/ofxCv/libs/ofxCv/include/ofxCv,
 					../../../addons/ofxCv/libs/ofxCv/src,
 					../../../addons/ofxCv/src,
-					../../../addons/ofxSyphon/libs,
-					../../../addons/ofxSyphon/libs/Syphon,
-					../../../addons/ofxSyphon/libs/Syphon/lib,
-					../../../addons/ofxSyphon/libs/Syphon/lib/osx,
-					../../../addons/ofxSyphon/libs/Syphon/lib/osx/Syphon.framework,
-					../../../addons/ofxSyphon/libs/Syphon/lib/osx/Syphon.framework/Headers,
-					../../../addons/ofxSyphon/libs/Syphon/lib/osx/Syphon.framework/Resources,
-					../../../addons/ofxSyphon/libs/Syphon/lib/osx/Syphon.framework/Resources/English.lproj,
-					../../../addons/ofxSyphon/libs/Syphon/lib/osx/Syphon.framework/Versions,
-					../../../addons/ofxSyphon/libs/Syphon/lib/osx/Syphon.framework/Versions/A,
-					../../../addons/ofxSyphon/libs/Syphon/lib/osx/Syphon.framework/Versions/A/Headers,
-					../../../addons/ofxSyphon/libs/Syphon/lib/osx/Syphon.framework/Versions/A/Resources,
-					../../../addons/ofxSyphon/libs/Syphon/lib/osx/Syphon.framework/Versions/A/Resources/English.lproj,
-					../../../addons/ofxSyphon/libs/Syphon/lib/osx/Syphon.framework/Versions/Current,
-					../../../addons/ofxSyphon/libs/Syphon/lib/osx/Syphon.framework/Versions/Current/Headers,
-					../../../addons/ofxSyphon/libs/Syphon/lib/osx/Syphon.framework/Versions/Current/Resources,
-					../../../addons/ofxSyphon/libs/Syphon/lib/osx/Syphon.framework/Versions/Current/Resources/English.lproj,
-					../../../addons/ofxSyphon/libs/Syphon/src,
-					../../../addons/ofxSyphon/src,
+					../../../addons/ofxSyphon_nimp/libs,
+					../../../addons/ofxSyphon_nimp/libs/Syphon,
+					../../../addons/ofxSyphon_nimp/libs/Syphon/lib,
+					../../../addons/ofxSyphon_nimp/libs/Syphon/lib/osx,
+					../../../addons/ofxSyphon_nimp/libs/Syphon/lib/osx/Syphon.framework,
+					../../../addons/ofxSyphon_nimp/libs/Syphon/lib/osx/Syphon.framework/Headers,
+					../../../addons/ofxSyphon_nimp/libs/Syphon/lib/osx/Syphon.framework/Resources,
+					../../../addons/ofxSyphon_nimp/libs/Syphon/lib/osx/Syphon.framework/Resources/English.lproj,
+					../../../addons/ofxSyphon_nimp/libs/Syphon/lib/osx/Syphon.framework/Versions,
+					../../../addons/ofxSyphon_nimp/libs/Syphon/lib/osx/Syphon.framework/Versions/A,
+					../../../addons/ofxSyphon_nimp/libs/Syphon/lib/osx/Syphon.framework/Versions/A/Headers,
+					../../../addons/ofxSyphon_nimp/libs/Syphon/lib/osx/Syphon.framework/Versions/A/Resources,
+					../../../addons/ofxSyphon_nimp/libs/Syphon/lib/osx/Syphon.framework/Versions/A/Resources/English.lproj,
+					../../../addons/ofxSyphon_nimp/libs/Syphon/lib/osx/Syphon.framework/Versions/Current,
+					../../../addons/ofxSyphon_nimp/libs/Syphon/lib/osx/Syphon.framework/Versions/Current/Headers,
+					../../../addons/ofxSyphon_nimp/libs/Syphon/lib/osx/Syphon.framework/Versions/Current/Resources,
+					../../../addons/ofxSyphon_nimp/libs/Syphon/lib/osx/Syphon.framework/Versions/Current/Resources/English.lproj,
+					../../../addons/ofxSyphon_nimp/libs/Syphon/src,
+					../../../addons/ofxSyphon_nimp/src,
 					../../../addons/ofxOpenCv/libs/opencv/include/,
 					../../../addons/ofxXmlSettings/libs,
 					../../../addons/ofxXmlSettings/src,
-					../../../addons/ofxJpegGlitch/src,
-					../../../addons/ofxJpegGlitch/libs,
-					../../../addons/ofxMidi/libs/portmidi,
-					../../../addons/ofxMidi/libs/pgmidi,
-					../../../addons/ofxMidi/libs,
-					../../../addons/ofxMidi/src/ios,
-					../../../addons/ofxMidi/src/desktop,
-					../../../addons/ofxMidi/src,
-					../../../addons/ofxMidi/libs/rtmidi,
+					../../../addons/ofxJpegGlitch_nimp/src,
+					../../../addons/ofxJpegGlitch_nimp/libs,
+					../../../addons/ofxMidi_nimp/libs/portmidi,
+					../../../addons/ofxMidi_nimp/libs/pgmidi,
+					../../../addons/ofxMidi_nimp/libs,
+					../../../addons/ofxMidi_nimp/src/ios,
+					../../../addons/ofxMidi_nimp/src/desktop,
+					../../../addons/ofxMidi_nimp/src,
+					../../../addons/ofxMidi_nimp/libs/rtmidi,
 					../../../addons/ofxOsc/libs/oscpack/src/ip/posix,
 					../../../addons/ofxOsc/libs/oscpack/src/ip,
 					../../../addons/ofxOsc/libs/oscpack/src,
@@ -2552,6 +2551,7 @@
 				ICON_FILE = "$(ICON_FILE_PATH)$(ICON)";
 				INFOPLIST_FILE = "openFrameworks-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
@@ -2615,8 +2615,6 @@
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_49)",
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_50)",
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_51)",
-					/Users/miligaricoits/Development/of_v0.8.4_osx_release/addons/ofxPulseSensor/libs/wiringPi/lib/linuxarmv6l,
-					/Users/miligaricoits/Development/of_v0.8.4_osx_release/addons/ofxOpenCv/libs/opencv/lib/osx,
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
