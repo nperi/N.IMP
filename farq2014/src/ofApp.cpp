@@ -893,6 +893,16 @@ void ofApp::menuEvent(ofxUIEventArgs &e) {
             if (i < inputGenerators.size()) {
                 ((MidiInputGenerator*)inputGenerators[i])->setMidiLearnActive(midiLearnActive);
             }
+            
+            if (midiLearnActive) {
+                console->pushMessage("MIDI Learn is ON.");
+                console->pushMessage("\tClick on any nodes parameters to create a map to a MIDI control.");
+                console->pushMessage("\tDelete all MIDI control mappings with DEL key.");
+                console->pushMessage("\tTo view what is map to a MIDI control, press COMMAND.");
+            }
+            else {
+                console->pushMessage("MIDI Learn is OFF.");
+            }
         }
         else {
             ((ofxUIMultiImageToggle*)menu->getWidget("Midi Learn"))->setValue(false);
