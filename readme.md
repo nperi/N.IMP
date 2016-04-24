@@ -3,6 +3,11 @@ n.imp
 
 node-based image processor
 
+Building
+---------------
+To build this project go to /bin/data path and run setup.sh script
+
+
 
 Overview appSettings.xml
 ------------------------
