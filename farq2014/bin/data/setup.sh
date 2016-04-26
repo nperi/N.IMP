@@ -12,3 +12,5 @@ git clone https://github.com/MiliGaricoits/ofxUI_nimp.git
 git clone https://github.com/MiliGaricoits/ofxFilterbank_nimp.git
 git clone https://github.com/MiliGaricoits/ofxGui_nimp.git
 git clone https://github.com/MiliGaricoits/ofxMSAInteractiveObject_nimp.git
+git clone https://github.com/nperi/ofxPostGlitch_nimp.git
+git clone https://github.com/nperi/ofxPostProcessing_nimp.git
