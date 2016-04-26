@@ -38,7 +38,7 @@ void OscInputGenerator::processInput() {
             it = oscMap->find(m.getAddress());
             
             if(it!=oscMap->end()){
-                for (int j = 0; j < m.getNumArgs(); ++j) {
+                for (int j = 0; j < m.getNumArgs() && j < it->second->paramId.size(); ++j) {
                     
                     Param* p        = new Param();
                     p->inputMax     = it->second->inputMaxValue[j];

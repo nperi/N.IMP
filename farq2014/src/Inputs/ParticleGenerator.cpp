@@ -39,6 +39,11 @@ ParticleGenerator::ParticleGenerator(string name, int id_) : InputSource(name, "
     pLifetime.add(maxLifetime.set("max Lifetime", 0, 0, 60000));
     gui.add(pLifetime);
     
+    pForce.setName("Force");
+    pForce.add(force_x.set("Force X", 0, 0, width));
+    pForce.add(force_y.set("Force Y", 0, 0, height));
+    gui.add(pForce);
+    
     gui.setWidthElements(INSPECTOR_WIDTH);
     
     ofxBaseGui* baseGui;
@@ -64,6 +69,10 @@ ParticleGenerator::ParticleGenerator(string name, int id_) : InputSource(name, "
     baseGui = gui.find("min Lifetime");
     ofAddListener(baseGui->addOrRemoveOSCInputBaseGui, &gui, &ofxGuiGroup::addOrRemoveOSCInput);
     baseGui = gui.find("max Lifetime");
+    ofAddListener(baseGui->addOrRemoveOSCInputBaseGui, &gui, &ofxGuiGroup::addOrRemoveOSCInput);
+    baseGui = gui.find("Force X");
+    ofAddListener(baseGui->addOrRemoveOSCInputBaseGui, &gui, &ofxGuiGroup::addOrRemoveOSCInput);
+    baseGui = gui.find("Force Y");
     ofAddListener(baseGui->addOrRemoveOSCInputBaseGui, &gui, &ofxGuiGroup::addOrRemoveOSCInput);
     
     particle = new ofxParticleSystem(200,width,height,minRadius,(unityScale) ? minRadius : maxRadius,minLifetime,maxLifetime,fadeOut);
@@ -118,16 +127,18 @@ void ParticleGenerator::addForce(ParticleForce f){
 
 //------------------------------------------------------------------
 void ParticleGenerator::updateParameter(Param* inputParam){
-    if(inputParam->name.compare("forceX")==0){
+    if(inputParam->name.compare("Force X")==0){
         ParticleForce f;
         f.radius = 50;
         f.isAttracting = true;
         f.scale = 1;
-        f.pos.set(ofVec2f(inputParam->floatVal,0));
+        f.pos.set(ofVec2f(inputParam->floatVal,force_y));
         addForce(f);
+        force_x = inputParam->floatVal;
 //        cout <<"x: " << f.pos->x;
     }
-    else if (inputParam->name.compare("forceY") == 0 && force.size() > 0){
+    else if (inputParam->name.compare("Force Y") == 0 && force.size() > 0){
+        force_y = inputParam->floatVal;
         ofVec2f v = force[force.size()-1].pos;
         v.y = inputParam->floatVal;
 //        cout <<" y: " << v.y <<endl;
@@ -167,9 +178,9 @@ void ParticleGenerator::updateParameter(Param* inputParam){
 //------------------------------------------------------------------
 float ParticleGenerator::getMidiMin(string param_){
     
-    if(param_.compare("forceX")==0){
+    if(param_.compare("Force X")==0){
         return 0;
-    }else if (param_.compare("forceY")==0){
+    }else if (param_.compare("Force Y")==0){
         return 0;
     }else if(param_.compare("Clear BG")==0){
         return 0;
@@ -197,10 +208,10 @@ float ParticleGenerator::getMidiMin(string param_){
 //------------------------------------------------------------------
 float ParticleGenerator::getMidiMax(string param_){
     
-    if(param_.compare("forceX")==0){
-        return 0;
-    }else if (param_.compare("forceY")==0){
-        return 0;
+    if(param_.compare("Force X")==0){
+        return width;
+    }else if (param_.compare("Force Y")==0){
+        return height;
     }else if(param_.compare("Clear BG")==0){
         return 1;
     }else if(param_.compare("Particles Alpha")==0){
