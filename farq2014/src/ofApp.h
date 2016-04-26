@@ -174,6 +174,7 @@ public:
     vector<ofxUIWidget*> widgetsToDelete;
     textInput* newNodeInput;
     bool holdingCommand, holdingControl, holdingDelete;
+    bool showInspectors, activatePatches;
     
     // console
     bool showConsole;

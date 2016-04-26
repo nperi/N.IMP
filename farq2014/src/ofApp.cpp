@@ -32,6 +32,8 @@ void ofApp::setup() {
     holdingCommand         = false;
     holdingControl         = false;
     holdingDelete          = false;
+    showInspectors         = false;
+    activatePatches        = false;
     
     //populating string dictionaries for simple comparison used in LoadFromXML
     inputTypes.insert(std::pair<string,InputType>("AUDIO_ANALIZER",AUDIO_ANALIZER));
@@ -505,12 +507,12 @@ void ofApp::audioIn(float * input, int bufferSize, int nChannels){
 void ofApp::keyPressed  (int key){
     bool notAvailable = false;
     switch(key){
-        case OF_KEY_LEFT:
-            previousViewer();
-            break;
-        case OF_KEY_RIGHT:
-            nextViewer();
-            break;
+//        case OF_KEY_LEFT:
+//            previousViewer();
+//            break;
+//        case OF_KEY_RIGHT:
+//            nextViewer();
+//            break;
         case OF_KEY_LEFT_COMMAND: case OF_KEY_RIGHT_COMMAND:
             holdingCommand = true;
             break;
@@ -520,36 +522,36 @@ void ofApp::keyPressed  (int key){
         case OF_KEY_BACKSPACE:
             holdingDelete = true;
             break;
-        case '1':
-            setCurrentViewer(0);
-            break;
-        case '2':
-            setCurrentViewer(1);
-            break;
-        case '3':
-            setCurrentViewer(2);
-            break;
-        case '4':
-            setCurrentViewer(3);
-            break;
-        case '5':
-            setCurrentViewer(4);
-            break;
-        case '6':
-            setCurrentViewer(5);
-            break;
-        case '7':
-            setCurrentViewer(6);
-            break;
-        case '8':
-            setCurrentViewer(7);
-            break;
-        case '9':
-            setCurrentViewer(8);
-            break;
-        case '0':
-            setCurrentViewer(9);
-            break;
+//        case '1':
+//            setCurrentViewer(0);
+//            break;
+//        case '2':
+//            setCurrentViewer(1);
+//            break;
+//        case '3':
+//            setCurrentViewer(2);
+//            break;
+//        case '4':
+//            setCurrentViewer(3);
+//            break;
+//        case '5':
+//            setCurrentViewer(4);
+//            break;
+//        case '6':
+//            setCurrentViewer(5);
+//            break;
+//        case '7':
+//            setCurrentViewer(6);
+//            break;
+//        case '8':
+//            setCurrentViewer(7);
+//            break;
+//        case '9':
+//            setCurrentViewer(8);
+//            break;
+//        case '0':
+//            setCurrentViewer(9);
+//            break;
         case 'f': case 'F':
             if (holdingCommand && ((newNodeInput == NULL) || (!newNodeInput->isClicked()))) {
                 isFullScreen = !isFullScreen;
@@ -578,20 +580,33 @@ void ofApp::keyPressed  (int key){
                 console->pushWarning("Unable to create nodes while Edit Mode is off");
             }
             break;
-            
         case 'j': case 'J' :
-                if ((newNodeInput == NULL) || (!newNodeInput->isClicked())) {
-                    loadSnippet();
-                }
+            if ((newNodeInput == NULL) || (!newNodeInput->isClicked())) {
+                loadSnippet();
+            }
             break;
         case 'k': case 'K' :
-                if ((newNodeInput == NULL) || (!newNodeInput->isClicked())) {
-                    saveSnippet();
-                }
+            if ((newNodeInput == NULL) || (!newNodeInput->isClicked())) {
+                saveSnippet();
+            }
             break;
-        case 'e': case 'E':{
+        case 'e': case 'E':
+            if (holdingCommand && ((newNodeInput == NULL) || (!newNodeInput->isClicked()))) {
                 int encapsulatedId = nodeViewers[currentViewer]->getSelectedEncapsulated();
                 EventHandler::getInstance()->setEncapsulatedIdDraw(encapsulatedId);
+            }
+            break;
+        case 'i': case 'I':
+            if (holdingCommand && ((newNodeInput == NULL) || (!newNodeInput->isClicked()))) {
+                showInspectors = !showInspectors;
+                nodeViewers[currentViewer]->deactivateAllPatches();
+                nodeViewers[currentViewer]->setDrawInspectors(showInspectors);
+            }
+            break;
+        case 'd': case 'D':
+            if (holdingCommand && ((newNodeInput == NULL) || (!newNodeInput->isClicked()))) {
+                activatePatches = !activatePatches;
+                activatePatches ? nodeViewers[currentViewer]->activateAllPatches() : nodeViewers[currentViewer]->deactivateAllPatches();
             }
             break;
         default:
@@ -623,16 +638,18 @@ void ofApp::keyReleased(int key){
             }
             holdingControl = false;
         break;
-            
+        case OF_KEY_LEFT_COMMAND: case OF_KEY_RIGHT_COMMAND:
+            holdingCommand = false;
+            break;
+        case OF_KEY_BACKSPACE:
+            holdingDelete = false;
+            break;
         case 'e': case 'E':
             if(EventHandler::getInstance()->getEncapsulatedIdDraw() != MAIN_WINDOW){
                 EventHandler::getInstance()->setEncapsulatedIdDraw(MAIN_WINDOW);
             }
         break;
     }
-    
-    holdingCommand = false;
-    holdingDelete  = false;
 }
 
 //------------------------------------------------------------------
