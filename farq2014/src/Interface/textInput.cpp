@@ -83,11 +83,12 @@ void textInput::keyPressed(int key) {
                 
                 if (this->dropdownList->getVisibleToggles().size() > 0) {
                     toggleSelected--;
-                    string toggleSelectedName = this->dropdownList->getToggles()[toggleSelected]->getName();
                     
                     if(toggleSelected < 0) {
                         toggleSelected = this->dropdownList->getToggles().size() - 1;
                     }
+                    string toggleSelectedName = this->dropdownList->getToggles()[toggleSelected]->getName();
+                    
                     while (!this->dropdownList->getToggles()[toggleSelected]->isVisible() ||
                            toggleSelectedName == "INPUTS" || toggleSelectedName == "LAYERS" || toggleSelectedName == "MIXERS" || toggleSelectedName == "OUTPUTS") {
                         
