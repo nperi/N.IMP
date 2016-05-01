@@ -30,8 +30,8 @@ InputCamera::InputCamera(string name, int id_) : InputSource(name, "Camera", id_
     cameraName = videoGrabber->listDevices()[cameraIndex].deviceName;
     
     gui.add(cameraSelectedName.set("", cameraName));
-    gui.add(nextCamera.setup(">> next server"));
-    gui.add(prevCamera.setup("<< previous server"));
+    gui.add(nextCamera.setup(">> next camera"));
+    gui.add(prevCamera.setup("<< previous camera"));
     nextCamera.addListener(this, &InputCamera::changeToNextCamera);
     prevCamera.addListener(this, &InputCamera::changeToPrevCamera);
     
@@ -39,7 +39,7 @@ InputCamera::InputCamera(string name, int id_) : InputSource(name, "Camera", id_
     resolutionLabels.push_back("480x360");
     resolutionLabels.push_back("640x480");
     resolutionLabels.push_back("960x540");
-    resolutionLabels.push_back("1024x576");
+    resolutionLabels.push_back("1024x576");			
     resolutionLabels.push_back("1280x720");
     resolutionLabels.push_back("1366x768");
     resolutionLabels.push_back("1920x1080");

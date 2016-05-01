@@ -190,6 +190,7 @@ ImageProcessor::ImageProcessor(string name_, int id_):VisualLayer(name_, "Image 
 
     
     drawNoInputs = true;
+    gui.minimizeAll();
 }
 
 //------------------------------------------------------------------
