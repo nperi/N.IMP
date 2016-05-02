@@ -171,7 +171,6 @@ void ofApp::setup() {
     
     //*** CONSOLE SETUP ***//
     //
-    // TODO: ver de arreglar esto
     console = ConsoleLog::getInstance();
     console->setupScrollBar(&pad);
     ofSetLogLevel(OF_LOG_ERROR);
