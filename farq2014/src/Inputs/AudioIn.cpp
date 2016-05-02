@@ -41,7 +41,13 @@ AudioIn::AudioIn(ofxUISuperCanvas* &gui_, string type_, string name_, int id_) :
     gui.setWidthElements(INSPECTOR_WIDTH);
     
     title->removeButton('r');
-    title->removeButton('m');    
+    title->removeButton('m');
+}
+
+AudioIn::~AudioIn(){
+    isEnabled.removeListener(this, &AudioIn::editEnabled);
+    selectBand.removeListener(this, &AudioIn::editBand);
+    editFFTInputs.removeListener(this, &AudioIn::editInputs);
 }
 
 //------------------------------------------------------------------

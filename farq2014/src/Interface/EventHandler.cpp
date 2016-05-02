@@ -12,7 +12,6 @@
 EventHandler* EventHandler::instance = NULL;
 
 EventHandler::EventHandler() {
-//    windowIdDraw = MAIN_WINDOW;
     encapsulatedIdDraw = MAIN_WINDOW;
 }
 
@@ -28,39 +27,9 @@ EventHandler* EventHandler::getInstance(){
     return instance;
 }
 
-////------------------------------------------------------------------
-//int EventHandler::getWindowIdDraw(){
-//    return instance->windowIdDraw;
-//}
-//
-////------------------------------------------------------------------
-//void EventHandler::setWindowIdDraw(int winId){
-//    instance->windowIdDraw = winId;
-//}
-//
-////------------------------------------------------------------------
-//int EventHandler::getWindowEvent(){
-//    return instance->windowEvent;
-//}
-//
-////------------------------------------------------------------------
-//void EventHandler::setWindowEvent(int winId){
-//    instance->windowEvent = winId;
-//}
-
 //------------------------------------------------------------------
 int EventHandler::getEncapsulatedIdDraw(){
     return encapsulatedIdDraw;
-}
-
-//------------------------------------------------------------------
-bool EventHandler::isMainEvent(){
-    return mainEvent;
-}
-
-//------------------------------------------------------------------
-void EventHandler::setMainEvent(bool isMainEvent){
-    mainEvent = isMainEvent;
 }
 
 //------------------------------------------------------------------

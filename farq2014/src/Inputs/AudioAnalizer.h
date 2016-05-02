@@ -20,6 +20,7 @@ class AudioAnalizer : public InputSource{
 public:
     
     AudioAnalizer(string name_= "Audio Analizer", int id_ = -1);
+    ~AudioAnalizer();
     
     void setup();
     void customDraw();

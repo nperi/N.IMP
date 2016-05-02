@@ -35,6 +35,12 @@ OSCReceiver::OSCReceiver(string name_, int id_) : InputSource(name_, "OSC Receiv
     title->removeButton('m');
 }
 
+OSCReceiver::~OSCReceiver(){
+    oscPort.removeListener(this, &OSCReceiver::editPort);
+    oscAddress.removeListener(this, &OSCReceiver::editAddress);
+    editOSC.removeListener(this, &OSCReceiver::editInputs);
+}
+
 //------------------------------------------------------------------
 void OSCReceiver::setup() {
 

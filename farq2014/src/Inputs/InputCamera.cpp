@@ -63,6 +63,8 @@ InputCamera::InputCamera(string name, int id_) : InputSource(name, "Camera", id_
 InputCamera::~InputCamera() {
     nextCamera.removeListener(this, &InputCamera::changeToNextCamera);
     prevCamera.removeListener(this, &InputCamera::changeToPrevCamera);
+    higherResolution.removeListener(this, &InputCamera::changeToHigherResolution);
+    lowerResolution.removeListener(this, &InputCamera::changeToLowerResolution);
 }
 
 //------------------------------------------------------------------

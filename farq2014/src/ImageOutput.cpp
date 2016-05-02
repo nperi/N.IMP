@@ -32,6 +32,13 @@ ImageOutput::ImageOutput(string name_, string typeName_, int id_, int maxInputs_
     title->setTitle( name );
 };
 
+ImageOutput::~ImageOutput(){
+    patchName.removeListener(this, &ImageOutput::editName);
+    if (typeName != "OSC Receiver") {
+        ofRemoveListener(gui.addOrRemoveOSCInputGui , this, &ImageOutput::addOrRemoveOSCInput);
+    }
+}
+
 //------------------------------------------------------------------
 string ImageOutput::getName(){
     return name;

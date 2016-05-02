@@ -20,6 +20,7 @@ class IkedaLayer : public VisualLayer{
   public:
 	
     IkedaLayer(string name_ = "New Ikeda Layer", int id_ = -1, bool isCanny_ = true, bool isThreshold_ = true, bool isColumns_ = true, bool isInvert_ = true);
+    ~IkedaLayer();
 	
     void setup();
     void updateParameter(Param* inputParam);

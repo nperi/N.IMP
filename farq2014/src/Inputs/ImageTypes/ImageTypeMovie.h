@@ -18,6 +18,7 @@ class ImageTypeMovie : public ImageType{
   public:
 	
 	ImageTypeMovie(string name_ ,string path_,ofBaseVideoPlayer* player);
+    ~ImageTypeMovie();
 	
     void activate(ofImage& _img);
     void update(ofImage& _img);

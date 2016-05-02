@@ -33,6 +33,7 @@ class ImageOutput : public ofxPatch {
   public:
 	
     ImageOutput(string name_, string typeName_, int id_, int maxInputs_ = 1, int width_ = NODE_WIDTH, int height_ = NODE_HEIGHT);
+    ~ImageOutput();
     
     string               getName();
     string               getTypeName();

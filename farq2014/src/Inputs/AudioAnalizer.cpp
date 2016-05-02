@@ -34,6 +34,11 @@ AudioAnalizer::AudioAnalizer(string name_, int id_) : InputSource(name_, "Audio 
     resetSize();
 }
 
+AudioAnalizer::~AudioAnalizer(){
+    threshold.removeListener(this, &AudioAnalizer::editTreshold);
+    saturation.removeListener(this, &AudioAnalizer::editSaturation);
+}
+
 //------------------------------------------------------------------
 void AudioAnalizer::setup() {
 

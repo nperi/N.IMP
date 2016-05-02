@@ -193,6 +193,105 @@ ImageProcessor::ImageProcessor(string name_, int id_):VisualLayer(name_, "Image 
     gui.minimizeAll();
 }
 
+ImageProcessor::~ImageProcessor(){
+    ofxBaseGui* baseGui;
+    baseGui = gui.find("Enabled");
+    if (baseGui) ofRemoveListener(baseGui->addOrRemoveOSCInputBaseGui, &gui, &ofxGuiGroup::addOrRemoveOSCInput);
+    baseGui = gui.find("Activate Pixelate");
+    if (baseGui) ofRemoveListener(baseGui->addOrRemoveOSCInputBaseGui, &gui, &ofxGuiGroup::addOrRemoveOSCInput);
+    baseGui = gui.find("Unity scale");
+    if (baseGui) ofRemoveListener(baseGui->addOrRemoveOSCInputBaseGui, &gui, &ofxGuiGroup::addOrRemoveOSCInput);
+    baseGui = gui.find("Res");
+    if (baseGui) ofRemoveListener(baseGui->addOrRemoveOSCInputBaseGui, &gui, &ofxGuiGroup::addOrRemoveOSCInput);
+    baseGui = gui.find("Activate Bloom");
+    if (baseGui) ofRemoveListener(baseGui->addOrRemoveOSCInputBaseGui, &gui, &ofxGuiGroup::addOrRemoveOSCInput);
+    baseGui = gui.find("Activate Contrast");
+    if (baseGui) ofRemoveListener(baseGui->addOrRemoveOSCInputBaseGui, &gui, &ofxGuiGroup::addOrRemoveOSCInput);
+    baseGui = gui.find("Contrast");
+    if (baseGui) ofRemoveListener(baseGui->addOrRemoveOSCInputBaseGui, &gui, &ofxGuiGroup::addOrRemoveOSCInput);
+    baseGui = gui.find("Brightness");
+    if (baseGui) ofRemoveListener(baseGui->addOrRemoveOSCInputBaseGui, &gui, &ofxGuiGroup::addOrRemoveOSCInput);
+    baseGui = gui.find("Multiple");
+    if (baseGui) ofRemoveListener(baseGui->addOrRemoveOSCInputBaseGui, &gui, &ofxGuiGroup::addOrRemoveOSCInput);
+    baseGui = gui.find("Activate Kaleidoscope");
+    if (baseGui) ofRemoveListener(baseGui->addOrRemoveOSCInputBaseGui, &gui, &ofxGuiGroup::addOrRemoveOSCInput);
+    baseGui = gui.find("Segments");
+    if (baseGui) ofRemoveListener(baseGui->addOrRemoveOSCInputBaseGui, &gui, &ofxGuiGroup::addOrRemoveOSCInput);
+    baseGui = gui.find("Activate Noise");
+    if (baseGui) ofRemoveListener(baseGui->addOrRemoveOSCInputBaseGui, &gui, &ofxGuiGroup::addOrRemoveOSCInput);
+    baseGui = gui.find("Frequency");
+    if (baseGui) ofRemoveListener(baseGui->addOrRemoveOSCInputBaseGui, &gui, &ofxGuiGroup::addOrRemoveOSCInput);
+    baseGui = gui.find("Amplitude");
+    if (baseGui) ofRemoveListener(baseGui->addOrRemoveOSCInputBaseGui, &gui, &ofxGuiGroup::addOrRemoveOSCInput);
+    baseGui = gui.find("Speed");
+    if (baseGui) ofRemoveListener(baseGui->addOrRemoveOSCInputBaseGui, &gui, &ofxGuiGroup::addOrRemoveOSCInput);
+    baseGui = gui.find("Activate Edge");
+    if (baseGui) ofRemoveListener(baseGui->addOrRemoveOSCInputBaseGui, &gui, &ofxGuiGroup::addOrRemoveOSCInput);
+    baseGui = gui.find("Hue");
+    if (baseGui) ofRemoveListener(baseGui->addOrRemoveOSCInputBaseGui, &gui, &ofxGuiGroup::addOrRemoveOSCInput);
+    baseGui = gui.find("Saturation");
+    if (baseGui) ofRemoveListener(baseGui->addOrRemoveOSCInputBaseGui, &gui, &ofxGuiGroup::addOrRemoveOSCInput);
+    baseGui = gui.find("Activate Bleach");
+    if (baseGui) ofRemoveListener(baseGui->addOrRemoveOSCInputBaseGui, &gui, &ofxGuiGroup::addOrRemoveOSCInput);
+    baseGui = gui.find("Opacity");
+    if (baseGui) ofRemoveListener(baseGui->addOrRemoveOSCInputBaseGui, &gui, &ofxGuiGroup::addOrRemoveOSCInput);
+    baseGui = gui.find("Activate RGB Shift");
+    if (baseGui) ofRemoveListener(baseGui->addOrRemoveOSCInputBaseGui, &gui, &ofxGuiGroup::addOrRemoveOSCInput);
+    baseGui = gui.find("Angle");
+    if (baseGui) ofRemoveListener(baseGui->addOrRemoveOSCInputBaseGui, &gui, &ofxGuiGroup::addOrRemoveOSCInput);
+    baseGui = gui.find("Amount");
+    if (baseGui) ofRemoveListener(baseGui->addOrRemoveOSCInputBaseGui, &gui, &ofxGuiGroup::addOrRemoveOSCInput);
+    baseGui = gui.find("Activate Zoom Blur");
+    if (baseGui) ofRemoveListener(baseGui->addOrRemoveOSCInputBaseGui, &gui, &ofxGuiGroup::addOrRemoveOSCInput);
+    baseGui = gui.find("Center X");
+    if (baseGui) ofRemoveListener(baseGui->addOrRemoveOSCInputBaseGui, &gui, &ofxGuiGroup::addOrRemoveOSCInput);
+    baseGui = gui.find("Center Y");
+    if (baseGui) ofRemoveListener(baseGui->addOrRemoveOSCInputBaseGui, &gui, &ofxGuiGroup::addOrRemoveOSCInput);
+    baseGui = gui.find("Exposure");
+    if (baseGui) ofRemoveListener(baseGui->addOrRemoveOSCInputBaseGui, &gui, &ofxGuiGroup::addOrRemoveOSCInput);
+    baseGui = gui.find("Density");
+    if (baseGui) ofRemoveListener(baseGui->addOrRemoveOSCInputBaseGui, &gui, &ofxGuiGroup::addOrRemoveOSCInput);
+    baseGui = gui.find("Weight");
+    if (baseGui) ofRemoveListener(baseGui->addOrRemoveOSCInputBaseGui, &gui, &ofxGuiGroup::addOrRemoveOSCInput);
+    baseGui = gui.find("Clamp");
+    if (baseGui) ofRemoveListener(baseGui->addOrRemoveOSCInputBaseGui, &gui, &ofxGuiGroup::addOrRemoveOSCInput);
+    
+    isBloom.removeListener(this, &ImageProcessor::cIsBloom);
+    isContrast.removeListener(this, &ImageProcessor::cIsContrast);
+    coContrast.removeListener(this, &ImageProcessor::ccoContrast);
+    coBrightness.removeListener(this, &ImageProcessor::ccoBrightness);
+    coMultiple.removeListener(this, &ImageProcessor::ccoMultiple);
+    
+    isKaleidoscope.removeListener(this, &ImageProcessor::cisKaleidoscope);
+    
+    kaSegments.removeListener(this, &ImageProcessor::ckaSegments);
+    noFreq.removeListener(this, &ImageProcessor::cnoFreq);
+    noAmp.removeListener(this, &ImageProcessor::cnoAmp);
+    noSpeed.removeListener(this, &ImageProcessor::cnoSpeed);
+    
+    isGod.removeListener(this, &ImageProcessor::cisGod);
+    isNoise.removeListener(this, &ImageProcessor::cisNoise);
+    isPixelate.removeListener(this, &ImageProcessor::cisPixelate);
+    piRes.removeListener(this, &ImageProcessor::cpiRes);
+    
+    isEdge.removeListener(this, &ImageProcessor::cisEdge);
+    edHue.removeListener(this, &ImageProcessor::cedHue);
+    edSat.removeListener(this, &ImageProcessor::cedSat);
+    
+    isRGBShift.removeListener(this, &ImageProcessor::cisRGBShift);
+    rgAmount.removeListener(this, &ImageProcessor::crgAmount);
+    rgAngle.removeListener(this, &ImageProcessor::crgAngle);
+    
+    isZoomBlur.removeListener(this, &ImageProcessor::cisZoomBlur);
+    zbCenterX.removeListener(this, &ImageProcessor::czbCenterX);
+    zbCenterY.removeListener(this, &ImageProcessor::czbCenterY);
+    zbExposure.removeListener(this, &ImageProcessor::czbExposure);
+    zbDecay.removeListener(this, &ImageProcessor::czbDecay);
+    zbDensity.removeListener(this, &ImageProcessor::czbDensity);
+    zbWeight.removeListener(this, &ImageProcessor::czbWeight);
+    zbClamp.removeListener(this, &ImageProcessor::czbClamp);
+}
+
 //------------------------------------------------------------------
 void ImageProcessor::setup() {
     

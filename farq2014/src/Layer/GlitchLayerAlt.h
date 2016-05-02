@@ -20,6 +20,7 @@ class GlitchLayerAlt : public VisualLayer{
 public:
     
     GlitchLayerAlt(string name_ = "New Glitch Layer Alt", int id_ = -1);
+    ~GlitchLayerAlt();
     
     void setup();
     void updateParameter(Param* inputParam);

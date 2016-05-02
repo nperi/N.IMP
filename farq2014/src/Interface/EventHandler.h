@@ -17,16 +17,9 @@ class EventHandler {
 public:
     
     static EventHandler* getInstance();
-//    int  getWindowIdDraw();
-//    int  getWindowEvent();
-//    void setWindowIdDraw(int winId);
-//    void setWindowEvent(int winId);
     
     int  getEncapsulatedIdDraw();
-    bool isMainEvent();
-    void setMainEvent(bool isMainEvent);
     void setEncapsulatedIdDraw(int encapsulatedId);
-    
     
 private:
     EventHandler();
@@ -36,11 +29,7 @@ private:
     ~EventHandler();
     static EventHandler* instance;
 
-//    int  windowIdDraw;
-//    int  windowEvent;
-    // default = MAIN_WINDOW
     int encapsulatedIdDraw;
-    bool mainEvent;
     
 };
 

@@ -26,6 +26,10 @@ ImageTypeMovie::ImageTypeMovie(string name_ ,string path_, ofBaseVideoPlayer* pl
     isPlaying.addListener(this, &ImageTypeMovie::cIsPlaying);
 }
 
+ImageTypeMovie::~ImageTypeMovie(){
+    isPlaying.removeListener(this, &ImageTypeMovie::cIsPlaying);
+}
+
 
 //------------------------------------------------------------------
 void ImageTypeMovie::activate(ofImage& _img){

@@ -21,6 +21,7 @@ class AudioIn : public InputSource{
 public:
     
     AudioIn(ofxUISuperCanvas* &gui_, string type_, string name_= "New Audio In", int id_ = -1);
+    ~AudioIn();
     
     void setup();
     void customDraw();
@@ -29,7 +30,7 @@ public:
     
     ofImage*            getImage(){};
     ofTexture*          getTexture(){};
-    ofxUIMovingGraph*  getWaveForm(){ return waveform; };
+    ofxUIMovingGraph*   getWaveForm(){ return waveform; };
     float               getMidiMin(string param_){};
     float               getMidiMax(string param_){};
     AudioInType         getAudioInType(){ return audioInType; };

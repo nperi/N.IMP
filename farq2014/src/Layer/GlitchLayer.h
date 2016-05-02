@@ -18,6 +18,7 @@ class GlitchLayer : public VisualLayer{
 public:
     
     GlitchLayer(string name_ = "New Glitch Layer", int id_ = -1);
+    ~GlitchLayer();
     
     void setup();
     void updateParameter(Param* inputParam);

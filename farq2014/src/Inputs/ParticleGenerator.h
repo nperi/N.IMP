@@ -23,6 +23,7 @@ class ParticleGenerator : public InputSource{
   public:
 	
 	ParticleGenerator(string name = "New Particle Generator", int id_ = -1);
+    ~ParticleGenerator();
 	
 	void setup();
     void updateParameter(Param* inputParam);

@@ -19,6 +19,7 @@ class ImageProcessor : public VisualLayer{
   public:
 	
 	ImageProcessor(string name_ = "New Image Processor", int id_ = -1);
+    ~ImageProcessor();
 	
     void setup();
     void updateParameter(Param* inputParam);

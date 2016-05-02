@@ -40,6 +40,10 @@ menuItem::menuItem(ofxUISuperCanvas* menu_, string type, string name, string img
     registerMouseEvents();
 }
 
+menuItem::~menuItem(){
+    delete menu;
+}
+
 //------------------------------------------------------------------
 void menuItem::draw() {
         

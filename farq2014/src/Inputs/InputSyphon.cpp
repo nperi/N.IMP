@@ -31,6 +31,8 @@ InputSyphon::InputSyphon(ofxSyphonServerDirectory* serverDir, string name, int i
 
 InputSyphon::~InputSyphon(){
     SyphonClientHandler::getInstance()->removeClient(this);
+    nextServer.removeListener(this, &InputSyphon::changeToNextServer);
+    prevServer.removeListener(this, &InputSyphon::changeToPrevServer);
 }
 
 //------------------------------------------------------------------

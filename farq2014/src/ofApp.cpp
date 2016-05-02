@@ -181,8 +181,7 @@ void ofApp::setup() {
     //*** AUDIO SETUP ***//
     //
     setupAudio();
-    
-    EventHandler::getInstance()->setMainEvent(true);
+
 }
 
 //------------------------------------------------------------------

@@ -276,7 +276,7 @@ void scrollBar::draw(){
 /* ================================================ */
 
 void scrollBar::mouseDragged(ofMouseEventArgs &e){
-    if(EventHandler::getInstance()->isMainEvent()){
+//    if(EventHandler::getInstance()->isMainEvent()){
         mousePositionX = e.x;
         mousePositionY = e.y;
         
@@ -305,13 +305,13 @@ void scrollBar::mouseDragged(ofMouseEventArgs &e){
 
         updateScrollBar(diffVec);
         updateHScrollBar(diffVec);
-    }
+//    }
 
 }
 
 //------------------------------------------------------------------
 void scrollBar::mouseReleased(ofMouseEventArgs &e){
-    if(EventHandler::getInstance()->isMainEvent()){
+//    if(EventHandler::getInstance()->isMainEvent()){
         mousePositionX = e.x;
         mousePositionY = e.y;
         
@@ -319,12 +319,12 @@ void scrollBar::mouseReleased(ofMouseEventArgs &e){
         composer->setDraggingHGrip(false);
         
         enableTrackpad = true;
-    }
+//    }
 }
 
 //------------------------------------------------------------------
 void scrollBar::mousePressed(ofMouseEventArgs &e){
-    if(EventHandler::getInstance()->isMainEvent()){
+//    if(EventHandler::getInstance()->isMainEvent()){
         mousePositionX = e.x;
         mousePositionY = e.y;
         
@@ -348,12 +348,12 @@ void scrollBar::mousePressed(ofMouseEventArgs &e){
         }
         
         enableTrackpad = false;
-    }
+//    }
 }
 
 //------------------------------------------------------------------
 void scrollBar::mouseMoved(ofMouseEventArgs &e){
-    if(EventHandler::getInstance()->isMainEvent()){
+//    if(EventHandler::getInstance()->isMainEvent()){
         mousePositionX = e.x;
         mousePositionY = e.y;
         if (isScrollBarVisible) {
@@ -369,12 +369,12 @@ void scrollBar::mouseMoved(ofMouseEventArgs &e){
         } else {
             mouseOverHGrip = false;
         }
-    }
+//    }
 }
 
 //------------------------------------------------------------------
 void scrollBar::keyPressed(ofKeyEventArgs &e){
-    if(EventHandler::getInstance()->isMainEvent()){
+//    if(EventHandler::getInstance()->isMainEvent()){
         ofVec3f diffVec = ofVec3f(0, 0, 0);
         if (isScrollBarVisible) {
             if (e.key == OF_KEY_UP ){
@@ -396,16 +396,16 @@ void scrollBar::keyPressed(ofKeyEventArgs &e){
         }
         updateScrollBar(diffVec);
         updateHScrollBar(diffVec);
-    }
+//    }
 }
 
 //------------------------------------------------------------------
 void scrollBar::windowResized(ofResizeEventArgs &e){
-    if(EventHandler::getInstance()->isMainEvent()){
+//    if(EventHandler::getInstance()->isMainEvent()){
         windowWidth = e.width;
         windowHeight = e.height*windowRatio;
         this->setup();
-    }
+//    }
 }
 
 /* ================================================ */

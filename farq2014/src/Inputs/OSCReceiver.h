@@ -24,6 +24,7 @@ class OSCReceiver : public InputSource{
 public:
     
     OSCReceiver(string name_= "New OSC Receiver", int id_ = -1);
+    ~OSCReceiver();
     
     void setup();
     void customDraw();
