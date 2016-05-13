@@ -149,13 +149,13 @@ void AudioIn::editSaturation(float& s) {
         waveform->setMin(-0);
     }
     else {
-        waveform->setMax(100/s);
-        waveform->setMin(50/-s);
+        waveform->setMax(1000/s);
+        waveform->setMin(500/-s);
     }
     
     AudioInEvent ev;
     ev.nodeId = nId;
-    ev.saturation = 100/s;
+    ev.saturation = 1000/s;
     
     ofNotifyEvent(editAudioInSaturation, ev);
 }
