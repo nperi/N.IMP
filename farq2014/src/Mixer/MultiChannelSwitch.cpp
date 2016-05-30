@@ -13,14 +13,14 @@ MultiChannelSwitch::MultiChannelSwitch(string name_, int id_):MixTable(name_, "M
     maxInputs = 16;
     selChannel = 0;
     
-    gui.add(drawInputGui.set("Show Input Gui", false));
+    gui.add(drawInputGui.set("Show Input Inspector", false));
     drawInputGui.addListener(this, &MultiChannelSwitch::cGui);
     
     gui.add(disableOtherChannels.set("Disable other channels", false));
     disableOtherChannels.addListener(this, &MultiChannelSwitch::cDisableChannels);
     
     ofxBaseGui* baseGui;
-    baseGui = gui.find("Show Input Gui");
+    baseGui = gui.find("Show Input Inspector");
     if (baseGui) ofAddListener(baseGui->addOrRemoveOSCInputBaseGui, &gui, &ofxGuiGroup::addOrRemoveOSCInput);
     baseGui = gui.find("Disable other channels");
     if (baseGui) ofAddListener(baseGui->addOrRemoveOSCInputBaseGui, &gui, &ofxGuiGroup::addOrRemoveOSCInput);
@@ -105,7 +105,7 @@ void MultiChannelSwitch::update() {
 //------------------------------------------------------------------
 void MultiChannelSwitch::updateParameter(Param* inputParam){
     
-    if(inputParam->name.compare("Show Input Gui")==0){
+    if(inputParam->name.compare("Show Input Inspector")==0){
         this->drawInputGui = inputParam->intVal;
     }
     else if(inputParam->name.compare("Disable other channels")==0){
@@ -116,7 +116,7 @@ void MultiChannelSwitch::updateParameter(Param* inputParam){
 //------------------------------------------------------------------
 float MultiChannelSwitch::getMidiMin(string param_){
     
-    if(param_.compare("Show Input Gui")==0){
+    if(param_.compare("Show Input Inspector")==0){
         return 0;
     }
     else if(param_.compare("Disable other channels")==0){
@@ -127,7 +127,7 @@ float MultiChannelSwitch::getMidiMin(string param_){
 //------------------------------------------------------------------
 float MultiChannelSwitch::getMidiMax(string param_){
     
-    if(param_.compare("Show Input Gui")==0){
+    if(param_.compare("Show Input Inspector")==0){
         return 1;
     }
     else if(param_.compare("Disable other channels")==0){
