@@ -50,12 +50,14 @@ ofBaseVideoPlayer* VideoPool::getPlayer(string path, string name) {
     if(!found){
         if(pool.size()<MAX_PLAYERS){
             ofxHapPlayer* a = new ofxHapPlayer();
-            bool b = a->loadMovie(path + name);
+            bool b = a->loadMovie(path);
             if(!b){
                 delete a;
                 vP = new ofQTKitPlayer();
                 ofQTKitDecodeMode decodeMode = OF_QTKIT_DECODE_PIXELS_AND_TEXTURE;
                 vP->setPixelFormat(OF_PIXELS_RGBA);
+            } else {
+                vP = a;
             }
             pool.push_back(std::pair<bool,ofBaseVideoPlayer*>(false,vP));
         }

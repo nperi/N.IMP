@@ -8,6 +8,7 @@
  */
 
 #include "ImageTypeMovie.h"
+#include "ofxHapPlayer.h"
 
 ImageTypeMovie::ImageTypeMovie(string name_ ,string path_, ofBaseVideoPlayer* player): ImageType(name_,path_){
     mediaType = T_MOVIE;
@@ -39,8 +40,10 @@ void ImageTypeMovie::activate(ofImage& _img){
         videoPlayer->loadMovie(path);
         
         if (isPlaying) videoPlayer->play();
-
-        _img.setFromPixels(videoPlayer->getPixels(), videoPlayer->getWidth(), videoPlayer->getHeight(), OF_IMAGE_COLOR_ALPHA);
+        
+        if(dynamic_cast<ofxHapPlayer*>(videoPlayer) == NULL) {
+            _img.setFromPixels(videoPlayer->getPixels(), videoPlayer->getWidth(), videoPlayer->getHeight(), OF_IMAGE_COLOR_ALPHA);
+        }
     }
 }
 
@@ -50,11 +53,15 @@ void ImageTypeMovie::update(ofImage& _img){
     if (isPlaying && videoPlayer!=NULL) {
         videoPlayer->update();
         if (videoPlayer->isFrameNew()){
-            _img.setFromPixels(videoPlayer->getPixels(), videoPlayer->getWidth(), videoPlayer->getHeight(), OF_IMAGE_COLOR_ALPHA);
+            if(dynamic_cast<ofxHapPlayer*>(videoPlayer) == NULL) {
+                _img.setFromPixels(videoPlayer->getPixels(), videoPlayer->getWidth(), videoPlayer->getHeight(), OF_IMAGE_COLOR_ALPHA);
+            }
         }
     }
     else {
-        _img.setFromPixels(videoPlayer->getPixels(), videoPlayer->getWidth(), videoPlayer->getHeight(), OF_IMAGE_COLOR_ALPHA);
+        if(dynamic_cast<ofxHapPlayer*>(videoPlayer) == NULL) {
+            _img.setFromPixels(videoPlayer->getPixels(), videoPlayer->getWidth(), videoPlayer->getHeight(), OF_IMAGE_COLOR_ALPHA);
+        }
     }
 }
 
@@ -105,7 +112,9 @@ void ImageTypeMovie::setPosition(float p, ofImage& _img){
 
         videoPlayer->setPosition(p);
         videoPlayer->update();
-        _img.setFromPixels(videoPlayer->getPixels(),videoPlayer->getWidth(),videoPlayer->getHeight(), OF_IMAGE_COLOR_ALPHA);
+        if(dynamic_cast<ofxHapPlayer*>(videoPlayer) == NULL) {
+            _img.setFromPixels(videoPlayer->getPixels(), videoPlayer->getWidth(), videoPlayer->getHeight(), OF_IMAGE_COLOR_ALPHA);
+        }
     }
 }
 

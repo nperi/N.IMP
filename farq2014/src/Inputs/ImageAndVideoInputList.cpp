@@ -8,6 +8,7 @@
  */
 
 #include "ImageAndVideoInputList.h"
+#include "ofxHapPlayer.h"
 
 
 ImageAndVideoInputList::ImageAndVideoInputList(string name, int id_) : InputSource(name, "Image & Video List", id_){
@@ -175,6 +176,9 @@ ofImage* ImageAndVideoInputList::getImage(){
 
 //------------------------------------------------------------------
 ofTexture* ImageAndVideoInputList::getTexture(){
+    if(dynamic_cast<ofxHapPlayer*>(videoPlayer) != NULL) {
+        return videoPlayer->getTexture();
+    }
     return &img.getTextureReference();
 }
 
