@@ -82,36 +82,91 @@ void MixMask::update(){
 
 //------------------------------------------------------------------
 void MixMask::drawShader(){
-    
     maskShader.begin();
     maskShader.setUniformTexture("Tex0", input[0]->getTextureReference(), 0);
-    if (input.size() > 1)
+    if(input.size() > 1){
         maskShader.setUniformTexture("Tex1", input[1]->getTextureReference(), 1);
-    else maskShader.setUniformTexture("Tex1", input[0]->getTextureReference(), 1);
-
-    ofMesh a;
-    a.addVertex(ofVec2f(0, height));
-    a.addTexCoord(ofVec2f(0, height));
+    } else {
+        maskShader.setUniformTexture("Tex1", input[0]->getTextureReference(), 1);
+    }
     
-    a.addVertex(ofVec2f(0, 0));
-    a.addTexCoord(ofVec2f(0, 0));
+    //our shader uses two textures, the top layer and the alpha
+    //we can load two textures into a shader using the multi texture coordinate extensions
+    glActiveTexture(GL_TEXTURE0_ARB);
+    input[0]->getTexture()->bind();
     
-    a.addVertex(ofVec2f(width, height));
-    a.addTexCoord(ofVec2f(width, height));
+    glActiveTexture(GL_TEXTURE1_ARB);
+    if(input.size() > 1) {
+        input[1]->getTexture()->bind();
+    } else {
+        input[0]->getTexture()->bind();
+    }
     
-    a.addVertex(ofVec3f(width, 0, 0));
-    a.addTexCoord(ofVec2f(width, 0));
+    //draw a quad the size of the frame
+    glBegin(GL_QUADS);
     
-    a.addIndex(0);
-    a.addIndex(2);
-    a.addIndex(1);
-    a.addIndex(2);
-    a.addIndex(3);
-    a.addIndex(1);
+    //move the mask around with the mouse by modifying the texture coordinates
+    float maskOffset = 0;//15 - mouseY;
+    glMultiTexCoord2d(GL_TEXTURE0_ARB, 0, 0);
+    glMultiTexCoord2d(GL_TEXTURE1_ARB, 0, maskOffset);
+    glVertex2f( 0, 0);
     
-    a.draw();
+    glMultiTexCoord2d(GL_TEXTURE0_ARB, width, 0);
+    glMultiTexCoord2d(GL_TEXTURE1_ARB, width, maskOffset);
+    glVertex2f( width, 0);
+    
+    glMultiTexCoord2d(GL_TEXTURE0_ARB, width, height);
+    glMultiTexCoord2d(GL_TEXTURE1_ARB, width, height + maskOffset);
+    glVertex2f( width,height);
+    
+    glMultiTexCoord2d(GL_TEXTURE0_ARB, 0, height);
+    glMultiTexCoord2d(GL_TEXTURE1_ARB, 0, height + maskOffset);
+    glVertex2f( 0, height );
+    
+    glEnd();
+    
+    //deactive and clean up
+    glActiveTexture(GL_TEXTURE1_ARB);
+    input[0]->getTexture()->unbind();
+    
+    glActiveTexture(GL_TEXTURE0_ARB);
+    if(input.size() > 1) {
+        input[1]->getTexture()->unbind();
+    } else {
+        input[0]->getTexture()->unbind();
+    }
     
     maskShader.end();
+    
+//    maskShader.begin();
+//    maskShader.setUniformTexture("Tex0", input[0]->getTextureReference(), 0);
+//    if (input.size() > 1)
+//        maskShader.setUniformTexture("Tex1", input[1]->getTextureReference(), 1);
+//    else maskShader.setUniformTexture("Tex1", input[0]->getTextureReference(), 1);
+//
+//    ofMesh a;
+//    a.addVertex(ofVec2f(0, height));
+//    a.addTexCoord(ofVec2f(0, height));
+//    
+//    a.addVertex(ofVec2f(0, 0));
+//    a.addTexCoord(ofVec2f(0, 0));
+//    
+//    a.addVertex(ofVec2f(width, height));
+//    a.addTexCoord(ofVec2f(width, height));
+//    
+//    a.addVertex(ofVec3f(width, 0, 0));
+//    a.addTexCoord(ofVec2f(width, 0));
+//    
+//    a.addIndex(0);
+//    a.addIndex(2);
+//    a.addIndex(1);
+//    a.addIndex(2);
+//    a.addIndex(3);
+//    a.addIndex(1);
+//    
+//    a.draw();
+//    
+//    maskShader.end();
 }
 
 //------------------------------------------------------------------
