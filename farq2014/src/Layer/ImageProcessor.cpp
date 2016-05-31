@@ -316,18 +316,37 @@ void ImageProcessor::update() {
     if(input.size()) {
         ofPushStyle();
         if (isEnabled) {
+//            fbo.begin();
+//            glPushAttrib(GL_ALL_ATTRIB_BITS);
+//            glEnable(GL_BLEND);
+//            glBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA,GL_ONE,GL_ONE_MINUS_SRC_ALPHA);
+//            ofSetColor(255);
+//            ofClear(255,255,255,0);
+//            
+//            post.begin();
+//            ofClear(255,255,255,0);
+//            input[0]->getTextureReference().draw(0, 0, width, height);
+//            post.end();
+//
+//            glDisable(GL_BLEND);
+//            glPopAttrib();
+//            fbo.end();
             fbo.begin();
             glPushAttrib(GL_ALL_ATTRIB_BITS);
             glEnable(GL_BLEND);
             glBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA,GL_ONE,GL_ONE_MINUS_SRC_ALPHA);
             ofSetColor(255);
             ofClear(255,255,255,0);
-            
             post.begin();
             ofClear(255,255,255,0);
-            input[0]->getTextureReference().draw(0, 0, width, height);
+            ofPushMatrix();
+            ofScale(1, -1);
+            ofPushMatrix();
+            ofTranslate(0, -height);
+            input[0]->getTexture()->draw(0,0,width,height);
+            ofPopMatrix();
+            ofPopMatrix();
             post.end();
-
             glDisable(GL_BLEND);
             glPopAttrib();
             fbo.end();
