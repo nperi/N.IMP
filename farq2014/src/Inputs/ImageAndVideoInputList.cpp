@@ -72,7 +72,7 @@ void ImageAndVideoInputList::setup(){
 //------------------------------------------------------------------
 void ImageAndVideoInputList::update(){
     
-    if (videoPlayer->getCurrentFrame() == videoPlayer->getTotalNumFrames()) {
+    if (isPlaying == true && playInLoop == false && inputs[currentSequence]->isVideoDone()) {
         nextSequenceChanged();
     }
     
