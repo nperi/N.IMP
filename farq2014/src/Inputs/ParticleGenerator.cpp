@@ -10,6 +10,10 @@
 #include "ParticleGenerator.h"
 
 ParticleGenerator::ParticleGenerator(string name, int id_) : InputSource(name, "Particle Generator", id_){
+    
+    width = 1080;
+    height = 720;
+    
     ofFbo::Settings s;
     s.width             = width;
     s.height            = height;
