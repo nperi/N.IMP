@@ -27,6 +27,7 @@ ImageAndVideoInputList::~ImageAndVideoInputList(){
         VideoPool::getInstance()->releasePlayer(videoPlayer);
     }
     
+    playInLoop.removeListener(this, &ImageAndVideoInputList::playInLoopChanged);
     isPalindromLoop.removeListener(this, &ImageAndVideoInputList::loopTypeChanged);
     bpm.removeListener(this, &ImageAndVideoInputList::bpmChanged);
     setOriginalPlaySpeed.removeListener(this,&ImageAndVideoInputList::setOriginalPlaySpeedChanged);
@@ -422,6 +423,7 @@ void ImageAndVideoInputList::sequenceChanged(int &s){
 //------------------------------------------------------------------
 void ImageAndVideoInputList::deleteSequence() {
     if (isEnabled && inputs.size() > 1) {
+        
         inputs.erase(inputs.begin() + currentSequence);
         if (currentSequence == inputs.size()) {
             currentSequence--;

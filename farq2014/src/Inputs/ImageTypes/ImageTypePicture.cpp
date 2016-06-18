@@ -29,7 +29,7 @@ void ImageTypePicture::activate(ofImage& _img){
 
 //------------------------------------------------------------------
 void ImageTypePicture::update(ofImage& _img){
-
+    _img = img;
 }
 
 //------------------------------------------------------------------

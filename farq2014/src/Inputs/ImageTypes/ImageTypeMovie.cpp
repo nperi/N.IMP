@@ -41,6 +41,8 @@ void ImageTypeMovie::activate(ofImage& _img){
         
         if (isPlaying) videoPlayer->play();
         
+//        _img.setFromPixels(videoPlayer->getPixels(), videoPlayer->getWidth(), videoPlayer->getHeight(), OF_IMAGE_COLOR_ALPHA);
+        
         if(dynamic_cast<ofxHapPlayer*>(videoPlayer) == NULL) {
             _img.setFromPixels(videoPlayer->getPixels(), videoPlayer->getWidth(), videoPlayer->getHeight(), OF_IMAGE_COLOR_ALPHA);
         }
