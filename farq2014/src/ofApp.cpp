@@ -122,6 +122,8 @@ void ofApp::setup() {
     spacer->setColorFill(ofxUIColor(120, 120, 120, 200));
     new menuItem(menu, "MultiImageToggle", "Midi Learn", "assets/midi_learn.png", false, RIGHT_MENU_WIDTH + MENU_ITEM_SIZE*15 + MENU_ITEM_PADDING*22, 20);
     
+    new menuItem(menu, "MultiImageButton", "Print Shortcuts", "assets/help.png", false, ofGetWidth() - 30, 20);
+    
     ofAddListener(menu->newGUIEvent,this,&ofApp::menuEvent);
     
     
@@ -922,6 +924,9 @@ void ofApp::menuEvent(ofxUIEventArgs &e) {
         else {
             ((ofxUIMultiImageToggle*)menu->getWidget("Midi Learn"))->setValue(false);
         }
+    }
+    else if (name == "Print Shortcuts") {
+        
     }
 }
 /* ================================================ */

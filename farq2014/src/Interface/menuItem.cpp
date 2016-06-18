@@ -51,7 +51,18 @@ void menuItem::draw() {
 
         if (counter < 10)
             counter++;
-        else ofDrawBitmapStringHighlight(label, ofGetMouseX()+10, ofGetMouseY()+30);
+        else {
+            
+            if (label == "Print Shortcuts") {
+                ofDrawBitmapStringHighlight(label, ofGetMouseX()-130, ofGetMouseY()+30);
+            }
+            else if (label == "Zoom In" || label == "Zoom Out" || label == "Analizer") {
+                ofDrawBitmapStringHighlight(label, ofGetMouseX()+15, ofGetMouseY()-10);
+            }
+            else {
+                ofDrawBitmapStringHighlight(label, ofGetMouseX()+10, ofGetMouseY()+30);
+            }
+        }
     }
     else {
         counter = 0;
