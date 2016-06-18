@@ -132,6 +132,14 @@ void ImageTypeMovie::cIsPlaying(bool &b){
     
 }
 
+//------------------------------------------------------------------
+bool ImageTypeMovie::isVideoDone(){
+    if (videoPlayer!=NULL) {
+        return videoPlayer->getCurrentFrame() == videoPlayer->getTotalNumFrames();
+    }
+    return false;
+}
+
 
 //------------------------------------------------------------------
 void ImageTypeMovie::setPlayer(ofBaseVideoPlayer *player){

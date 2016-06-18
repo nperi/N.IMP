@@ -71,6 +71,14 @@ void ImageTypePictureSequence::activate(ofImage& _img){
 }
 
 //------------------------------------------------------------------
+bool ImageTypePictureSequence::isVideoDone(){
+    if (isPlaying) {
+        return player.getCurrentFrame() == player.getTotalNumFrames();
+    }
+    return false;
+}
+
+//------------------------------------------------------------------
 float ImageTypePictureSequence::getHeight() {
     return img.getHeight();
 }

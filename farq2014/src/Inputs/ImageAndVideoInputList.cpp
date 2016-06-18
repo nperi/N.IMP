@@ -72,6 +72,10 @@ void ImageAndVideoInputList::setup(){
 //------------------------------------------------------------------
 void ImageAndVideoInputList::update(){
     
+    if (videoPlayer->getCurrentFrame() == videoPlayer->getTotalNumFrames()) {
+        nextSequenceChanged();
+    }
+    
     inputs[currentSequence]->update(img);
     playPos2 = inputs[currentSequence]->getPosition();
 }
@@ -106,6 +110,9 @@ void ImageAndVideoInputList::updateParameter(Param* inputParam){
     else if(inputParam->name.compare("Play")==0){
         this->isPlaying = inputParam->intVal;
     }
+    else if(inputParam->name.compare("Play in Loop")==0){
+        this->playInLoop = inputParam->intVal;
+    }
     else if(inputParam->name.compare("Loop Palindrom")==0){
         this->isPalindromLoop = inputParam->intVal;
     }
@@ -134,6 +141,8 @@ float ImageAndVideoInputList::getMidiMin(string param_){
         return 0;
     }else if(param_.compare("Play")==0){
         return 0;
+    }else if(param_.compare("Play in Loop")==0){
+        return 0;
     }else if(param_.compare("Loop Palindrom")==0){
         return 0;
     }else if(param_.compare("BPM = Seq. Length")==0){
@@ -159,6 +168,8 @@ float ImageAndVideoInputList::getMidiMax(string param_){
     }else if(param_.compare("Current Sequence")==0){
         return inputs.size()-1;
     }else if(param_.compare("Play")==0){
+        return 1;
+    }else if(param_.compare("Play in Loop")==0){
         return 1;
     }else if(param_.compare("Loop Palindrom")==0){
         return 1;
@@ -209,6 +220,7 @@ void ImageAndVideoInputList::loadImage(string name_, string path_){
     if (inputs.size() == 1) {
         
         //create gui
+        playInLoop.addListener(this, &ImageAndVideoInputList::playInLoopChanged);
         isPalindromLoop.addListener(this, &ImageAndVideoInputList::loopTypeChanged);
         bpm.addListener(this, &ImageAndVideoInputList::bpmChanged);
         setOriginalPlaySpeed.addListener(this,&ImageAndVideoInputList::setOriginalPlaySpeedChanged);
@@ -235,6 +247,7 @@ void ImageAndVideoInputList::loadImage(string name_, string path_){
         
         seqSettings.setName("Sequence Settings");
         seqSettings.add(isPlaying.set("Play",true));
+        seqSettings.add(playInLoop.set("Play in Loop",false));
         seqSettings.add(isPalindromLoop.set("Loop Palindrom",false));
         seqSettings.add(isMatchBpmToSequenceLength.set("BPM = Seq. Length",false));
         seqSettings.add(bpm.set("BPM", 100, 10, 200));
@@ -251,6 +264,8 @@ void ImageAndVideoInputList::loadImage(string name_, string path_){
         baseGui = gui.find("Current Sequence");
         if (baseGui) ofAddListener(baseGui->addOrRemoveOSCInputBaseGui, &gui, &ofxGuiGroup::addOrRemoveOSCInput);
         baseGui = gui.find("Play");
+        if (baseGui) ofAddListener(baseGui->addOrRemoveOSCInputBaseGui, &gui, &ofxGuiGroup::addOrRemoveOSCInput);
+        baseGui = gui.find("Play in Loop");
         if (baseGui) ofAddListener(baseGui->addOrRemoveOSCInputBaseGui, &gui, &ofxGuiGroup::addOrRemoveOSCInput);
         baseGui = gui.find("Loop Palindrom");
         if (baseGui) ofAddListener(baseGui->addOrRemoveOSCInputBaseGui, &gui, &ofxGuiGroup::addOrRemoveOSCInput);
@@ -289,6 +304,12 @@ void ImageAndVideoInputList::loopTypeChanged(bool &b){
     }else{
         inputs[currentSequence]->setLoopState(OF_LOOP_NORMAL);
     }
+}
+
+//------------------------------------------------------------------
+void ImageAndVideoInputList::playInLoopChanged(bool &b){
+    
+    playInLoop = b;
 }
 
 //------------------------------------------------------------------

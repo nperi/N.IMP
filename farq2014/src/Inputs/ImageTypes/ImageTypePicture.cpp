@@ -53,6 +53,11 @@ void ImageTypePicture::setPosition(float p, ofImage& _img){
 }
 
 //------------------------------------------------------------------
+bool ImageTypePicture::isVideoDone(){
+    return false;
+}
+
+//------------------------------------------------------------------
 float ImageTypePicture::getHeight() {
     return img.getHeight();
 }

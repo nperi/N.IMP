@@ -29,6 +29,7 @@ class ImageType {
     virtual float getPosition() = 0;
     virtual void calculateFPS() = 0;
     virtual void setPosition(float p, ofImage& _img) = 0;
+    virtual bool isVideoDone() = 0;
     
     ofParameter<bool> isPlayingBackwards;
     ofParameter<bool> isMatchBpmToSequenceLength;

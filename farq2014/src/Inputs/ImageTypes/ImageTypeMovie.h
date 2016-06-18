@@ -28,6 +28,7 @@ class ImageTypeMovie : public ImageType{
     void calculateFPS();
     void setPosition(float p, ofImage& _img);
     void setLoopState(ofLoopType l);
+    bool isVideoDone();
     
     void setPlayer(ofBaseVideoPlayer* player);
     
