@@ -100,7 +100,7 @@ public:
     void setSelectedForOSC();
     void setSelectedForMIDI();
     void consoleHeightChanged(float &ratio);
-    
+    void printShortcuts();
     
     //change current viewer
     void nextViewer();

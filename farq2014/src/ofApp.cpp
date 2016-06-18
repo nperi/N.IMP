@@ -76,21 +76,20 @@ void ofApp::setup() {
     menu->getCanvasTitle()->ofxUIWidget::setVisible(false);
     menu->setColorBack(ofxUIColor(140, 140, 140,255));
     ofxUISpacer* spacer;
-    
-    new menuItem(menu, "MultiImageButton", "New Patcher", "assets/new_file.png", false, RIGHT_MENU_WIDTH, 20);
-    new menuItem(menu, "MultiImageButton", "Open Patcher", "assets/open_file.png", false, RIGHT_MENU_WIDTH + MENU_ITEM_SIZE + MENU_ITEM_PADDING, 20);
-    new menuItem(menu, "MultiImageButton", "Save Patcher", "assets/save_file.png", false, RIGHT_MENU_WIDTH + MENU_ITEM_SIZE*2 + MENU_ITEM_PADDING*2, 20);
+    new menuItem(menu, "MultiImageButton", "New Patcher (cmd+n)", "assets/new_file.png", false, RIGHT_MENU_WIDTH, 20);
+    new menuItem(menu, "MultiImageButton", "Open Patcher (cmd+o)", "assets/open_file.png", false, RIGHT_MENU_WIDTH + MENU_ITEM_SIZE + MENU_ITEM_PADDING, 20);
+    new menuItem(menu, "MultiImageButton", "Save Patcher (cmd+s)", "assets/save_file.png", false, RIGHT_MENU_WIDTH + MENU_ITEM_SIZE*2 + MENU_ITEM_PADDING*2, 20);
     
     spacer = new ofxUISpacer(RIGHT_MENU_WIDTH + MENU_ITEM_SIZE*3 + MENU_ITEM_PADDING*3, 20, 1,MENU_ITEM_SIZE);
     menu->addWidget(spacer);
     spacer->setColorFill(ofxUIColor(120, 120, 120, 200));
-    new menuItem(menu, "MultiImageButton", "Create Node", "assets/node.png", false, RIGHT_MENU_WIDTH + MENU_ITEM_SIZE*3 + MENU_ITEM_PADDING*4, 20);
+    new menuItem(menu, "MultiImageButton", "Create Node (n)", "assets/node.png", false, RIGHT_MENU_WIDTH + MENU_ITEM_SIZE*3 + MENU_ITEM_PADDING*4, 20);
     
     spacer = new ofxUISpacer(RIGHT_MENU_WIDTH + MENU_ITEM_SIZE*4 + MENU_ITEM_PADDING*5, 20, 1,MENU_ITEM_SIZE);
     menu->addWidget(spacer);
     spacer->setColorFill(ofxUIColor(120, 120, 120, 200));
-    new menuItem(menu, "MultiImageButton", "Save Snippet", "assets/save_snippet.png", false, RIGHT_MENU_WIDTH + MENU_ITEM_SIZE*4 + MENU_ITEM_PADDING*6, 20);
-    new menuItem(menu, "MultiImageButton", "Open Snippet", "assets/open_snippet.png", false, RIGHT_MENU_WIDTH + MENU_ITEM_SIZE*5 + MENU_ITEM_PADDING*7, 20);
+    new menuItem(menu, "MultiImageButton", "Save Snippet (cmd+k)", "assets/save_snippet.png", false, RIGHT_MENU_WIDTH + MENU_ITEM_SIZE*4 + MENU_ITEM_PADDING*6, 20);
+    new menuItem(menu, "MultiImageButton", "Open Snippet (cmd+j)", "assets/open_snippet.png", false, RIGHT_MENU_WIDTH + MENU_ITEM_SIZE*5 + MENU_ITEM_PADDING*7, 20);
     
     spacer = new ofxUISpacer(RIGHT_MENU_WIDTH + MENU_ITEM_SIZE*6 + MENU_ITEM_PADDING*8, 20, 1,MENU_ITEM_SIZE);
     menu->addWidget(spacer);
@@ -107,7 +106,7 @@ void ofApp::setup() {
     spacer = new ofxUISpacer(RIGHT_MENU_WIDTH + MENU_ITEM_SIZE*10 + MENU_ITEM_PADDING*14, 20, 1,MENU_ITEM_SIZE);
     menu->addWidget(spacer);
     spacer->setColorFill(ofxUIColor(120, 120, 120, 200));
-    new menuItem(menu, "MultiImageToggle", "Console on/off", "assets/console.png", false, RIGHT_MENU_WIDTH + MENU_ITEM_SIZE*10 + MENU_ITEM_PADDING*15, 20);
+    new menuItem(menu, "MultiImageToggle", "Console on/off (cmd+c)", "assets/console.png", false, RIGHT_MENU_WIDTH + MENU_ITEM_SIZE*10 + MENU_ITEM_PADDING*15, 20);
     new menuItem(menu, "MultiImageButton", "Clear Console", "assets/clear_console.png", false, RIGHT_MENU_WIDTH + MENU_ITEM_SIZE*11 + MENU_ITEM_PADDING*16, 20);
     
     spacer = new ofxUISpacer(RIGHT_MENU_WIDTH + MENU_ITEM_SIZE*12 + MENU_ITEM_PADDING*17, 20, 1,MENU_ITEM_SIZE);
@@ -115,14 +114,14 @@ void ofApp::setup() {
     spacer->setColorFill(ofxUIColor(120, 120, 120, 200));
     new menuItem(menu, "MultiImageButton", "Encapsulate", "assets/encapsulate.png", false, RIGHT_MENU_WIDTH + MENU_ITEM_SIZE*12 + MENU_ITEM_PADDING*18, 20);
     new menuItem(menu, "MultiImageButton", "Uncapsulate", "assets/uncapsulate.png", false, RIGHT_MENU_WIDTH + MENU_ITEM_SIZE*13 + MENU_ITEM_PADDING*19, 20);
-    new menuItem(menu, "MultiImageButton", "Open encapsulated", "assets/open_encapsulated.png", false, RIGHT_MENU_WIDTH + MENU_ITEM_SIZE*14 + MENU_ITEM_PADDING*20, 20);
+    new menuItem(menu, "MultiImageButton", "Open encapsulated (cmd+e)", "assets/open_encapsulated.png", false, RIGHT_MENU_WIDTH + MENU_ITEM_SIZE*14 + MENU_ITEM_PADDING*20, 20);
     
     spacer = new ofxUISpacer(RIGHT_MENU_WIDTH + MENU_ITEM_SIZE*15 + MENU_ITEM_PADDING*21, 20, 1,MENU_ITEM_SIZE);
     menu->addWidget(spacer);
     spacer->setColorFill(ofxUIColor(120, 120, 120, 200));
     new menuItem(menu, "MultiImageToggle", "Midi Learn", "assets/midi_learn.png", false, RIGHT_MENU_WIDTH + MENU_ITEM_SIZE*15 + MENU_ITEM_PADDING*22, 20);
     
-    new menuItem(menu, "MultiImageButton", "Print Shortcuts", "assets/help.png", false, ofGetWidth() - 30, 20);
+    new menuItem(menu, "MultiImageButton", "Print Shortcuts (F1)", "assets/help.png", false, ofGetWidth() - 30, 20);
     
     ofAddListener(menu->newGUIEvent,this,&ofApp::menuEvent);
     
@@ -423,6 +422,7 @@ void ofApp::update() {
         right_menu->getWidget("Zoom In")->getRect()->setY(right_menu->getRect()->getHeight()-30);
         right_menu->getWidget("Zoom Out")->getRect()->setY(right_menu->getRect()->getHeight()-60);
         right_menu->getWidget("Analizer")->getRect()->setY(right_menu->getRect()->getHeight()-100);
+        menu->getWidget("Print Shortcuts (F1)")->getRect()->setX(menu->getRect()->getWidth()-30);
         
         scrollBars->update();
         nodeViewers[currentViewer]->update();
@@ -507,12 +507,6 @@ void ofApp::audioIn(float * input, int bufferSize, int nChannels){
 void ofApp::keyPressed  (int key){
     bool notAvailable = false;
     switch(key){
-//        case OF_KEY_LEFT:
-//            previousViewer();
-//            break;
-//        case OF_KEY_RIGHT:
-//            nextViewer();
-//            break;
         case OF_KEY_LEFT_COMMAND: case OF_KEY_RIGHT_COMMAND:
             holdingCommand = true;
             break;
@@ -522,36 +516,6 @@ void ofApp::keyPressed  (int key){
         case OF_KEY_BACKSPACE:
             holdingDelete = true;
             break;
-//        case '1':
-//            setCurrentViewer(0);
-//            break;
-//        case '2':
-//            setCurrentViewer(1);
-//            break;
-//        case '3':
-//            setCurrentViewer(2);
-//            break;
-//        case '4':
-//            setCurrentViewer(3);
-//            break;
-//        case '5':
-//            setCurrentViewer(4);
-//            break;
-//        case '6':
-//            setCurrentViewer(5);
-//            break;
-//        case '7':
-//            setCurrentViewer(6);
-//            break;
-//        case '8':
-//            setCurrentViewer(7);
-//            break;
-//        case '9':
-//            setCurrentViewer(8);
-//            break;
-//        case '0':
-//            setCurrentViewer(9);
-//            break;
         case 'f': case 'F':
             if (holdingCommand && ((newNodeInput == NULL) || (!newNodeInput->isClicked()))) {
                 isFullScreen = !isFullScreen;
@@ -565,28 +529,43 @@ void ofApp::keyPressed  (int key){
             }
             break;
         case 'n': case 'N' :
-            if (nodeViewers[currentViewer]->getEdit()) {
-                if (newNodeInput == NULL)
-                    this->createNodeInput();
-                else if (!newNodeInput->isClicked()){
-                    newNodeInput->getRect()->setX(ofGetMouseX());
-                    newNodeInput->getRect()->setY(ofGetMouseY());
-                    
-                    newNodeInput->getDropdownList()->getRect()->setX(ofGetMouseX());
-                    newNodeInput->getDropdownList()->getRect()->setY(ofGetMouseY());
+            if(!holdingCommand){
+                if (nodeViewers[currentViewer]->getEdit()) {
+                    if (newNodeInput == NULL)
+                        this->createNodeInput();
+                    else if (!newNodeInput->isClicked()){
+                        newNodeInput->getRect()->setX(ofGetMouseX());
+                        newNodeInput->getRect()->setY(ofGetMouseY());
+                        
+                        newNodeInput->getDropdownList()->getRect()->setX(ofGetMouseX());
+                        newNodeInput->getDropdownList()->getRect()->setY(ofGetMouseY());
+                    }
                 }
-            }
-            else {
-                console->pushWarning("Unable to create nodes while Edit Mode is off");
+                else {
+                    console->pushWarning("Unable to create nodes while Edit Mode is off");
+                }
+            } else {
+                if (nodeViewers[currentViewer]->getPatches().size() > 1) {
+                    saveToXML();
+                }
+                xmlFileName = "Untitle.xml";
+                xmlFilePath = "";
+                deleteEverything();
+                
+                audioAnalizer = new AudioAnalizer();
+                audioAnalizer->setDrawAudioAnalizer(false);
+                ((ofxUIMultiImageToggle*)right_menu->getWidget("Analizer"))->setValue(false);
+                initNode(audioAnalizer);
+                nodeViewers[currentViewer]->addPatch(audioAnalizer, ofPoint((ofGetWidth()/2)-100, (ofGetHeight()/2)-50));
             }
             break;
         case 'j': case 'J' :
-            if ((newNodeInput == NULL) || (!newNodeInput->isClicked())) {
+            if (holdingCommand && ((newNodeInput == NULL) || (!newNodeInput->isClicked()))) {
                 loadSnippet();
             }
             break;
         case 'k': case 'K' :
-            if ((newNodeInput == NULL) || (!newNodeInput->isClicked())) {
+            if (holdingCommand && ((newNodeInput == NULL) || (!newNodeInput->isClicked()))) {
                 saveSnippet();
             }
             break;
@@ -609,6 +588,29 @@ void ofApp::keyPressed  (int key){
                 activatePatches ? nodeViewers[currentViewer]->activateAllPatches() : nodeViewers[currentViewer]->deactivateAllPatches();
             }
             break;
+        case 's': case 'S':
+            if (holdingCommand && ((newNodeInput == NULL) || (!newNodeInput->isClicked()))) {
+                saveToXML();
+            }
+            break;
+        case 'o': case 'O':
+            if (holdingCommand && ((newNodeInput == NULL) || (!newNodeInput->isClicked()))) {
+                loadFromXML();
+            }
+            break;
+        case 'c': case 'C':
+            if (holdingCommand && ((newNodeInput == NULL) || (!newNodeInput->isClicked()))) {
+                if(showConsole){
+                    scrollBars->changeWindowHeight(1);
+                }else{
+                    scrollBars->changeWindowHeight(console->getWindowRatio());
+                }
+                showConsole = !showConsole;
+                console->setConsoleVisible(showConsole);
+            }
+            break;
+        case OF_KEY_F1:
+            printShortcuts();
         default:
             notAvailable = true;
             break;
@@ -742,7 +744,7 @@ void ofApp::menuEvent(ofxUIEventArgs &e) {
     
     string name = e.getName();
     
-    if (name == "New Patcher") {
+    if (name == "New Patcher (cmd+n)") {
         if(((ofxUIMultiImageButton*)e.widget)->getValue() == 1){
             if (nodeViewers[currentViewer]->getPatches().size() > 1) {
                 saveToXML();
@@ -758,7 +760,7 @@ void ofApp::menuEvent(ofxUIEventArgs &e) {
             nodeViewers[currentViewer]->addPatch(audioAnalizer, ofPoint((ofGetWidth()/2)-100, (ofGetHeight()/2)-50));
         }
     }
-    else if (name == "Open Patcher") {
+    else if (name == "Open Patcher (cmd+o)") {
         if(((ofxUIMultiImageButton*)e.widget)->getValue() == 1){
             loadFromXML();
         }
@@ -781,7 +783,7 @@ void ofApp::menuEvent(ofxUIEventArgs &e) {
         ((ofxUIImageToggle*)menu->getWidget("Straight Links"))->setValue(false);
         nodeViewers[currentViewer]->setLinkType(PATH_LINKS);
     }
-    else if (name == "Create Node") {
+    else if (name == "Create Node (n)") {
         if(((ofxUIMultiImageButton*)e.widget)->getValue() == 1){
             if (nodeViewers[currentViewer]->getEdit()) {
                 if (newNodeInput == NULL) {
@@ -830,22 +832,22 @@ void ofApp::menuEvent(ofxUIEventArgs &e) {
             audioAnalizer->setDrawAudioAnalizer(true);
         }
     }
-    else if (name == "Save Snippet"){
+    else if (name == "Save Snippet (cmd+j)"){
         if(((ofxUIMultiImageButton*)e.widget)->getValue() == 1){
             saveSnippet();
         }
     }
-    else if (name == "Open Snippet"){
+    else if (name == "Open Snippet (cmd+k)"){
         if(((ofxUIMultiImageButton*)e.widget)->getValue() == 1){
             loadSnippet();
         }
     }
-    else if (name == "Save Patcher"){
+    else if (name == "Save Patcher (cmd+n)"){
         if(((ofxUIMultiImageButton*)e.widget)->getValue() == 1){
             saveToXML();
         }
     }
-    else if (name == "Console on/off"){
+    else if (name == "Console on/off (cmd+c)"){
         if(showConsole){
             scrollBars->changeWindowHeight(1);
         }else{
@@ -883,7 +885,7 @@ void ofApp::menuEvent(ofxUIEventArgs &e) {
             }
         }
     }
-    else if (name == "Open encapsulated"){
+    else if (name == "Open encapsulated (cmd+e)"){
         if(((ofxUIMultiImageButton*)e.widget)->getValue() == 1){
             if(EventHandler::getInstance()->getEncapsulatedIdDraw() != MAIN_WINDOW){
                 EventHandler::getInstance()->setEncapsulatedIdDraw(MAIN_WINDOW);
@@ -925,8 +927,8 @@ void ofApp::menuEvent(ofxUIEventArgs &e) {
             ((ofxUIMultiImageToggle*)menu->getWidget("Midi Learn"))->setValue(false);
         }
     }
-    else if (name == "Print Shortcuts") {
-        
+    else if (name == "Print Shortcuts (F1)") {
+        printShortcuts();
     }
 }
 /* ================================================ */
@@ -1681,7 +1683,7 @@ bool ofApp::loadFromXML(){
         console->pushError("XML couldn't be loaded: " + errorMsg);
         deleteEverything();
         
-        ((ofxUIImageToggle*)menu->getWidget("Console on/off"))->setValue(true);
+        ((ofxUIImageToggle*)menu->getWidget("Console on/off (cmd+c)"))->setValue(true);
         showConsole = true;
         return;
     }
@@ -2869,3 +2871,37 @@ bool ofApp::saveSnippet() {
 
 /* ================================================ */
 /* ================================================ */
+
+void ofApp::printShortcuts(){
+    
+    String intro = "Shortcuts for N.IMP";
+    string newNode     = "\tCreate a Node - n";
+    string loadSnippet = "\tLoad Snippet - command + j";
+    string saveSnippet = "\tSave Snippet - command + k";
+    string showConsole = "\tShow Console - command + c";
+    string deleteInput = "\tDelete Input - esc";
+    string fullScreen  = "\tFullscreen - command + f";
+    string showEncapsulated = "\tShow Encapsulated Node - command + e";
+    string deactivateAllNodes = "\tActivate\\Deactivate all nodes - command + d";
+    string showAllInspector = "\tShow\\Hide all inspectors - command + i";
+    string newPatcher  = "\tNew Patcher - command + n";
+    string openPatcher = "\tOpen Patcher - command + o";
+    string savePatcher = "\tSave Patcher - command + s";
+    string help = "\tShow shortcuts - F1";
+    
+    console->pushMessage(intro);
+    console->pushMessage(newNode);
+    console->pushMessage(loadSnippet);
+    console->pushMessage(saveSnippet);
+    console->pushMessage(showConsole);
+    console->pushMessage(deleteInput);
+    console->pushMessage(fullScreen);
+    console->pushMessage(showEncapsulated);
+    console->pushMessage(deactivateAllNodes);
+    console->pushMessage(showAllInspector);
+    console->pushMessage(newPatcher);
+    console->pushMessage(openPatcher);
+    console->pushMessage(savePatcher);
+    console->pushMessage(help);
+    
+}
