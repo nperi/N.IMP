@@ -88,3 +88,11 @@ float ImageTypePictureSequence::getWidth() {
     return img.getWidth();
 }
 
+//------------------------------------------------------------------
+float ImageTypePictureSequence::getCurrentSecond() {
+    float totalFrames = player.getTotalNumFrames();
+    float curFrame = player.getCurrentFrame();
+    float totalDuration = player.getDuration();
+    return curFrame/totalFrames*totalDuration;
+}
+

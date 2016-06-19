@@ -33,6 +33,8 @@ class ImageTypePictureSequence : public ImageType{
     float getHeight();
     float getWidth();
     
+    float getCurrentSecond();
+    
 private:
     
     ofxImageSequencePlayer player;

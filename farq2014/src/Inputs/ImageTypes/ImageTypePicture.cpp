@@ -67,3 +67,7 @@ float ImageTypePicture::getWidth() {
     return img.getWidth();
 }
 
+//------------------------------------------------------------------
+float ImageTypePicture::getCurrentSecond() {
+    return 0;
+}

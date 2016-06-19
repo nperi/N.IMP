@@ -35,6 +35,8 @@ class ImageTypeMovie : public ImageType{
     float getHeight();
     float getWidth();
     
+    float getCurrentSecond();
+    
 private:
     
     ofBaseVideoPlayer* videoPlayer;

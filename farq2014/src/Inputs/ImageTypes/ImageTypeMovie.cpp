@@ -159,3 +159,11 @@ float ImageTypeMovie::getHeight() {
 float ImageTypeMovie::getWidth() {
     return videoPlayer->getWidth();
 }
+
+//------------------------------------------------------------------
+float ImageTypeMovie::getCurrentSecond() {
+    float totalFrames = videoPlayer->getTotalNumFrames();
+    float curFrame = videoPlayer->getCurrentFrame();
+    float totalDuration = videoPlayer->getDuration();
+    return curFrame/totalFrames*totalDuration;
+}

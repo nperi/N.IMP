@@ -47,6 +47,8 @@ class ImageType {
     virtual float getHeight() = 0;
     virtual float getWidth() = 0;
     
+    virtual float getCurrentSecond() = 0;
+    
     protected:
     imgType mediaType;
     string name;

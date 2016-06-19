@@ -34,6 +34,8 @@ class ImageTypePicture : public ImageType{
     float getHeight();
     float getWidth();
     
+    float getCurrentSecond();
+    
 private:
     
     ofImage img;
