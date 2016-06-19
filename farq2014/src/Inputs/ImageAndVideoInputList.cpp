@@ -89,8 +89,6 @@ void ImageAndVideoInputList::update(){
     
     if (isPlaying == true && playInLoop == false && prevPosition > this->playPos2) {
         nextSequenceChanged();
-        prevPosition = 0;
-        playPos2 = 0;
     }
 }
 
@@ -394,6 +392,9 @@ void ImageAndVideoInputList::nextSequenceChanged(){
         inputs[currentSequence]->getFileExtension() == PNG
         ? img.setImageType(OF_IMAGE_COLOR_ALPHA)
         : img.setImageType(OF_IMAGE_COLOR);
+        
+        prevPosition = 0;
+        playPos2 = 0;
     }
 }
 
@@ -406,6 +407,9 @@ void ImageAndVideoInputList::prevSequenceChanged(){
         inputs[currentSequence]->getFileExtension() == PNG
         ? img.setImageType(OF_IMAGE_COLOR_ALPHA)
         : img.setImageType(OF_IMAGE_COLOR);
+        
+        prevPosition = 0;
+        playPos2 = 0;
     }
 }
 
