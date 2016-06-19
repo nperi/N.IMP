@@ -12,6 +12,26 @@
 //------------------------------------------------------------------
 GlitchLayer::GlitchLayer(string name_, int id_):VisualLayer(name_, "Glitch Layer", id_){
     
+    
+    do_CONVERGENCE = false;
+    do_GLOW = false;
+    do_SHAKER = false;
+    do_CUTSLIDER = false;
+    do_TWIST = false;
+    do_OUTLINE = false;
+    do_NOISE = false;
+    do_SLITSCAN = false;
+    do_SWELL = false;
+    do_INVERT = false;
+    
+    do_CR_HIGHCONTRAST = false;
+    do_CR_BLUERAISE = false;
+    do_CR_REDRAISE = false;
+    do_CR_GREENRAISE = false;
+    do_CR_BLUEINVERT = false;
+    do_CR_REDINVERT = false;
+    do_CR_GREENINVERT = false;
+    
     gui.add(isEnabled.setup("Enabled",isEnabled, 100,20));
     gui.add(do_CONVERGENCE.setup("CONVERGENCE", do_CONVERGENCE, 100,20));
     gui.add(do_GLOW.setup("GLOW", do_GLOW, 100,20));
