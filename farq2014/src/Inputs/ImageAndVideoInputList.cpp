@@ -14,6 +14,7 @@
 ImageAndVideoInputList::ImageAndVideoInputList(string name, int id_) : InputSource(name, "Image & Video List", id_){
     
     currentSequence = 0;
+    prevPosition = 0.0;
     lastSequence = currentSequence;
     isEnabled = false;
     videoPlayer = NULL;
@@ -73,10 +74,6 @@ void ImageAndVideoInputList::setup(){
 //------------------------------------------------------------------
 void ImageAndVideoInputList::update(){
     
-    if (isPlaying == true && playInLoop == false && inputs[currentSequence]->isVideoDone()) {
-        nextSequenceChanged();
-    }
-    
     if (videoPlayer != NULL) {
         videoTime = getTime(inputs[currentSequence]->getCurrentSecond()) + " / " + getTime(videoPlayer->getDuration());
     }
@@ -87,7 +84,14 @@ void ImageAndVideoInputList::update(){
 
     
     inputs[currentSequence]->update(img);
+    prevPosition = playPos2;
     playPos2 = inputs[currentSequence]->getPosition();
+    
+    if (isPlaying == true && playInLoop == false && prevPosition > this->playPos2) {
+        nextSequenceChanged();
+        prevPosition = 0;
+        playPos2 = 0;
+    }
 }
 
 //------------------------------------------------------------------

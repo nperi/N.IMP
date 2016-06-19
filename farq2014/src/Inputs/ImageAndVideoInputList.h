@@ -48,6 +48,8 @@ class ImageAndVideoInputList : public InputSource{
     string videoTime;
     ofParameter<string> videoPlayingTime;
     
+    float prevPosition;
+    
     ofxButton nextSequence;
     ofxButton prevSequence;
     

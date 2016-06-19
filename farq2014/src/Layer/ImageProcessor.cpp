@@ -193,6 +193,7 @@ ImageProcessor::ImageProcessor(string name_, int id_):VisualLayer(name_, "Image 
     gui.minimizeAll();
 }
 
+//------------------------------------------------------------------
 ImageProcessor::~ImageProcessor(){
     ofxBaseGui* baseGui;
     baseGui = gui.find("Enabled");

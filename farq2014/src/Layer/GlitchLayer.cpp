@@ -150,18 +150,20 @@ void GlitchLayer::update(){
             
             /* Apply effects */
             myGlitch.generateFx();
+            
+    //        }
+    //        else {
+    //            fbo.begin();
+    //            ofSetColor(255);
+    //            input[0]->getTextureReference().draw(0,0,width,height);
+    //            fbo.end();
+    //        }
+            
+            fbo.readToPixels(buff);
+            img.setFromPixels(buff);
+            
+            img.update();
         }
-        else {
-            fbo.begin();
-            ofSetColor(255);
-            input[0]->getTextureReference().draw(0,0,width,height);
-            fbo.end();
-        }
-        
-        fbo.readToPixels(buff);
-        img.setFromPixels(buff);
-        
-        img.update();
     }
 }
 
@@ -333,18 +335,25 @@ float GlitchLayer::getMidiMax(string param_){
 
 //------------------------------------------------------------------
 ofImage* GlitchLayer::getImage(){
+    
     if (drawNoInputs)
         return &noInputsImg;
-    else
-        return &img;
+    else {
+        if (isEnabled)
+            return &img;
+        else return input[0]->getImage();
+    }
 }
 
 //------------------------------------------------------------------
 ofTexture* GlitchLayer::getTexture(){
     if (drawNoInputs)
         return &noInputsImg.getTextureReference();
-    else
-        return &img.getTextureReference();
+    else {
+        if (isEnabled)
+            return &img.getTextureReference();
+        else return input[0]->getTexture();
+    }
 }
 
 //------------------------------------------------------------------
