@@ -19,6 +19,7 @@
 #include "ImageTypePicture.h"
 #include "ImageTypePictureSequence.h"
 #include "VideoPool.h"
+#include <math.h>
 
 
 
@@ -43,6 +44,9 @@ class ImageAndVideoInputList : public InputSource{
     
     float getMidiMin(string param_);
     float getMidiMax(string param_);
+    
+    string videoTime;
+    ofParameter<string> videoPlayingTime;
     
     ofxButton nextSequence;
     ofxButton prevSequence;
@@ -90,6 +94,7 @@ private:
     void setEnableChanged(bool &b);
     void deleteSequence();
     void addNewInput();
+    string getTime(float t);
     
     int lastSequence;
     bool hasMovie;

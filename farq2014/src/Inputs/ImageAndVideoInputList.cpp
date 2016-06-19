@@ -77,6 +77,15 @@ void ImageAndVideoInputList::update(){
         nextSequenceChanged();
     }
     
+    if (videoPlayer != NULL) {
+        videoTime = getTime(inputs[currentSequence]->getCurrentSecond()) + " / " + getTime(videoPlayer->getDuration());
+    }
+    else {
+        videoTime = "00:00 / 00:00";
+    }
+    videoPlayingTime.set("", videoTime);
+
+    
     inputs[currentSequence]->update(img);
     playPos2 = inputs[currentSequence]->getPosition();
 }
@@ -253,6 +262,7 @@ void ImageAndVideoInputList::loadImage(string name_, string path_){
         seqSettings.add(isMatchBpmToSequenceLength.set("BPM = Seq. Length",false));
         seqSettings.add(bpm.set("BPM", 100, 10, 200));
         seqSettings.add(bpmMultiplier.set("BPM Multiplier", 4, 1, 120));
+        seqSettings.add(videoPlayingTime.set("", videoTime));
         seqSettings.add(playPosition.set("Play Position",0.0,0.0,1.0));
         seqSettings.add(playPos2.set("Pos",0.0,0.0,1.0));
         gui.add(seqSettings);
@@ -518,6 +528,32 @@ void ImageAndVideoInputList::setEnable(bool isEnabled_){
         }
     }
     InputSource::setEnable(isEnabled_);
+}
+
+//------------------------------------------------------------------
+string ImageAndVideoInputList::getTime(float t){
+    
+    char time[30];
+    int minutes = (int)t/60;
+    int seconds = (int)(fmod(t/60, 60)*60);
+    if (minutes < 10) {
+        if (seconds < 10) {
+            sprintf(time, "0%d:0%d", (int)t/60, (int)(fmod(t/60, 60)*60));
+        }
+        else {
+            sprintf(time, "0%d:%d", (int)t/60, (int)(fmod(t/60, 60)*60));
+        }
+    }
+    else {
+        if (seconds < 10) {
+            sprintf(time, "%d:0%d", (int)t/60, (int)(fmod(t/60, 60)*60));
+        }
+        else {
+            sprintf(time, "%d:%d", (int)t/60, (int)(fmod(t/60, 60)*60));
+        }
+    }
+    
+    return time;
 }
 
 //------------------------------------------------------------------
