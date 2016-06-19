@@ -101,7 +101,7 @@ void ofApp::setup() {
     spacer = new ofxUISpacer(RIGHT_MENU_WIDTH + MENU_ITEM_SIZE*9 + MENU_ITEM_PADDING*12, 20, 1,MENU_ITEM_SIZE);
     menu->addWidget(spacer);
     spacer->setColorFill(ofxUIColor(120, 120, 120, 200));
-    new menuItem(menu, "MultiImageToggle", "Edit Mode on/off", "assets/edit_mode.png", false, RIGHT_MENU_WIDTH + MENU_ITEM_SIZE*9 + MENU_ITEM_PADDING*13, 20);
+    new menuItem(menu, "MultiImageToggle", "Edit Mode on/off (F2)", "assets/edit_mode.png", false, RIGHT_MENU_WIDTH + MENU_ITEM_SIZE*9 + MENU_ITEM_PADDING*13, 20);
     
     spacer = new ofxUISpacer(RIGHT_MENU_WIDTH + MENU_ITEM_SIZE*10 + MENU_ITEM_PADDING*14, 20, 1,MENU_ITEM_SIZE);
     menu->addWidget(spacer);
@@ -804,7 +804,7 @@ void ofApp::menuEvent(ofxUIEventArgs &e) {
             }
         }
     }
-    else if (name == "Edit Mode on/off") {
+    else if (name == "Edit Mode on/off (F2)") {
         
         if (nodeViewers[currentViewer]->getEdit())
             nodeViewers[currentViewer]->setEdit(false);
@@ -832,12 +832,12 @@ void ofApp::menuEvent(ofxUIEventArgs &e) {
             audioAnalizer->setDrawAudioAnalizer(true);
         }
     }
-    else if (name == "Save Snippet (cmd+j)"){
+    else if (name == "Save Snippet (cmd+k)"){
         if(((ofxUIMultiImageButton*)e.widget)->getValue() == 1){
             saveSnippet();
         }
     }
-    else if (name == "Open Snippet (cmd+k)"){
+    else if (name == "Open Snippet (cmd+j)"){
         if(((ofxUIMultiImageButton*)e.widget)->getValue() == 1){
             loadSnippet();
         }
@@ -2888,6 +2888,7 @@ void ofApp::printShortcuts(){
     string openPatcher = "\tOpen Patcher - command + o";
     string savePatcher = "\tSave Patcher - command + s";
     string help = "\tShow shortcuts - F1";
+    string editMode = "\tEdit Mode On\\Off - F2";
     
     console->pushMessage(intro);
     console->pushMessage(newNode);
@@ -2903,5 +2904,6 @@ void ofApp::printShortcuts(){
     console->pushMessage(openPatcher);
     console->pushMessage(savePatcher);
     console->pushMessage(help);
+    console->pushMessage(editMode);
     
 }
