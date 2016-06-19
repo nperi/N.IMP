@@ -62,7 +62,7 @@ private:
     
     void update();
     void setGlitchParameters();
-    
+    bool hasAnyEffect();
 };
 
 
