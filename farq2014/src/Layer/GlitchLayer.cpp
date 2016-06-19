@@ -339,7 +339,7 @@ ofImage* GlitchLayer::getImage(){
     if (drawNoInputs)
         return &noInputsImg;
     else {
-        if (isEnabled)
+        if (isEnabled || !hasAnyEffect())
             return &img;
         else return input[0]->getImage();
     }
@@ -350,7 +350,7 @@ ofTexture* GlitchLayer::getTexture(){
     if (drawNoInputs)
         return &noInputsImg.getTextureReference();
     else {
-        if (isEnabled)
+        if (isEnabled || !hasAnyEffect())
             return &img.getTextureReference();
         else return input[0]->getTexture();
     }
@@ -480,3 +480,28 @@ bool GlitchLayer::saveSettingsToSnippet(ofxXmlSettings &XML, map<int,int> newIds
     return saved;
     
 }
+
+//------------------------------------------------------------------
+bool GlitchLayer::hasAnyEffect() {
+    return do_CONVERGENCE 	||
+        do_GLOW 			||
+        do_SHAKER			||
+        do_CUTSLIDER		||
+        do_TWIST			||
+        do_OUTLINE			||
+        do_NOISE			||
+        do_SLITSCAN			||
+        do_SWELL			||
+        do_INVERT			||
+        do_CR_HIGHCONTRAST  ||
+        do_CR_BLUERAISE		||
+        do_CR_REDRAISE		||
+        do_CR_GREENRAISE	||
+        do_CR_BLUEINVERT	||
+        do_CR_REDINVERT     ||
+        do_CR_GREENINVERT;
+}
+
+
+
+
