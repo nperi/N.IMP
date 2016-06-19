@@ -190,7 +190,10 @@ void MixSimpleBlend::inputRemoved(int id_){
 
 //------------------------------------------------------------------
 void MixSimpleBlend::updateParameter(Param* inputParam){
-    if(inputParam->name.compare("opacity")==0){
+    if(inputParam->name.compare("Enabled")==0){
+        this->isEnabled = inputParam->intVal;
+    }
+    else if(inputParam->name.compare("opacity")==0){
         opacity.set(inputParam->intVal);
     }
     else if(inputParam->name.compare(0, 5, "Blend")==0){
@@ -201,7 +204,9 @@ void MixSimpleBlend::updateParameter(Param* inputParam){
 //------------------------------------------------------------------
 float MixSimpleBlend::getMidiMin(string param_){
     
-    if(param_.compare("opacity")==0){
+    if(param_.compare("Enabled")==0){
+        return 0;
+    }else if(param_.compare("opacity")==0){
         return 0;
     }else if(param_.compare(0, 5, "Blend")==0){
         return 0;
@@ -211,7 +216,9 @@ float MixSimpleBlend::getMidiMin(string param_){
 //------------------------------------------------------------------
 float MixSimpleBlend::getMidiMax(string param_){
     
-    if(param_.compare("opacity")==0){
+    if(param_.compare("Enabled")==0){
+        return 1;
+    }else if(param_.compare("opacity")==0){
         return 255;
     }else if(param_.compare(0, 5, "Blend")==0){
         return 24;

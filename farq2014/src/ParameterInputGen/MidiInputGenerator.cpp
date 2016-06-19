@@ -56,6 +56,7 @@ void MidiInputGenerator::newMidiMessage(ofxMidiMessage& msg){
             p->imageInputId = midiControlMaps[msg.control].at(i)->nodeId;
             p->name         = midiControlMaps[msg.control].at(i)->paramId;
             p->value        = msg.value;
+            p->midiControl  = msg.control;
             p->intVal       = ofMap(msg.value,
                                     midiControlMaps[msg.control].at(i)->inputMinValue,
                                     midiControlMaps[msg.control].at(i)->inputMaxValue,

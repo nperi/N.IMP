@@ -842,7 +842,7 @@ void ofApp::menuEvent(ofxUIEventArgs &e) {
             loadSnippet();
         }
     }
-    else if (name == "Save Patcher (cmd+n)"){
+    else if (name == "Save Patcher (cmd+s)"){
         if(((ofxUIMultiImageButton*)e.widget)->getValue() == 1){
             saveToXML();
         }
@@ -917,7 +917,7 @@ void ofApp::menuEvent(ofxUIEventArgs &e) {
                 console->pushMessage("MIDI Learn is ON.");
                 console->pushMessage("\tClick on any nodes parameters to create a map to a MIDI control.");
                 console->pushMessage("\tDelete all MIDI control mappings with DEL key.");
-                console->pushMessage("\tTo view what is map to a MIDI control, press COMMAND.");
+                console->pushMessage("\tTo view what is map to a MIDI control, press CONTROL.");
             }
             else {
                 console->pushMessage("MIDI Learn is OFF.");
