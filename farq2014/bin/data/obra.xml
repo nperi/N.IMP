@@ -1,6 +1,6 @@
 <MAIN_SETTINGS>
     <link_type>1</link_type>
-    <total_nodes>16</total_nodes>
+    <total_nodes>20</total_nodes>
     <show_console>0</show_console>
     <SETTINGS>
         <INPUTS>
@@ -26,26 +26,26 @@
                     </point>
                 </texture>
             </NODE>
-            <NODE id="2" name="New Image &amp; Video List" type="IMAGE_AND_VIDEO_LIST" path="" bpm="100.000000000" multiplier_divider="4" isPlaying="0" palindrom="0" matchBPMtoSequence="0" currentSequence="0">
+            <NODE id="2" name="New Image &amp; Video List" type="IMAGE_AND_VIDEO_LIST" path="" bpm="100.000000000" multiplier_divider="4" isPlaying="0" playInLoop="0" palindrom="0" matchBPMtoSequence="0" currentSequence="0">
                 <ASSET name="1 bigbang_hap.mov" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/1 bigbang_hap.mov"></ASSET>
                 <type>none</type>
                 <path>none</path>
                 <visible>1</visible>
                 <texture>
                     <point>
-                        <x>30.865135193</x>
+                        <x>29.865135193</x>
                         <y>45.167900085</y>
                     </point>
                     <point>
-                        <x>156.134918213</x>
+                        <x>155.134918213</x>
                         <y>45.167900085</y>
                     </point>
                     <point>
-                        <x>156.134918213</x>
+                        <x>155.134918213</x>
                         <y>115.632141113</y>
                     </point>
                     <point>
-                        <x>30.865135193</x>
+                        <x>29.865135193</x>
                         <y>115.632141113</y>
                     </point>
                 </texture>
@@ -80,20 +80,20 @@
                 <visible>1</visible>
                 <texture>
                     <point>
-                        <x>-30.303466797</x>
-                        <y>283.520080566</y>
+                        <x>22.696533203</x>
+                        <y>269.520080566</y>
                     </point>
                     <point>
-                        <x>92.462036133</x>
-                        <y>283.520080566</y>
+                        <x>145.462036133</x>
+                        <y>269.520080566</y>
                     </point>
                     <point>
-                        <x>92.462036133</x>
-                        <y>365.363769531</y>
+                        <x>145.462036133</x>
+                        <y>351.363769531</y>
                     </point>
                     <point>
-                        <x>-30.303466797</x>
-                        <y>365.363769531</y>
+                        <x>22.696533203</x>
+                        <y>351.363769531</y>
                     </point>
                 </texture>
                 <mask>
@@ -121,27 +121,28 @@
                     </dot>
                 </out>
             </NODE>
-            <NODE id="13" name="New Image &amp; Video List" type="IMAGE_AND_VIDEO_LIST" path="" bpm="100.000000000" multiplier_divider="4" isPlaying="0" palindrom="0" matchBPMtoSequence="0" currentSequence="0">
+            <NODE id="13" name="New Image &amp; Video List" type="IMAGE_AND_VIDEO_LIST" path="" bpm="100.000000000" multiplier_divider="4" isPlaying="0" playInLoop="1" palindrom="0" matchBPMtoSequence="0" currentSequence="0">
                 <ASSET name="2 bigbang_hap.mov" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/2 bigbang_hap.mov"></ASSET>
+                <ASSET name="3 mitosis_hap.mov" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/3 mitosis_hap.mov"></ASSET>
                 <type>none</type>
                 <path>none</path>
                 <visible>1</visible>
                 <texture>
                     <point>
-                        <x>363.706909180</x>
-                        <y>281.816223145</y>
+                        <x>28.507171631</x>
+                        <y>409.038208008</y>
                     </point>
                     <point>
-                        <x>497.338378906</x>
-                        <y>281.816223145</y>
+                        <x>155.742248535</x>
+                        <y>409.038208008</y>
                     </point>
                     <point>
-                        <x>497.338378906</x>
-                        <y>356.983917236</y>
+                        <x>155.742248535</x>
+                        <y>480.607940674</y>
                     </point>
                     <point>
-                        <x>363.706909180</x>
-                        <y>356.983917236</y>
+                        <x>28.507171631</x>
+                        <y>480.607940674</y>
                     </point>
                 </texture>
                 <mask>
@@ -165,7 +166,103 @@
                 <out>
                     <active>1</active>
                     <dot>
-                        <to>11</to>
+                        <to>20</to>
+                    </dot>
+                </out>
+            </NODE>
+            <NODE id="19" name="New Image &amp; Video List" type="IMAGE_AND_VIDEO_LIST" path="" bpm="100.000000000" multiplier_divider="4" isPlaying="0" playInLoop="0" palindrom="0" matchBPMtoSequence="0" currentSequence="0">
+                <ASSET name="(1) bacterias.png" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/imagenes/creación de la vida/(1) bacterias.png"></ASSET>
+                <ASSET name="(1) bacterias 2.png" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/imagenes/creación de la vida/(1) bacterias 2.png"></ASSET>
+                <ASSET name="(1) bacterias 3.png" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/imagenes/creación de la vida/(1) bacterias 3.png"></ASSET>
+                <ASSET name="(1) bacterias 4.png" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/imagenes/creación de la vida/(1) bacterias 4.png"></ASSET>
+                <ASSET name="(1) bacterias 5.png" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/imagenes/creación de la vida/(1) bacterias 5.png"></ASSET>
+                <ASSET name="(1) bacterias 6.png" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/imagenes/creación de la vida/(1) bacterias 6.png"></ASSET>
+                <ASSET name="(1) bacterias 7.png" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/imagenes/creación de la vida/(1) bacterias 7.png"></ASSET>
+                <ASSET name="(1) bacterias 8.png" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/imagenes/creación de la vida/(1) bacterias 8.png"></ASSET>
+                <ASSET name="(1) bacterias 9.png" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/imagenes/creación de la vida/(1) bacterias 9.png"></ASSET>
+                <ASSET name="(1) bacterias 10.png" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/imagenes/creación de la vida/(1) bacterias 10.png"></ASSET>
+                <ASSET name="(1) bacterias 11.png" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/imagenes/creación de la vida/(1) bacterias 11.png"></ASSET>
+                <ASSET name="(2) bacterias y celulas.png" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/imagenes/creación de la vida/(2) bacterias y celulas.png"></ASSET>
+                <ASSET name="(2) celulas.png" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/imagenes/creación de la vida/(2) celulas.png"></ASSET>
+                <ASSET name="(2) celulas 2.png" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/imagenes/creación de la vida/(2) celulas 2.png"></ASSET>
+                <ASSET name="(2) celulas 3.png" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/imagenes/creación de la vida/(2) celulas 3.png"></ASSET>
+                <ASSET name="(2) celulas 4.png" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/imagenes/creación de la vida/(2) celulas 4.png"></ASSET>
+                <ASSET name="(2) celulas 5.png" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/imagenes/creación de la vida/(2) celulas 5.png"></ASSET>
+                <ASSET name="(2) celulas 6.png" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/imagenes/creación de la vida/(2) celulas 6.png"></ASSET>
+                <ASSET name="(3) celulas y mitosis.png" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/imagenes/creación de la vida/(3) celulas y mitosis.png"></ASSET>
+                <ASSET name="(3) celulas y mitosis 2.png" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/imagenes/creación de la vida/(3) celulas y mitosis 2.png"></ASSET>
+                <ASSET name="(3) celulas y mitosis 3.png" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/imagenes/creación de la vida/(3) celulas y mitosis 3.png"></ASSET>
+                <ASSET name="(3) celulas y mitosis 4.png" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/imagenes/creación de la vida/(3) celulas y mitosis 4.png"></ASSET>
+                <ASSET name="(4) adn.png" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/imagenes/creación de la vida/(4) adn.png"></ASSET>
+                <ASSET name="(4) adn 2.png" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/imagenes/creación de la vida/(4) adn 2.png"></ASSET>
+                <ASSET name="(5) molusco.png" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/imagenes/creación de la vida/(5) molusco.png"></ASSET>
+                <ASSET name="(5) molusco 2.png" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/imagenes/creación de la vida/(5) molusco 2.png"></ASSET>
+                <ASSET name="(6) hydra.png" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/imagenes/creación de la vida/(6) hydra.png"></ASSET>
+                <ASSET name="(6) hydra 2.png" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/imagenes/creación de la vida/(6) hydra 2.png"></ASSET>
+                <ASSET name="(7) medusa.png" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/imagenes/creación de la vida/(7) medusa.png"></ASSET>
+                <ASSET name="(7) medusa 2.png" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/imagenes/creación de la vida/(7) medusa 2.png"></ASSET>
+                <ASSET name="(7) medusa 3.png" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/imagenes/creación de la vida/(7) medusa 3.png"></ASSET>
+                <ASSET name="(8) babosa.png" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/imagenes/creación de la vida/(8) babosa.png"></ASSET>
+                <ASSET name="(8) babosa 2.png" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/imagenes/creación de la vida/(8) babosa 2.png"></ASSET>
+                <ASSET name="(8) babosa 3.png" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/imagenes/creación de la vida/(8) babosa 3.png"></ASSET>
+                <ASSET name="(10) agnato.jpg" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/imagenes/creación de la vida/(10) agnato.jpg"></ASSET>
+                <ASSET name="(10) agnato 2.png" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/imagenes/creación de la vida/(10) agnato 2.png"></ASSET>
+                <ASSET name="(10) agnato 3.png" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/imagenes/creación de la vida/(10) agnato 3.png"></ASSET>
+                <ASSET name="(10) ammonite.jpg" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/imagenes/creación de la vida/(10) ammonite.jpg"></ASSET>
+                <ASSET name="(10) ammonite 2.jpg" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/imagenes/creación de la vida/(10) ammonite 2.jpg"></ASSET>
+                <ASSET name="(10) gamba gigante.jpeg" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/imagenes/creación de la vida/(10) gamba gigante.jpeg"></ASSET>
+                <ASSET name="(10) trilobite.jpg" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/imagenes/creación de la vida/(10) trilobite.jpg"></ASSET>
+                <ASSET name="(10) pez 2.png" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/imagenes/creación de la vida/(10) pez 2.png"></ASSET>
+                <ASSET name="(10) pez 3.png" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/imagenes/creación de la vida/(10) pez 3.png"></ASSET>
+                <ASSET name="(10) pez 4.png" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/imagenes/creación de la vida/(10) pez 4.png"></ASSET>
+                <ASSET name="(10) pez 5.png" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/imagenes/creación de la vida/(10) pez 5.png"></ASSET>
+                <ASSET name="(10) pez 6.png" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/imagenes/creación de la vida/(10) pez 6.png"></ASSET>
+                <ASSET name="(10) pez 7.png" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/imagenes/creación de la vida/(10) pez 7.png"></ASSET>
+                <ASSET name="(10) Tiktaalik.png" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/imagenes/creación de la vida/(10) Tiktaalik.png"></ASSET>
+                <ASSET name="(10) Tiktaalik 2.jpg" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/imagenes/creación de la vida/(10) Tiktaalik 2.jpg"></ASSET>
+                <type>none</type>
+                <path>none</path>
+                <visible>1</visible>
+                <texture>
+                    <point>
+                        <x>366.829620361</x>
+                        <y>394.706604004</y>
+                    </point>
+                    <point>
+                        <x>540.171875000</x>
+                        <y>394.706604004</y>
+                    </point>
+                    <point>
+                        <x>540.171875000</x>
+                        <y>510.560668945</y>
+                    </point>
+                    <point>
+                        <x>366.829620361</x>
+                        <y>510.560668945</y>
+                    </point>
+                </texture>
+                <mask>
+                    <point>
+                        <x>0.000000000</x>
+                        <y>0.000000000</y>
+                    </point>
+                    <point>
+                        <x>1.000000000</x>
+                        <y>0.000000000</y>
+                    </point>
+                    <point>
+                        <x>1.000000000</x>
+                        <y>1.000000000</y>
+                    </point>
+                    <point>
+                        <x>0.000000000</x>
+                        <y>1.000000000</y>
+                    </point>
+                </mask>
+                <out>
+                    <active>1</active>
+                    <dot>
+                        <to>20</to>
                     </dot>
                 </out>
             </NODE>
@@ -186,11 +283,11 @@
                     </point>
                     <point>
                         <x>493.666534424</x>
-                        <y>113.055999756</y>
+                        <y>113.055992126</y>
                     </point>
                     <point>
                         <x>368.396759033</x>
-                        <y>113.055999756</y>
+                        <y>113.055992126</y>
                     </point>
                 </texture>
                 <mask>
@@ -216,6 +313,50 @@
                     <dot>
                         <to>5</to>
                     </dot>
+                </out>
+            </NODE>
+            <NODE id="17" name="New Glitch Layer" type="GLITCH_1" enabled="1" inputSource="11" do_CONVERGENCE="0" do_GLOW="0" do_SHAKER="0" do_CUTSLIDER="0" do_TWIST="0" do_OUTLINE="0" do_NOISE="0" do_SLITSCAN="0" do_SWELL="0" do_INVERT="0" do_CR_HIGHCONTRAST="0" do_CR_BLUERAISE="0" do_CR_REDRAISE="0" do_CR_GREENRAISE="0" do_CR_BLUEINVERT="0" do_CR_REDINVERT="0" do_CR_GREENINVERT="0">
+                <type>none</type>
+                <path>none</path>
+                <visible>1</visible>
+                <texture>
+                    <point>
+                        <x>952.091674805</x>
+                        <y>0.660239458</y>
+                    </point>
+                    <point>
+                        <x>1079.326782227</x>
+                        <y>0.660239458</y>
+                    </point>
+                    <point>
+                        <x>1079.326782227</x>
+                        <y>72.229972839</y>
+                    </point>
+                    <point>
+                        <x>952.091674805</x>
+                        <y>72.229972839</y>
+                    </point>
+                </texture>
+                <mask>
+                    <point>
+                        <x>0.000000000</x>
+                        <y>0.000000000</y>
+                    </point>
+                    <point>
+                        <x>1.000000000</x>
+                        <y>0.000000000</y>
+                    </point>
+                    <point>
+                        <x>1.000000000</x>
+                        <y>1.000000000</y>
+                    </point>
+                    <point>
+                        <x>0.000000000</x>
+                        <y>1.000000000</y>
+                    </point>
+                </mask>
+                <out>
+                    <active>1</active>
                 </out>
             </NODE>
         </VISUAL_LAYERS>
@@ -271,26 +412,26 @@
             </NODE>
             <NODE id="11" name="New Mix Simple Blend" type="SIMPLE_BLEND" enabled="1" selector1="0" selector2="1" blendmode="0" opacity="255.000000000">
                 <INPUT_SOURCE nodeId="5"></INPUT_SOURCE>
-                <INPUT_SOURCE nodeId="13"></INPUT_SOURCE>
+                <INPUT_SOURCE nodeId="20"></INPUT_SOURCE>
                 <type>none</type>
                 <path>none</path>
                 <visible>1</visible>
                 <texture>
                     <point>
-                        <x>704.602661133</x>
-                        <y>27.761108398</y>
+                        <x>605.736145020</x>
+                        <y>4.191894531</y>
                     </point>
                     <point>
-                        <x>838.234130859</x>
-                        <y>27.761108398</y>
+                        <x>732.971252441</x>
+                        <y>4.191894531</y>
                     </point>
                     <point>
-                        <x>838.234130859</x>
-                        <y>102.928802490</y>
+                        <x>732.971252441</x>
+                        <y>75.761627197</y>
                     </point>
                     <point>
-                        <x>704.602661133</x>
-                        <y>102.928802490</y>
+                        <x>605.736145020</x>
+                        <y>75.761627197</y>
                     </point>
                 </texture>
                 <mask>
@@ -313,6 +454,58 @@
                 </mask>
                 <out>
                     <active>1</active>
+                    <dot>
+                        <to>17</to>
+                    </dot>
+                </out>
+            </NODE>
+            <NODE id="20" name="New MultiChannel Switch" type="MULTI_CHANNEL" selChannel="0">
+                <INPUT_SOURCE nodeId="13"></INPUT_SOURCE>
+                <INPUT_SOURCE nodeId="19"></INPUT_SOURCE>
+                <type>none</type>
+                <path>none</path>
+                <visible>1</visible>
+                <texture>
+                    <point>
+                        <x>367.500000000</x>
+                        <y>264.358459473</y>
+                    </point>
+                    <point>
+                        <x>494.735076904</x>
+                        <y>264.358459473</y>
+                    </point>
+                    <point>
+                        <x>494.735076904</x>
+                        <y>335.928192139</y>
+                    </point>
+                    <point>
+                        <x>367.500000000</x>
+                        <y>335.928192139</y>
+                    </point>
+                </texture>
+                <mask>
+                    <point>
+                        <x>0.000000000</x>
+                        <y>0.000000000</y>
+                    </point>
+                    <point>
+                        <x>1.000000000</x>
+                        <y>0.000000000</y>
+                    </point>
+                    <point>
+                        <x>1.000000000</x>
+                        <y>1.000000000</y>
+                    </point>
+                    <point>
+                        <x>0.000000000</x>
+                        <y>1.000000000</y>
+                    </point>
+                </mask>
+                <out>
+                    <active>1</active>
+                    <dot>
+                        <to>11</to>
+                    </dot>
                 </out>
             </NODE>
         </MIXERS>
@@ -327,14 +520,20 @@
             <NODE id="9" name="New Particle Generator"></NODE>
             <NODE id="11" name="New Mix Simple Blend"></NODE>
             <NODE id="13" name="New Image &amp; Video List"></NODE>
+            <NODE id="17" name="New Glitch Layer"></NODE>
+            <NODE id="19" name="New Image &amp; Video List"></NODE>
+            <NODE id="20" name="New MultiChannel Switch"></NODE>
         </NODE_VIEW>
     </NODE_VIEWS>
     <PARAM_INPUT_GENERATORS>
         <INPUT_GEN name="midi" type="MIDI" midiDeviceName="USB Trigger Finger">
             <MIDI_SETTINGS>
-                <MIDI_MAP midiId="2" nodeId="11" param="opacity"></MIDI_MAP>
+                <MIDI_MAP midiId="1" nodeId="11" param="opacity"></MIDI_MAP>
+                <MIDI_MAP midiId="2" nodeId="17" param="BLUERAISE"></MIDI_MAP>
                 <MIDI_MAP midiId="7" nodeId="5" param="Enabled"></MIDI_MAP>
                 <MIDI_MAP midiId="10" nodeId="3" param="INVERT"></MIDI_MAP>
+                <MIDI_MAP midiId="12" nodeId="17" param="REDRAISE"></MIDI_MAP>
+                <MIDI_MAP midiId="17" nodeId="17" param="GREENRAISE"></MIDI_MAP>
             </MIDI_SETTINGS>
         </INPUT_GEN>
     </PARAM_INPUT_GENERATORS>

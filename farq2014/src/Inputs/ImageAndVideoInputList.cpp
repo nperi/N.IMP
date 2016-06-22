@@ -572,12 +572,6 @@ bool ImageAndVideoInputList::loadSettings(ofxXmlSettings &XML, int nTag_, int no
     nId     = XML.getAttribute("NODE", "id", -1, nTag_) + nodesCount_;
     path    = XML.getAttribute("NODE", "path","none", nTag_);
     
-    bpm             = ofToFloat(XML.getAttribute("NODE", "bpm","120", nTag_));
-    bpmMultiplier   = ofToInt(XML.getAttribute("NODE", "multiplier_divider","32", nTag_));
-    isPlaying       = ofToBool(XML.getAttribute("NODE", "isPlaying","true", nTag_));
-    isPalindromLoop = ofToBool(XML.getAttribute("NODE", "palindrom","true", nTag_));
-    isMatchBpmToSequenceLength = ofToBool(XML.getAttribute("NODE", "matchBPMtoSequence","false", nTag_));
-    
     if ((path == "none") || (path == "")) {
         XML.pushTag("NODE",nTag_);
         int numVideoTag = XML.getNumTags("ASSET");
@@ -596,6 +590,13 @@ bool ImageAndVideoInputList::loadSettings(ofxXmlSettings &XML, int nTag_, int no
     else{
         loadImage(name, path);
     }
+    
+    bpm             = ofToFloat(XML.getAttribute("NODE", "bpm","120", nTag_));
+    bpmMultiplier   = ofToInt(XML.getAttribute("NODE", "multiplier_divider","32", nTag_));
+    isPlaying       = ofToBool(XML.getAttribute("NODE", "isPlaying","true", nTag_));
+    playInLoop      = ofToBool(XML.getAttribute("NODE", "playInLoop","false", nTag_));
+    isPalindromLoop = ofToBool(XML.getAttribute("NODE", "palindrom","true", nTag_));
+    isMatchBpmToSequenceLength = ofToBool(XML.getAttribute("NODE", "matchBPMtoSequence","false", nTag_));
     
     currentSequence = ofToInt(XML.getAttribute("NODE", "currentSequence", "0", nTag_));
     
@@ -632,6 +633,7 @@ bool ImageAndVideoInputList::saveSettings(ofxXmlSettings &XML) {
     XML.addAttribute("NODE", "bpm", bpm, lastPlace);
     XML.addAttribute("NODE", "multiplier_divider", bpmMultiplier, lastPlace);
     XML.addAttribute("NODE", "isPlaying", isPlaying, lastPlace);
+    XML.addAttribute("NODE", "playInLoop", playInLoop, lastPlace);
     XML.addAttribute("NODE", "palindrom", isPalindromLoop, lastPlace);
     XML.addAttribute("NODE", "matchBPMtoSequence", isMatchBpmToSequenceLength, lastPlace);
     XML.addAttribute("NODE", "currentSequence", currentSequence, lastPlace);
@@ -669,6 +671,7 @@ bool ImageAndVideoInputList::saveSettingsToSnippet(ofxXmlSettings &XML, map<int,
     XML.addAttribute("NODE", "bpm", bpm, lastPlace);
     XML.addAttribute("NODE", "multiplier_divider", bpmMultiplier, lastPlace);
     XML.addAttribute("NODE", "isPlaying", isPlaying, lastPlace);
+    XML.addAttribute("NODE", "playInLoop", playInLoop, lastPlace);
     XML.addAttribute("NODE", "palindrom", isPalindromLoop, lastPlace);
     XML.addAttribute("NODE", "matchBPMtoSequence", isMatchBpmToSequenceLength, lastPlace);
     XML.addAttribute("NODE", "currentSequence", currentSequence, lastPlace);

@@ -94,6 +94,7 @@ GlitchLayer::GlitchLayer(string name_, int id_):VisualLayer(name_, "Glitch Layer
     drawNoInputs = true;
 }
 
+//------------------------------------------------------------------
 GlitchLayer::~GlitchLayer(){
     ofxBaseGui* baseGui;
     baseGui = gui.find("Enabled");
@@ -158,7 +159,7 @@ void GlitchLayer::update(){
     //process pipeline
     if(input.size()) {
 
-        if(isEnabled){
+        if(isEnabled && hasAnyEffect()){
             
             setGlitchParameters();
             
@@ -359,7 +360,7 @@ ofImage* GlitchLayer::getImage(){
     if (drawNoInputs)
         return &noInputsImg;
     else {
-        if (isEnabled || !hasAnyEffect())
+        if (isEnabled && hasAnyEffect())
             return &img;
         else return input[0]->getImage();
     }
@@ -370,7 +371,7 @@ ofTexture* GlitchLayer::getTexture(){
     if (drawNoInputs)
         return &noInputsImg.getTextureReference();
     else {
-        if (isEnabled || !hasAnyEffect())
+        if (isEnabled && hasAnyEffect())
             return &img.getTextureReference();
         else return input[0]->getTexture();
     }
