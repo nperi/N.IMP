@@ -38,8 +38,15 @@ void ImageTypeMovie::activate(ofImage& _img){
         videoPlayer->stop();
         videoPlayer->close();
         videoPlayer->loadMovie(path);
-        
-        if (isPlaying) videoPlayer->play();
+
+        if (isPlaying) {
+            videoPlayer->play();
+        } else {
+            videoPlayer->play();
+            videoPlayer->update();
+            videoPlayer->stop();
+            videoPlayer->setFrame(0);
+        }
         
 //        _img.setFromPixels(videoPlayer->getPixels(), videoPlayer->getWidth(), videoPlayer->getHeight(), OF_IMAGE_COLOR_ALPHA);
         
