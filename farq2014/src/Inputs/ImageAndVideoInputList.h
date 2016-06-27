@@ -101,6 +101,8 @@ private:
     int lastSequence;
     bool hasMovie;
     ofBaseVideoPlayer* videoPlayer;
+    ofBaseVideoPlayer* hapPlayer;
+    ofBaseVideoPlayer* commonPlayer;
     
     string path;
 };

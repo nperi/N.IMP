@@ -10,7 +10,7 @@
 #include "ImageTypeMovie.h"
 #include "ofxHapPlayer.h"
 
-ImageTypeMovie::ImageTypeMovie(string name_ ,string path_, ofBaseVideoPlayer* player): ImageType(name_,path_){
+ImageTypeMovie::ImageTypeMovie(string name_ ,string path_, ofBaseVideoPlayer* player, bool isHap): ImageType(name_,path_){
     mediaType = T_MOVIE;
     //ofQTKitDecodeMode decodeMode = OF_QTKIT_DECODE_PIXELS_AND_TEXTURE;
     //videoPlayer.setPixelFormat(OF_PIXELS_RGBA);
@@ -21,6 +21,7 @@ ImageTypeMovie::ImageTypeMovie(string name_ ,string path_, ofBaseVideoPlayer* pl
     name = name_;
     ext  = OTHER;
     isPlaying = false;
+    hap = isHap;
     
     if (videoPlayer != NULL) videoPlayer->stop();
     
@@ -173,4 +174,9 @@ float ImageTypeMovie::getCurrentSecond() {
     float curFrame = videoPlayer->getCurrentFrame();
     float totalDuration = videoPlayer->getDuration();
     return curFrame/totalFrames*totalDuration;
+}
+
+//------------------------------------------------------------------
+bool ImageTypeMovie::isHap() {
+    return hap;
 }

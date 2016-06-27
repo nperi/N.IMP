@@ -82,3 +82,25 @@ void VideoPool::releasePlayer(ofBaseVideoPlayer* player) {
         }
     }
 }
+
+ofBaseVideoPlayer* VideoPool::getCommonPlayer() {
+    ofBaseVideoPlayer* vP = new ofQTKitPlayer();
+    ofQTKitDecodeMode decodeMode = OF_QTKIT_DECODE_PIXELS_AND_TEXTURE;
+    vP->setPixelFormat(OF_PIXELS_RGBA);
+    pool.push_back(std::pair<bool,ofBaseVideoPlayer*>(false,vP));
+    return vP;
+}
+
+ofBaseVideoPlayer* VideoPool::getHapPlayer() {
+    ofBaseVideoPlayer* vP = new ofxHapPlayer();
+    pool.push_back(std::pair<bool,ofBaseVideoPlayer*>(false,vP));
+    return vP;
+}
+
+
+bool VideoPool::isHapVideo(string path) {
+    ofxHapPlayer* vP = new ofxHapPlayer();
+    bool b = vP->loadMovie(path);
+    delete vP;
+    return b;
+}

@@ -19,6 +19,13 @@ ImageAndVideoInputList::ImageAndVideoInputList(string name, int id_) : InputSour
     isEnabled = false;
     videoPlayer = NULL;
     hasMovie = false;
+    
+    commonPlayer = VideoPool::getInstance()->getCommonPlayer();
+    hapPlayer = VideoPool::getInstance()->getHapPlayer();
+    commonPlayer->stop();
+    hapPlayer->stop();
+    videoPlayer = commonPlayer;
+    
 }
 
 //------------------------------------------------------------------
@@ -49,6 +56,10 @@ ImageAndVideoInputList::~ImageAndVideoInputList(){
     img.clear();
     img.getTextureReference().clear();
     
+    delete hapPlayer;
+    delete commonPlayer;
+    videoPlayer = NULL;
+    
 }
 
 //------------------------------------------------------------------
@@ -73,7 +84,11 @@ void ImageAndVideoInputList::setup(){
 
 //------------------------------------------------------------------
 void ImageAndVideoInputList::update(){
-    
+    if(inputs[currentSequence]->isHap()){
+        videoPlayer = hapPlayer;
+    } else {
+        videoPlayer = commonPlayer;
+    }
     if (videoPlayer != NULL) {
         videoTime = getTime(inputs[currentSequence]->getCurrentSecond()) + " / " + getTime(videoPlayer->getDuration());
     }
@@ -87,7 +102,7 @@ void ImageAndVideoInputList::update(){
     prevPosition = playPos2;
     playPos2 = inputs[currentSequence]->getPosition();
     
-    if (isPlaying == true && playInLoop == false && prevPosition > this->playPos2) {
+    if (dynamic_cast<ImageTypeMovie*>(inputs[currentSequence]) && isPlaying == true && playInLoop == false && prevPosition > this->playPos2) {
         nextSequenceChanged();
     }
 }
@@ -211,11 +226,16 @@ void ImageAndVideoInputList::loadImage(string name_, string path_){
     if (ofIsStringInString(path_, ".mov") || ofIsStringInString(path_, ".mp4") ||
         ofIsStringInString(path_, ".mpg") || ofIsStringInString(path_, ".mpg") ) {
         
-        if (inputs.size() == 0 || videoPlayer == NULL) {
-            videoPlayer = VideoPool::getInstance()->getPlayer(path_, name_);
-            videoPlayer->stop();
+//        if (inputs.size() == 0 || videoPlayer == NULL) {
+//            videoPlayer = VideoPool::getInstance()->getPlayer(path_, name_);
+//            videoPlayer->stop();
+//        }
+//        inputs.push_back(new ImageTypeMovie(name_,path_,videoPlayer));
+        if(VideoPool::getInstance()->isHapVideo(path_)) {
+            inputs.push_back(new ImageTypeMovie(name_,path_, hapPlayer, true));
+        } else {
+            inputs.push_back(new ImageTypeMovie(name_,path_, commonPlayer, false));
         }
-        inputs.push_back(new ImageTypeMovie(name_,path_,videoPlayer));
         hasMovie = true;
     }
     //load image sequence

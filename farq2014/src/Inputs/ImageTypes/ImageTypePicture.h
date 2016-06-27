@@ -36,6 +36,8 @@ class ImageTypePicture : public ImageType{
     
     float getCurrentSecond();
     
+    bool isHap() { return false; }
+
 private:
     
     ofImage img;
