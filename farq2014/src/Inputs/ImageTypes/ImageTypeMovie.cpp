@@ -22,11 +22,12 @@ ImageTypeMovie::ImageTypeMovie(string name_ ,string path_, ofBaseVideoPlayer* pl
     ext  = OTHER;
     isPlaying = false;
     
-    if (videoPlayer != NULL) videoPlayer->stop();
+//    if (videoPlayer != NULL) videoPlayer->stop();
     
     isPlaying.addListener(this, &ImageTypeMovie::cIsPlaying);
 }
 
+//------------------------------------------------------------------
 ImageTypeMovie::~ImageTypeMovie(){
     isPlaying.removeListener(this, &ImageTypeMovie::cIsPlaying);
 }
