@@ -48,6 +48,7 @@ class ImageType {
     virtual float getWidth() = 0;
     
     virtual float getCurrentSecond() = 0;
+    virtual bool isHap() = 0;
     
     protected:
     imgType mediaType;

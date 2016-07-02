@@ -17,7 +17,7 @@ class ImageTypeMovie : public ImageType{
 	
   public:
 	
-	ImageTypeMovie(string name_ ,string path_,ofBaseVideoPlayer* player);
+	ImageTypeMovie(string name_ ,string path_,ofBaseVideoPlayer* player, bool isHap);
     ~ImageTypeMovie();
 	
     void activate(ofImage& _img);
@@ -37,10 +37,13 @@ class ImageTypeMovie : public ImageType{
     
     float getCurrentSecond();
     
+    bool isHap();
+    
 private:
     
     ofBaseVideoPlayer* videoPlayer;
     string path;
+    bool hap;
     
     void cIsPlaying(bool &b);
 	

@@ -20,7 +20,9 @@ class VideoPool{
         void update();
         ofBaseVideoPlayer* getPlayer(string path, string name);
         void releasePlayer(ofBaseVideoPlayer* player);
-        
+        bool isHapVideo(string path);
+        ofBaseVideoPlayer* getCommonPlayer();
+        ofBaseVideoPlayer* getHapPlayer();
 
     protected:
         VideoPool() {};
