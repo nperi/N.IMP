@@ -99,11 +99,17 @@ void ImageAndVideoInputList::update(){
 
     
     inputs[currentSequence]->update(img);
-    prevPosition = playPos2;
-    playPos2 = inputs[currentSequence]->getPosition();
     
-    if (dynamic_cast<ImageTypeMovie*>(inputs[currentSequence]) && isPlaying == true && playInLoop == false && prevPosition > this->playPos2) {
-        nextSequenceChanged();
+    if (dynamic_cast<ImageTypeMovie*>(inputs[currentSequence])) {
+        prevPosition = playPos2;
+        playPos2 = inputs[currentSequence]->getPosition();
+        
+        if (isPlaying == true && playInLoop == false && prevPosition > this->playPos2) {
+            nextSequenceChanged();
+        }
+    }
+    else {
+        prevPosition = 0;
     }
 }
 
@@ -442,13 +448,13 @@ void ImageAndVideoInputList::sequenceChanged(int &s){
         inputs[currentSequence]->activate(img);
         inputs[currentSequence]->isPlaying = isPlaying;
         
-        inputs[0]->bpm = bpm;
-        inputs[0]->bpmMultiplier = bpmMultiplier;
-        inputs[0]->isMatchBpmToSequenceLength = isMatchBpmToSequenceLength;
-        inputs[0]->isPlayingBackwards = isPlayingBackwards;
+        inputs[currentSequence]->bpm = bpm;
+        inputs[currentSequence]->bpmMultiplier = bpmMultiplier;
+        inputs[currentSequence]->isMatchBpmToSequenceLength = isMatchBpmToSequenceLength;
+        inputs[currentSequence]->isPlayingBackwards = isPlayingBackwards;
         ofLoopType l = (isPalindromLoop) ? OF_LOOP_PALINDROME : OF_LOOP_NORMAL;
-        inputs[0]->setLoopState(l);
-        inputs[0]->calculateFPS();
+        inputs[currentSequence]->setLoopState(l);
+        inputs[currentSequence]->calculateFPS();
         
 //        width  = getBox().width/SCALE_RATIO;
         width  = (textureCorners[1].x - textureCorners[0].x)/SCALE_RATIO;
