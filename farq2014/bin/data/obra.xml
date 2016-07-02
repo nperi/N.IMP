@@ -1,6 +1,6 @@
 <MAIN_SETTINGS>
     <link_type>1</link_type>
-    <total_nodes>20</total_nodes>
+    <total_nodes>28</total_nodes>
     <show_console>0</show_console>
     <SETTINGS>
         <INPUTS>
@@ -26,27 +26,27 @@
                     </point>
                 </texture>
             </NODE>
-            <NODE id="2" name="New Image &amp; Video List" type="IMAGE_AND_VIDEO_LIST" path="" bpm="100.000000000" multiplier_divider="4" isPlaying="0" playInLoop="0" palindrom="0" matchBPMtoSequence="0" currentSequence="0">
+            <NODE id="2" name="1 Big Bang" type="IMAGE_AND_VIDEO_LIST" path="" bpm="100.000000000" multiplier_divider="4" isPlaying="0" playInLoop="0" palindrom="0" matchBPMtoSequence="0" currentSequence="0">
                 <ASSET name="1 bigbang_hap.mov" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/1 bigbang_hap.mov"></ASSET>
                 <type>none</type>
                 <path>none</path>
                 <visible>1</visible>
                 <texture>
                     <point>
-                        <x>29.865135193</x>
-                        <y>45.167900085</y>
+                        <x>34.531852722</x>
+                        <y>36.855171204</y>
                     </point>
                     <point>
-                        <x>155.134918213</x>
-                        <y>45.167900085</y>
+                        <x>178.595611572</x>
+                        <y>36.855171204</y>
                     </point>
                     <point>
-                        <x>155.134918213</x>
-                        <y>115.632141113</y>
+                        <x>178.595611572</x>
+                        <y>117.890991211</y>
                     </point>
                     <point>
-                        <x>29.865135193</x>
-                        <y>115.632141113</y>
+                        <x>34.531852722</x>
+                        <y>117.890991211</y>
                     </point>
                 </texture>
                 <mask>
@@ -80,20 +80,20 @@
                 <visible>1</visible>
                 <texture>
                     <point>
-                        <x>22.696533203</x>
-                        <y>269.520080566</y>
+                        <x>54.466804504</x>
+                        <y>406.746765137</y>
                     </point>
                     <point>
-                        <x>145.462036133</x>
-                        <y>269.520080566</y>
+                        <x>177.232238770</x>
+                        <y>406.746765137</y>
                     </point>
                     <point>
-                        <x>145.462036133</x>
-                        <y>351.363769531</y>
+                        <x>177.232238770</x>
+                        <y>488.590484619</y>
                     </point>
                     <point>
-                        <x>22.696533203</x>
-                        <y>351.363769531</y>
+                        <x>54.466804504</x>
+                        <y>488.590484619</y>
                     </point>
                 </texture>
                 <mask>
@@ -121,7 +121,7 @@
                     </dot>
                 </out>
             </NODE>
-            <NODE id="13" name="New Image &amp; Video List" type="IMAGE_AND_VIDEO_LIST" path="" bpm="100.000000000" multiplier_divider="4" isPlaying="0" playInLoop="1" palindrom="0" matchBPMtoSequence="0" currentSequence="0">
+            <NODE id="13" name="2 Big Bang" type="IMAGE_AND_VIDEO_LIST" path="" bpm="100.000000000" multiplier_divider="4" isPlaying="0" playInLoop="1" palindrom="0" matchBPMtoSequence="0" currentSequence="0">
                 <ASSET name="2 bigbang_hap.mov" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/2 bigbang_hap.mov"></ASSET>
                 <ASSET name="3 mitosis_hap.mov" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/3 mitosis_hap.mov"></ASSET>
                 <type>none</type>
@@ -129,20 +129,20 @@
                 <visible>1</visible>
                 <texture>
                     <point>
-                        <x>28.507171631</x>
-                        <y>409.038208008</y>
+                        <x>33.814682007</x>
+                        <y>522.245239258</y>
                     </point>
                     <point>
-                        <x>155.742248535</x>
-                        <y>409.038208008</y>
+                        <x>178.127395630</x>
+                        <y>522.245239258</y>
                     </point>
                     <point>
-                        <x>155.742248535</x>
-                        <y>480.607940674</y>
+                        <x>178.127395630</x>
+                        <y>603.421203613</y>
                     </point>
                     <point>
-                        <x>28.507171631</x>
-                        <y>480.607940674</y>
+                        <x>33.814682007</x>
+                        <y>603.421203613</y>
                     </point>
                 </texture>
                 <mask>
@@ -170,7 +170,7 @@
                     </dot>
                 </out>
             </NODE>
-            <NODE id="19" name="New Image &amp; Video List" type="IMAGE_AND_VIDEO_LIST" path="" bpm="100.000000000" multiplier_divider="4" isPlaying="0" playInLoop="0" palindrom="0" matchBPMtoSequence="0" currentSequence="0">
+            <NODE id="19" name="3 Creacion Vida" type="IMAGE_AND_VIDEO_LIST" path="" bpm="100.000000000" multiplier_divider="4" isPlaying="1" playInLoop="0" palindrom="0" matchBPMtoSequence="0" currentSequence="0">
                 <ASSET name="(1) bacterias.png" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/imagenes/creación de la vida/(1) bacterias.png"></ASSET>
                 <ASSET name="(1) bacterias 2.png" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/imagenes/creación de la vida/(1) bacterias 2.png"></ASSET>
                 <ASSET name="(1) bacterias 3.png" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/imagenes/creación de la vida/(1) bacterias 3.png"></ASSET>
@@ -220,25 +220,27 @@
                 <ASSET name="(10) pez 7.png" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/imagenes/creación de la vida/(10) pez 7.png"></ASSET>
                 <ASSET name="(10) Tiktaalik.png" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/imagenes/creación de la vida/(10) Tiktaalik.png"></ASSET>
                 <ASSET name="(10) Tiktaalik 2.jpg" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/imagenes/creación de la vida/(10) Tiktaalik 2.jpg"></ASSET>
+                <ASSET name="4 dinosauros_hap.mov" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/4 dinosauros_hap.mov"></ASSET>
+                <ASSET name="5 extincion_dinosauros_hap.mov" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/5 extincion_dinosauros_hap.mov"></ASSET>
                 <type>none</type>
                 <path>none</path>
                 <visible>1</visible>
                 <texture>
                     <point>
-                        <x>366.829620361</x>
-                        <y>394.706604004</y>
+                        <x>395.097930908</x>
+                        <y>518.405700684</y>
                     </point>
                     <point>
-                        <x>540.171875000</x>
-                        <y>394.706604004</y>
+                        <x>579.618286133</x>
+                        <y>518.405700684</y>
                     </point>
                     <point>
-                        <x>540.171875000</x>
-                        <y>510.560668945</y>
+                        <x>579.618286133</x>
+                        <y>641.730712891</y>
                     </point>
                     <point>
-                        <x>366.829620361</x>
-                        <y>510.560668945</y>
+                        <x>395.097930908</x>
+                        <y>641.730712891</y>
                     </point>
                 </texture>
                 <mask>
@@ -266,6 +268,54 @@
                     </dot>
                 </out>
             </NODE>
+            <NODE id="27" name="New Image &amp; Video List" type="IMAGE_AND_VIDEO_LIST" path="" bpm="100.000000000" multiplier_divider="4" isPlaying="0" playInLoop="1" palindrom="0" matchBPMtoSequence="0" currentSequence="0">
+                <ASSET name="Minimal Composition.mp4_hap.mov" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/videos/mascaras-figuras/Minimal Composition.mp4_hap.mov"></ASSET>
+                <type>none</type>
+                <path>none</path>
+                <visible>1</visible>
+                <texture>
+                    <point>
+                        <x>792.931640625</x>
+                        <y>666.191955566</y>
+                    </point>
+                    <point>
+                        <x>955.878417969</x>
+                        <y>666.191955566</y>
+                    </point>
+                    <point>
+                        <x>955.878417969</x>
+                        <y>757.849914551</y>
+                    </point>
+                    <point>
+                        <x>792.931640625</x>
+                        <y>757.849914551</y>
+                    </point>
+                </texture>
+                <mask>
+                    <point>
+                        <x>0.000000000</x>
+                        <y>0.000000000</y>
+                    </point>
+                    <point>
+                        <x>1.000000000</x>
+                        <y>0.000000000</y>
+                    </point>
+                    <point>
+                        <x>1.000000000</x>
+                        <y>1.000000000</y>
+                    </point>
+                    <point>
+                        <x>0.000000000</x>
+                        <y>1.000000000</y>
+                    </point>
+                </mask>
+                <out>
+                    <active>1</active>
+                    <dot>
+                        <to>25</to>
+                    </dot>
+                </out>
+            </NODE>
         </INPUTS>
         <VISUAL_LAYERS>
             <NODE id="3" name="New Glitch Layer" type="GLITCH_1" enabled="1" inputSource="2" do_CONVERGENCE="0" do_GLOW="0" do_SHAKER="0" do_CUTSLIDER="0" do_TWIST="0" do_OUTLINE="0" do_NOISE="0" do_SLITSCAN="0" do_SWELL="0" do_INVERT="0" do_CR_HIGHCONTRAST="0" do_CR_BLUERAISE="0" do_CR_REDRAISE="0" do_CR_GREENRAISE="0" do_CR_BLUEINVERT="0" do_CR_REDINVERT="0" do_CR_GREENINVERT="0">
@@ -274,20 +324,20 @@
                 <visible>1</visible>
                 <texture>
                     <point>
-                        <x>368.396759033</x>
+                        <x>399.112213135</x>
                         <y>42.591751099</y>
                     </point>
                     <point>
-                        <x>493.666534424</x>
+                        <x>543.175964355</x>
                         <y>42.591751099</y>
                     </point>
                     <point>
-                        <x>493.666534424</x>
-                        <y>113.055992126</y>
+                        <x>543.175964355</x>
+                        <y>123.627571106</y>
                     </point>
                     <point>
-                        <x>368.396759033</x>
-                        <y>113.055992126</y>
+                        <x>399.112213135</x>
+                        <y>123.627571106</y>
                     </point>
                 </texture>
                 <mask>
@@ -321,20 +371,20 @@
                 <visible>1</visible>
                 <texture>
                     <point>
-                        <x>952.091674805</x>
-                        <y>0.660239458</y>
+                        <x>1211.687377930</x>
+                        <y>221.077301025</y>
                     </point>
                     <point>
-                        <x>1079.326782227</x>
-                        <y>0.660239458</y>
+                        <x>1356.000000000</x>
+                        <y>221.077301025</y>
                     </point>
                     <point>
-                        <x>1079.326782227</x>
-                        <y>72.229972839</y>
+                        <x>1356.000000000</x>
+                        <y>302.253265381</y>
                     </point>
                     <point>
-                        <x>952.091674805</x>
-                        <y>72.229972839</y>
+                        <x>1211.687377930</x>
+                        <y>302.253265381</y>
                     </point>
                 </texture>
                 <mask>
@@ -357,6 +407,56 @@
                 </mask>
                 <out>
                     <active>1</active>
+                    <dot>
+                        <to>23</to>
+                    </dot>
+                </out>
+            </NODE>
+            <NODE id="23" name="New Image Processor" type="IMAGE_PROCESSOR" enabled="1" inputSource="17" isBloom="0" isContrast="0" coContrast="1.000000000" coBrightness="1.000000000" coMultiple="1.000000000" isKaleidoscope="0" kaSegments="2.000000000" isNoise="0" noFreq="0.430083126" noAmp="0.100000001" noSpeed="0.100000001" isEdge="0" edHue="0.405253321" edSat="0.000000000" isBleach="0" blOpacity="1.000000000" isRGBShift="0" rgAngle="0.000000000" rgAmount="0.000000000" isGod="0" isZoomBlur="0" zbCenterX="0.281254977" zbCenterY="0.301663160" zbExposure="0.487907559" zbDensity="0.250642747" zbWeight="0.250642747" zbClamp="1.000000000">
+                <type>none</type>
+                <path>none</path>
+                <visible>1</visible>
+                <texture>
+                    <point>
+                        <x>1005.346618652</x>
+                        <y>374.258087158</y>
+                    </point>
+                    <point>
+                        <x>1149.659179688</x>
+                        <y>374.258087158</y>
+                    </point>
+                    <point>
+                        <x>1149.659179688</x>
+                        <y>455.434051514</y>
+                    </point>
+                    <point>
+                        <x>1005.346618652</x>
+                        <y>455.434051514</y>
+                    </point>
+                </texture>
+                <mask>
+                    <point>
+                        <x>0.000000000</x>
+                        <y>0.000000000</y>
+                    </point>
+                    <point>
+                        <x>1.000000000</x>
+                        <y>0.000000000</y>
+                    </point>
+                    <point>
+                        <x>1.000000000</x>
+                        <y>1.000000000</y>
+                    </point>
+                    <point>
+                        <x>0.000000000</x>
+                        <y>1.000000000</y>
+                    </point>
+                </mask>
+                <out>
+                    <active>1</active>
+                    <dot>
+                        <to>25</to>
+                    </dot>
                 </out>
             </NODE>
         </VISUAL_LAYERS>
@@ -369,20 +469,20 @@
                 <visible>1</visible>
                 <texture>
                     <point>
-                        <x>368.164154053</x>
-                        <y>171.095825195</y>
+                        <x>744.927001953</x>
+                        <y>43.013801575</y>
                     </point>
                     <point>
-                        <x>493.433959961</x>
-                        <y>171.095825195</y>
+                        <x>870.196716309</x>
+                        <y>43.013801575</y>
                     </point>
                     <point>
-                        <x>493.433959961</x>
-                        <y>241.560119629</y>
+                        <x>870.196716309</x>
+                        <y>113.477798462</y>
                     </point>
                     <point>
-                        <x>368.164154053</x>
-                        <y>241.560119629</y>
+                        <x>744.927001953</x>
+                        <y>113.477798462</y>
                     </point>
                 </texture>
                 <mask>
@@ -418,20 +518,20 @@
                 <visible>1</visible>
                 <texture>
                     <point>
-                        <x>605.736145020</x>
-                        <y>4.191894531</y>
+                        <x>804.576416016</x>
+                        <y>220.135009766</y>
                     </point>
                     <point>
-                        <x>732.971252441</x>
-                        <y>4.191894531</y>
+                        <x>948.889099121</x>
+                        <y>220.135009766</y>
                     </point>
                     <point>
-                        <x>732.971252441</x>
-                        <y>75.761627197</y>
+                        <x>948.889099121</x>
+                        <y>301.310974121</y>
                     </point>
                     <point>
-                        <x>605.736145020</x>
-                        <y>75.761627197</y>
+                        <x>804.576416016</x>
+                        <y>301.310974121</y>
                     </point>
                 </texture>
                 <mask>
@@ -467,20 +567,20 @@
                 <visible>1</visible>
                 <texture>
                     <point>
-                        <x>367.500000000</x>
-                        <y>264.358459473</y>
+                        <x>799.749328613</x>
+                        <y>515.786132812</y>
                     </point>
                     <point>
-                        <x>494.735076904</x>
-                        <y>264.358459473</y>
+                        <x>944.062011719</x>
+                        <y>515.786132812</y>
                     </point>
                     <point>
-                        <x>494.735076904</x>
-                        <y>335.928192139</y>
+                        <x>944.062011719</x>
+                        <y>596.962097168</y>
                     </point>
                     <point>
-                        <x>367.500000000</x>
-                        <y>335.928192139</y>
+                        <x>799.749328613</x>
+                        <y>596.962097168</y>
                     </point>
                 </texture>
                 <mask>
@@ -508,21 +608,70 @@
                     </dot>
                 </out>
             </NODE>
+            <NODE id="25" name="New Mix Simple Blend" type="SIMPLE_BLEND" enabled="0" selector1="0" selector2="1" blendmode="6" opacity="0.000000000">
+                <INPUT_SOURCE nodeId="23"></INPUT_SOURCE>
+                <INPUT_SOURCE nodeId="27"></INPUT_SOURCE>
+                <type>none</type>
+                <path>none</path>
+                <visible>1</visible>
+                <texture>
+                    <point>
+                        <x>1402.890869141</x>
+                        <y>641.220031738</y>
+                    </point>
+                    <point>
+                        <x>1719.117919922</x>
+                        <y>641.220031738</y>
+                    </point>
+                    <point>
+                        <x>1719.117919922</x>
+                        <y>819.097534180</y>
+                    </point>
+                    <point>
+                        <x>1402.890869141</x>
+                        <y>819.097534180</y>
+                    </point>
+                </texture>
+                <mask>
+                    <point>
+                        <x>0.000000000</x>
+                        <y>0.000000000</y>
+                    </point>
+                    <point>
+                        <x>1.000000000</x>
+                        <y>0.000000000</y>
+                    </point>
+                    <point>
+                        <x>1.000000000</x>
+                        <y>1.000000000</y>
+                    </point>
+                    <point>
+                        <x>0.000000000</x>
+                        <y>1.000000000</y>
+                    </point>
+                </mask>
+                <out>
+                    <active>1</active>
+                </out>
+            </NODE>
         </MIXERS>
         <ENCAPSULATED_NODES></ENCAPSULATED_NODES>
         <SYPHON_SERVERS></SYPHON_SERVERS>
     </SETTINGS>
     <NODE_VIEWS>
         <NODE_VIEW name="obra.xml">
-            <NODE id="2" name="New Image &amp; Video List"></NODE>
+            <NODE id="2" name="1 Big Bang"></NODE>
             <NODE id="3" name="New Glitch Layer"></NODE>
             <NODE id="5" name="New Mix Simple Blend"></NODE>
             <NODE id="9" name="New Particle Generator"></NODE>
             <NODE id="11" name="New Mix Simple Blend"></NODE>
-            <NODE id="13" name="New Image &amp; Video List"></NODE>
+            <NODE id="13" name="2 Big Bang"></NODE>
             <NODE id="17" name="New Glitch Layer"></NODE>
-            <NODE id="19" name="New Image &amp; Video List"></NODE>
+            <NODE id="19" name="3 Creacion Vida"></NODE>
             <NODE id="20" name="New MultiChannel Switch"></NODE>
+            <NODE id="23" name="New Image Processor"></NODE>
+            <NODE id="25" name="New Mix Simple Blend"></NODE>
+            <NODE id="27" name="New Image &amp; Video List"></NODE>
         </NODE_VIEW>
     </NODE_VIEWS>
     <PARAM_INPUT_GENERATORS>
@@ -530,11 +679,16 @@
             <MIDI_SETTINGS>
                 <MIDI_MAP midiId="1" nodeId="11" param="opacity"></MIDI_MAP>
                 <MIDI_MAP midiId="2" nodeId="17" param="BLUERAISE"></MIDI_MAP>
-                <MIDI_MAP midiId="7" nodeId="5" param="Enabled"></MIDI_MAP>
+                <MIDI_MAP midiId="7" nodeId="23" param="Angle"></MIDI_MAP>
                 <MIDI_MAP midiId="10" nodeId="3" param="INVERT"></MIDI_MAP>
                 <MIDI_MAP midiId="12" nodeId="17" param="REDRAISE"></MIDI_MAP>
+                <MIDI_MAP midiId="14" nodeId="23" param="Amount"></MIDI_MAP>
+                <MIDI_MAP midiId="15" nodeId="25" param="opacity"></MIDI_MAP>
                 <MIDI_MAP midiId="17" nodeId="17" param="GREENRAISE"></MIDI_MAP>
             </MIDI_SETTINGS>
+        </INPUT_GEN>
+        <INPUT_GEN name="midi" type="MIDI" midiDeviceName="Akai APC40">
+            <MIDI_SETTINGS></MIDI_SETTINGS>
         </INPUT_GEN>
     </PARAM_INPUT_GENERATORS>
 </MAIN_SETTINGS>
