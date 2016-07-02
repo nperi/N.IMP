@@ -19,7 +19,7 @@ void ofApp::setup() {
     //*** MAIN SETUP ***//
     //
 
-    ofSetFrameRate(30);
+//    ofSetFrameRate(30);
     xmlFileName            = "Untitle.xml";
     xmlFilePath            = "";
     loadingOK              = true;
