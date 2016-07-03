@@ -47,7 +47,7 @@ void OscInputGenerator::processInput() {
                     p->name         = it->second->paramId[j];
                     p->value        = m.getArgAsFloat(j);
                     p->floatVal     = ofMap(m.getArgAsFloat(j), it->second->inputMinValue[j], it->second->inputMaxValue[j], it->second->paramMinValue[j], it->second->paramMaxValue[j]);
-                    p->intVal       = p->floatVal;
+                    p->intVal       = m.getArgAsInt32(j);
                     storeMessage(p);
                 }
             }
