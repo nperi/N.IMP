@@ -62,6 +62,7 @@ class ImageAndVideoInputList : public InputSource{
     ofParameter<int> bpmMultiplier;
     ofParameter<bool> isPlaying;
 //    ofParameter<bool> isEnabledOn;
+    ofParameter<bool> repeatSequence;
     ofParameter<bool> playInLoop;
     ofParameter<bool> isPalindromLoop;
     ofParameter<bool> isPlayingBackwards;
@@ -82,6 +83,7 @@ private:
     void sequenceChanged(int &s);
     
     void setOriginalPlaySpeedChanged(bool &b);
+    void repeatSequenceChanged(bool &b);
     void playInLoopChanged(bool &b);
     void loopTypeChanged(bool &b);
     void isPlayingBackwardsChanged(bool &b);

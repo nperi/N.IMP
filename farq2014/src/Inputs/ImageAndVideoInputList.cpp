@@ -35,6 +35,7 @@ ImageAndVideoInputList::~ImageAndVideoInputList(){
         VideoPool::getInstance()->releasePlayer(videoPlayer);
     }
     
+    repeatSequence.removeListener(this, &ImageAndVideoInputList::repeatSequenceChanged);
     playInLoop.removeListener(this, &ImageAndVideoInputList::playInLoopChanged);
     isPalindromLoop.removeListener(this, &ImageAndVideoInputList::loopTypeChanged);
     bpm.removeListener(this, &ImageAndVideoInputList::bpmChanged);
@@ -105,7 +106,12 @@ void ImageAndVideoInputList::update(){
         playPos2 = inputs[currentSequence]->getPosition();
         
         if (isPlaying == true && playInLoop == false && prevPosition > this->playPos2) {
-            nextSequenceChanged();
+            if(!repeatSequence && currentSequence == inputs.size()-1){
+                videoPlayer->stop();
+                isPlaying = false;
+            } else {
+                nextSequenceChanged();
+            }
         }
     }
     else {
@@ -174,6 +180,8 @@ float ImageAndVideoInputList::getMidiMin(string param_){
         return 0;
     }else if(param_.compare("Play")==0){
         return 0;
+    }else if(param_.compare("Repeat Sequence")==0){
+        return 0;
     }else if(param_.compare("Play in Loop")==0){
         return 0;
     }else if(param_.compare("Loop Palindrom")==0){
@@ -201,6 +209,8 @@ float ImageAndVideoInputList::getMidiMax(string param_){
     }else if(param_.compare("Current Sequence")==0){
         return inputs.size()-1;
     }else if(param_.compare("Play")==0){
+        return 1;
+    }else if(param_.compare("Repeat Sequence")==0){
         return 1;
     }else if(param_.compare("Play in Loop")==0){
         return 1;
@@ -258,6 +268,7 @@ void ImageAndVideoInputList::loadImage(string name_, string path_){
     if (inputs.size() == 1) {
         
         //create gui
+        repeatSequence.addListener(this, &ImageAndVideoInputList::repeatSequenceChanged);
         playInLoop.addListener(this, &ImageAndVideoInputList::playInLoopChanged);
         isPalindromLoop.addListener(this, &ImageAndVideoInputList::loopTypeChanged);
         bpm.addListener(this, &ImageAndVideoInputList::bpmChanged);
@@ -285,6 +296,7 @@ void ImageAndVideoInputList::loadImage(string name_, string path_){
         
         seqSettings.setName("Sequence Settings");
         seqSettings.add(isPlaying.set("Play",true));
+        seqSettings.add(repeatSequence.set("Repeat Sequence",true));
         seqSettings.add(playInLoop.set("Play in Loop",false));
         seqSettings.add(isPalindromLoop.set("Loop Palindrom",false));
         seqSettings.add(isMatchBpmToSequenceLength.set("BPM = Seq. Length",false));
@@ -303,6 +315,8 @@ void ImageAndVideoInputList::loadImage(string name_, string path_){
         baseGui = gui.find("Current Sequence");
         if (baseGui) ofAddListener(baseGui->addOrRemoveOSCInputBaseGui, &gui, &ofxGuiGroup::addOrRemoveOSCInput);
         baseGui = gui.find("Play");
+        if (baseGui) ofAddListener(baseGui->addOrRemoveOSCInputBaseGui, &gui, &ofxGuiGroup::addOrRemoveOSCInput);
+        baseGui = gui.find("Repeat Sequence");
         if (baseGui) ofAddListener(baseGui->addOrRemoveOSCInputBaseGui, &gui, &ofxGuiGroup::addOrRemoveOSCInput);
         baseGui = gui.find("Play in Loop");
         if (baseGui) ofAddListener(baseGui->addOrRemoveOSCInputBaseGui, &gui, &ofxGuiGroup::addOrRemoveOSCInput);
@@ -346,8 +360,19 @@ void ImageAndVideoInputList::loopTypeChanged(bool &b){
 }
 
 //------------------------------------------------------------------
+void ImageAndVideoInputList::repeatSequenceChanged(bool &b){
+    if(b && playInLoop){
+        playInLoop = false;
+    }
+    repeatSequence = b;
+}
+
+
+//------------------------------------------------------------------
 void ImageAndVideoInputList::playInLoopChanged(bool &b){
-    
+    if(b && repeatSequence){
+        repeatSequence = false;
+    }
     playInLoop = b;
 }
 
@@ -620,6 +645,7 @@ bool ImageAndVideoInputList::loadSettings(ofxXmlSettings &XML, int nTag_, int no
     bpm             = ofToFloat(XML.getAttribute("NODE", "bpm","120", nTag_));
     bpmMultiplier   = ofToInt(XML.getAttribute("NODE", "multiplier_divider","32", nTag_));
     isPlaying       = ofToBool(XML.getAttribute("NODE", "isPlaying","true", nTag_));
+    repeatSequence  = ofToBool(XML.getAttribute("NODE", "repeatSequence","true", nTag_));
     playInLoop      = ofToBool(XML.getAttribute("NODE", "playInLoop","false", nTag_));
     isPalindromLoop = ofToBool(XML.getAttribute("NODE", "palindrom","true", nTag_));
     isMatchBpmToSequenceLength = ofToBool(XML.getAttribute("NODE", "matchBPMtoSequence","false", nTag_));
@@ -659,6 +685,7 @@ bool ImageAndVideoInputList::saveSettings(ofxXmlSettings &XML) {
     XML.addAttribute("NODE", "bpm", bpm, lastPlace);
     XML.addAttribute("NODE", "multiplier_divider", bpmMultiplier, lastPlace);
     XML.addAttribute("NODE", "isPlaying", isPlaying, lastPlace);
+    XML.addAttribute("NODE", "repeatSequence", repeatSequence, lastPlace);
     XML.addAttribute("NODE", "playInLoop", playInLoop, lastPlace);
     XML.addAttribute("NODE", "palindrom", isPalindromLoop, lastPlace);
     XML.addAttribute("NODE", "matchBPMtoSequence", isMatchBpmToSequenceLength, lastPlace);
@@ -697,6 +724,7 @@ bool ImageAndVideoInputList::saveSettingsToSnippet(ofxXmlSettings &XML, map<int,
     XML.addAttribute("NODE", "bpm", bpm, lastPlace);
     XML.addAttribute("NODE", "multiplier_divider", bpmMultiplier, lastPlace);
     XML.addAttribute("NODE", "isPlaying", isPlaying, lastPlace);
+    XML.addAttribute("NODE", "repeatSequence", repeatSequence, lastPlace);
     XML.addAttribute("NODE", "playInLoop", playInLoop, lastPlace);
     XML.addAttribute("NODE", "palindrom", isPalindromLoop, lastPlace);
     XML.addAttribute("NODE", "matchBPMtoSequence", isMatchBpmToSequenceLength, lastPlace);
