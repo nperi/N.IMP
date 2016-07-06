@@ -914,13 +914,14 @@ void ofApp::menuEvent(ofxUIEventArgs &e) {
             }
             
             if (midiLearnActive) {
-                console->pushMessage("MIDI Learn is ON.");
-                console->pushMessage("\tClick on any nodes parameters to create a map to a MIDI control.");
-                console->pushMessage("\tDelete all MIDI control mappings with DEL key.");
-                console->pushMessage("\tTo view what is map to a MIDI control, press CONTROL.");
+                console->pushMessage("");
+                console->pushMessage("*** MIDI Learn is ON ***");
+                console->pushMessage("Click on any nodes parameters to create a map to a MIDI control.");
+                console->pushMessage("Delete all MIDI control mappings with DEL key.");
+                console->pushMessage("To view what is map to a MIDI control, press CONTROL.");
             }
             else {
-                console->pushMessage("MIDI Learn is OFF.");
+                console->pushMessage("*** MIDI Learn is OFF ***");
             }
         }
         else {
@@ -2874,23 +2875,32 @@ bool ofApp::saveSnippet() {
 
 void ofApp::printShortcuts(){
     
-    String intro = "Shortcuts for N.IMP";
-    string newNode     = "\tCreate a Node - n";
-    string loadSnippet = "\tLoad Snippet - command + j";
-    string saveSnippet = "\tSave Snippet - command + k";
-    string showConsole = "\tShow Console - command + c";
-    string deleteInput = "\tDelete Input - esc";
-    string fullScreen  = "\tFullscreen - command + f";
-    string showEncapsulated = "\tShow Encapsulated Node - command + e";
-    string deactivateAllNodes = "\tActivate\\Deactivate all nodes - command + d";
-    string showAllInspector = "\tShow\\Hide all inspectors - command + i";
-    string newPatcher  = "\tNew Patcher - command + n";
-    string openPatcher = "\tOpen Patcher - command + o";
-    string savePatcher = "\tSave Patcher - command + s";
-    string help = "\tShow shortcuts - F1";
-    string editMode = "\tEdit Mode On\\Off - F2";
+    if(!showConsole){
+        scrollBars->changeWindowHeight(console->getWindowRatio());
+    }
+    showConsole = true;
+    console->setConsoleVisible(showConsole);
     
+    String intro = "*** Shortcuts for N.IMP ***";
+    string newNode     = "Create a Node - n";
+    string loadSnippet = "Load Snippet - command + j";
+    string saveSnippet = "Save Snippet - command + k";
+    string showConsole = "Show Console - command + c";
+    string deleteInput = "Delete Input - esc";
+    string fullScreen  = "Fullscreen - command + f";
+    string showEncapsulated = "Show Encapsulated Node - command + e";
+    string deactivateAllNodes = "Activate\\Deactivate all nodes - command + d";
+    string showAllInspector = "Show\\Hide all inspectors - command + i";
+    string newPatcher  = "New Patcher - command + n";
+    string openPatcher = "Open Patcher - command + o";
+    string savePatcher = "Save Patcher - command + s";
+    string help = "Show shortcuts - F1";
+    string editMode = "Edit Mode On\\Off - F2";
+    
+    console->pushMessage("");
+    console->pushMessage("***************************");
     console->pushMessage(intro);
+    console->pushMessage("***************************");
     console->pushMessage(newNode);
     console->pushMessage(loadSnippet);
     console->pushMessage(saveSnippet);
@@ -2905,5 +2915,6 @@ void ofApp::printShortcuts(){
     console->pushMessage(savePatcher);
     console->pushMessage(help);
     console->pushMessage(editMode);
+    console->pushMessage("");
     
 }
