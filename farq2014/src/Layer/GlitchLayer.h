@@ -64,7 +64,7 @@ private:
     void setGlitchParameters();
     bool hasAnyEffect();
     
-    void _showHelp( int &_nId );
+    void _showHelp();
 };
 
 

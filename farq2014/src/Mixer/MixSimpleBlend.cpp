@@ -273,7 +273,7 @@ void MixSimpleBlend::resetSizeBasedOnInput(ofxPatch* input_){
 }
 
 //------------------------------------------------------------------
-void MixSimpleBlend::_showHelp( int &_nId ){
+void MixSimpleBlend::_showHelp(){
     
 }
 

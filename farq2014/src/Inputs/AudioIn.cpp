@@ -185,7 +185,7 @@ void AudioIn::resetSize(int _width, int _height) {
 }
 
 //------------------------------------------------------------------
-void AudioIn::_showHelp( int &_nId ){
+void AudioIn::_showHelp(){
     
 }
 

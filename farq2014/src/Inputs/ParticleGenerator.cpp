@@ -279,7 +279,7 @@ ofTexture* ParticleGenerator::getTexture(){
 }
 
 //------------------------------------------------------------------
-void ParticleGenerator::_showHelp( int &_nId ){
+void ParticleGenerator::_showHelp(){
     
 }
 

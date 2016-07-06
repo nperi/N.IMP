@@ -781,7 +781,7 @@ void ImageProcessor::cpiRes(ofVec2f &b){
 }
 
 //------------------------------------------------------------------
-void ImageProcessor::_showHelp( int &_nId ){
+void ImageProcessor::_showHelp(){
     
 }
 

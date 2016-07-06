@@ -42,7 +42,7 @@ private:
     void inputAdded(ImageOutput* in_);
     void inputRemoved(int id_);
     void editName(string& name_);
-    void _showHelp( int &_nId );
+    void _showHelp();
     
     int padding_x, padding_y, previous_index;
     float drawing_width, drawing_height;

@@ -153,7 +153,7 @@ ofTexture* GlitchLayerAlt::getTexture(){
 }
 
 //------------------------------------------------------------------
-void GlitchLayerAlt::_showHelp( int &_nId ){
+void GlitchLayerAlt::_showHelp(){
     
 }
 

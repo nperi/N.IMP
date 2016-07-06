@@ -616,7 +616,7 @@ string ImageAndVideoInputList::getTime(float t){
 }
 
 //------------------------------------------------------------------
-void ImageAndVideoInputList::_showHelp( int &_nId ){
+void ImageAndVideoInputList::_showHelp(){
     
 }
 

@@ -60,7 +60,7 @@ private:
     void editPort(string& p);
     void editAddress(string& a);
     void editInputs(bool& e);
-    void _showHelp( int &_nId );
+    void _showHelp();
     
     ofxTextInput oscPort;
     ofxTextInput oscAddress;

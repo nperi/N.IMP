@@ -94,7 +94,7 @@ protected:
     virtual void inputAdded(ImageOutput* in_){}; //called when input is added
     virtual void inputRemoved(int id_){}; //called when input is removed
     virtual void editName(string& name_);
-    virtual void _showHelp( int &_nId ){};
+    virtual void _showHelp(){};
     
     ofParameter<string> name;
     string typeName;
