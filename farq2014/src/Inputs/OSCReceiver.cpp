@@ -184,6 +184,11 @@ void OSCReceiver::removeNodeParams(int nodeId_){
 }
 
 //------------------------------------------------------------------
+void OSCReceiver::_showHelp( int &_nId ){
+    
+}
+
+//------------------------------------------------------------------
 bool OSCReceiver::loadSettings(ofxXmlSettings &XML, int nTag_, int nodesCount_) {
     
     bool loaded = true;

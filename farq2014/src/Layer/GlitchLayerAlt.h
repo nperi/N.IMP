@@ -46,6 +46,8 @@ private:
     
     void update();
     
+    void _showHelp( int &_nId );
+    
 };
 
 

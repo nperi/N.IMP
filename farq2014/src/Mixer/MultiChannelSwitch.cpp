@@ -224,6 +224,11 @@ void MultiChannelSwitch::resetSizeBasedOnInput(ofxPatch* input_){
 }
 
 //------------------------------------------------------------------
+void MultiChannelSwitch::_showHelp( int &_nId ){
+    
+}
+
+//------------------------------------------------------------------
 bool MultiChannelSwitch::loadSettings(ofxXmlSettings &XML, int nTag_, int nodesCount_) {
 
     nId             = XML.getAttribute("NODE", "id", -1, nTag_) + nodesCount_;

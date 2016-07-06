@@ -231,6 +231,11 @@ void MixMask::setEnable(bool isEnabled_){
 }
 
 //------------------------------------------------------------------
+void MixMask::_showHelp( int &_nId ){
+    
+}
+
+//------------------------------------------------------------------
 bool MixMask::loadSettings(ofxXmlSettings &XML, int nTag_, int nodesCount_) {
     
     nId       = XML.getAttribute("NODE", "id", -1, nTag_) + nodesCount_;

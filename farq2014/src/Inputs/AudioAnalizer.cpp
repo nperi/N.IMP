@@ -100,6 +100,11 @@ void AudioAnalizer::editSaturation(int& s) {
 }
 
 //------------------------------------------------------------------
+void AudioAnalizer::_showHelp( int &_nId ){
+    
+}
+
+//------------------------------------------------------------------
 bool AudioAnalizer::loadSettings(ofxXmlSettings &XML, int nTag_, int nodesCount_) {
     
     nId = XML.getAttribute("NODE", "id", -1, nTag_) + nodesCount_;

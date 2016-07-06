@@ -781,6 +781,12 @@ void ImageProcessor::cpiRes(ofVec2f &b){
 }
 
 //------------------------------------------------------------------
+void ImageProcessor::_showHelp( int &_nId ){
+    
+}
+
+
+//------------------------------------------------------------------
 bool ImageProcessor::loadSettings(ofxXmlSettings &XML, int nTag_, int nodesCount_) {
     
     nId             = XML.getAttribute("NODE", "id", -1, nTag_) + nodesCount_;

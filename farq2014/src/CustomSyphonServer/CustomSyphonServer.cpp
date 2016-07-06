@@ -188,6 +188,11 @@ void CustomSyphonServer::editName(string& name_) {
 }
 
 //------------------------------------------------------------------
+void CustomSyphonServer::_showHelp( int &_nId ){
+    
+}
+
+//------------------------------------------------------------------
 bool CustomSyphonServer::loadSettings(ofxXmlSettings &XML, int nTag_, int nodesCount_) {
     bool loaded = true;
     nId = XML.getAttribute("NODE", "id", -1, nTag_) + nodesCount_;

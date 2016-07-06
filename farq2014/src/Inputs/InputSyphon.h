@@ -28,6 +28,8 @@ public:
 
 private:
     
+    void _showHelp( int &_nId );
+    
     ofImage serverDownImg;
     
     int     dirIdx;

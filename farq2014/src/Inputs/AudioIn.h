@@ -68,6 +68,7 @@ private:
     void editBand(int& band_);
     void editSaturation(float& s);
     void editEnabled(bool& e);
+    void _showHelp( int &_nId );
     
     ofxUIMovingGraph* waveform;
     vector<float> inputBuffer;

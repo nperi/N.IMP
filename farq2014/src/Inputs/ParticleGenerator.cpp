@@ -279,6 +279,11 @@ ofTexture* ParticleGenerator::getTexture(){
 }
 
 //------------------------------------------------------------------
+void ParticleGenerator::_showHelp( int &_nId ){
+    
+}
+
+//------------------------------------------------------------------
 bool ParticleGenerator::loadSettings(ofxXmlSettings &XML, int nTag_, int nodesCount_) {
     
     bool saved = true;

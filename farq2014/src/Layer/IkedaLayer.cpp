@@ -247,6 +247,12 @@ ofTexture* IkedaLayer::getTexture(){
 }
 
 //------------------------------------------------------------------
+void IkedaLayer::_showHelp( int &_nId ){
+    
+}
+
+
+//------------------------------------------------------------------
 bool IkedaLayer::loadSettings(ofxXmlSettings &XML, int nTag_, int nodesCount_) {
     
     isCanny     = ofToBool(XML.getAttribute("NODE","isCanny","true",nTag_));

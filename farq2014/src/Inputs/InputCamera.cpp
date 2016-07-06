@@ -263,6 +263,11 @@ void InputCamera::editResolution(string resolution_) {
 //}
 
 //------------------------------------------------------------------
+void InputCamera::_showHelp( int &_nId ){
+    
+}
+
+//------------------------------------------------------------------
 bool InputCamera::loadSettings(ofxXmlSettings &XML, int nTag_, int nodesCount_) {
     
     bool loaded = true;

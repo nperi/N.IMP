@@ -378,6 +378,11 @@ ofTexture* GlitchLayer::getTexture(){
 }
 
 //------------------------------------------------------------------
+void GlitchLayer::_showHelp( int &_nId ){
+    
+}
+
+//------------------------------------------------------------------
 bool GlitchLayer::loadSettings(ofxXmlSettings &XML, int nTag_, int nodesCount_) {
     
     do_CONVERGENCE      = ofToBool(XML.getAttribute("NODE","do_CONVERGENCE","false",nTag_));

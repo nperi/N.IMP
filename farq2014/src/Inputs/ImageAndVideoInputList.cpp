@@ -616,6 +616,11 @@ string ImageAndVideoInputList::getTime(float t){
 }
 
 //------------------------------------------------------------------
+void ImageAndVideoInputList::_showHelp( int &_nId ){
+    
+}
+
+//------------------------------------------------------------------
 bool ImageAndVideoInputList::loadSettings(ofxXmlSettings &XML, int nTag_, int nodesCount_) {
     
     bool loaded = true;

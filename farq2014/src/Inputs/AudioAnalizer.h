@@ -44,6 +44,7 @@ private:
     void update();
     void editTreshold(float& t);
     void editSaturation(int& s);
+    void _showHelp( int &_nId );
 
     ofxFilterbank filterBank;
     ofParameter<float> threshold;

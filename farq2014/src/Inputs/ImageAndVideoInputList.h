@@ -82,6 +82,8 @@ private:
     void nextSequenceChanged();
     void sequenceChanged(int &s);
     
+    void _showHelp( int &_nId );
+    
     void setOriginalPlaySpeedChanged(bool &b);
     void repeatSequenceChanged(bool &b);
     void playInLoopChanged(bool &b);

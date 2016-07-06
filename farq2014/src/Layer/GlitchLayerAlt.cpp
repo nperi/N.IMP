@@ -153,6 +153,11 @@ ofTexture* GlitchLayerAlt::getTexture(){
 }
 
 //------------------------------------------------------------------
+void GlitchLayerAlt::_showHelp( int &_nId ){
+    
+}
+
+//------------------------------------------------------------------
 bool GlitchLayerAlt::loadSettings(ofxXmlSettings &XML, int nTag_, int nodesCount_) {
     
     isEnabled = XML.getAttribute("NODE", "enabled", true, nTag_);

@@ -82,6 +82,8 @@ private:
     void update();
     ofxPostProcessing post;
     
+    void _showHelp( int &_nId );
+    
     void cIsBloom(bool &b);
     void cIsContrast(bool &b);
     void ccoContrast(float &f);

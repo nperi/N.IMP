@@ -185,6 +185,11 @@ void AudioIn::resetSize(int _width, int _height) {
 }
 
 //------------------------------------------------------------------
+void AudioIn::_showHelp( int &_nId ){
+    
+}
+
+//------------------------------------------------------------------
 bool AudioIn::loadSettings(ofxXmlSettings &XML, int nTag_, int nodesCount_) {
     
     bool loaded = true;

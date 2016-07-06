@@ -166,6 +166,11 @@ void InputSyphon::serverRetired(string serverName, string appName) {
 }
 
 //------------------------------------------------------------------
+void InputSyphon::_showHelp( int &_nId ){
+    
+}
+
+//------------------------------------------------------------------
 bool InputSyphon::loadSettings(ofxXmlSettings &XML, int nTag_, int nodesCount_) {
     bool loaded = false;
     nId        = XML.getAttribute("NODE", "id", -1, nTag_) + nodesCount_;

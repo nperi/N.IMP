@@ -63,6 +63,8 @@ private:
     void update();
     void setGlitchParameters();
     bool hasAnyEffect();
+    
+    void _showHelp( int &_nId );
 };
 
 

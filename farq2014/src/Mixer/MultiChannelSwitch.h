@@ -57,6 +57,8 @@ private:
     void inputRemoved(int id_);
     void update();
     
+    void _showHelp( int &_nId );
+    
     void cselChannel(int& s);
     void cGui(bool& g);
     void cDisableChannels(bool& c);

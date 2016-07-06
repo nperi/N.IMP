@@ -260,6 +260,11 @@ void MixSimpleBlend::resetSizeBasedOnInput(ofxPatch* input_){
 }
 
 //------------------------------------------------------------------
+void MixSimpleBlend::_showHelp( int &_nId ){
+    
+}
+
+//------------------------------------------------------------------
 bool MixSimpleBlend::loadSettings(ofxXmlSettings &XML, int nTag_, int nodesCount_) {
     
     
