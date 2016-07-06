@@ -72,6 +72,8 @@ class ImageAndVideoInputList : public InputSource{
     ofxButton nextFrame;
     ofxButton previousFrame;
     ofParameter<bool> setOriginalPlaySpeed;
+    
+    bool isCurrentSequenceHap();
 	
 private:
     vector<ImageType*> inputs;

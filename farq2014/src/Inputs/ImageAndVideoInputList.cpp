@@ -752,3 +752,8 @@ bool ImageAndVideoInputList::saveSettingsToSnippet(ofxXmlSettings &XML, map<int,
     
     return saved;
 }
+
+//------------------------------------------------------------------
+bool ImageAndVideoInputList::isCurrentSequenceHap() {
+    return inputs[currentSequence]->isHap();
+}

@@ -64,6 +64,7 @@ private:
     vector<Entry*> entries;
     
     int selector1, selector2;
+    bool oneHap;
     
 };
 
