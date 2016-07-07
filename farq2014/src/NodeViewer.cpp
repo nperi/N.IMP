@@ -261,26 +261,28 @@ bool NodeViewer::saveSettings(ofxXmlSettings &XML) {
         
         if ( XML.getAttribute("NODE_VIEW", "name", "", i) == name){
             
-            XML.pushTag("NODE_VIEW");
+            saved = XML.pushTag("NODE_VIEW");
             
-            totalNodes = XML.getNumTags("NODE");
-            
-            for (int e = 0; e < elements.size(); e++) {
+            if (saved){
+                totalNodes = XML.getNumTags("NODE");
                 
-                found = false;
-                
-                for (int n = 0; n <= totalNodes; n++) {
-                    if (XML.getAttribute("NODE", "id", -1, n) == elements[e]->getImageOutput()->getId()) {
-                        XML.setAttribute("NODE", "name", elements[e]->getImageOutput()->getName(), n);
-                        found = true;
-                    }
-                }
-                
-                if (!found) {
-                    int lastPlace = XML.addTag("NODE");
+                for (int e = 0; e < elements.size(); e++) {
                     
-                    XML.addAttribute("NODE", "id", elements[e]->getImageOutput()->getId(), lastPlace);
-                    XML.addAttribute("NODE", "name", elements[e]->getImageOutput()->getName(), lastPlace);
+                    found = false;
+                    
+                    for (int n = 0; n <= totalNodes; n++) {
+                        if (XML.getAttribute("NODE", "id", -1, n) == elements[e]->getImageOutput()->getId()) {
+                            XML.setAttribute("NODE", "name", elements[e]->getImageOutput()->getName(), n);
+                            found = true;
+                        }
+                    }
+                    
+                    if (!found) {
+                        int lastPlace = XML.addTag("NODE");
+                        
+                        XML.addAttribute("NODE", "id", elements[e]->getImageOutput()->getId(), lastPlace);
+                        XML.addAttribute("NODE", "name", elements[e]->getImageOutput()->getName(), lastPlace);
+                    }
                 }
             }
             
