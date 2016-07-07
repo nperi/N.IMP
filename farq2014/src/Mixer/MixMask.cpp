@@ -235,6 +235,7 @@ void MixMask::_showHelp(){
     string name = "Node type name: Mix Mask";
     string description = "Description: Mix two different images";
     string use = "Use: Mix two different images, letting rotate one. This node accepts two inputs maximum";
+    ConsoleLog::getInstance()->pushMessage("");
     ConsoleLog::getInstance()->pushMessage(name);
     ConsoleLog::getInstance()->pushMessage(description);
     ConsoleLog::getInstance()->pushMessage(use);

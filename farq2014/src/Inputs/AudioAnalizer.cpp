@@ -104,6 +104,7 @@ void AudioAnalizer::_showHelp(){
     string name = "Node type name: Audio Analizer";
     string description = "Description: Details of the environment sound decompressed through the FFT (fast fourier transform) algorith";
     string use = "Use: Details of the environment sound decompressed through the FFT (fast fourier transform) algorith";
+    ConsoleLog::getInstance()->pushMessage("");
     ConsoleLog::getInstance()->pushMessage(name);
     ConsoleLog::getInstance()->pushMessage(description);
     ConsoleLog::getInstance()->pushMessage(use);

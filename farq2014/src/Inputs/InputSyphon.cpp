@@ -170,6 +170,7 @@ void InputSyphon::_showHelp(){
     string name = "Node type name: Syphon Client";
     string description = "Description: Iterate through every syphon server publishing on this computer and consume its content";
     string use = "Use: Through the inspector you can switch servers";
+    ConsoleLog::getInstance()->pushMessage("");
     ConsoleLog::getInstance()->pushMessage(name);
     ConsoleLog::getInstance()->pushMessage(description);
     ConsoleLog::getInstance()->pushMessage(use);

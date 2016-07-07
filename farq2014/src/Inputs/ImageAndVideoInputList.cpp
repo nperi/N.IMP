@@ -619,11 +619,13 @@ string ImageAndVideoInputList::getTime(float t){
 void ImageAndVideoInputList::_showHelp(){
     string name = "Node type name: Image or Video";
     string description = "Description: Contains a list of videos and images";
-    string use = "Use: Drag into the workspace a video or image to add a new node of this type\n";
-    use += "Drag a video or image to an existing node to add it to the list";
+    string use = "Use: Drag into the workspace a video or image to add a new node of this type";
+    string use2 = " \t Drag a video or image to an existing node to add it to the list";
+    ConsoleLog::getInstance()->pushMessage("");
     ConsoleLog::getInstance()->pushMessage(name);
     ConsoleLog::getInstance()->pushMessage(description);
     ConsoleLog::getInstance()->pushMessage(use);
+    ConsoleLog::getInstance()->pushMessage(use2);
 }
 
 //------------------------------------------------------------------

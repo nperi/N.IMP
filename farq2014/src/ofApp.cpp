@@ -929,7 +929,9 @@ void ofApp::menuEvent(ofxUIEventArgs &e) {
         }
     }
     else if (name == "Print Shortcuts (F1)") {
-        printShortcuts();
+        if(((ofxUIMultiImageButton*)e.widget)->getValue() == 1){
+            printShortcuts();
+        }
     }
 }
 /* ================================================ */

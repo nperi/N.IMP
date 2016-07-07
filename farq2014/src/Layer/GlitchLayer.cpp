@@ -382,6 +382,7 @@ void GlitchLayer::_showHelp(){
     string name = "Node type name: Glitch 1";
     string description = "Description: Apply different transformations to the current input";
     string use = "Use: Apply different transformations to the current input";
+    ConsoleLog::getInstance()->pushMessage("");
     ConsoleLog::getInstance()->pushMessage(name);
     ConsoleLog::getInstance()->pushMessage(description);
     ConsoleLog::getInstance()->pushMessage(use);
