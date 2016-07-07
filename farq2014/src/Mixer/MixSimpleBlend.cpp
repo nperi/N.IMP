@@ -274,7 +274,12 @@ void MixSimpleBlend::resetSizeBasedOnInput(ofxPatch* input_){
 
 //------------------------------------------------------------------
 void MixSimpleBlend::_showHelp(){
-    
+    string name = "Node type name: Mix Simple Blend";
+    string description = "Description: Blends two different images";
+    string use = "Use: Blends two different images. This node accepts several inputs but only blends the first two selected";
+    ConsoleLog::getInstance()->pushMessage(name);
+    ConsoleLog::getInstance()->pushMessage(description);
+    ConsoleLog::getInstance()->pushMessage(use);
 }
 
 //------------------------------------------------------------------

@@ -225,7 +225,12 @@ void MultiChannelSwitch::resetSizeBasedOnInput(ofxPatch* input_){
 
 //------------------------------------------------------------------
 void MultiChannelSwitch::_showHelp(){
-    
+    string name = "Node type name: Multi Channel Switch";
+    string description = "Description: Forwards through the pipeline only one input";
+    string use = "Use: Accepts several inputs but only forwards through the pipeline the selected one";
+    ConsoleLog::getInstance()->pushMessage(name);
+    ConsoleLog::getInstance()->pushMessage(description);
+    ConsoleLog::getInstance()->pushMessage(use);
 }
 
 //------------------------------------------------------------------

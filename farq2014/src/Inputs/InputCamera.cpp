@@ -264,7 +264,12 @@ void InputCamera::editResolution(string resolution_) {
 
 //------------------------------------------------------------------
 void InputCamera::_showHelp(){
-    
+    string name = "Node type name: Camera";
+    string description = "Description: Iterate through every camera connected to this computer";
+    string use = "Use: Through the inspector you can switch cameras and resolutions";
+    ConsoleLog::getInstance()->pushMessage(name);
+    ConsoleLog::getInstance()->pushMessage(description);
+    ConsoleLog::getInstance()->pushMessage(use);
 }
 
 //------------------------------------------------------------------

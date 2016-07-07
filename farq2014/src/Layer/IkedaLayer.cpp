@@ -248,7 +248,12 @@ ofTexture* IkedaLayer::getTexture(){
 
 //------------------------------------------------------------------
 void IkedaLayer::_showHelp(){
-    
+    string name = "Node type name: Ikeda";
+    string description = "Description: Apply different grayscale and canny transformations to the current input";
+    string use = "Use: Apply different grayscale and canny transformations to the current input";
+    ConsoleLog::getInstance()->pushMessage(name);
+    ConsoleLog::getInstance()->pushMessage(description);
+    ConsoleLog::getInstance()->pushMessage(use);
 }
 
 

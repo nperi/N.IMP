@@ -186,7 +186,16 @@ void AudioIn::resetSize(int _width, int _height) {
 
 //------------------------------------------------------------------
 void AudioIn::_showHelp(){
-    
+    string name = "Node type name: Audio In";
+    string description = "Description: Listens to the enviroment sound through the computer's microphone\n";
+    string use = "Use: Configure the threshold and of the sounds you want to start listening to\n";
+    use += "To control another node's parameter with the sound this nodes listens to:\n";
+    use += "1. Open the inspector and click on the 'Edit Left/Right FFT Inputs' checkbox\n";
+    use += "2. Select the desired parameter to be controled by this message\n";
+    use += "3. Click again on the 'Edit Left/Right FFT Inputs' checkbox";
+    ConsoleLog::getInstance()->pushMessage(name);
+    ConsoleLog::getInstance()->pushMessage(description);
+    ConsoleLog::getInstance()->pushMessage(use);
 }
 
 //------------------------------------------------------------------
