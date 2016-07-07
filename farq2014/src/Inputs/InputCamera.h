@@ -47,7 +47,7 @@ class InputCamera : public InputSource{
 private:
     
     void update();
-    void _showHelp( int &_nId );
+    void _showHelp();
     
     ofParameter<string> cameraSelectedName;
     string cameraName;

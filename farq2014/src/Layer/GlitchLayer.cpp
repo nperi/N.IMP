@@ -378,7 +378,7 @@ ofTexture* GlitchLayer::getTexture(){
 }
 
 //------------------------------------------------------------------
-void GlitchLayer::_showHelp( int &_nId ){
+void GlitchLayer::_showHelp(){
     
 }
 

@@ -28,7 +28,7 @@ public:
 
 private:
     
-    void _showHelp( int &_nId );
+    void _showHelp();
     
     ofImage serverDownImg;
     

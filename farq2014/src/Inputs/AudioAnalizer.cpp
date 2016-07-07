@@ -100,7 +100,7 @@ void AudioAnalizer::editSaturation(int& s) {
 }
 
 //------------------------------------------------------------------
-void AudioAnalizer::_showHelp( int &_nId ){
+void AudioAnalizer::_showHelp(){
     
 }
 

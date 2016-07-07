@@ -247,7 +247,7 @@ ofTexture* IkedaLayer::getTexture(){
 }
 
 //------------------------------------------------------------------
-void IkedaLayer::_showHelp( int &_nId ){
+void IkedaLayer::_showHelp(){
     
 }
 

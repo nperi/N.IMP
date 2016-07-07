@@ -82,7 +82,7 @@ private:
     void update();
     ofxPostProcessing post;
     
-    void _showHelp( int &_nId );
+    void _showHelp();
     
     void cIsBloom(bool &b);
     void cIsContrast(bool &b);

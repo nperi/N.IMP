@@ -188,7 +188,7 @@ void CustomSyphonServer::editName(string& name_) {
 }
 
 //------------------------------------------------------------------
-void CustomSyphonServer::_showHelp( int &_nId ){
+void CustomSyphonServer::_showHelp(){
     
 }
 

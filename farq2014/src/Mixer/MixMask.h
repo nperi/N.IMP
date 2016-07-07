@@ -41,7 +41,7 @@ private:
     void inputAdded(ImageOutput* in_);
     void inputRemoved(int id_);
     
-    void _showHelp( int &_nId );
+    void _showHelp();
     
     ofShader maskShader;
     void drawShader();

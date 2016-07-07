@@ -166,7 +166,7 @@ void InputSyphon::serverRetired(string serverName, string appName) {
 }
 
 //------------------------------------------------------------------
-void InputSyphon::_showHelp( int &_nId ){
+void InputSyphon::_showHelp(){
     
 }
 

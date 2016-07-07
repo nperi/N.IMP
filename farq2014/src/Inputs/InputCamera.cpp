@@ -263,7 +263,7 @@ void InputCamera::editResolution(string resolution_) {
 //}
 
 //------------------------------------------------------------------
-void InputCamera::_showHelp( int &_nId ){
+void InputCamera::_showHelp(){
     
 }
 

@@ -61,7 +61,7 @@ class ParticleGenerator : public InputSource{
 private:
     
     void update();
-    void _showHelp( int &_nId );
+    void _showHelp();
     
     ofxParticleSystem* particle;
     int nForces = 3;

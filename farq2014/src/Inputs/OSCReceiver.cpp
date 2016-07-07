@@ -184,7 +184,7 @@ void OSCReceiver::removeNodeParams(int nodeId_){
 }
 
 //------------------------------------------------------------------
-void OSCReceiver::_showHelp( int &_nId ){
+void OSCReceiver::_showHelp(){
     
 }
 

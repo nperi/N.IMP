@@ -224,7 +224,7 @@ void MultiChannelSwitch::resetSizeBasedOnInput(ofxPatch* input_){
 }
 
 //------------------------------------------------------------------
-void MultiChannelSwitch::_showHelp( int &_nId ){
+void MultiChannelSwitch::_showHelp(){
     
 }
 

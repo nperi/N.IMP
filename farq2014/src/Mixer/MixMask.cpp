@@ -231,7 +231,7 @@ void MixMask::setEnable(bool isEnabled_){
 }
 
 //------------------------------------------------------------------
-void MixMask::_showHelp( int &_nId ){
+void MixMask::_showHelp(){
     
 }
 
