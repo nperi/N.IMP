@@ -1782,7 +1782,7 @@ bool ofApp::saveToXML() {
     
     ofxXmlSettings XML;
     bool file = true;
-    bool backupFile = true;
+    bool backupFile = false;
     bool success = true;
     string backupFilePath;
     

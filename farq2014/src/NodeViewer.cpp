@@ -291,16 +291,20 @@ bool NodeViewer::saveSettings(ofxXmlSettings &XML) {
             int lastPlace = XML.addTag("NODE_VIEW");
             
             XML.addAttribute("NODE_VIEW", "name", name, lastPlace);
-            XML.pushTag("NODE_VIEW");
+            saved = XML.pushTag("NODE_VIEW");
             
-            for (int e = 0; e < elements.size(); e++) {
-                
-                lastPlace = XML.addTag("NODE");
-                XML.addAttribute("NODE", "id", elements[e]->getImageOutput()->getId(), lastPlace);
-                XML.addAttribute("NODE", "name", elements[e]->getImageOutput()->getName(), lastPlace);
+            if (saved){
+                for (int e = 0; e < elements.size(); e++) {
+                    
+                    lastPlace = XML.addTag("NODE");
+                    XML.addAttribute("NODE", "id", elements[e]->getImageOutput()->getId(), lastPlace);
+                    XML.addAttribute("NODE", "name", elements[e]->getImageOutput()->getName(), lastPlace);
+                }
             }
         }
         
         XML.popTag();
     }
+    
+    return saved;
 }
