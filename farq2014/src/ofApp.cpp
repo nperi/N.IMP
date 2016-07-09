@@ -2373,7 +2373,7 @@ void ofApp::deleteEverything() {
     encapsulatedIds.clear();
     syphonServers.clear();
     
-    audioAnalizer   = NULL;
+    audioAnalizer = NULL;
     
     nodeViewers[currentViewer]->setNodesCount(0);
 }
