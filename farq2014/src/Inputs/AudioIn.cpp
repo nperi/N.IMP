@@ -193,14 +193,14 @@ void AudioIn::_showHelp(){
     string use3 = " \t 1. Open the inspector and click on the 'Edit Left/Right FFT Inputs' checkbox";
     string use4 = " \t 2. Select the desired parameter to be controled by this message";
     string use5 = " \t 3. Click again on the 'Edit Left/Right FFT Inputs' checkbox";
-    ConsoleLog::getInstance()->pushMessage("");
+    ConsoleLog::getInstance()->pushMessage("", false);
     ConsoleLog::getInstance()->pushMessage(name);
-    ConsoleLog::getInstance()->pushMessage(description);
-    ConsoleLog::getInstance()->pushMessage(use);
-    ConsoleLog::getInstance()->pushMessage(use2);
-    ConsoleLog::getInstance()->pushMessage(use3);
-    ConsoleLog::getInstance()->pushMessage(use4);
-    ConsoleLog::getInstance()->pushMessage(use5);
+    ConsoleLog::getInstance()->pushMessage(description, false);
+    ConsoleLog::getInstance()->pushMessage(use, false);
+    ConsoleLog::getInstance()->pushMessage(use2, false);
+    ConsoleLog::getInstance()->pushMessage(use3, false);
+    ConsoleLog::getInstance()->pushMessage(use4, false);
+    ConsoleLog::getInstance()->pushMessage(use5, false);
 }
 
 //------------------------------------------------------------------

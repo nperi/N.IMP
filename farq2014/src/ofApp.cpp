@@ -2900,23 +2900,23 @@ void ofApp::printShortcuts(){
     string editMode = "Edit Mode On\\Off - F2";
     
     console->pushMessage("");
-    console->pushMessage("***************************");
-    console->pushMessage(intro);
-    console->pushMessage("***************************");
-    console->pushMessage(newNode);
-    console->pushMessage(loadSnippet);
-    console->pushMessage(saveSnippet);
-    console->pushMessage(showConsole);
-    console->pushMessage(deleteInput);
-    console->pushMessage(fullScreen);
-    console->pushMessage(showEncapsulated);
-    console->pushMessage(deactivateAllNodes);
-    console->pushMessage(showAllInspector);
-    console->pushMessage(newPatcher);
-    console->pushMessage(openPatcher);
-    console->pushMessage(savePatcher);
-    console->pushMessage(help);
-    console->pushMessage(editMode);
-    console->pushMessage("");
+    console->pushMessage("***************************", false);
+    console->pushMessage(intro, false);
+    console->pushMessage("***************************", false);
+    console->pushMessage(newNode, false);
+    console->pushMessage(loadSnippet, false);
+    console->pushMessage(saveSnippet, false);
+    console->pushMessage(showConsole, false);
+    console->pushMessage(deleteInput, false);
+    console->pushMessage(fullScreen, false);
+    console->pushMessage(showEncapsulated, false);
+    console->pushMessage(deactivateAllNodes, false);
+    console->pushMessage(showAllInspector, false);
+    console->pushMessage(newPatcher, false);
+    console->pushMessage(openPatcher, false);
+    console->pushMessage(savePatcher, false);
+    console->pushMessage(help, false);
+    console->pushMessage(editMode, false);
+    console->pushMessage("", false);
     
 }

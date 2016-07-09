@@ -128,26 +128,30 @@ bool ConsoleLog::mouseMoved(ofMouseEventArgs &e){
 }
 
 //------------------------------------------------------------------
-void ConsoleLog::pushMessage(string message){
+void ConsoleLog::pushMessage(string message, bool firstMesssage){
+    message = processMessage(message, firstMesssage);
     Message m = Message(DEFAULT, message);
     push(m);
 }
 
 //------------------------------------------------------------------
-void ConsoleLog::pushError(string error){
+void ConsoleLog::pushError(string error, bool firstMesssage){
+    error = processMessage(error, firstMesssage);
     Message m = Message(ERROR, error);
     push(m);
     ofLog(OF_LOG_ERROR, error);
 }
 
 //------------------------------------------------------------------
-void ConsoleLog::pushSuccess(string success){
+void ConsoleLog::pushSuccess(string success, bool firstMesssage){
+    success = processMessage(success, firstMesssage);
     Message m = Message(SUCCESS, success);
     push(m);
 }
 
 //------------------------------------------------------------------
-void ConsoleLog::pushWarning(string warning){
+void ConsoleLog::pushWarning(string warning, bool firstMesssage){
+    warning = processMessage(warning, firstMesssage);
     Message m = Message(WARNING, warning);
     push(m);
 }
@@ -184,7 +188,7 @@ void ConsoleLog::printMessages(){
         }
         
         if (y > container.y + font.getLineHeight()) {
-            font.drawString("- " + messages.at(i).message, RIGHT_MENU_WIDTH + 10.f, y);
+            font.drawString(messages.at(i).message, RIGHT_MENU_WIDTH + 10.f, y);
         }
         y += font.getLineHeight();
     }
@@ -204,4 +208,20 @@ int ConsoleLog::getHighestCoord(){
 //------------------------------------------------------------------
 void ConsoleLog::setDiffStartY(int diffY){
     startY += diffY;
+}
+
+//------------------------------------------------------------------
+string ConsoleLog::processMessage(string message, bool firstMessage) {
+    if(firstMessage){
+        time_t rawtime;
+        struct tm * timeinfo;
+        time(&rawtime);
+        timeinfo = localtime (&rawtime);
+        ostringstream oss;
+        oss << timeinfo->tm_hour << ":" << timeinfo->tm_min << ":" << timeinfo->tm_sec << " - " << message;
+        return oss.str();
+    } else {
+        return message = " \t " + message;
+    }
+    
 }

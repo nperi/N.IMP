@@ -283,10 +283,10 @@ void ParticleGenerator::_showHelp(){
     string name = "Node type name: Particle Generator";
     string description = "Description: Generates particles randomly";
     string use = "Use: Generates partilces randomly";
-    ConsoleLog::getInstance()->pushMessage("");
+    ConsoleLog::getInstance()->pushMessage("", false);
     ConsoleLog::getInstance()->pushMessage(name);
-    ConsoleLog::getInstance()->pushMessage(description);
-    ConsoleLog::getInstance()->pushMessage(use);
+    ConsoleLog::getInstance()->pushMessage(description, false);
+    ConsoleLog::getInstance()->pushMessage(use, false);
 }
 
 //------------------------------------------------------------------

@@ -621,11 +621,11 @@ void ImageAndVideoInputList::_showHelp(){
     string description = "Description: Contains a list of videos and images";
     string use = "Use: Drag into the workspace a video or image to add a new node of this type";
     string use2 = " \t Drag a video or image to an existing node to add it to the list";
-    ConsoleLog::getInstance()->pushMessage("");
+    ConsoleLog::getInstance()->pushMessage("", false);
     ConsoleLog::getInstance()->pushMessage(name);
-    ConsoleLog::getInstance()->pushMessage(description);
-    ConsoleLog::getInstance()->pushMessage(use);
-    ConsoleLog::getInstance()->pushMessage(use2);
+    ConsoleLog::getInstance()->pushMessage(description, false);
+    ConsoleLog::getInstance()->pushMessage(use, false);
+    ConsoleLog::getInstance()->pushMessage(use2, false);
 }
 
 //------------------------------------------------------------------

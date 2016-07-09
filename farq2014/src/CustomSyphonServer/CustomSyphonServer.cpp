@@ -192,10 +192,10 @@ void CustomSyphonServer::_showHelp(){
     string name = "Node type name: Syphon Output";
     string description = "Description: Output of the pipeline";
     string use = "Use: Configure in the inspector the name of the server which the output will be published in the syphon server";
-    ConsoleLog::getInstance()->pushMessage("");
+    ConsoleLog::getInstance()->pushMessage("", false);
     ConsoleLog::getInstance()->pushMessage(name);
-    ConsoleLog::getInstance()->pushMessage(description);
-    ConsoleLog::getInstance()->pushMessage(use);
+    ConsoleLog::getInstance()->pushMessage(description, false);
+    ConsoleLog::getInstance()->pushMessage(use, false);
 }
 
 //------------------------------------------------------------------
