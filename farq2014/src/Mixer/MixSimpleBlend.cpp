@@ -277,10 +277,10 @@ void MixSimpleBlend::_showHelp(){
     string name = "Node type name: Mix Simple Blend";
     string description = "Description: Blends two different images";
     string use = "Use: Blends two different images. This node accepts several inputs but only blends the first two selected";
-    ConsoleLog::getInstance()->pushMessage("");
+    ConsoleLog::getInstance()->pushMessage("", false);
     ConsoleLog::getInstance()->pushMessage(name);
-    ConsoleLog::getInstance()->pushMessage(description);
-    ConsoleLog::getInstance()->pushMessage(use);
+    ConsoleLog::getInstance()->pushMessage(description, false);
+    ConsoleLog::getInstance()->pushMessage(use, false);
 }
 
 //------------------------------------------------------------------

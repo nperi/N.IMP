@@ -2896,25 +2896,25 @@ void ofApp::printShortcuts(){
     showConsole = true;
     console->setConsoleVisible(showConsole);
     
-    console->pushMessage("");
-    console->pushMessage("************************");
-    console->pushMessage("*** Shortcuts for N.IMP ***");
-    console->pushMessage("************************");
-    console->pushMessage("Create a Node - n");
-    console->pushMessage("Cancel node creation - esc");
-    console->pushMessage("Load Snippet - command + j");
-    console->pushMessage("Save Snippet - command + k");
-    console->pushMessage("Show Console - command + c");
-    console->pushMessage("Clear Console - command + shift + c");
-    console->pushMessage("Fullscreen - command + f");
-    console->pushMessage("Show Encapsulated Node - command + e");
-    console->pushMessage("Activate\\Deactivate all nodes - command + d");
-    console->pushMessage("Show\\Hide all inspectors - command + i");
-    console->pushMessage("New Patcher - command + n");
-    console->pushMessage("Open Patcher - command + o");
-    console->pushMessage("Save Patcher - command + s");
-    console->pushMessage("Show shortcuts - F1");
-    console->pushMessage("Edit Mode On\\Off - F2");
-    console->pushMessage("");
+    console->pushMessage("", false);
+    console->pushMessage("************************", false);
+    console->pushMessage("*** Shortcuts for N.IMP ***", false);
+    console->pushMessage("************************", false);
+    console->pushMessage("Create a Node - n", false);
+    console->pushMessage("Cancel node creation - esc", false);
+    console->pushMessage("Load Snippet - command + j", false);
+    console->pushMessage("Save Snippet - command + k", false);
+    console->pushMessage("Show Console - command + c", false);
+    console->pushMessage("Clear Console - command + shift + c", false);
+    console->pushMessage("Fullscreen - command + f", false);
+    console->pushMessage("Show Encapsulated Node - command + e", false);
+    console->pushMessage("Activate\\Deactivate all nodes - command + d", false);
+    console->pushMessage("Show\\Hide all inspectors - command + i", false);
+    console->pushMessage("New Patcher - command + n", false);
+    console->pushMessage("Open Patcher - command + o", false);
+    console->pushMessage("Save Patcher - command + s", false);
+    console->pushMessage("Show shortcuts - F1", false);
+    console->pushMessage("Edit Mode On\\Off - F2", false);
+    console->pushMessage("", false);
     
 }

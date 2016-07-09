@@ -45,10 +45,10 @@ public:
     
     //*** FUNCTIONS ***//
     //
-    void pushMessage(string message);
-    void pushError(string error);
-    void pushSuccess(string success);
-    void pushWarning(string warning);
+    void pushMessage(string message, bool firstMessage = true);
+    void pushError(string error, bool firstMessage = true);
+    void pushSuccess(string success, bool firstMessage = true);
+    void pushWarning(string warning, bool firstMessage = true);
     void clearMessages();
     void printMessages();
     
@@ -84,6 +84,8 @@ private:
     bool consoleVisible;
     bool pressingConsole;
     
+    // if a same message is going to be printed in several lines, set 'firstMessage' to false
+    string processMessage(string message, bool firstMessage);
 };
 
 

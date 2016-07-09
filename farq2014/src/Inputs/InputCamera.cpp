@@ -267,11 +267,10 @@ void InputCamera::_showHelp(){
     string name = "Node type name: Camera";
     string description = "Description: Input node that captures the image from a camera.";
     string use = "Use: Through the Inspector you can switch between all cameras conected to the computer and available resolutions.";
-    ConsoleLog::getInstance()->pushMessage("");
+    ConsoleLog::getInstance()->pushMessage("", false);
     ConsoleLog::getInstance()->pushMessage(name);
-    ConsoleLog::getInstance()->pushMessage(description);
-    ConsoleLog::getInstance()->pushMessage(use);
-    ConsoleLog::getInstance()->pushMessage("");
+    ConsoleLog::getInstance()->pushMessage(description, false);
+    ConsoleLog::getInstance()->pushMessage(use, false);
 }
 
 //------------------------------------------------------------------
