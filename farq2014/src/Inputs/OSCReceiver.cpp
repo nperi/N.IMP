@@ -186,12 +186,12 @@ void OSCReceiver::removeNodeParams(int nodeId_){
 //------------------------------------------------------------------
 void OSCReceiver::_showHelp(){
     string name = "Node type name: OSC Receiver";
-    string description = "Description: Listens to messages in the configured port and address";
-    string use = "Use: Configure in the inspector the port and address of the osc message you want to start listening to";
-    string use2 = "To control another node's parameter with the osc message this nodes listens to:";
-    string use3 = " \t 1. Open the inspector and click on the 'Edit OSC Inputs' checkbox";
-    string use4 = " \t 2. Select the desired parameters to be controled by this message";
-    string use5 = " \t 3. Click again on the 'Edit OSC Inputs' checkbox";
+    string description = "Description: Listens to incoming OSC messages in the configured port and address.";
+    string use = "Use: Setup in the Inspector the port and address of the OSC message you want to start listening to.";
+    string use2 = "To control nodes attributes with this OSC message receiver node follow this steps:";
+    string use3 = " \t 1. Open the Inspector and click on the 'Edit OSC Inputs' checkbox.";
+    string use4 = " \t 2. Select the desired attributes in another node's Inspector to be controlled by messages received by this node.";
+    string use5 = " \t 3. Click again on the 'Edit OSC Inputs' checkbox to save the configuration.";
     ConsoleLog::getInstance()->pushMessage("");
     ConsoleLog::getInstance()->pushMessage(name);
     ConsoleLog::getInstance()->pushMessage(description);

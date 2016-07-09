@@ -173,7 +173,7 @@ public:
     //create new node
     vector<ofxUIWidget*> widgetsToDelete;
     textInput* newNodeInput;
-    bool holdingCommand, holdingControl, holdingDelete;
+    bool holdingCommand, holdingControl, holdingDelete, holdingShift;
     bool showInspectors, activatePatches;
     
     // console

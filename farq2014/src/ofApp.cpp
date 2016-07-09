@@ -32,6 +32,7 @@ void ofApp::setup() {
     holdingCommand         = false;
     holdingControl         = false;
     holdingDelete          = false;
+    holdingShift           = false;
     showInspectors         = false;
     activatePatches        = false;
     
@@ -107,7 +108,7 @@ void ofApp::setup() {
     menu->addWidget(spacer);
     spacer->setColorFill(ofxUIColor(120, 120, 120, 200));
     new menuItem(menu, "MultiImageToggle", "Console on/off (cmd+c)", "assets/console.png", false, RIGHT_MENU_WIDTH + MENU_ITEM_SIZE*10 + MENU_ITEM_PADDING*15, 20);
-    new menuItem(menu, "MultiImageButton", "Clear Console", "assets/clear_console.png", false, RIGHT_MENU_WIDTH + MENU_ITEM_SIZE*11 + MENU_ITEM_PADDING*16, 20);
+    new menuItem(menu, "MultiImageButton", "Clear Console (cmd+shift+c)", "assets/clear_console.png", false, RIGHT_MENU_WIDTH + MENU_ITEM_SIZE*11 + MENU_ITEM_PADDING*16, 20);
     
     spacer = new ofxUISpacer(RIGHT_MENU_WIDTH + MENU_ITEM_SIZE*12 + MENU_ITEM_PADDING*17, 20, 1,MENU_ITEM_SIZE);
     menu->addWidget(spacer);
@@ -516,6 +517,9 @@ void ofApp::keyPressed  (int key){
         case OF_KEY_BACKSPACE:
             holdingDelete = true;
             break;
+        case OF_KEY_SHIFT:
+            holdingShift = true;
+            break;
         case 'f': case 'F':
             if (holdingCommand && ((newNodeInput == NULL) || (!newNodeInput->isClicked()))) {
                 isFullScreen = !isFullScreen;
@@ -600,13 +604,18 @@ void ofApp::keyPressed  (int key){
             break;
         case 'c': case 'C':
             if (holdingCommand && ((newNodeInput == NULL) || (!newNodeInput->isClicked()))) {
-                if(showConsole){
-                    scrollBars->changeWindowHeight(1);
-                }else{
-                    scrollBars->changeWindowHeight(console->getWindowRatio());
+                if (holdingShift && showConsole) {
+                    console->clearMessages();
                 }
-                showConsole = !showConsole;
-                console->setConsoleVisible(showConsole);
+                else {
+                    if(showConsole){
+                        scrollBars->changeWindowHeight(1);
+                    }else{
+                        scrollBars->changeWindowHeight(console->getWindowRatio());
+                    }
+                    showConsole = !showConsole;
+                    console->setConsoleVisible(showConsole);
+                }
             }
             break;
         case OF_KEY_F1:
@@ -645,6 +654,9 @@ void ofApp::keyReleased(int key){
             break;
         case OF_KEY_BACKSPACE:
             holdingDelete = false;
+            break;
+        case OF_KEY_SHIFT:
+            holdingShift = false;
             break;
         case 'e': case 'E':
             if(EventHandler::getInstance()->getEncapsulatedIdDraw() != MAIN_WINDOW){
@@ -856,7 +868,7 @@ void ofApp::menuEvent(ofxUIEventArgs &e) {
         showConsole = !showConsole;
         console->setConsoleVisible(showConsole);
     }
-    else if (name == "Clear Console"){
+    else if (name == "Clear Console (cmd+shift+c)"){
         console->clearMessages();
     }
     
@@ -922,6 +934,7 @@ void ofApp::menuEvent(ofxUIEventArgs &e) {
             }
             else {
                 console->pushMessage("*** MIDI Learn is OFF ***");
+                console->pushMessage("");
             }
         }
         else {
@@ -2883,40 +2896,25 @@ void ofApp::printShortcuts(){
     showConsole = true;
     console->setConsoleVisible(showConsole);
     
-    String intro = "*** Shortcuts for N.IMP ***";
-    string newNode     = "Create a Node - n";
-    string loadSnippet = "Load Snippet - command + j";
-    string saveSnippet = "Save Snippet - command + k";
-    string showConsole = "Show Console - command + c";
-    string deleteInput = "Delete Input - esc";
-    string fullScreen  = "Fullscreen - command + f";
-    string showEncapsulated = "Show Encapsulated Node - command + e";
-    string deactivateAllNodes = "Activate\\Deactivate all nodes - command + d";
-    string showAllInspector = "Show\\Hide all inspectors - command + i";
-    string newPatcher  = "New Patcher - command + n";
-    string openPatcher = "Open Patcher - command + o";
-    string savePatcher = "Save Patcher - command + s";
-    string help = "Show shortcuts - F1";
-    string editMode = "Edit Mode On\\Off - F2";
-    
     console->pushMessage("");
-    console->pushMessage("***************************");
-    console->pushMessage(intro);
-    console->pushMessage("***************************");
-    console->pushMessage(newNode);
-    console->pushMessage(loadSnippet);
-    console->pushMessage(saveSnippet);
-    console->pushMessage(showConsole);
-    console->pushMessage(deleteInput);
-    console->pushMessage(fullScreen);
-    console->pushMessage(showEncapsulated);
-    console->pushMessage(deactivateAllNodes);
-    console->pushMessage(showAllInspector);
-    console->pushMessage(newPatcher);
-    console->pushMessage(openPatcher);
-    console->pushMessage(savePatcher);
-    console->pushMessage(help);
-    console->pushMessage(editMode);
+    console->pushMessage("************************");
+    console->pushMessage("*** Shortcuts for N.IMP ***");
+    console->pushMessage("************************");
+    console->pushMessage("Create a Node - n");
+    console->pushMessage("Cancel node creation - esc");
+    console->pushMessage("Load Snippet - command + j");
+    console->pushMessage("Save Snippet - command + k");
+    console->pushMessage("Show Console - command + c");
+    console->pushMessage("Clear Console - command + shift + c");
+    console->pushMessage("Fullscreen - command + f");
+    console->pushMessage("Show Encapsulated Node - command + e");
+    console->pushMessage("Activate\\Deactivate all nodes - command + d");
+    console->pushMessage("Show\\Hide all inspectors - command + i");
+    console->pushMessage("New Patcher - command + n");
+    console->pushMessage("Open Patcher - command + o");
+    console->pushMessage("Save Patcher - command + s");
+    console->pushMessage("Show shortcuts - F1");
+    console->pushMessage("Edit Mode On\\Off - F2");
     console->pushMessage("");
     
 }
