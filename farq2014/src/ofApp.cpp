@@ -689,6 +689,9 @@ void ofApp::mouseReleased(int x, int y, int button){
 void ofApp::dragEvent(ofDragInfo dragInfo){
     
     if( dragInfo.files.size() > 0 ){
+        
+        bool foundNode = false;
+        
         for(int i = 0; i < dragInfo.files.size(); i++){
             
             textInputEvent* ev = new textInputEvent();
@@ -719,6 +722,7 @@ void ofApp::dragEvent(ofDragInfo dragInfo){
                 return;
             }
             
+            foundNode = false;
             for (int j = 0; j < inputs.size(); j ++) {
                 if (inputs[j]->getTypeName() == "Image & Video List" && inputs[j]->isOver(dragInfo.position*cam.getGlobalTransformMatrix())){
                     ((ImageAndVideoInputList*)inputs[j])->loadImage(file.getFileName(), dragInfo.files[i]);
@@ -726,16 +730,19 @@ void ofApp::dragEvent(ofDragInfo dragInfo){
                                          + " was succesfully added as a new sequence to the node "
                                          + inputs[j]->getName() + ".");
                     file.close();
-                    return;
+                    foundNode = true;
+                    break;
                 }
             }
             
-            ev->path   = dragInfo.files[i];
-            ev->point  = dragInfo.position;
-            ev->name   = file.getFileName();
-            ev->widget = NULL;
-            createNode(*ev);
-            file.close();
+            if (!foundNode) {
+                ev->path   = dragInfo.files[i];
+                ev->point  = dragInfo.position;
+                ev->name   = file.getFileName();
+                ev->widget = NULL;
+                createNode(*ev);
+                file.close();
+            }
         }
     }
 }

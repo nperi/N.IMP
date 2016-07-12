@@ -16,7 +16,8 @@ ImageTypePicture::ImageTypePicture(string name_ ,string path_, bool isResize, in
         img.resize(width, height);
     }
     unsigned char* p = img.getPixels();
-    tex.loadData(p, img.getWidth(), img.getHeight(), GL_RGB);
+    
+    tex.loadData(p, img.getWidth(), img.getHeight(), ofGetGlFormat(img.getPixelsRef()));
     
     ofIsStringInString(path_, ".png") ? ext = PNG : ext = OTHER;
     
