@@ -1,6 +1,6 @@
 <MAIN_SETTINGS>
     <link_type>1</link_type>
-    <total_nodes>28</total_nodes>
+    <total_nodes>30</total_nodes>
     <show_console>0</show_console>
     <SETTINGS>
         <INPUTS>
@@ -26,7 +26,7 @@
                     </point>
                 </texture>
             </NODE>
-            <NODE id="2" name="1 Big Bang" type="IMAGE_AND_VIDEO_LIST" path="" bpm="100.000000000" multiplier_divider="4" isPlaying="0" playInLoop="0" palindrom="0" matchBPMtoSequence="0" currentSequence="0">
+            <NODE id="2" name="1 Big Bang" type="IMAGE_AND_VIDEO_LIST" path="" bpm="100.000000000" multiplier_divider="4" isPlaying="0" repeatSequence="1" playInLoop="0" palindrom="0" matchBPMtoSequence="0" currentSequence="0">
                 <ASSET name="1 bigbang_hap.mov" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/1 bigbang_hap.mov"></ASSET>
                 <type>none</type>
                 <path>none</path>
@@ -80,20 +80,20 @@
                 <visible>1</visible>
                 <texture>
                     <point>
-                        <x>54.466804504</x>
-                        <y>406.746765137</y>
+                        <x>48.508544922</x>
+                        <y>137.416656494</y>
                     </point>
                     <point>
-                        <x>177.232238770</x>
-                        <y>406.746765137</y>
+                        <x>171.273971558</x>
+                        <y>137.416656494</y>
                     </point>
                     <point>
-                        <x>177.232238770</x>
-                        <y>488.590484619</y>
+                        <x>171.273971558</x>
+                        <y>219.260375977</y>
                     </point>
                     <point>
-                        <x>54.466804504</x>
-                        <y>488.590484619</y>
+                        <x>48.508544922</x>
+                        <y>219.260375977</y>
                     </point>
                 </texture>
                 <mask>
@@ -121,7 +121,7 @@
                     </dot>
                 </out>
             </NODE>
-            <NODE id="13" name="2 Big Bang" type="IMAGE_AND_VIDEO_LIST" path="" bpm="100.000000000" multiplier_divider="4" isPlaying="0" playInLoop="1" palindrom="0" matchBPMtoSequence="0" currentSequence="0">
+            <NODE id="13" name="2 Big Bang" type="IMAGE_AND_VIDEO_LIST" path="" bpm="100.000000000" multiplier_divider="4" isPlaying="0" repeatSequence="0" playInLoop="1" palindrom="0" matchBPMtoSequence="0" currentSequence="0">
                 <ASSET name="2 bigbang_hap.mov" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/2 bigbang_hap.mov"></ASSET>
                 <ASSET name="3 mitosis_hap.mov" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/3 mitosis_hap.mov"></ASSET>
                 <type>none</type>
@@ -129,20 +129,20 @@
                 <visible>1</visible>
                 <texture>
                     <point>
-                        <x>33.814682007</x>
-                        <y>522.245239258</y>
+                        <x>-46.080474854</x>
+                        <y>270.238342285</y>
                     </point>
                     <point>
-                        <x>178.127395630</x>
-                        <y>522.245239258</y>
+                        <x>98.232269287</x>
+                        <y>270.238342285</y>
                     </point>
                     <point>
-                        <x>178.127395630</x>
-                        <y>603.421203613</y>
+                        <x>98.232269287</x>
+                        <y>351.414367676</y>
                     </point>
                     <point>
-                        <x>33.814682007</x>
-                        <y>603.421203613</y>
+                        <x>-46.080474854</x>
+                        <y>351.414367676</y>
                     </point>
                 </texture>
                 <mask>
@@ -170,7 +170,7 @@
                     </dot>
                 </out>
             </NODE>
-            <NODE id="19" name="3 Creacion Vida" type="IMAGE_AND_VIDEO_LIST" path="" bpm="100.000000000" multiplier_divider="4" isPlaying="1" playInLoop="0" palindrom="0" matchBPMtoSequence="0" currentSequence="0">
+            <NODE id="19" name="3 Evolucion" type="IMAGE_AND_VIDEO_LIST" path="" bpm="100.000000000" multiplier_divider="4" isPlaying="0" repeatSequence="1" playInLoop="0" palindrom="0" matchBPMtoSequence="0" currentSequence="0">
                 <ASSET name="(1) bacterias.png" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/imagenes/creación de la vida/(1) bacterias.png"></ASSET>
                 <ASSET name="(1) bacterias 2.png" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/imagenes/creación de la vida/(1) bacterias 2.png"></ASSET>
                 <ASSET name="(1) bacterias 3.png" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/imagenes/creación de la vida/(1) bacterias 3.png"></ASSET>
@@ -222,25 +222,83 @@
                 <ASSET name="(10) Tiktaalik 2.jpg" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/imagenes/creación de la vida/(10) Tiktaalik 2.jpg"></ASSET>
                 <ASSET name="4 dinosauros_hap.mov" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/4 dinosauros_hap.mov"></ASSET>
                 <ASSET name="5 extincion_dinosauros_hap.mov" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/5 extincion_dinosauros_hap.mov"></ASSET>
+                <ASSET name="6 montañas_hap.mov" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/6 montañas_hap.mov"></ASSET>
+                <ASSET name="7 dinosaurio fosil_hap.mov" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/7 dinosaurio fosil_hap.mov"></ASSET>
+                <ASSET name="8 crecen arboles y nubes_hap.mov" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/8 crecen arboles y nubes_hap.mov"></ASSET>
+                <ASSET name="9 crece pasto_hap.mov" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/9 crece pasto_hap.mov"></ASSET>
+                <ASSET name="10 paisajes_hap.mov" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/10 paisajes_hap.mov"></ASSET>
+                <ASSET name="11 flores_hap.mov" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/11 flores_hap.mov"></ASSET>
+                <ASSET name="12 animalito_hap.mov" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/12 animalito_hap.mov"></ASSET>
+                <ASSET name="13 vida en el agua_hap.mov" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/13 vida en el agua_hap.mov"></ASSET>
+                <ASSET name="14 vida en la tierra_hap.mov" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/14 vida en la tierra_hap.mov"></ASSET>
+                <ASSET name="15 de mono a hombre_hap.mov" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/15 de mono a hombre_hap.mov"></ASSET>
+                <ASSET name="16 creacion del fuego_hap.mov" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/16 creacion del fuego_hap.mov"></ASSET>
+                <ASSET name="0 - cazadores mamut3.jpg" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/17 evolucion y acontecimientos/0 - cazadores mamut3.jpg"></ASSET>
+                <ASSET name="1 - DartmouthPreHistory.jpg" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/17 evolucion y acontecimientos/1 - DartmouthPreHistory.jpg"></ASSET>
+                <ASSET name="2 - descubrimiento del fuego.jpeg" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/17 evolucion y acontecimientos/2 - descubrimiento del fuego.jpeg"></ASSET>
+                <ASSET name="3 - AC 3000 - stonehenge.jpg" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/17 evolucion y acontecimientos/3 - AC 3000 - stonehenge.jpg"></ASSET>
+                <ASSET name="4 - evolucion3.jpg" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/17 evolucion y acontecimientos/4 - evolucion3.jpg"></ASSET>
+                <ASSET name="5 - invension de la rueda.jpg" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/17 evolucion y acontecimientos/5 - invension de la rueda.jpg"></ASSET>
+                <ASSET name="6 - invension de la rueda 2.png" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/17 evolucion y acontecimientos/6 - invension de la rueda 2.png"></ASSET>
+                <ASSET name="7 - AC 2000 - mayas.jpg" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/17 evolucion y acontecimientos/7 - AC 2000 - mayas.jpg"></ASSET>
+                <ASSET name="8 - agricultura y ganaderia 2.jpg" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/17 evolucion y acontecimientos/8 - agricultura y ganaderia 2.jpg"></ASSET>
+                <ASSET name="9 - pescando.jpg" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/17 evolucion y acontecimientos/9 - pescando.jpg"></ASSET>
+                <ASSET name="10 - pinturas-bisonte.jpg" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/17 evolucion y acontecimientos/10 - pinturas-bisonte.jpg"></ASSET>
+                <ASSET name="11 - pinturas.jpg" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/17 evolucion y acontecimientos/11 - pinturas.jpg"></ASSET>
+                <ASSET name="12 - pinturas2.jpg" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/17 evolucion y acontecimientos/12 - pinturas2.jpg"></ASSET>
+                <ASSET name="13 - AC 2500 - egipto.png" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/17 evolucion y acontecimientos/13 - AC 2500 - egipto.png"></ASSET>
+                <ASSET name="14 - jeroglificos.jpg" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/17 evolucion y acontecimientos/14 - jeroglificos.jpg"></ASSET>
+                <ASSET name="15 - jeroglificos egipcios.jpg" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/17 evolucion y acontecimientos/15 - jeroglificos egipcios.jpg"></ASSET>
+                <ASSET name="16 - agricultura y ganaderia.jpg" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/17 evolucion y acontecimientos/16 - agricultura y ganaderia.jpg"></ASSET>
+                <ASSET name="17 - AC 440-430 - grecia.jpg" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/17 evolucion y acontecimientos/17 - AC 440-430 - grecia.jpg"></ASSET>
+                <ASSET name="18 - AC 220 - muralla china.jpg" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/17 evolucion y acontecimientos/18 - AC 220 - muralla china.jpg"></ASSET>
+                <ASSET name="19 - DC 1 - roma.jpg" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/17 evolucion y acontecimientos/19 - DC 1 - roma.jpg"></ASSET>
+                <ASSET name="20 - crucifiction 2.jpg" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/17 evolucion y acontecimientos/20 - crucifiction 2.jpg"></ASSET>
+                <ASSET name="21 - siglo V - caida del imperio romano.jpg" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/17 evolucion y acontecimientos/21 - siglo V - caida del imperio romano.jpg"></ASSET>
+                <ASSET name="22 - 1440 - Siglo XV - invension de la imprenta.jpg" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/17 evolucion y acontecimientos/22 - 1440 - Siglo XV - invension de la imprenta.jpg"></ASSET>
+                <ASSET name="23 - 1492 - siglo XV - descubrimiento de america.gif" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/17 evolucion y acontecimientos/23 - 1492 - siglo XV - descubrimiento de america.gif"></ASSET>
+                <ASSET name="24 - 1509 - Siglo XV - Rey Enrique VIII.jpg" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/17 evolucion y acontecimientos/24 - 1509 - Siglo XV - Rey Enrique VIII.jpg"></ASSET>
+                <ASSET name="25 - 1857 - invension del telefono 2.jpg" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/17 evolucion y acontecimientos/25 - 1857 - invension del telefono 2.jpg"></ASSET>
+                <ASSET name="26 - 1857 - invension del telefono.jpg" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/17 evolucion y acontecimientos/26 - 1857 - invension del telefono.jpg"></ASSET>
+                <ASSET name="27 - 1878 - invension de la luz.jpg" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/17 evolucion y acontecimientos/27 - 1878 - invension de la luz.jpg"></ASSET>
+                <ASSET name="28 - 1865 - abraham-lincoln.jpg" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/17 evolucion y acontecimientos/28 - 1865 - abraham-lincoln.jpg"></ASSET>
+                <ASSET name="29 - 1912  - titanic.png" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/17 evolucion y acontecimientos/29 - 1912  - titanic.png"></ASSET>
+                <ASSET name="18 - 1929  Graf Zeppelin_short_hap.mov" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/18 - 1929  Graf Zeppelin_short_hap.mov"></ASSET>
+                <ASSET name="19 - 1930 FIFA World Cup Uruguay_short_hap.mov" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/19 - 1930 FIFA World Cup Uruguay_short_hap.mov"></ASSET>
+                <ASSET name="30 - 1945 - hitler.jpg" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/17 evolucion y acontecimientos/30 - 1945 - hitler.jpg"></ASSET>
+                <ASSET name="31 - 1948 - Mahatma Gandhi.jpg" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/17 evolucion y acontecimientos/31 - 1948 - Mahatma Gandhi.jpg"></ASSET>
+                <ASSET name="32 - 1954 - frida.jpg" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/17 evolucion y acontecimientos/32 - 1954 - frida.jpg"></ASSET>
+                <ASSET name="33 - 1955 - einstein.jpeg" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/17 evolucion y acontecimientos/33 - 1955 - einstein.jpeg"></ASSET>
+                <ASSET name="34 - 1962 - marilyn monroe.jpg" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/17 evolucion y acontecimientos/34 - 1962 - marilyn monroe.jpg"></ASSET>
+                <ASSET name="35 - 1963 - john-f-kennedy.jpg" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/17 evolucion y acontecimientos/35 - 1963 - john-f-kennedy.jpg"></ASSET>
+                <ASSET name="36 - 1965 - Muhammad Ali.jpg" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/17 evolucion y acontecimientos/36 - 1965 - Muhammad Ali.jpg"></ASSET>
+                <ASSET name="37 - 1967 - che-guevara.jpg" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/17 evolucion y acontecimientos/37 - 1967 - che-guevara.jpg"></ASSET>
+                <ASSET name="38 - 1968 - Martin Luther King jr.jpg" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/17 evolucion y acontecimientos/38 - 1968 - Martin Luther King jr.jpg"></ASSET>
+                <ASSET name="39 - 1969 - Neil Amstrong.jpg" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/17 evolucion y acontecimientos/39 - 1969 - Neil Amstrong.jpg"></ASSET>
+                <ASSET name="40 - 1969 - Neil Amstrong2.jpg" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/17 evolucion y acontecimientos/40 - 1969 - Neil Amstrong2.jpg"></ASSET>
+                <ASSET name="41 - 1977 - chaplin.jpg" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/17 evolucion y acontecimientos/41 - 1977 - chaplin.jpg"></ASSET>
+                <ASSET name="42 - 1980 - lennon.jpg" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/17 evolucion y acontecimientos/42 - 1980 - lennon.jpg"></ASSET>
+                <ASSET name="43 - 1981 - bob-marley.jpg" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/17 evolucion y acontecimientos/43 - 1981 - bob-marley.jpg"></ASSET>
+                <ASSET name="44 - 1984 - steve-jobs.jpg" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/17 evolucion y acontecimientos/44 - 1984 - steve-jobs.jpg"></ASSET>
                 <type>none</type>
                 <path>none</path>
                 <visible>1</visible>
                 <texture>
                     <point>
-                        <x>395.097930908</x>
-                        <y>518.405700684</y>
+                        <x>312.224121094</x>
+                        <y>250.325225830</y>
                     </point>
                     <point>
-                        <x>579.618286133</x>
-                        <y>518.405700684</y>
+                        <x>457.258850098</x>
+                        <y>250.325225830</y>
                     </point>
                     <point>
-                        <x>579.618286133</x>
-                        <y>641.730712891</y>
+                        <x>457.258850098</x>
+                        <y>347.259826660</y>
                     </point>
                     <point>
-                        <x>395.097930908</x>
-                        <y>641.730712891</y>
+                        <x>312.224121094</x>
+                        <y>347.259826660</y>
                     </point>
                 </texture>
                 <mask>
@@ -266,29 +324,32 @@
                     <dot>
                         <to>20</to>
                     </dot>
+                    <dot>
+                        <to>30</to>
+                    </dot>
                 </out>
             </NODE>
-            <NODE id="27" name="New Image &amp; Video List" type="IMAGE_AND_VIDEO_LIST" path="" bpm="100.000000000" multiplier_divider="4" isPlaying="0" playInLoop="1" palindrom="0" matchBPMtoSequence="0" currentSequence="0">
+            <NODE id="27" name="New Image &amp; Video List" type="IMAGE_AND_VIDEO_LIST" path="" bpm="100.000000000" multiplier_divider="4" isPlaying="0" repeatSequence="0" playInLoop="1" palindrom="0" matchBPMtoSequence="0" currentSequence="0">
                 <ASSET name="Minimal Composition.mp4_hap.mov" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/videos/mascaras-figuras/Minimal Composition.mp4_hap.mov"></ASSET>
                 <type>none</type>
                 <path>none</path>
                 <visible>1</visible>
                 <texture>
                     <point>
-                        <x>792.931640625</x>
-                        <y>666.191955566</y>
+                        <x>904.963623047</x>
+                        <y>664.509948730</y>
                     </point>
                     <point>
-                        <x>955.878417969</x>
-                        <y>666.191955566</y>
+                        <x>1067.910400391</x>
+                        <y>664.509948730</y>
                     </point>
                     <point>
-                        <x>955.878417969</x>
-                        <y>757.849914551</y>
+                        <x>1067.910400391</x>
+                        <y>756.167907715</y>
                     </point>
                     <point>
-                        <x>792.931640625</x>
-                        <y>757.849914551</y>
+                        <x>904.963623047</x>
+                        <y>756.167907715</y>
                     </point>
                 </texture>
                 <mask>
@@ -316,6 +377,68 @@
                     </dot>
                 </out>
             </NODE>
+            <NODE id="29" name="4 Acontecimientos" type="IMAGE_AND_VIDEO_LIST" path="" bpm="100.000000000" multiplier_divider="4" isPlaying="0" repeatSequence="1" playInLoop="0" palindrom="0" matchBPMtoSequence="0" currentSequence="0">
+                <ASSET name="20 - 1914-1918 primera guerra mundial (1)_hap.mov" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/20 - 1914-1918 primera guerra mundial (1)_hap.mov"></ASSET>
+                <ASSET name="21 - 1914-1918 primera guerra mundial (2)_hap.mov" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/21 - 1914-1918 primera guerra mundial (2)_hap.mov"></ASSET>
+                <ASSET name="22 - 1945 - hitler y nazis_hap.mov" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/22 - 1945 - hitler y nazis_hap.mov"></ASSET>
+                <ASSET name="23 - 1945-8 Atomic Bomb- Hiroshima and Nagasaki_hap.mov" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/23 - 1945-8 Atomic Bomb- Hiroshima and Nagasaki_hap.mov"></ASSET>
+                <ASSET name="25 - 1962 - Marilyn Monroe_hap.mov" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/25 - 1962 - Marilyn Monroe_hap.mov"></ASSET>
+                <ASSET name="27 - 1965-25-5 Ali vs Liston 1st Round Knockout_hap.mov" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/27 - 1965-25-5 Ali vs Liston 1st Round Knockout_hap.mov"></ASSET>
+                <ASSET name="26 - 1965 - Ku Klux Klan_hap.mov" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/26 - 1965 - Ku Klux Klan_hap.mov"></ASSET>
+                <ASSET name="28 - 1969-16-7 Despegue del Apolo 11_hap.mov" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/28 - 1969-16-7 Despegue del Apolo 11_hap.mov"></ASSET>
+                <ASSET name="29 - 1981-29-7 casamiento diana y carlos_hap.mov" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/29 - 1981-29-7 casamiento diana y carlos_hap.mov"></ASSET>
+                <ASSET name="30 - 1984-24-1 Steve Jobs introduces the Macintosh_hap.mov" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/30 - 1984-24-1 Steve Jobs introduces the Macintosh_hap.mov"></ASSET>
+                <ASSET name="31 - 1989-9-11 La caída del Muro de Berlín_hap.mov" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/31 - 1989-9-11 La caída del Muro de Berlín_hap.mov"></ASSET>
+                <ASSET name="12 - pinturas2.jpg" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/17 evolucion y acontecimientos/12 - pinturas2.jpg"></ASSET>
+                <type>none</type>
+                <path>none</path>
+                <visible>1</visible>
+                <texture>
+                    <point>
+                        <x>107.755699158</x>
+                        <y>644.454895020</y>
+                    </point>
+                    <point>
+                        <x>289.651062012</x>
+                        <y>644.454895020</y>
+                    </point>
+                    <point>
+                        <x>289.651062012</x>
+                        <y>746.771057129</y>
+                    </point>
+                    <point>
+                        <x>107.755699158</x>
+                        <y>746.771057129</y>
+                    </point>
+                </texture>
+                <mask>
+                    <point>
+                        <x>0.000000000</x>
+                        <y>0.000000000</y>
+                    </point>
+                    <point>
+                        <x>1.000000000</x>
+                        <y>0.000000000</y>
+                    </point>
+                    <point>
+                        <x>1.000000000</x>
+                        <y>1.000000000</y>
+                    </point>
+                    <point>
+                        <x>0.000000000</x>
+                        <y>1.000000000</y>
+                    </point>
+                </mask>
+                <out>
+                    <active>1</active>
+                    <dot>
+                        <to>20</to>
+                    </dot>
+                    <dot>
+                        <to>30</to>
+                    </dot>
+                </out>
+            </NODE>
         </INPUTS>
         <VISUAL_LAYERS>
             <NODE id="3" name="New Glitch Layer" type="GLITCH_1" enabled="1" inputSource="2" do_CONVERGENCE="0" do_GLOW="0" do_SHAKER="0" do_CUTSLIDER="0" do_TWIST="0" do_OUTLINE="0" do_NOISE="0" do_SLITSCAN="0" do_SWELL="0" do_INVERT="0" do_CR_HIGHCONTRAST="0" do_CR_BLUERAISE="0" do_CR_REDRAISE="0" do_CR_GREENRAISE="0" do_CR_BLUEINVERT="0" do_CR_REDINVERT="0" do_CR_GREENINVERT="0">
@@ -324,20 +447,20 @@
                 <visible>1</visible>
                 <texture>
                     <point>
-                        <x>399.112213135</x>
-                        <y>42.591751099</y>
+                        <x>394.320953369</x>
+                        <y>33.009212494</y>
                     </point>
                     <point>
-                        <x>543.175964355</x>
-                        <y>42.591751099</y>
+                        <x>538.384704590</x>
+                        <y>33.009212494</y>
                     </point>
                     <point>
-                        <x>543.175964355</x>
-                        <y>123.627571106</y>
+                        <x>538.384704590</x>
+                        <y>114.045028687</y>
                     </point>
                     <point>
-                        <x>399.112213135</x>
-                        <y>123.627571106</y>
+                        <x>394.320953369</x>
+                        <y>114.045028687</y>
                     </point>
                 </texture>
                 <mask>
@@ -371,20 +494,20 @@
                 <visible>1</visible>
                 <texture>
                     <point>
-                        <x>1211.687377930</x>
-                        <y>221.077301025</y>
+                        <x>1125.444458008</x>
+                        <y>218.202453613</y>
                     </point>
                     <point>
-                        <x>1356.000000000</x>
-                        <y>221.077301025</y>
+                        <x>1307.339843750</x>
+                        <y>218.202453613</y>
                     </point>
                     <point>
-                        <x>1356.000000000</x>
-                        <y>302.253265381</y>
+                        <x>1307.339843750</x>
+                        <y>320.518615723</y>
                     </point>
                     <point>
-                        <x>1211.687377930</x>
-                        <y>302.253265381</y>
+                        <x>1125.444458008</x>
+                        <y>320.518615723</y>
                     </point>
                 </texture>
                 <mask>
@@ -418,20 +541,20 @@
                 <visible>1</visible>
                 <texture>
                     <point>
-                        <x>1005.346618652</x>
-                        <y>374.258087158</y>
+                        <x>923.895019531</x>
+                        <y>336.886199951</y>
                     </point>
                     <point>
-                        <x>1149.659179688</x>
-                        <y>374.258087158</y>
+                        <x>1105.790405273</x>
+                        <y>336.886199951</y>
                     </point>
                     <point>
-                        <x>1149.659179688</x>
-                        <y>455.434051514</y>
+                        <x>1105.790405273</x>
+                        <y>439.202362061</y>
                     </point>
                     <point>
-                        <x>1005.346618652</x>
-                        <y>455.434051514</y>
+                        <x>923.895019531</x>
+                        <y>439.202362061</y>
                     </point>
                 </texture>
                 <mask>
@@ -518,20 +641,20 @@
                 <visible>1</visible>
                 <texture>
                     <point>
-                        <x>804.576416016</x>
-                        <y>220.135009766</y>
+                        <x>744.206542969</x>
+                        <y>185.637939453</y>
                     </point>
                     <point>
-                        <x>948.889099121</x>
-                        <y>220.135009766</y>
+                        <x>926.101928711</x>
+                        <y>185.637939453</y>
                     </point>
                     <point>
-                        <x>948.889099121</x>
-                        <y>301.310974121</y>
+                        <x>926.101928711</x>
+                        <y>287.954101562</y>
                     </point>
                     <point>
-                        <x>804.576416016</x>
-                        <y>301.310974121</y>
+                        <x>744.206542969</x>
+                        <y>287.954101562</y>
                     </point>
                 </texture>
                 <mask>
@@ -559,28 +682,30 @@
                     </dot>
                 </out>
             </NODE>
-            <NODE id="20" name="New MultiChannel Switch" type="MULTI_CHANNEL" selChannel="0">
+            <NODE id="20" name="Switch Acontecimientos" type="MULTI_CHANNEL" selChannel="0" drawInputGui="1">
                 <INPUT_SOURCE nodeId="13"></INPUT_SOURCE>
                 <INPUT_SOURCE nodeId="19"></INPUT_SOURCE>
+                <INPUT_SOURCE nodeId="29"></INPUT_SOURCE>
+                <INPUT_SOURCE nodeId="30"></INPUT_SOURCE>
                 <type>none</type>
                 <path>none</path>
                 <visible>1</visible>
                 <texture>
                     <point>
-                        <x>799.749328613</x>
-                        <y>515.786132812</y>
+                        <x>725.757080078</x>
+                        <y>502.330810547</y>
                     </point>
                     <point>
-                        <x>944.062011719</x>
-                        <y>515.786132812</y>
+                        <x>870.069824219</x>
+                        <y>502.330810547</y>
                     </point>
                     <point>
-                        <x>944.062011719</x>
-                        <y>596.962097168</y>
+                        <x>870.069824219</x>
+                        <y>583.506835938</y>
                     </point>
                     <point>
-                        <x>799.749328613</x>
-                        <y>596.962097168</y>
+                        <x>725.757080078</x>
+                        <y>583.506835938</y>
                     </point>
                 </texture>
                 <mask>
@@ -616,20 +741,20 @@
                 <visible>1</visible>
                 <texture>
                     <point>
-                        <x>1402.890869141</x>
-                        <y>641.220031738</y>
+                        <x>1281.856079102</x>
+                        <y>661.330871582</y>
                     </point>
                     <point>
-                        <x>1719.117919922</x>
-                        <y>641.220031738</y>
+                        <x>1463.185180664</x>
+                        <y>661.330871582</y>
                     </point>
                     <point>
-                        <x>1719.117919922</x>
-                        <y>819.097534180</y>
+                        <x>1463.185180664</x>
+                        <y>763.328491211</y>
                     </point>
                     <point>
-                        <x>1402.890869141</x>
-                        <y>819.097534180</y>
+                        <x>1281.856079102</x>
+                        <y>763.328491211</y>
                     </point>
                 </texture>
                 <mask>
@@ -654,6 +779,55 @@
                     <active>1</active>
                 </out>
             </NODE>
+            <NODE id="30" name="Mezcla 3 y 4" type="SIMPLE_BLEND" enabled="1" selector1="0" selector2="1" blendmode="0" opacity="96.966148376">
+                <INPUT_SOURCE nodeId="19"></INPUT_SOURCE>
+                <INPUT_SOURCE nodeId="29"></INPUT_SOURCE>
+                <type>none</type>
+                <path>none</path>
+                <visible>1</visible>
+                <texture>
+                    <point>
+                        <x>512.052795410</x>
+                        <y>638.966430664</y>
+                    </point>
+                    <point>
+                        <x>693.948120117</x>
+                        <y>638.966430664</y>
+                    </point>
+                    <point>
+                        <x>693.948120117</x>
+                        <y>741.282592773</y>
+                    </point>
+                    <point>
+                        <x>512.052795410</x>
+                        <y>741.282592773</y>
+                    </point>
+                </texture>
+                <mask>
+                    <point>
+                        <x>0.000000000</x>
+                        <y>0.000000000</y>
+                    </point>
+                    <point>
+                        <x>1.000000000</x>
+                        <y>0.000000000</y>
+                    </point>
+                    <point>
+                        <x>1.000000000</x>
+                        <y>1.000000000</y>
+                    </point>
+                    <point>
+                        <x>0.000000000</x>
+                        <y>1.000000000</y>
+                    </point>
+                </mask>
+                <out>
+                    <active>1</active>
+                    <dot>
+                        <to>20</to>
+                    </dot>
+                </out>
+            </NODE>
         </MIXERS>
         <ENCAPSULATED_NODES></ENCAPSULATED_NODES>
         <SYPHON_SERVERS></SYPHON_SERVERS>
@@ -667,11 +841,13 @@
             <NODE id="11" name="New Mix Simple Blend"></NODE>
             <NODE id="13" name="2 Big Bang"></NODE>
             <NODE id="17" name="New Glitch Layer"></NODE>
-            <NODE id="19" name="3 Creacion Vida"></NODE>
-            <NODE id="20" name="New MultiChannel Switch"></NODE>
+            <NODE id="19" name="3 Evolucion"></NODE>
+            <NODE id="20" name="Switch Acontecimientos"></NODE>
             <NODE id="23" name="New Image Processor"></NODE>
             <NODE id="25" name="New Mix Simple Blend"></NODE>
             <NODE id="27" name="New Image &amp; Video List"></NODE>
+            <NODE id="29" name="4 Acontecimientos"></NODE>
+            <NODE id="30" name="Mezcla 3 y 4"></NODE>
         </NODE_VIEW>
     </NODE_VIEWS>
     <PARAM_INPUT_GENERATORS>
