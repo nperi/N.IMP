@@ -180,10 +180,10 @@ void MultiChannelSwitch::cLabel(bool& b){
         }
         for (int i = 0; i < channels.size(); ++i) {
             if (channels[i]->selected == true) {
-                if (disableOtherChannels)
+                if (disableOtherChannels) {
                     input[selChannel]->setEnable(false);
-                if(drawInputGui)
-                    input[selChannel]->setDrawInspector(false);
+//                    input[selChannel]->setDrawInspector(false);
+                }
                 selChannel = i;
                 input[selChannel]->setEnable(true);
                 input[selChannel]->setDrawInspector(drawInputGui);
@@ -239,6 +239,7 @@ bool MultiChannelSwitch::loadSettings(ofxXmlSettings &XML, int nTag_, int nodesC
 
     nId             = XML.getAttribute("NODE", "id", -1, nTag_) + nodesCount_;
     selChannel      = ofToInt(XML.getAttribute("INPUT_SOURCE","selChannel","0",nTag_));
+    drawInputGui    = ofToInt(XML.getAttribute("INPUT_SOURCE","drawInputGui","0",nTag_));
     
     XML.pushTag("NODE", nTag_);
     
@@ -275,7 +276,7 @@ bool MultiChannelSwitch::saveSettings(ofxXmlSettings &XML) {
     XML.addAttribute("NODE", "type", "MULTI_CHANNEL", lastPlace);
     
     XML.addAttribute("NODE", "selChannel", selChannel, lastPlace);
-    //XML.addAttribute("NODE", "drawInputGui", drawInputGui, lastPlace);
+    XML.addAttribute("NODE", "drawInputGui", drawInputGui, lastPlace);
     
     saved = XML.pushTag("NODE", lastPlace);
     if (saved){
