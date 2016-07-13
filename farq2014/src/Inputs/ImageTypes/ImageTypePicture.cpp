@@ -11,13 +11,12 @@
 
 ImageTypePicture::ImageTypePicture(string name_ ,string path_, bool isResize, int width, int height): ImageType(name_,path_){
     mediaType = T_IMAGE;
+
+    img.setUseTexture(false);
     img.loadImage(path_);
     if (isResize) {
         img.resize(width, height);
     }
-    unsigned char* p = img.getPixels();
-    
-    tex.loadData(p, img.getWidth(), img.getHeight(), ofGetGlFormat(img.getPixelsRef()));
     
     ofIsStringInString(path_, ".png") ? ext = PNG : ext = OTHER;
     
@@ -25,12 +24,12 @@ ImageTypePicture::ImageTypePicture(string name_ ,string path_, bool isResize, in
 
 //------------------------------------------------------------------
 void ImageTypePicture::activate(ofImage& _img){
-    _img = img;
+    _img.setFromPixels(img.getPixelsRef());
 }
 
 //------------------------------------------------------------------
 void ImageTypePicture::update(ofImage& _img){
-    _img = img;
+    _img.setFromPixels(img.getPixelsRef());
 }
 
 //------------------------------------------------------------------

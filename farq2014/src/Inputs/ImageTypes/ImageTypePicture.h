@@ -41,7 +41,6 @@ class ImageTypePicture : public ImageType{
 private:
     
     ofImage img;
-    ofTexture tex;
 };
 
 #endif
