@@ -111,6 +111,13 @@ void MultiChannelSwitch::updateParameter(Param* inputParam){
     else if(inputParam->name.compare("Disable other channels")==0){
         this->disableOtherChannels = inputParam->intVal;
     }
+    else if (inputParam->intVal > 0){
+        for (int i = 0; i < channels.size(); i++) {
+            if (inputParam->name == channels[i]->label) {
+                channels[i]->selected.set(true);
+            }
+        }
+    }
 }
 
 //------------------------------------------------------------------
@@ -122,6 +129,13 @@ float MultiChannelSwitch::getMidiMin(string param_){
     else if(param_.compare("Disable other channels")==0){
         return 0;
     }
+    else {
+        for (int i = 0; i < channels.size(); i++) {
+            if (param_ == channels[i]->label) {
+                return 0;
+            }
+        }
+    }
 }
 
 //------------------------------------------------------------------
@@ -132,6 +146,13 @@ float MultiChannelSwitch::getMidiMax(string param_){
     }
     else if(param_.compare("Disable other channels")==0){
         return 1;
+    }
+    else {
+        for (int i = 0; i < channels.size(); i++) {
+            if (param_ == channels[i]->label) {
+                return 1;
+            }
+        }
     }
 }
 
