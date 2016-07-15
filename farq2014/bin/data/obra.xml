@@ -381,15 +381,14 @@
                 <ASSET name="20 - 1914-1918 primera guerra mundial (1)_hap.mov" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/20 - 1914-1918 primera guerra mundial (1)_hap.mov"></ASSET>
                 <ASSET name="21 - 1914-1918 primera guerra mundial (2)_hap.mov" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/21 - 1914-1918 primera guerra mundial (2)_hap.mov"></ASSET>
                 <ASSET name="22 - 1945 - hitler y nazis_hap.mov" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/22 - 1945 - hitler y nazis_hap.mov"></ASSET>
-                <ASSET name="23 - 1945-8 Atomic Bomb- Hiroshima and Nagasaki_hap.mov" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/23 - 1945-8 Atomic Bomb- Hiroshima and Nagasaki_hap.mov"></ASSET>
+                <ASSET name="23 - 1945-8 Atomic Bomb- Hiroshima and Nagasaki_short_hap.mov" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/23 - 1945-8 Atomic Bomb- Hiroshima and Nagasaki_short_hap.mov"></ASSET>
                 <ASSET name="25 - 1962 - Marilyn Monroe_hap.mov" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/25 - 1962 - Marilyn Monroe_hap.mov"></ASSET>
-                <ASSET name="27 - 1965-25-5 Ali vs Liston 1st Round Knockout_hap.mov" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/27 - 1965-25-5 Ali vs Liston 1st Round Knockout_hap.mov"></ASSET>
+                <ASSET name="27 - 1965-25-5 Ali vs Liston 1st Round Knockout_short_hap.mov" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/27 - 1965-25-5 Ali vs Liston 1st Round Knockout_short_hap.mov"></ASSET>
                 <ASSET name="26 - 1965 - Ku Klux Klan_hap.mov" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/26 - 1965 - Ku Klux Klan_hap.mov"></ASSET>
-                <ASSET name="28 - 1969-16-7 Despegue del Apolo 11_hap.mov" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/28 - 1969-16-7 Despegue del Apolo 11_hap.mov"></ASSET>
+                <ASSET name="28 - 1969-16-7 Despegue del Apolo 11_short_hap.mov" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/28 - 1969-16-7 Despegue del Apolo 11_short_hap.mov"></ASSET>
                 <ASSET name="29 - 1981-29-7 casamiento diana y carlos_hap.mov" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/29 - 1981-29-7 casamiento diana y carlos_hap.mov"></ASSET>
-                <ASSET name="30 - 1984-24-1 Steve Jobs introduces the Macintosh_hap.mov" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/30 - 1984-24-1 Steve Jobs introduces the Macintosh_hap.mov"></ASSET>
+                <ASSET name="30 - 1984-24-1 Steve Jobs introduces the Macintosh_short_hap.mov" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/30 - 1984-24-1 Steve Jobs introduces the Macintosh_short_hap.mov"></ASSET>
                 <ASSET name="31 - 1989-9-11 La caída del Muro de Berlín_hap.mov" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/31 - 1989-9-11 La caída del Muro de Berlín_hap.mov"></ASSET>
-                <ASSET name="12 - pinturas2.jpg" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/17 evolucion y acontecimientos/12 - pinturas2.jpg"></ASSET>
                 <type>none</type>
                 <path>none</path>
                 <visible>1</visible>
@@ -682,7 +681,7 @@
                     </dot>
                 </out>
             </NODE>
-            <NODE id="20" name="Switch Acontecimientos" type="MULTI_CHANNEL" selChannel="0" drawInputGui="1">
+            <NODE id="20" name="Switch Acontecimientos" type="MULTI_CHANNEL" selChannel="0" drawInputGui="0">
                 <INPUT_SOURCE nodeId="13"></INPUT_SOURCE>
                 <INPUT_SOURCE nodeId="19"></INPUT_SOURCE>
                 <INPUT_SOURCE nodeId="29"></INPUT_SOURCE>
@@ -692,20 +691,20 @@
                 <visible>1</visible>
                 <texture>
                     <point>
-                        <x>725.757080078</x>
-                        <y>502.330810547</y>
+                        <x>713.757080078</x>
+                        <y>467.330810547</y>
                     </point>
                     <point>
-                        <x>870.069824219</x>
-                        <y>502.330810547</y>
+                        <x>858.069824219</x>
+                        <y>467.330810547</y>
                     </point>
                     <point>
-                        <x>870.069824219</x>
-                        <y>583.506835938</y>
+                        <x>858.069824219</x>
+                        <y>548.506835938</y>
                     </point>
                     <point>
-                        <x>725.757080078</x>
-                        <y>583.506835938</y>
+                        <x>713.757080078</x>
+                        <y>548.506835938</y>
                     </point>
                 </texture>
                 <mask>
