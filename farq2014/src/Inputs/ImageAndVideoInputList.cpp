@@ -139,7 +139,7 @@ void ImageAndVideoInputList::updateParameter(Param* inputParam){
     else if(inputParam->name.compare("Play Position")==0){
         this->playPosition = inputParam->floatVal;
     }
-    else if(inputParam->name.compare("POS")==0){
+    else if(inputParam->name.compare("Position")==0){
         this->playPos2 = inputParam->floatVal;
     }
     else if(inputParam->name.compare("Current Sequence")==0){
@@ -174,7 +174,7 @@ float ImageAndVideoInputList::getMidiMin(string param_){
         return 1;
     }else if(param_.compare("Play Position")==0){
         return 0;
-    }else if(param_.compare("Pos")==0){
+    }else if(param_.compare("Position")==0){
         return 0;
     }else if(param_.compare("Current Sequence")==0){
         return 0;
@@ -204,7 +204,7 @@ float ImageAndVideoInputList::getMidiMax(string param_){
         return 16;
     }else if(param_.compare("Play Position")==0){
         return 1.0;
-    }else if(param_.compare("Pos")==0){
+    }else if(param_.compare("Position")==0){
         return 1.0;
     }else if(param_.compare("Current Sequence")==0){
         return inputs.size()-1;
@@ -304,7 +304,7 @@ void ImageAndVideoInputList::loadImage(string name_, string path_){
         seqSettings.add(bpmMultiplier.set("BPM Multiplier", 4, 1, 120));
         seqSettings.add(videoPlayingTime.set("", videoTime));
         seqSettings.add(playPosition.set("Play Position",0.0,0.0,1.0));
-        seqSettings.add(playPos2.set("Pos",0.0,0.0,1.0));
+        seqSettings.add(playPos2.set("Position",0.0,0.0,1.0));
         gui.add(seqSettings);
         
         gui.setWidthElements(INSPECTOR_WIDTH);
@@ -330,7 +330,7 @@ void ImageAndVideoInputList::loadImage(string name_, string path_){
         if (baseGui) ofAddListener(baseGui->addOrRemoveOSCInputBaseGui, &gui, &ofxGuiGroup::addOrRemoveOSCInput);
         baseGui = gui.find("Play Position");
         if (baseGui) ofAddListener(baseGui->addOrRemoveOSCInputBaseGui, &gui, &ofxGuiGroup::addOrRemoveOSCInput);
-        baseGui = gui.find("Pos");
+        baseGui = gui.find("Position");
         if (baseGui) ofAddListener(baseGui->addOrRemoveOSCInputBaseGui, &gui, &ofxGuiGroup::addOrRemoveOSCInput);
         
         //gui.add(nextFrame.setup("nextFrame"));
