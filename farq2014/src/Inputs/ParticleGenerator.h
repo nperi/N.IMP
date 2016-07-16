@@ -63,6 +63,8 @@ private:
     
     void update();
     void _showHelp();
+    void forceXChanged(float &x);
+    void forceYChanged(float &y);
     
     ofxParticleSystem* particle;
     int nForces = 3;

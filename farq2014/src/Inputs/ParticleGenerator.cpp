@@ -51,6 +51,9 @@ ParticleGenerator::ParticleGenerator(string name, int id_) : InputSource(name, "
     pForce.add(force_y.set("Force Y", 0, 0, height));
     gui.add(pForce);
     
+    force_x.addListener(this, &ParticleGenerator::forceXChanged);
+    force_y.addListener(this, &ParticleGenerator::forceYChanged);
+    
     gui.setWidthElements(INSPECTOR_WIDTH);
     
     ofxBaseGui* baseGui;
@@ -165,6 +168,28 @@ void ParticleGenerator::update() {
     fbo.end();
     
     force.clear();
+}
+
+//------------------------------------------------------------------
+void ParticleGenerator::forceXChanged(float &x) {
+    
+    ParticleForce f;
+    f.radius = force_radius;
+    f.isAttracting = force_attracting;
+    f.scale = force_scale;
+    f.pos.set(ofVec2f(x,force_y));
+    addForce(f);
+}
+
+//------------------------------------------------------------------
+void ParticleGenerator::forceYChanged(float &y) {
+    
+    ParticleForce f;
+    f.radius = force_radius;
+    f.isAttracting = force_attracting;
+    f.scale = force_scale;
+    f.pos.set(ofVec2f(force_x,y));
+    addForce(f);
 }
 
 //------------------------------------------------------------------
