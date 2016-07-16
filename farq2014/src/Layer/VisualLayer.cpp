@@ -15,7 +15,9 @@ VisualLayer::VisualLayer(string name_, string typeName_, int id_) : ImageOutput(
     firstInit = true;
     nodeType = VISUAL_LAYER;
     
-    addInputDot();
+    if(name_ != "Shader"){
+        addInputDot();
+    }
 }
 
 //------------------------------------------------------------------

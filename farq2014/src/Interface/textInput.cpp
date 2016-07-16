@@ -29,6 +29,7 @@ textInput::textInput(string _name, string _textstring, float w, float h, float x
     nodes.push_back("glitch 2");
     nodes.push_back("ikeda");
     nodes.push_back("image processor");
+    nodes.push_back("shader");
     nodes.push_back("MIXERS");
     nodes.push_back("mix mask");
     nodes.push_back("mix simple blend");
@@ -306,7 +307,39 @@ void textInput::guiEvent(ofxUIEventArgs &event_){
                         e.path = openFileResult.getPath();
                         e.name = file.getFileName();
                     }
-                    else return;
+                    else {
+                        ConsoleLog::getInstance()->pushError("Select a valid image or video file (.jpg, .jpeg, .gif, .bmp, .mov, .mpg, .mp4 or .m4v)");
+                        return;
+                    }
+                }
+                file.close();
+                ofNotifyEvent(createNode, e , this);
+            }
+            else {
+                dropdownList->clearSelected();
+                return;
+            }
+        }
+        else if(e.type == "shader"){
+            openFileResult = ofSystemLoadDialog("Select a shader (.fs)");
+            
+            if (openFileResult.bSuccess){
+                
+                ofFile file (openFileResult.getPath());
+                
+                if (file.exists()){
+                    
+                    string fileExtension = ofToUpper(file.getExtension());
+                    
+                    //We only want shaders
+                    if (fileExtension == "fs" || fileExtension == "FS") {
+                        e.path = openFileResult.getPath();
+                        e.name = file.getFileName();
+                    }
+                    else {
+                        ConsoleLog::getInstance()->pushError("Select a valid shader file (.fs)");
+                        return;
+                    }
                 }
                 file.close();
                 ofNotifyEvent(createNode, e , this);

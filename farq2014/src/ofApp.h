@@ -33,6 +33,7 @@
 #include "IkedaLayer.h"
 #include "GlitchLayer.h"
 #include "GlitchLayerAlt.h"
+#include "ShaderLayer.h"
 #include "ImageProcessor.h"
 #include "MixSimpleBlend.h"
 #include "MixMask.h"
