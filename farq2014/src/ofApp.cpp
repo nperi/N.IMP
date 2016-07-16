@@ -581,7 +581,7 @@ void ofApp::keyPressed  (int key){
                 nodeViewers[currentViewer]->setDrawInspectors(showInspectors);
             }
             break;
-        case 'd': case 'D':
+        case 'A': case 'a':
             if (holdingCommand && ((newNodeInput == NULL) || (!newNodeInput->isClicked()))) {
                 activatePatches = !activatePatches;
                 activatePatches ? nodeViewers[currentViewer]->activateAllPatches() : nodeViewers[currentViewer]->deactivateAllPatches();
