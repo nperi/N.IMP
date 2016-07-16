@@ -1,4 +1,6 @@
 #include "ShaderLayer.h"
+
+#include "ImageAndVideoInputList.h"
 #include <sstream>
 #include <string>
 
@@ -10,16 +12,6 @@ ShaderLayer::ShaderLayer(string name_, int id_):VisualLayer(name_, "Shader", id_
     drawNoInputs = true;
     passes = 1;
     internalFormat = GL_RGBA;
-    
-    fbo.allocate(width, height);
-    
-    vertexShader = "void main(){\n\
-        \n\
-        gl_Position = gl_ModelViewProjectionMatrix * gl_Vertex;\n\
-    }\n";
-    
-    pingPong.allocate(width, height, internalFormat);
-    
 }
 
 ShaderLayer::~ShaderLayer(){
@@ -36,9 +28,8 @@ void ShaderLayer::setup() {
         if(maxInputs > 0){
             width  = input[0]->getWidth();
             height = input[0]->getHeight();
-        }   
-        img.allocate(width, height, OF_IMAGE_COLOR_ALPHA);
-        img.setUseTexture(true);
+        }
+        pingPong.allocate(width, height, internalFormat);
     }
 }
 
@@ -62,16 +53,11 @@ void ShaderLayer::update(){
             }
             
             pingPong.swap();
-            
-            fbo.begin();
-            ofEnableAlphaBlending();
-            pingPong.dst->draw(0,0);
-            fbo.end();
         } else {
-            fbo.begin();
+            pingPong.dst->begin();
             ofSetColor(255);
             input[0]->getTextureReference().draw(0, 0, width, height);
-            fbo.end();
+            pingPong.dst->end();
         }
     } else if (maxInputs == 0) {
         for(int i = 0; i < passes; i++) {
@@ -101,11 +87,6 @@ void ShaderLayer::update(){
         }
         
         pingPong.swap();
-        
-        fbo.begin();
-        ofEnableAlphaBlending();
-        pingPong.dst->draw(0,0);
-        fbo.end();
     }
 }
 
@@ -167,10 +148,7 @@ ofTexture* ShaderLayer::getTexture(){
         return &noInputsImg.getTextureReference();
     }
     else{
-        fbo.readToPixels(buff);
-        img.setFromPixels(buff);
-        img.update();
-        return &img.getTextureReference();
+        return &pingPong.dst->getTextureReference();
     }
 }
 

@@ -1,4 +1,4 @@
-uniform sampler2DRect	tex0;
+uniform sampler2DRect tex0;
 float size_cx = 1.0;
 float size_cy = 1.0;
 

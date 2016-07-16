@@ -35,8 +35,6 @@ MixSimpleBlend::MixSimpleBlend(string name_, int id_):MixTable(name_, "Mix Simpl
     blendMode.addListener(this, &MixSimpleBlend::blendModeChanged);
     
     drawNoInputs = true;
-    
-    oneHap = false;
 }
 
 //------------------------------------------------------------------
@@ -86,22 +84,12 @@ void MixSimpleBlend::update(){
 //                ofScale(1, -1);
 //                ofPushMatrix();
 //                ofTranslate(0, -height);
-                if(dynamic_cast<ImageAndVideoInputList*>(input[selector1]) != NULL && ((ImageAndVideoInputList*) input[selector1])->isCurrentSequenceHap()) {
-                    input[selector1]->getTextureReference().readToPixels(buff);
-                    img.setFromPixels(buff);
-                    oneHap = true;
-                }
-                
+
                 psBlend.begin();
                 ofSetColor(255, 255, 255,opacity);
                 input[selector2]->getTextureReference().draw(0, 0, width, height);
                 psBlend.end();
-                if(oneHap){
-                    psBlend.draw(img.getTextureReference(), blendMode);
-                } else {
-                    psBlend.draw(input[selector1]->getTextureReference(), blendMode);
-                }
-                oneHap = false;
+                psBlend.draw(input[selector1]->getTextureReference(), blendMode);
                 
 //                ofPopMatrix();
 //                ofPopMatrix();
