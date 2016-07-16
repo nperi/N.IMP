@@ -490,6 +490,12 @@ bool ShaderLayer::loadShader(string path_, string fileName_){
         s.erase(0, pos + endSentence.length());
     }
     
+    maxInputs = numTextures;
+    if(maxInputs > 0){
+        addInputDot();
+        gui.add(isEnabled.setup("Enabled", isEnabled, 100, 20));
+    }
+    
     s = fragmentShader;
     searchFor = "const int ";
     string equals = " = ";
@@ -609,13 +615,6 @@ bool ShaderLayer::loadShader(string path_, string fileName_){
         newGroup.add(shaderVec2Params[i]->paramx);
         newGroup.add(shaderVec2Params[i]->paramy);
         gui.add(newGroup);
-    }
-    
-    
-    maxInputs = numTextures;
-    if(maxInputs > 0){
-        addInputDot();
-        gui.add(isEnabled.setup("Enabled", isEnabled, 100, 20));
     }
 
     gui.setWidthElements(INSPECTOR_WIDTH);
