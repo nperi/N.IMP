@@ -180,10 +180,10 @@ void GlitchLayer::update(){
     //            fbo.end();
     //        }
             
-            fbo.readToPixels(buff);
-            img.setFromPixels(buff);
-            
-            img.update();
+//            fbo.readToPixels(buff);
+//            img.setFromPixels(buff);
+//            
+//            img.update();
         }
     }
 }
@@ -372,7 +372,7 @@ ofTexture* GlitchLayer::getTexture(){
         return &noInputsImg.getTextureReference();
     else {
         if (isEnabled && hasAnyEffect())
-            return &img.getTextureReference();
+            return &fbo.getTextureReference();
         else return input[0]->getTexture();
     }
 }
