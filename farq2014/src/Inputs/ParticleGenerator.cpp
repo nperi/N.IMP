@@ -44,6 +44,9 @@ ParticleGenerator::ParticleGenerator(string name, int id_) : InputSource(name, "
     gui.add(pLifetime);
     
     pForce.setName("Force");
+    pForce.add(force_attracting.set("Attracting", false));
+    pForce.add(force_radius.set("Radius", 100, 0, 200));
+    pForce.add(force_scale.set("Scale", 1, 0, 20));
     pForce.add(force_x.set("Force X", 0, 0, width));
     pForce.add(force_y.set("Force Y", 0, 0, height));
     gui.add(pForce);
@@ -76,12 +79,18 @@ ParticleGenerator::ParticleGenerator(string name, int id_) : InputSource(name, "
     ofAddListener(baseGui->addOrRemoveOSCInputBaseGui, &gui, &ofxGuiGroup::addOrRemoveOSCInput);
     baseGui = gui.find("Force Y");
     ofAddListener(baseGui->addOrRemoveOSCInputBaseGui, &gui, &ofxGuiGroup::addOrRemoveOSCInput);
+    baseGui = gui.find("Attracting");
+    ofAddListener(baseGui->addOrRemoveOSCInputBaseGui, &gui, &ofxGuiGroup::addOrRemoveOSCInput);
+    baseGui = gui.find("Radius");
+    ofAddListener(baseGui->addOrRemoveOSCInputBaseGui, &gui, &ofxGuiGroup::addOrRemoveOSCInput);
+    baseGui = gui.find("Scale");
+    ofAddListener(baseGui->addOrRemoveOSCInputBaseGui, &gui, &ofxGuiGroup::addOrRemoveOSCInput);
     
     particle = new ofxParticleSystem(200,width,height,minRadius,(unityScale) ? minRadius : maxRadius,minLifetime,maxLifetime,fadeOut);
     
 }
 
-
+//------------------------------------------------------------------
 ParticleGenerator::~ParticleGenerator(){
     ofxBaseGui* baseGui;
     baseGui = gui.find("Clear BG");
@@ -103,6 +112,16 @@ ParticleGenerator::~ParticleGenerator(){
     baseGui = gui.find("min Lifetime");
     ofRemoveListener(baseGui->addOrRemoveOSCInputBaseGui, &gui, &ofxGuiGroup::addOrRemoveOSCInput);
     baseGui = gui.find("max Lifetime");
+    ofRemoveListener(baseGui->addOrRemoveOSCInputBaseGui, &gui, &ofxGuiGroup::addOrRemoveOSCInput);
+    baseGui = gui.find("Force X");
+    ofRemoveListener(baseGui->addOrRemoveOSCInputBaseGui, &gui, &ofxGuiGroup::addOrRemoveOSCInput);
+    baseGui = gui.find("Force Y");
+    ofRemoveListener(baseGui->addOrRemoveOSCInputBaseGui, &gui, &ofxGuiGroup::addOrRemoveOSCInput);
+    baseGui = gui.find("Attracting");
+    ofRemoveListener(baseGui->addOrRemoveOSCInputBaseGui, &gui, &ofxGuiGroup::addOrRemoveOSCInput);
+    baseGui = gui.find("Radius");
+    ofRemoveListener(baseGui->addOrRemoveOSCInputBaseGui, &gui, &ofxGuiGroup::addOrRemoveOSCInput);
+    baseGui = gui.find("Scale");
     ofRemoveListener(baseGui->addOrRemoveOSCInputBaseGui, &gui, &ofxGuiGroup::addOrRemoveOSCInput);
     delete particle;
 }
@@ -157,9 +176,9 @@ void ParticleGenerator::addForce(ParticleForce f){
 void ParticleGenerator::updateParameter(Param* inputParam){
     if(inputParam->name.compare("Force X")==0){
         ParticleForce f;
-        f.radius = 50;
-        f.isAttracting = true;
-        f.scale = 1;
+        f.radius = force_radius;
+        f.isAttracting = force_attracting;
+        f.scale = force_scale;
         f.pos.set(ofVec2f(inputParam->floatVal,force_y));
         addForce(f);
         force_x = inputParam->floatVal;
@@ -168,6 +187,15 @@ void ParticleGenerator::updateParameter(Param* inputParam){
         force_y = inputParam->floatVal;
         ofVec2f v = force[force.size()-1].pos;
         v.y = inputParam->floatVal;
+    }
+    else if(inputParam->name.compare("Attracting")==0){
+        force_attracting = inputParam->intVal;
+    }
+    else if(inputParam->name.compare("Radius")==0){
+        force_radius = inputParam->intVal;
+    }
+    else if(inputParam->name.compare("Scale")==0){
+        force_scale = inputParam->floatVal;
     }
     else if(inputParam->name.compare("Clear BG")==0){
         isClearBg = inputParam->intVal;
@@ -208,6 +236,12 @@ float ParticleGenerator::getMidiMin(string param_){
         return 0;
     }else if (param_.compare("Force Y")==0){
         return 0;
+    }else if(param_.compare("Attracting")==0){
+        return 0;
+    }else if(param_.compare("Radius")==0){
+        return 0;
+    }else if(param_.compare("Scale")==0){
+        return 1;
     }else if(param_.compare("Clear BG")==0){
         return 0;
     }else if(param_.compare("Particles Alpha")==0){
@@ -238,6 +272,12 @@ float ParticleGenerator::getMidiMax(string param_){
         return width;
     }else if (param_.compare("Force Y")==0){
         return height;
+    }else if(param_.compare("Attracting")==0){
+        return 1;
+    }else if(param_.compare("Radius")==0){
+        return 200;
+    }else if(param_.compare("Scale")==0){
+        return 20;
     }else if(param_.compare("Clear BG")==0){
         return 1;
     }else if(param_.compare("Particles Alpha")==0){

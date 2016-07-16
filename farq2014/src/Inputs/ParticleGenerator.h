@@ -48,7 +48,9 @@ class ParticleGenerator : public InputSource{
     ofParameter<float> fadeOut;
     
     ofParameterGroup pForce;
-    ofParameter<float> force_x, force_y;
+    ofParameter<float> force_x, force_y, force_scale;
+    ofParameter<int> force_radius;
+    ofParameter<bool> force_attracting;
     
     bool loadSettings(ofxXmlSettings &XML, int nTag_, int nodesCount_ = 0);
     bool saveSettings(ofxXmlSettings &XML);
@@ -69,6 +71,10 @@ private:
     ofxButton bAddParticles,bRemoveParticles;
     
     long int lastGen = 0;
+    
+    bool forceAttracting;
+    int forceRadius;
+    float forceScale;
 };
 
 
