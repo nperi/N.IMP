@@ -14,12 +14,10 @@ public:
 	void setup();
     void update();
     
-//    ofImage*    getImage();
     ofTexture*  getTexture();
 
     void changeToNextServer();
     void changeToPrevServer();
-//    void changeServer();
     void serverRetired(string serverName, string appName);
     
     bool loadSettings(ofxXmlSettings &XML, int nTag_, int nodesCount_ = 0);
@@ -41,7 +39,6 @@ private:
     ofxSyphonClient client;
     
     bool serverDown;
-//    void serverAnnounced(ofxSyphonServerDirectoryEventArgs &arg);
 
     void updateParameter(Param* inputParam){};
     float getMidiMin(string param_){};

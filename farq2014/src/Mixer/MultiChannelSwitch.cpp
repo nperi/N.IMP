@@ -24,11 +24,7 @@ MultiChannelSwitch::MultiChannelSwitch(string name_, int id_):MixTable(name_, "M
     if (baseGui) ofAddListener(baseGui->addOrRemoveOSCInputBaseGui, &gui, &ofxGuiGroup::addOrRemoveOSCInput);
     baseGui = gui.find("Disable other channels");
     if (baseGui) ofAddListener(baseGui->addOrRemoveOSCInputBaseGui, &gui, &ofxGuiGroup::addOrRemoveOSCInput);
-    
-//    labelGroup.setName("Channels");
-//    labelGroup.add(selChannel.set("channel", 0, 0, 0));
-//    gui.add(labelGroup);
-    
+
     selChannel.addListener(this, &MultiChannelSwitch::cselChannel);
     
     drawNoInputs = true;
@@ -53,9 +49,7 @@ void MultiChannelSwitch::inputAdded(ImageOutput* in_){
     
     gui.add(c->selected);
     c->selected.addListener(this, &MultiChannelSwitch::cLabel);
-    
-//    gui.remove("Channels");
-//    gui.add(labelGroup);
+
     gui.setWidthElements(INSPECTOR_WIDTH);
     
     ofxBaseGui* baseGui;
@@ -87,9 +81,7 @@ void MultiChannelSwitch::inputRemoved(int id_){
         selChannel.setMax(input.size());
         channels[selChannel]->selected = true;
     }
-    
-//    gui.remove("Channels");
-//    gui.add(labelGroup);
+
     gui.setWidthElements(INSPECTOR_WIDTH);
 }
 
@@ -207,7 +199,6 @@ void MultiChannelSwitch::cLabel(bool& b){
             if (channels[i]->selected == true) {
                 if (disableOtherChannels) {
                     input[selChannel]->setEnable(false);
-//                    input[selChannel]->setDrawInspector(false);
                 }
                 selChannel = i;
                 input[selChannel]->setEnable(true);
@@ -216,15 +207,6 @@ void MultiChannelSwitch::cLabel(bool& b){
         }
     }
 }
-
-//------------------------------------------------------------------
-//ofImage* MultiChannelSwitch::getImage(){
-//    if (drawNoInputs)
-//        return &noInputsImg;
-//    else {
-//        return input[selChannel]->getImage();
-//    }
-//}
 
 //------------------------------------------------------------------
 ofTexture* MultiChannelSwitch::getTexture(){

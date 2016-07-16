@@ -24,7 +24,6 @@ class InputCamera : public InputSource{
 	
 	void setup();
     
-//    ofImage*    getImage();
     ofTexture*  getTexture();
     
     void updateParameter(Param* inputParam){};
@@ -40,7 +39,6 @@ class InputCamera : public InputSource{
     void changeToPrevCamera();
     void changeToHigherResolution();
     void changeToLowerResolution();
-//    void changeHDorVGA(bool &hd_);
     void editResolution(string resolution);
     void initCamera();
 
@@ -58,7 +56,6 @@ private:
     int cameraIndex;
     
     ofParameter<string> resolutionName;
-//    ofParameter<bool> hd_vga;
     ofxButton higherResolution;
     ofxButton lowerResolution;
     int previous_resolution;

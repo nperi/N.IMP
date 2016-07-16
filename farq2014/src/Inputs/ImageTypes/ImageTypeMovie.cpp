@@ -12,18 +12,12 @@
 
 ImageTypeMovie::ImageTypeMovie(string name_ ,string path_, ofBaseVideoPlayer* player, bool isHap): ImageType(name_,path_){
     mediaType = T_MOVIE;
-    //ofQTKitDecodeMode decodeMode = OF_QTKIT_DECODE_PIXELS_AND_TEXTURE;
-    //videoPlayer.setPixelFormat(OF_PIXELS_RGBA);
-    //videoPlayer.loadMovie(path_, decodeMode);
-    //videoPlayer.loadMovie(path_);
     videoPlayer = player;
     path = path_;
     name = name_;
     ext  = OTHER;
     isPlaying = false;
     hap = isHap;
-    
-//    if (videoPlayer != NULL) videoPlayer->stop();
     
     isPlaying.addListener(this, &ImageTypeMovie::cIsPlaying);
 }
@@ -50,10 +44,12 @@ void ImageTypeMovie::activate(ofImage& _img){
             videoPlayer->setFrame(0);
         }
         
-//        _img.setFromPixels(videoPlayer->getPixels(), videoPlayer->getWidth(), videoPlayer->getHeight(), OF_IMAGE_COLOR_ALPHA);
-        
         if(dynamic_cast<ofxHapPlayer*>(videoPlayer) == NULL) {
             _img.setFromPixels(videoPlayer->getPixels(), videoPlayer->getWidth(), videoPlayer->getHeight(), OF_IMAGE_COLOR_ALPHA);
+        } else {
+            ofPixels buff;
+            videoPlayer->getTexture()->readToPixels(buff);
+            _img.setFromPixels(buff);
         }
     }
 }
@@ -131,8 +127,14 @@ void ImageTypeMovie::setPosition(float p, ofImage& _img){
 
         videoPlayer->setPosition(p);
         videoPlayer->update();
-        if(dynamic_cast<ofxHapPlayer*>(videoPlayer) == NULL) {
-            _img.setFromPixels(videoPlayer->getPixels(), videoPlayer->getWidth(), videoPlayer->getHeight(), OF_IMAGE_COLOR_ALPHA);
+        if(_img.isAllocated()){
+            if(dynamic_cast<ofxHapPlayer*>(videoPlayer) == NULL) {
+                _img.setFromPixels(videoPlayer->getPixels(), videoPlayer->getWidth(), videoPlayer->getHeight(), OF_IMAGE_COLOR_ALPHA);
+            } else {
+                ofPixels buff;
+                videoPlayer->getTexture()->readToPixels(buff);
+                _img.setFromPixels(buff);
+            }
         }
     }
 }

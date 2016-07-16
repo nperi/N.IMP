@@ -15,9 +15,7 @@ ImageOutput::ImageOutput(string name_, string typeName_, int id_, int maxInputs_
     typeName    = typeName_;
     width       = width_;
     height      = height_;
-    
-//    img.allocate(width, height, OF_IMAGE_COLOR);
-//    img.setUseTexture(true);
+
     maxInputs   = maxInputs_;
     panel.setup();
     panel.add(gui.setup(typeName));
@@ -193,18 +191,6 @@ void ImageOutput::resetProcessedFlag(){
 void ImageOutput::setEnable(bool isEnabled_){
     isEnabled = isEnabled_;
 }
-
-//------------------------------------------------------------------
-//vector<string> ImageOutput::getAttributesForMidiLearn() {
-//    
-//    return panel.getAttributesForMidiLearn();
-//}
-//
-////------------------------------------------------------------------
-//vector<string> ImageOutput::getAttributesForAudioIn() {
-//
-//    return panel.getAttributesForAudioIn();
-//}
 
 //------------------------------------------------------------------
 vector<string> ImageOutput::getAttributesClicked() {

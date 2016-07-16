@@ -51,10 +51,6 @@ void ofxParticleSystem::update() {
 		particles[i].update();
 	}
     
-    /*
-	for ( list<ofxParticle>::iterator p = particles.begin(); p != particles.end(); ++p) {
-		p->update();
-	}*/
 }
 
 void ofxParticleSystem::addForce(ofVec2f force) {
@@ -93,12 +89,7 @@ void ofxParticleSystem::addAttractionForce(float x, float y, float radius, float
 }
 
 void ofxParticleSystem::draw() {
-	/*for ( list<ofxParticle>::iterator p = particles.begin(); p != particles.end(); ++p) {
-		p->draw();
-	}*/
     ofEnableAlphaBlending();
-	//ofSetColor(0,130,130, 200);
-	//ofSetColor(0x000000);
 	
 	for (int i = 0; i < particles.size(); i++){
 		particles[i].draw();

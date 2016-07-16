@@ -28,7 +28,6 @@ class ParticleGenerator : public InputSource{
 	void setup();
     void updateParameter(Param* inputParam);
     
-//    ofImage*    getImage();
     ofTexture*  getTexture();
     
     void addForce(ParticleForce f);

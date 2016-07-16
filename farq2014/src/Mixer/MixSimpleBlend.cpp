@@ -51,9 +51,6 @@ void MixSimpleBlend::setup() {
 
         fbo.allocate(width, height);
         psBlend.setup(width, height);
-        
-        img.allocate(width, height, OF_IMAGE_COLOR_ALPHA);
-        img.setUseTexture(true);
     }
 }
 
@@ -80,19 +77,11 @@ void MixSimpleBlend::update(){
                 }
             }
             else{
-//                ofPushMatrix();
-//                ofScale(1, -1);
-//                ofPushMatrix();
-//                ofTranslate(0, -height);
-
                 psBlend.begin();
                 ofSetColor(255, 255, 255,opacity);
                 input[selector2]->getTextureReference().draw(0, 0, width, height);
                 psBlend.end();
                 psBlend.draw(input[selector1]->getTextureReference(), blendMode);
-                
-//                ofPopMatrix();
-//                ofPopMatrix();
             }
             glDisable(GL_BLEND);
             glPopAttrib();
@@ -225,17 +214,6 @@ float MixSimpleBlend::getMidiMax(string param_){
         return 24;
     }
 }
-
-//------------------------------------------------------------------
-//ofImage* MixSimpleBlend::getImage(){
-//    if (drawNoInputs)
-//        return &noInputsImg;
-//    else {
-//        fbo.readToPixels(buff);
-//        img.setFromPixels(buff);
-//        return &img;
-//    }
-//}
 
 //------------------------------------------------------------------
 ofTexture* MixSimpleBlend::getTexture(){

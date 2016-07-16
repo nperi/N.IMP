@@ -37,7 +37,6 @@ class ImageOutput : public ofxPatch {
     
     string               getName();
     string               getTypeName();
-//    virtual ofImage*     getImage(){};
     virtual ofTexture*   getTexture(){};
     vector<ImageOutput*> getInputs();
     vector<string>       getInputNames();
@@ -71,12 +70,10 @@ class ImageOutput : public ofxPatch {
     virtual bool saveSettingsToSnippet(ofxXmlSettings &XML, map<int,int> newIdsMap)=0;
     
     //midi learn methods
-//    vector<string> getAttributesForMidiLearn();
     virtual float getMidiMin(string param_)=0;
     virtual float getMidiMax(string param_)=0;
     
     //audio in methods
-//    vector<string> getAttributesForAudioIn();
     bool setAttributesForAudioIn(string name_, bool left, int nodeID_);
     bool setAttributesForOSC(string name, int nodeID_);
     bool setAttributesForMIDI(string name_, int control_);

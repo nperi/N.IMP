@@ -87,9 +87,7 @@ void AudioIn::updateParameter(Param* inputParam) {
 
 //------------------------------------------------------------------
 void AudioIn::_mouseDragged(ofMouseEventArgs &e){
-    
     ofxPatch::_mouseDragged(e);
-    
     setWaveFormPosition();
 }
 

@@ -28,7 +28,6 @@ public:
     
     void _mouseDragged(ofMouseEventArgs &e);
     
-//    ofImage*            getImage(){};
     ofTexture*          getTexture(){};
     ofxUIMovingGraph*   getWaveForm(){ return waveform; };
     float               getMidiMin(string param_){};

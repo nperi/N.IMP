@@ -24,8 +24,7 @@ ImageAndVideoInputList::ImageAndVideoInputList(string name, int id_) : InputSour
     hapPlayer = VideoPool::getInstance()->getHapPlayer();
     commonPlayer->stop();
     hapPlayer->stop();
-    videoPlayer = commonPlayer;
-    
+    videoPlayer = commonPlayer;    
 }
 
 //------------------------------------------------------------------
@@ -125,11 +124,6 @@ void ImageAndVideoInputList::updateParameter(Param* inputParam){
     if(inputParam->name.compare("BPM")==0){
         this->bpm = inputParam->floatVal;
     }
-//    else if(inputParam->name.compare("BPM Multiplier")==0 || inputParam->name.compare("Loop length in beats")==0){
-//        isMatchBpmToSequenceLength
-//        ? this->bpmMultiplier = ofMap(inputParam->value, inputParam->inputMin, inputParam->inputMax, 0, 16)
-//        : this->bpmMultiplier = ofMap(inputParam->value, inputParam->inputMin, inputParam->inputMax, 0, 120);
-//    }
     else if(inputParam->name.compare("BPM Multiplier")==0){
         this->bpmMultiplier = inputParam->intVal;
     }
@@ -143,7 +137,6 @@ void ImageAndVideoInputList::updateParameter(Param* inputParam){
         this->playPos2 = inputParam->floatVal;
     }
     else if(inputParam->name.compare("Current Sequence")==0){
-//        this->currentSequence = ofMap(inputParam->value, inputParam->inputMin, inputParam->inputMax, 0, getMidiMax("Current Sequence"));
         this->currentSequence = inputParam->intVal % inputs.size();
     }
     else if(inputParam->name.compare("Play")==0){
@@ -224,11 +217,6 @@ float ImageAndVideoInputList::getMidiMax(string param_){
 }
 
 //------------------------------------------------------------------
-//ofImage* ImageAndVideoInputList::getImage(){
-//    return &img;
-//}
-
-//------------------------------------------------------------------
 ofTexture* ImageAndVideoInputList::getTexture(){
     return &img.getTextureReference();
 }
@@ -238,12 +226,6 @@ void ImageAndVideoInputList::loadImage(string name_, string path_){
     
     if (ofIsStringInString(path_, ".mov") || ofIsStringInString(path_, ".mp4") ||
         ofIsStringInString(path_, ".mpg") || ofIsStringInString(path_, ".mpg") ) {
-        
-//        if (inputs.size() == 0 || videoPlayer == NULL) {
-//            videoPlayer = VideoPool::getInstance()->getPlayer(path_, name_);
-//            videoPlayer->stop();
-//        }
-//        inputs.push_back(new ImageTypeMovie(name_,path_,videoPlayer));
         if(VideoPool::getInstance()->isHapVideo(path_)) {
             inputs.push_back(new ImageTypeMovie(name_,path_, hapPlayer, true));
         } else {
@@ -251,10 +233,6 @@ void ImageAndVideoInputList::loadImage(string name_, string path_){
         }
         hasMovie = true;
     }
-    //load image sequence
-//    else if (!ofIsStringInString(path_, ".")) {
-//        inputs.push_back(new ImageTypePictureSequence(name_,path_));
-//    }
     //load single image
     else{
         inputs.push_back(new ImageTypePicture(name_,path_));
@@ -330,8 +308,6 @@ void ImageAndVideoInputList::loadImage(string name_, string path_){
         baseGui = gui.find("Position");
         if (baseGui) ofAddListener(baseGui->addOrRemoveOSCInputBaseGui, &gui, &ofxGuiGroup::addOrRemoveOSCInput);
         
-        //gui.add(nextFrame.setup("nextFrame"));
-        //gui.add(previousFrame.setup("previousFrame"));
         isPlayingBackwards = false;
 
         //start first scene
@@ -478,7 +454,6 @@ void ImageAndVideoInputList::sequenceChanged(int &s){
         inputs[currentSequence]->setLoopState(l);
         inputs[currentSequence]->calculateFPS();
         
-//        width  = getBox().width/SCALE_RATIO;
         width  = (textureCorners[1].x - textureCorners[0].x)/SCALE_RATIO;
         height = (width*inputs[currentSequence]->getHeight())/inputs[currentSequence]->getWidth();
         
@@ -561,26 +536,13 @@ void ImageAndVideoInputList::setEnable(bool isEnabled_){
         }
         else if (isEnabled_ && nEnabled == 0)
         {
-//            videoPlayer = VideoPool::getInstance()->getPlayer();
-            
-//            for (int i=0; i<inputs.size(); ++i) {
-//                if (inputs[i]->getType() == T_MOVIE) {
-//                    ImageTypeMovie* t = (ImageTypeMovie*)inputs[i];
-//                    t->setPlayer(videoPlayer);
-//                }
-//            }
-            
             inputs[currentSequence]->activate(img);
             inputs[currentSequence]->isPlaying = isPlaying;
         }
-//        else if (!isEnabled_ && nEnabled>1){
-//            //nothing
-//        }
         else{
             if (videoPlayer != NULL) {
                 videoPlayer->stop();
             }
-//            VideoPool::getInstance()->releasePlayer(videoPlayer);
         }
     }
     InputSource::setEnable(isEnabled_);

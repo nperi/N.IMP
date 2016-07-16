@@ -12,14 +12,8 @@ void ofApp::setup() {
     
     ofSetEscapeQuitsApp(false);
     
-    //*** WINDOWS SETUP ***//
-    // ******* END WINDOWS SETUP ******//
-    
-    
     //*** MAIN SETUP ***//
     //
-
-//    ofSetFrameRate(30);
     xmlFileName            = "Untitle.xml";
     xmlFilePath            = "";
     loadingOK              = true;

@@ -26,7 +26,6 @@ public:
     AudioInputGenerator(string name_, int nodeID_);
     ~AudioInputGenerator();
     void processInput();
-    //bool setupFromXML();
     void setChannel(int c) { channel = c; };
     void setBand(int b) { band = b; };
     void setSaturation(float s) { saturation = s; };

@@ -11,7 +11,6 @@
 
 
 CustomSyphonServer::CustomSyphonServer(string name_, ImageOutput* feeder_, int id_): ImageOutput(name_, "Syphon Output", id_){
-//    name = exportName_;
     feeder = feeder_;
     
     addInputDot();
@@ -68,11 +67,6 @@ void CustomSyphonServer::update(){
     else {
         server.publishTexture(&noInputsImg.getTextureReference());
     }
-}
-
-//------------------------------------------------------------------
-ofImage* CustomSyphonServer::getImage(){
-    
 }
 
 //------------------------------------------------------------------

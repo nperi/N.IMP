@@ -55,7 +55,6 @@ void ConsoleScrollBar::setup(float screenRatio_){
     mouseOverGrip = false; // true when the mouse is over the grip
     
     // The size of the panel. All the console screen except margins
-//    panelWidth = ofGetWidth() - scrollBarWidth;
     panelHeight = ofGetHeight() - ofGetHeight()*windowRatio - scrollBarWidth;
     
     applyInertia = false;

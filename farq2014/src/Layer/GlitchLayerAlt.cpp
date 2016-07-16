@@ -57,8 +57,6 @@ void GlitchLayerAlt::setup() {
         width  = input[0]->getWidth();
         height = input[0]->getHeight();
         
-//        buff.allocate(width, height, OF_IMAGE_COLOR_ALPHA);
-        
         img.allocate(width, height, OF_IMAGE_COLOR_ALPHA);
         img.setUseTexture(true);
     }
@@ -135,14 +133,6 @@ float GlitchLayerAlt::getMidiMax(string param_){
         return 255;
     }
 }
-
-//------------------------------------------------------------------
-//ofImage* GlitchLayerAlt::getImage(){
-//    if (drawNoInputs)
-//        return &noInputsImg;
-//    else
-//        return &img;
-//}
 
 //------------------------------------------------------------------
 ofTexture* GlitchLayerAlt::getTexture(){

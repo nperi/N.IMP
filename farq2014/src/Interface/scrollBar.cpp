@@ -276,136 +276,124 @@ void scrollBar::draw(){
 /* ================================================ */
 
 void scrollBar::mouseDragged(ofMouseEventArgs &e){
-//    if(EventHandler::getInstance()->isMainEvent()){
-        mousePositionX = e.x;
-        mousePositionY = e.y;
+    mousePositionX = e.x;
+    mousePositionY = e.y;
+    
+    ofVec3f mouse = ofVec3f(e.x, e.y,0);
+    ofVec3f mouseLast = ofVec3f(ofGetPreviousMouseX(),ofGetPreviousMouseY(),0);
+    
+    ofVec3f diffVec = ofVec3f(0,0,0);
+    
+    if (isScrollBarVisible && composer->isDraggingGrip()) {
+        diffVec.y = mouseLast.y - mouse.y;
         
-        ofVec3f mouse = ofVec3f(e.x, e.y,0);
-        ofVec3f mouseLast = ofVec3f(ofGetPreviousMouseX(),ofGetPreviousMouseY(),0);
+        // Move the grip according to the mouse displacement
+        int dy = e.y - mousePreviousY;
+        mousePreviousY = e.y;
+        gripRectangle.y += dy;
         
-        ofVec3f diffVec = ofVec3f(0,0,0);
+    }
+    if(isHScrollBarVisible && composer->isDraggingHGrip()){
+        diffVec.x = mouseLast.x - mouse.x;
         
-        if (isScrollBarVisible && composer->isDraggingGrip()) {
-            diffVec.y = mouseLast.y - mouse.y;
-            
-            // Move the grip according to the mouse displacement
-            int dy = e.y - mousePreviousY;
-            mousePreviousY = e.y;
-            gripRectangle.y += dy;
-            
-        }
-        if(isHScrollBarVisible && composer->isDraggingHGrip()){
-            diffVec.x = mouseLast.x - mouse.x;
-            
-            // Move the grip according to the mouse displacement
-            int dx = e.x - mousePreviousX;
-            mousePreviousX = e.x;
-            hGripRectangle.x += dx;
-        }
+        // Move the grip according to the mouse displacement
+        int dx = e.x - mousePreviousX;
+        mousePreviousX = e.x;
+        hGripRectangle.x += dx;
+    }
 
-        updateScrollBar(diffVec);
-        updateHScrollBar(diffVec);
-//    }
+    updateScrollBar(diffVec);
+    updateHScrollBar(diffVec);
 
 }
 
 //------------------------------------------------------------------
 void scrollBar::mouseReleased(ofMouseEventArgs &e){
-//    if(EventHandler::getInstance()->isMainEvent()){
-        mousePositionX = e.x;
-        mousePositionY = e.y;
-        
-        composer->setDraggingGrip(false);
-        composer->setDraggingHGrip(false);
-        
-        enableTrackpad = true;
-//    }
+    mousePositionX = e.x;
+    mousePositionY = e.y;
+    
+    composer->setDraggingGrip(false);
+    composer->setDraggingHGrip(false);
+    
+    enableTrackpad = true;
 }
 
 //------------------------------------------------------------------
 void scrollBar::mousePressed(ofMouseEventArgs &e){
-//    if(EventHandler::getInstance()->isMainEvent()){
-        mousePositionX = e.x;
-        mousePositionY = e.y;
-        
-        // Check if the click occur on the grip
-        if (isScrollBarVisible) {
-            ofRectangle r = gripRectangle;
-            if (r.inside(e.x, e.y)) {
-                composer->deactivateAllPatches();
-                composer->setDraggingGrip(true);
-                mousePreviousY = e.y;
-            }
+    mousePositionX = e.x;
+    mousePositionY = e.y;
+    
+    // Check if the click occur on the grip
+    if (isScrollBarVisible) {
+        ofRectangle r = gripRectangle;
+        if (r.inside(e.x, e.y)) {
+            composer->deactivateAllPatches();
+            composer->setDraggingGrip(true);
+            mousePreviousY = e.y;
         }
-        
-        if (isHScrollBarVisible) {
-            ofRectangle r = hGripRectangle;
-            if (r.inside(e.x, e.y)) {
-                composer->deactivateAllPatches();
-                composer->setDraggingHGrip(true);
-                mousePreviousX = e.x;
-            }
+    }
+    
+    if (isHScrollBarVisible) {
+        ofRectangle r = hGripRectangle;
+        if (r.inside(e.x, e.y)) {
+            composer->deactivateAllPatches();
+            composer->setDraggingHGrip(true);
+            mousePreviousX = e.x;
         }
-        
-        enableTrackpad = false;
-//    }
+    }
+    
+    enableTrackpad = false;
 }
 
 //------------------------------------------------------------------
 void scrollBar::mouseMoved(ofMouseEventArgs &e){
-//    if(EventHandler::getInstance()->isMainEvent()){
-        mousePositionX = e.x;
-        mousePositionY = e.y;
-        if (isScrollBarVisible) {
-            ofRectangle r = gripRectangle;
-            mouseOverGrip = r.inside(e.x, e.y);
-        } else {
-            mouseOverGrip = false;
-        }
-        
-        if (isHScrollBarVisible) {
-            ofRectangle r = hGripRectangle;
-            mouseOverHGrip = r.inside(e.x, e.y);
-        } else {
-            mouseOverHGrip = false;
-        }
-//    }
+    mousePositionX = e.x;
+    mousePositionY = e.y;
+    if (isScrollBarVisible) {
+        ofRectangle r = gripRectangle;
+        mouseOverGrip = r.inside(e.x, e.y);
+    } else {
+        mouseOverGrip = false;
+    }
+    
+    if (isHScrollBarVisible) {
+        ofRectangle r = hGripRectangle;
+        mouseOverHGrip = r.inside(e.x, e.y);
+    } else {
+        mouseOverHGrip = false;
+    }
 }
 
 //------------------------------------------------------------------
 void scrollBar::keyPressed(ofKeyEventArgs &e){
-//    if(EventHandler::getInstance()->isMainEvent()){
-        ofVec3f diffVec = ofVec3f(0, 0, 0);
-        if (isScrollBarVisible) {
-            if (e.key == OF_KEY_UP ){
-                diffVec.y = KEY_SCROLL_SENSITIVITY;
-                gripRectangle.y -= KEY_SCROLL_SENSITIVITY;
-            } else if (e.key == OF_KEY_DOWN){
-                diffVec.y = -KEY_SCROLL_SENSITIVITY;
-                gripRectangle.y += KEY_SCROLL_SENSITIVITY;
-            }
+    ofVec3f diffVec = ofVec3f(0, 0, 0);
+    if (isScrollBarVisible) {
+        if (e.key == OF_KEY_UP ){
+            diffVec.y = KEY_SCROLL_SENSITIVITY;
+            gripRectangle.y -= KEY_SCROLL_SENSITIVITY;
+        } else if (e.key == OF_KEY_DOWN){
+            diffVec.y = -KEY_SCROLL_SENSITIVITY;
+            gripRectangle.y += KEY_SCROLL_SENSITIVITY;
         }
-        if(isHScrollBarVisible){
-            if (e.key == OF_KEY_LEFT ){
-                diffVec.x = KEY_SCROLL_SENSITIVITY;
-                hGripRectangle.x -= KEY_SCROLL_SENSITIVITY;
-            } else if (e.key == OF_KEY_RIGHT ){
-                diffVec.x = -KEY_SCROLL_SENSITIVITY;
-                hGripRectangle.x += KEY_SCROLL_SENSITIVITY;
-            }
+    }
+    if(isHScrollBarVisible){
+        if (e.key == OF_KEY_LEFT ){
+            diffVec.x = KEY_SCROLL_SENSITIVITY;
+            hGripRectangle.x -= KEY_SCROLL_SENSITIVITY;
+        } else if (e.key == OF_KEY_RIGHT ){
+            diffVec.x = -KEY_SCROLL_SENSITIVITY;
+            hGripRectangle.x += KEY_SCROLL_SENSITIVITY;
         }
-        updateScrollBar(diffVec);
-        updateHScrollBar(diffVec);
-//    }
+    }
+    updateScrollBar(diffVec);
+    updateHScrollBar(diffVec);
 }
 
 //------------------------------------------------------------------
 void scrollBar::windowResized(ofResizeEventArgs &e){
-//    if(EventHandler::getInstance()->isMainEvent()){
-        windowWidth = e.width;
-        windowHeight = e.height*windowRatio;
-        this->setup();
-//    }
+    windowWidth = e.width;
+    windowHeight = e.height*windowRatio;
+    this->setup();
 }
 
 /* ================================================ */
@@ -424,7 +412,6 @@ void scrollBar::updateScrollBar(ofVec2f diffVec){
     }
     if(diffVec.y != 0){
         if(!(gripRectangle.y < BEGIN_Y) && !(gripRectangle.getBottom() > scrollBarRectangle.getBottom())){
-            //composer->movePatches(diffVec);
             cam->setPosition(cam->getPosition().x, cam->getPosition().y - diffVec.y, cam->getPosition().z);
         }
         
@@ -562,7 +549,6 @@ void scrollBar::changeWindowHeight(float windowRatio_) {
 /* ================================================ */
 
 bool scrollBar::isZooming(){
-    
     if( (prev0.y < post0.y && prev1.y > post1.y) ||
        (prev0.y > post0.y && prev1.y < post1.y) ){
         return true;

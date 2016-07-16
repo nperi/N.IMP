@@ -136,8 +136,6 @@ void NodeViewer::createConnections(){
 
 //------------------------------------------------------------------
 void NodeViewer::createConnections(vector<NodeElement*> _elements){
-    
-    //connections.clear();
     vector<string> elemNames;
     
     vector<ImageOutput*> inputs;
@@ -186,34 +184,6 @@ void NodeViewer::closePatch( int _nID ){
 string NodeViewer::getName(){
     return name;
 }
-
-//------------------------------------------------------------------
-//map<int, vector <string> > NodeViewer::getAttributesSelectedForMidiLearn() {
-//    
-//    map<int, vector <string> > result;
-//    vector<string> partialResult;
-//    for (int i = 0; i < elements.size(); ++i) {
-//        partialResult = elements[i]->getImageOutput()->getAttributesClicked();
-//        if (partialResult.size() > 0) {
-//            result[elements[i]->getImageOutput()->getId()] = partialResult;
-//        }
-//    }
-//    return result;
-//}
-//
-////------------------------------------------------------------------
-//map<int, vector <string> > NodeViewer::getAttributesSelectedForAudioIn() {
-//    
-//    map<int, vector <string> > result;
-//    vector<string> partialResult;
-//    for (int i = 0; i < elements.size(); ++i) {
-//        partialResult = elements[i]->getImageOutput()->getAttributesClicked();
-//        if (partialResult.size() > 0) {
-//            result[elements[i]->getImageOutput()->getId()] = partialResult;
-//        }
-//    }
-//    return result;
-//}
 
 //------------------------------------------------------------------
 map<int, vector <string> > NodeViewer::getAttributesClicked() {

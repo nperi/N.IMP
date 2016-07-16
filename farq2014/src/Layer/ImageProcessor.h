@@ -23,8 +23,7 @@ class ImageProcessor : public VisualLayer{
 	
     void setup();
     void updateParameter(Param* inputParam);
-    
-//    ofImage*    getImage();
+
     ofTexture*  getTexture();
     
     ofParameter<bool> isBloom;

@@ -109,7 +109,6 @@ ImageProcessor::ImageProcessor(string name_, int id_):VisualLayer(name_, "Image 
     gui.add(edge);
     gui.add(bleach);
     gui.add(rgbshift);
-   // gui.add(god);
     gui.add(zoomBlur);
     gui.add(pixelate);
     gui.setWidthElements(INSPECTOR_WIDTH);
@@ -317,21 +316,6 @@ void ImageProcessor::update() {
     if(input.size()) {
         ofPushStyle();
         if (isEnabled) {
-//            fbo.begin();
-//            glPushAttrib(GL_ALL_ATTRIB_BITS);
-//            glEnable(GL_BLEND);
-//            glBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA,GL_ONE,GL_ONE_MINUS_SRC_ALPHA);
-//            ofSetColor(255);
-//            ofClear(255,255,255,0);
-//            
-//            post.begin();
-//            ofClear(255,255,255,0);
-//            input[0]->getTextureReference().draw(0, 0, width, height);
-//            post.end();
-//
-//            glDisable(GL_BLEND);
-//            glPopAttrib();
-//            fbo.end();
             fbo.begin();
             glPushAttrib(GL_ALL_ATTRIB_BITS);
             glEnable(GL_BLEND);
@@ -603,16 +587,6 @@ float ImageProcessor::getMidiMax(string param_){
     }
 }
 
-//------------------------------------------------------------------
-//ofImage* ImageProcessor::getImage(){
-//    if (drawNoInputs)
-//        return &noInputsImg;
-//    else {
-//        fbo.readToPixels(buff);
-//        img.setFromPixels(buff);
-//        return &img;
-//    }
-//}
 
 //------------------------------------------------------------------
 ofTexture* ImageProcessor::getTexture(){

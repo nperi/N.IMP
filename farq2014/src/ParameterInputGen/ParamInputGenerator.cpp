@@ -22,7 +22,6 @@ ParamInputGenerator::~ParamInputGenerator(){
 
 void ParamInputGenerator::setup(){
     samplingMs = 33; // default sampling is 30 fps -- this only works with threaded generators
-    //setupFromXML();
     isConfigured = true;
 }
 
@@ -69,9 +68,7 @@ void ParamInputGenerator::storeMessage(Param* p){
     
     if(inputBuffer->size()>10){
         Param* firstP = inputBuffer->front();
-        //cout << inputBuffer->size();
         inputBuffer->pop();
-        //cout << " after: " << inputBuffer->size() << endl;
         //delete firstP;
         
     }

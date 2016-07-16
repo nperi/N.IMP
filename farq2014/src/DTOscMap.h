@@ -19,7 +19,6 @@ class DTOscMap {
 	
     DTOscMap(){};
     
-//    string path;
     vector<int>     nodeId;
     vector<string>  paramId;
     

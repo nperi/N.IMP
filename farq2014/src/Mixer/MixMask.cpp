@@ -41,9 +41,6 @@ void MixMask::setup() {
         height = input[0]->getHeight();
         
         fbo.allocate(width, height);
-        
-        img.allocate(width, height, OF_IMAGE_COLOR_ALPHA);
-        img.setUseTexture(true);
     }
 }
 
@@ -137,36 +134,6 @@ void MixMask::drawShader(){
     }
     
     maskShader.end();
-    
-//    maskShader.begin();
-//    maskShader.setUniformTexture("Tex0", input[0]->getTextureReference(), 0);
-//    if (input.size() > 1)
-//        maskShader.setUniformTexture("Tex1", input[1]->getTextureReference(), 1);
-//    else maskShader.setUniformTexture("Tex1", input[0]->getTextureReference(), 1);
-//
-//    ofMesh a;
-//    a.addVertex(ofVec2f(0, height));
-//    a.addTexCoord(ofVec2f(0, height));
-//    
-//    a.addVertex(ofVec2f(0, 0));
-//    a.addTexCoord(ofVec2f(0, 0));
-//    
-//    a.addVertex(ofVec2f(width, height));
-//    a.addTexCoord(ofVec2f(width, height));
-//    
-//    a.addVertex(ofVec3f(width, 0, 0));
-//    a.addTexCoord(ofVec2f(width, 0));
-//    
-//    a.addIndex(0);
-//    a.addIndex(2);
-//    a.addIndex(1);
-//    a.addIndex(2);
-//    a.addIndex(3);
-//    a.addIndex(1);
-//    
-//    a.draw();
-//    
-//    maskShader.end();
 }
 
 //------------------------------------------------------------------
@@ -192,17 +159,6 @@ float MixMask::getMidiMax(string param_){
         return 360;
     }
 }
-
-//------------------------------------------------------------------
-//ofImage* MixMask::getImage(){
-//    if (drawNoInputs)
-//        return &noInputsImg;
-//    else {
-//        fbo.readToPixels(buff);
-//        img.setFromPixels(buff);
-//        return &img;
-//    }
-//}
 
 //------------------------------------------------------------------
 ofTexture* MixMask::getTexture(){

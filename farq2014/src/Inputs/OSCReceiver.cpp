@@ -58,11 +58,6 @@ void OSCReceiver::customDraw(){
 }
 
 //------------------------------------------------------------------
-//ofImage* OSCReceiver::getImage(){
-//    return &oscReceiverImg;
-//}
-
-//------------------------------------------------------------------
 ofTexture* OSCReceiver::getTexture(){
     return &oscReceiverImg.getTextureReference();
 }

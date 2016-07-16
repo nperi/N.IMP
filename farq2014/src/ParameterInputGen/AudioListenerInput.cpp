@@ -24,10 +24,6 @@ void AudioListenerInput::processInput(){
     
 }
 
-//bool AudioListenerInput::setupFromXML(){
-//    
-//}
-
 bool AudioListenerInput::fillNewData(float* left_, float* right_, int bufferLen_){
     
     // if we dont have unprocessed data in the buffer, then we store it and process it

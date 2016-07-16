@@ -77,7 +77,6 @@ enum paramInputType
 enum InputType
 {
     AUDIO_ANALIZER,
-//    VIDEO,
     CAM,
     IMAGE_AND_VIDEO_LIST,
     PARTICLE,

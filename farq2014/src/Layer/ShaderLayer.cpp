@@ -135,14 +135,6 @@ float ShaderLayer::getMidiMax(string param_){
 }
 
 //------------------------------------------------------------------
-//ofImage* ShaderLayer::getImage(){
-//    if (drawNoInputs)
-//        return &noInputsImg;
-//    else
-//        return &img;
-//}
-
-//------------------------------------------------------------------
 ofTexture* ShaderLayer::getTexture(){
     if (drawNoInputs){
         return &noInputsImg.getTextureReference();

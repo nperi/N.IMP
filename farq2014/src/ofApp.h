@@ -6,7 +6,6 @@
 #include "ofxXmlSettings.h"
 
 #include "ofxGui.h"
-//#include "ofxSyphon.h"
 
 #include "VisualLayer.h"
 #include "InputSource.h"

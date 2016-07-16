@@ -26,7 +26,6 @@ public:
     bool loadSettings(ofxXmlSettings &XML, int nTag_, int nodesCount_ = 0);
     bool saveSettingsToSnippet(ofxXmlSettings &XML, map<int,int> newIdsMap);
     
-    ofImage*    getImage();
     ofTexture*  getTexture();
     
     void aspectRatioChanged(int &index_);

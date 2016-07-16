@@ -17,8 +17,6 @@ NodeElement::NodeElement(ImageOutput* imo_, int x_, int y_, int guiX_,int guiY_,
     guiWidth = guiWidth_;
     imageOutput = imo_;
     
-//    scale = scale_;
-    
 }
 
 //------------------------------------------------------------------
@@ -47,11 +45,3 @@ void NodeElement::setupGuiPositions(){
 ImageOutput* NodeElement::getImageOutput(){
     return imageOutput;
 }
-
-//ofVec2f NodeElement::getPosIn(){
-//    return ofVec2f(x,y +(scale*240));
-//}
-//
-//ofVec2f NodeElement::getPosOut(){
-//    return ofVec2f(x+ (scale*640),y + (scale*240));
-//}

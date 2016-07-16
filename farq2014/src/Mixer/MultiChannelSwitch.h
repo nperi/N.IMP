@@ -32,8 +32,7 @@ public:
 	
 	void setup();
     void updateParameter(Param* inputParam);
-    
-//    ofImage*    getImage();
+
     ofTexture*  getTexture();
     
     void setEnable(bool isEnabled_);
@@ -64,7 +63,6 @@ private:
     void cDisableChannels(bool& c);
     void cLabel(bool& b);
     
-//    ofParameterGroup labelGroup;
     vector<Channel*> channels;
     
     //hack to kill double callback

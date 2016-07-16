@@ -51,9 +51,7 @@ ParticleGenerator::ParticleGenerator(string name, int id_) : InputSource(name, "
     gui.setWidthElements(INSPECTOR_WIDTH);
     
     ofxBaseGui* baseGui;
-
-//    ofAddListener(bAddParticles.addOrRemoveOSCInputBaseGui, &gui, &ofxGuiGroup::addOrRemoveOSCInput);
-//    ofAddListener(bRemoveParticles.addOrRemoveOSCInputBaseGui, &gui, &ofxGuiGroup::addOrRemoveOSCInput);
+    
     baseGui = gui.find("Clear BG");
     ofAddListener(baseGui->addOrRemoveOSCInputBaseGui, &gui, &ofxGuiGroup::addOrRemoveOSCInput);
     baseGui = gui.find("Particles Alpha");
@@ -165,13 +163,11 @@ void ParticleGenerator::updateParameter(Param* inputParam){
         f.pos.set(ofVec2f(inputParam->floatVal,force_y));
         addForce(f);
         force_x = inputParam->floatVal;
-//        cout <<"x: " << f.pos->x;
     }
     else if (inputParam->name.compare("Force Y") == 0 && force.size() > 0){
         force_y = inputParam->floatVal;
         ofVec2f v = force[force.size()-1].pos;
         v.y = inputParam->floatVal;
-//        cout <<" y: " << v.y <<endl;
     }
     else if(inputParam->name.compare("Clear BG")==0){
         isClearBg = inputParam->intVal;
@@ -264,14 +260,6 @@ float ParticleGenerator::getMidiMax(string param_){
         return 60000;
     }
 }
-
-//------------------------------------------------------------------
-//ofImage* ParticleGenerator::getImage(){
-//    
-//    fbo.readToPixels(buff);
-//    img.setFromPixels(buff);
-//    return &img;
-//}
 
 //------------------------------------------------------------------
 ofTexture* ParticleGenerator::getTexture(){

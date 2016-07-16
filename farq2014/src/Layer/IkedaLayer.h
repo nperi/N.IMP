@@ -25,7 +25,6 @@ class IkedaLayer : public VisualLayer{
     void setup();
     void updateParameter(Param* inputParam);
     
-//    ofImage*    getImage();
     ofTexture*  getTexture();
     
     bool loadSettings(ofxXmlSettings &XML, int nTag_, int nodesCount_ = 0);

@@ -21,10 +21,6 @@ InputCamera::InputCamera(string name, int id_) : InputSource(name, "Camera", id_
         width   = videoGrabber->getWidth();
         height  = videoGrabber->getHeight();
         drawNoInputs = false;
-        
-//        img.allocate(width, height, OF_IMAGE_COLOR_ALPHA);
-//        img.setUseTexture(true);
-//        fbo.allocate(width, height);
     }
     
     cameraIndex = 0;
@@ -48,10 +44,8 @@ InputCamera::InputCamera(string name, int id_) : InputSource(name, "Camera", id_
 
     
     gui.add(resolutionName.set("", "Resolution: 640x480"));
-//    gui.add(hd_vga.set("HD", true));
     gui.add(higherResolution.setup(">> higher resolution"));
     gui.add(lowerResolution.setup("<< lower resolution"));
-//    hd_vga.addListener(this, &InputCamera::changeHDorVGA);
     higherResolution.addListener(this, &InputCamera::changeToHigherResolution);
     lowerResolution.addListener(this, &InputCamera::changeToLowerResolution);
     
@@ -78,25 +72,8 @@ void InputCamera::update() {
     
     if (videoGrabber->isInitialized()) {
         videoGrabber->update();
-        if(videoGrabber->isFrameNew()) {
-//            fbo.begin();
-//            videoGrabber->draw(0, 0);
-//            fbo.end();
-//            img.setFromPixels(videoGrabber->getPixels(), width, height, OF_IMAGE_COLOR);
-        }
     }
 }
-
-//------------------------------------------------------------------
-//ofImage* InputCamera::getImage(){
-//    
-//    if (drawNoInputs || !videoGrabber->isInitialized()) {
-//        return &noInputsImg;
-//    }
-//    else {
-//        return &img;
-//    }
-//}
 
 //------------------------------------------------------------------
 ofTexture* InputCamera::getTexture(){
@@ -105,7 +82,6 @@ ofTexture* InputCamera::getTexture(){
         return &noInputsImg.getTextureReference();
     }
     else {
-//        return &fbo.getTextureReference();
         return &videoGrabber->getTextureReference();
     }
 }
@@ -245,28 +221,11 @@ void InputCamera::editResolution(string resolution_) {
         height = 1440;
     }
     
-//    img.allocate(width, height, OF_IMAGE_COLOR_ALPHA);
-//    fbo.allocate(width, height);
     resetSize(width, height);
     videoGrabber->close();
     videoGrabber->setDeviceID(cameraIndex);
     videoGrabber->initGrabber(width, height);
 }
-
-//------------------------------------------------------------------
-//void InputCamera::changeHDorVGA(bool &hd_) {
-//    
-//    if (hd_vga) {
-//        previous_resolution = previous_resolution%resolutionLabelsHD.size();
-//        editResolution(resolutionLabelsHD[previous_resolution]);
-//    }
-//    else {
-//        previous_resolution = previous_resolution%resolutionLabelsVGA.size();
-//        editResolution(resolutionLabelsVGA[previous_resolution]);
-//    }
-//    
-//    getNodeViewerIBelong()->updateConnectionsSize(this);
-//}
 
 //------------------------------------------------------------------
 void InputCamera::_showHelp(){

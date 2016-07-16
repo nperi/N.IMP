@@ -23,7 +23,6 @@ public:
     void setup();
     void updateParameter(Param* inputParam);
     
-//    ofImage*    getImage();
     ofTexture*  getTexture();
     
     bool loadSettings(ofxXmlSettings &XML, int nTag_, int nodesCount_ = 0);
@@ -36,7 +35,6 @@ public:
     ofTexture		texture;
     ofxPostGlitch	myGlitch;
     
-//    ofPixels        buff;
     
     //glitch parameters
     ofxToggle do_CONVERGENCE;

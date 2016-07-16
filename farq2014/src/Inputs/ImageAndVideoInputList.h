@@ -35,7 +35,6 @@ class ImageAndVideoInputList : public InputSource{
     void updateParameter(Param* inputParam);
     void setEnable(bool isEnabled_);
     
-//    ofImage*    getImage();
     ofTexture*  getTexture();
     
     bool loadSettings(ofxXmlSettings &XML, int nTag_, int nodesCount_ = 0);
@@ -61,7 +60,6 @@ class ImageAndVideoInputList : public InputSource{
     ofParameter<float> bpm;
     ofParameter<int> bpmMultiplier;
     ofParameter<bool> isPlaying;
-//    ofParameter<bool> isEnabledOn;
     ofParameter<bool> repeatSequence;
     ofParameter<bool> playInLoop;
     ofParameter<bool> isPalindromLoop;

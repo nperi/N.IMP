@@ -44,8 +44,6 @@ public:
     void deleteEverything();
     
     string getName();
-//    map<int, vector <string> > getAttributesSelectedForMidiLearn();
-//    map<int, vector <string> > getAttributesSelectedForAudioIn();
     map<int, vector <string> > getAttributesClicked();
 	
     bool saveSettings(ofxXmlSettings &XML);
@@ -53,7 +51,6 @@ public:
 private:
     
     vector<NodeElement*> elements;
-    //vector<std::pair<ofVec2f,ofVec2f> > connections;
     string name;
 };
 
