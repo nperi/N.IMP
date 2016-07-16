@@ -194,15 +194,15 @@ float MixMask::getMidiMax(string param_){
 }
 
 //------------------------------------------------------------------
-ofImage* MixMask::getImage(){
-    if (drawNoInputs)
-        return &noInputsImg;
-    else {
-        fbo.readToPixels(buff);
-        img.setFromPixels(buff);
-        return &img;
-    }
-}
+//ofImage* MixMask::getImage(){
+//    if (drawNoInputs)
+//        return &noInputsImg;
+//    else {
+//        fbo.readToPixels(buff);
+//        img.setFromPixels(buff);
+//        return &img;
+//    }
+//}
 
 //------------------------------------------------------------------
 ofTexture* MixMask::getTexture(){

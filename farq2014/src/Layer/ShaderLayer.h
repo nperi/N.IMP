@@ -35,7 +35,7 @@ class ShaderLayer : public VisualLayer {
 	
     void setup();
     
-    ofImage*    getImage();
+//    ofImage*    getImage();
     ofTexture*  getTexture();
     
     bool loadSettings(ofxXmlSettings &XML, int nTag_, int nodesCount_ = 0);

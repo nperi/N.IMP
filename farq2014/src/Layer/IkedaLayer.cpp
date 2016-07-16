@@ -230,12 +230,12 @@ float IkedaLayer::getMidiMax(string param_){
 }
 
 //------------------------------------------------------------------
-ofImage* IkedaLayer::getImage(){
-    if (drawNoInputs)
-        return &noInputsImg;
-    else
-        return &img;
-}
+//ofImage* IkedaLayer::getImage(){
+//    if (drawNoInputs)
+//        return &noInputsImg;
+//    else
+//        return &img;
+//}
 
 //------------------------------------------------------------------
 ofTexture* IkedaLayer::getTexture(){

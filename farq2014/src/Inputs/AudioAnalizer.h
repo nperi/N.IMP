@@ -27,7 +27,7 @@ public:
     
     void _mouseDragged(ofMouseEventArgs &e);
     
-    ofImage*    getImage(){};
+//    ofImage*    getImage(){};
     ofTexture*  getTexture(){};
     float       getMidiMin(string param_){};
     float       getMidiMax(string param_){};

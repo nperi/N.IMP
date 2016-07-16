@@ -22,8 +22,9 @@ InputCamera::InputCamera(string name, int id_) : InputSource(name, "Camera", id_
         height  = videoGrabber->getHeight();
         drawNoInputs = false;
         
-        img.allocate(width, height, OF_IMAGE_COLOR_ALPHA);
-        img.setUseTexture(true);
+//        img.allocate(width, height, OF_IMAGE_COLOR_ALPHA);
+//        img.setUseTexture(true);
+//        fbo.allocate(width, height);
     }
     
     cameraIndex = 0;
@@ -78,21 +79,24 @@ void InputCamera::update() {
     if (videoGrabber->isInitialized()) {
         videoGrabber->update();
         if(videoGrabber->isFrameNew()) {
-            img.setFromPixels(videoGrabber->getPixels(), width, height, OF_IMAGE_COLOR);
+//            fbo.begin();
+//            videoGrabber->draw(0, 0);
+//            fbo.end();
+//            img.setFromPixels(videoGrabber->getPixels(), width, height, OF_IMAGE_COLOR);
         }
     }
 }
 
 //------------------------------------------------------------------
-ofImage* InputCamera::getImage(){
-    
-    if (drawNoInputs || !videoGrabber->isInitialized()) {
-        return &noInputsImg;
-    }
-    else {
-        return &img;
-    }
-}
+//ofImage* InputCamera::getImage(){
+//    
+//    if (drawNoInputs || !videoGrabber->isInitialized()) {
+//        return &noInputsImg;
+//    }
+//    else {
+//        return &img;
+//    }
+//}
 
 //------------------------------------------------------------------
 ofTexture* InputCamera::getTexture(){
@@ -101,7 +105,8 @@ ofTexture* InputCamera::getTexture(){
         return &noInputsImg.getTextureReference();
     }
     else {
-        return &img.getTextureReference();
+//        return &fbo.getTextureReference();
+        return &videoGrabber->getTextureReference();
     }
 }
 
@@ -240,7 +245,8 @@ void InputCamera::editResolution(string resolution_) {
         height = 1440;
     }
     
-    img.allocate(width, height, OF_IMAGE_COLOR_ALPHA);
+//    img.allocate(width, height, OF_IMAGE_COLOR_ALPHA);
+//    fbo.allocate(width, height);
     resetSize(width, height);
     videoGrabber->close();
     videoGrabber->setDeviceID(cameraIndex);

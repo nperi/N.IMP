@@ -218,13 +218,13 @@ void MultiChannelSwitch::cLabel(bool& b){
 }
 
 //------------------------------------------------------------------
-ofImage* MultiChannelSwitch::getImage(){
-    if (drawNoInputs)
-        return &noInputsImg;
-    else {
-        return input[selChannel]->getImage();
-    }
-}
+//ofImage* MultiChannelSwitch::getImage(){
+//    if (drawNoInputs)
+//        return &noInputsImg;
+//    else {
+//        return input[selChannel]->getImage();
+//    }
+//}
 
 //------------------------------------------------------------------
 ofTexture* MultiChannelSwitch::getTexture(){

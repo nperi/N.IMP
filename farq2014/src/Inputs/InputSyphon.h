@@ -14,7 +14,7 @@ public:
 	void setup();
     void update();
     
-    ofImage*    getImage();
+//    ofImage*    getImage();
     ofTexture*  getTexture();
 
     void changeToNextServer();

@@ -62,20 +62,20 @@ void InputSyphon::update() {
 }
 
 //------------------------------------------------------------------
-ofImage* InputSyphon::getImage(){
-    
-    if(serverDown){
-        return &serverDownImg;
-    }
-    
-    if (drawNoInputs)
-        return &noInputsImg;
-    else {
-        fbo.readToPixels(buff);
-        img.setFromPixels(buff);
-        return &img;
-    }
-}
+//ofImage* InputSyphon::getImage(){
+//    
+//    if(serverDown){
+//        return &serverDownImg;
+//    }
+//    
+//    if (drawNoInputs)
+//        return &noInputsImg;
+//    else {
+//        fbo.readToPixels(buff);
+//        img.setFromPixels(buff);
+//        return &img;
+//    }
+//}
 
 //------------------------------------------------------------------
 ofTexture* InputSyphon::getTexture(){

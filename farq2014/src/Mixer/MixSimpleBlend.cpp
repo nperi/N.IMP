@@ -227,15 +227,15 @@ float MixSimpleBlend::getMidiMax(string param_){
 }
 
 //------------------------------------------------------------------
-ofImage* MixSimpleBlend::getImage(){
-    if (drawNoInputs)
-        return &noInputsImg;
-    else {
-        fbo.readToPixels(buff);
-        img.setFromPixels(buff);
-        return &img;
-    }
-}
+//ofImage* MixSimpleBlend::getImage(){
+//    if (drawNoInputs)
+//        return &noInputsImg;
+//    else {
+//        fbo.readToPixels(buff);
+//        img.setFromPixels(buff);
+//        return &img;
+//    }
+//}
 
 //------------------------------------------------------------------
 ofTexture* MixSimpleBlend::getTexture(){

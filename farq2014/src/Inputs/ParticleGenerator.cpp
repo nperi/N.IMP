@@ -266,12 +266,12 @@ float ParticleGenerator::getMidiMax(string param_){
 }
 
 //------------------------------------------------------------------
-ofImage* ParticleGenerator::getImage(){
-    
-    fbo.readToPixels(buff);
-    img.setFromPixels(buff);
-    return &img;
-}
+//ofImage* ParticleGenerator::getImage(){
+//    
+//    fbo.readToPixels(buff);
+//    img.setFromPixels(buff);
+//    return &img;
+//}
 
 //------------------------------------------------------------------
 ofTexture* ParticleGenerator::getTexture(){

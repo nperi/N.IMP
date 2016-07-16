@@ -35,7 +35,7 @@ class ImageAndVideoInputList : public InputSource{
     void updateParameter(Param* inputParam);
     void setEnable(bool isEnabled_);
     
-    ofImage*    getImage();
+//    ofImage*    getImage();
     ofTexture*  getTexture();
     
     bool loadSettings(ofxXmlSettings &XML, int nTag_, int nodesCount_ = 0);

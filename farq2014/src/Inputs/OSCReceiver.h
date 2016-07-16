@@ -29,7 +29,7 @@ public:
     void setup();
     void customDraw();
     
-    ofImage*    getImage();
+//    ofImage*    getImage();
     ofTexture*  getTexture();
     float       getMidiMin(string param_){};
     float       getMidiMax(string param_){};

@@ -224,9 +224,9 @@ float ImageAndVideoInputList::getMidiMax(string param_){
 }
 
 //------------------------------------------------------------------
-ofImage* ImageAndVideoInputList::getImage(){
-    return &img;
-}
+//ofImage* ImageAndVideoInputList::getImage(){
+//    return &img;
+//}
 
 //------------------------------------------------------------------
 ofTexture* ImageAndVideoInputList::getTexture(){

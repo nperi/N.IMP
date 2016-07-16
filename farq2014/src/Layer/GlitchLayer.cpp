@@ -355,16 +355,16 @@ float GlitchLayer::getMidiMax(string param_){
 }
 
 //------------------------------------------------------------------
-ofImage* GlitchLayer::getImage(){
-    
-    if (drawNoInputs)
-        return &noInputsImg;
-    else {
-        if (isEnabled && hasAnyEffect())
-            return &img;
-        else return input[0]->getImage();
-    }
-}
+//ofImage* GlitchLayer::getImage(){
+//    
+//    if (drawNoInputs)
+//        return &noInputsImg;
+//    else {
+//        if (isEnabled && hasAnyEffect())
+//            return &img;
+//        else return input[0]->getImage();
+//    }
+//}
 
 //------------------------------------------------------------------
 ofTexture* GlitchLayer::getTexture(){

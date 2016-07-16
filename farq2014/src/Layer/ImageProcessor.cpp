@@ -604,15 +604,15 @@ float ImageProcessor::getMidiMax(string param_){
 }
 
 //------------------------------------------------------------------
-ofImage* ImageProcessor::getImage(){
-    if (drawNoInputs)
-        return &noInputsImg;
-    else {
-        fbo.readToPixels(buff);
-        img.setFromPixels(buff);
-        return &img;
-    }
-}
+//ofImage* ImageProcessor::getImage(){
+//    if (drawNoInputs)
+//        return &noInputsImg;
+//    else {
+//        fbo.readToPixels(buff);
+//        img.setFromPixels(buff);
+//        return &img;
+//    }
+//}
 
 //------------------------------------------------------------------
 ofTexture* ImageProcessor::getTexture(){

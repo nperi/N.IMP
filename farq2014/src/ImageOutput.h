@@ -37,7 +37,7 @@ class ImageOutput : public ofxPatch {
     
     string               getName();
     string               getTypeName();
-    virtual ofImage*     getImage(){};
+//    virtual ofImage*     getImage(){};
     virtual ofTexture*   getTexture(){};
     vector<ImageOutput*> getInputs();
     vector<string>       getInputNames();

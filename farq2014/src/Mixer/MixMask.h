@@ -23,7 +23,7 @@ public:
 	void setup();
     void updateParameter(Param* inputParam);
 	
-    ofImage*    getImage();
+//    ofImage*    getImage();
     ofTexture*  getTexture();
     
     void setEnable(bool isEnabled_);

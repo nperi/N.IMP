@@ -24,7 +24,7 @@ class InputCamera : public InputSource{
 	
 	void setup();
     
-    ofImage*    getImage();
+//    ofImage*    getImage();
     ofTexture*  getTexture();
     
     void updateParameter(Param* inputParam){};
