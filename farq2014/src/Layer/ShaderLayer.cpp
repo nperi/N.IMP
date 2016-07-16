@@ -45,6 +45,24 @@ void ShaderLayer::update(){
                     shader.setUniformTexture(shaderTextureNames[i], input[i]->getTextureReference(), i );
                 }
                 
+                for(int j = 0; j < shaderFloatParams.size(); j++){
+                    if(shaderFloatParams[j]->name == "time"){
+                        shader.setUniform1f(shaderFloatParams[j]->name, ofGetElapsedTimef());
+                    } else {
+                        shader.setUniform1f(shaderFloatParams[j]->name, shaderFloatParams[j]->param.get());
+                    }
+                }
+                for(int j = 0; j < shaderIntParams.size(); j++){
+                    shader.setUniform1i(shaderIntParams[j]->name, shaderIntParams[j]->param.get());
+                }
+                
+                for(int j = 0; j < shaderVec2Params.size(); j++){
+                    shader.setUniform2f(shaderVec2Params[j]->name, shaderVec2Params[j]->paramx.get(), shaderVec2Params[j]->paramy.get());
+                }
+                for(int j = 0; j < shaderBoolParams.size(); j++){
+                    shader.setUniform1i(shaderBoolParams[j]->name, shaderBoolParams[j]->param.get());
+                }
+                
                 doFrame();
                 
                 shader.end();
@@ -66,7 +84,11 @@ void ShaderLayer::update(){
             shader.begin();
             
             for(int j = 0; j < shaderFloatParams.size(); j++){
-                shader.setUniform1f(shaderFloatParams[j]->name, shaderFloatParams[j]->param.get());
+                if(shaderFloatParams[j]->name == "time"){
+                    shader.setUniform1f(shaderFloatParams[j]->name, ofGetElapsedTimef());
+                } else {
+                    shader.setUniform1f(shaderFloatParams[j]->name, shaderFloatParams[j]->param.get());
+                }
             }
             for(int j = 0; j < shaderIntParams.size(); j++){
                 shader.setUniform1i(shaderIntParams[j]->name, shaderIntParams[j]->param.get());
@@ -177,7 +199,7 @@ void ShaderLayer::_showHelp(){
     string description = "Description: Load a custom shader";
     string use = "Use: Drag a shader or create a shader node and select a file.";
     string use2= "The file extension must be .fs";
-    string use3= "All the uniform must have constants defined exactly like this:";
+    string use3= "All the uniforms (except time) must have constants defined exactly like this:";
     string use4= " \t For int and float:";
     string use5= " \t \t nameMax = value;";
     string use6= " \t \t nameMin = value;";
@@ -190,6 +212,7 @@ void ShaderLayer::_showHelp(){
     string use13= " \t \t nameYMax = value;";
     string use14= " \t \t nameYMin = value;";
     string use15= " \t \t nameYDefault = value;";
+    string use16= " \t For time controlled uniform define it as a float with name 'time'";
     ConsoleLog::getInstance()->pushMessage("", false);
     ConsoleLog::getInstance()->pushMessage(name);
     ConsoleLog::getInstance()->pushMessage(description, false);
@@ -208,6 +231,7 @@ void ShaderLayer::_showHelp(){
     ConsoleLog::getInstance()->pushMessage(use13, false);
     ConsoleLog::getInstance()->pushMessage(use14, false);
     ConsoleLog::getInstance()->pushMessage(use15, false);
+    ConsoleLog::getInstance()->pushMessage(use16, false);
 }
 
 
@@ -437,7 +461,9 @@ bool ShaderLayer::loadShader(string path_, string fileName_){
             if(variableType == "float"){
                 ShaderFloatParam* newFloatParam = new ShaderFloatParam();
                 newFloatParam->name = variableName;
-                newFloatParam->param.set(variableName, 0);
+                if(variableName != "time"){
+                    newFloatParam->param.set(variableName, 0);
+                }
                 shaderFloatParams.push_back(newFloatParam);
             } else if(variableType == "int"){
                 ShaderIntParam* newIntParam = new ShaderIntParam();
@@ -521,10 +547,12 @@ bool ShaderLayer::loadShader(string path_, string fileName_){
             res = res.substr((searchFor + shaderFloatParams[i]->name + "Default = ").size());
             paramXDefault = std::atof(res.c_str());
         }
-        shaderFloatParams[i]->param.setMax(paramXMax);
-        shaderFloatParams[i]->param.setMin(paramXMin);
-        shaderFloatParams[i]->param.set(paramXDefault);
-        gui.add(shaderFloatParams[i]->param);
+        if(shaderFloatParams[i]->name != "time"){
+            shaderFloatParams[i]->param.setMax(paramXMax);
+            shaderFloatParams[i]->param.setMin(paramXMin);
+            shaderFloatParams[i]->param.set(paramXDefault);
+            gui.add(shaderFloatParams[i]->param);
+        }
     }
     
     for(int i = 0; i < shaderBoolParams.size(); i++){
