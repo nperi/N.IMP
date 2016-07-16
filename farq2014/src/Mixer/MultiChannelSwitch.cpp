@@ -58,6 +58,10 @@ void MultiChannelSwitch::inputAdded(ImageOutput* in_){
 //    gui.add(labelGroup);
     gui.setWidthElements(INSPECTOR_WIDTH);
     
+    ofxBaseGui* baseGui;
+    baseGui = gui.find(c->label);
+    if (baseGui) ofAddListener(baseGui->addOrRemoveOSCInputBaseGui, &gui, &ofxGuiGroup::addOrRemoveOSCInput);
+    
     //hack
     lastClicked = ofGetElapsedTimeMillis();
 }
