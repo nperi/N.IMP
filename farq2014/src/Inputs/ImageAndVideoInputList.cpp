@@ -230,9 +230,6 @@ ofImage* ImageAndVideoInputList::getImage(){
 
 //------------------------------------------------------------------
 ofTexture* ImageAndVideoInputList::getTexture(){
-    if(dynamic_cast<ofxHapPlayer*>(videoPlayer) != NULL) {
-        return videoPlayer->getTexture();
-    }
     return &img.getTextureReference();
 }
 

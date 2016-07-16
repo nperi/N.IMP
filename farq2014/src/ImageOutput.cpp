@@ -7,6 +7,7 @@
 //
 
 #include "ImageOutput.h"
+#include "ImageAndVideoInputList.h"
 
 ImageOutput::ImageOutput(string name_, string typeName_, int id_, int maxInputs_, int width_, int height_) : ofxPatch(){
     nId         = id_;

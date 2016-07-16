@@ -49,6 +49,7 @@ void ofApp::setup() {
     visualLayerTypes.insert(std::pair<string,VisualLayerType>("GLITCH_1", GLITCH_1));
     visualLayerTypes.insert(std::pair<string,VisualLayerType>("GLITCH_2", GLITCH_2));
     visualLayerTypes.insert(std::pair<string,VisualLayerType>("IMAGE_PROCESSOR", IMAGE_PROCESSOR));
+    visualLayerTypes.insert(std::pair<string,VisualLayerType>("SHADER", SHADER));
     mixerTypes.insert(std::pair<string,MixerType>("MASK", MASK));
     mixerTypes.insert(std::pair<string,MixerType>("SIMPLE_BLEND", SIMPLE_BLEND));
     mixerTypes.insert(std::pair<string,MixerType>("MULTI_CHANNEL", MULTI_CHANNEL));
@@ -717,6 +718,10 @@ void ofApp::dragEvent(ofDragInfo dragInfo){
                 
                  ev->type = "video player";
             }
+            else if( (ext == "frag") || (ext == "FRAG") ||
+                     (ext == "fs") || (ext == "FS") ) {
+                ev->type = "shader";
+            }
             else {
                 console->pushError("Not valid file format to create a node.");
                 return;
@@ -1052,6 +1057,11 @@ void ofApp::createNode(textInputEvent &args){
     else if (args.type == "ikeda") {
         newPatch = new IkedaLayer();
         visualLayers.push_back((IkedaLayer*)newPatch);
+    }
+    else if (args.type == "shader") {
+        newPatch = new ShaderLayer();
+        ((ShaderLayer*)newPatch)->loadShader(args.path, args.name);
+        visualLayers.push_back((ShaderLayer*)newPatch);
     }
     else if (args.type == "image or video") {
         newPatch = new ImageAndVideoInputList();
@@ -2157,6 +2167,19 @@ string ofApp::loadNodes(ofxXmlSettings &XML){
                         
                         break;
                     };
+                    case SHADER:
+                    {
+                        ShaderLayer* gLA = new ShaderLayer(layerName, layerId);
+                        if (inputSourceId != 0)
+                            gLA->addInputIdentifier(inputSourceId);
+                        gLA->loadSettings(XML, i);
+                        
+                        
+                        visualLayers.push_back(gLA);
+                        nodes.insert(std::pair<int,ImageOutput*>(layerId,gLA));
+                        
+                        break;
+                    }
                     default:
                     {
                         result = false;
@@ -2543,6 +2566,18 @@ bool ofApp::loadSnippet() {
                         visualLayers.push_back(gLA);
                         aux_nodes.insert(std::pair<int,ImageOutput*>(nodeId,gLA));
                         aux_nodesVector.push_back(gLA);
+                    }
+                }
+                else if (nodeType == "SHADER") {
+                    
+                    ShaderLayer* sL = new ShaderLayer(nodeName, nodeId);
+                    if (inputSourceId != nodesCount)
+                        sL->addInputIdentifier(inputSourceId);
+                    result = sL->loadSettings(XML, i, nodesCount);
+                    if (result) {
+                        visualLayers.push_back(sL);
+                        aux_nodes.insert(std::pair<int,ImageOutput*>(nodeId,sL));
+                        aux_nodesVector.push_back(sL);
                     }
                 }
                 else if (nodeType == "SIMPLE_BLEND") {

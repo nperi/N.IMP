@@ -92,7 +92,8 @@ enum VisualLayerType
     IKEDA,
     GLITCH_1,
     GLITCH_2,
-    IMAGE_PROCESSOR
+    IMAGE_PROCESSOR,
+    SHADER
 };
 
 enum MixerType

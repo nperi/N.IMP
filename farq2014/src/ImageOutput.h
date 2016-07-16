@@ -110,6 +110,7 @@ protected:
     ofxToggle isEnabled;
 	
     ofxComposer* viewer;
+    
 };
 
 #endif

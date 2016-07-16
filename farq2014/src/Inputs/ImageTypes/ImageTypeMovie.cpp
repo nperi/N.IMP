@@ -66,12 +66,20 @@ void ImageTypeMovie::update(ofImage& _img){
         if (videoPlayer->isFrameNew()){
             if(dynamic_cast<ofxHapPlayer*>(videoPlayer) == NULL) {
                 _img.setFromPixels(videoPlayer->getPixels(), videoPlayer->getWidth(), videoPlayer->getHeight(), OF_IMAGE_COLOR_ALPHA);
+            } else {
+                ofPixels buff;
+                videoPlayer->getTexture()->readToPixels(buff);
+                _img.setFromPixels(buff);
             }
         }
     }
     else {
         if(dynamic_cast<ofxHapPlayer*>(videoPlayer) == NULL) {
             _img.setFromPixels(videoPlayer->getPixels(), videoPlayer->getWidth(), videoPlayer->getHeight(), OF_IMAGE_COLOR_ALPHA);
+        } else {
+            ofPixels buff;
+            videoPlayer->getTexture()->readToPixels(buff);
+            _img.setFromPixels(buff);
         }
     }
 }
