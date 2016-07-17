@@ -205,7 +205,9 @@ bool OscInputGenerator::loadSettings(ofxXmlSettings &XML, int nodesCount_) {
     
     //get osc input device
     //
-    port = ofToInt(XML.getAttribute("OSC_SETTINGS","port","6666"));
+    port    = ofToInt(XML.getAttribute("OSC_SETTINGS","port","6666"));
+    min     = ofToInt(XML.getAttribute("OSC_SETTINGS","min","0"));
+    max     = ofToInt(XML.getAttribute("OSC_SETTINGS","max","127"));
     receiver.setup(port);
     
     //get osc mapping data
@@ -264,6 +266,8 @@ bool OscInputGenerator::saveSettings(ofxXmlSettings &XML) {
         
         lastPlace = XML.addTag("OSC_SETTINGS");
         XML.addAttribute("OSC_SETTINGS", "port", port, lastPlace);
+        XML.addAttribute("OSC_SETTINGS", "min", min, lastPlace);
+        XML.addAttribute("OSC_SETTINGS", "max", max, lastPlace);
         saved = XML.pushTag("OSC_SETTINGS", lastPlace);
         if (saved) {
             
@@ -306,6 +310,8 @@ bool OscInputGenerator::saveSettingsToSnippet(ofxXmlSettings &XML, map<int,int> 
         
         lastPlace = XML.addTag("OSC_SETTINGS");
         XML.addAttribute("OSC_SETTINGS", "port", port, lastPlace);
+        XML.addAttribute("OSC_SETTINGS", "min", min, lastPlace);
+        XML.addAttribute("OSC_SETTINGS", "max", max, lastPlace);
         saved = XML.pushTag("OSC_SETTINGS", lastPlace);
         if (saved) {
             

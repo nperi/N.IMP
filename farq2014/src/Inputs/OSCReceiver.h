@@ -33,7 +33,7 @@ public:
     float       getMidiMin(string param_){};
     float       getMidiMax(string param_){};
     int         getPort(){ return port; };
-    string      getAddress(){ return address.get().substr(9); };
+    string      getAddress(){ return oldAddress; };
     bool        getEditInputsActive() { return editOSC; };
     
     void        setPort(int p);

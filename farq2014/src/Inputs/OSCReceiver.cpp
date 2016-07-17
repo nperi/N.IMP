@@ -31,12 +31,6 @@ OSCReceiver::OSCReceiver(string name_, int id_) : InputSource(name_, "OSC Receiv
     paramsGroup.setName("Params");
     gui.add(paramsGroup);
     
-    oscPort.addListener(this, &OSCReceiver::editPort);
-    oscAddress.addListener(this, &OSCReceiver::editAddress);
-    oscMax.addListener(this, &OSCReceiver::editMax);
-    oscMin.addListener(this, &OSCReceiver::editMin);
-    editOSC.addListener(this, &OSCReceiver::editInputs);
-    
     gui.setWidthElements(INSPECTOR_WIDTH);
     
     title->removeButton('r');
@@ -53,6 +47,12 @@ OSCReceiver::~OSCReceiver(){
 
 //------------------------------------------------------------------
 void OSCReceiver::setup() {
+    
+    oscPort.addListener(this, &OSCReceiver::editPort);
+    oscAddress.addListener(this, &OSCReceiver::editAddress);
+    oscMax.addListener(this, &OSCReceiver::editMax);
+    oscMin.addListener(this, &OSCReceiver::editMin);
+    editOSC.addListener(this, &OSCReceiver::editInputs);
 
 }
 
@@ -222,22 +222,16 @@ void OSCReceiver::removeNodeParams(int nodeId_){
 
 //------------------------------------------------------------------
 void OSCReceiver::_showHelp(){
-    string name = "Node type name: OSC Receiver";
-    string description = "Description: Listens to incoming OSC messages in the configured port and address.";
-    string use = "Use: Setup in the Inspector the port and address of the OSC message you want to start listening to.";
-    string use2 = "To control nodes attributes with this OSC message receiver node follow this steps:";
-    string use3 = " \t 1. Open the Inspector and click on the 'Edit OSC Inputs' checkbox.";
-    string use4 = " \t 2. Select the desired attributes in another node's Inspector to be controlled by messages received by this node.";
-    string use5 = " \t 3. Click again on the 'Edit OSC Inputs' checkbox to save the configuration.";
-    
+
     ConsoleLog::getInstance()->pushMessage("", false);
-    ConsoleLog::getInstance()->pushMessage(name);
-    ConsoleLog::getInstance()->pushMessage(description, false);
-    ConsoleLog::getInstance()->pushMessage(use, false);
-    ConsoleLog::getInstance()->pushMessage(use2, false);
-    ConsoleLog::getInstance()->pushMessage(use3, false);
-    ConsoleLog::getInstance()->pushMessage(use4, false);
-    ConsoleLog::getInstance()->pushMessage(use5, false);
+    ConsoleLog::getInstance()->pushMessage("Node type name: OSC Receiver");
+    ConsoleLog::getInstance()->pushMessage("Description: Listens to incoming OSC messages in the configured port and address.", false);
+    ConsoleLog::getInstance()->pushMessage("Use: Setup in the Inspector the port and address of the OSC message you want to start listening to,", false);
+    ConsoleLog::getInstance()->pushMessage(" \t \t and also the minimun and maxumin values the incoming messages can take.", false);
+    ConsoleLog::getInstance()->pushMessage("To control nodes attributes with this OSC message receiver node follow this steps:", false);
+    ConsoleLog::getInstance()->pushMessage(" \t 1. Open the Inspector and click on the 'Edit OSC Inputs' checkbox.", false);
+    ConsoleLog::getInstance()->pushMessage(" \t 2. Select the desired attributes in another node's Inspector to be controlled by messages received by this node.", false);
+    ConsoleLog::getInstance()->pushMessage(" \t 3. Click again on the 'Edit OSC Inputs' checkbox to save the configuration.", false);
 }
 
 //------------------------------------------------------------------
@@ -247,10 +241,21 @@ bool OSCReceiver::loadSettings(ofxXmlSettings &XML, int nTag_, int nodesCount_) 
     
     nId     = XML.getAttribute("NODE", "id", -1, nTag_) + nodesCount_;
     port    = XML.getAttribute("NODE", "port", 6666, nTag_);
-    address = XML.getAttribute("NODE", "address", "/", nTag_);
-    oscAddress.setup("Address", address, 100, 20);
-    oldAddress = address;
+    min     = XML.getAttribute("NODE", "min", 0, nTag_);
+    max     = XML.getAttribute("NODE", "max", 127, nTag_);
+    oldAddress = XML.getAttribute("NODE", "address", "/", nTag_);
     
+    address = oldAddress;
+    oscPortNumber = ofToString(port);
+    oscMinNumber = ofToString(min);
+    oscMaxNumber = ofToString(max);
+    
+    oscPort.setup("Port", oscPortNumber, 100, 20);
+    oscAddress.setup("Address", address, 100, 20);
+    oscMin.setup("Min Value", oscMinNumber, 100, 20);
+    oscMax.setup("Max Value", oscMaxNumber, 100, 20);
+    
+    gui.setWidthElements(INSPECTOR_WIDTH);
     
     loaded = XML.pushTag("NODE", nTag_);
     
@@ -292,7 +297,9 @@ bool OSCReceiver::saveSettings(ofxXmlSettings &XML) {
     XML.addAttribute("NODE", "name", name, lastPlace);
     XML.addAttribute("NODE", "type", "OSC_RECEIVER", lastPlace);
     XML.addAttribute("NODE", "port", port, lastPlace);
-    XML.addAttribute("NODE", "address", address, lastPlace);
+    XML.addAttribute("NODE", "address", oldAddress, lastPlace);
+    XML.addAttribute("NODE", "min", min, lastPlace);
+    XML.addAttribute("NODE", "max", max, lastPlace);
     
     saved = XML.pushTag("NODE", lastPlace);
     if (saved){
@@ -324,7 +331,9 @@ bool OSCReceiver::saveSettingsToSnippet(ofxXmlSettings &XML, map<int,int> newIds
         XML.addAttribute("NODE", "name", name, lastPlace);
         XML.addAttribute("NODE", "type", "OSC_RECEIVER", lastPlace);
         XML.addAttribute("NODE", "port", port, lastPlace);
-        XML.addAttribute("NODE", "address", address, lastPlace);
+        XML.addAttribute("NODE", "address", oldAddress, lastPlace);
+        XML.addAttribute("NODE", "min", min, lastPlace);
+        XML.addAttribute("NODE", "max", max, lastPlace);
         
         saved = XML.pushTag("NODE", lastPlace);
         if (saved){
