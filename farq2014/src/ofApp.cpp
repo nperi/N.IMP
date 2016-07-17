@@ -2944,7 +2944,7 @@ void ofApp::printShortcuts(){
     console->pushMessage("Clear Console - command + shift + c", false);
     console->pushMessage("Fullscreen - command + f", false);
     console->pushMessage("Show Encapsulated Node - command + e", false);
-    console->pushMessage("Activate\\Deactivate all nodes - command + d", false);
+    console->pushMessage("Activate\\Deactivate all nodes - command + a", false);
     console->pushMessage("Show\\Hide all inspectors - command + i", false);
     console->pushMessage("New Patcher - command + n", false);
     console->pushMessage("Open Patcher - command + o", false);
