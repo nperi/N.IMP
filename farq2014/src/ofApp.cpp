@@ -1438,8 +1438,12 @@ void ofApp::editOSCPort(OSCEvent &e_) {
     for (int i = 0; i < inputGenerators.size(); ++i) {
         ParamInputGenerator* p = inputGenerators[i];
         if (p->getParamInputType() == OSC && ((OscInputGenerator*)p)->getNodeID() == e_.nodeId) {
-            ((OscInputGenerator*)p)->setPort(e_.port);
-            ((OscInputGenerator*)p)->setAddress(e_.oldAddress, e_.address);
+            if (e_.port != 0) {
+                ((OscInputGenerator*)p)->setPort(e_.port);
+            }
+            if (e_.oldAddress != e_.address) {
+                ((OscInputGenerator*)p)->setAddress(e_.oldAddress, e_.address);
+            }
         }
     }
 }

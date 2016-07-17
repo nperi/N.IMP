@@ -81,6 +81,7 @@ void OSCReceiver::editPort(string& p){
     ev.nodeId = nId;
     ev.port = port;
     ev.address = oldAddress;
+    ev.oldAddress = oldAddress;
     ev.max = max;
     ev.min = min;
     ofNotifyEvent(editOSCPort, ev);
@@ -91,7 +92,7 @@ void OSCReceiver::editAddress(string& a){
     
     OSCEvent ev;
     ev.nodeId = nId;
-    ev.port = port;
+    ev.port = 0;
     ev.address = a.substr(9);
     ev.oldAddress = oldAddress;
     ev.max = max;
