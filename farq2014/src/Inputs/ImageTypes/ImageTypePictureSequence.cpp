@@ -21,7 +21,7 @@ ImageTypePictureSequence::ImageTypePictureSequence(string name_ ,string path_): 
 }
 
 //------------------------------------------------------------------
-void ImageTypePictureSequence::update(ofImage& _img){
+void ImageTypePictureSequence::update(ofImage& _img, ofFbo& _fbo){
     if (isPlaying) {
         player.update();
         if (player.isFrameNew()) {
@@ -65,7 +65,7 @@ void ImageTypePictureSequence::setPosition(float p, ofImage& _img){
 }
 
 //------------------------------------------------------------------
-void ImageTypePictureSequence::activate(ofImage& _img){
+void ImageTypePictureSequence::activate(ofImage& _img, ofFbo& _fbo){
     player.play();
     _img.setFromPixels(player.getPixels(), player.getWidth(), player.getHeight(), OF_IMAGE_COLOR_ALPHA);
 }

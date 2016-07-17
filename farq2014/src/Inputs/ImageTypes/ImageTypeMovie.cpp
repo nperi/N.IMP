@@ -29,7 +29,7 @@ ImageTypeMovie::~ImageTypeMovie(){
 
 
 //------------------------------------------------------------------
-void ImageTypeMovie::activate(ofImage& _img){
+void ImageTypeMovie::activate(ofImage& _img, ofFbo& _fbo){
     if (videoPlayer!=NULL) {
         videoPlayer->stop();
         videoPlayer->close();
@@ -47,36 +47,33 @@ void ImageTypeMovie::activate(ofImage& _img){
         if(dynamic_cast<ofxHapPlayer*>(videoPlayer) == NULL) {
             _img.setFromPixels(videoPlayer->getPixels(), videoPlayer->getWidth(), videoPlayer->getHeight(), OF_IMAGE_COLOR_ALPHA);
         } else {
-            ofPixels buff;
-            videoPlayer->getTexture()->readToPixels(buff);
-            _img.setFromPixels(buff);
+            _fbo.begin();
+            ofClear(0, 0, 0,255);
+            ofSetColor(255);
+            videoPlayer->getTexture()->draw(0, 0, videoPlayer->getWidth(), videoPlayer->getHeight());
+            _fbo.end();
         }
     }
 }
 
 
 //------------------------------------------------------------------
-void ImageTypeMovie::update(ofImage& _img){
-    if (isPlaying && videoPlayer!=NULL) {
+void ImageTypeMovie::update(ofImage& _img, ofFbo& _fbo){
+    if (isPlaying && videoPlayer != NULL) {
         videoPlayer->update();
-        if (videoPlayer->isFrameNew()){
-            if(dynamic_cast<ofxHapPlayer*>(videoPlayer) == NULL) {
-                _img.setFromPixels(videoPlayer->getPixels(), videoPlayer->getWidth(), videoPlayer->getHeight(), OF_IMAGE_COLOR_ALPHA);
-            } else {
-                ofPixels buff;
-                videoPlayer->getTexture()->readToPixels(buff);
-                _img.setFromPixels(buff);
-            }
+        if (!videoPlayer->isFrameNew()){
+            return;
         }
     }
-    else {
-        if(dynamic_cast<ofxHapPlayer*>(videoPlayer) == NULL) {
-            _img.setFromPixels(videoPlayer->getPixels(), videoPlayer->getWidth(), videoPlayer->getHeight(), OF_IMAGE_COLOR_ALPHA);
-        } else {
-            ofPixels buff;
-            videoPlayer->getTexture()->readToPixels(buff);
-            _img.setFromPixels(buff);
-        }
+    
+    if(dynamic_cast<ofxHapPlayer*>(videoPlayer) == NULL) {
+        _img.setFromPixels(videoPlayer->getPixels(), videoPlayer->getWidth(), videoPlayer->getHeight(), OF_IMAGE_COLOR_ALPHA);
+    } else {
+        _fbo.begin();
+        ofClear(0, 0, 0,255);
+        ofSetColor(255);
+        videoPlayer->getTexture()->draw(0, 0, videoPlayer->getWidth(), videoPlayer->getHeight());
+        _fbo.end();
     }
 }
 

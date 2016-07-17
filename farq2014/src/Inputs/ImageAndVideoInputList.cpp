@@ -80,6 +80,8 @@ void ImageAndVideoInputList::setup(){
 
         img.setUseTexture(true);
         isEnabled = true;
+        
+        fbo.allocate(width, height);
     }
     else {
         drawNoInputs = true;
@@ -101,8 +103,7 @@ void ImageAndVideoInputList::update(){
     }
     videoPlayingTime.set("", videoTime);
 
-    
-    inputs[currentSequence]->update(img);
+    inputs[currentSequence]->update(img, fbo);
     
     if (dynamic_cast<ImageTypeMovie*>(inputs[currentSequence])) {
         prevPosition = playPos2;
@@ -146,6 +147,12 @@ void ImageAndVideoInputList::updateParameter(Param* inputParam){
     else if(inputParam->name.compare("Play")==0){
         this->isPlaying = inputParam->intVal;
     }
+    else if(inputParam->name.compare(">> next")==0 && inputParam->intVal > 0){
+        this->currentSequence = (currentSequence + 1) % inputs.size();
+    }
+    else if(inputParam->name.compare("<< prev")==0 && inputParam->intVal > 0){
+        this->currentSequence = (currentSequence - 1) % inputs.size();
+    }
     else if(inputParam->name.compare("Play in Loop")==0){
         this->playInLoop = inputParam->intVal;
     }
@@ -177,6 +184,10 @@ float ImageAndVideoInputList::getMidiMin(string param_){
         return 0;
     }else if(param_.compare("Play")==0){
         return 0;
+    }else if(param_.compare(">> next")==0){
+        return 0;
+    }else if(param_.compare("<< prev")==0){
+        return 0;
     }else if(param_.compare("Repeat Sequence")==0){
         return 0;
     }else if(param_.compare("Play in Loop")==0){
@@ -207,6 +218,10 @@ float ImageAndVideoInputList::getMidiMax(string param_){
         return inputs.size()-1;
     }else if(param_.compare("Play")==0){
         return 1;
+    }else if(param_.compare(">> next")==0){
+        return 1;
+    }else if(param_.compare("<< prev")==0){
+        return 1;
     }else if(param_.compare("Repeat Sequence")==0){
         return 1;
     }else if(param_.compare("Play in Loop")==0){
@@ -222,7 +237,13 @@ float ImageAndVideoInputList::getMidiMax(string param_){
 
 //------------------------------------------------------------------
 ofTexture* ImageAndVideoInputList::getTexture(){
-    return &img.getTextureReference();
+    
+    if(inputs[currentSequence]->isHap()) {
+        return &fbo.getTextureReference();
+    }
+    else {
+        return &img.getTextureReference();
+    }
 }
 
 //------------------------------------------------------------------
@@ -231,15 +252,15 @@ void ImageAndVideoInputList::loadImage(string name_, string path_){
     if (ofIsStringInString(path_, ".mov") || ofIsStringInString(path_, ".mp4") ||
         ofIsStringInString(path_, ".mpg") || ofIsStringInString(path_, ".mpg") ) {
         if(VideoPool::getInstance()->isHapVideo(path_)) {
-            inputs.push_back(new ImageTypeMovie(name_,path_, hapPlayer, true));
+            inputs.push_back(new ImageTypeMovie(name_, path_, hapPlayer, true));
         } else {
-            inputs.push_back(new ImageTypeMovie(name_,path_, commonPlayer, false));
+            inputs.push_back(new ImageTypeMovie(name_, path_, commonPlayer, false));
         }
         hasMovie = true;
     }
     //load single image
     else{
-        inputs.push_back(new ImageTypePicture(name_,path_));
+        inputs.push_back(new ImageTypePicture(name_, path_));
     }
     
     currentSequence.setMax(inputs.size()-1);
@@ -295,6 +316,10 @@ void ImageAndVideoInputList::loadImage(string name_, string path_){
         if (baseGui) ofAddListener(baseGui->addOrRemoveOSCInputBaseGui, &gui, &ofxGuiGroup::addOrRemoveOSCInput);
         baseGui = gui.find("Play");
         if (baseGui) ofAddListener(baseGui->addOrRemoveOSCInputBaseGui, &gui, &ofxGuiGroup::addOrRemoveOSCInput);
+        baseGui = gui.find(">> next");
+        if (baseGui) ofAddListener(baseGui->addOrRemoveOSCInputBaseGui, &gui, &ofxGuiGroup::addOrRemoveOSCInput);
+        baseGui = gui.find("<< prev");
+        if (baseGui) ofAddListener(baseGui->addOrRemoveOSCInputBaseGui, &gui, &ofxGuiGroup::addOrRemoveOSCInput);
         baseGui = gui.find("Repeat Sequence");
         if (baseGui) ofAddListener(baseGui->addOrRemoveOSCInputBaseGui, &gui, &ofxGuiGroup::addOrRemoveOSCInput);
         baseGui = gui.find("Play in Loop");
@@ -323,7 +348,7 @@ void ImageAndVideoInputList::loadImage(string name_, string path_){
         inputs[currentSequence]->isPlayingBackwards = isPlayingBackwards;
         inputs[currentSequence]->setLoopState(l);
         inputs[currentSequence]->calculateFPS();
-        inputs[currentSequence]->activate(img);
+        inputs[currentSequence]->activate(img, fbo);
     }
 }
 
@@ -447,7 +472,7 @@ void ImageAndVideoInputList::sequenceChanged(int &s){
         inputs[lastSequence]->isPlaying = false;
         lastSequence = currentSequence;
         
-        inputs[currentSequence]->activate(img);
+        inputs[currentSequence]->activate(img, fbo);
         inputs[currentSequence]->isPlaying = isPlaying;
         
         inputs[currentSequence]->bpm = bpm;
@@ -540,7 +565,7 @@ void ImageAndVideoInputList::setEnable(bool isEnabled_){
         }
         else if (isEnabled_ && nEnabled == 0)
         {
-            inputs[currentSequence]->activate(img);
+            inputs[currentSequence]->activate(img, fbo);
             inputs[currentSequence]->isPlaying = isPlaying;
         }
         else{

@@ -24,7 +24,7 @@ class ImageType {
     virtual ~ImageType() {};
 	
     imgType getType(){return mediaType;};
-    virtual void update(ofImage& _img) = 0;
+    virtual void update(ofImage& _img, ofFbo& _fbo) = 0;
     
     virtual int getFrameRate() = 0;
     virtual float getPosition() = 0;
@@ -37,7 +37,7 @@ class ImageType {
     ofParameter<float> bpm;
     ofParameter<int> bpmMultiplier;
     
-    virtual void activate(ofImage& _img) = 0;
+    virtual void activate(ofImage& _img, ofFbo& _fbo) = 0;
     virtual void setLoopState(ofLoopType l) = 0;
     ofParameter<bool> isPlaying;
     

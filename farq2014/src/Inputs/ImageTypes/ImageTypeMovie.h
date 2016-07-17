@@ -20,8 +20,8 @@ class ImageTypeMovie : public ImageType{
 	ImageTypeMovie(string name_ ,string path_,ofBaseVideoPlayer* player, bool isHap);
     ~ImageTypeMovie();
 	
-    void activate(ofImage& _img);
-    void update(ofImage& _img);
+    void activate(ofImage& _img, ofFbo& _fbo);
+    void update(ofImage& _img, ofFbo& _fbo);
     
     int getFrameRate();
     float getPosition();

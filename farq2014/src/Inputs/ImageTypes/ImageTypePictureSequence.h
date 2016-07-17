@@ -20,8 +20,8 @@ class ImageTypePictureSequence : public ImageType{
 	
 	ImageTypePictureSequence(string name_ ,string path_);
 	
-    void activate(ofImage& _img);
-    void update(ofImage& _img);
+    void activate(ofImage& _img, ofFbo& _fbo);
+    void update(ofImage& _img, ofFbo& _fbo);
     
     int getFrameRate();
     float getPosition();

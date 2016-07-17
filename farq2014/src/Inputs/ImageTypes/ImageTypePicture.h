@@ -21,13 +21,13 @@ class ImageTypePicture : public ImageType{
 	ImageTypePicture(string name_ ,string path_, bool isResize = false, int width = 1024, int height = 768);
 	~ImageTypePicture();
     
-    void update(ofImage& _img);
+    void update(ofImage& _img, ofFbo& _fbo);
     
     int getFrameRate();
     float getPosition();
     void calculateFPS();
     void setPosition(float p, ofImage& _img);
-    void activate(ofImage& _img);
+    void activate(ofImage& _img, ofFbo& _fbo);
     bool isVideoDone();
     
     void setLoopState(ofLoopType l){};

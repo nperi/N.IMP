@@ -27,12 +27,12 @@ ImageTypePicture::~ImageTypePicture(){
 }
 
 //------------------------------------------------------------------
-void ImageTypePicture::activate(ofImage& _img){
+void ImageTypePicture::activate(ofImage& _img, ofFbo& _fbo){
     _img.setFromPixels(img.getPixelsRef());
 }
 
 //------------------------------------------------------------------
-void ImageTypePicture::update(ofImage& _img){
+void ImageTypePicture::update(ofImage& _img, ofFbo& _fbo){
     _img.setFromPixels(img.getPixelsRef());
 }
 
