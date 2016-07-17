@@ -14,6 +14,8 @@ class OSCEvent : ofEventArgs {
 public:
     int nodeId;
     int port;
+    int min;
+    int max;
     string address;
     string oldAddress;
 };

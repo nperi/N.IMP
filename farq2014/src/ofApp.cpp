@@ -1390,6 +1390,7 @@ void ofApp::listenToOSCEvents(OSCReceiver *osc, bool listen) {
     
     if (listen){
         ofAddListener(osc->editOSCPort , this, &ofApp::editOSCPort);
+        ofAddListener(osc->editOSCMinMaxValues , this, &ofApp::editOSCMinMaxValues);
         ofAddListener(osc->editOSCInputsActive , this, &ofApp::editOSCInputsActive);
         
         for(std::map<int, ImageOutput*>::iterator it = nodes.begin(); it != nodes.end(); it++ ){
@@ -1399,6 +1400,7 @@ void ofApp::listenToOSCEvents(OSCReceiver *osc, bool listen) {
     }
     else {
         ofRemoveListener(osc->editOSCPort , this, &ofApp::editOSCPort);
+        ofRemoveListener(osc->editOSCMinMaxValues , this, &ofApp::editOSCMinMaxValues);
         ofRemoveListener(osc->editOSCInputsActive , this, &ofApp::editOSCInputsActive);
         
         for(std::map<int, ImageOutput*>::iterator it = nodes.begin(); it != nodes.end(); it++ ){
@@ -1433,6 +1435,18 @@ void ofApp::editOSCPort(OSCEvent &e_) {
         if (p->getParamInputType() == OSC && ((OscInputGenerator*)p)->getNodeID() == e_.nodeId) {
             ((OscInputGenerator*)p)->setPort(e_.port);
             ((OscInputGenerator*)p)->setAddress(e_.oldAddress, e_.address);
+        }
+    }
+}
+
+//------------------------------------------------------------------
+void ofApp::editOSCMinMaxValues(OSCEvent &e_) {
+    
+    for (int i = 0; i < inputGenerators.size(); ++i) {
+        ParamInputGenerator* p = inputGenerators[i];
+        if (p->getParamInputType() == OSC && ((OscInputGenerator*)p)->getNodeID() == e_.nodeId) {
+            ((OscInputGenerator*)p)->setMin(e_.min);
+            ((OscInputGenerator*)p)->setMax(e_.max);
         }
     }
 }
@@ -1477,7 +1491,7 @@ void ofApp::editOSCInputs(ofxOSCGuiEvent &event_) {
 //------------------------------------------------------------------
 void ofApp::consoleHeightChanged(float &ratio){
     
-    scrollBars->changeWindowHeight(ratio);
+    scrollBars->changeWindowHeight(ratio); 
 }
 
 //------------------------------------------------------------------

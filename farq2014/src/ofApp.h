@@ -90,6 +90,7 @@ public:
     void listenToAudioInEvents(AudioIn* audio, bool listen);
     void listenToOSCEvents(OSCReceiver* osc, bool listen);
     void editOSCPort(OSCEvent &e_);
+    void editOSCMinMaxValues(OSCEvent &e_);
     void editOSCInputs(ofxOSCGuiEvent &e_);
     void editOSCInputsActive(OSCEvent &e_);
     bool loadFromXML();

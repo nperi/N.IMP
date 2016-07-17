@@ -14,6 +14,8 @@ OscInputGenerator::OscInputGenerator(string name_, int nodeID_):ParamInputGenera
     oscMap  = new std::map<string,DTOscMap* >();
     type    = OSC;
     nodeID  = nodeID_;
+    min = 0;
+    max = 127;
 }
 
 //------------------------------------------------------------------
@@ -41,12 +43,14 @@ void OscInputGenerator::processInput() {
                 for (int j = 0; j < m.getNumArgs() && j < it->second->paramId.size(); ++j) {
                     
                     Param* p        = new Param();
-                    p->inputMax     = it->second->inputMaxValue[j];
-                    p->inputMin     = it->second->inputMinValue[j];
+//                    p->inputMax     = it->second->inputMaxValue[j];
+//                    p->inputMin     = it->second->inputMinValue[j];
+                    p->inputMax     = max;
+                    p->inputMin     = min;
                     p->imageInputId = it->second->nodeId[j];
                     p->name         = it->second->paramId[j];
                     p->value        = m.getArgAsFloat(j);
-                    p->floatVal     = ofMap(m.getArgAsFloat(j), it->second->inputMinValue[j], it->second->inputMaxValue[j], it->second->paramMinValue[j], it->second->paramMaxValue[j]);
+                    p->floatVal     = ofMap(m.getArgAsFloat(j), min, max, it->second->paramMinValue[j], it->second->paramMaxValue[j]);
                     p->intVal       = m.getArgAsInt32(j);
                     storeMessage(p);
                 }
@@ -77,6 +81,16 @@ void OscInputGenerator::setAddress(string oldAddress_, string address_) {
 }
 
 //------------------------------------------------------------------
+void OscInputGenerator::setMin(int _min) {
+    min = _min;
+}
+
+//------------------------------------------------------------------
+void OscInputGenerator::setMax(int _max) {
+    max = _max;
+}
+
+//------------------------------------------------------------------
 bool OscInputGenerator::addNewOSCMap(string address_, ImageOutput* node_, vector<string> params_) {
     
     std::map<string,DTOscMap* >::iterator it = oscMap->find(address_);
@@ -85,8 +99,8 @@ bool OscInputGenerator::addNewOSCMap(string address_, ImageOutput* node_, vector
         for (int i = 0; i < params_.size(); i++) {
             it->second->paramId.push_back(params_[i]);
             it->second->nodeId.push_back(node_->getId());
-            it->second->inputMinValue.push_back(0);
-            it->second->inputMaxValue.push_back(127);
+//            it->second->inputMinValue.push_back(0);
+//            it->second->inputMaxValue.push_back(127);
             it->second->paramMinValue.push_back(node_->getMidiMin(params_[i]));
             it->second->paramMaxValue.push_back(node_->getMidiMax(params_[i]));
         }
@@ -97,8 +111,8 @@ bool OscInputGenerator::addNewOSCMap(string address_, ImageOutput* node_, vector
         for (int i = 0; i < params_.size(); i++) {
             dtM->paramId.push_back(params_[i]);
             dtM->nodeId.push_back(node_->getId());
-            dtM->inputMinValue.push_back(0);
-            dtM->inputMaxValue.push_back(127);
+//            dtM->inputMinValue.push_back(0);
+//            dtM->inputMaxValue.push_back(127);
             dtM->paramMinValue.push_back(node_->getMidiMin(params_[i]));
             dtM->paramMaxValue.push_back(node_->getMidiMax(params_[i]));
         }
@@ -114,8 +128,8 @@ bool OscInputGenerator::addNewOSCMap(string address_, ImageOutput* node_, string
     if (it != oscMap->end()) {
         it->second->paramId.push_back(param_);
         it->second->nodeId.push_back(node_->getId());
-        it->second->inputMinValue.push_back(0);
-        it->second->inputMaxValue.push_back(127);
+//        it->second->inputMinValue.push_back(0);
+//        it->second->inputMaxValue.push_back(127);
         it->second->paramMinValue.push_back(node_->getMidiMin(param_));
         it->second->paramMaxValue.push_back(node_->getMidiMax(param_));
     }
@@ -124,8 +138,8 @@ bool OscInputGenerator::addNewOSCMap(string address_, ImageOutput* node_, string
         
         dtM->paramId.push_back(param_);
         dtM->nodeId.push_back(node_->getId());
-        dtM->inputMinValue.push_back(0);
-        dtM->inputMaxValue.push_back(127);
+//        dtM->inputMinValue.push_back(0);
+//        dtM->inputMaxValue.push_back(127);
         dtM->paramMinValue.push_back(node_->getMidiMin(param_));
         dtM->paramMaxValue.push_back(node_->getMidiMax(param_));
         
@@ -147,8 +161,8 @@ void OscInputGenerator::removeOSCMap(string address_, ImageOutput* node_, string
                 
                 it->second->paramId.erase(it->second->paramId.begin() + j);
                 it->second->nodeId.erase(it->second->nodeId.begin() + j);
-                it->second->inputMinValue.erase(it->second->inputMinValue.begin() + j);
-                it->second->inputMaxValue.erase(it->second->inputMaxValue.begin() + j);
+//                it->second->inputMinValue.erase(it->second->inputMinValue.begin() + j);
+//                it->second->inputMaxValue.erase(it->second->inputMaxValue.begin() + j);
                 it->second->paramMinValue.erase(it->second->paramMinValue.begin() + j);
                 it->second->paramMaxValue.erase(it->second->paramMaxValue.begin() + j);
                 
@@ -168,8 +182,8 @@ void OscInputGenerator::removeNodeFromParams(int nodeID_) {
             if (it->second->nodeId[j] == nodeID_) {
                 it->second->paramId.erase(it->second->paramId.begin() + j);
                 it->second->nodeId.erase(it->second->nodeId.begin() + j);
-                it->second->inputMinValue.erase(it->second->inputMinValue.begin() + j);
-                it->second->inputMaxValue.erase(it->second->inputMaxValue.begin() + j);
+//                it->second->inputMinValue.erase(it->second->inputMinValue.begin() + j);
+//                it->second->inputMaxValue.erase(it->second->inputMaxValue.begin() + j);
                 it->second->paramMinValue.erase(it->second->paramMinValue.begin() + j);
                 it->second->paramMaxValue.erase(it->second->paramMaxValue.begin() + j);
                 j--;
@@ -210,15 +224,15 @@ bool OscInputGenerator::loadSettings(ofxXmlSettings &XML, int nodesCount_) {
             
             int     nodeId = XML.getAttribute("OSC_MAP","nodeId",0,i) + nodesCount_;
             string  param = XML.getAttribute("OSC_MAP","param","",i);
-            float   inputMinValue = ofToFloat(XML.getAttribute("OSC_MAP","inputMinValue","0",i));
-            float   inputMaxValue = ofToFloat(XML.getAttribute("OSC_MAP","inputMaxValue","127",i));
+//            float   inputMinValue = ofToFloat(XML.getAttribute("OSC_MAP","inputMinValue","0",i));
+//            float   inputMaxValue = ofToFloat(XML.getAttribute("OSC_MAP","inputMaxValue","127",i));
             float   paramMinValue = ofToFloat(XML.getAttribute("OSC_MAP","paramMinValue","0",i));
             float   paramMaxValue = ofToFloat(XML.getAttribute("OSC_MAP","paramMaxValue","127",i));
             
             dtM->paramId.push_back(param);
             dtM->nodeId.push_back(nodeId);
-            dtM->inputMinValue.push_back(inputMinValue);
-            dtM->inputMaxValue.push_back(inputMaxValue);
+//            dtM->inputMinValue.push_back(inputMinValue);
+//            dtM->inputMaxValue.push_back(inputMaxValue);
             dtM->paramMinValue.push_back(paramMinValue);
             dtM->paramMaxValue.push_back(paramMaxValue);
             
@@ -262,8 +276,8 @@ bool OscInputGenerator::saveSettings(ofxXmlSettings &XML) {
                     XML.addTag("OSC_MAP");
                     XML.addAttribute("OSC_MAP","nodeId", it->second->nodeId[j], j);
                     XML.addAttribute("OSC_MAP","param", it->second->paramId[j], j);
-                    XML.addAttribute("OSC_MAP","inputMinValue", it->second->inputMinValue[j], j);
-                    XML.addAttribute("OSC_MAP","inputMaxValue", it->second->inputMaxValue[j], j);
+//                    XML.addAttribute("OSC_MAP","inputMinValue", it->second->inputMinValue[j], j);
+//                    XML.addAttribute("OSC_MAP","inputMaxValue", it->second->inputMaxValue[j], j);
                     XML.addAttribute("OSC_MAP","paramMinValue", it->second->paramMinValue[j], j);
                     XML.addAttribute("OSC_MAP","paramMaxValue", it->second->paramMaxValue[j], j);
                 }
@@ -305,8 +319,8 @@ bool OscInputGenerator::saveSettingsToSnippet(ofxXmlSettings &XML, map<int,int> 
                         XML.addTag("OSC_MAP");
                         XML.addAttribute("OSC_MAP","nodeId", it->second->nodeId[j], j);
                         XML.addAttribute("OSC_MAP","param", it->second->paramId[j], j);
-                        XML.addAttribute("OSC_MAP","inputMinValue", it->second->inputMinValue[j], j);
-                        XML.addAttribute("OSC_MAP","inputMaxValue", it->second->inputMaxValue[j], j);
+//                        XML.addAttribute("OSC_MAP","inputMinValue", it->second->inputMinValue[j], j);
+//                        XML.addAttribute("OSC_MAP","inputMaxValue", it->second->inputMaxValue[j], j);
                         XML.addAttribute("OSC_MAP","paramMinValue", it->second->paramMinValue[j], j);
                         XML.addAttribute("OSC_MAP","paramMaxValue", it->second->paramMaxValue[j], j);
                     }

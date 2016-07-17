@@ -28,6 +28,8 @@ class OscInputGenerator : public ParamInputGenerator{
     int  getNodeID(){ return nodeID; };
     void setPort(int port_);
     void setAddress(string oldAddress_, string address_);
+    void setMin(int min);
+    void setMax(int max);
     
     std::map<string,DTOscMap* >* oscMap;
     void removeNodeFromParams(int nodeID_);
@@ -41,7 +43,7 @@ class OscInputGenerator : public ParamInputGenerator{
     bool saveSettingsToSnippet(ofxXmlSettings &XML, map<int,int> newIdsMap);
     
 private:
-    int port;
+    int port, min, max;
     ofxOscReceiver receiver;
     int nodeID;
 	

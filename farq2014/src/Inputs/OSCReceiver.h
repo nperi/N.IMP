@@ -33,7 +33,7 @@ public:
     float       getMidiMin(string param_){};
     float       getMidiMax(string param_){};
     int         getPort(){ return port; };
-    string      getAddress(){ return address; };
+    string      getAddress(){ return address.get().substr(9); };
     bool        getEditInputsActive() { return editOSC; };
     
     void        setPort(int p);
@@ -46,6 +46,7 @@ public:
     void        updateParameter(Param* inputParam){};
     
     ofEvent<OSCEvent> editOSCPort;
+    ofEvent<OSCEvent> editOSCMinMaxValues;
     ofEvent<OSCEvent> editOSCAddress;
     ofEvent<OSCEvent> editOSCInputsActive;
     
@@ -58,19 +59,25 @@ private:
     void update();
     void editPort(string& p);
     void editAddress(string& a);
+    void editMin(string& a);
+    void editMax(string& a);
     void editInputs(bool& e);
     void _showHelp();
     
     ofxTextInput oscPort;
     ofxTextInput oscAddress;
+    ofxTextInput oscMin;
+    ofxTextInput oscMax;
     ofParameter<string> oscPortNumber;
     ofParameter<string> address;
+    ofParameter<string> oscMinNumber;
+    ofParameter<string> oscMaxNumber;
     ofParameter<bool> editOSC;
     ofParameterGroup portGroup;
     ofParameterGroup paramsGroup;
     vector<OSCParam> paramsLabels;
 
-    int port;
+    int port, min, max;
     string oldAddress;
     ofImage oscReceiverImg;
     bool disabledEdit;

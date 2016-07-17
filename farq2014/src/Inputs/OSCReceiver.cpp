@@ -14,12 +14,18 @@ OSCReceiver::OSCReceiver(string name_, int id_) : InputSource(name_, "OSC Receiv
     disabledEdit = false;
     oscReceiverImg.loadImage("assets/osc_receiver.png");
     
-    address = "/";
-    oldAddress = "/";
-    port = 6666;
-    oscPortNumber = "6666";
+    oldAddress  = "/";
+    port        = 6666;
+    min         = 0;
+    max         = 127;
+    address.set("Address", "/");
+    oscPortNumber.set("Port", "6666");
+    oscMinNumber.set("Min Value", "0");
+    oscMaxNumber.set("Max Value", "127");
     gui.add(oscPort.setup("Port", oscPortNumber, 100, 20));
     gui.add(oscAddress.setup("Address", address, 100, 20));
+    gui.add(oscMin.setup("Min Value", oscMinNumber, 100, 20));
+    gui.add(oscMax.setup("Max Value", oscMaxNumber, 100, 20));
     gui.add(editOSC.set("Edit OSC Inputs", false));
     
     paramsGroup.setName("Params");
@@ -27,6 +33,8 @@ OSCReceiver::OSCReceiver(string name_, int id_) : InputSource(name_, "OSC Receiv
     
     oscPort.addListener(this, &OSCReceiver::editPort);
     oscAddress.addListener(this, &OSCReceiver::editAddress);
+    oscMax.addListener(this, &OSCReceiver::editMax);
+    oscMin.addListener(this, &OSCReceiver::editMin);
     editOSC.addListener(this, &OSCReceiver::editInputs);
     
     gui.setWidthElements(INSPECTOR_WIDTH);
@@ -38,6 +46,8 @@ OSCReceiver::OSCReceiver(string name_, int id_) : InputSource(name_, "OSC Receiv
 OSCReceiver::~OSCReceiver(){
     oscPort.removeListener(this, &OSCReceiver::editPort);
     oscAddress.removeListener(this, &OSCReceiver::editAddress);
+    oscMax.removeListener(this, &OSCReceiver::editMax);
+    oscMin.removeListener(this, &OSCReceiver::editMin);
     editOSC.removeListener(this, &OSCReceiver::editInputs);
 }
 
@@ -65,12 +75,14 @@ ofTexture* OSCReceiver::getTexture(){
 //------------------------------------------------------------------
 void OSCReceiver::editPort(string& p){
     
-    port = ofToInt(p);
+    port = ofToInt(p.substr(5));
     
     OSCEvent ev;
     ev.nodeId = nId;
     ev.port = port;
-    ev.address = address;
+    ev.address = oldAddress;
+    ev.max = max;
+    ev.min = min;
     ofNotifyEvent(editOSCPort, ev);
 }
 
@@ -80,11 +92,41 @@ void OSCReceiver::editAddress(string& a){
     OSCEvent ev;
     ev.nodeId = nId;
     ev.port = port;
-    ev.address = address;
+    ev.address = a.substr(9);
     ev.oldAddress = oldAddress;
+    ev.max = max;
+    ev.min = min;
     ofNotifyEvent(editOSCPort, ev);
     
-    oldAddress = a;
+    oldAddress = a.substr(9);
+}
+
+//------------------------------------------------------------------
+void OSCReceiver::editMin(string& a){
+    
+    min = ofToInt(a.substr(11));
+    
+    OSCEvent ev;
+    ev.nodeId = nId;
+    ev.port = port;
+    ev.address = oldAddress;
+    ev.max = max;
+    ev.min = min;
+    ofNotifyEvent(editOSCMinMaxValues, ev);
+}
+
+//------------------------------------------------------------------
+void OSCReceiver::editMax(string& a){
+    
+    max = ofToInt(a.substr(11));
+    
+    OSCEvent ev;
+    ev.nodeId = nId;
+    ev.port = port;
+    ev.address = oldAddress;
+    ev.max = max;
+    ev.min = min;
+    ofNotifyEvent(editOSCMinMaxValues, ev);
 }
 
 //------------------------------------------------------------------
@@ -93,8 +135,8 @@ void OSCReceiver::editInputs(bool& b){
     if (!disabledEdit) {
         OSCEvent ev;
         ev.nodeId = nId;
-        ev.port = port;
-        ev.address = address;
+        ev.port = port ;
+        ev.address = oldAddress;
         ofNotifyEvent(editOSCInputsActive, ev);
     }
     else {
