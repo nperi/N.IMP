@@ -19,7 +19,8 @@ class ImageTypePicture : public ImageType{
   public:
 	
 	ImageTypePicture(string name_ ,string path_, bool isResize = false, int width = 1024, int height = 768);
-	
+	~ImageTypePicture();
+    
     void update(ofImage& _img);
     
     int getFrameRate();

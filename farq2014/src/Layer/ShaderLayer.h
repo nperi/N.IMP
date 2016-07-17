@@ -34,13 +34,13 @@ struct ShaderVec3Param{
     string               name;
 };
 
-//struct ShaderVec4Param{
-//    ofParameter<float> paramx;
-//    ofParameter<float> paramy;
-//    ofParameter<float> paramz;
-//    ofParameter<float> paramw;
-//    string               name;
-//};
+struct ShaderVec4Param{
+    ofParameter<float> paramx;
+    ofParameter<float> paramy;
+    ofParameter<float> paramz;
+    ofParameter<float> paramw;
+    string               name;
+};
 
 class ShaderLayer : public VisualLayer {
   public:
@@ -77,7 +77,7 @@ private:
     vector<ShaderBoolParam*>  shaderBoolParams;
     vector<ShaderVec2Param*>  shaderVec2Params;
     vector<ShaderVec3Param*>  shaderVec3Params;
-//    vector<ShaderVec4Param*>  shaderVec4Params;
+    vector<ShaderVec4Param*>  shaderVec4Params;
     vector<string>            shaderTextureNames;
     void paramChanged(float &f);
     string      fragmentShader, vertexShader;

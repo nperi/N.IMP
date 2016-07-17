@@ -22,6 +22,10 @@ ImageTypePicture::ImageTypePicture(string name_ ,string path_, bool isResize, in
     
 }
 
+ImageTypePicture::~ImageTypePicture(){
+    img.clear();
+}
+
 //------------------------------------------------------------------
 void ImageTypePicture::activate(ofImage& _img){
     _img.setFromPixels(img.getPixelsRef());
