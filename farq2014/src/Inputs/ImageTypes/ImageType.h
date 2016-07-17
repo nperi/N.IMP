@@ -21,6 +21,7 @@ class ImageType {
         name = name_;
         path = path_;
     };
+    virtual ~ImageType() {};
 	
     imgType getType(){return mediaType;};
     virtual void update(ofImage& _img) = 0;

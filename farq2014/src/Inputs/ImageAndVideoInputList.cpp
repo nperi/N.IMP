@@ -56,6 +56,10 @@ ImageAndVideoInputList::~ImageAndVideoInputList(){
     img.clear();
     img.getTextureReference().clear();
     
+    for(int i=0; i < inputs.size(); i++){
+        delete inputs[i];
+    }
+    
     delete hapPlayer;
     delete commonPlayer;
     videoPlayer = NULL;

@@ -1054,8 +1054,13 @@ void ofApp::createNode(textInputEvent &args){
     }
     else if (args.type == "shader") {
         newPatch = new ShaderLayer();
-        ((ShaderLayer*)newPatch)->loadShader(args.path, args.name);
-        visualLayers.push_back((ShaderLayer*)newPatch);
+        bool loaded = ((ShaderLayer*)newPatch)->loadShader(args.path, args.name);
+        if(loaded){
+            visualLayers.push_back((ShaderLayer*)newPatch);
+        } else {
+            delete newPatch;
+            newPatch = NULL;
+        }
     }
     else if (args.type == "image or video") {
         newPatch = new ImageAndVideoInputList();
