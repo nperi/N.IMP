@@ -494,7 +494,13 @@ bool ShaderLayer::loadShader(string path_, string fileName_){
     if(maxInputs > 0){
         addInputDot();
         gui.add(isEnabled.setup("Enabled", isEnabled, 100, 20));
+        
+        stringstream maxInputsString;
+        maxInputsString << "Max inputs: " << maxInputs;
+        gui.add(shaderMaxInputs.set(maxInputsString.str()));
     }
+    gui.add(shaderFileName.set(fileName_));
+    
     
     s = fragmentShader;
     searchFor = "const int ";

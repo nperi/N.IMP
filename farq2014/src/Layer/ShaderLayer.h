@@ -30,7 +30,7 @@ struct ShaderBoolParam{
 class ShaderLayer : public VisualLayer {
   public:
 	
-    ShaderLayer(string name_ = "Shader", int id_ = -1);
+    ShaderLayer(string name_ = "New Shader", int id_ = -1);
     ~ShaderLayer();
 	
     void setup();
@@ -67,6 +67,9 @@ private:
     int         nTextures, passes, internalFormat;
     bool        bFine;
     string      path;
+    
+    ofParameter<string> shaderFileName;
+    ofParameter<string> shaderMaxInputs;
 };
 
 #endif
