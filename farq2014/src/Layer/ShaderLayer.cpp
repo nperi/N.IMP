@@ -55,13 +55,18 @@ void ShaderLayer::update(){
                 for(int j = 0; j < shaderIntParams.size(); j++){
                     shader.setUniform1i(shaderIntParams[j]->name, shaderIntParams[j]->param.get());
                 }
-                
-                for(int j = 0; j < shaderVec2Params.size(); j++){
-                    shader.setUniform2f(shaderVec2Params[j]->name, shaderVec2Params[j]->paramx.get(), shaderVec2Params[j]->paramy.get());
-                }
                 for(int j = 0; j < shaderBoolParams.size(); j++){
                     shader.setUniform1i(shaderBoolParams[j]->name, shaderBoolParams[j]->param.get());
                 }
+                for(int j = 0; j < shaderVec2Params.size(); j++){
+                    shader.setUniform2f(shaderVec2Params[j]->name, shaderVec2Params[j]->paramx.get(), shaderVec2Params[j]->paramy.get());
+                }
+                for(int j = 0; j < shaderVec3Params.size(); j++){
+                    shader.setUniform3f(shaderVec3Params[j]->name, shaderVec3Params[j]->paramx.get(), shaderVec3Params[j]->paramy.get(), shaderVec3Params[j]->paramz.get());
+                }
+//                for(int j = 0; j < shaderVec4Params.size(); j++){
+//                    shader.setUniform4f(shaderVec4Params[j]->name, shaderVec4Params[j]->paramx.get(), shaderVec4Params[j]->paramy.get(), shaderVec4Params[j]->paramz.get(), shaderVec4Params[j]->paramw.get());
+//                }
                 
                 doFrame();
                 
@@ -93,13 +98,18 @@ void ShaderLayer::update(){
             for(int j = 0; j < shaderIntParams.size(); j++){
                 shader.setUniform1i(shaderIntParams[j]->name, shaderIntParams[j]->param.get());
             }
-            
-            for(int j = 0; j < shaderVec2Params.size(); j++){
-                shader.setUniform2f(shaderVec2Params[j]->name, shaderVec2Params[j]->paramx.get(), shaderVec2Params[j]->paramy.get());
-            }
             for(int j = 0; j < shaderBoolParams.size(); j++){
                 shader.setUniform1i(shaderBoolParams[j]->name, shaderBoolParams[j]->param.get());
             }
+            for(int j = 0; j < shaderVec2Params.size(); j++){
+                shader.setUniform2f(shaderVec2Params[j]->name, shaderVec2Params[j]->paramx.get(), shaderVec2Params[j]->paramy.get());
+            }
+            for(int j = 0; j < shaderVec3Params.size(); j++){
+                shader.setUniform3f(shaderVec3Params[j]->name, shaderVec3Params[j]->paramx.get(), shaderVec3Params[j]->paramy.get(), shaderVec3Params[j]->paramz.get());
+            }
+//            for(int j = 0; j < shaderVec4Params.size(); j++){
+//                shader.setUniform4f(shaderVec4Params[j]->name, shaderVec4Params[j]->paramx.get(), shaderVec4Params[j]->paramy.get(), shaderVec4Params[j]->paramz.get(), shaderVec4Params[j]->paramw.get());
+//            }
             
             doFrame();
             
@@ -124,6 +134,11 @@ float ShaderLayer::getMidiMin(string param_){
             return shaderFloatParams[i]->param.getMin();
         }
     }
+    for(int i=0; i < shaderBoolParams.size(); i++) {
+        if(param_.compare(shaderBoolParams[i]->name) == 0){
+            return 0;
+        }
+    }
     for(int i=0; i < shaderVec2Params.size(); i++) {
         if(param_.compare(shaderVec2Params[i]->paramx.getName()) == 0){
             return shaderVec2Params[i]->paramx.getMin();
@@ -132,6 +147,31 @@ float ShaderLayer::getMidiMin(string param_){
             return shaderVec2Params[i]->paramy.getMin();
         }
     }
+    for(int i=0; i < shaderVec3Params.size(); i++) {
+        if(param_.compare(shaderVec3Params[i]->paramx.getName()) == 0){
+            return shaderVec3Params[i]->paramx.getMin();
+        }
+        if(param_.compare(shaderVec3Params[i]->paramy.getName()) == 0){
+            return shaderVec3Params[i]->paramy.getMin();
+        }
+        if(param_.compare(shaderVec3Params[i]->paramz.getName()) == 0){
+            return shaderVec3Params[i]->paramz.getMin();
+        }
+    }
+//    for(int i=0; i < shaderVec4Params.size(); i++) {
+//        if(param_.compare(shaderVec4Params[i]->paramx.getName()) == 0){
+//            return shaderVec3Params[i]->paramx.getMin();
+//        }
+//        if(param_.compare(shaderVec4Params[i]->paramy.getName()) == 0){
+//            return shaderVec4Params[i]->paramy.getMin();
+//        }
+//        if(param_.compare(shaderVec4Params[i]->paramz.getName()) == 0){
+//            return shaderVec4Params[i]->paramz.getMin();
+//        }
+//        if(param_.compare(shaderVec4Params[i]->paramw.getName()) == 0){
+//            return shaderVec4Params[i]->paramw.getMin();
+//        }
+//    }
 }
 
 //------------------------------------------------------------------
@@ -146,6 +186,11 @@ float ShaderLayer::getMidiMax(string param_){
             return shaderFloatParams[i]->param.getMax();
         }
     }
+    for(int i=0; i < shaderBoolParams.size(); i++) {
+        if(param_.compare(shaderBoolParams[i]->name) == 0){
+            return 1;
+        }
+    }
     for(int i=0; i < shaderVec2Params.size(); i++) {
         if(param_.compare(shaderVec2Params[i]->paramx.getName()) == 0){
             return shaderVec2Params[i]->paramx.getMax();
@@ -154,6 +199,31 @@ float ShaderLayer::getMidiMax(string param_){
             return shaderVec2Params[i]->paramy.getMax();
         }
     }
+    for(int i=0; i < shaderVec3Params.size(); i++) {
+        if(param_.compare(shaderVec3Params[i]->paramx.getName()) == 0){
+            return shaderVec3Params[i]->paramx.getMax();
+        }
+        if(param_.compare(shaderVec3Params[i]->paramy.getName()) == 0){
+            return shaderVec3Params[i]->paramy.getMax();
+        }
+        if(param_.compare(shaderVec3Params[i]->paramz.getName()) == 0){
+            return shaderVec3Params[i]->paramz.getMax();
+        }
+    }
+//    for(int i=0; i < shaderVec4Params.size(); i++) {
+//        if(param_.compare(shaderVec4Params[i]->paramx.getName()) == 0){
+//            return shaderVec4Params[i]->paramx.getMax();
+//        }
+//        if(param_.compare(shaderVec4Params[i]->paramy.getName()) == 0){
+//            return shaderVec4Params[i]->paramy.getMax();
+//        }
+//        if(param_.compare(shaderVec4Params[i]->paramz.getName()) == 0){
+//            return shaderVec4Params[i]->paramz.getMax();
+//        }
+//        if(param_.compare(shaderVec4Params[i]->paramw.getName()) == 0){
+//            return shaderVec4Params[i]->paramw.getMax();
+//        }
+//    }
 }
 
 //------------------------------------------------------------------
@@ -180,6 +250,12 @@ void ShaderLayer::updateParameter(Param* inputParam){
             break;
         }
     }
+    for(int i=0; i < shaderBoolParams.size(); i++) {
+        if(inputParam->name.compare(shaderBoolParams[i]->name) == 0){
+            shaderBoolParams[i]->param = inputParam->intVal;
+            break;
+        }
+    }
     for(int i=0; i < shaderVec2Params.size(); i++) {
         if(inputParam->name.compare(shaderVec2Params[i]->paramx.getName()) == 0){
             shaderVec2Params[i]->paramx = inputParam->floatVal;
@@ -190,6 +266,39 @@ void ShaderLayer::updateParameter(Param* inputParam){
             break;
         }
     }
+    for(int i=0; i < shaderVec3Params.size(); i++) {
+        if(inputParam->name.compare(shaderVec3Params[i]->paramx.getName()) == 0){
+            shaderVec3Params[i]->paramx = inputParam->floatVal;
+            break;
+        }
+        if(inputParam->name.compare(shaderVec3Params[i]->paramy.getName()) == 0){
+            shaderVec3Params[i]->paramy = inputParam->floatVal;
+            break;
+        }
+        if(inputParam->name.compare(shaderVec3Params[i]->paramz.getName()) == 0){
+            shaderVec3Params[i]->paramz = inputParam->floatVal;
+            break;
+        }
+    }
+//    for(int i=0; i < shaderVec4Params.size(); i++) {
+//        if(inputParam->name.compare(shaderVec4Params[i]->paramx.getName()) == 0){
+//            shaderVec4Params[i]->paramx = inputParam->floatVal;
+//            break;
+//        }
+//        if(inputParam->name.compare(shaderVec4Params[i]->paramy.getName()) == 0){
+//            shaderVec4Params[i]->paramy = inputParam->floatVal;
+//            break;
+//        }
+//        if(inputParam->name.compare(shaderVec4Params[i]->paramz.getName()) == 0){
+//            shaderVec4Params[i]->paramz = inputParam->floatVal;
+//            break;
+//        }
+//        if(inputParam->name.compare(shaderVec4Params[i]->paramw.getName()) == 0){
+//            shaderVec4Params[i]->paramw = inputParam->floatVal;
+//            break;
+//        }
+//    }
+    
 
 }
 
@@ -312,6 +421,44 @@ bool ShaderLayer::loadSettings(ofxXmlSettings &XML, int nTag_, int nodesCount_) 
         }
     }
     
+    numParamTag = XML.getNumTags("VEC3_PARAM");
+    if(numParamTag>0){
+        for (int v=0; v<numParamTag; v++){
+            string name_ = XML.getAttribute("VEC3_PARAM","name","default",v);
+            float valuex_ = ofToFloat(XML.getAttribute("VEC3_PARAM","valuex","0",v));
+            float valuey_ = ofToFloat(XML.getAttribute("VEC3_PARAM","valuey","0",v));
+            float valuez_ = ofToFloat(XML.getAttribute("VEC3_PARAM","valuez","0",v));
+            for(int j = 0; j < shaderVec3Params.size(); j++){
+                if(shaderVec3Params[j]->name == name_){
+                    shaderVec3Params[j]->paramx.set(valuex_);
+                    shaderVec3Params[j]->paramy.set(valuey_);
+                    shaderVec3Params[j]->paramz.set(valuez_);
+                    break;
+                }
+            }
+        }
+    }
+    
+//    numParamTag = XML.getNumTags("VEC4_PARAM");
+//    if(numParamTag>0){
+//        for (int v=0; v<numParamTag; v++){
+//            string name_ = XML.getAttribute("VEC4_PARAM","name","default",v);
+//            float valuex_ = ofToFloat(XML.getAttribute("VEC4_PARAM","valuex","0",v));
+//            float valuey_ = ofToFloat(XML.getAttribute("VEC4_PARAM","valuey","0",v));
+//            float valuez_ = ofToFloat(XML.getAttribute("VEC4_PARAM","valuez","0",v));
+//            float valuew_ = ofToFloat(XML.getAttribute("VEC4_PARAM","valuew","0",v));
+//            for(int j = 0; j < shaderVec4Params.size(); j++){
+//                if(shaderVec4Params[j]->name == name_){
+//                    shaderVec4Params[j]->paramx.set(valuex_);
+//                    shaderVec4Params[j]->paramy.set(valuey_);
+//                    shaderVec4Params[j]->paramz.set(valuez_);
+//                    shaderVec4Params[j]->paramw.set(valuew_);
+//                    break;
+//                }
+//            }
+//        }
+//    }
+    
     // End Load Params
     
     type        = XML.getValue("type","none");
@@ -371,6 +518,23 @@ bool ShaderLayer::saveSettings(ofxXmlSettings &XML) {
             XML.addAttribute("VEC2_PARAM", "valuex", shaderVec2Params[svp]->paramx.get(), svp);
             XML.addAttribute("VEC2_PARAM", "valuey", shaderVec2Params[svp]->paramy.get(), svp);
         }
+        
+        for (int svp = 0; svp < shaderVec3Params.size(); svp++){
+            XML.addTag("VEC3_PARAM");
+            XML.addAttribute("VEC3_PARAM", "name", shaderVec3Params[svp]->name, svp);
+            XML.addAttribute("VEC3_PARAM", "valuex", shaderVec3Params[svp]->paramx.get(), svp);
+            XML.addAttribute("VEC3_PARAM", "valuey", shaderVec3Params[svp]->paramy.get(), svp);
+            XML.addAttribute("VEC3_PARAM", "valuez", shaderVec3Params[svp]->paramz.get(), svp);
+        }
+        
+//        for (int svp = 0; svp < shaderVec4Params.size(); svp++){
+//            XML.addTag("VEC4_PARAM");
+//            XML.addAttribute("VEC4_PARAM", "name", shaderVec4Params[svp]->name, svp);
+//            XML.addAttribute("VEC4_PARAM", "valuex", shaderVec4Params[svp]->paramx.get(), svp);
+//            XML.addAttribute("VEC4_PARAM", "valuey", shaderVec4Params[svp]->paramy.get(), svp);
+//            XML.addAttribute("VEC4_PARAM", "valuez", shaderVec4Params[svp]->paramz.get(), svp);
+//            XML.addAttribute("VEC4_PARAM", "valuew", shaderVec4Params[svp]->paramw.get(), svp);
+//        }
         saved = ofxPatch::saveSettings(XML, true, lastPlace);
         XML.popTag(); // NODE
     }
@@ -425,6 +589,24 @@ bool ShaderLayer::saveSettingsToSnippet(ofxXmlSettings &XML, map<int,int> newIds
             XML.addAttribute("VEC2_PARAM", "valuex", shaderVec2Params[svp]->paramx.get(), svp);
             XML.addAttribute("VEC2_PARAM", "valuey", shaderVec2Params[svp]->paramy.get(), svp);
         }
+        
+        for (int svp = 0; svp < shaderVec3Params.size(); svp++){
+            XML.addTag("VEC3_PARAM");
+            XML.addAttribute("VEC3_PARAM", "name", shaderVec3Params[svp]->name, svp);
+            XML.addAttribute("VEC3_PARAM", "valuex", shaderVec3Params[svp]->paramx.get(), svp);
+            XML.addAttribute("VEC3_PARAM", "valuey", shaderVec3Params[svp]->paramy.get(), svp);
+            XML.addAttribute("VEC3_PARAM", "valuez", shaderVec3Params[svp]->paramz.get(), svp);
+        }
+        
+//        for (int svp = 0; svp < shaderVec4Params.size(); svp++){
+//            XML.addTag("VEC4_PARAM");
+//            XML.addAttribute("VEC4_PARAM", "name", shaderVec4Params[svp]->name, svp);
+//            XML.addAttribute("VEC4_PARAM", "valuex", shaderVec4Params[svp]->paramx.get(), svp);
+//            XML.addAttribute("VEC4_PARAM", "valuey", shaderVec4Params[svp]->paramy.get(), svp);
+//            XML.addAttribute("VEC4_PARAM", "valuez", shaderVec4Params[svp]->paramz.get(), svp);
+//            XML.addAttribute("VEC4_PARAM", "valuew", shaderVec4Params[svp]->paramw.get(), svp);
+//        }
+        
         saved = ofxPatch::saveSettings(XML, true, lastPlace);
         XML.popTag(); // NODE
     }
@@ -470,18 +652,33 @@ bool ShaderLayer::loadShader(string path_, string fileName_){
                 newIntParam->name = variableName;
                 newIntParam->param.set(variableName, 0);
                 shaderIntParams.push_back(newIntParam);
+            }else if(variableType == "bool"){
+                ofParameter<bool> newParam;
+                ShaderBoolParam* newBoolParam = new ShaderBoolParam();
+                newBoolParam->name = variableName;
+                newBoolParam->param.set(variableName, false);
+                shaderBoolParams.push_back(newBoolParam);
             } else if(variableType == "vec2"){
                 ShaderVec2Param* newVec2Param = new ShaderVec2Param();
                 newVec2Param->name = variableName;
                 newVec2Param->paramx.set(variableName + "X", 0);
                 newVec2Param->paramy.set(variableName + "Y", 0);
                 shaderVec2Params.push_back(newVec2Param);
-            } else if(variableType == "bool"){
-                ofParameter<bool> newParam;
-                ShaderBoolParam* newBoolParam = new ShaderBoolParam();
-                newBoolParam->name = variableName;
-                newBoolParam->param.set(variableName, false);
-                shaderBoolParams.push_back(newBoolParam);
+            } else if(variableType == "vec3"){
+                ShaderVec3Param* newVec3Param = new ShaderVec3Param();
+                newVec3Param->name = variableName;
+                newVec3Param->paramx.set(variableName + "X", 0);
+                newVec3Param->paramy.set(variableName + "Y", 0);
+                newVec3Param->paramz.set(variableName + "Z", 0);
+                shaderVec3Params.push_back(newVec3Param);
+//            } else if(variableType == "vec4"){
+//                ShaderVec4Param* newVec4Param = new ShaderVec4Param();
+//                newVec4Param->name = variableName;
+//                newVec4Param->paramx.set(variableName + "X", 0);
+//                newVec4Param->paramy.set(variableName + "Y", 0);
+//                newVec4Param->paramz.set(variableName + "Z", 0);
+//                newVec4Param->paramw.set(variableName + "W", 0);
+//                shaderVec4Params.push_back(newVec4Param);
             } else if(variableType == "sampler2DRect" || variableType == "sampler2D"){
                 numTextures++;
                 shaderTextureNames.push_back(variableName);
@@ -622,6 +819,180 @@ bool ShaderLayer::loadShader(string path_, string fileName_){
         newGroup.add(shaderVec2Params[i]->paramy);
         gui.add(newGroup);
     }
+    
+    paramXMax, paramXMin, paramYMax, paramYMin, paramXDefault, paramYDefault = 0;
+    float paramZMax, paramZMin, paramZDefault, paramWMax, paramWMin, paramWDefault = 0;
+    searchFor = "const float ";
+    for(int i = 0; i < shaderVec3Params.size(); i++){
+        if((pos = s.find(searchFor + shaderVec3Params[i]->name + "XMax")) != string::npos){
+            pos2 = s.find(endSentence, pos);
+            res = s.substr(pos, pos2-pos);
+            res = res.substr((searchFor + shaderVec3Params[i]->name + "XMax = ").size());
+            paramXMax = std::atof(res.c_str());
+        }
+        if((pos = s.find(searchFor + shaderVec3Params[i]->name + "XMin")) != string::npos){
+            pos2 = s.find(endSentence, pos);
+            res = s.substr(pos, pos2-pos);
+            res = res.substr((searchFor + shaderVec3Params[i]->name + "XMin = ").size());
+            paramXMin = std::atof(res.c_str());
+        }
+        if((pos = s.find(searchFor + shaderVec3Params[i]->name + "XDefault")) != string::npos){
+            pos2 = s.find(endSentence, pos);
+            res = s.substr(pos, pos2-pos);
+            res = res.substr((searchFor + shaderVec3Params[i]->name + "XDefault = ").size());
+            paramXDefault = std::atof(res.c_str());
+        }
+        if((pos = s.find(searchFor + shaderVec3Params[i]->name + "YMax")) != string::npos){
+            pos2 = s.find(endSentence, pos);
+            res = s.substr(pos, pos2-pos);
+            res = res.substr((searchFor + shaderVec3Params[i]->name + "YMax = ").size());
+            paramYMax = std::atof(res.c_str());
+        }
+        if((pos = s.find(searchFor + shaderVec3Params[i]->name + "YMin")) != string::npos){
+            pos2 = s.find(endSentence, pos);
+            res = s.substr(pos, pos2-pos);
+            res = res.substr((searchFor + shaderVec3Params[i]->name + "YMin = ").size());
+            paramYMin = std::atof(res.c_str());
+        }
+        if((pos = s.find(searchFor + shaderVec3Params[i]->name + "YDefault")) != string::npos){
+            pos2 = s.find(endSentence, pos);
+            res = s.substr(pos, pos2-pos);
+            res = res.substr((searchFor + shaderVec3Params[i]->name + "YDefault = ").size());
+            paramYDefault = std::atof(res.c_str());
+        }
+        if((pos = s.find(searchFor + shaderVec3Params[i]->name + "ZMax")) != string::npos){
+            pos2 = s.find(endSentence, pos);
+            res = s.substr(pos, pos2-pos);
+            res = res.substr((searchFor + shaderVec3Params[i]->name + "ZMax = ").size());
+            paramZMax = std::atof(res.c_str());
+        }
+        if((pos = s.find(searchFor + shaderVec3Params[i]->name + "ZMin")) != string::npos){
+            pos2 = s.find(endSentence, pos);
+            res = s.substr(pos, pos2-pos);
+            res = res.substr((searchFor + shaderVec3Params[i]->name + "ZMin = ").size());
+            paramZMin = std::atof(res.c_str());
+        }
+        if((pos = s.find(searchFor + shaderVec3Params[i]->name + "ZDefault")) != string::npos){
+            pos2 = s.find(endSentence, pos);
+            res = s.substr(pos, pos2-pos);
+            res = res.substr((searchFor + shaderVec3Params[i]->name + "ZDefault = ").size());
+            paramZDefault = std::atof(res.c_str());
+        }
+        shaderVec3Params[i]->paramx.setMax(paramXMax);
+        shaderVec3Params[i]->paramx.setMin(paramXMin);
+        shaderVec3Params[i]->paramy.setMax(paramYMax);
+        shaderVec3Params[i]->paramy.setMin(paramYMin);
+        shaderVec3Params[i]->paramz.setMax(paramZMax);
+        shaderVec3Params[i]->paramz.setMin(paramZMin);
+        shaderVec3Params[i]->paramx.set(paramXDefault);
+        shaderVec3Params[i]->paramy.set(paramYDefault);
+        shaderVec3Params[i]->paramz.set(paramZDefault);
+        ofParameterGroup newGroup;
+        newGroup.setName(shaderVec3Params[i]->name);
+        newGroup.add(shaderVec3Params[i]->paramx);
+        newGroup.add(shaderVec3Params[i]->paramy);
+        newGroup.add(shaderVec3Params[i]->paramz);
+        gui.add(newGroup);
+    }
+    
+//    paramXMax, paramXMin, paramYMax, paramYMin, paramXDefault, paramYDefault = 0;
+//    paramZMax, paramZMin, paramZDefault, paramWMax, paramWMin, paramWDefault = 0;
+//    searchFor = "const float ";
+//    for(int i = 0; i < shaderVec4Params.size(); i++){
+//        if((pos = s.find(searchFor + shaderVec4Params[i]->name + "XMax")) != string::npos){
+//            pos2 = s.find(endSentence, pos);
+//            res = s.substr(pos, pos2-pos);
+//            res = res.substr((searchFor + shaderVec4Params[i]->name + "XMax = ").size());
+//            paramXMax = std::atof(res.c_str());
+//        }
+//        if((pos = s.find(searchFor + shaderVec4Params[i]->name + "XMin")) != string::npos){
+//            pos2 = s.find(endSentence, pos);
+//            res = s.substr(pos, pos2-pos);
+//            res = res.substr((searchFor + shaderVec4Params[i]->name + "XMin = ").size());
+//            paramXMin = std::atof(res.c_str());
+//        }
+//        if((pos = s.find(searchFor + shaderVec4Params[i]->name + "XDefault")) != string::npos){
+//            pos2 = s.find(endSentence, pos);
+//            res = s.substr(pos, pos2-pos);
+//            res = res.substr((searchFor + shaderVec4Params[i]->name + "XDefault = ").size());
+//            paramXDefault = std::atof(res.c_str());
+//        }
+//        if((pos = s.find(searchFor + shaderVec4Params[i]->name + "YMax")) != string::npos){
+//            pos2 = s.find(endSentence, pos);
+//            res = s.substr(pos, pos2-pos);
+//            res = res.substr((searchFor + shaderVec4Params[i]->name + "YMax = ").size());
+//            paramYMax = std::atof(res.c_str());
+//        }
+//        if((pos = s.find(searchFor + shaderVec4Params[i]->name + "YMin")) != string::npos){
+//            pos2 = s.find(endSentence, pos);
+//            res = s.substr(pos, pos2-pos);
+//            res = res.substr((searchFor + shaderVec4Params[i]->name + "YMin = ").size());
+//            paramYMin = std::atof(res.c_str());
+//        }
+//        if((pos = s.find(searchFor + shaderVec4Params[i]->name + "YDefault")) != string::npos){
+//            pos2 = s.find(endSentence, pos);
+//            res = s.substr(pos, pos2-pos);
+//            res = res.substr((searchFor + shaderVec4Params[i]->name + "YDefault = ").size());
+//            paramYDefault = std::atof(res.c_str());
+//        }
+//        if((pos = s.find(searchFor + shaderVec4Params[i]->name + "ZMax")) != string::npos){
+//            pos2 = s.find(endSentence, pos);
+//            res = s.substr(pos, pos2-pos);
+//            res = res.substr((searchFor + shaderVec4Params[i]->name + "ZMax = ").size());
+//            paramZMax = std::atof(res.c_str());
+//        }
+//        if((pos = s.find(searchFor + shaderVec4Params[i]->name + "ZMin")) != string::npos){
+//            pos2 = s.find(endSentence, pos);
+//            res = s.substr(pos, pos2-pos);
+//            res = res.substr((searchFor + shaderVec4Params[i]->name + "ZMin = ").size());
+//            paramZMin = std::atof(res.c_str());
+//        }
+//        if((pos = s.find(searchFor + shaderVec4Params[i]->name + "ZDefault")) != string::npos){
+//            pos2 = s.find(endSentence, pos);
+//            res = s.substr(pos, pos2-pos);
+//            res = res.substr((searchFor + shaderVec4Params[i]->name + "ZDefault = ").size());
+//            paramZDefault = std::atof(res.c_str());
+//        }
+//        if((pos = s.find(searchFor + shaderVec4Params[i]->name + "WMax")) != string::npos){
+//            pos2 = s.find(endSentence, pos);
+//            res = s.substr(pos, pos2-pos);
+//            res = res.substr((searchFor + shaderVec4Params[i]->name + "WMax = ").size());
+//            paramWMax = std::atof(res.c_str());
+//        }
+//        if((pos = s.find(searchFor + shaderVec4Params[i]->name + "WMin")) != string::npos){
+//            pos2 = s.find(endSentence, pos);
+//            res = s.substr(pos, pos2-pos);
+//            res = res.substr((searchFor + shaderVec4Params[i]->name + "WMin = ").size());
+//            paramWMin = std::atof(res.c_str());
+//        }
+//        if((pos = s.find(searchFor + shaderVec4Params[i]->name + "WDefault")) != string::npos){
+//            pos2 = s.find(endSentence, pos);
+//            res = s.substr(pos, pos2-pos);
+//            res = res.substr((searchFor + shaderVec4Params[i]->name + "WDefault = ").size());
+//            paramWDefault = std::atof(res.c_str());
+//        }
+//        shaderVec4Params[i]->paramx.setMax(paramXMax);
+//        shaderVec4Params[i]->paramx.setMin(paramXMin);
+//        shaderVec4Params[i]->paramy.setMax(paramYMax);
+//        shaderVec4Params[i]->paramy.setMin(paramYMin);
+//        shaderVec4Params[i]->paramz.setMax(paramZMax);
+//        shaderVec4Params[i]->paramz.setMin(paramZMin);
+//        shaderVec4Params[i]->paramw.setMax(paramWMax);
+//        shaderVec4Params[i]->paramw.setMin(paramWMin);
+//        shaderVec4Params[i]->paramx.set(paramXDefault);
+//        shaderVec4Params[i]->paramy.set(paramYDefault);
+//        shaderVec4Params[i]->paramz.set(paramZDefault);
+//        shaderVec4Params[i]->paramw.set(paramWDefault);
+//        ofParameterGroup newGroup;
+//        newGroup.setName(shaderVec4Params[i]->name);
+//        newGroup.add(shaderVec4Params[i]->paramx);
+//        newGroup.add(shaderVec4Params[i]->paramy);
+//        newGroup.add(shaderVec4Params[i]->paramz);
+//        newGroup.add(shaderVec4Params[i]->paramw);
+//        gui.add(newGroup);
+//    }
+    
+    
 
     gui.setWidthElements(INSPECTOR_WIDTH);
     
@@ -643,6 +1014,25 @@ bool ShaderLayer::loadShader(string path_, string fileName_){
         baseGui = gui.find(shaderVec2Params[i]->paramy.getName());
         if(baseGui) ofAddListener(baseGui->addOrRemoveOSCInputBaseGui, &gui, &ofxGuiGroup::addOrRemoveOSCInput);
     }
+    for(int i=0; i < shaderVec3Params.size(); i++) {
+        baseGui = gui.find(shaderVec3Params[i]->paramx.getName());
+        if(baseGui) ofAddListener(baseGui->addOrRemoveOSCInputBaseGui, &gui, &ofxGuiGroup::addOrRemoveOSCInput);
+        baseGui = gui.find(shaderVec3Params[i]->paramy.getName());
+        if(baseGui) ofAddListener(baseGui->addOrRemoveOSCInputBaseGui, &gui, &ofxGuiGroup::addOrRemoveOSCInput);
+        baseGui = gui.find(shaderVec3Params[i]->paramz.getName());
+        if(baseGui) ofAddListener(baseGui->addOrRemoveOSCInputBaseGui, &gui, &ofxGuiGroup::addOrRemoveOSCInput);
+    }
+//    for(int i=0; i < shaderVec4Params.size(); i++) {
+//        baseGui = gui.find(shaderVec4Params[i]->paramx.getName());
+//        if(baseGui) ofAddListener(baseGui->addOrRemoveOSCInputBaseGui, &gui, &ofxGuiGroup::addOrRemoveOSCInput);
+//        baseGui = gui.find(shaderVec4Params[i]->paramy.getName());
+//        if(baseGui) ofAddListener(baseGui->addOrRemoveOSCInputBaseGui, &gui, &ofxGuiGroup::addOrRemoveOSCInput);
+//        baseGui = gui.find(shaderVec4Params[i]->paramz.getName());
+//        if(baseGui) ofAddListener(baseGui->addOrRemoveOSCInputBaseGui, &gui, &ofxGuiGroup::addOrRemoveOSCInput);
+//        baseGui = gui.find(shaderVec4Params[i]->paramw.getName());
+//        if(baseGui) ofAddListener(baseGui->addOrRemoveOSCInputBaseGui, &gui, &ofxGuiGroup::addOrRemoveOSCInput);
+//    }
+
     
     
     // Compile the shader and loadit to the GPU

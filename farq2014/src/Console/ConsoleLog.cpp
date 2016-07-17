@@ -218,6 +218,9 @@ string ConsoleLog::processMessage(string message, bool firstMessage) {
         time(&rawtime);
         timeinfo = localtime (&rawtime);
         ostringstream oss;
+        if(timeinfo->tm_hour < 10){
+            oss << "0";
+        }
         oss << timeinfo->tm_hour << ":";
         if(timeinfo->tm_min < 10){
             oss << "0";
