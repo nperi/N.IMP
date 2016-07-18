@@ -191,11 +191,7 @@ void ofApp::setupAudio(){
     // creating audio analizer
     //
     if (audioAnalizer == NULL) {
-        audioAnalizer = new AudioAnalizer();
-        audioAnalizer->setDrawAudioAnalizer(false);
-        ((ofxUIMultiImageToggle*)right_menu->getWidget("Analizer"))->setValue(false);
-        initNode(audioAnalizer);
-        nodeViewers[currentViewer]->addPatch(audioAnalizer, ofPoint((ofGetWidth()/2)-100, (ofGetHeight()/2)-50));
+        initAudioAnalizer();
     }
     
     setSelectedForAudioIn();
@@ -551,11 +547,7 @@ void ofApp::keyPressed  (int key){
                 xmlFilePath = "";
                 deleteEverything();
                 
-                audioAnalizer = new AudioAnalizer();
-                audioAnalizer->setDrawAudioAnalizer(false);
-                ((ofxUIMultiImageToggle*)right_menu->getWidget("Analizer"))->setValue(false);
-                initNode(audioAnalizer);
-                nodeViewers[currentViewer]->addPatch(audioAnalizer, ofPoint((ofGetWidth()/2)-100, (ofGetHeight()/2)-50));
+                initAudioAnalizer();
             }
             break;
         case 'j': case 'J' :
@@ -771,11 +763,7 @@ void ofApp::menuEvent(ofxUIEventArgs &e) {
             xmlFilePath = "";
             deleteEverything();
             
-            audioAnalizer = new AudioAnalizer();
-            audioAnalizer->setDrawAudioAnalizer(false);
-            ((ofxUIMultiImageToggle*)right_menu->getWidget("Analizer"))->setValue(false);
-            initNode(audioAnalizer);
-            nodeViewers[currentViewer]->addPatch(audioAnalizer, ofPoint((ofGetWidth()/2)-100, (ofGetHeight()/2)-50));
+            initAudioAnalizer();
         }
     }
     else if (name == "Open Patcher (cmd+o)") {
@@ -1179,6 +1167,15 @@ void ofApp::initNode(ofxPatch* node) {
     }
 }
 
+void ofApp::initAudioAnalizer() {
+    
+    audioAnalizer = new AudioAnalizer();
+    audioAnalizer->setDrawAudioAnalizer(false);
+    ((ofxUIMultiImageToggle*)right_menu->getWidget("Analizer"))->setValue(false);
+    initNode(audioAnalizer);
+    nodeViewers[currentViewer]->addPatch(audioAnalizer, ofPoint((ofGetWidth()/2)-100, (ofGetHeight()/2)-50));
+}
+
 //------------------------------------------------------------------
 void ofApp::closePatch(int &_nID) {
     
@@ -1535,6 +1532,10 @@ bool ofApp::loadFromXML(){
         file.close();
     }
     
+    if (xmlFilePath == ""){
+        return;
+    }
+    
     if( XML.loadFile(xmlFilePath) ){
         
         deleteEverything();
@@ -1723,21 +1724,23 @@ bool ofApp::loadFromXML(){
             loadingOK = false;
             errorMsg = "File " + xmlFileName + " is not elegible for N.IMP";
         }
+        
+        if(!loadingOK){
+            ofLog(OF_LOG_ERROR, errorMsg);
+            console->pushError("XML couldn't be loaded: " + errorMsg);
+            deleteEverything();
+            initAudioAnalizer();
+            
+            ((ofxUIImageToggle*)menu->getWidget("Console on/off (cmd+c)"))->setValue(true);
+            showConsole = true;
+            return;
+        }
     }
     else {
         loadingOK = false;
     }
     
-    if(!loadingOK){
-        ofLog(OF_LOG_ERROR, errorMsg);
-        console->pushError("XML couldn't be loaded: " + errorMsg);
-        deleteEverything();
-        
-        ((ofxUIImageToggle*)menu->getWidget("Console on/off (cmd+c)"))->setValue(true);
-        showConsole = true;
-        return;
-    }
-    else{
+    if(loadingOK){
         //populating the nodes vector for fast iteration in the main loop.
         for(int i=0; i<inputs.size();i++){
             nodesVector.push_back(inputs[i]);
@@ -2351,7 +2354,7 @@ string ofApp::loadNodes(ofxXmlSettings &XML){
             
             for(int j=0; j<numSyphonServer; j++){
                 int nodeId          = XML.getAttribute("NODE","id",-1,j);
-                int inputSourceId   = XML.getAttribute("NODE","inputSource",-1,j);
+                int inputSourceId   = XML.getAttribute("NODE","inputId",-1,j);
                 string name         = XML.getAttribute("NODE","name","SyphonName",j);
                 
                 CustomSyphonServer* cSS;

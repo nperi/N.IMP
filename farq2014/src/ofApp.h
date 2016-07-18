@@ -82,6 +82,7 @@ public:
     void createNodeInput(float _x = ofGetMouseX(), float _y = ofGetMouseY());
     void createNode(textInputEvent &args);
     void initNode(ofxPatch* node);
+    void initAudioAnalizer();
     void closePatch(int &_nID);
     void editAudioInBand(AudioInEvent &e_);
     void editAudioIn(AudioInEvent &e_);
