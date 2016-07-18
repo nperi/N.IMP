@@ -150,10 +150,12 @@ void ImageAndVideoInputList::updateParameter(Param* inputParam){
         this->isPlaying = inputParam->intVal;
     }
     else if(inputParam->name.compare(">> next")==0 && inputParam->intVal > 0){
-        this->currentSequence = (currentSequence + 1) % inputs.size();
+//        this->currentSequence = (currentSequence + 1) % inputs.size();
+        nextSequenceChanged();
     }
     else if(inputParam->name.compare("<< prev")==0 && inputParam->intVal > 0){
-        this->currentSequence = (currentSequence - 1) % inputs.size();
+//        this->currentSequence = (currentSequence - 1) % inputs.size();
+        prevSequenceChanged();
     }
     else if(inputParam->name.compare("Play in Loop")==0){
         this->playInLoop = inputParam->intVal;
