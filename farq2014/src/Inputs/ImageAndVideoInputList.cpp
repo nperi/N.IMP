@@ -81,7 +81,9 @@ void ImageAndVideoInputList::setup(){
         img.setUseTexture(true);
         isEnabled = true;
         
-        fbo.allocate(width, height);
+        if (inputs[currentSequence]->isHap()) {
+            fbo.allocate(width, height);
+        }
     }
     else {
         drawNoInputs = true;
@@ -337,6 +339,10 @@ void ImageAndVideoInputList::loadImage(string name_, string path_){
         baseGui = gui.find("Position");
         if (baseGui) ofAddListener(baseGui->addOrRemoveOSCInputBaseGui, &gui, &ofxGuiGroup::addOrRemoveOSCInput);
         
+        if (inputs[currentSequence]->isHap()) {
+            fbo.allocate(width, height);
+        }
+        
         isPlayingBackwards = false;
 
         //start first scene
@@ -487,6 +493,10 @@ void ImageAndVideoInputList::sequenceChanged(int &s){
         height = (width*inputs[currentSequence]->getHeight())/inputs[currentSequence]->getWidth();
         
         resetSize();
+        
+        if (inputs[currentSequence]->isHap()) {
+            fbo.allocate(inputs[currentSequence]->getWidth(), inputs[currentSequence]->getHeight());
+        }
     }
 }
 
