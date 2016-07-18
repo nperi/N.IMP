@@ -126,11 +126,7 @@ float MultiChannelSwitch::getMidiMin(string param_){
         return 0;
     }
     else {
-        for (int i = 0; i < channels.size(); i++) {
-            if (param_ == channels[i]->label) {
-                return 0;
-            }
-        }
+        return 0;
     }
 }
 
@@ -144,11 +140,7 @@ float MultiChannelSwitch::getMidiMax(string param_){
         return 1;
     }
     else {
-        for (int i = 0; i < channels.size(); i++) {
-            if (param_ == channels[i]->label) {
-                return 1;
-            }
-        }
+        return 1;
     }
 }
 

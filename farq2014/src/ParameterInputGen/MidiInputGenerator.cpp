@@ -13,6 +13,7 @@ MidiInputGenerator::MidiInputGenerator(string name_, string midiDeviceName_):Par
     midiDeviceName = midiDeviceName_;
     midiControlMaps = *new map<int,vector<DTMidiMap*> >();
     type = MIDI;
+    midiLearnActive = false;
 }
 
 //------------------------------------------------------------------
