@@ -9,6 +9,8 @@
 
 #include "OscInputGenerator.h"
 
+static vector<string> addressListening;
+static vector<DTOscPortMap> pendingMessages;
 
 OscInputGenerator::OscInputGenerator(string name_, int nodeID_):ParamInputGenerator(name_, true){
     oscMap  = new std::map<string,DTOscMap* >();
@@ -16,6 +18,7 @@ OscInputGenerator::OscInputGenerator(string name_, int nodeID_):ParamInputGenera
     nodeID  = nodeID_;
     min = 0;
     max = 127;
+    
 }
 
 //------------------------------------------------------------------
@@ -28,37 +31,93 @@ OscInputGenerator::~OscInputGenerator(){
 
 //------------------------------------------------------------------
 void OscInputGenerator::processInput() {
-    
     if(lock()){
+        bool someoneListening = false;
         while(receiver.hasWaitingMessages()){
-            // get the next message
             ofxOscMessage m;
             receiver.getNextMessage(&m);
-            
+            DTOscPortMap newMsg;
+            newMsg.port = port;
+            newMsg.msg = m;
+            pendingMessages.push_back(newMsg);
+        }
+        
+        vector<int> toDelete;
+        for(int i = 0; i < pendingMessages.size(); i++) {
+            string addr = pendingMessages[i].msg.getAddress();
             std::map<string,DTOscMap* >::iterator it;
-            
-            it = oscMap->find(m.getAddress());
-            
-            if(it!=oscMap->end()){
-                for (int j = 0; j < m.getNumArgs() && j < it->second->paramId.size(); ++j) {
+            it = oscMap->find(addr);
+            if(it!=oscMap->end()) {
+                if(pendingMessages[i].port == port){
                     
-                    Param* p        = new Param();
-//                    p->inputMax     = it->second->inputMaxValue[j];
-//                    p->inputMin     = it->second->inputMinValue[j];
-                    p->inputMax     = max;
-                    p->inputMin     = min;
-                    p->imageInputId = it->second->nodeId[j];
-                    p->name         = it->second->paramId[j];
-                    p->value        = m.getArgAsFloat(j) ? m.getArgAsFloat(j) : m.getArgAsInt32(j);
-                    p->floatVal     = ofMap(p->value, min, max, it->second->paramMinValue[j], it->second->paramMaxValue[j]);
-                    p->intVal       = ofMap(p->value, min, max, it->second->paramMinValue[j], it->second->paramMaxValue[j]);
-                    storeMessage(p);
+                    for (int j = 0; j < pendingMessages[i].msg.getNumArgs() && j < it->second->paramId.size(); ++j) {
+                        Param* p        = new Param();
+                        //                    p->inputMax     = it->second->inputMaxValue[j];
+                        //                    p->inputMin     = it->second->inputMinValue[j];
+                        p->inputMax     = max;
+                        p->inputMin     = min;
+                        p->imageInputId = it->second->nodeId[j];
+                        p->name         = it->second->paramId[j];
+                        p->value        = pendingMessages[i].msg.getArgAsFloat(j) ? pendingMessages[i].msg.getArgAsFloat(j) : pendingMessages[i].msg.getArgAsInt32(j);
+                        p->floatVal     = ofMap(p->value, min, max, it->second->paramMinValue[j], it->second->paramMaxValue[j]);
+                        p->intVal       = ofMap(p->value, min, max, it->second->paramMinValue[j], it->second->paramMaxValue[j]);
+                        storeMessage(p);
+                    }
+                    
+                    toDelete.push_back(i);
                 }
             }
+        }
+        for(int j = 0; j<toDelete.size(); j++){
+            pendingMessages.erase(pendingMessages.begin() + toDelete[j]);
         }
         unlock();
     }
 }
+    
+            // get the next message
+//            ofxOscMessage m;
+//            receiver.getNextMessage(&m);
+//            
+//            std::map<string,DTOscMap* >::iterator it;
+//            
+////            it = oscMap->find(m.getAddress());
+//            string addr = receiver.readNextMessageAddress();
+//            std::map<string,DTOscMap* >::iterator it;
+//            it = oscMap->find(addr);
+        
+//            for(int k=0; k < addressListening.size(); k++){
+////                cout << addressListening.at(k) << endl;
+//                if(addressListening.at(k) == addr){
+////                    cout << "hay otro escuchando !!! " << endl;
+//                    someoneListening = true;
+//                }
+//            }
+//            cout << "hilo " << this->getThreadId() << endl;
+//            if(it!=oscMap->end() || !someoneListening){
+//                // get the next message
+//                
+//                if(it!=oscMap->end()){
+//                    for (int j = 0; j < m.getNumArgs() && j < it->second->paramId.size(); ++j) {
+//                        
+//                        Param* p        = new Param();
+//                        //                    p->inputMax     = it->second->inputMaxValue[j];
+//                        //                    p->inputMin     = it->second->inputMinValue[j];
+//                        p->inputMax     = max;
+//                        p->inputMin     = min;
+//                        p->imageInputId = it->second->nodeId[j];
+//                        p->name         = it->second->paramId[j];
+//                        p->value        = m.getArgAsFloat(j) ? m.getArgAsFloat(j) : m.getArgAsInt32(j);
+//                        p->floatVal     = ofMap(p->value, min, max, it->second->paramMinValue[j], it->second->paramMaxValue[j]);
+//                        p->intVal       = ofMap(p->value, min, max, it->second->paramMinValue[j], it->second->paramMaxValue[j]);
+//                        storeMessage(p);
+//                    }
+//                }
+//            }
+//        }
+    
+//        this->yield();
+//}
 
 //------------------------------------------------------------------
 void OscInputGenerator::setPort(int port_) {
@@ -77,6 +136,7 @@ void OscInputGenerator::setAddress(string oldAddress_, string address_) {
     if (it != oscMap->end()) {
         oscMap->insert(std::pair<string,DTOscMap* >(address_,it->second));
         oscMap->erase(it);
+        pushListeningAddress(oldAddress_, address_);
     }
 }
 
@@ -117,6 +177,7 @@ bool OscInputGenerator::addNewOSCMap(string address_, ImageOutput* node_, vector
             dtM->paramMaxValue.push_back(node_->getMidiMax(params_[i]));
         }
         oscMap->insert(std::pair<string,DTOscMap* >(address_,dtM));
+        pushListeningAddress(address_, address_);
     }
 }
 
@@ -144,6 +205,7 @@ bool OscInputGenerator::addNewOSCMap(string address_, ImageOutput* node_, string
         dtM->paramMaxValue.push_back(node_->getMidiMax(param_));
         
         oscMap->insert(std::pair<string,DTOscMap* >(address_,dtM));
+        pushListeningAddress(address_, address_);
     }
 }
 
@@ -239,6 +301,7 @@ bool OscInputGenerator::loadSettings(ofxXmlSettings &XML, int nodesCount_) {
             dtM->paramMaxValue.push_back(paramMaxValue);
             
             oscMap->insert(std::pair<string,DTOscMap* >(address,dtM));
+            pushListeningAddress(address, address);
         }
         XML.popTag();
     }
@@ -342,3 +405,22 @@ bool OscInputGenerator::saveSettingsToSnippet(ofxXmlSettings &XML, map<int,int> 
     return saved;
 }
 
+
+//------------------------------------------------------------------
+void OscInputGenerator::pushListeningAddress(string oldAddress_, string newAddress_) {
+    if(lock()){
+        int i = 0;
+        bool found = false;
+        for(i; i < addressListening.size(); i++){
+            if(addressListening.at(i) == oldAddress_){
+                found = true;
+                break;
+            }
+        }
+        if(found){
+            addressListening.erase(addressListening.begin()+i);
+        }
+        addressListening.push_back(newAddress_);
+    }
+    unlock();
+}

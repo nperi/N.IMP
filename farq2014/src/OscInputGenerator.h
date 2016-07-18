@@ -17,11 +17,17 @@
 #include "ImageOutput.h"
 #include <stdlib.h>
 
+class DTOscPortMap {
+    
+public:
+    int port;
+    ofxOscMessage msg;
+};
+
 class OscInputGenerator : public ParamInputGenerator{
 	
   public:
-	
-	OscInputGenerator(string name_, int nodeID_);
+    OscInputGenerator(string name_, int nodeID_);
     ~OscInputGenerator();
 	
     void processInput();
@@ -46,6 +52,8 @@ private:
     int port, min, max;
     ofxOscReceiver receiver;
     int nodeID;
+    
+    void pushListeningAddress(string oldAddress_, string newAddress_);
 	
 };
 
