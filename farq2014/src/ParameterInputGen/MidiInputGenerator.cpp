@@ -30,7 +30,8 @@ void MidiInputGenerator::processInput(){
 //------------------------------------------------------------------
 void MidiInputGenerator::setMidiIn(ofxMidiIn* midiIn_) {
     
-    midiIn = midiIn_;
+//    midiIn = midiIn_;
+    midiIn = new ofxMidiIn();
     
     midiIn->openPort(midiDeviceName);
     midiIn->ignoreTypes(false, false, false);
@@ -43,34 +44,36 @@ void MidiInputGenerator::newMidiMessage(ofxMidiMessage& msg){
     
     midiMessage = msg;
     
-    if (midiLearnActive) {
-        Param* p       = new Param();
-        p->midiControl = msg.control;
-        storeMessage(p);
-    }
-    else if (midiControlMaps[msg.control].size() > 0) {
-        for(int i = 0; i < midiControlMaps[msg.control].size(); i++){
-            Param* p        = new Param();
-            p->inputMax     = 127;
-            p->inputMin     = 0;
-            p->imageInputId = midiControlMaps[msg.control].at(i)->nodeId;
-            p->name         = midiControlMaps[msg.control].at(i)->paramId;
-            p->value        = msg.value;
-            p->midiControl  = msg.control;
-            p->intVal       = ofMap(msg.value,
-                                    midiControlMaps[msg.control].at(i)->inputMinValue,
-                                    midiControlMaps[msg.control].at(i)->inputMaxValue,
-                                    midiControlMaps[msg.control].at(i)->paramMinValue,
-                                    midiControlMaps[msg.control].at(i)->paramMaxValue);
-
-            p->floatVal     = ofMap(msg.value,
-                                    midiControlMaps[msg.control].at(i)->inputMinValue,
-                                    midiControlMaps[msg.control].at(i)->inputMaxValue,
-                                    midiControlMaps[msg.control].at(i)->paramMinValue,
-                                    midiControlMaps[msg.control].at(i)->paramMaxValue);
-
-            // since this is unthreaded, then i dont need to lock and unlock
+    if (msg.portName == this->midiDeviceName) {
+        if (midiLearnActive) {
+            Param* p       = new Param();
+            p->midiControl = msg.control;
             storeMessage(p);
+        }
+        else if (midiControlMaps[msg.control].size() > 0) {
+            for(int i = 0; i < midiControlMaps[msg.control].size(); i++){
+                Param* p        = new Param();
+                p->inputMax     = 127;
+                p->inputMin     = 0;
+                p->imageInputId = midiControlMaps[msg.control].at(i)->nodeId;
+                p->name         = midiControlMaps[msg.control].at(i)->paramId;
+                p->value        = msg.value;
+                p->midiControl  = msg.control;
+                p->intVal       = ofMap(msg.value,
+                                        midiControlMaps[msg.control].at(i)->inputMinValue,
+                                        midiControlMaps[msg.control].at(i)->inputMaxValue,
+                                        midiControlMaps[msg.control].at(i)->paramMinValue,
+                                        midiControlMaps[msg.control].at(i)->paramMaxValue);
+
+                p->floatVal     = ofMap(msg.value,
+                                        midiControlMaps[msg.control].at(i)->inputMinValue,
+                                        midiControlMaps[msg.control].at(i)->inputMaxValue,
+                                        midiControlMaps[msg.control].at(i)->paramMinValue,
+                                        midiControlMaps[msg.control].at(i)->paramMaxValue);
+
+                // since this is unthreaded, then i dont need to lock and unlock
+                storeMessage(p);
+            }
         }
     }
 }
