@@ -49,8 +49,8 @@ void MixSimpleBlend::setup() {
         width  = input[selector1]->getWidth();
         height = input[selector1]->getHeight();
 
-        fbo.allocate(width, height);
-        psBlend.setup(width, height);
+        fbo.allocate(1920, 1080);
+        psBlend.setup(1920, 1080);
     }
 }
 
@@ -69,17 +69,17 @@ void MixSimpleBlend::update(){
                 
                 if (opacity < 255) {
                     ofSetColor(255, 255, 255);
-                    input[selector1]->getTextureReference().draw(0, 0, width, height);
+                    input[selector1]->getTextureReference().draw(0, 0, 1920, 1080);
                 }
                 if (opacity > 0) {
                     ofSetColor(255, 255, 255,opacity);
-                    input[selector2]->getTextureReference().draw(0, 0, width, height);
+                    input[selector2]->getTextureReference().draw(0, 0, 1920, 1080);
                 }
             }
             else{
                 psBlend.begin();
                 ofSetColor(255, 255, 255,opacity);
-                input[selector2]->getTextureReference().draw(0, 0, width, height);
+                input[selector2]->getTextureReference().draw(0, 0, 1920, 1080);
                 psBlend.end();
                 psBlend.draw(input[selector1]->getTextureReference(), blendMode);
             }
@@ -90,7 +90,7 @@ void MixSimpleBlend::update(){
         else {
             fbo.begin();
             ofSetColor(255);
-            input[selector1]->getTextureReference().draw(0, 0, width, height);
+            input[selector1]->getTextureReference().draw(0, 0, 1920, 1080);
             fbo.end();
         }
         ofPopStyle();

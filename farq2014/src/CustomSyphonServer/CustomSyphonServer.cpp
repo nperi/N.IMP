@@ -56,7 +56,7 @@ void CustomSyphonServer::setup(){
 void CustomSyphonServer::update(){
     if(!drawNoInputs){
         ofPushStyle();
-        server.publishTexture(&fbo.getTextureReference());
+        server.publishTexture(&feeder->getTextureReference());
         
         fbo.begin();
         ofSetColor(255);
