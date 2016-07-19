@@ -911,6 +911,7 @@ void ofApp::menuEvent(ofxUIEventArgs &e) {
             midiLearnActive = !midiLearnActive;
             nodeViewers[currentViewer]->setMidiLearnActive(midiLearnActive);
             
+            int i = 0;
             for (int i = 0; i < inputGenerators.size(); i++) {
                 if(inputGenerators[i]->getParamInputType() == MIDI) {
                     ((MidiInputGenerator*)inputGenerators[i])->setMidiLearnActive(midiLearnActive);
@@ -1323,8 +1324,7 @@ void ofApp::editAudioIn(AudioInEvent &edit_){
         
         for (int i = 0; i < inputGenerators.size(); i++) {
             if (inputGenerators[i]->getParamInputType() == MIDI) {
-                ((MidiInputGenerator*)inputGenerators[i])->setMidiLearnActive(false);
-            }
+            ((MidiInputGenerator*)inputGenerators[i])->setMidiLearnActive(false);
         }
     }
     
