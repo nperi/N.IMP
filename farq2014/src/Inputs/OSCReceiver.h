@@ -35,6 +35,8 @@ public:
     int         getPort(){ return port; };
     string      getAddress(){ return oldAddress; };
     bool        getEditInputsActive() { return editOSC; };
+    int         getOSCMin() { return min; };
+    int         getOscMax() { return max; };
     
     void        setPort(int p);
     void        addParameter(int nodeId_, string paramName_);
@@ -77,7 +79,7 @@ private:
     ofParameterGroup paramsGroup;
     vector<OSCParam> paramsLabels;
 
-    int port, min, max;
+    int port, oldPort, min, max;
     string oldAddress;
     ofImage oscReceiverImg;
     bool disabledEdit;

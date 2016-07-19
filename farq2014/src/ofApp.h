@@ -94,6 +94,7 @@ public:
     void editOSCMinMaxValues(OSCEvent &e_);
     void editOSCInputs(ofxOSCGuiEvent &e_);
     void editOSCInputsActive(OSCEvent &e_);
+    ImageOutput* findOSCNodeForAddress(string address);
     bool loadFromXML();
     bool saveToXML();
     string loadNodes(ofxXmlSettings &XML);
@@ -196,5 +197,5 @@ public:
     
     // OSC
     bool editOSCActive;
-    map<int, OscInputGenerator*>* oscInputGeneratorPortMap;
+    map<int, OscInputGenerator*> oscInputGeneratorPortMap;
 };

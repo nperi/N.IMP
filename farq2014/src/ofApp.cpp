@@ -179,7 +179,7 @@ void ofApp::setup() {
     setupAudio();
     
     //*** OSC SETUP ***//
-    oscInputGeneratorPortMap = new map<int, OscInputGenerator*>();
+//    oscInputGeneratorPortMap = new map<int, OscInputGenerator*>();
 
 }
 
@@ -244,26 +244,42 @@ void ofApp::setSelectedForOSC(){
     std::map<string, DTOscMap*>* om;
     std::map<int, ImageOutput*>::iterator node_;
     
-    for (int i = 0; i < inputGenerators.size(); i++){
-
-        if (inputGenerators[i]->getParamInputType() == OSC) {
+    for(map<int,OscInputGenerator*>::iterator it = oscInputGeneratorPortMap.begin(); it != oscInputGeneratorPortMap.end(); it++ ){
             
-            om = ((OscInputGenerator*)inputGenerators[i])->oscMap;
-            oscNode = (OSCReceiver*)nodes.find(((OscInputGenerator*)inputGenerators[i])->getNodeID())->second;
+            om = it->second->oscMap;
             
             for (std::map<string,DTOscMap* >::iterator it = om->begin(); it != om->end(); it++) {
-                for (int j = 0; j < it->second->nodeId.size(); j++) {
-                    
-                    node_ = nodes.find(it->second->nodeId[j]);
-                    if (node_ != nodes.end()) {
-                        node_->second->setAttributesForOSC(it->second->paramId[j], oscNode->getId());
+                
+                oscNode = (OSCReceiver*)findOSCNodeForAddress(it->first);
+                if (oscNode != NULL) {
+                
+                    for (int j = 0; j < it->second->nodeId.size(); j++) {
+                        
+                        node_ = nodes.find(it->second->nodeId[j]);
+                        if (node_ != nodes.end()) {
+                            node_->second->setAttributesForOSC(it->second->paramId[j], oscNode->getId());
+                        }
                     }
                 }
             }
             
-            listenToOSCEvents(oscNode, true);
+        listenToOSCEvents(oscNode, true);
+    }
+}
+
+
+//------------------------------------------------------------------
+ImageOutput* ofApp::findOSCNodeForAddress(string address) {
+    
+    for(map<int,ImageOutput*>::iterator it = nodes.begin(); it != nodes.end(); it++ ){
+        if (it->second->getTypeName() == "OSC Receiver") {
+            if (((OSCReceiver*)it->second)->getAddress() == address) {
+                return it->second;
+            }
         }
     }
+    
+    return NULL;
 }
 
 //------------------------------------------------------------------
@@ -1132,12 +1148,26 @@ void ofApp::createNode(textInputEvent &args){
             listenToAudioInEvents((AudioIn*)newPatch, true);
         }
         else if (newPatch->getIsOSCReceiver()) {
-            OscInputGenerator* oscI = new OscInputGenerator(newPatch->getName(), newPatch->getId());
-            inputGenerators.push_back(oscI);
-            oscI->setup();
-            oscI->start();
             
-            listenToOSCEvents((OSCReceiver*)newPatch, true);
+            // search for OSC Input Generator with port 6666
+            std::map<int, OscInputGenerator*>::iterator it;
+            it = oscInputGeneratorPortMap.find(6666);
+            
+            if (it != oscInputGeneratorPortMap.end()) {
+                it->second->oscReceiverIn();
+            }
+            // create new OSC Input Generator with port 6666
+            else {
+                OscInputGenerator* oscI = new OscInputGenerator("");
+                newOSCInput->setPort(6666);
+            
+                inputGenerators.push_back(oscI);
+                oscInputGeneratorPortMap.insert(std::pair<int,OscInputGenerator*>(6666,oscI));
+                oscI->setup();
+                oscI->start();
+                
+                listenToOSCEvents((OSCReceiver*)newPatch, true);
+            }
         }
     }
     if (args.widget != NULL) {
@@ -1155,20 +1185,37 @@ void ofApp::initNode(ofxPatch* node) {
     node->setLinkType(nodeViewers[currentViewer]->getLinkType());
     ofAddListener( node->title->close , this, &ofApp::closePatch);
     
-    std::map<int, ImageOutput*>::iterator oscNode_;
+    ofAddListener(((ImageOutput*)node)->editOSCInputs , this, &ofApp::editOSCInputs);
     
-    for (int i = 0; i < inputGenerators.size(); ++i) {
-        ParamInputGenerator* p = inputGenerators[i];
-        if ((p->getParamInputType() == OSC)) {
-            oscNode_ = nodes.find(((OscInputGenerator*)p)->getNodeID());
-            
-            if (oscNode_ != nodes.end()) {
-                ofAddListener(((ImageOutput*)node)->editOSCInputs , this, &ofApp::editOSCInputs);
-            }
-        }
-    }
+//    ImageOutput* oscNode_;
+//    
+//    for(map<int,OscInputGenerator*>::iterator it = oscInputGeneratorPortMap.begin(); it != oscInputGeneratorPortMap.end(); it++ ){
+//        
+//        for (std::map<string,DTOscMap* >::iterator it2 = it->second->oscMap->begin(); it2 != it->second->oscMap->end(); it2++) {
+//            
+//            oscNode_ = (OSCReceiver*)findOSCNodeForAddress(it2->first);
+//            if (oscNode_ != NULL) {
+//                ofAddListener(((ImageOutput*)node)->editOSCInputs , this, &ofApp::editOSCInputs);
+//            }
+//        }
+//    }
+    
+    
+//    std::map<int, ImageOutput*>::iterator oscNode_;
+//    
+//    for (int i = 0; i < inputGenerators.size(); ++i) {
+//        ParamInputGenerator* p = inputGenerators[i];
+//        if ((p->getParamInputType() == OSC)) {
+//            oscNode_ = nodes.find(((OscInputGenerator*)p)->getNodeID());
+//            
+//            if (oscNode_ != nodes.end()) {
+//                ofAddListener(((ImageOutput*)node)->editOSCInputs , this, &ofApp::editOSCInputs);
+//            }
+//        }
+//    }
 }
 
+//------------------------------------------------------------------
 void ofApp::initAudioAnalizer() {
     
     audioAnalizer = new AudioAnalizer();
@@ -1205,9 +1252,19 @@ void ofApp::closePatch(int &_nID) {
                 listenToAudioInEvents((AudioIn*)nodeToDelete, false);
             }
             
+            if (nodeToDelete->getIsOSCReceiver()) {
+                std::map<int, OscInputGenerator*>::iterator it = oscInputGeneratorPortMap.find(((OSCReceiver*)nodeToDelete)->getPort());
+                
+                if (it != oscInputGeneratorPortMap.end()) {
+                    // remove osc mappungs for node to delete
+                    it->second->getOSCMapForAddress(((OSCReceiver*)nodeToDelete)->getAddress());
+                }
+            }
+            
             while (i < inputGenerators.size()) {
-                if ((inputGenerators[i]->getParamInputType() == FFT && ((AudioListenerInput*)inputGenerators[i])->getNodeID() == _nID)
-                    || (inputGenerators[i]->getParamInputType() == OSC && ((OscInputGenerator*)inputGenerators[i])->getNodeID() == _nID)) {
+                
+                if (inputGenerators[i]->getParamInputType() == FFT && ((AudioListenerInput*)inputGenerators[i])->getNodeID() == _nID) {
+//                    || (inputGenerators[i]->getParamInputType() == OSC && ((OscInputGenerator*)inputGenerators[i])->getNodeID() == _nID)) {
                     
                     delete inputGenerators[i];
                     inputGenerators.erase(inputGenerators.begin() + i);
@@ -1219,16 +1276,16 @@ void ofApp::closePatch(int &_nID) {
         // delete params from input generators
         //
         else {
-            std::map<int, ImageOutput*>::iterator oscNode_;
+            ImageOutput* oscNode;
             
-            for(int i = 0; i < inputGenerators.size(); i++) {
-                inputGenerators[i]->removeNodeFromParams(_nID);
+            for(map<int,OscInputGenerator*>::iterator it = oscInputGeneratorPortMap.begin(); it != oscInputGeneratorPortMap.end(); it++ ){
                 
-                if(inputGenerators[i]->getParamInputType() == OSC) {
-                    oscNode_ = nodes.find(((OscInputGenerator*)inputGenerators[i])->getNodeID());
+                for (std::map<string,DTOscMap* >::iterator it2 = it->second->oscMap->begin(); it2 != it->second->oscMap->end(); it2++) {
                     
-                    if (oscNode_ != nodes.end()) {
-                        ((OSCReceiver*)oscNode_->second)->removeNodeParams(_nID);
+                    oscNode = (OSCReceiver*)findOSCNodeForAddress(it2->first);
+                    if (oscNode != NULL) {
+
+                        ((OSCReceiver*)oscNode)->removeNodeParams(_nID);
                         ofRemoveListener(nodeToDelete->editOSCInputs , this, &ofApp::editOSCInputs);
                     }
                 }
@@ -1327,7 +1384,8 @@ void ofApp::editAudioIn(AudioInEvent &edit_){
         
         for (int i = 0; i < inputGenerators.size(); i++) {
             if (inputGenerators[i]->getParamInputType() == MIDI) {
-            ((MidiInputGenerator*)inputGenerators[i])->setMidiLearnActive(false);
+                ((MidiInputGenerator*)inputGenerators[i])->setMidiLearnActive(false);
+            }
         }
     }
     
@@ -1430,38 +1488,62 @@ void ofApp::listenToAudioInEvents(AudioIn* audio, bool listen) {
 
 //------------------------------------------------------------------
 void ofApp::editOSCPort(OSCEvent &e_) {
-    bool otherListeningSamePort, portChanged = false;
-    int  otherListeningSamePortId = -1;
-    for(int i=0; i < inputGenerators.size(); i++){
-        ParamInputGenerator* p = inputGenerators[i];
-        if (p->getParamInputType() == OSC){
-            if(e_.port != 0 && e_.port == ((OscInputGenerator*)p)->getPort() &&  e_.nodeId != ((OscInputGenerator*)p)->getNodeID()) {
-                otherListeningSamePort = true;
-                otherListeningSamePortId = ((OscInputGenerator*)p)->getNodeID();
+    
+    // search for OSC Input Generator with old port
+    std::map<int, OscInputGenerator*>::iterator it;
+    it = oscInputGeneratorPortMap.find(e_.oldPort);
+    
+    if (it != oscInputGeneratorPortMap.end()) {
+        
+        // change address
+        if (e_.oldAddress != e_.address) {
+            it->second->setAddress(e_.oldAddress, e_.address);
+        }
+        // change port
+        else if (e_.oldPort != e_.port) {
+            
+            DTOscMap* oscmap = NULL;
+            
+            // removing osc mappings from old port
+            if (it != oscInputGeneratorPortMap.end()) {
+                oscmap = it->second->getOSCMapForAddress(e_.address);
+                
+                if (it->second->getNumberOSCReceiver() == 0) {
+                    
+                }
             }
-            if(e_.port != 0 && ((OscInputGenerator*)p)->getNodeID() == e_.nodeId){
-                ((OscInputGenerator*)p)->setPort(e_.port);
-                portChanged = true;
+            
+            // add osc mappings to new port
+            it = oscInputGeneratorPortMap.find(e_.port);
+            if (it != oscInputGeneratorPortMap.end() && oscmap != NULL) {
+                it->second->addOSCMapForAddress(e_.address, oscmap);
             }
-            if (e_.oldAddress != e_.address) {
-                ((OscInputGenerator*)p)->setAddress(e_.oldAddress, e_.address);
+            // create new OSC Input Generator
+            else {
+                OscInputGenerator* newOSCInput = new OscInputGenerator("");
+                newOSCInput->setPort(6666);
+                
+                if (oscmap != NULL) {
+                    newOSCInput->oscMap->insert(std::pair<string,DTOscMap* >(e_.address,oscmap));
+                }
+                oscInputGeneratorPortMap.insert(std::pair<int,OscInputGenerator*>(6666,newOSCInput));
+                inputGenerators.push_back(newOSCInput);
+                newOSCInput->setup();
+                newOSCInput->start();
             }
         }
     }
-    
-    // borrar el anterior concatenando al original el oscMap
-    
 }
 
 //------------------------------------------------------------------
 void ofApp::editOSCMinMaxValues(OSCEvent &e_) {
     
-    for (int i = 0; i < inputGenerators.size(); ++i) {
-        ParamInputGenerator* p = inputGenerators[i];
-        if (p->getParamInputType() == OSC && ((OscInputGenerator*)p)->getNodeID() == e_.nodeId) {
-            ((OscInputGenerator*)p)->setMin(e_.min);
-            ((OscInputGenerator*)p)->setMax(e_.max);
-        }
+    std::map<int, OscInputGenerator*>::iterator it;
+    it = oscInputGeneratorPortMap.find(e_.port);
+    
+    if (it != oscInputGeneratorPortMap.end()) {
+        it->second->setMin(e_.address, e_.min);
+        it->second->setMax(e_.address, e_.max);
     }
 }
 
@@ -1476,31 +1558,64 @@ void ofApp::editOSCInputsActive(OSCEvent &edit_) {
 void ofApp::editOSCInputs(ofxOSCGuiEvent &event_) {
 
     if (editOSCActive){
-        for (int i = 0; i < inputGenerators.size(); ++i) {
-            ParamInputGenerator* p = inputGenerators[i];
-            if ((p->getParamInputType() == OSC) &&  (((OscInputGenerator*)p)->getNodeID() == event_.oscNodeId)) {
-                std::map<int, ImageOutput*>::iterator oscNode_;
-                oscNode_ = nodes.find(event_.oscNodeId);
-
-                if (oscNode_ != nodes.end()) {
-                    
-                    std::map<int, ImageOutput*>::iterator nodeToAdd_ = nodes.find(event_.nodeId);
-
-                    if (nodeToAdd_ != nodes.end()) {
-                        if (event_.add) {
-                            ((OscInputGenerator*)p)->addNewOSCMap(((OSCReceiver*)oscNode_->second)->getAddress(), nodeToAdd_->second, event_.paramName);
-                            ((OSCReceiver*)oscNode_->second)->addParameter(nodeToAdd_->second->getId(), event_.paramName);
-                        }
-                        else {
-                            ((OscInputGenerator*)p)->removeOSCMap(((OSCReceiver*)oscNode_->second)->getAddress(), nodeToAdd_->second, event_.paramName);
-                            ((OSCReceiver*)oscNode_->second)->removeParameter(nodeToAdd_->second->getId(), event_.paramName);
-                        }
+        
+        std::map<int, ImageOutput*>::iterator oscNode_;
+        oscNode_ = nodes.find(event_.oscNodeId);
+        
+        if (oscNode_ != nodes.end()) {
+            
+            // get OSC Input Generator for port: event_.oscNodePort
+            std::map<int, OscInputGenerator*>::iterator it;
+            it = oscInputGeneratorPortMap.find(((OSCReceiver*)oscNode_->second)->getPort());
+            
+            if (it != oscInputGeneratorPortMap.end()) {
+                
+                std::map<int, ImageOutput*>::iterator nodeToAdd_ = nodes.find(event_.nodeId);
+                
+                if (nodeToAdd_ != nodes.end()) {
+                    if (event_.add) {
+                        it->second->addNewOSCMap(((OSCReceiver*)oscNode_->second)->getOSCMin(), ((OSCReceiver*)oscNode_->second)->getOscMax(),
+                                                 ((OSCReceiver*)oscNode_->second)->getAddress(), nodeToAdd_->second, event_.paramName);
+                        ((OSCReceiver*)oscNode_->second)->addParameter(nodeToAdd_->second->getId(), event_.paramName);
+                    }
+                    else {
+                        it->second->removeOSCMap(((OSCReceiver*)oscNode_->second)->getAddress(), nodeToAdd_->second, event_.paramName);
+                        ((OSCReceiver*)oscNode_->second)->removeParameter(nodeToAdd_->second->getId(), event_.paramName);
                     }
                 }
             }
         }
     }
 }
+
+//ofApp::editOSCInputs(ofxOSCGuiEvent &event_) {
+//    
+//    if (editOSCActive){
+//        for (int i = 0; i < inputGenerators.size(); ++i) {
+//            ParamInputGenerator* p = inputGenerators[i];
+//            if ((p->getParamInputType() == OSC) &&  (((OscInputGenerator*)p)->getNodeID() == event_.oscNodeId)) {
+//                std::map<int, ImageOutput*>::iterator oscNode_;
+//                oscNode_ = nodes.find(event_.oscNodeId);
+//                
+//                if (oscNode_ != nodes.end()) {
+//                    
+//                    std::map<int, ImageOutput*>::iterator nodeToAdd_ = nodes.find(event_.nodeId);
+//                    
+//                    if (nodeToAdd_ != nodes.end()) {
+//                        if (event_.add) {
+//                            ((OscInputGenerator*)p)->addNewOSCMap(((OSCReceiver*)oscNode_->second)->getAddress(), nodeToAdd_->second, event_.paramName);
+//                            ((OSCReceiver*)oscNode_->second)->addParameter(nodeToAdd_->second->getId(), event_.paramName);
+//                        }
+//                        else {
+//                            ((OscInputGenerator*)p)->removeOSCMap(((OSCReceiver*)oscNode_->second)->getAddress(), nodeToAdd_->second, event_.paramName);
+//                            ((OSCReceiver*)oscNode_->second)->removeParameter(nodeToAdd_->second->getId(), event_.paramName);
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//    }
+//}
 
 //------------------------------------------------------------------
 void ofApp::consoleHeightChanged(float &ratio){
@@ -1698,7 +1813,7 @@ bool ofApp::loadFromXML(){
                                 }
                                 case OSC:
                                 {
-                                    OscInputGenerator* oI = new OscInputGenerator(inputName, nodeID);
+                                    OscInputGenerator* oI = new OscInputGenerator(inputName);
                                     oI->loadSettings(XML);
                                     
                                     inputGenerators.push_back(oI);
@@ -2759,7 +2874,7 @@ bool ofApp::loadSnippet() {
                                     }
                                     case OSC:
                                     {
-                                        OscInputGenerator* oI = new OscInputGenerator(inputName, nodeID);
+                                        OscInputGenerator* oI = new OscInputGenerator(inputName);
                                         result = oI->loadSettings(XML, nodesCount);
                                         if (result) {
                                             inputGenerators.push_back(oI);
@@ -2891,10 +3006,12 @@ bool ofApp::saveSnippet() {
                 if (((ImageOutput*)it->second)->getTypeName() == "OSC Receiver") {
                     
                     for (int i = 0; i < inputGenerators.size(); ++i) {
-                        if (inputGenerators[i]->getParamInputType() == OSC &&
-                            ((OscInputGenerator*)inputGenerators[i])->getNodeID() == ((ImageOutput*)it->second)->getId()) {
-                            
-                            oscInputs.push_back((OscInputGenerator*)audioListeners[i]);
+                        
+                        std::map<int, OscInputGenerator*>::iterator it;
+                        it = oscInputGeneratorPortMap.find(((OSCReceiver*)it->second)->getPort());
+                        
+                        if (it != oscInputGeneratorPortMap.end()) {
+                            oscInputs.push_back(it->second);
                             break;
                         }
                     }

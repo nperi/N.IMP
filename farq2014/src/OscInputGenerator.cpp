@@ -11,9 +11,10 @@
 
 
 OscInputGenerator::OscInputGenerator(string name_):ParamInputGenerator(name_, true){
-    oscMap  = new std::map<string,DTOscMap* >();
-    type    = OSC;
-    
+    oscMap              = new std::map<string,DTOscMap* >();
+    type                = OSC;
+    port                = 6666;
+    numberOSCReceiver   = 1;
 }
 
 //------------------------------------------------------------------
@@ -217,9 +218,14 @@ DTOscMap* OscInputGenerator::getOSCMapForAddress(string address_) {
         DTOscMap* ret = it->second;
         oscMap->erase(it);
     }
+    
+    // decrease 1 the counter of OSC Receivers mapped to this OSC Input Generator
+    oscReceiverLeft();
+    
     return ret;
 }
 
+//------------------------------------------------------------------
 vector<string> OscInputGenerator::getAllAddress(){
     vector<string> keys;
     for(std::map<string,DTOscMap* >::iterator it = oscMap->begin(); it != oscMap->end(); ++it) {
@@ -245,6 +251,9 @@ void OscInputGenerator::addOSCMapForAddress(string address_, DTOscMap* oscmap){
     } else {
         oscMap->insert(std::pair<string,DTOscMap* >(address_,oscmap));
     }
+    
+    // increase 1 the counter of OSC Receivers mapped to this OSC Input Generator
+    oscReceiverIn();
 }
 
 //------------------------------------------------------------------

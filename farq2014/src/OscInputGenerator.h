@@ -44,6 +44,10 @@ class OscInputGenerator : public ParamInputGenerator{
     void removeOSCMap(string address_, ImageOutput* node_, string param_);
     void clearOSCMap();
     
+    void oscReceiverIn() { numberOSCReceiver++; };
+    void oscReceiverLeft() { numberOSCReceiver--; };
+    void getNumberOSCReceiver() { return numberOSCReceiver; };
+    
     bool loadSettings(ofxXmlSettings &XML, int nodesCount_ = 0);
     bool saveSettings(ofxXmlSettings &XML);
     bool saveSettingsToSnippet(ofxXmlSettings &XML, map<int,int> newIdsMap);
@@ -53,7 +57,7 @@ class OscInputGenerator : public ParamInputGenerator{
     vector<string> getAllAddress();
     
 private:
-    int port;
+    int port, numberOSCReceiver;
     ofxOscReceiver receiver;
 	
 };
