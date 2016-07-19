@@ -177,6 +177,9 @@ void ofApp::setup() {
     //*** AUDIO SETUP ***//
     //
     setupAudio();
+    
+    //*** OSC SETUP ***//
+    oscInputGeneratorPortMap = new map<int, OscInputGenerator*>();
 
 }
 
@@ -1427,18 +1430,27 @@ void ofApp::listenToAudioInEvents(AudioIn* audio, bool listen) {
 
 //------------------------------------------------------------------
 void ofApp::editOSCPort(OSCEvent &e_) {
-    
-    for (int i = 0; i < inputGenerators.size(); ++i) {
+    bool otherListeningSamePort, portChanged = false;
+    int  otherListeningSamePortId = -1;
+    for(int i=0; i < inputGenerators.size(); i++){
         ParamInputGenerator* p = inputGenerators[i];
-        if (p->getParamInputType() == OSC && ((OscInputGenerator*)p)->getNodeID() == e_.nodeId) {
-            if (e_.port != 0) {
+        if (p->getParamInputType() == OSC){
+            if(e_.port != 0 && e_.port == ((OscInputGenerator*)p)->getPort() &&  e_.nodeId != ((OscInputGenerator*)p)->getNodeID()) {
+                otherListeningSamePort = true;
+                otherListeningSamePortId = ((OscInputGenerator*)p)->getNodeID();
+            }
+            if(e_.port != 0 && ((OscInputGenerator*)p)->getNodeID() == e_.nodeId){
                 ((OscInputGenerator*)p)->setPort(e_.port);
+                portChanged = true;
             }
             if (e_.oldAddress != e_.address) {
                 ((OscInputGenerator*)p)->setAddress(e_.oldAddress, e_.address);
             }
         }
     }
+    
+    // borrar el anterior concatenando al original el oscMap
+    
 }
 
 //------------------------------------------------------------------
