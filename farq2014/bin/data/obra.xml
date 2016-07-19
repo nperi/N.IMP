@@ -1,6 +1,6 @@
 <MAIN_SETTINGS>
     <link_type>1</link_type>
-    <total_nodes>30</total_nodes>
+    <total_nodes>51</total_nodes>
     <show_console>0</show_console>
     <SETTINGS>
         <INPUTS>
@@ -26,27 +26,27 @@
                     </point>
                 </texture>
             </NODE>
-            <NODE id="2" name="1 Big Bang" type="IMAGE_AND_VIDEO_LIST" path="" bpm="100.000000000" multiplier_divider="4" isPlaying="0" repeatSequence="1" playInLoop="0" palindrom="0" matchBPMtoSequence="0" currentSequence="0">
+            <NODE id="2" name="1 Big Bang" type="IMAGE_AND_VIDEO_LIST" path="" bpm="100.545066833" multiplier_divider="4" isPlaying="0" repeatSequence="0" playInLoop="0" palindrom="0" matchBPMtoSequence="0" currentSequence="0">
                 <ASSET name="1 bigbang_hap.mov" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/1 bigbang_hap.mov"></ASSET>
                 <type>none</type>
                 <path>none</path>
                 <visible>1</visible>
                 <texture>
                     <point>
-                        <x>34.531852722</x>
-                        <y>36.855171204</y>
+                        <x>31.531852722</x>
+                        <y>35.855171204</y>
                     </point>
                     <point>
-                        <x>178.595611572</x>
-                        <y>36.855171204</y>
+                        <x>175.595611572</x>
+                        <y>35.855171204</y>
                     </point>
                     <point>
-                        <x>178.595611572</x>
-                        <y>117.890991211</y>
+                        <x>175.595611572</x>
+                        <y>116.890991211</y>
                     </point>
                     <point>
-                        <x>34.531852722</x>
-                        <y>117.890991211</y>
+                        <x>31.531852722</x>
+                        <y>116.890991211</y>
                     </point>
                 </texture>
                 <mask>
@@ -70,107 +70,12 @@
                 <out>
                     <active>1</active>
                     <dot>
-                        <to>3</to>
+                        <to>11</to>
                     </dot>
                 </out>
             </NODE>
-            <NODE id="9" name="New Particle Generator" type="PARTICLE">
-                <type>none</type>
-                <path>none</path>
-                <visible>1</visible>
-                <texture>
-                    <point>
-                        <x>48.508544922</x>
-                        <y>137.416656494</y>
-                    </point>
-                    <point>
-                        <x>171.273971558</x>
-                        <y>137.416656494</y>
-                    </point>
-                    <point>
-                        <x>171.273971558</x>
-                        <y>219.260375977</y>
-                    </point>
-                    <point>
-                        <x>48.508544922</x>
-                        <y>219.260375977</y>
-                    </point>
-                </texture>
-                <mask>
-                    <point>
-                        <x>0.000000000</x>
-                        <y>0.000000000</y>
-                    </point>
-                    <point>
-                        <x>1.000000000</x>
-                        <y>0.000000000</y>
-                    </point>
-                    <point>
-                        <x>1.000000000</x>
-                        <y>1.000000000</y>
-                    </point>
-                    <point>
-                        <x>0.000000000</x>
-                        <y>1.000000000</y>
-                    </point>
-                </mask>
-                <out>
-                    <active>1</active>
-                    <dot>
-                        <to>5</to>
-                    </dot>
-                </out>
-            </NODE>
-            <NODE id="13" name="2 Big Bang" type="IMAGE_AND_VIDEO_LIST" path="" bpm="100.000000000" multiplier_divider="4" isPlaying="0" repeatSequence="0" playInLoop="1" palindrom="0" matchBPMtoSequence="0" currentSequence="0">
+            <NODE id="19" name="3 Evolucion" type="IMAGE_AND_VIDEO_LIST" path="" bpm="100.000000000" multiplier_divider="4" isPlaying="0" repeatSequence="0" playInLoop="0" palindrom="0" matchBPMtoSequence="1" currentSequence="93">
                 <ASSET name="2 bigbang_hap.mov" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/2 bigbang_hap.mov"></ASSET>
-                <ASSET name="3 mitosis_hap.mov" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/3 mitosis_hap.mov"></ASSET>
-                <type>none</type>
-                <path>none</path>
-                <visible>1</visible>
-                <texture>
-                    <point>
-                        <x>-46.080474854</x>
-                        <y>270.238342285</y>
-                    </point>
-                    <point>
-                        <x>98.232269287</x>
-                        <y>270.238342285</y>
-                    </point>
-                    <point>
-                        <x>98.232269287</x>
-                        <y>351.414367676</y>
-                    </point>
-                    <point>
-                        <x>-46.080474854</x>
-                        <y>351.414367676</y>
-                    </point>
-                </texture>
-                <mask>
-                    <point>
-                        <x>0.000000000</x>
-                        <y>0.000000000</y>
-                    </point>
-                    <point>
-                        <x>1.000000000</x>
-                        <y>0.000000000</y>
-                    </point>
-                    <point>
-                        <x>1.000000000</x>
-                        <y>1.000000000</y>
-                    </point>
-                    <point>
-                        <x>0.000000000</x>
-                        <y>1.000000000</y>
-                    </point>
-                </mask>
-                <out>
-                    <active>1</active>
-                    <dot>
-                        <to>20</to>
-                    </dot>
-                </out>
-            </NODE>
-            <NODE id="19" name="3 Evolucion" type="IMAGE_AND_VIDEO_LIST" path="" bpm="100.000000000" multiplier_divider="4" isPlaying="0" repeatSequence="1" playInLoop="0" palindrom="0" matchBPMtoSequence="0" currentSequence="0">
                 <ASSET name="(1) bacterias.png" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/imagenes/creación de la vida/(1) bacterias.png"></ASSET>
                 <ASSET name="(1) bacterias 2.png" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/imagenes/creación de la vida/(1) bacterias 2.png"></ASSET>
                 <ASSET name="(1) bacterias 3.png" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/imagenes/creación de la vida/(1) bacterias 3.png"></ASSET>
@@ -279,26 +184,27 @@
                 <ASSET name="41 - 1977 - chaplin.jpg" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/17 evolucion y acontecimientos/41 - 1977 - chaplin.jpg"></ASSET>
                 <ASSET name="42 - 1980 - lennon.jpg" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/17 evolucion y acontecimientos/42 - 1980 - lennon.jpg"></ASSET>
                 <ASSET name="43 - 1981 - bob-marley.jpg" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/17 evolucion y acontecimientos/43 - 1981 - bob-marley.jpg"></ASSET>
+                <ASSET name="29 - 1981-29-7 casamiento diana y carlos_hap.mov" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/29 - 1981-29-7 casamiento diana y carlos_hap.mov"></ASSET>
                 <ASSET name="44 - 1984 - steve-jobs.jpg" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/17 evolucion y acontecimientos/44 - 1984 - steve-jobs.jpg"></ASSET>
                 <type>none</type>
                 <path>none</path>
                 <visible>1</visible>
                 <texture>
                     <point>
-                        <x>312.224121094</x>
-                        <y>250.325225830</y>
+                        <x>-174.775878906</x>
+                        <y>145.805023193</y>
                     </point>
                     <point>
-                        <x>457.258850098</x>
-                        <y>250.325225830</y>
+                        <x>-29.741149902</x>
+                        <y>145.805023193</y>
                     </point>
                     <point>
-                        <x>457.258850098</x>
-                        <y>347.259826660</y>
+                        <x>-29.741149902</x>
+                        <y>227.387054443</y>
                     </point>
                     <point>
-                        <x>312.224121094</x>
-                        <y>347.259826660</y>
+                        <x>-174.775878906</x>
+                        <y>227.387054443</y>
                     </point>
                 </texture>
                 <mask>
@@ -333,23 +239,23 @@
                 <ASSET name="Minimal Composition.mp4_hap.mov" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/videos/mascaras-figuras/Minimal Composition.mp4_hap.mov"></ASSET>
                 <type>none</type>
                 <path>none</path>
-                <visible>1</visible>
+                <visible>0</visible>
                 <texture>
                     <point>
-                        <x>904.963623047</x>
-                        <y>664.509948730</y>
+                        <x>956.963623047</x>
+                        <y>777.509948730</y>
                     </point>
                     <point>
-                        <x>1067.910400391</x>
-                        <y>664.509948730</y>
+                        <x>1119.910400391</x>
+                        <y>777.509948730</y>
                     </point>
                     <point>
-                        <x>1067.910400391</x>
-                        <y>756.167907715</y>
+                        <x>1119.910400391</x>
+                        <y>869.167907715</y>
                     </point>
                     <point>
-                        <x>904.963623047</x>
-                        <y>756.167907715</y>
+                        <x>956.963623047</x>
+                        <y>869.167907715</y>
                     </point>
                 </texture>
                 <mask>
@@ -378,36 +284,37 @@
                 </out>
             </NODE>
             <NODE id="29" name="4 Acontecimientos" type="IMAGE_AND_VIDEO_LIST" path="" bpm="100.000000000" multiplier_divider="4" isPlaying="0" repeatSequence="1" playInLoop="0" palindrom="0" matchBPMtoSequence="0" currentSequence="0">
-                <ASSET name="20 - 1914-1918 primera guerra mundial (1)_hap.mov" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/20 - 1914-1918 primera guerra mundial (1)_hap.mov"></ASSET>
-                <ASSET name="21 - 1914-1918 primera guerra mundial (2)_hap.mov" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/21 - 1914-1918 primera guerra mundial (2)_hap.mov"></ASSET>
-                <ASSET name="22 - 1945 - hitler y nazis_hap.mov" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/22 - 1945 - hitler y nazis_hap.mov"></ASSET>
-                <ASSET name="23 - 1945-8 Atomic Bomb- Hiroshima and Nagasaki_short_hap.mov" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/23 - 1945-8 Atomic Bomb- Hiroshima and Nagasaki_short_hap.mov"></ASSET>
-                <ASSET name="25 - 1962 - Marilyn Monroe_hap.mov" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/25 - 1962 - Marilyn Monroe_hap.mov"></ASSET>
-                <ASSET name="27 - 1965-25-5 Ali vs Liston 1st Round Knockout_short_hap.mov" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/27 - 1965-25-5 Ali vs Liston 1st Round Knockout_short_hap.mov"></ASSET>
+                <ASSET name="20 - 1914-1918 primera guerra mundial_hap.mov" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/20 - 1914-1918 primera guerra mundial_hap.mov"></ASSET>
+                <ASSET name="21 - 1945-8 Atomic Bomb- Hiroshima and Nagasaki_hap.mov" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/21 - 1945-8 Atomic Bomb- Hiroshima and Nagasaki_hap.mov"></ASSET>
+                <ASSET name="22 - negro mahatma gandhi_hap.mov" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/22 - negro mahatma gandhi_hap.mov"></ASSET>
+                <ASSET name="23 - 1962 - Marilyn Monroe_hap.mov" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/23 - 1962 - Marilyn Monroe_hap.mov"></ASSET>
+                <ASSET name="24 - 1965-25-5 Ali vs Liston 1st Round Knockout_hap.mov" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/24 - 1965-25-5 Ali vs Liston 1st Round Knockout_hap.mov"></ASSET>
+                <ASSET name="25 - negro che guevara_hap.mov" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/25 - negro che guevara_hap.mov"></ASSET>
                 <ASSET name="26 - 1965 - Ku Klux Klan_hap.mov" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/26 - 1965 - Ku Klux Klan_hap.mov"></ASSET>
-                <ASSET name="28 - 1969-16-7 Despegue del Apolo 11_short_hap.mov" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/28 - 1969-16-7 Despegue del Apolo 11_short_hap.mov"></ASSET>
-                <ASSET name="29 - 1981-29-7 casamiento diana y carlos_hap.mov" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/29 - 1981-29-7 casamiento diana y carlos_hap.mov"></ASSET>
-                <ASSET name="30 - 1984-24-1 Steve Jobs introduces the Macintosh_short_hap.mov" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/30 - 1984-24-1 Steve Jobs introduces the Macintosh_short_hap.mov"></ASSET>
+                <ASSET name="27 - 1969-16-7 Despegue del Apolo 11_hap.mov" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/27 - 1969-16-7 Despegue del Apolo 11_hap.mov"></ASSET>
+                <ASSET name="28 - negro chaplin_hap.mov" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/28 - negro chaplin_hap.mov"></ASSET>
+                <ASSET name="29 - negro casamiento diana_hap.mov" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/29 - negro casamiento diana_hap.mov"></ASSET>
+                <ASSET name="30 - 1984-24-1 Steve Jobs introduces the Macintosh_hap.mov" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/30 - 1984-24-1 Steve Jobs introduces the Macintosh_hap.mov"></ASSET>
                 <ASSET name="31 - 1989-9-11 La caída del Muro de Berlín_hap.mov" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/31 - 1989-9-11 La caída del Muro de Berlín_hap.mov"></ASSET>
                 <type>none</type>
                 <path>none</path>
                 <visible>1</visible>
                 <texture>
                     <point>
-                        <x>107.755699158</x>
-                        <y>644.454895020</y>
+                        <x>-209.367004395</x>
+                        <y>523.077209473</y>
                     </point>
                     <point>
-                        <x>289.651062012</x>
-                        <y>644.454895020</y>
+                        <x>-27.471588135</x>
+                        <y>523.077209473</y>
                     </point>
                     <point>
-                        <x>289.651062012</x>
-                        <y>746.771057129</y>
+                        <x>-27.471588135</x>
+                        <y>625.393371582</y>
                     </point>
                     <point>
-                        <x>107.755699158</x>
-                        <y>746.771057129</y>
+                        <x>-209.367004395</x>
+                        <y>625.393371582</y>
                     </point>
                 </texture>
                 <mask>
@@ -438,28 +345,57 @@
                     </dot>
                 </out>
             </NODE>
-        </INPUTS>
-        <VISUAL_LAYERS>
-            <NODE id="3" name="New Glitch Layer" type="GLITCH_1" enabled="1" inputSource="2" do_CONVERGENCE="0" do_GLOW="0" do_SHAKER="0" do_CUTSLIDER="0" do_TWIST="0" do_OUTLINE="0" do_NOISE="0" do_SLITSCAN="0" do_SWELL="0" do_INVERT="0" do_CR_HIGHCONTRAST="0" do_CR_BLUERAISE="0" do_CR_REDRAISE="0" do_CR_GREENRAISE="0" do_CR_BLUEINVERT="0" do_CR_REDINVERT="0" do_CR_GREENINVERT="0">
+            <NODE id="31" name="5 Actualidad" type="IMAGE_AND_VIDEO_LIST" path="" bpm="100.000000000" multiplier_divider="4" isPlaying="0" repeatSequence="1" playInLoop="0" palindrom="0" matchBPMtoSequence="0" currentSequence="0">
+                <ASSET name="1 - 1989-9-11 La caída del Muro de Berlín 2_hap.mov" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/32 - Actualidad/1 - 1989-9-11 La caída del Muro de Berlín 2_hap.mov"></ASSET>
+                <ASSET name="2 - anochecer_hap.mov" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/32 - Actualidad/2 - anochecer_hap.mov"></ASSET>
+                <ASSET name="3 - seasons_hap.mov" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/32 - Actualidad/3 - seasons_hap.mov"></ASSET>
+                <ASSET name="4 - sagrada familia_hap.mov" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/32 - Actualidad/4 - sagrada familia_hap.mov"></ASSET>
+                <ASSET name="5 - antena_hap.mov" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/32 - Actualidad/5 - antena_hap.mov"></ASSET>
+                <ASSET name="6 - zebra_hap.mov" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/32 - Actualidad/6 - zebra_hap.mov"></ASSET>
+                <ASSET name="7 - molinos_hap.mov" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/32 - Actualidad/7 - molinos_hap.mov"></ASSET>
+                <ASSET name="8 - skydiving_hap.mov" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/32 - Actualidad/8 - skydiving_hap.mov"></ASSET>
+                <ASSET name="9 - lions_hap.mov" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/32 - Actualidad/9 - lions_hap.mov"></ASSET>
+                <ASSET name="10 - deshielo_hap.mov" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/32 - Actualidad/10 - deshielo_hap.mov"></ASSET>
+                <ASSET name="11 - tablas de surf_hap.mov" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/32 - Actualidad/11 - tablas de surf_hap.mov"></ASSET>
+                <ASSET name="12 - puertito_hap.mov" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/32 - Actualidad/12 - puertito_hap.mov"></ASSET>
+                <ASSET name="13 - crucero_hap.mov" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/32 - Actualidad/13 - crucero_hap.mov"></ASSET>
+                <ASSET name="14 - cuidad_hap.mov" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/32 - Actualidad/14 - cuidad_hap.mov"></ASSET>
+                <ASSET name="15 - tunel de tren_hap.mov" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/32 - Actualidad/15 - tunel de tren_hap.mov"></ASSET>
+                <ASSET name="16 - fuentes_hap.mov" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/32 - Actualidad/16 - fuentes_hap.mov"></ASSET>
+                <ASSET name="17 - cruce de calles_hap.mov" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/32 - Actualidad/17 - cruce de calles_hap.mov"></ASSET>
+                <ASSET name="18 - hotel Burj Al Arab_hap.mov" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/32 - Actualidad/18 - hotel Burj Al Arab_hap.mov"></ASSET>
+                <ASSET name="19 - tomorrowland_hap.mov" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/32 - Actualidad/19 - tomorrowland_hap.mov"></ASSET>
+                <ASSET name="20 - oficinas_hap.mov" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/32 - Actualidad/20 - oficinas_hap.mov"></ASSET>
+                <ASSET name="21 - programacion_hap.mov" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/32 - Actualidad/21 - programacion_hap.mov"></ASSET>
+                <ASSET name="22 - oculus rift_hap.mov" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/32 - Actualidad/22 - oculus rift_hap.mov"></ASSET>
+                <ASSET name="23 - paginas web_hap.mov" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/32 - Actualidad/23 - paginas web_hap.mov"></ASSET>
+                <ASSET name="24 - iphone_hap.mov" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/32 - Actualidad/24 - iphone_hap.mov"></ASSET>
+                <ASSET name="25 - piernas bionicas_hap.mov" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/32 - Actualidad/25 - piernas bionicas_hap.mov"></ASSET>
+                <ASSET name="26 - brazo bionico_hap.mov" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/32 - Actualidad/26 - brazo bionico_hap.mov"></ASSET>
+                <ASSET name="27 - robot_hap.mov" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/32 - Actualidad/27 - robot_hap.mov"></ASSET>
+                <ASSET name="28 - Porsche 918 Spyder_hap.mov" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/32 - Actualidad/28 - Porsche 918 Spyder_hap.mov"></ASSET>
+                <ASSET name="29 - telecomunicacion_hap.mov" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/32 - Actualidad/29 - telecomunicacion_hap.mov"></ASSET>
+                <ASSET name="30 - mujer escucha por primera vez_hap.mov" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/32 - Actualidad/30 - mujer escucha por primera vez_hap.mov"></ASSET>
+                <ASSET name="31 - bebe escucha por primera vez_hap.mov" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/32 - Actualidad/31 - bebe escucha por primera vez_hap.mov"></ASSET>
                 <type>none</type>
                 <path>none</path>
                 <visible>1</visible>
                 <texture>
                     <point>
-                        <x>394.320953369</x>
-                        <y>33.009212494</y>
+                        <x>185.345306396</x>
+                        <y>520.774108887</y>
                     </point>
                     <point>
-                        <x>538.384704590</x>
-                        <y>33.009212494</y>
+                        <x>374.659606934</x>
+                        <y>520.774108887</y>
                     </point>
                     <point>
-                        <x>538.384704590</x>
-                        <y>114.045028687</y>
+                        <x>374.659606934</x>
+                        <y>627.263427734</y>
                     </point>
                     <point>
-                        <x>394.320953369</x>
-                        <y>114.045028687</y>
+                        <x>185.345306396</x>
+                        <y>627.263427734</y>
                     </point>
                 </texture>
                 <mask>
@@ -483,30 +419,440 @@
                 <out>
                     <active>1</active>
                     <dot>
-                        <to>5</to>
+                        <to>20</to>
                     </dot>
                 </out>
             </NODE>
-            <NODE id="17" name="New Glitch Layer" type="GLITCH_1" enabled="1" inputSource="11" do_CONVERGENCE="0" do_GLOW="0" do_SHAKER="0" do_CUTSLIDER="0" do_TWIST="0" do_OUTLINE="0" do_NOISE="0" do_SLITSCAN="0" do_SWELL="0" do_INVERT="0" do_CR_HIGHCONTRAST="0" do_CR_BLUERAISE="0" do_CR_REDRAISE="0" do_CR_GREENRAISE="0" do_CR_BLUEINVERT="0" do_CR_REDINVERT="0" do_CR_GREENINVERT="0">
+            <NODE id="32" name="Final" type="IMAGE_AND_VIDEO_LIST" path="" bpm="200.000000000" multiplier_divider="4" isPlaying="0" repeatSequence="1" playInLoop="0" palindrom="0" matchBPMtoSequence="0" currentSequence="0">
+                <ASSET name="32 - final_hap.mov" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/32 - Actualidad/32 - final_hap.mov"></ASSET>
                 <type>none</type>
                 <path>none</path>
                 <visible>1</visible>
                 <texture>
                     <point>
-                        <x>1125.444458008</x>
-                        <y>218.202453613</y>
+                        <x>585.617187500</x>
+                        <y>520.728393555</y>
                     </point>
                     <point>
-                        <x>1307.339843750</x>
-                        <y>218.202453613</y>
+                        <x>737.185974121</x>
+                        <y>520.728393555</y>
                     </point>
                     <point>
-                        <x>1307.339843750</x>
-                        <y>320.518615723</y>
+                        <x>737.185974121</x>
+                        <y>605.985839844</y>
                     </point>
                     <point>
-                        <x>1125.444458008</x>
-                        <y>320.518615723</y>
+                        <x>585.617187500</x>
+                        <y>605.985839844</y>
+                    </point>
+                </texture>
+                <mask>
+                    <point>
+                        <x>0.000000000</x>
+                        <y>0.000000000</y>
+                    </point>
+                    <point>
+                        <x>1.000000000</x>
+                        <y>0.000000000</y>
+                    </point>
+                    <point>
+                        <x>1.000000000</x>
+                        <y>1.000000000</y>
+                    </point>
+                    <point>
+                        <x>0.000000000</x>
+                        <y>1.000000000</y>
+                    </point>
+                </mask>
+                <out>
+                    <active>1</active>
+                    <dot>
+                        <to>20</to>
+                    </dot>
+                </out>
+            </NODE>
+            <NODE id="34" name="New OSC Receiver" type="OSC_RECEIVER" port="26884" address="/cc/33" min="0" max="1">
+                <PARAM name="Play" nodeID="19"></PARAM>
+                <type>none</type>
+                <path>none</path>
+                <visible>1</visible>
+                <texture>
+                    <point>
+                        <x>1536.422851562</x>
+                        <y>18.457201004</y>
+                    </point>
+                    <point>
+                        <x>1630.492553711</x>
+                        <y>18.457201004</y>
+                    </point>
+                    <point>
+                        <x>1630.492553711</x>
+                        <y>89.009895325</y>
+                    </point>
+                    <point>
+                        <x>1536.422851562</x>
+                        <y>89.009895325</y>
+                    </point>
+                </texture>
+                <mask>
+                    <point>
+                        <x>0.000000000</x>
+                        <y>0.000000000</y>
+                    </point>
+                    <point>
+                        <x>1.000000000</x>
+                        <y>0.000000000</y>
+                    </point>
+                    <point>
+                        <x>1.000000000</x>
+                        <y>1.000000000</y>
+                    </point>
+                    <point>
+                        <x>0.000000000</x>
+                        <y>1.000000000</y>
+                    </point>
+                </mask>
+                <out>
+                    <active>1</active>
+                </out>
+            </NODE>
+            <NODE id="35" name="New OSC Receiver" type="OSC_RECEIVER" port="26884" address="/cc/35" min="0" max="1">
+                <PARAM name="&gt;&gt; next" nodeID="19"></PARAM>
+                <type>none</type>
+                <path>none</path>
+                <visible>1</visible>
+                <texture>
+                    <point>
+                        <x>1530.621093750</x>
+                        <y>125.435195923</y>
+                    </point>
+                    <point>
+                        <x>1624.405395508</x>
+                        <y>125.435195923</y>
+                    </point>
+                    <point>
+                        <x>1624.405395508</x>
+                        <y>195.773544312</y>
+                    </point>
+                    <point>
+                        <x>1530.621093750</x>
+                        <y>195.773544312</y>
+                    </point>
+                </texture>
+                <mask>
+                    <point>
+                        <x>0.000000000</x>
+                        <y>0.000000000</y>
+                    </point>
+                    <point>
+                        <x>1.000000000</x>
+                        <y>0.000000000</y>
+                    </point>
+                    <point>
+                        <x>1.000000000</x>
+                        <y>1.000000000</y>
+                    </point>
+                    <point>
+                        <x>0.000000000</x>
+                        <y>1.000000000</y>
+                    </point>
+                </mask>
+                <out>
+                    <active>1</active>
+                </out>
+            </NODE>
+            <NODE id="42" name="New OSC Receiver" type="OSC_RECEIVER" port="26884" address="/cc/36" min="0" max="1">
+                <PARAM name="Activate Noise" nodeID="23"></PARAM>
+                <type>none</type>
+                <path>none</path>
+                <visible>1</visible>
+                <texture>
+                    <point>
+                        <x>1649.609985352</x>
+                        <y>15.597963333</y>
+                    </point>
+                    <point>
+                        <x>1743.306274414</x>
+                        <y>15.597963333</y>
+                    </point>
+                    <point>
+                        <x>1743.306274414</x>
+                        <y>85.870063782</y>
+                    </point>
+                    <point>
+                        <x>1649.609985352</x>
+                        <y>85.870063782</y>
+                    </point>
+                </texture>
+                <mask>
+                    <point>
+                        <x>0.000000000</x>
+                        <y>0.000000000</y>
+                    </point>
+                    <point>
+                        <x>1.000000000</x>
+                        <y>0.000000000</y>
+                    </point>
+                    <point>
+                        <x>1.000000000</x>
+                        <y>1.000000000</y>
+                    </point>
+                    <point>
+                        <x>0.000000000</x>
+                        <y>1.000000000</y>
+                    </point>
+                </mask>
+                <out>
+                    <active>1</active>
+                </out>
+            </NODE>
+            <NODE id="43" name="New OSC Receiver" type="OSC_RECEIVER" port="26884" address="/cc/37" min="0" max="1">
+                <PARAM name="Activate Kaleidoscope" nodeID="23"></PARAM>
+                <type>none</type>
+                <path>none</path>
+                <visible>1</visible>
+                <texture>
+                    <point>
+                        <x>1651.167724609</x>
+                        <y>113.266242981</y>
+                    </point>
+                    <point>
+                        <x>1745.748413086</x>
+                        <y>113.266242981</y>
+                    </point>
+                    <point>
+                        <x>1745.748413086</x>
+                        <y>184.201797485</y>
+                    </point>
+                    <point>
+                        <x>1651.167724609</x>
+                        <y>184.201797485</y>
+                    </point>
+                </texture>
+                <mask>
+                    <point>
+                        <x>0.000000000</x>
+                        <y>0.000000000</y>
+                    </point>
+                    <point>
+                        <x>1.000000000</x>
+                        <y>0.000000000</y>
+                    </point>
+                    <point>
+                        <x>1.000000000</x>
+                        <y>1.000000000</y>
+                    </point>
+                    <point>
+                        <x>0.000000000</x>
+                        <y>1.000000000</y>
+                    </point>
+                </mask>
+                <out>
+                    <active>1</active>
+                </out>
+            </NODE>
+            <NODE id="48" name="New OSC Receiver" type="OSC_RECEIVER" port="26884" address="/cc/38" min="0" max="1">
+                <PARAM name="Play" nodeID="29"></PARAM>
+                <type>none</type>
+                <path>none</path>
+                <visible>1</visible>
+                <texture>
+                    <point>
+                        <x>1531.519287109</x>
+                        <y>215.124450684</y>
+                    </point>
+                    <point>
+                        <x>1629.801635742</x>
+                        <y>215.124450684</y>
+                    </point>
+                    <point>
+                        <x>1629.801635742</x>
+                        <y>288.836151123</y>
+                    </point>
+                    <point>
+                        <x>1531.519287109</x>
+                        <y>288.836151123</y>
+                    </point>
+                </texture>
+                <mask>
+                    <point>
+                        <x>0.000000000</x>
+                        <y>0.000000000</y>
+                    </point>
+                    <point>
+                        <x>1.000000000</x>
+                        <y>0.000000000</y>
+                    </point>
+                    <point>
+                        <x>1.000000000</x>
+                        <y>1.000000000</y>
+                    </point>
+                    <point>
+                        <x>0.000000000</x>
+                        <y>1.000000000</y>
+                    </point>
+                </mask>
+                <out>
+                    <active>1</active>
+                </out>
+            </NODE>
+            <NODE id="49" name="New OSC Receiver" type="OSC_RECEIVER" port="26884" address="/cc/40" min="0" max="1">
+                <PARAM name="&gt;&gt; next" nodeID="29"></PARAM>
+                <type>none</type>
+                <path>none</path>
+                <visible>1</visible>
+                <texture>
+                    <point>
+                        <x>1646.840942383</x>
+                        <y>212.162628174</y>
+                    </point>
+                    <point>
+                        <x>1745.321777344</x>
+                        <y>212.162628174</y>
+                    </point>
+                    <point>
+                        <x>1745.321777344</x>
+                        <y>286.023254395</y>
+                    </point>
+                    <point>
+                        <x>1646.840942383</x>
+                        <y>286.023254395</y>
+                    </point>
+                </texture>
+                <mask>
+                    <point>
+                        <x>0.000000000</x>
+                        <y>0.000000000</y>
+                    </point>
+                    <point>
+                        <x>1.000000000</x>
+                        <y>0.000000000</y>
+                    </point>
+                    <point>
+                        <x>1.000000000</x>
+                        <y>1.000000000</y>
+                    </point>
+                    <point>
+                        <x>0.000000000</x>
+                        <y>1.000000000</y>
+                    </point>
+                </mask>
+                <out>
+                    <active>1</active>
+                </out>
+            </NODE>
+            <NODE id="50" name="New OSC Receiver" type="OSC_RECEIVER" port="26884" address="/cc/34" min="0" max="1">
+                <PARAM name="&lt;&lt; prev" nodeID="19"></PARAM>
+                <type>none</type>
+                <path>none</path>
+                <visible>1</visible>
+                <texture>
+                    <point>
+                        <x>1765.115600586</x>
+                        <y>18.189672470</y>
+                    </point>
+                    <point>
+                        <x>1858.117065430</x>
+                        <y>18.189672470</y>
+                    </point>
+                    <point>
+                        <x>1858.117065430</x>
+                        <y>87.940750122</y>
+                    </point>
+                    <point>
+                        <x>1765.115600586</x>
+                        <y>87.940750122</y>
+                    </point>
+                </texture>
+                <mask>
+                    <point>
+                        <x>0.000000000</x>
+                        <y>0.000000000</y>
+                    </point>
+                    <point>
+                        <x>1.000000000</x>
+                        <y>0.000000000</y>
+                    </point>
+                    <point>
+                        <x>1.000000000</x>
+                        <y>1.000000000</y>
+                    </point>
+                    <point>
+                        <x>0.000000000</x>
+                        <y>1.000000000</y>
+                    </point>
+                </mask>
+                <out>
+                    <active>1</active>
+                </out>
+            </NODE>
+            <NODE id="51" name="New OSC Receiver" type="OSC_RECEIVER" port="26884" address="/cc/39" min="0" max="1">
+                <PARAM name="&lt;&lt; prev" nodeID="29"></PARAM>
+                <type>none</type>
+                <path>none</path>
+                <visible>1</visible>
+                <texture>
+                    <point>
+                        <x>1765.916259766</x>
+                        <y>113.530921936</y>
+                    </point>
+                    <point>
+                        <x>1858.427124023</x>
+                        <y>113.530921936</y>
+                    </point>
+                    <point>
+                        <x>1858.427124023</x>
+                        <y>182.914093018</y>
+                    </point>
+                    <point>
+                        <x>1765.916259766</x>
+                        <y>182.914093018</y>
+                    </point>
+                </texture>
+                <mask>
+                    <point>
+                        <x>0.000000000</x>
+                        <y>0.000000000</y>
+                    </point>
+                    <point>
+                        <x>1.000000000</x>
+                        <y>0.000000000</y>
+                    </point>
+                    <point>
+                        <x>1.000000000</x>
+                        <y>1.000000000</y>
+                    </point>
+                    <point>
+                        <x>0.000000000</x>
+                        <y>1.000000000</y>
+                    </point>
+                </mask>
+                <out>
+                    <active>1</active>
+                </out>
+            </NODE>
+        </INPUTS>
+        <VISUAL_LAYERS>
+            <NODE id="17" name="Glitcher" type="GLITCH_1" enabled="1" inputSource="11" do_CONVERGENCE="0" do_GLOW="0" do_SHAKER="0" do_CUTSLIDER="0" do_TWIST="0" do_OUTLINE="0" do_NOISE="0" do_SLITSCAN="0" do_SWELL="0" do_INVERT="0" do_CR_HIGHCONTRAST="0" do_CR_BLUERAISE="0" do_CR_REDRAISE="0" do_CR_GREENRAISE="0" do_CR_BLUEINVERT="0" do_CR_REDINVERT="0" do_CR_GREENINVERT="0">
+                <type>none</type>
+                <path>none</path>
+                <visible>1</visible>
+                <texture>
+                    <point>
+                        <x>757.444458008</x>
+                        <y>38.202453613</y>
+                    </point>
+                    <point>
+                        <x>939.339843750</x>
+                        <y>38.202453613</y>
+                    </point>
+                    <point>
+                        <x>939.339843750</x>
+                        <y>140.518615723</y>
+                    </point>
+                    <point>
+                        <x>757.444458008</x>
+                        <y>140.518615723</y>
                     </point>
                 </texture>
                 <mask>
@@ -534,26 +880,26 @@
                     </dot>
                 </out>
             </NODE>
-            <NODE id="23" name="New Image Processor" type="IMAGE_PROCESSOR" enabled="1" inputSource="17" isBloom="0" isContrast="0" coContrast="1.000000000" coBrightness="1.000000000" coMultiple="1.000000000" isKaleidoscope="0" kaSegments="2.000000000" isNoise="0" noFreq="0.430083126" noAmp="0.100000001" noSpeed="0.100000001" isEdge="0" edHue="0.405253321" edSat="0.000000000" isBleach="0" blOpacity="1.000000000" isRGBShift="0" rgAngle="0.000000000" rgAmount="0.000000000" isGod="0" isZoomBlur="0" zbCenterX="0.281254977" zbCenterY="0.301663160" zbExposure="0.487907559" zbDensity="0.250642747" zbWeight="0.250642747" zbClamp="1.000000000">
+            <NODE id="23" name="Image Processor " type="IMAGE_PROCESSOR" enabled="1" inputSource="17" isBloom="0" isContrast="0" coContrast="0.857860327" coBrightness="1.741868496" coMultiple="1.838528395" isKaleidoscope="0" kaSegments="2.000000000" isNoise="0" noFreq="0.000000000" noAmp="0.056301817" noSpeed="2.500000000" isEdge="0" edHue="0.405253321" edSat="0.000000000" isBleach="0" blOpacity="1.000000000" isRGBShift="1" rgAngle="0.000000000" rgAmount="0.000000000" isGod="0" isZoomBlur="0" zbCenterX="0.281254977" zbCenterY="0.301663160" zbExposure="0.487907559" zbDensity="0.250642747" zbWeight="0.250642747" zbClamp="1.000000000">
                 <type>none</type>
                 <path>none</path>
                 <visible>1</visible>
                 <texture>
                     <point>
-                        <x>923.895019531</x>
-                        <y>336.886199951</y>
+                        <x>1110.895019531</x>
+                        <y>38.886199951</y>
                     </point>
                     <point>
-                        <x>1105.790405273</x>
-                        <y>336.886199951</y>
+                        <x>1292.790405273</x>
+                        <y>38.886199951</y>
                     </point>
                     <point>
-                        <x>1105.790405273</x>
-                        <y>439.202362061</y>
+                        <x>1292.790405273</x>
+                        <y>141.202362061</y>
                     </point>
                     <point>
-                        <x>923.895019531</x>
-                        <y>439.202362061</y>
+                        <x>1110.895019531</x>
+                        <y>141.202362061</y>
                     </point>
                 </texture>
                 <mask>
@@ -583,77 +929,28 @@
             </NODE>
         </VISUAL_LAYERS>
         <MIXERS>
-            <NODE id="5" name="New Mix Simple Blend" type="SIMPLE_BLEND" enabled="0" selector1="0" selector2="1" blendmode="5" opacity="50.018535614">
-                <INPUT_SOURCE nodeId="3"></INPUT_SOURCE>
-                <INPUT_SOURCE nodeId="9"></INPUT_SOURCE>
-                <type>none</type>
-                <path>none</path>
-                <visible>1</visible>
-                <texture>
-                    <point>
-                        <x>744.927001953</x>
-                        <y>43.013801575</y>
-                    </point>
-                    <point>
-                        <x>870.196716309</x>
-                        <y>43.013801575</y>
-                    </point>
-                    <point>
-                        <x>870.196716309</x>
-                        <y>113.477798462</y>
-                    </point>
-                    <point>
-                        <x>744.927001953</x>
-                        <y>113.477798462</y>
-                    </point>
-                </texture>
-                <mask>
-                    <point>
-                        <x>0.000000000</x>
-                        <y>0.000000000</y>
-                    </point>
-                    <point>
-                        <x>1.000000000</x>
-                        <y>0.000000000</y>
-                    </point>
-                    <point>
-                        <x>1.000000000</x>
-                        <y>1.000000000</y>
-                    </point>
-                    <point>
-                        <x>0.000000000</x>
-                        <y>1.000000000</y>
-                    </point>
-                </mask>
-                <out>
-                    <active>1</active>
-                    <dot>
-                        <to>11</to>
-                    </dot>
-                </out>
-            </NODE>
-            <NODE id="11" name="New Mix Simple Blend" type="SIMPLE_BLEND" enabled="1" selector1="0" selector2="1" blendmode="0" opacity="255.000000000">
-                <INPUT_SOURCE nodeId="5"></INPUT_SOURCE>
+            <NODE id="11" name="Blends" type="SIMPLE_BLEND" enabled="1" selector1="0" selector2="1" blendmode="0" opacity="255.000000000">
+                <INPUT_SOURCE nodeId="2"></INPUT_SOURCE>
                 <INPUT_SOURCE nodeId="20"></INPUT_SOURCE>
                 <type>none</type>
                 <path>none</path>
                 <visible>1</visible>
                 <texture>
                     <point>
-                        <x>744.206542969</x>
-                        <y>185.637939453</y>
+                        <x>402.235534668</x>
+                        <y>35.586059570</y>
                     </point>
                     <point>
-                        <x>926.101928711</x>
-                        <y>185.637939453</y>
+                        <x>584.130920410</x>
+                        <y>35.586059570</y>
                     </point>
                     <point>
-                        <x>926.101928711</x>
-                        <y>287.954101562</y>
+                        <x>584.130920410</x>
+                        <y>137.902221680</y>
                     </point>
                     <point>
-                        <x>744.206542969</x>
-                        <y>287.954101562</y>
+                        <x>402.235534668</x>
+                        <y>137.902221680</y>
                     </point>
                 </texture>
                 <mask>
@@ -681,30 +978,31 @@
                     </dot>
                 </out>
             </NODE>
-            <NODE id="20" name="Switch Acontecimientos" type="MULTI_CHANNEL" selChannel="0" drawInputGui="0">
-                <INPUT_SOURCE nodeId="13"></INPUT_SOURCE>
+            <NODE id="20" name="Switch Acontecimientos" type="MULTI_CHANNEL" selChannel="2" drawInputGui="0">
                 <INPUT_SOURCE nodeId="19"></INPUT_SOURCE>
                 <INPUT_SOURCE nodeId="29"></INPUT_SOURCE>
                 <INPUT_SOURCE nodeId="30"></INPUT_SOURCE>
+                <INPUT_SOURCE nodeId="31"></INPUT_SOURCE>
+                <INPUT_SOURCE nodeId="32"></INPUT_SOURCE>
                 <type>none</type>
                 <path>none</path>
                 <visible>1</visible>
                 <texture>
                     <point>
-                        <x>713.757080078</x>
-                        <y>467.330810547</y>
+                        <x>404.757080078</x>
+                        <y>185.330810547</y>
                     </point>
                     <point>
-                        <x>858.069824219</x>
-                        <y>467.330810547</y>
+                        <x>586.652465820</x>
+                        <y>185.330810547</y>
                     </point>
                     <point>
-                        <x>858.069824219</x>
-                        <y>548.506835938</y>
+                        <x>586.652465820</x>
+                        <y>287.646972656</y>
                     </point>
                     <point>
-                        <x>713.757080078</x>
-                        <y>548.506835938</y>
+                        <x>404.757080078</x>
+                        <y>287.646972656</y>
                     </point>
                 </texture>
                 <mask>
@@ -732,7 +1030,7 @@
                     </dot>
                 </out>
             </NODE>
-            <NODE id="25" name="New Mix Simple Blend" type="SIMPLE_BLEND" enabled="0" selector1="0" selector2="1" blendmode="6" opacity="0.000000000">
+            <NODE id="25" name="New Mix Simple Blend" type="SIMPLE_BLEND" enabled="1" selector1="0" selector2="1" blendmode="6" opacity="0.000000000">
                 <INPUT_SOURCE nodeId="23"></INPUT_SOURCE>
                 <INPUT_SOURCE nodeId="27"></INPUT_SOURCE>
                 <type>none</type>
@@ -740,20 +1038,20 @@
                 <visible>1</visible>
                 <texture>
                     <point>
-                        <x>1281.856079102</x>
-                        <y>661.330871582</y>
+                        <x>1150.856079102</x>
+                        <y>643.330871582</y>
                     </point>
                     <point>
-                        <x>1463.185180664</x>
-                        <y>661.330871582</y>
+                        <x>1332.185180664</x>
+                        <y>643.330871582</y>
                     </point>
                     <point>
-                        <x>1463.185180664</x>
-                        <y>763.328491211</y>
+                        <x>1332.185180664</x>
+                        <y>745.328491211</y>
                     </point>
                     <point>
-                        <x>1281.856079102</x>
-                        <y>763.328491211</y>
+                        <x>1150.856079102</x>
+                        <y>745.328491211</y>
                     </point>
                 </texture>
                 <mask>
@@ -776,9 +1074,12 @@
                 </mask>
                 <out>
                     <active>1</active>
+                    <dot>
+                        <to>36</to>
+                    </dot>
                 </out>
             </NODE>
-            <NODE id="30" name="Mezcla 3 y 4" type="SIMPLE_BLEND" enabled="1" selector1="0" selector2="1" blendmode="0" opacity="96.966148376">
+            <NODE id="30" name="Mezcla 3 y 4" type="SIMPLE_BLEND" enabled="1" selector1="0" selector2="1" blendmode="0" opacity="255.000000000">
                 <INPUT_SOURCE nodeId="19"></INPUT_SOURCE>
                 <INPUT_SOURCE nodeId="29"></INPUT_SOURCE>
                 <type>none</type>
@@ -786,20 +1087,20 @@
                 <visible>1</visible>
                 <texture>
                     <point>
-                        <x>512.052795410</x>
-                        <y>638.966430664</y>
+                        <x>366.167480469</x>
+                        <y>370.920043945</y>
                     </point>
                     <point>
-                        <x>693.948120117</x>
-                        <y>638.966430664</y>
+                        <x>548.062866211</x>
+                        <y>370.920043945</y>
                     </point>
                     <point>
-                        <x>693.948120117</x>
-                        <y>741.282592773</y>
+                        <x>548.062866211</x>
+                        <y>473.236206055</y>
                     </point>
                     <point>
-                        <x>512.052795410</x>
-                        <y>741.282592773</y>
+                        <x>366.167480469</x>
+                        <y>473.236206055</y>
                     </point>
                 </texture>
                 <mask>
@@ -829,24 +1130,76 @@
             </NODE>
         </MIXERS>
         <ENCAPSULATED_NODES></ENCAPSULATED_NODES>
-        <SYPHON_SERVERS></SYPHON_SERVERS>
+        <SYPHON_SERVERS>
+            <NODE id="36" inputId="25" name="Syphon Output" aspectRatio="5">
+                <type>none</type>
+                <path>none</path>
+                <visible>1</visible>
+                <texture>
+                    <point>
+                        <x>1533.927246094</x>
+                        <y>355.400024414</y>
+                    </point>
+                    <point>
+                        <x>1715.256347656</x>
+                        <y>355.400024414</y>
+                    </point>
+                    <point>
+                        <x>1715.256347656</x>
+                        <y>457.397644043</y>
+                    </point>
+                    <point>
+                        <x>1533.927246094</x>
+                        <y>457.397644043</y>
+                    </point>
+                </texture>
+                <mask>
+                    <point>
+                        <x>0.000000000</x>
+                        <y>0.000000000</y>
+                    </point>
+                    <point>
+                        <x>1.000000000</x>
+                        <y>0.000000000</y>
+                    </point>
+                    <point>
+                        <x>1.000000000</x>
+                        <y>1.000000000</y>
+                    </point>
+                    <point>
+                        <x>0.000000000</x>
+                        <y>1.000000000</y>
+                    </point>
+                </mask>
+                <out>
+                    <active>1</active>
+                </out>
+            </NODE>
+        </SYPHON_SERVERS>
     </SETTINGS>
     <NODE_VIEWS>
         <NODE_VIEW name="obra.xml">
             <NODE id="2" name="1 Big Bang"></NODE>
-            <NODE id="3" name="New Glitch Layer"></NODE>
-            <NODE id="5" name="New Mix Simple Blend"></NODE>
-            <NODE id="9" name="New Particle Generator"></NODE>
-            <NODE id="11" name="New Mix Simple Blend"></NODE>
-            <NODE id="13" name="2 Big Bang"></NODE>
-            <NODE id="17" name="New Glitch Layer"></NODE>
+            <NODE id="11" name="Blends"></NODE>
+            <NODE id="17" name="Glitcher"></NODE>
             <NODE id="19" name="3 Evolucion"></NODE>
             <NODE id="20" name="Switch Acontecimientos"></NODE>
-            <NODE id="23" name="New Image Processor"></NODE>
+            <NODE id="23" name="Image Processor "></NODE>
             <NODE id="25" name="New Mix Simple Blend"></NODE>
             <NODE id="27" name="New Image &amp; Video List"></NODE>
             <NODE id="29" name="4 Acontecimientos"></NODE>
             <NODE id="30" name="Mezcla 3 y 4"></NODE>
+            <NODE id="31" name="5 Actualidad"></NODE>
+            <NODE id="32" name="Final"></NODE>
+            <NODE id="34" name="New OSC Receiver"></NODE>
+            <NODE id="35" name="New OSC Receiver"></NODE>
+            <NODE id="36" name="Syphon Output"></NODE>
+            <NODE id="42" name="New OSC Receiver"></NODE>
+            <NODE id="43" name="New OSC Receiver"></NODE>
+            <NODE id="48" name="New OSC Receiver"></NODE>
+            <NODE id="49" name="New OSC Receiver"></NODE>
+            <NODE id="50" name="New OSC Receiver"></NODE>
+            <NODE id="51" name="New OSC Receiver"></NODE>
         </NODE_VIEW>
     </NODE_VIEWS>
     <PARAM_INPUT_GENERATORS>
@@ -854,16 +1207,78 @@
             <MIDI_SETTINGS>
                 <MIDI_MAP midiId="1" nodeId="11" param="opacity"></MIDI_MAP>
                 <MIDI_MAP midiId="2" nodeId="17" param="BLUERAISE"></MIDI_MAP>
-                <MIDI_MAP midiId="7" nodeId="23" param="Angle"></MIDI_MAP>
-                <MIDI_MAP midiId="10" nodeId="3" param="INVERT"></MIDI_MAP>
+                <MIDI_MAP midiId="7" nodeId="17" param="INVERT"></MIDI_MAP>
+                <MIDI_MAP midiId="8" nodeId="23" param="Angle"></MIDI_MAP>
+                <MIDI_MAP midiId="10" nodeId="23" param="Amount"></MIDI_MAP>
                 <MIDI_MAP midiId="12" nodeId="17" param="REDRAISE"></MIDI_MAP>
-                <MIDI_MAP midiId="14" nodeId="23" param="Amount"></MIDI_MAP>
-                <MIDI_MAP midiId="15" nodeId="25" param="opacity"></MIDI_MAP>
                 <MIDI_MAP midiId="17" nodeId="17" param="GREENRAISE"></MIDI_MAP>
+                <MIDI_MAP midiId="91" nodeId="23" param="Frequency"></MIDI_MAP>
             </MIDI_SETTINGS>
         </INPUT_GEN>
         <INPUT_GEN name="midi" type="MIDI" midiDeviceName="Akai APC40">
-            <MIDI_SETTINGS></MIDI_SETTINGS>
+            <MIDI_SETTINGS>
+                <MIDI_MAP midiId="7" nodeId="30" param="opacity"></MIDI_MAP>
+                <MIDI_MAP midiId="16" nodeId="20" param="3 Evolucion"></MIDI_MAP>
+                <MIDI_MAP midiId="17" nodeId="20" param="4 Acontecimientos"></MIDI_MAP>
+                <MIDI_MAP midiId="20" nodeId="20" param="Mezcla 3 y 4"></MIDI_MAP>
+                <MIDI_MAP midiId="21" nodeId="20" param="5 Actualidad"></MIDI_MAP>
+            </MIDI_SETTINGS>
+        </INPUT_GEN>
+        <INPUT_GEN nodeId="34" type="OSC">
+            <OSC_SETTINGS port="26884" min="0" max="1">
+                <ADDRESS path="/cc/33">
+                    <OSC_MAP nodeId="19" param="Play" paramMinValue="0.000000000" paramMaxValue="1.000000000"></OSC_MAP>
+                </ADDRESS>
+            </OSC_SETTINGS>
+        </INPUT_GEN>
+        <INPUT_GEN nodeId="35" type="OSC">
+            <OSC_SETTINGS port="26884" min="0" max="1">
+                <ADDRESS path="/cc/35">
+                    <OSC_MAP nodeId="19" param="&gt;&gt; next" paramMinValue="0.000000000" paramMaxValue="1.000000000"></OSC_MAP>
+                </ADDRESS>
+            </OSC_SETTINGS>
+        </INPUT_GEN>
+        <INPUT_GEN nodeId="42" type="OSC">
+            <OSC_SETTINGS port="26884" min="0" max="1">
+                <ADDRESS path="/cc/36">
+                    <OSC_MAP nodeId="23" param="Activate Noise" paramMinValue="0.000000000" paramMaxValue="1.000000000"></OSC_MAP>
+                </ADDRESS>
+            </OSC_SETTINGS>
+        </INPUT_GEN>
+        <INPUT_GEN nodeId="43" type="OSC">
+            <OSC_SETTINGS port="26884" min="0" max="1">
+                <ADDRESS path="/cc/37">
+                    <OSC_MAP nodeId="23" param="Activate Kaleidoscope" paramMinValue="0.000000000" paramMaxValue="1.000000000"></OSC_MAP>
+                </ADDRESS>
+            </OSC_SETTINGS>
+        </INPUT_GEN>
+        <INPUT_GEN nodeId="48" type="OSC">
+            <OSC_SETTINGS port="26884" min="0" max="1">
+                <ADDRESS path="/cc/38">
+                    <OSC_MAP nodeId="29" param="Play" paramMinValue="0.000000000" paramMaxValue="1.000000000"></OSC_MAP>
+                </ADDRESS>
+            </OSC_SETTINGS>
+        </INPUT_GEN>
+        <INPUT_GEN nodeId="49" type="OSC">
+            <OSC_SETTINGS port="26884" min="0" max="1">
+                <ADDRESS path="/cc/40">
+                    <OSC_MAP nodeId="29" param="&gt;&gt; next" paramMinValue="0.000000000" paramMaxValue="1.000000000"></OSC_MAP>
+                </ADDRESS>
+            </OSC_SETTINGS>
+        </INPUT_GEN>
+        <INPUT_GEN nodeId="50" type="OSC">
+            <OSC_SETTINGS port="26884" min="0" max="1">
+                <ADDRESS path="/cc/34">
+                    <OSC_MAP nodeId="19" param="&lt;&lt; prev" paramMinValue="0.000000000" paramMaxValue="1.000000000"></OSC_MAP>
+                </ADDRESS>
+            </OSC_SETTINGS>
+        </INPUT_GEN>
+        <INPUT_GEN nodeId="51" type="OSC">
+            <OSC_SETTINGS port="26884" min="0" max="1">
+                <ADDRESS path="/cc/39">
+                    <OSC_MAP nodeId="29" param="&lt;&lt; prev" paramMinValue="0.000000000" paramMaxValue="1.000000000"></OSC_MAP>
+                </ADDRESS>
+            </OSC_SETTINGS>
         </INPUT_GEN>
     </PARAM_INPUT_GENERATORS>
 </MAIN_SETTINGS>
