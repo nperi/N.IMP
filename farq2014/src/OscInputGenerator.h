@@ -46,7 +46,7 @@ class OscInputGenerator : public ParamInputGenerator{
     
     void oscReceiverIn() { numberOSCReceiver++; };
     void oscReceiverLeft() { numberOSCReceiver--; };
-    void getNumberOSCReceiver() { return numberOSCReceiver; };
+    int  getNumberOSCReceiver() { return numberOSCReceiver; };
     
     bool loadSettings(ofxXmlSettings &XML, int nodesCount_ = 0);
     bool saveSettings(ofxXmlSettings &XML);

@@ -1159,7 +1159,7 @@ void ofApp::createNode(textInputEvent &args){
             // create new OSC Input Generator with port 6666
             else {
                 OscInputGenerator* oscI = new OscInputGenerator("");
-                newOSCInput->setPort(6666);
+                oscI->setPort(6666);
             
                 inputGenerators.push_back(oscI);
                 oscInputGeneratorPortMap.insert(std::pair<int,OscInputGenerator*>(6666,oscI));
@@ -1252,19 +1252,26 @@ void ofApp::closePatch(int &_nID) {
                 listenToAudioInEvents((AudioIn*)nodeToDelete, false);
             }
             
+            
+            OscInputGenerator* oscToDelete = NULL;
             if (nodeToDelete->getIsOSCReceiver()) {
                 std::map<int, OscInputGenerator*>::iterator it = oscInputGeneratorPortMap.find(((OSCReceiver*)nodeToDelete)->getPort());
                 
                 if (it != oscInputGeneratorPortMap.end()) {
-                    // remove osc mappungs for node to delete
+                    // remove osc mappings for node to delete
                     it->second->getOSCMapForAddress(((OSCReceiver*)nodeToDelete)->getAddress());
+                    
+                    if (it->second->getNumberOSCReceiver() == 0) {
+                        oscToDelete = it->second;
+                        oscInputGeneratorPortMap.erase(it);
+                    }
                 }
             }
             
             while (i < inputGenerators.size()) {
                 
-                if (inputGenerators[i]->getParamInputType() == FFT && ((AudioListenerInput*)inputGenerators[i])->getNodeID() == _nID) {
-//                    || (inputGenerators[i]->getParamInputType() == OSC && ((OscInputGenerator*)inputGenerators[i])->getNodeID() == _nID)) {
+                if ((inputGenerators[i]->getParamInputType() == FFT && ((AudioListenerInput*)inputGenerators[i])->getNodeID() == _nID)
+                    || (inputGenerators[i]->getParamInputType() == OSC && ((OscInputGenerator*)inputGenerators[i]) == oscToDelete)) {
                     
                     delete inputGenerators[i];
                     inputGenerators.erase(inputGenerators.begin() + i);
@@ -1508,8 +1515,24 @@ void ofApp::editOSCPort(OSCEvent &e_) {
             if (it != oscInputGeneratorPortMap.end()) {
                 oscmap = it->second->getOSCMapForAddress(e_.address);
                 
+                
                 if (it->second->getNumberOSCReceiver() == 0) {
                     
+                    // delete Osc Input Generator
+                    OscInputGenerator* oscToDelete = it->second;
+                    oscInputGeneratorPortMap.erase(it);
+                    
+                    int i = 0;
+                    while (i < inputGenerators.size()) {
+                        
+                        if ((inputGenerators[i]->getParamInputType() == OSC && ((OscInputGenerator*)inputGenerators[i]) == oscToDelete)) {
+                            
+                            delete inputGenerators[i];
+                            inputGenerators.erase(inputGenerators.begin() + i);
+                            i = inputGenerators.size();
+                        }
+                        i++;
+                    }
                 }
             }
             
@@ -1521,12 +1544,12 @@ void ofApp::editOSCPort(OSCEvent &e_) {
             // create new OSC Input Generator
             else {
                 OscInputGenerator* newOSCInput = new OscInputGenerator("");
-                newOSCInput->setPort(6666);
+                newOSCInput->setPort(e_.port);
                 
                 if (oscmap != NULL) {
                     newOSCInput->oscMap->insert(std::pair<string,DTOscMap* >(e_.address,oscmap));
                 }
-                oscInputGeneratorPortMap.insert(std::pair<int,OscInputGenerator*>(6666,newOSCInput));
+                oscInputGeneratorPortMap.insert(std::pair<int,OscInputGenerator*>(e_.port,newOSCInput));
                 inputGenerators.push_back(newOSCInput);
                 newOSCInput->setup();
                 newOSCInput->start();

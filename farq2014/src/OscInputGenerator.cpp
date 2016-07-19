@@ -13,13 +13,13 @@
 OscInputGenerator::OscInputGenerator(string name_):ParamInputGenerator(name_, true){
     oscMap              = new std::map<string,DTOscMap* >();
     type                = OSC;
-    port                = 6666;
     numberOSCReceiver   = 1;
 }
 
 //------------------------------------------------------------------
 OscInputGenerator::~OscInputGenerator(){
     
+    stopThread();
     oscMap->clear();
     delete oscMap;
     oscMap = NULL;
@@ -45,9 +45,9 @@ void OscInputGenerator::processInput() {
                     p->inputMin     = it->second->inputMinValue[j];
                     p->imageInputId = it->second->nodeId[j];
                     p->name         = it->second->paramId[j];
-                    p->value        = m.getArgAsFloat(j);
+                    p->value        = m.getArgAsFloat(j) ? m.getArgAsFloat(j) : m.getArgAsInt32(j);
                     p->floatVal     = ofMap(m.getArgAsFloat(j), it->second->inputMinValue[j], it->second->inputMaxValue[j], it->second->paramMinValue[j], it->second->paramMaxValue[j]);
-                    p->intVal       = m.getArgAsInt32(j);
+                    p->intVal       = ofMap(m.getArgAsInt32(j), it->second->inputMinValue[j], it->second->inputMaxValue[j], it->second->paramMinValue[j], it->second->paramMaxValue[j]);
                     storeMessage(p);
                 }
             }
@@ -215,7 +215,7 @@ DTOscMap* OscInputGenerator::getOSCMapForAddress(string address_) {
     it = oscMap->find(address_);
     
     if(it != oscMap->end()){
-        DTOscMap* ret = it->second;
+        ret = it->second;
         oscMap->erase(it);
     }
     
