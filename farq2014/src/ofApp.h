@@ -196,4 +196,5 @@ public:
     
     // OSC
     bool editOSCActive;
+    map<int, OscInputGenerator*>* oscInputGeneratorPortMap;
 };
