@@ -349,10 +349,9 @@ bool ShaderLayer::loadSettings(ofxXmlSettings &XML, int nTag_, int nodesCount_) 
     
     nId         = XML.getAttribute("NODE", "id", -1, nTag_) + nodesCount_;
     isEnabled   = XML.getAttribute("NODE", "enabled", true, nTag_);
-    path = XML.getAttribute("NODE", "path","none", nTag_);
-    
-    loadShader(path, this->name);
-    
+    path        = XML.getAttribute("NODE", "path","none", nTag_);
+    shaderFileName = XML.getAttribute("NODE", "fileName","none", nTag_);
+    loadShader(path, shaderFileName);
     XML.pushTag("NODE", nTag_);
     
     // Load Inputs
@@ -486,6 +485,7 @@ bool ShaderLayer::saveSettings(ofxXmlSettings &XML) {
     XML.addAttribute("NODE", "type", "SHADER", lastPlace);
     XML.addAttribute("NODE", "enabled", isEnabled, lastPlace);
     XML.addAttribute("NODE", "path", path, lastPlace);
+    XML.addAttribute("NODE", "fileName", shaderFileName, lastPlace);
 
     saved = XML.pushTag("NODE", lastPlace);
     if (saved){
@@ -557,6 +557,7 @@ bool ShaderLayer::saveSettingsToSnippet(ofxXmlSettings &XML, map<int,int> newIds
     XML.addAttribute("NODE", "type", "SHADER", lastPlace);
     XML.addAttribute("NODE", "enabled", isEnabled, lastPlace);
     XML.addAttribute("NODE", "path", path, lastPlace);
+    XML.addAttribute("NODE", "fileName", shaderFileName, lastPlace);
     
     saved = XML.pushTag("NODE", lastPlace);
     if (saved){
