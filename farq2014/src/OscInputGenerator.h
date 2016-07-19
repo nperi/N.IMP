@@ -27,20 +27,20 @@ public:
 class OscInputGenerator : public ParamInputGenerator{
 	
   public:
-    OscInputGenerator(string name_, int nodeID_);
+    OscInputGenerator(string name_);
     ~OscInputGenerator();
 	
     void processInput();
-    int  getNodeID(){ return nodeID; };
     void setPort(int port_);
+    int  getPort() { return port; };
     void setAddress(string oldAddress_, string address_);
-    void setMin(int min);
-    void setMax(int max);
+    void setMin(string address_, int min);
+    void setMax(string address_, int max);
     
     std::map<string,DTOscMap* >* oscMap;
     void removeNodeFromParams(int nodeID_);
-    bool addNewOSCMap(string address_, ImageOutput* node_, vector<string> params_);
-    bool addNewOSCMap(string address_, ImageOutput* node_, string param_);
+    bool addNewOSCMap(int min_, int max_, string address_, ImageOutput* node_, vector<string> params_);
+    bool addNewOSCMap(int min_, int max_, string address_, ImageOutput* node_, string param_);
     void removeOSCMap(string address_, ImageOutput* node_, string param_);
     void clearOSCMap();
     
@@ -48,12 +48,13 @@ class OscInputGenerator : public ParamInputGenerator{
     bool saveSettings(ofxXmlSettings &XML);
     bool saveSettingsToSnippet(ofxXmlSettings &XML, map<int,int> newIdsMap);
     
-private:
-    int port, min, max;
-    ofxOscReceiver receiver;
-    int nodeID;
+    DTOscMap* getOSCMapForAddress(string address_);
+    void addOSCMapForAddress(string address_, DTOscMap* oscmap);
+    vector<string> getAllAddress();
     
-    void pushListeningAddress(string oldAddress_, string newAddress_);
+private:
+    int port;
+    ofxOscReceiver receiver;
 	
 };
 

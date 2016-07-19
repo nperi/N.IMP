@@ -12,7 +12,6 @@
 
 #include "ofMain.h"
 
-
 class DTOscMap {
 	
   public:
@@ -22,13 +21,10 @@ class DTOscMap {
     vector<int>     nodeId;
     vector<string>  paramId;
     
-//    vector<float>   inputMinValue;
-//    vector<float>   inputMaxValue;
+    vector<float>   inputMinValue;
+    vector<float>   inputMaxValue;
     vector<float>   paramMinValue;
     vector<float>   paramMaxValue;
-    
-    
-	
 };
 
 #endif
