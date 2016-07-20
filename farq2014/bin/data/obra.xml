@@ -1224,59 +1224,31 @@
                 <MIDI_MAP midiId="21" nodeId="20" param="5 Actualidad"></MIDI_MAP>
             </MIDI_SETTINGS>
         </INPUT_GEN>
-        <INPUT_GEN nodeId="34" type="OSC">
-            <OSC_SETTINGS port="26884" min="0" max="1">
+        <INPUT_GEN type="OSC">
+            <OSC_SETTINGS port="26884" numberOSCReceiver="8">
                 <ADDRESS path="/cc/33">
-                    <OSC_MAP nodeId="19" param="Play" paramMinValue="0.000000000" paramMaxValue="1.000000000"></OSC_MAP>
+                    <OSC_MAP nodeId="19" param="Play" inputMinValue="0.000000000" inputMaxValue="1.000000000" paramMinValue="0.000000000" paramMaxValue="1.000000000"></OSC_MAP>
                 </ADDRESS>
-            </OSC_SETTINGS>
-        </INPUT_GEN>
-        <INPUT_GEN nodeId="35" type="OSC">
-            <OSC_SETTINGS port="26884" min="0" max="1">
                 <ADDRESS path="/cc/35">
-                    <OSC_MAP nodeId="19" param="&gt;&gt; next" paramMinValue="0.000000000" paramMaxValue="1.000000000"></OSC_MAP>
+                    <OSC_MAP nodeId="19" param="&gt;&gt; next" inputMinValue="0.000000000" inputMaxValue="1.000000000" paramMinValue="0.000000000" paramMaxValue="1.000000000"></OSC_MAP>
                 </ADDRESS>
-            </OSC_SETTINGS>
-        </INPUT_GEN>
-        <INPUT_GEN nodeId="42" type="OSC">
-            <OSC_SETTINGS port="26884" min="0" max="1">
                 <ADDRESS path="/cc/36">
-                    <OSC_MAP nodeId="23" param="Activate Noise" paramMinValue="0.000000000" paramMaxValue="1.000000000"></OSC_MAP>
+                    <OSC_MAP nodeId="23" param="Activate Noise" inputMinValue="0.000000000" inputMaxValue="1.000000000" paramMinValue="0.000000000" paramMaxValue="1.000000000"></OSC_MAP>
                 </ADDRESS>
-            </OSC_SETTINGS>
-        </INPUT_GEN>
-        <INPUT_GEN nodeId="43" type="OSC">
-            <OSC_SETTINGS port="26884" min="0" max="1">
                 <ADDRESS path="/cc/37">
-                    <OSC_MAP nodeId="23" param="Activate Kaleidoscope" paramMinValue="0.000000000" paramMaxValue="1.000000000"></OSC_MAP>
+                    <OSC_MAP nodeId="23" param="Activate Kaleidoscope" inputMinValue="0.000000000" inputMaxValue="1.000000000" paramMinValue="0.000000000" paramMaxValue="1.000000000"></OSC_MAP>
                 </ADDRESS>
-            </OSC_SETTINGS>
-        </INPUT_GEN>
-        <INPUT_GEN nodeId="48" type="OSC">
-            <OSC_SETTINGS port="26884" min="0" max="1">
                 <ADDRESS path="/cc/38">
-                    <OSC_MAP nodeId="29" param="Play" paramMinValue="0.000000000" paramMaxValue="1.000000000"></OSC_MAP>
+                    <OSC_MAP nodeId="29" param="Play" inputMinValue="0.000000000" inputMaxValue="1.000000000" paramMinValue="0.000000000" paramMaxValue="1.000000000"></OSC_MAP>
                 </ADDRESS>
-            </OSC_SETTINGS>
-        </INPUT_GEN>
-        <INPUT_GEN nodeId="49" type="OSC">
-            <OSC_SETTINGS port="26884" min="0" max="1">
                 <ADDRESS path="/cc/40">
-                    <OSC_MAP nodeId="29" param="&gt;&gt; next" paramMinValue="0.000000000" paramMaxValue="1.000000000"></OSC_MAP>
+                    <OSC_MAP nodeId="29" param="&gt;&gt; next" inputMinValue="0.000000000" inputMaxValue="1.000000000" paramMinValue="0.000000000" paramMaxValue="1.000000000"></OSC_MAP>
                 </ADDRESS>
-            </OSC_SETTINGS>
-        </INPUT_GEN>
-        <INPUT_GEN nodeId="50" type="OSC">
-            <OSC_SETTINGS port="26884" min="0" max="1">
                 <ADDRESS path="/cc/34">
-                    <OSC_MAP nodeId="19" param="&lt;&lt; prev" paramMinValue="0.000000000" paramMaxValue="1.000000000"></OSC_MAP>
+                    <OSC_MAP nodeId="19" param="&lt;&lt; prev" inputMinValue="0.000000000" inputMaxValue="1.000000000" paramMinValue="0.000000000" paramMaxValue="1.000000000"></OSC_MAP>
                 </ADDRESS>
-            </OSC_SETTINGS>
-        </INPUT_GEN>
-        <INPUT_GEN nodeId="51" type="OSC">
-            <OSC_SETTINGS port="26884" min="0" max="1">
                 <ADDRESS path="/cc/39">
-                    <OSC_MAP nodeId="29" param="&lt;&lt; prev" paramMinValue="0.000000000" paramMaxValue="1.000000000"></OSC_MAP>
+                    <OSC_MAP nodeId="29" param="&lt;&lt; prev" inputMinValue="0.000000000" inputMaxValue="1.000000000" paramMinValue="0.000000000" paramMaxValue="1.000000000"></OSC_MAP>
                 </ADDRESS>
             </OSC_SETTINGS>
         </INPUT_GEN>
