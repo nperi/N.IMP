@@ -263,7 +263,8 @@ bool OscInputGenerator::loadSettings(ofxXmlSettings &XML, int nodesCount_) {
     
     //get osc input device
     //
-    port    = ofToInt(XML.getAttribute("OSC_SETTINGS","port","6666"));
+    port                = ofToInt(XML.getAttribute("OSC_SETTINGS","port","6666"));
+    numberOSCReceiver   = ofToInt(XML.getAttribute("OSC_SETTINGS", "numberOSCReceiver", "1"));
     receiver.setup(port);
     
     //get osc mapping data
@@ -274,7 +275,7 @@ bool OscInputGenerator::loadSettings(ofxXmlSettings &XML, int nodesCount_) {
     for (int j = 0; j < getNumAddressTag; ++j) {
         
         string address = XML.getAttribute("ADDRESS","path","/",j);
-        XML.pushTag("ADDRESS");
+        XML.pushTag("ADDRESS", j);
         int getNumOSCMapTag = XML.getNumTags("OSC_MAP");
         DTOscMap* dtM = new DTOscMap();
         
@@ -321,6 +322,7 @@ bool OscInputGenerator::saveSettings(ofxXmlSettings &XML) {
         
         lastPlace = XML.addTag("OSC_SETTINGS");
         XML.addAttribute("OSC_SETTINGS", "port", port, lastPlace);
+        XML.addAttribute("OSC_SETTINGS", "numberOSCReceiver", numberOSCReceiver, lastPlace);
         saved = XML.pushTag("OSC_SETTINGS", lastPlace);
         if (saved) {
             
@@ -362,6 +364,7 @@ bool OscInputGenerator::saveSettingsToSnippet(ofxXmlSettings &XML, map<int,int> 
         
         lastPlace = XML.addTag("OSC_SETTINGS");
         XML.addAttribute("OSC_SETTINGS", "port", port, lastPlace);
+        XML.addAttribute("OSC_SETTINGS", "numberOSCReceiver", numberOSCReceiver, lastPlace);
         saved = XML.pushTag("OSC_SETTINGS", lastPlace);
         if (saved) {
             

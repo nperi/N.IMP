@@ -50,10 +50,12 @@ OSCReceiver::~OSCReceiver(){
 //------------------------------------------------------------------
 void OSCReceiver::setup() {
     
-    oldAddress = oldAddress + ofToString(nId);
-    address = oldAddress;
-    oscAddress.setup("Address", address, 100, 20);
-    gui.setWidthElements(INSPECTOR_WIDTH);
+    if (oldAddress == "/") {
+        oldAddress = oldAddress + ofToString(nId);
+        address = oldAddress;
+        oscAddress.setup("Address", address, 100, 20);
+        gui.setWidthElements(INSPECTOR_WIDTH);
+    }
     
     oscPort.addListener(this, &OSCReceiver::editPort);
     oscAddress.addListener(this, &OSCReceiver::editAddress);
@@ -255,13 +257,14 @@ bool OSCReceiver::loadSettings(ofxXmlSettings &XML, int nTag_, int nodesCount_) 
     port    = XML.getAttribute("NODE", "port", 6666, nTag_);
     min     = XML.getAttribute("NODE", "min", 0, nTag_);
     max     = XML.getAttribute("NODE", "max", 127, nTag_);
-    oldAddress = XML.getAttribute("NODE", "address", "/" + ofToString(nId), nTag_);
+    oldAddress = XML.getAttribute("NODE", "address", "/", nTag_);
     
     address = oldAddress;
     oscPortNumber = ofToString(port);
     oscMinNumber = ofToString(min);
     oscMaxNumber = ofToString(max);
     
+    oldPort = port;
     oscPort.setup("Port", oscPortNumber, 100, 20);
     oscAddress.setup("Address", address, 100, 20);
     oscMin.setup("Min Value", oscMinNumber, 100, 20);

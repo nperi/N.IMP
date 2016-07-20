@@ -17,6 +17,8 @@ ParamInputGenerator::ParamInputGenerator(string name_, bool isThreaded_){
 }
 
 ParamInputGenerator::~ParamInputGenerator(){
+    isRunning = false;
+    deleteAllMessages();
     stop();
 }
 
@@ -77,12 +79,12 @@ void ParamInputGenerator::storeMessage(Param* p){
 
 void ParamInputGenerator::threadedFunction(){
     
-    while(isThreadRunning()) {
+    while(isThreadRunning() && isRunning) {
         processInput();
         sleep(samplingMs); // we limit the sampling to avoid wasting resources.
     }
     
-    deleteAllMessages();
+//    deleteAllMessages();
 }
 
 void ParamInputGenerator::deleteAllMessages(){

@@ -246,34 +246,34 @@ void ofApp::setSelectedForOSC(){
     
     for(map<int,OscInputGenerator*>::iterator it = oscInputGeneratorPortMap.begin(); it != oscInputGeneratorPortMap.end(); it++ ){
             
-            om = it->second->oscMap;
+        om = it->second->oscMap;
+
+        for (std::map<string,DTOscMap* >::iterator it2 = om->begin(); it2 != om->end(); it2++) {
             
-            for (std::map<string,DTOscMap* >::iterator it = om->begin(); it != om->end(); it++) {
-                
-                oscNode = (OSCReceiver*)findOSCNodeForAddress(it->first);
-                if (oscNode != NULL) {
-                
-                    for (int j = 0; j < it->second->nodeId.size(); j++) {
-                        
-                        node_ = nodes.find(it->second->nodeId[j]);
-                        if (node_ != nodes.end()) {
-                            node_->second->setAttributesForOSC(it->second->paramId[j], oscNode->getId());
-                        }
+            oscNode = (OSCReceiver*)findOSCNodeForAddress(it2->first, it->first);
+            if (oscNode != NULL) {
+            
+                for (int j = 0; j < it2->second->nodeId.size(); j++) {
+                    
+                    node_ = nodes.find(it2->second->nodeId[j]);
+                    if (node_ != nodes.end()) {
+                        node_->second->setAttributesForOSC(it2->second->paramId[j], oscNode->getId());
                     }
                 }
+                
+                listenToOSCEvents(oscNode, true);
             }
-            
-        listenToOSCEvents(oscNode, true);
+        }
     }
 }
 
 
 //------------------------------------------------------------------
-ImageOutput* ofApp::findOSCNodeForAddress(string address) {
+ImageOutput* ofApp::findOSCNodeForAddress(string address_, int port_) {
     
     for(map<int,ImageOutput*>::iterator it = nodes.begin(); it != nodes.end(); it++ ){
         if (it->second->getTypeName() == "OSC Receiver") {
-            if (((OSCReceiver*)it->second)->getAddress() == address) {
+            if ((((OSCReceiver*)it->second)->getAddress() == address_) && (((OSCReceiver*)it->second)->getPort() == port_)) {
                 return it->second;
             }
         }
@@ -1289,10 +1289,11 @@ void ofApp::closePatch(int &_nID) {
                 
                 for (std::map<string,DTOscMap* >::iterator it2 = it->second->oscMap->begin(); it2 != it->second->oscMap->end(); it2++) {
                     
-                    oscNode = (OSCReceiver*)findOSCNodeForAddress(it2->first);
+                    oscNode = (OSCReceiver*)findOSCNodeForAddress(it2->first, it->first);
                     if (oscNode != NULL) {
 
                         ((OSCReceiver*)oscNode)->removeNodeParams(_nID);
+                        it->second->removeNodeFromParams(_nID);
                         ofRemoveListener(nodeToDelete->editOSCInputs , this, &ofApp::editOSCInputs);
                     }
                 }
@@ -1538,8 +1539,13 @@ void ofApp::editOSCPort(OSCEvent &e_) {
             
             // add osc mappings to new port
             it = oscInputGeneratorPortMap.find(e_.port);
-            if (it != oscInputGeneratorPortMap.end() && oscmap != NULL) {
-                it->second->addOSCMapForAddress(e_.address, oscmap);
+            if (it != oscInputGeneratorPortMap.end()) {
+                if (oscmap != NULL) {
+                    it->second->addOSCMapForAddress(e_.address, oscmap);
+                }
+                else {
+                    it->second->oscReceiverIn();
+                }
             }
             // create new OSC Input Generator
             else {
@@ -1840,6 +1846,7 @@ bool ofApp::loadFromXML(){
                                     oI->loadSettings(XML);
                                     
                                     inputGenerators.push_back(oI);
+                                    oscInputGeneratorPortMap.insert(std::pair<int,OscInputGenerator*>(oI->getPort(),oI));
                                     
                                     break;
                                 }
@@ -2549,6 +2556,7 @@ void ofApp::deleteEverything() {
     }
     inputGenerators.clear();
     audioListeners.clear();
+    oscInputGeneratorPortMap.clear();
     
     for (int i = 0; i < nodes.size(); i++){
         if (nodes[i] != NULL) ofRemoveListener( nodes[i]->title->close , this, &ofApp::closePatch);
