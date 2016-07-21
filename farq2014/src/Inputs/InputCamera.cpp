@@ -162,7 +162,7 @@ void InputCamera::changeToHigherResolution() {
         previous_resolution++;
         editResolution(resolutionLabels[previous_resolution]);
         
-        if (resolutionLabels[previous_resolution] == "960x540")
+//        if (resolutionLabels[previous_resolution] == "960x540
             getNodeViewerIBelong()->updateConnectionsSize(this);
     }
 }
@@ -174,7 +174,7 @@ void InputCamera::changeToLowerResolution() {
         previous_resolution--;
         editResolution(resolutionLabels[previous_resolution]);
         
-        if (resolutionLabels[previous_resolution] == "640x480")
+//        if (resolutionLabels[previous_resolution] == "640x480")
             getNodeViewerIBelong()->updateConnectionsSize(this);
     }
 }
@@ -225,6 +225,7 @@ void InputCamera::editResolution(string resolution_) {
     videoGrabber->close();
     videoGrabber->setDeviceID(cameraIndex);
     videoGrabber->initGrabber(width, height);
+    
 }
 
 //------------------------------------------------------------------

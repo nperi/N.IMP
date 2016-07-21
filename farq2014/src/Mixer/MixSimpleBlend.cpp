@@ -46,11 +46,11 @@ void MixSimpleBlend::setup() {
     else {
         drawNoInputs  = false;
         
-        width  = input[selector1]->getWidth();
-        height = input[selector1]->getHeight();
+        width  = input[selector1]->getTexture()->getWidth();
+        height = input[selector1]->getTexture()->getHeight();
 
-        fbo.allocate(1920, 1080);
-        psBlend.setup(1920, 1080);
+        fbo.allocate(width, height);
+        psBlend.setup(width, height);
     }
 }
 
@@ -69,17 +69,17 @@ void MixSimpleBlend::update(){
                 
                 if (opacity < 255) {
                     ofSetColor(255, 255, 255);
-                    input[selector1]->getTextureReference().draw(0, 0, 1920, 1080);
+                    input[selector1]->getTextureReference().draw(0, 0, width, height);
                 }
                 if (opacity > 0) {
                     ofSetColor(255, 255, 255,opacity);
-                    input[selector2]->getTextureReference().draw(0, 0, 1920, 1080);
+                    input[selector2]->getTextureReference().draw(0, 0, width, height);
                 }
             }
             else{
                 psBlend.begin();
                 ofSetColor(255, 255, 255,opacity);
-                input[selector2]->getTextureReference().draw(0, 0, 1920, 1080);
+                input[selector2]->getTextureReference().draw(0, 0, width, height);
                 psBlend.end();
                 psBlend.draw(input[selector1]->getTextureReference(), blendMode);
             }
@@ -90,7 +90,7 @@ void MixSimpleBlend::update(){
         else {
             fbo.begin();
             ofSetColor(255);
-            input[selector1]->getTextureReference().draw(0, 0, 1920, 1080);
+            input[selector1]->getTextureReference().draw(0, 0, width, height);
             fbo.end();
         }
         ofPopStyle();
@@ -233,9 +233,10 @@ void MixSimpleBlend::setEnable(bool isEnabled_){
 //------------------------------------------------------------------
 void MixSimpleBlend::resetSizeBasedOnInput(ofxPatch* input_){
     
-    if (input_ == input[selector2]) {
-        ofxPatch::resetSizeBasedOnInput(input_);
-    }
+//    if (input_ == input[selector2]) {
+//        ofxPatch::resetSizeBasedOnInput(input_);
+//    }
+    ofxPatch::resetSizeBasedOnInput(input[selector1]);
 }
 
 //------------------------------------------------------------------
