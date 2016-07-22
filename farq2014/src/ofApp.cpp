@@ -1165,9 +1165,8 @@ void ofApp::createNode(textInputEvent &args){
                 oscInputGeneratorPortMap.insert(std::pair<int,OscInputGenerator*>(6666,oscI));
                 oscI->setup();
                 oscI->start();
-                
-                listenToOSCEvents((OSCReceiver*)newPatch, true);
             }
+            listenToOSCEvents((OSCReceiver*)newPatch, true);
         }
     }
     if (args.widget != NULL) {
@@ -1461,8 +1460,9 @@ void ofApp::listenToOSCEvents(OSCReceiver *osc, bool listen) {
         ofAddListener(osc->editOSCInputsActive , this, &ofApp::editOSCInputsActive);
         
         for(std::map<int, ImageOutput*>::iterator it = nodes.begin(); it != nodes.end(); it++ ){
-            if (it->second != osc)
+            if (it->second != osc) {
                 ofAddListener(it->second->editOSCInputs , this, &ofApp::editOSCInputs);
+            }
         }
     }
     else {
@@ -1471,8 +1471,9 @@ void ofApp::listenToOSCEvents(OSCReceiver *osc, bool listen) {
         ofRemoveListener(osc->editOSCInputsActive , this, &ofApp::editOSCInputsActive);
         
         for(std::map<int, ImageOutput*>::iterator it = nodes.begin(); it != nodes.end(); it++ ){
-            if (it->second != osc)
+            if (it->second != osc) {
                 ofRemoveListener(it->second->editOSCInputs , this, &ofApp::editOSCInputs);
+            }
         }
     }
 }
