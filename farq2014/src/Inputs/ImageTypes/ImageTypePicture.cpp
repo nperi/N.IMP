@@ -22,6 +22,7 @@ ImageTypePicture::ImageTypePicture(string name_ ,string path_, bool isResize, in
     
 }
 
+//------------------------------------------------------------------
 ImageTypePicture::~ImageTypePicture(){
     img.clear();
 }

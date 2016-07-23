@@ -191,7 +191,7 @@ bool ImageTypeMovie::isHap() {
 
 //------------------------------------------------------------------
 void ImageTypeMovie::drawFirstFrame(ofFbo& _fbo) {
-    videoPlayer->setFrame(0);
+    videoPlayer->firstFrame();
     _fbo.begin();
     ofClear(0, 0, 0,255);
     ofSetColor(255);
