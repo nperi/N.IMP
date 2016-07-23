@@ -498,6 +498,7 @@ void ImageAndVideoInputList::sequenceChanged(int &s){
         
         if (inputs[currentSequence]->isHap()) {
             fbo.allocate(inputs[currentSequence]->getWidth(), inputs[currentSequence]->getHeight());
+            ((ImageTypeMovie*)inputs[currentSequence])->drawFirstFrame(fbo);
         }
     }
 }

@@ -188,3 +188,13 @@ float ImageTypeMovie::getCurrentSecond() {
 bool ImageTypeMovie::isHap() {
     return hap;
 }
+
+//------------------------------------------------------------------
+void ImageTypeMovie::drawFirstFrame(ofFbo& _fbo) {
+    videoPlayer->setFrame(0);
+    _fbo.begin();
+    ofClear(0, 0, 0,255);
+    ofSetColor(255);
+    videoPlayer->getTexture()->draw(0, 0, videoPlayer->getWidth(), videoPlayer->getHeight());
+    _fbo.end();
+}

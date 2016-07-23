@@ -38,6 +38,7 @@ class ImageTypeMovie : public ImageType{
     float getCurrentSecond();
     
     bool isHap();
+    void drawFirstFrame(ofFbo& _fbo);
     
 private:
     
