@@ -82,7 +82,7 @@ void textInput::keyPressed(int key) {
                     setVisibleToggles();
                 }
                 
-                if (this->dropdownList->getVisibleToggles().size() > 0) {
+                if (this->dropdownList->getVisibleToggles().size() > 4) {
                     toggleSelected--;
                     
                     if(toggleSelected < 0) {
@@ -121,7 +121,7 @@ void textInput::keyPressed(int key) {
                     setVisibleToggles();
                 }
                 
-                if (this->dropdownList->getVisibleToggles().size() > 0) {
+                if (this->dropdownList->getVisibleToggles().size() > 4) {
                     toggleSelected = (toggleSelected+1) % this->dropdownList->getToggles().size();
                     string toggleSelectedName = this->dropdownList->getToggles()[toggleSelected]->getName();
                     
