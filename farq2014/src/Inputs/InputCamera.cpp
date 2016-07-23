@@ -247,6 +247,8 @@ bool InputCamera::loadSettings(ofxXmlSettings &XML, int nTag_, int nodesCount_) 
     nId                 = XML.getAttribute("NODE", "id", -1, nTag_) + nodesCount_;
     cameraName          = XML.getAttribute("NODE", "cameraName","No Camera Available", nTag_);
     previous_resolution = XML.getAttribute("NODE", "resolution", 2, nTag_);
+    width               = XML.getAttribute("NODE", "width", 640, nTag_);
+    height              = XML.getAttribute("NODE", "height", 480, nTag_);
     resolutionName.set("", resolutionLabels[previous_resolution]);
     
     vector<ofVideoDevice> devices = videoGrabber->listDevices();
@@ -299,6 +301,8 @@ bool InputCamera::saveSettings(ofxXmlSettings &XML) {
     XML.addAttribute("NODE", "type", "CAM", lastPlace);
     XML.addAttribute("NODE", "cameraName", cameraName, lastPlace);
     XML.addAttribute("NODE", "resolution", previous_resolution, lastPlace);
+    XML.addAttribute("NODE", "width", width, lastPlace);
+    XML.addAttribute("NODE", "height", height, lastPlace);
 
     saved = XML.pushTag("NODE", lastPlace);
     if (saved){
@@ -321,6 +325,8 @@ bool InputCamera::saveSettingsToSnippet(ofxXmlSettings &XML, map<int,int> newIds
     XML.addAttribute("NODE", "type", "CAM", lastPlace);
     XML.addAttribute("NODE", "cameraName", cameraName, lastPlace);
     XML.addAttribute("NODE", "resolution", previous_resolution, lastPlace);
+    XML.addAttribute("NODE", "width", width, lastPlace);
+    XML.addAttribute("NODE", "height", height, lastPlace);
     
     saved = XML.pushTag("NODE", lastPlace);
     if (saved){
