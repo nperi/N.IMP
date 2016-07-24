@@ -16,7 +16,7 @@ ImageAndVideoInputList::ImageAndVideoInputList(string name, int id_) : InputSour
     currentSequence = 0;
     prevPosition = 0.0;
     lastSequence = currentSequence;
-    isEnabled = false;
+    isEnabled = true;
     videoPlayer = NULL;
     hasMovie = false;
     
@@ -79,7 +79,6 @@ void ImageAndVideoInputList::setup(){
         : img.allocate(width, height, OF_IMAGE_COLOR);
 
         img.setUseTexture(true);
-        isEnabled = true;
         
         if (inputs[currentSequence]->isHap()) {
             fbo.allocate(width, height);
@@ -634,8 +633,9 @@ bool ImageAndVideoInputList::loadSettings(ofxXmlSettings &XML, int nTag_, int no
     
     bool loaded = true;
     
-    nId     = XML.getAttribute("NODE", "id", -1, nTag_) + nodesCount_;
-    path    = XML.getAttribute("NODE", "path","none", nTag_);
+    nId       = XML.getAttribute("NODE", "id", -1, nTag_) + nodesCount_;
+    path      = XML.getAttribute("NODE", "path","none", nTag_);
+    isEnabled = ofToBool(XML.getAttribute("NODE", "enabled", "true", nTag_));
     
     if ((path == "none") || (path == "")) {
         XML.pushTag("NODE",nTag_);
@@ -695,6 +695,7 @@ bool ImageAndVideoInputList::saveSettings(ofxXmlSettings &XML) {
     XML.addAttribute("NODE", "name", name, lastPlace);
     XML.addAttribute("NODE", "type", "IMAGE_AND_VIDEO_LIST", lastPlace);
     XML.addAttribute("NODE", "path", path, lastPlace);
+    XML.addAttribute("NODE", "enabled", isEnabled, lastPlace);
     
     XML.addAttribute("NODE", "bpm", bpm, lastPlace);
     XML.addAttribute("NODE", "multiplier_divider", bpmMultiplier, lastPlace);
@@ -734,6 +735,7 @@ bool ImageAndVideoInputList::saveSettingsToSnippet(ofxXmlSettings &XML, map<int,
     XML.addAttribute("NODE", "name", name, lastPlace);
     XML.addAttribute("NODE", "type", "IMAGE_AND_VIDEO_LIST", lastPlace);
     XML.addAttribute("NODE", "path", path, lastPlace);
+    XML.addAttribute("NODE", "enabled", isEnabled, lastPlace);
     
     XML.addAttribute("NODE", "bpm", bpm, lastPlace);
     XML.addAttribute("NODE", "multiplier_divider", bpmMultiplier, lastPlace);
