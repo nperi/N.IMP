@@ -63,4 +63,6 @@ Mix different inputs and apply transformations
 Export generated content to syphon server.
 
 
-            
+
+### Screenshot
+![alt tag](/screenShot.png?raw=true "Demo")
