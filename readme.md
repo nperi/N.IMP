@@ -1,148 +1,59 @@
-n.imp
+N.IMP
 =====
 
-node-based image processor
+Node-based Image Processor
 
 Building
 ---------------
 To build this project go to /bin/data path and run setup.sh script
 
 
+Description
+---------------
+N.IMP is an audiovisual real-time content generator made in Open Frameworks. It is a node-based arquitecture which has different types of inputs to feed content to the application, then layers and mixers to process them and generates a new output. It has a syphon node to export the generated content.
 
-Overview appSettings.xml
-------------------------
+For the moment it's only available for mac.
 
-### Basic Structure
-
-```html
-<MAIN_SETTINGS>
-    <SETTINGS>
-        <INPUTS>
-            <!-- add inputs here -->
-        </INPUTS>
-        <VISUAL_LAYERS>
-            <!-- add visual layers here --> 
-        </VISUAL_LAYERS>
-        <MIXERS>
-        	<!-- add mixers here --> 
-        </MIXERS>
-    </SETTINGS>
-
-    <NODE_VIEWS>
-    	<!-- create node views from created elements --> 
-        <NODE_VIEW name="OUTPUT">
-            <NODE name="mainMix" x="20" y="20" guiX="1370" guiY="20" imageScale="1.35" guiWidth="200" />
-        </NODE_VIEW>
-    </NODE_VIEWS>
-</MAIN_SETTINGS>
-```
 
 ### Inputs
 
-Single Image
-```html
-<INPUT name="Mask" type="IMAGE" path="images/mask.png"/>
-```
+- Image and video Sequence
+Drag and drop an image or video file to the workspace to create an input of this type.
 
-Image Sequence
-```html
-<INPUT name="Mask" type="IMAGE" path="test"
-                   isPlaying="true" 
-                   bpm="100" 
-                   matchBPMtoSequence="true" 
-                   multiplier_divider="1"
-                   palindrom="false"
-                   />
-```
+- Camera
+Recognizes every webcam connected to the host.
 
-Video
-```html
-<INPUT name="video" type="VIDEO" path="movies/movie.mov"/>
-```
+- Particle Generator
+Random particle generator. Control lifetime and gravity/repulsion points.
 
-Camera
-```html
-<INPUT name="cam1" type="CAMERA" id="0"/>
-```
+- Syphon
+Consume content published in syphon.
 
-Particle
-```html
-<INPUT name="Particle" type="PARTICLE"/>
-```
+- Image Processor
+
+- Audio/OSC/MIDI
+Control other node's parameters with audio or midi/osc messages.
+
 
 ### Visual Layers
 
-IKEDA layer
-```html
-<VISUAL_LAYER name="V_IKEDA" type="IKEDA" inputSource="Video2"
-                    isCanny="true" 
-                    isThreshold="true" 
-                    isColumns="true" 
-                    isInvert="true"
-                    pNColumns="4"
-                    pCannyX="12"
-                    pCannyY="12"
-                    pThreshold="12"
-                    />
-```
+- IKEDA Layer, Glitch1 Layer, Glitch2 Layer, Image Processor
+Greyscale effects, Canny's algorithm, several other effects.
 
-Glitch1 layer
-```html
-<VISUAL_LAYER name="V_GLITCH1" type="GLITCH_1" inputSource="Video2"
-                do_CONVERGENCE="false"
-                do_GLOW="false"
-                do_SHAKER="false"
-                de_CUTSLIDER="false"
-                do_TWIST="false"
-                do_OUTLINE="false"
-                do_NOISE="false"
-                do_SLITSCAN="false"
-                do_SWELL="false"
-                do_INVERT="false"
-                
-                do_CR_HIGHCONTRAST="false"
-                do_CR_BLUERAISE="false"
-                do_CR_REDRAISE="false"
-                do_CR_GREENRAISE="false"
-                do_CR_BLUEINVERT="false"
-                do_CR_REDINVERT="false"
-                do_CR_GREENINVERT="false"/>
-```
+- Shaders
+Create your own shaders to apply different transformations. It supports GLSL version 120
 
-Glitch2 layer
-```html
-<VISUAL_LAYER name="V_GLITCH2" type="GLITCH_2" inputSource="Camera1"
-                dq="20"
-                qn="40"
-                dht="80"/>
-```
 
 ### Mixers
 
-Multi-channel Mixer layer (up to 8 inputs)
-```html
-<MIXER name="mainMix" type="MULTI_CHANNEL">
-                <INPUT_SOURCE name="source1"/>
-                <INPUT_SOURCE name="source2"/>
-                <INPUT_SOURCE name="source3"/>
-                <INPUT_SOURCE name="source4"/>
-                <INPUT_SOURCE name="source5"/>
-            </MIXER>
-```         
+- Multi-Channel Switch (up to 8 inputs), Mix Simple Blend, Mix Mask
+Mix different inputs and apply transformations
 
-Render Pipeline
----------------
 
-###General Render Pipeline
+### Outputs
 
-```
- _____  n    ____________   1   ______________
-|INPUT|---->|ChannelMixer|---->|ImageProcessor| --
- -----       ------------       --------------    \     ___________    n    _______
-                                                    -> |SimpleMixer| ----> |MainMix|
- _____  n    ____________   1   ______________    /     -----------         -------
-|INPUT|---->|ChannelMixer|---->|ImageProcessor| --
- -----       ------------       --------------     
-```
+- Syphon Output
+Export generated content to syphon server.
+
 
             
