@@ -233,7 +233,7 @@
                     </dot>
                 </out>
             </NODE>
-            <NODE id="29" name="4 Acontecimientos" type="IMAGE_AND_VIDEO_LIST" path="" enabled="0" bpm="100.000000000" multiplier_divider="4" isPlaying="1" repeatSequence="1" playInLoop="0" palindrom="0" matchBPMtoSequence="0" currentSequence="8">
+            <NODE id="29" name="4 Acontecimientos" type="IMAGE_AND_VIDEO_LIST" path="" enabled="0" bpm="100.000000000" multiplier_divider="4" isPlaying="1" repeatSequence="0" playInLoop="0" palindrom="0" matchBPMtoSequence="0" currentSequence="0">
                 <ASSET name="20 - 1914-1918 primera guerra mundial_hap.mov" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/20 - 1914-1918 primera guerra mundial_hap.mov"></ASSET>
                 <ASSET name="21 - 1945-8 Atomic Bomb- Hiroshima and Nagasaki_hap.mov" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/21 - 1945-8 Atomic Bomb- Hiroshima and Nagasaki_hap.mov"></ASSET>
                 <ASSET name="22 - negro mahatma gandhi_hap.mov" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/22 - negro mahatma gandhi_hap.mov"></ASSET>
@@ -981,16 +981,16 @@
                         <y>665.502746582</y>
                     </point>
                     <point>
-                        <x>842.986511230</x>
+                        <x>842.136535645</x>
                         <y>665.502746582</y>
                     </point>
                     <point>
-                        <x>842.986511230</x>
-                        <y>758.131164551</y>
+                        <x>842.136535645</x>
+                        <y>757.652954102</y>
                     </point>
                     <point>
                         <x>678.313903809</x>
-                        <y>758.131164551</y>
+                        <y>757.652954102</y>
                     </point>
                 </texture>
                 <mask>
@@ -1069,7 +1069,7 @@
                     </dot>
                 </out>
             </NODE>
-            <NODE id="20" name="Switch Acontecimientos" type="MULTI_CHANNEL" selChannel="0" drawInputGui="1">
+            <NODE id="20" name="Switch Acontecimientos" type="MULTI_CHANNEL" selChannel="0" drawInputGui="0">
                 <INPUT_SOURCE nodeId="19"></INPUT_SOURCE>
                 <INPUT_SOURCE nodeId="29"></INPUT_SOURCE>
                 <INPUT_SOURCE nodeId="30"></INPUT_SOURCE>
@@ -1090,11 +1090,11 @@
                     </point>
                     <point>
                         <x>794.259765625</x>
-                        <y>412.873046875</y>
+                        <y>412.834472656</y>
                     </point>
                     <point>
                         <x>649.225219727</x>
-                        <y>412.873046875</y>
+                        <y>412.834472656</y>
                     </point>
                 </texture>
                 <mask>
@@ -1139,11 +1139,11 @@
                     </point>
                     <point>
                         <x>753.397827148</x>
-                        <y>223.338897705</y>
+                        <y>223.300323486</y>
                     </point>
                     <point>
                         <x>608.363281250</x>
-                        <y>223.338897705</y>
+                        <y>223.300323486</y>
                     </point>
                 </texture>
                 <mask>
@@ -1180,7 +1180,7 @@
                 <visible>1</visible>
                 <texture>
                     <point>
-                        <x>1557.782836914</x>
+                        <x>1557.846557617</x>
                         <y>500.783020020</y>
                     </point>
                     <point>
@@ -1189,11 +1189,11 @@
                     </point>
                     <point>
                         <x>1701.846557617</x>
-                        <y>581.818847656</y>
+                        <y>581.783020020</y>
                     </point>
                     <point>
-                        <x>1557.782836914</x>
-                        <y>581.818847656</y>
+                        <x>1557.846557617</x>
+                        <y>581.783020020</y>
                     </point>
                 </texture>
                 <mask>
