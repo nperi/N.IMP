@@ -1,6 +1,6 @@
 <MAIN_SETTINGS>
     <link_type>1</link_type>
-    <total_nodes>55</total_nodes>
+    <total_nodes>56</total_nodes>
     <show_console>0</show_console>
     <SETTINGS>
         <INPUTS>
@@ -34,19 +34,19 @@
                 <texture>
                     <point>
                         <x>-238.058227539</x>
-                        <y>-57.058612823</y>
+                        <y>-61.058609009</y>
                     </point>
                     <point>
                         <x>-93.994483948</x>
-                        <y>-57.058612823</y>
+                        <y>-61.058609009</y>
                     </point>
                     <point>
                         <x>-93.994483948</x>
-                        <y>23.977241516</y>
+                        <y>19.977241516</y>
                     </point>
                     <point>
                         <x>-238.058227539</x>
-                        <y>23.977241516</y>
+                        <y>19.977241516</y>
                     </point>
                 </texture>
                 <mask>
@@ -186,7 +186,7 @@
                 <ASSET name="44 - 1984 - steve-jobs.jpg" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/17 evolucion y acontecimientos/44 - 1984 - steve-jobs.jpg"></ASSET>
                 <type>none</type>
                 <path>none</path>
-                <visible>1</visible>
+                <visible>0</visible>
                 <texture>
                     <point>
                         <x>184.597686768</x>
@@ -233,7 +233,7 @@
                     </dot>
                 </out>
             </NODE>
-            <NODE id="29" name="4 Acontecimientos" type="IMAGE_AND_VIDEO_LIST" path="" enabled="0" bpm="100.000000000" multiplier_divider="4" isPlaying="1" repeatSequence="0" playInLoop="0" palindrom="0" matchBPMtoSequence="0" currentSequence="0">
+            <NODE id="29" name="4 Acontecimientos" type="IMAGE_AND_VIDEO_LIST" path="" enabled="0" bpm="100.000000000" multiplier_divider="4" isPlaying="0" repeatSequence="0" playInLoop="0" palindrom="0" matchBPMtoSequence="0" currentSequence="0">
                 <ASSET name="20 - 1914-1918 primera guerra mundial_hap.mov" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/20 - 1914-1918 primera guerra mundial_hap.mov"></ASSET>
                 <ASSET name="21 - 1945-8 Atomic Bomb- Hiroshima and Nagasaki_hap.mov" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/21 - 1945-8 Atomic Bomb- Hiroshima and Nagasaki_hap.mov"></ASSET>
                 <ASSET name="22 - negro mahatma gandhi_hap.mov" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/22 - negro mahatma gandhi_hap.mov"></ASSET>
@@ -295,7 +295,7 @@
                     </dot>
                 </out>
             </NODE>
-            <NODE id="31" name="5 Actualidad" type="IMAGE_AND_VIDEO_LIST" path="" enabled="0" bpm="100.000000000" multiplier_divider="120" isPlaying="1" repeatSequence="0" playInLoop="0" palindrom="0" matchBPMtoSequence="0" currentSequence="0">
+            <NODE id="31" name="5 Actualidad" type="IMAGE_AND_VIDEO_LIST" path="" enabled="0" bpm="100.000000000" multiplier_divider="4" isPlaying="0" repeatSequence="0" playInLoop="0" palindrom="0" matchBPMtoSequence="0" currentSequence="0">
                 <ASSET name="1 - 1989-9-11 La caída del Muro de Berlín 2_hap.mov" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/32 - Actualidad/1 - 1989-9-11 La caída del Muro de Berlín 2_hap.mov"></ASSET>
                 <ASSET name="2 - anochecer_hap.mov" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/32 - Actualidad/2 - anochecer_hap.mov"></ASSET>
                 <ASSET name="3 - seasons_hap.mov" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/32 - Actualidad/3 - seasons_hap.mov"></ASSET>
@@ -341,11 +341,11 @@
                     </point>
                     <point>
                         <x>392.277587891</x>
-                        <y>557.341918945</y>
+                        <y>557.342346191</y>
                     </point>
                     <point>
                         <x>202.963317871</x>
-                        <y>557.341918945</y>
+                        <y>557.342346191</y>
                     </point>
                 </texture>
                 <mask>
@@ -474,19 +474,19 @@
                 <texture>
                     <point>
                         <x>1609.861328125</x>
-                        <y>47.445198059</y>
+                        <y>46.135196686</y>
                     </point>
                     <point>
                         <x>1703.645629883</x>
-                        <y>47.445198059</y>
+                        <y>46.135196686</y>
                     </point>
                     <point>
                         <x>1703.645629883</x>
-                        <y>117.783515930</y>
+                        <y>116.473518372</y>
                     </point>
                     <point>
                         <x>1609.861328125</x>
-                        <y>117.783515930</y>
+                        <y>116.473518372</y>
                     </point>
                 </texture>
                 <mask>
@@ -512,26 +512,26 @@
                 </out>
             </NODE>
             <NODE id="42" name="New OSC Receiver" type="OSC_RECEIVER" port="26884" address="/cc/36" min="0" max="1">
-                <PARAM name="Activate Noise" nodeID="23"></PARAM>
+                <PARAM name="NOISE" nodeID="17"></PARAM>
                 <type>none</type>
                 <path>none</path>
                 <visible>1</visible>
                 <texture>
                     <point>
-                        <x>1714.489746094</x>
-                        <y>-54.572013855</y>
+                        <x>1715.799804688</x>
+                        <y>-53.261951447</y>
                     </point>
                     <point>
-                        <x>1808.186035156</x>
-                        <y>-54.572013855</y>
+                        <x>1809.496093750</x>
+                        <y>-53.261951447</y>
                     </point>
                     <point>
-                        <x>1808.186035156</x>
-                        <y>15.700084686</y>
+                        <x>1809.496093750</x>
+                        <y>17.010141373</y>
                     </point>
                     <point>
-                        <x>1714.489746094</x>
-                        <y>15.700084686</y>
+                        <x>1715.799804688</x>
+                        <y>17.010141373</y>
                     </point>
                 </texture>
                 <mask>
@@ -602,7 +602,7 @@
                 </out>
             </NODE>
             <NODE id="48" name="New OSC Receiver" type="OSC_RECEIVER" port="26884" address="/cc/38" min="0" max="1">
-                <PARAM name="Play" nodeID="29"></PARAM>
+                <PARAM name="OUTLINE" nodeID="17"></PARAM>
                 <type>none</type>
                 <path>none</path>
                 <visible>1</visible>
@@ -737,26 +737,26 @@
                 </out>
             </NODE>
             <NODE id="51" name="New OSC Receiver" type="OSC_RECEIVER" port="26884" address="/cc/39" min="0" max="1">
-                <PARAM name="&lt;&lt; prev" nodeID="29"></PARAM>
+                <PARAM name="CONVERGENCE" nodeID="17"></PARAM>
                 <type>none</type>
                 <path>none</path>
                 <visible>1</visible>
                 <texture>
                     <point>
-                        <x>1824.245849609</x>
-                        <y>48.600936890</y>
+                        <x>1825.556152344</x>
+                        <y>45.980934143</y>
                     </point>
                     <point>
-                        <x>1916.756713867</x>
-                        <y>48.600936890</y>
+                        <x>1918.067016602</x>
+                        <y>45.980934143</y>
                     </point>
                     <point>
-                        <x>1916.756713867</x>
-                        <y>117.984062195</y>
+                        <x>1918.067016602</x>
+                        <y>115.364036560</y>
                     </point>
                     <point>
-                        <x>1824.245849609</x>
-                        <y>117.984062195</y>
+                        <x>1825.556152344</x>
+                        <y>115.364036560</y>
                     </point>
                 </texture>
                 <mask>
@@ -882,19 +882,19 @@
                 <texture>
                     <point>
                         <x>1033.972167969</x>
-                        <y>-56.825103760</y>
+                        <y>-60.825103760</y>
                     </point>
                     <point>
                         <x>1178.035888672</x>
-                        <y>-56.825103760</y>
+                        <y>-60.825103760</y>
                     </point>
                     <point>
                         <x>1178.035888672</x>
-                        <y>24.210754395</y>
+                        <y>20.210746765</y>
                     </point>
                     <point>
                         <x>1033.972167969</x>
-                        <y>24.210754395</y>
+                        <y>20.210746765</y>
                     </point>
                 </texture>
                 <mask>
@@ -928,20 +928,20 @@
                 <visible>1</visible>
                 <texture>
                     <point>
-                        <x>1101.745361328</x>
-                        <y>506.965881348</y>
+                        <x>1099.045410156</x>
+                        <y>519.075988770</y>
                     </point>
                     <point>
-                        <x>1245.809082031</x>
-                        <y>506.965881348</y>
+                        <x>1243.109130859</x>
+                        <y>519.075988770</y>
                     </point>
                     <point>
-                        <x>1245.809082031</x>
-                        <y>588.001708984</y>
+                        <x>1243.109130859</x>
+                        <y>600.111816406</y>
                     </point>
                     <point>
-                        <x>1101.745361328</x>
-                        <y>588.001708984</y>
+                        <x>1099.045410156</x>
+                        <y>600.111816406</y>
                     </point>
                 </texture>
                 <mask>
@@ -1037,11 +1037,11 @@
                     </point>
                     <point>
                         <x>756.587524414</x>
-                        <y>20.178848267</y>
+                        <y>20.178840637</y>
                     </point>
                     <point>
                         <x>612.523742676</x>
-                        <y>20.178848267</y>
+                        <y>20.178840637</y>
                     </point>
                 </texture>
                 <mask>
@@ -1069,7 +1069,7 @@
                     </dot>
                 </out>
             </NODE>
-            <NODE id="20" name="Switch Acontecimientos" type="MULTI_CHANNEL" selChannel="0" drawInputGui="0">
+            <NODE id="20" name="Switch Acontecimientos" type="MULTI_CHANNEL" selChannel="0" drawInputGui="1" disableOtherChannels="1">
                 <INPUT_SOURCE nodeId="19"></INPUT_SOURCE>
                 <INPUT_SOURCE nodeId="29"></INPUT_SOURCE>
                 <INPUT_SOURCE nodeId="30"></INPUT_SOURCE>
@@ -1122,7 +1122,7 @@
                     </dot>
                 </out>
             </NODE>
-            <NODE id="30" name="Mezcla 3 y 4" type="SIMPLE_BLEND" enabled="0" selector1="0" selector2="1" blendmode="0" opacity="40.455024719">
+            <NODE id="30" name="Mezcla 3 y 4" type="SIMPLE_BLEND" enabled="0" selector1="0" selector2="1" blendmode="0" opacity="58.505954742">
                 <INPUT_SOURCE nodeId="19"></INPUT_SOURCE>
                 <INPUT_SOURCE nodeId="29"></INPUT_SOURCE>
                 <type>none</type>
@@ -1180,20 +1180,20 @@
                 <visible>1</visible>
                 <texture>
                     <point>
-                        <x>1557.846557617</x>
-                        <y>500.783020020</y>
+                        <x>1551.678833008</x>
+                        <y>517.812988281</y>
                     </point>
                     <point>
-                        <x>1701.846557617</x>
-                        <y>500.783020020</y>
+                        <x>1695.742553711</x>
+                        <y>517.812988281</y>
                     </point>
                     <point>
-                        <x>1701.846557617</x>
-                        <y>581.783020020</y>
+                        <x>1695.742553711</x>
+                        <y>598.848815918</y>
                     </point>
                     <point>
-                        <x>1557.846557617</x>
-                        <y>581.783020020</y>
+                        <x>1551.678833008</x>
+                        <y>598.848815918</y>
                     </point>
                 </texture>
                 <mask>
@@ -1283,16 +1283,16 @@
                     <OSC_MAP nodeId="19" param="&gt;&gt; next" inputMinValue="0.000000000" inputMaxValue="1.000000000" paramMinValue="0.000000000" paramMaxValue="1.000000000"></OSC_MAP>
                 </ADDRESS>
                 <ADDRESS path="/cc/36">
-                    <OSC_MAP nodeId="23" param="Activate Noise" inputMinValue="0.000000000" inputMaxValue="1.000000000" paramMinValue="0.000000000" paramMaxValue="1.000000000"></OSC_MAP>
+                    <OSC_MAP nodeId="17" param="NOISE" inputMinValue="0.000000000" inputMaxValue="1.000000000" paramMinValue="0.000000000" paramMaxValue="1.000000000"></OSC_MAP>
                 </ADDRESS>
                 <ADDRESS path="/cc/37">
                     <OSC_MAP nodeId="23" param="Activate Kaleidoscope" inputMinValue="0.000000000" inputMaxValue="1.000000000" paramMinValue="0.000000000" paramMaxValue="1.000000000"></OSC_MAP>
                 </ADDRESS>
                 <ADDRESS path="/cc/38">
-                    <OSC_MAP nodeId="29" param="Play" inputMinValue="0.000000000" inputMaxValue="1.000000000" paramMinValue="0.000000000" paramMaxValue="1.000000000"></OSC_MAP>
+                    <OSC_MAP nodeId="17" param="OUTLINE" inputMinValue="0.000000000" inputMaxValue="1.000000000" paramMinValue="0.000000000" paramMaxValue="1.000000000"></OSC_MAP>
                 </ADDRESS>
                 <ADDRESS path="/cc/39">
-                    <OSC_MAP nodeId="29" param="&lt;&lt; prev" inputMinValue="0.000000000" inputMaxValue="1.000000000" paramMinValue="0.000000000" paramMaxValue="1.000000000"></OSC_MAP>
+                    <OSC_MAP nodeId="17" param="CONVERGENCE" inputMinValue="0.000000000" inputMaxValue="1.000000000" paramMinValue="0.000000000" paramMaxValue="1.000000000"></OSC_MAP>
                 </ADDRESS>
                 <ADDRESS path="/cc/40">
                     <OSC_MAP nodeId="29" param="&gt;&gt; next" inputMinValue="0.000000000" inputMaxValue="1.000000000" paramMinValue="0.000000000" paramMaxValue="1.000000000"></OSC_MAP>
