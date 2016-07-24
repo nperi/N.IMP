@@ -19,7 +19,7 @@ For the moment it's only available for mac.
 
 - Image and video Sequence
 
-Drag and drop an image or video file to the workspace to create an input of this type.
+Drag and drop an image or video file to the workspace to create an input of this type. It supports HAP codec for videos.
 
 - Camera
 
