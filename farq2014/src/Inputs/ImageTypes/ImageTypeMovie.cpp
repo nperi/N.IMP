@@ -18,7 +18,6 @@ ImageTypeMovie::ImageTypeMovie(string name_ ,string path_, ofBaseVideoPlayer* pl
     ext  = OTHER;
     isPlaying = false;
     hap = isHap;
-    isVideoInitialized = false;
     
     isPlaying.addListener(this, &ImageTypeMovie::cIsPlaying);
 }
@@ -33,21 +32,17 @@ ImageTypeMovie::~ImageTypeMovie(){
 void ImageTypeMovie::activate(ofImage& _img, ofFbo& _fbo){
     if (videoPlayer!=NULL) {
         
-        if (!isVideoInitialized) {
-            videoPlayer->stop();
-            videoPlayer->close();
-            videoPlayer->loadMovie(path);
+        videoPlayer->stop();
+        videoPlayer->close();
+        videoPlayer->loadMovie(path);
 
-            if (isPlaying) {
-                videoPlayer->play();
-            } else {
-                videoPlayer->play();
-                videoPlayer->update();
-                videoPlayer->stop();
-                videoPlayer->setFrame(0);
-            }
-            
-            isVideoInitialized = true;
+        if (isPlaying) {
+            videoPlayer->play();
+        } else {
+            videoPlayer->play();
+            videoPlayer->update();
+            videoPlayer->stop();
+            videoPlayer->setFrame(0);
         }
         
         if(dynamic_cast<ofxHapPlayer*>(videoPlayer) == NULL) {

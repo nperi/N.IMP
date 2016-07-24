@@ -580,7 +580,9 @@ void ImageAndVideoInputList::setEnable(bool isEnabled_){
         else if (isEnabled_ && nEnabled == 1)
         {
             inputs[currentSequence]->isPlaying = isPlaying;
-            inputs[currentSequence]->activate(img, fbo);
+            if (isPlaying)
+                videoPlayer->play();
+//            inputs[currentSequence]->activate(img, fbo);
         }
         else{
             if (videoPlayer != NULL) {
