@@ -163,12 +163,16 @@ void MultiChannelSwitch::cGui(bool& g){
 //------------------------------------------------------------------
 void MultiChannelSwitch::cDisableChannels(bool& c){
     
-    for (int i = 0; i < input.size(); i++) {
-        if (i != selChannel) {
-            input[i]->setEnable(!c);
+    if (input.size() > 0) {
+        for (int i = 0; i < input.size(); i++) {
+            if (i != selChannel) {
+                input[i]->setEnable(!c);
+            }
         }
+        
+        if (input[selChannel])
+            input[selChannel]->setEnable(true);
     }
-    input[selChannel]->setEnable(true);
 }
 
 //------------------------------------------------------------------
@@ -236,9 +240,10 @@ void MultiChannelSwitch::_showHelp(){
 //------------------------------------------------------------------
 bool MultiChannelSwitch::loadSettings(ofxXmlSettings &XML, int nTag_, int nodesCount_) {
 
-    nId             = XML.getAttribute("NODE", "id", -1, nTag_) + nodesCount_;
-    selChannel      = ofToInt(XML.getAttribute("INPUT_SOURCE","selChannel","0",nTag_));
-    drawInputGui    = ofToInt(XML.getAttribute("INPUT_SOURCE","drawInputGui","0",nTag_));
+    nId                  = XML.getAttribute("NODE", "id", -1, nTag_) + nodesCount_;
+    drawInputGui         = ofToBool(XML.getAttribute("NODE","drawInputGui","false",nTag_));
+    disableOtherChannels = ofToBool(XML.getAttribute("NODE", "disableOtherChannels","false",nTag_));
+    selChannel           = ofToInt(XML.getAttribute("NODE","selChannel","0",nTag_));
     
     XML.pushTag("NODE", nTag_);
     
@@ -276,6 +281,7 @@ bool MultiChannelSwitch::saveSettings(ofxXmlSettings &XML) {
     
     XML.addAttribute("NODE", "selChannel", selChannel, lastPlace);
     XML.addAttribute("NODE", "drawInputGui", drawInputGui, lastPlace);
+    XML.addAttribute("NODE", "disableOtherChannels", disableOtherChannels, lastPlace);
     
     saved = XML.pushTag("NODE", lastPlace);
     if (saved){
@@ -301,6 +307,8 @@ bool MultiChannelSwitch::saveSettingsToSnippet(ofxXmlSettings &XML, map<int,int>
     XML.addAttribute("NODE", "type", "MULTI_CHANNEL", lastPlace);
     
     XML.addAttribute("NODE", "selChannel", selChannel, lastPlace);
+    XML.addAttribute("NODE", "drawInputGui", drawInputGui, lastPlace);
+    XML.addAttribute("NODE", "disableOtherChannels", disableOtherChannels, lastPlace);
     
     saved = XML.pushTag("NODE", lastPlace);
     if (saved){
