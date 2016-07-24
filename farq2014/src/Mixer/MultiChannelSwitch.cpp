@@ -109,7 +109,7 @@ void MultiChannelSwitch::updateParameter(Param* inputParam){
     }
     else if (inputParam->intVal > 0){
         for (int i = 0; i < channels.size(); i++) {
-            if (inputParam->name == channels[i]->label) {
+            if (inputParam->name == channels[i]->label && !channels[i]->selected.get()) {
                 channels[i]->selected.set(true);
             }
         }

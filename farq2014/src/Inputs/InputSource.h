@@ -29,8 +29,11 @@ class InputSource : public ImageOutput{
     virtual void setEnable(bool isEnabled_){
         if (isEnabled_){
             ++nEnabled;
-        }else if (nEnabled >0){
-            --nEnabled;
+//        } else if (nEnabled >0){
+//            --nEnabled;
+//        }
+        } else {
+            nEnabled = 0;
         }
     };
     

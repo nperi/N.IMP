@@ -47,6 +47,7 @@ private:
     bool hap;
     
     void cIsPlaying(bool &b);
+    bool isVideoInitialized;
 	
 };
 

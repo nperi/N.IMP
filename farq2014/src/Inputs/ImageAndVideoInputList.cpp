@@ -568,17 +568,19 @@ void ImageAndVideoInputList::setEnable(bool isEnabled_){
     
     isEnabled = isEnabled_;
     
+    InputSource::setEnable(isEnabled_);
+    
     //all to manage videoplayer
     
     //does it need player
     if (hasMovie) {
-        if (isEnabled_ && nEnabled > 0) {
+        if (isEnabled_ && nEnabled > 1) {
             //nothing
         }
-        else if (isEnabled_ && nEnabled == 0)
+        else if (isEnabled_ && nEnabled == 1)
         {
-            inputs[currentSequence]->activate(img, fbo);
             inputs[currentSequence]->isPlaying = isPlaying;
+            inputs[currentSequence]->activate(img, fbo);
         }
         else{
             if (videoPlayer != NULL) {
@@ -586,7 +588,6 @@ void ImageAndVideoInputList::setEnable(bool isEnabled_){
             }
         }
     }
-    InputSource::setEnable(isEnabled_);
 }
 
 //------------------------------------------------------------------
