@@ -1,6 +1,6 @@
 <MAIN_SETTINGS>
     <link_type>1</link_type>
-    <total_nodes>53</total_nodes>
+    <total_nodes>55</total_nodes>
     <show_console>0</show_console>
     <SETTINGS>
         <INPUTS>
@@ -26,27 +26,27 @@
                     </point>
                 </texture>
             </NODE>
-            <NODE id="2" name="1 Big Bang" type="IMAGE_AND_VIDEO_LIST" path="" bpm="100.545066833" multiplier_divider="4" isPlaying="0" repeatSequence="0" playInLoop="0" palindrom="0" matchBPMtoSequence="0" currentSequence="0">
+            <NODE id="2" name="1 Big Bang" type="IMAGE_AND_VIDEO_LIST" path="" enabled="1" bpm="100.545066833" multiplier_divider="4" isPlaying="0" repeatSequence="0" playInLoop="0" palindrom="0" matchBPMtoSequence="0" currentSequence="0">
                 <ASSET name="1 bigbang_hap.mov" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/1 bigbang_hap.mov"></ASSET>
                 <type>none</type>
                 <path>none</path>
                 <visible>1</visible>
                 <texture>
                     <point>
-                        <x>-199.488769531</x>
-                        <y>32.761150360</y>
+                        <x>-238.058227539</x>
+                        <y>-57.058612823</y>
                     </point>
                     <point>
-                        <x>-55.424995422</x>
-                        <y>32.761150360</y>
+                        <x>-93.994483948</x>
+                        <y>-57.058612823</y>
                     </point>
                     <point>
-                        <x>-55.424995422</x>
-                        <y>113.796974182</y>
+                        <x>-93.994483948</x>
+                        <y>23.977241516</y>
                     </point>
                     <point>
-                        <x>-199.488769531</x>
-                        <y>113.796974182</y>
+                        <x>-238.058227539</x>
+                        <y>23.977241516</y>
                     </point>
                 </texture>
                 <mask>
@@ -74,7 +74,7 @@
                     </dot>
                 </out>
             </NODE>
-            <NODE id="19" name="3 Evolucion" type="IMAGE_AND_VIDEO_LIST" path="" bpm="100.000000000" multiplier_divider="4" isPlaying="0" repeatSequence="0" playInLoop="0" palindrom="0" matchBPMtoSequence="1" currentSequence="0">
+            <NODE id="19" name="3 Evolucion" type="IMAGE_AND_VIDEO_LIST" path="" enabled="1" bpm="100.000000000" multiplier_divider="4" isPlaying="0" repeatSequence="0" playInLoop="0" palindrom="0" matchBPMtoSequence="1" currentSequence="0">
                 <ASSET name="2 bigbang_hap.mov" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/2 bigbang_hap.mov"></ASSET>
                 <ASSET name="(1) bacterias.png" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/imagenes/creación de la vida/(1) bacterias.png"></ASSET>
                 <ASSET name="(1) bacterias 2.png" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/imagenes/creación de la vida/(1) bacterias 2.png"></ASSET>
@@ -189,20 +189,20 @@
                 <visible>1</visible>
                 <texture>
                     <point>
-                        <x>157.347625732</x>
-                        <y>128.303558350</y>
+                        <x>184.597686768</x>
+                        <y>-58.986404419</y>
                     </point>
                     <point>
-                        <x>302.382354736</x>
-                        <y>128.303558350</y>
+                        <x>329.632263184</x>
+                        <y>-58.986404419</y>
                     </point>
                     <point>
-                        <x>302.382354736</x>
-                        <y>209.885620117</y>
+                        <x>329.632263184</x>
+                        <y>22.595541000</y>
                     </point>
                     <point>
-                        <x>157.347625732</x>
-                        <y>209.885620117</y>
+                        <x>184.597686768</x>
+                        <y>22.595541000</y>
                     </point>
                 </texture>
                 <mask>
@@ -233,7 +233,7 @@
                     </dot>
                 </out>
             </NODE>
-            <NODE id="29" name="4 Acontecimientos" type="IMAGE_AND_VIDEO_LIST" path="" bpm="100.000000000" multiplier_divider="4" isPlaying="1" repeatSequence="1" playInLoop="0" palindrom="0" matchBPMtoSequence="0" currentSequence="1">
+            <NODE id="29" name="4 Acontecimientos" type="IMAGE_AND_VIDEO_LIST" path="" enabled="0" bpm="100.000000000" multiplier_divider="4" isPlaying="1" repeatSequence="1" playInLoop="0" palindrom="0" matchBPMtoSequence="0" currentSequence="8">
                 <ASSET name="20 - 1914-1918 primera guerra mundial_hap.mov" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/20 - 1914-1918 primera guerra mundial_hap.mov"></ASSET>
                 <ASSET name="21 - 1945-8 Atomic Bomb- Hiroshima and Nagasaki_hap.mov" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/21 - 1945-8 Atomic Bomb- Hiroshima and Nagasaki_hap.mov"></ASSET>
                 <ASSET name="22 - negro mahatma gandhi_hap.mov" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/22 - negro mahatma gandhi_hap.mov"></ASSET>
@@ -251,20 +251,20 @@
                 <visible>1</visible>
                 <texture>
                     <point>
-                        <x>-239.275909424</x>
-                        <y>424.068420410</y>
+                        <x>-253.462982178</x>
+                        <y>448.427734375</y>
                     </point>
                     <point>
-                        <x>-57.380508423</x>
-                        <y>424.068420410</y>
+                        <x>-71.567573547</x>
+                        <y>448.427734375</y>
                     </point>
                     <point>
-                        <x>-57.380508423</x>
-                        <y>526.384582520</y>
+                        <x>-71.567573547</x>
+                        <y>550.743896484</y>
                     </point>
                     <point>
-                        <x>-239.275909424</x>
-                        <y>526.384582520</y>
+                        <x>-253.462982178</x>
+                        <y>550.743896484</y>
                     </point>
                 </texture>
                 <mask>
@@ -295,7 +295,7 @@
                     </dot>
                 </out>
             </NODE>
-            <NODE id="31" name="5 Actualidad" type="IMAGE_AND_VIDEO_LIST" path="" bpm="100.000000000" multiplier_divider="4" isPlaying="0" repeatSequence="0" playInLoop="0" palindrom="0" matchBPMtoSequence="0" currentSequence="0">
+            <NODE id="31" name="5 Actualidad" type="IMAGE_AND_VIDEO_LIST" path="" enabled="0" bpm="100.000000000" multiplier_divider="120" isPlaying="1" repeatSequence="0" playInLoop="0" palindrom="0" matchBPMtoSequence="0" currentSequence="0">
                 <ASSET name="1 - 1989-9-11 La caída del Muro de Berlín 2_hap.mov" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/32 - Actualidad/1 - 1989-9-11 La caída del Muro de Berlín 2_hap.mov"></ASSET>
                 <ASSET name="2 - anochecer_hap.mov" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/32 - Actualidad/2 - anochecer_hap.mov"></ASSET>
                 <ASSET name="3 - seasons_hap.mov" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/32 - Actualidad/3 - seasons_hap.mov"></ASSET>
@@ -332,20 +332,20 @@
                 <visible>1</visible>
                 <texture>
                     <point>
-                        <x>485.465911865</x>
-                        <y>389.793487549</y>
+                        <x>202.963317871</x>
+                        <y>450.853057861</y>
                     </point>
                     <point>
-                        <x>674.780273438</x>
-                        <y>389.793487549</y>
+                        <x>392.277587891</x>
+                        <y>450.853057861</y>
                     </point>
                     <point>
-                        <x>674.780273438</x>
-                        <y>496.282531738</y>
+                        <x>392.277587891</x>
+                        <y>557.341918945</y>
                     </point>
                     <point>
-                        <x>485.465911865</x>
-                        <y>496.282531738</y>
+                        <x>202.963317871</x>
+                        <y>557.341918945</y>
                     </point>
                 </texture>
                 <mask>
@@ -373,27 +373,27 @@
                     </dot>
                 </out>
             </NODE>
-            <NODE id="32" name="Final" type="IMAGE_AND_VIDEO_LIST" path="" bpm="100.942169189" multiplier_divider="4" isPlaying="0" repeatSequence="0" playInLoop="0" palindrom="0" matchBPMtoSequence="0" currentSequence="0">
+            <NODE id="32" name="Final" type="IMAGE_AND_VIDEO_LIST" path="" enabled="0" bpm="100.942169189" multiplier_divider="4" isPlaying="1" repeatSequence="0" playInLoop="0" palindrom="0" matchBPMtoSequence="0" currentSequence="0">
                 <ASSET name="32 - final_hap.mov" path="/Users/miligaricoits/Google Drive/Proyecto de Grado/Obra/seleccionados/32 - Actualidad/32 - final_hap.mov"></ASSET>
                 <type>none</type>
                 <path>none</path>
                 <visible>1</visible>
                 <texture>
                     <point>
-                        <x>889.863281250</x>
-                        <y>459.879180908</y>
+                        <x>869.563110352</x>
+                        <y>817.563354492</y>
                     </point>
                     <point>
-                        <x>1041.432006836</x>
-                        <y>459.879180908</y>
+                        <x>1021.131774902</x>
+                        <y>817.563354492</y>
                     </point>
                     <point>
-                        <x>1041.432006836</x>
-                        <y>545.136352539</y>
+                        <x>1021.131774902</x>
+                        <y>902.820312500</y>
                     </point>
                     <point>
-                        <x>889.863281250</x>
-                        <y>545.136352539</y>
+                        <x>869.563110352</x>
+                        <y>902.820312500</y>
                     </point>
                 </texture>
                 <mask>
@@ -428,20 +428,20 @@
                 <visible>1</visible>
                 <texture>
                     <point>
-                        <x>1536.422851562</x>
-                        <y>18.457201004</y>
+                        <x>1609.162719727</x>
+                        <y>-54.332782745</y>
                     </point>
                     <point>
-                        <x>1630.492553711</x>
-                        <y>18.457201004</y>
+                        <x>1703.232421875</x>
+                        <y>-54.332782745</y>
                     </point>
                     <point>
-                        <x>1630.492553711</x>
-                        <y>89.009895325</y>
+                        <x>1703.232421875</x>
+                        <y>16.219913483</y>
                     </point>
                     <point>
-                        <x>1536.422851562</x>
-                        <y>89.009895325</y>
+                        <x>1609.162719727</x>
+                        <y>16.219913483</y>
                     </point>
                 </texture>
                 <mask>
@@ -473,20 +473,20 @@
                 <visible>1</visible>
                 <texture>
                     <point>
-                        <x>1530.621093750</x>
-                        <y>125.435195923</y>
+                        <x>1609.861328125</x>
+                        <y>47.445198059</y>
                     </point>
                     <point>
-                        <x>1624.405395508</x>
-                        <y>125.435195923</y>
+                        <x>1703.645629883</x>
+                        <y>47.445198059</y>
                     </point>
                     <point>
-                        <x>1624.405395508</x>
-                        <y>195.773544312</y>
+                        <x>1703.645629883</x>
+                        <y>117.783515930</y>
                     </point>
                     <point>
-                        <x>1530.621093750</x>
-                        <y>195.773544312</y>
+                        <x>1609.861328125</x>
+                        <y>117.783515930</y>
                     </point>
                 </texture>
                 <mask>
@@ -518,20 +518,20 @@
                 <visible>1</visible>
                 <texture>
                     <point>
-                        <x>1649.609985352</x>
-                        <y>15.597963333</y>
+                        <x>1714.489746094</x>
+                        <y>-54.572013855</y>
                     </point>
                     <point>
-                        <x>1743.306274414</x>
-                        <y>15.597963333</y>
+                        <x>1808.186035156</x>
+                        <y>-54.572013855</y>
                     </point>
                     <point>
-                        <x>1743.306274414</x>
-                        <y>85.870063782</y>
+                        <x>1808.186035156</x>
+                        <y>15.700084686</y>
                     </point>
                     <point>
-                        <x>1649.609985352</x>
-                        <y>85.870063782</y>
+                        <x>1714.489746094</x>
+                        <y>15.700084686</y>
                     </point>
                 </texture>
                 <mask>
@@ -563,20 +563,20 @@
                 <visible>1</visible>
                 <texture>
                     <point>
-                        <x>1651.167724609</x>
-                        <y>113.266242981</y>
+                        <x>1716.047485352</x>
+                        <y>46.996250153</y>
                     </point>
                     <point>
-                        <x>1745.748413086</x>
-                        <y>113.266242981</y>
+                        <x>1810.628173828</x>
+                        <y>46.996250153</y>
                     </point>
                     <point>
-                        <x>1745.748413086</x>
-                        <y>184.201797485</y>
+                        <x>1810.628173828</x>
+                        <y>117.931785583</y>
                     </point>
                     <point>
-                        <x>1651.167724609</x>
-                        <y>184.201797485</y>
+                        <x>1716.047485352</x>
+                        <y>117.931785583</y>
                     </point>
                 </texture>
                 <mask>
@@ -608,20 +608,20 @@
                 <visible>1</visible>
                 <texture>
                     <point>
-                        <x>1531.519287109</x>
-                        <y>215.124450684</y>
+                        <x>1610.779541016</x>
+                        <y>146.254425049</y>
                     </point>
                     <point>
-                        <x>1629.801635742</x>
-                        <y>215.124450684</y>
+                        <x>1709.061889648</x>
+                        <y>146.254425049</y>
                     </point>
                     <point>
-                        <x>1629.801635742</x>
-                        <y>288.836151123</y>
+                        <x>1709.061889648</x>
+                        <y>219.966140747</y>
                     </point>
                     <point>
-                        <x>1531.519287109</x>
-                        <y>288.836151123</y>
+                        <x>1610.779541016</x>
+                        <y>219.966140747</y>
                     </point>
                 </texture>
                 <mask>
@@ -653,20 +653,20 @@
                 <visible>1</visible>
                 <texture>
                     <point>
-                        <x>1654.673706055</x>
-                        <y>212.043334961</y>
+                        <x>1722.153686523</x>
+                        <y>145.773315430</y>
                     </point>
                     <point>
-                        <x>1753.154541016</x>
-                        <y>212.043334961</y>
+                        <x>1820.634521484</x>
+                        <y>145.773315430</y>
                     </point>
                     <point>
-                        <x>1753.154541016</x>
-                        <y>285.903808594</y>
+                        <x>1820.634521484</x>
+                        <y>219.633804321</y>
                     </point>
                     <point>
-                        <x>1654.673706055</x>
-                        <y>285.903808594</y>
+                        <x>1722.153686523</x>
+                        <y>219.633804321</y>
                     </point>
                 </texture>
                 <mask>
@@ -698,20 +698,20 @@
                 <visible>1</visible>
                 <texture>
                     <point>
-                        <x>1765.115600586</x>
-                        <y>18.189672470</y>
+                        <x>1822.135009766</x>
+                        <y>-54.600311279</y>
                     </point>
                     <point>
-                        <x>1858.117065430</x>
-                        <y>18.189672470</y>
+                        <x>1915.136474609</x>
+                        <y>-54.600311279</y>
                     </point>
                     <point>
-                        <x>1858.117065430</x>
-                        <y>87.940750122</y>
+                        <x>1915.136474609</x>
+                        <y>15.150772095</y>
                     </point>
                     <point>
-                        <x>1765.115600586</x>
-                        <y>87.940750122</y>
+                        <x>1822.135009766</x>
+                        <y>15.150772095</y>
                     </point>
                 </texture>
                 <mask>
@@ -743,20 +743,20 @@
                 <visible>1</visible>
                 <texture>
                     <point>
-                        <x>1765.916259766</x>
-                        <y>113.530921936</y>
+                        <x>1824.245849609</x>
+                        <y>48.600936890</y>
                     </point>
                     <point>
-                        <x>1858.427124023</x>
-                        <y>113.530921936</y>
+                        <x>1916.756713867</x>
+                        <y>48.600936890</y>
                     </point>
                     <point>
-                        <x>1858.427124023</x>
-                        <y>182.914093018</y>
+                        <x>1916.756713867</x>
+                        <y>117.984062195</y>
                     </point>
                     <point>
-                        <x>1765.916259766</x>
-                        <y>182.914093018</y>
+                        <x>1824.245849609</x>
+                        <y>117.984062195</y>
                     </point>
                 </texture>
                 <mask>
@@ -788,20 +788,20 @@
                 <visible>1</visible>
                 <texture>
                     <point>
-                        <x>1769.833496094</x>
-                        <y>210.650146484</y>
+                        <x>1833.911254883</x>
+                        <y>141.826110840</y>
                     </point>
                     <point>
-                        <x>1865.166503906</x>
-                        <y>210.650146484</y>
+                        <x>1956.988647461</x>
+                        <y>141.826110840</y>
                     </point>
                     <point>
-                        <x>1865.166503906</x>
-                        <y>282.149902344</y>
+                        <x>1956.988647461</x>
+                        <y>234.134033203</y>
                     </point>
                     <point>
-                        <x>1769.833496094</x>
-                        <y>282.149902344</y>
+                        <x>1833.911254883</x>
+                        <y>234.134033203</y>
                     </point>
                 </texture>
                 <mask>
@@ -826,26 +826,26 @@
                     <active>1</active>
                 </out>
             </NODE>
-            <NODE id="53" name="Audience" type="CAM" cameraName="FaceTime HD Camera" resolution="7" width="1920.000000000" height="1080.000000000">
+            <NODE id="55" name="Audiencia" type="CAM" cameraName="FaceTime HD Camera" resolution="5" width="1280.000000000" height="720.000000000">
                 <type>none</type>
                 <path>none</path>
                 <visible>1</visible>
                 <texture>
                     <point>
-                        <x>1052.094848633</x>
-                        <y>304.919982910</y>
+                        <x>678.720458984</x>
+                        <y>820.252197266</y>
                     </point>
                     <point>
-                        <x>1206.084960938</x>
-                        <y>304.919982910</y>
+                        <x>842.543090820</x>
+                        <y>820.252197266</y>
                     </point>
                     <point>
-                        <x>1206.084960938</x>
-                        <y>391.539306641</y>
+                        <x>842.543090820</x>
+                        <y>912.402404785</y>
                     </point>
                     <point>
-                        <x>1052.094848633</x>
-                        <y>391.539306641</y>
+                        <x>678.720458984</x>
+                        <y>912.402404785</y>
                     </point>
                 </texture>
                 <mask>
@@ -869,7 +869,7 @@
                 <out>
                     <active>1</active>
                     <dot>
-                        <to>20</to>
+                        <to>54</to>
                     </dot>
                 </out>
             </NODE>
@@ -881,20 +881,20 @@
                 <visible>1</visible>
                 <texture>
                     <point>
-                        <x>752.481750488</x>
-                        <y>23.234872818</y>
+                        <x>1033.972167969</x>
+                        <y>-56.825103760</y>
                     </point>
                     <point>
-                        <x>896.545532227</x>
-                        <y>23.234872818</y>
+                        <x>1178.035888672</x>
+                        <y>-56.825103760</y>
                     </point>
                     <point>
-                        <x>896.545532227</x>
-                        <y>104.270698547</y>
+                        <x>1178.035888672</x>
+                        <y>24.210754395</y>
                     </point>
                     <point>
-                        <x>752.481750488</x>
-                        <y>104.270698547</y>
+                        <x>1033.972167969</x>
+                        <y>24.210754395</y>
                     </point>
                 </texture>
                 <mask>
@@ -928,20 +928,20 @@
                 <visible>1</visible>
                 <texture>
                     <point>
-                        <x>1110.895019531</x>
-                        <y>38.886199951</y>
+                        <x>1101.745361328</x>
+                        <y>506.965881348</y>
                     </point>
                     <point>
-                        <x>1254.958740234</x>
-                        <y>38.886199951</y>
+                        <x>1245.809082031</x>
+                        <y>506.965881348</y>
                     </point>
                     <point>
-                        <x>1254.958740234</x>
-                        <y>119.922027588</y>
+                        <x>1245.809082031</x>
+                        <y>588.001708984</y>
                     </point>
                     <point>
-                        <x>1110.895019531</x>
-                        <y>119.922027588</y>
+                        <x>1101.745361328</x>
+                        <y>588.001708984</y>
                     </point>
                 </texture>
                 <mask>
@@ -969,6 +969,55 @@
                     </dot>
                 </out>
             </NODE>
+            <NODE id="54" name="Old Tv Shader" type="SHADER" enabled="0" path="/Users/miligaricoits/Development/of_v0.8.4_osx_release/apps/N.IMP fork/farq2014/bin/data/customShaders/oldTv.fs" fileName="oldTv.fs">
+                <INPUT_SOURCE nodeId="55"></INPUT_SOURCE>
+                <FLOAT_PARAM name="time" value="-43739078328278056960.000000000"></FLOAT_PARAM>
+                <type>none</type>
+                <path>none</path>
+                <visible>1</visible>
+                <texture>
+                    <point>
+                        <x>678.313903809</x>
+                        <y>665.502746582</y>
+                    </point>
+                    <point>
+                        <x>842.986511230</x>
+                        <y>665.502746582</y>
+                    </point>
+                    <point>
+                        <x>842.986511230</x>
+                        <y>758.131164551</y>
+                    </point>
+                    <point>
+                        <x>678.313903809</x>
+                        <y>758.131164551</y>
+                    </point>
+                </texture>
+                <mask>
+                    <point>
+                        <x>0.000000000</x>
+                        <y>0.000000000</y>
+                    </point>
+                    <point>
+                        <x>1.000000000</x>
+                        <y>0.000000000</y>
+                    </point>
+                    <point>
+                        <x>1.000000000</x>
+                        <y>1.000000000</y>
+                    </point>
+                    <point>
+                        <x>0.000000000</x>
+                        <y>1.000000000</y>
+                    </point>
+                </mask>
+                <out>
+                    <active>1</active>
+                    <dot>
+                        <to>20</to>
+                    </dot>
+                </out>
+            </NODE>
         </VISUAL_LAYERS>
         <MIXERS>
             <NODE id="11" name="Blends" type="SIMPLE_BLEND" enabled="1" selector1="0" selector2="1" blendmode="0" opacity="0.000000000">
@@ -979,20 +1028,20 @@
                 <visible>1</visible>
                 <texture>
                     <point>
-                        <x>378.724090576</x>
-                        <y>22.052976608</y>
+                        <x>612.523742676</x>
+                        <y>-60.857009888</y>
                     </point>
                     <point>
-                        <x>522.787841797</x>
-                        <y>22.052976608</y>
+                        <x>756.587524414</x>
+                        <y>-60.857009888</y>
                     </point>
                     <point>
-                        <x>522.787841797</x>
-                        <y>103.088806152</y>
+                        <x>756.587524414</x>
+                        <y>20.178848267</y>
                     </point>
                     <point>
-                        <x>378.724090576</x>
-                        <y>103.088806152</y>
+                        <x>612.523742676</x>
+                        <y>20.178848267</y>
                     </point>
                 </texture>
                 <mask>
@@ -1020,32 +1069,32 @@
                     </dot>
                 </out>
             </NODE>
-            <NODE id="20" name="Switch Acontecimientos" type="MULTI_CHANNEL" selChannel="0" drawInputGui="0">
+            <NODE id="20" name="Switch Acontecimientos" type="MULTI_CHANNEL" selChannel="0" drawInputGui="1">
                 <INPUT_SOURCE nodeId="19"></INPUT_SOURCE>
                 <INPUT_SOURCE nodeId="29"></INPUT_SOURCE>
                 <INPUT_SOURCE nodeId="30"></INPUT_SOURCE>
                 <INPUT_SOURCE nodeId="31"></INPUT_SOURCE>
-                <INPUT_SOURCE nodeId="53"></INPUT_SOURCE>
+                <INPUT_SOURCE nodeId="54"></INPUT_SOURCE>
                 <INPUT_SOURCE nodeId="32"></INPUT_SOURCE>
                 <type>none</type>
                 <path>none</path>
                 <visible>1</visible>
                 <texture>
                     <point>
-                        <x>534.706298828</x>
-                        <y>181.205444336</y>
+                        <x>649.225219727</x>
+                        <y>331.252532959</y>
                     </point>
                     <point>
-                        <x>679.741027832</x>
-                        <y>181.205444336</y>
+                        <x>794.259765625</x>
+                        <y>331.252532959</y>
                     </point>
                     <point>
-                        <x>679.741027832</x>
-                        <y>262.787506104</y>
+                        <x>794.259765625</x>
+                        <y>412.873046875</y>
                     </point>
                     <point>
-                        <x>534.706298828</x>
-                        <y>262.787506104</y>
+                        <x>649.225219727</x>
+                        <y>412.873046875</y>
                     </point>
                 </texture>
                 <mask>
@@ -1073,7 +1122,7 @@
                     </dot>
                 </out>
             </NODE>
-            <NODE id="30" name="Mezcla 3 y 4" type="SIMPLE_BLEND" enabled="0" selector1="0" selector2="1" blendmode="0" opacity="255.000000000">
+            <NODE id="30" name="Mezcla 3 y 4" type="SIMPLE_BLEND" enabled="0" selector1="0" selector2="1" blendmode="0" opacity="40.455024719">
                 <INPUT_SOURCE nodeId="19"></INPUT_SOURCE>
                 <INPUT_SOURCE nodeId="29"></INPUT_SOURCE>
                 <type>none</type>
@@ -1081,20 +1130,20 @@
                 <visible>1</visible>
                 <texture>
                     <point>
-                        <x>171.243637085</x>
-                        <y>524.558471680</y>
+                        <x>608.363281250</x>
+                        <y>141.718383789</y>
                     </point>
                     <point>
-                        <x>316.278381348</x>
-                        <y>524.558471680</y>
+                        <x>753.397827148</x>
+                        <y>141.718383789</y>
                     </point>
                     <point>
-                        <x>316.278381348</x>
-                        <y>606.140502930</y>
+                        <x>753.397827148</x>
+                        <y>223.338897705</y>
                     </point>
                     <point>
-                        <x>171.243637085</x>
-                        <y>606.140502930</y>
+                        <x>608.363281250</x>
+                        <y>223.338897705</y>
                     </point>
                 </texture>
                 <mask>
@@ -1131,20 +1180,20 @@
                 <visible>1</visible>
                 <texture>
                     <point>
-                        <x>1438.241088867</x>
-                        <y>357.400024414</y>
+                        <x>1557.782836914</x>
+                        <y>500.783020020</y>
                     </point>
                     <point>
-                        <x>1582.304809570</x>
-                        <y>357.400024414</y>
+                        <x>1701.846557617</x>
+                        <y>500.783020020</y>
                     </point>
                     <point>
-                        <x>1582.304809570</x>
-                        <y>438.435852051</y>
+                        <x>1701.846557617</x>
+                        <y>581.818847656</y>
                     </point>
                     <point>
-                        <x>1438.241088867</x>
-                        <y>438.435852051</y>
+                        <x>1557.782836914</x>
+                        <y>581.818847656</y>
                     </point>
                 </texture>
                 <mask>
@@ -1193,7 +1242,8 @@
             <NODE id="50" name="New OSC Receiver"></NODE>
             <NODE id="51" name="New OSC Receiver"></NODE>
             <NODE id="52" name="New OSC Receiver"></NODE>
-            <NODE id="53" name="Audience"></NODE>
+            <NODE id="54" name="Old Tv Shader"></NODE>
+            <NODE id="55" name="Audiencia"></NODE>
         </NODE_VIEW>
     </NODE_VIEWS>
     <PARAM_INPUT_GENERATORS>
