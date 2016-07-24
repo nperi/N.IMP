@@ -66,3 +66,21 @@ Export generated content to syphon server.
 
 ### Screenshot
 ![alt tag](/screenShot.png?raw=true "Demo")
+
+
+### Used OF addons
+Forked this addons and made our customization.
+
+https://github.com/patriciogonzalezvivo/ofxComposer
+https://github.com/rezaali/ofxUI
+https://github.com/neilmendoza/ofxPostProcessing
+https://github.com/astellato/ofxSyphon
+https://github.com/danomatika/ofxMidi
+https://github.com/jens-a-e/ofxMultiTouchPad
+https://github.com/Akira-Hayasaka/ofxPSBlend
+https://github.com/maxillacult/ofxPostGlitch
+https://github.com/bangnoise/ofxHapPlayer
+https://github.com/brinoausrino/ofxImageSequencePlayer
+https://github.com/2bbb/ofxJpegGlitch
+https://github.com/kronick/ofxAVFVideoPlayer
+https://github.com/leozimmerman/ofxFilterbank
